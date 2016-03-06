@@ -1,0 +1,17 @@
+<!--
+  Website version: {{ site.meta.version }}
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+{% include head.html %}
+  </head>
+  <body role="document">
+    <div class="container" role="main">
+{% if page.navigation.show_navbar %}{% include navbar.html %}{% endif %}
+{{ content }}
+{% if page.navigation.show_footer %}{% include footer.html %}{% endif %}
+{% include javascript.html %}
+    </div> <!-- /container -->
+  </body>
+</html>

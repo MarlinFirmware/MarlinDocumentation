@@ -1,0 +1,28 @@
+    <!-- head -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="{% if page.meta.description %}{{ page.meta.description }}{% else %}{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}{% endif %}">
+    <meta name="author" content="{% if page.meta.author %}{{ page.meta.author }}{% else %}{{ site.meta.author }} <{{ site.meta.feedback_email }}>{% endif %}">
+    {% capture canonical %}{% if page.meta.canonical %}{{ page.meta.canonical }}{% else %}{{site.url}}{{page.url}}{% endif %}{% endcapture %}
+    <link rel="canonical" href="{{canonical}}"/>
+    <link rel="icon" href="{{ site.github.url }}/{{ site.assets_url }}/favicon.ico">
+
+    <title>{% if page.meta.title %}{{ page.meta.title }}{% else %}Default{% endif %} | {{ site.title }}</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+      integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <!-- Overall template theme and custom styles -->
+    <link href="{{ site.github.url }}/{{ site.css_url }}/bootstrap/readable.min.css" rel="stylesheet">
+    <link href="{{ site.github.url }}/{{ site.css_url }}/bootstrap/custom.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <!-- /head -->

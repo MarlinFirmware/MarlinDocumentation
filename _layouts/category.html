@@ -1,0 +1,16 @@
+---
+layout: default
+---
+        <h2>{{ page.type }}</h2>
+
+        <ul>
+          {% for p in site.pages %}
+            {% if p.meta.hidden != true %}
+              {% for pc in p.meta.categories %}
+                {% if pc == page.type %}
+                  <li><a href="{{ p.url }}">{{ p.meta.title }}</a></li>
+                {% endif %}
+              {% endfor %}
+            {% endif %}
+          {% endfor %}
+        </ul>
