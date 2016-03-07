@@ -14,16 +14,16 @@ navigation:
 G-Code (or GCode) is the instruction code that tells a RepRap 3D printer what to do. For example, the G-Code `G0 X10` tells the machine to move the current tool to X position 10. Marlin's GCode is loosely based on the language specification for the [NIST RS274NGC Interpreter](http://www.nist.gov/customcf/get_pdf.cfm?pub_id=823374), but departs radically in its specific implementation details. (For example, RepRap G-Code doesn't care about "modal groups.")
 
 ### Movement
- * **G0**   -> G1
- * **G1**   - Coordinated Movement X Y Z E
- * **G2**   - Clockwise Arc
- * **G3**   - Counter-clockwise Arc
- * **G4**   - Dwell S<seconds> or P<ms>
- * **G92**  - Set the "current position" for X Y Z E
- * **M0**   - Wait for user, with optional prompt message (requires LCD controller)
- * **M1**   -> M0
- * **M400** - Finish all moves
- * **M999** - Restart after an Emergency Stop
+ * [G0](#g0)     - See [G1](#g1)
+ * [G1](#g1)     - Coordinated Movement (XYZ E)
+ * [G2](#g2)     - Clockwise Arc
+ * [G3](#g3)     - Counter-clockwise Arc
+ * [G4](#g4)     - Dwell/Wait
+ * [G92](#g92)   - Set the *current position* for (XYZ E)
+ * [M0](#m0)     - Wait for user, with optional prompt message <span class="label label-warning">Requires a LCD screen</span>
+ * [M1](#m1)     - See [M0](#m0)
+ * [M400](#m400) - Finish all moves
+ * [M999](#m999) - Restart after an Emergency Stop
 
 ### SD Card
  * **M20**  - List SD card
@@ -157,7 +157,10 @@ extrude-only move will be classified as retract depending on the direction
  * **M351** - Toggle MS1 MS2 pins directly to set microstepping.
 
 ### SCARA
-''May change to suit future G-code standards''
+
+<div class="alert alert-warning">
+  <p>May change to suit future G-code standards</p>
+</div>
 
  * **M360** - SCARA calibration: Move to cal-position ThetaA (0 deg calibration)
  * **M361** - SCARA calibration: Move to cal-position ThetaB (90 deg calibration - steps per degree)
@@ -169,23 +172,56 @@ extrude-only move will be classified as retract depending on the direction
 ### Host Printing
  * **M110** - Set the current Line Number
 
-## G-Code Comments
-Comments start at a `;` (semicolon) and end with the end of the line:
+### Comments
+Comments start with a `;` (semicolon) and end with the end of the line, take a look a the following example:
 
-    N3 T0*57 ; This is a comment
-    N4 G92 E0*67
-    ; So is this
-    N5 G28*22
 
-(example taken from the [RepRap wiki](http://reprap.org/wiki/Gcode#Comments))
+```
+G1 X10 Y40 Z5 ; This is a comment
+G92 Z2 F100
 
-If you need to use a literal `;` somewhere (for example within `M117`), you can escape semicolons with a `\`
-(backslash):
+; This is another comment
+G1 X100 Y100 F1200
+```
 
-    M117 Hello \;)
+If you need to use a literal `;` somewhere (for example within `M117`), you can escape semicolons with a `\` (backslash):
 
-The backslash `\` can also be used to escape `\` itself if you need a literal `\` in front of a `;`
+```
+M117 Hello \;)
+```
 
-    M117 backslash: \\;and a comment
+The backslash `\` can also be used to escape `\` itself if you need a literal `\` in front of a `;`:
 
-Please note that hosts should strip any comments before sending GCODE to the printer in order to save bandwidth.
+```
+M117 backslash: \\;and a comment
+```
+
+<div class="alert alert-info">
+  <p>Please note that hosts should strip any comments before sending GCODE to the printer in order to save bandwidth.</p>
+</div>
+
+
+## G-Codes Detailed Description
+
+### G0
+In Marlin `G0` is exactly the same as [G1](#g1).
+Some G-Code generators may, by convention, use G0 for non-extrusion movements (those without the E axis) and G1 for moves with the extruder.
+
+### G1
+
+#### Description
+Coordinated Movement of specified axes. This command tells the planner to queue a move to a given position `XYZ E` with a given feedrate `F`.
+
+G1 is used for all coordinated movement. The effect of G1 is to simply add a move to the queue. The move itself will happen at some point in the future. All the specified axes will move simultaneously to arrive at the given coordinates at the same time using linear interpolation. The speed may change over time following an acceleration curve, according to the acceleration and jerk settings of the given axes.
+
+#### Arguments
+ * X\<mm> A coordinate on the X axis
+ * Y\<mm> A coordinate on the Y axis
+ * Z\<mm> A coordinate on the Z axis
+ * E\<mm> A coordinate on the E axis
+ * F\<mm/m> A maximum movement rate. The actual rate may be attenuated, scaled, accelerated, and decelerated over time.
+
+#### Example
+ G1 X10 Y11.5 E112.11 F5000
+
+
