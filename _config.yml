@@ -1,8 +1,6 @@
 # Jekyll
 safe:             'true'
-markdown:         'kramdown'
-highlighter:      'rouge'
-encoding:         'utf-8'
+exclude:          [ 'README.md', 'public', '_config.yml', 'LICENSE', '.gitignore' ]
 
 # Site configuration
 url:              'http://jbrazio.github.io/MarlinDocumentation'
@@ -10,19 +8,15 @@ title:            'Marlin Firmware'
 subtitle:         'Documentation Project'
 description:      'Learn how to get started using Marlin.'
 
-# jekyll serve parameters
-port:             '4000'
-host:             '127.0.0.1'
-
 # Assets location
-css_url:          'assets/stylesheets'
-js_url:           'assets/javascript'
-img_url:          'assets/images'
-assets_url:       'assets'
+css_url   : 'assets/stylesheets'
+js_url    : 'assets/javascript'
+img_url   : 'assets/images'
+assets_url:      'assets'
 
-# Categories
-docs_url:         'articles/docs'
-howto_url:        'articles/howto'
+# Categories URL
+docs_url    :    'articles/docs'
+howto_url   :     'articles/howto'
 features_url:     'articles/features'
 
 # Metadata
@@ -31,9 +25,6 @@ meta:
   author:         'Marlin Documentation Project'
   feedback_email: 'marlin-doc@this-is-not-a-valid-domain.org'
 
-# Exclude non-site files
-exclude: [ 'README.md', 'public', '_config.yml', 'LICENSE' ]
-
 # --------------#
 #    Defaults   #
 # ------------- #
@@ -41,6 +32,7 @@ defaults:
   -
     scope:
       type:               'pages'
+
     values:
       navigation:
         show_title:       'true'
@@ -48,6 +40,7 @@ defaults:
         show_footer:      'true'
         show_breadcrumbs: 'true'
         show_description: 'false'
+
       meta:
         hidden:           'false'
-        categories: [ 'default' ]
+        categories:       [ 'default' ]
