@@ -8,7 +8,6 @@ body {
 	padding-top: 40px;
 }
 
-.custom-text-justify {
-  text-align: justify;
-  text-justify: inter-word;
+.custom-border-warning {
+    border-left-color: #f0ad4e;
 }

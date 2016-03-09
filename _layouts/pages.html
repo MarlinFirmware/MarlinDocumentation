@@ -9,7 +9,11 @@
   <body role="document" data-spy="scroll" data-target="#toc">
     <div class="container" role="main">
 {% if page.navigation.show_navbar %}{% include navbar.html %}{% endif %}
+      <div class="content custom-top-offset">
+      <!-- content -->
 {{ content }}
+      <!-- /content -->
+      </div>
 {% if page.navigation.show_footer %}{% include footer.html %}{% endif %}
 {% include javascript.html %}
     </div> <!-- /container -->

@@ -9,15 +9,13 @@ subtitle:         'Documentation Project'
 description:      'Learn how to get started using Marlin.'
 
 # Assets location
-css_url   : 'assets/stylesheets'
-js_url    : 'assets/javascript'
-img_url   : 'assets/images'
-assets_url:      'assets'
+css_url:          'assets/stylesheets'
+js_url:           'assets/javascript'
+img_url:          'assets/images'
+assets_url:       'assets'
 
 # Categories URL
-docs_url    :    'articles/docs'
-howto_url   :     'articles/howto'
-features_url:     'articles/features'
+articles_url :    'articles'
 
 # Metadata
 meta:
@@ -25,10 +23,23 @@ meta:
   author:         'Marlin Documentation Project'
   feedback_email: 'marlin-doc@this-is-not-a-valid-domain.org'
 
-# --------------#
-#    Defaults   #
-# ------------- #
+# Page defaults
 defaults:
+  -
+    scope:
+      type:               'articles'
+
+    values:
+      navigation:
+        show_title:       'true'
+        show_navbar:      'true'
+        show_footer:      'true'
+        show_breadcrumbs: 'true'
+        show_description: 'false'
+
+      meta:
+        hidden:           'false'
+        categories:       [ 'default' ]
   -
     scope:
       type:               'pages'

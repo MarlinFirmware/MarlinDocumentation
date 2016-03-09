@@ -1,5 +1,5 @@
 ---
-layout: doc
+layout: articles
 
 meta:
   title:        'Supported G-Code'
@@ -199,6 +199,10 @@ M117 backslash: \\;and a comment
 <div class="alert alert-info">
   <p>Please note that hosts should strip any comments before sending GCODE to the printer in order to save bandwidth.</p>
 </div>
+
+<blockquote class="custom-border-warning">
+  <p>Please note that hosts should strip any comments before sending GCODE to the printer in order to save bandwidth.</p>
+</blockquote>
 
 
 ## G-Codes Detailed Description

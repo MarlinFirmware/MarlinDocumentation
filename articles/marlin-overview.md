@@ -1,5 +1,5 @@
 ---
-layout: doc
+layout: articles
 
 meta:
   title:        'Introduction'
