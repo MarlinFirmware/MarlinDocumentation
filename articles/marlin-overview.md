@@ -7,32 +7,49 @@ meta:
   categories:   [ features ]
 
 navigation:
-  show_description: true
+  show_description: false
 ---
-Marlin is a firmware for 3D printers based on AVR microprocessors such as those used on the [Arduino](http://arduino.cc) platform, it allows full control over the 3D printer, extrusors and heated building plates either by being connected to a host PC or in a standalone mode. Marlin code resides in the PROM on the controller board, usually called firmware, and controls the input/output, voltage states, and movement of the 3D printer.
+Marlin is a highly optimized firmware for 3D printers based on AVR microprocessor (such as those used on the [Arduino](http://arduino.cc) platform) with movement driven by stepper motors.
 
-Depending on configuration options, the size of the Marlin binary image may be anywhere from 50K to over 200K.
+Through the use of a programmer tool, Marlin is flashed directly onto the PROM on your 3D printer's controller board, and will thereafter run standalone. Marlin controls the input/output, voltage states, and movement of the 3D printer, taking buffered command streams from SD cards and host controllers.
 
-It supports a huge number of features, such as:
+Marlin aims to be adaptable to as many boards and as many configurations as possible, with a very lean default profile. Depending on configuration options, the size of the Marlin binary image may be as low as 50K or over 200K.
 
-* Compensation for Bed Position
-    * Deployment of sensors for bed probing
-    * Manually, or by Servo, or other programmable mechanisms
-* [[Bed Auto Leveling]] -- Compensation for Un-level Beds
-* [[Mesh Bed Leveling]]
-* [[Manual Bed Leveling]]
-* [[Firmware Retraction]]
+## Official Releases ##
+- Current Release: Marlin [version 1.0.2-1](https://github.com/MarlinFirmware/Marlin/releases/tag/1.0.2-1)
+- Upcoming Release: Marlin [version 1.1.0](https://github.com/MarlinFirmware/Marlin/releases)
+
+## Features ##
+
+A huge number of features are included, such as:
+
+* A rich dialect of [[G-Code in Marlin|G-Code]]
+* USB communication with messages for hosts
+* A growing list of [[Supported Hardware|specific boards]]. Over 40 now supported.
+* More than 20 languages supported, including Japanese and Russian
+* Support for [[LCD Controllers]] and [[SD cards]]
+* In addition to [[Cartesian_Kinematics|Cartesian]] kinematics Marlin also supports [[Delta_Kinematics|Delta]], [[SCARA_Kinematics|SCARA]], [[CoreXY]], and [[CoreXZ]]
+* Support for up to 4 extruders
+* Support for [[Thermistors]] and [[thermocouples]]
 * [[Thermal Runaway Protection]]
 * [[EEPROM]] save and restore
-* Thermistors and thermocouples
-* [[LCD Controllers]] and [[SD cards]]
-* [[Delta_Kinematics|Delta]], [[SCARA_Kinematics|SCARA]], and [[Cartesian_Kinematics|Cartesian]] kinematics
-* USB communication
-* A rich dialect of [[G-Code in Marlin|G-Code]]
-* Up to 4 extruders
-* Several [[Supported Hardware|specific boards]]
+* Support using switches or sensors as proximity probes
+ * Probes on servo arms
+ * Probes that can be picked up and dropped
+ * Probes that can be enabled/disabled
+* Bed Tilt Compensation, for better results printing on a non-level bed
+ * [[Mesh Bed Leveling]], with save to EEPROM
+ * [[Manual Bed Leveling]], step-by-step using an LCD controller
+ * [[Bed Auto Leveling]], which requires some kind of Z Probe
+* [[Firmware Retraction]], to allow retraction tuning without re-slicing
+* [[Acceleration]] and [[Jerk]] tuning, for better corners and surface finish
+* Support for [[Dual X Carriage]] setups
+* Support for [[Filament Runout Sensor]] and [[Filament Width Sensor]]
+* ...and
 
-## Essential Resources ##
+## Development ##
+For information related to **cutting-edge development and testing on Version 1.2 and beyond**, head over to the [Marlin Development Wiki](https://github.com/MarlinFirmware/MarlinDev/wiki). There you can find guidance on the new file layout, obtaining the hardware support package, and how to integrate Marlin with Arduino >= 1.6.7.
 
-* [Marlin Development Repository on Github](https://github.com/MarlinFirmware/MarlinDev) – Marlin Development Central. Get, and contribute to, the latest development code for Marlin firmware here.
-* [Marlin Release Repository on Github](https://github.com/MarlinFirmware/Marlin) – Get the latest released, or soon to be released, Marlin firmware here.
+For information related to **patching current releases and release candidates (beta releases)** see [[Reporting Bugs]] and [[Contributing]] here in this wiki.
+
+

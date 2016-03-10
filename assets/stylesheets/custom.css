@@ -1,7 +1,10 @@
-/* Move down content because we have a fixed navbar that is 50px tall */
 body {
   padding-top: 50px;
   padding-bottom: 20px;
+}
+
+p {
+    text-align: justify;
 }
 
 .custom-top-offset {
@@ -10,4 +13,42 @@ body {
 
 .custom-border-warning {
     border-left-color: #f0ad4e;
+}
+
+#toc {
+    font-size: 90%;
+}
+
+#toc .toc-h1 {
+    font-weight: bold;
+}
+
+#toc .toc-h2 {
+    font-weight: bold;
+}
+
+#toc .toc-h3 {
+
+}
+
+nav[data-toggle='toc'] {
+  margin-top: 30px;
+}
+
+/* small screens */
+@media (max-width: 768px) {
+  /* override the Affix plugin so that the navigation isn't sticky */
+  nav.affix[data-toggle='toc'] {
+    position: static;
+  }
+
+  /* PICK ONE */
+  /* don't expand nested items, which pushes down the rest of the page when navigating */
+  nav[data-toggle='toc'] .nav .active .nav {
+    display: none;
+  }
+  /* alternatively, if you *do* want the second-level navigation to be shown (as seen on this page on mobile), use this */
+  nav[data-toggle='toc'] .nav .nav {
+    display: block;
+  }
 }

@@ -27,6 +27,7 @@ meta:
 defaults:
   -
     scope:
+      path:               ''
       type:               'articles'
 
     values:
@@ -42,6 +43,7 @@ defaults:
         categories:       [ 'default' ]
   -
     scope:
+      path:               ''
       type:               'pages'
 
     values:

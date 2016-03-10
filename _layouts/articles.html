@@ -7,27 +7,24 @@
 {% include head.html %}
   </head>
   <body role="document">
-
-{% if page.navigation.show_navbar %}{% include navbar.html %}{% endif %}
-      <div class="content">
+    <div class="container" role="main">
+    {% if page.navigation.show_navbar %}{% include navbar.html %}{% endif %}
         <div class="row">
-          <div class="col-sm-3">
-            <div id="toc"></div>
-          </div>
-
           <div class="col-sm-9">
-            <div class="page-header">
-              <h1>{{ page.meta.title }}
-                {% if page.meta.description and page.navigation.show_description %}<small>{{ page.meta.description }}</small>{% endif %}</h1>
-            </div>
+              <div class="page-header">
+                <h1>{{ page.meta.title }}</h1> <!-- {% if page.meta.description and page.navigation.show_description %}<small>{{ page.meta.description }}</small>{% endif %} --></small></h1>
+              </div>
             <!-- content -->
 {{ content }}
             <!-- /content -->
           </div>
+
+          <div class="col-sm-3">
+            <nav id="toc" data-spy="affix" data-toggle="toc"></nav>
+          </div>
         </div>
-      </div>
 {% if page.navigation.show_footer %}{% include footer.html %}{% endif %}
 {% include javascript.html %}
-
+    </div> <!-- /container -->
   </body>
 </html>
