@@ -5,6 +5,11 @@
 <html lang="en">
   <head>
 {% include head.html %}
+    {% if page.toc.selectors %}<!-- toc hack -->
+    <script language="javascript">
+      toc_selectors = 'h1,h2';
+    </script>
+    <!-- /toc hack -->{% endif %}
   </head>
   <body role="document">
     <div class="container" role="main">
