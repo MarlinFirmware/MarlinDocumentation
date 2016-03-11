@@ -4,7 +4,7 @@ layout: articles
 meta:
   title:        'Supported G-Code'
   description:  'Marlin supports a rich subset of G-Code.'
-  categories:   [ features ]
+  categories:   [ features, gcode ]
 ---
 ## About
 
@@ -18,7 +18,7 @@ G-Code (or GCode) is the instruction code that tells a RepRap 3D printer what to
  * [G4](gcode-movement.html#g4)     - Dwell/Wait
  * [G92](gcode-movement.html#g92)   - Set the *current position* for (XYZ E)
  * [M0](gcode-movement.html#m0)     - Wait for user, with optional prompt message <span class="label label-warning">Requires a LCD screen</span>
- * [M1]gcode-movement.html#m1)     - See [M0](gcode-movement.html#m0)
+ * [M1](gcode-movement.html#m1)     - See [M0](gcode-movement.html#m0)
  * [M400](gcode-movement.html#m400) - Finish all moves
  * [M999](gcode-movement.html#m999) - Restart after an Emergency Stop
 
