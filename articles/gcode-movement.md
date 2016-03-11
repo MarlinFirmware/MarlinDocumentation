@@ -2,11 +2,13 @@
 layout: articles
 
 meta:
-  title:        'Movemen G-Code'
+  title:        'Movement'
   description:  'Marlin supports a rich subset of G-Code.'
   categories:   [ features ]
----
 
+toc:
+  selectors: 'h1,h2'
+---
 ## G0
 In Marlin `G0` is exactly the same as [G1](#g1).
 Some G-Code generators may, by convention, use G0 for non-extrusion movements (those without the E axis) and G1 for moves with the extruder.
