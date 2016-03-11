@@ -6,11 +6,10 @@ meta:
   description:  'Marlin supports a rich subset of G-Code.'
   categories:   [ features, gcode ]
 ---
-## About
 
 G-Code (or GCode) is the instruction code that tells a RepRap 3D printer what to do. For example, the G-Code `G0 X10` tells the machine to move the current tool to X position 10. Marlin's GCode is loosely based on the language specification for the [NIST RS274NGC Interpreter](http://www.nist.gov/customcf/get_pdf.cfm?pub_id=823374), but departs radically in its specific implementation details. (For example, RepRap G-Code doesn't care about "modal groups.")
 
-### Movement
+## Movement
  * [G0](gcode-movement.html#g0)     - See [G1](gcode-movement.html#g1)
  * [G1](gcode-movement.html#g1)     - Coordinated Movement (XYZ E)
  * [G2](gcode-movement.html#g2)     - Clockwise Arc
@@ -22,7 +21,9 @@ G-Code (or GCode) is the instruction code that tells a RepRap 3D printer what to
  * [M400](gcode-movement.html#m400) - Finish all moves
  * [M999](gcode-movement.html#m999) - Restart after an Emergency Stop
 
-### SD Card
+---
+
+## SD Card
  * **M20**  - List SD card
  * **M21**  - Init SD card
  * **M22**  - Release SD card
@@ -39,7 +40,9 @@ G-Code (or GCode) is the instruction code that tells a RepRap 3D printer what to
  * **M540** - Set the state of the * **Abort on Endstop Hit|ABORT_ON_ENDSTOP_HIT_FEATURE_ENABLED** flag.
  * **M928** - Start SD logging. Stop logging with * **M29**.
 
-### Hardware Control
+---
+
+## Hardware Control
  * **M42**  - Change pin status via gcode: P<pin> S<value>. If P is omitted the onboard LED pin will be used.
         M42 P9 S1 ; set PIN 9 to 1.
  * **M80**  - Turn on Power Supply
@@ -49,7 +52,9 @@ G-Code (or GCode) is the instruction code that tells a RepRap 3D printer what to
  * **M226** - Wait for a pin to be in some state: P<pin number> S<pin state>
  * **M410** - Quickstop. Abort all planned moves, stopping the printer.
 
-### Temperature
+---
+
+## Temperature
  * **M104** - Set extruder target temperature
  * **M105** - Request the current temperature of all heaters
  * **M106** - Set the fan speed
@@ -63,18 +68,22 @@ G-Code (or GCode) is the instruction code that tells a RepRap 3D printer what to
  * **M303** - PID relay autotune S<temperature> sets the target temperature. (default target temperature = 150C)
  * **M304** - Set bed PID parameters P I and D
 
-### Messages
+---
+
+## Messages
  * **M111** - Set debug flags
  * **M114** - Output current position to serial port
  * **M115** - Capabilities string
  * **M117** - Display message text on the LCD
  * **M119** - Output Endstop status to serial port
 
-### Endstops
+---
+
+## Endstops
  * **M120** - Enable endstop detection
  * **M121** - Disable endstop detection
 
-### Special Features
+## Special Features
  * **M126** - Solenoid Air Valve Open. (Requires * **BARICUDA**)
  * **M127** - Solenoid Air Valve Closed. (Requires * **BARICUDA**)
  * **M128** - EtoP Open. (Requires * **BARICUDA**)
@@ -88,7 +97,9 @@ G-Code (or GCode) is the instruction code that tells a RepRap 3D printer what to
  * **M381** - Disable all solenoids. (Requires * **EXT_SOLENOID**)
  * **M600** - Pause for filament change. (Requires * **FILAMENTCHANGEENABLE**)
 
-### Units and Measures
+---
+
+## Units and Measures
  * **G90**  - Use Absolute Coordinates
  * **G91**  - Use Relative Coordinates
  * **M82**  - Set E codes absolute (default)
@@ -106,7 +117,9 @@ G-Code (or GCode) is the instruction code that tells a RepRap 3D printer what to
  * **M220** - Set speed factor override percentage: S<factor in percent>
  * **M221** - Set extrude factor override percentage: S<factor in percent>
 
-### Firmware Retraction
+---
+
+## Firmware Retraction
  * **G10**  - Retract filament according to settings of M207
  * **G11**  - Retract recover filament according to settings of M208
  * **M207** - Set retract length S[positive mm] F[feedrate mm/min] Z[additional zlift/hop], stays in mm regardless
@@ -115,7 +128,9 @@ of M200 setting
  * **M209** - S<1=true/0=false> enable automatic retract detect if the slicer did not support G10/11: every normal
 extrude-only move will be classified as retract depending on the direction
 
-### Z Probe
+---
+
+## Z Probe
  * **G28**  - Home one or more axes.
  * **G29**  - Probe the bed Z height at multiple points and enable bed leveling compensation.
  * **G30**  - Probe the bed Z height at the current XY position.
@@ -127,24 +142,32 @@ extrude-only move will be classified as retract depending on the direction
  * **M420** - Enable or disable Mesh Bed Leveling.
  * **M421** - Set a single Mesh Bed Leveling Z coordinate: X<pos> Y<pos> Z<pos>
 
-### Filament Diameter
+---
+
+## Filament Diameter
  * **M404** - Set (or display) Nominal Filament Diameter in mm: [N<diameter>] (e.g., 3mm or 1.75mm)
  * **M405** - Turn on Filament Sensor extrusion control: [D<distance>] to set distance (in cm) from sensor to extruder
  * **M406** - Turn off Filament Sensor extrusion control
  * **M407** - Display measured Filament Diameter
 
-### EEPROM Settings
+---
+
+## EEPROM Settings
  * **M500** - Save current settings to EEPROM.
  * **M501** - Load stored settings from EEPROM.
  * **M502** - Revert to the default "factory settings." '''''Does not store them in EEPROM!'''''
  * **M503** - Print current settings (from memory, not EEPROM).
 
-### Delta
+---
+
+## Delta
  * **M665** - Set Delta configurations: L<diagonal rod> R<delta radius> S<segments/s>
  * **M666** - Set Delta endstop adjustment: X<x-adjustment> Y<y-adjustment> Z<z-adjustment>
  * **M605** - Set dual x-carriage movement mode: S<mode> [ X<duplication x-offset> R<duplication temp offset> ]
 
-### Stepper Drivers
+---
+
+## Stepper Drivers
  * **M17**  - Enable/Power all stepper motors
  * **M18**  -> * **M84**
  * **M84**  - Disable steppers until the next move, or set the inactivity timeout after which steppers should be disabled.
@@ -153,7 +176,9 @@ extrude-only move will be classified as retract depending on the direction
  * **M350** - Set microstepping mode.
  * **M351** - Toggle MS1 MS2 pins directly to set microstepping.
 
-### SCARA
+---
+
+## SCARA
 
 <div class="alert alert-warning">
   <p>May change to suit future G-code standards</p>
@@ -166,10 +191,14 @@ extrude-only move will be classified as retract depending on the direction
  * **M364** - SCARA calibration: Move to cal-position PSIC (90 deg to Theta calibration position)
  * **M365** - SCARA calibration: Scaling factor, X, Y, Z axis
 
-### Host Printing
+---
+
+## Host Printing
  * **M110** - Set the current Line Number
 
-### Comments
+---
+
+## Comments
 Comments start with a `;` (semicolon) and end with the end of the line, take a look a the following example:
 
 
@@ -193,10 +222,6 @@ The backslash `\` can also be used to escape `\` itself if you need a literal `\
 M117 backslash: \\;and a comment
 ```
 
-<div class="alert alert-info">
-  <p>Please note that hosts should strip any comments before sending GCODE to the printer in order to save bandwidth.</p>
-</div>
-
 <blockquote class="custom-border-warning">
-  <p>Please note that hosts should strip any comments before sending GCODE to the printer in order to save bandwidth.</p>
+  <p>Hosts should strip any comments before sending GCODE to the printer in order to save bandwidth.</p>
 </blockquote>

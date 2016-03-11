@@ -168,13 +168,13 @@ If both `S` and `P` are included, `S` takes precedence.
 </blockquote>
 
 ### Example
-Display '''Click When Ready''' on the LCD screen and wait forever for a controller button press:
+Display `Click When Ready` on the LCD screen and wait forever for a controller button press:
 
 ```
  M0 Click When Ready
 ```
 
-Display '''Wait for user...''' on the LCD screen and wait 10 seconds for a controller button press, then continue:
+Display `Wait for user...` on the LCD screen and wait 10 seconds for a controller button press, then continue:
 
 ```
  M0 S10
