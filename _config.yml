@@ -32,14 +32,14 @@ defaults:
 
     values:
       navigation:
-        show_title:       'true'
-        show_navbar:      'true'
-        show_footer:      'true'
-        show_breadcrumbs: 'true'
-        show_description: 'false'
+        show_title:       true
+        show_navbar:      true
+        show_footer:      true
+        show_breadcrumbs: true
+        show_description: false
 
       meta:
-        hidden:           'false'
+        hidden:           false
         categories:       [ 'default' ]
   -
     scope:
@@ -48,12 +48,12 @@ defaults:
 
     values:
       navigation:
-        show_title:       'true'
-        show_navbar:      'true'
-        show_footer:      'true'
-        show_breadcrumbs: 'true'
-        show_description: 'false'
+        show_title:       true
+        show_navbar:      true
+        show_footer:      true
+        show_breadcrumbs: true
+        show_description: false
 
       meta:
-        hidden:           'false'
+        hidden:           false
         categories:       [ 'default' ]
