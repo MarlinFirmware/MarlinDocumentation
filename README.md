@@ -36,10 +36,18 @@ git checkout -b article-mashed_potatos
 Then inside the articles folder you should add the new file `mashed-potatos.md` and let flow all your creativity into it.
 When you feel it is ready to be shared with the world just submit a commit into your own fork of **MarlinDocumentation** a start a new Pull Request to upstream.
 
-## Local previewing changes
+## Previewing content
 
 Jekyll allows you to preview the changes before submitted them to Github, just open a terminal/cmd window chdir to your local copy of the repository and start Jekyll using the following command: `jekyll serve --watch`.
 Jekyll will watch the local files and every save you do will trigger an automatic build of the site which can then be easly previewd from [your own computer](http://localhost:4000/).
+
+## Coding style
+
+The preferred format for article contribution is Markdown language.
+
+## Wanted
+
+- Transport all documents from old Marlin wiki into this new system.
 
 ## License
 
