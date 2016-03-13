@@ -12,20 +12,29 @@
         <div class="navbar-collapse collapse" id="navbar-main">
           <ul class="nav navbar-nav">
             <li class="dropdown">
-              <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes">Getting Started <span class="caret"></span></a>
-              <ul class="dropdown-menu" aria-labelledby="themes">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="getting-started">Getting Started <span class="caret"></span></a>
+              <ul class="dropdown-menu" aria-labelledby="getting-started">
+                <li><a href="{{ site.github.url }}/{{ site.articles_url }}/marlin-overview.html">Introduction</a></li>
+                <li class="divider"></li>
+                <li><a href="#">How to get</a></li>
+                <li><a href="#">How to build</a></li>
+                <li><a href="#">How to install</a></li>
+                <li class="divider"></li>
+                <li><a href="{{ site.github.url }}/{{ site.articles_url }}/reporting-bugs.html">Reporting bugs</a></li>
+              </ul>
+            </li>
+            <li>
+              <a href="{{ site.github.url }}/{{ site.articles_url }}">Documentation</a>
+            </li>
+            <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="development">Development <span class="caret"></span></a>
+              <ul class="dropdown-menu" aria-labelledby="development">
                 <li><a href="{{ site.github.url }}/{{ site.articles_url }}/marlin-overview.html">Introduction</a></li>
                 <li class="divider"></li>
                 <li><a href="#">How to get</a></li>
                 <li><a href="#">How to build</a></li>
                 <li><a href="#">How to install</a></li>
               </ul>
-            </li>
-            <li>
-              <a href="{{ site.github.url }}/{{ site.articles_url }}">Documentation</a>
-            </li>
-            <li>
-              <a href="#">Development</a>
             </li>
           </ul>
 
