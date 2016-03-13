@@ -1,5 +1,7 @@
 # Marlin Documentation Project
 
+[![Build Status](https://travis-ci.org/jbrazio/MarlinDocumentation.svg?branch=master)](https://travis-ci.org/jbrazio/MarlinDocumentation)
+
 The aim of this project is to provide a clear and consise documentation of the [Marlin 3D printer firmware](https://github.com/MarlinFirmware/Marlin), we made it open and available on Github so anyone is welcome to contribute by either completing, correcting or creating new arcticles. Please see the chapter [Wanted](#wanted) for a list of the current most valuable needed contributions for the documenation project.
 
 ![Marlin logo](assets/images/logo/marlin/small.png)
