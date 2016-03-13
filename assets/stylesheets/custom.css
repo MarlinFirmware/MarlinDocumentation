@@ -17,7 +17,8 @@ p {
 
 #toc {
     font-size: 90%;
-    min-width: 200px;
+    min-width: 300px;
+    padding-left: 50px;
 }
 
 #toc .toc-h1 {
