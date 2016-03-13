@@ -29,6 +29,7 @@ git clone https://github.com/jbrazio/MarlinDocumentation.git
 ```
 
 Then you should create a new branch, as the new article is about "mashed potatos" we do the following command:
+
 ```
 git checkout -b article-mashed_potatos
 ```
@@ -47,7 +48,8 @@ The preferred format for article contribution is Markdown language.
 
 ## Wanted
 
-- Transport all documents from old Marlin wiki into this new system.
+1. Transport all documents from old Marlin wiki into this new system.
+2. Create getting started guides to ease the Marlin learning curve for new users.
 
 ## License
 
