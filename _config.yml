@@ -1,6 +1,6 @@
 # Jekyll
 safe:             'true'
-exclude:          [ 'README.md', 'public', '_config.yml', 'LICENSE', '.gitignore' ]
+exclude:          [ 'README.md', 'public', '_config.yml', 'LICENSE', '.gitignore', 'vendor', 'script' ]
 
 # Site configuration
 url:              'http://jbrazio.github.io/MarlinDocumentation'
