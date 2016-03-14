@@ -43,8 +43,7 @@ G-Code (or GCode) is the instruction code that tells a RepRap 3D printer what to
 ---
 
 ## Hardware Control
- * **M42**  - Change pin status via gcode: P<pin> S<value>. If P is omitted the onboard LED pin will be used.
-        M42 P9 S1 ; set PIN 9 to 1.
+ * **M42**  - Change pin status
  * **M80**  - Turn on Power Supply
  * **M81**  - Turn off Power Supply
  * **M85**  - Set inactivity shutdown timer with parameter S<seconds>. Disable with "M85" or "M85 S0".
@@ -59,7 +58,7 @@ G-Code (or GCode) is the instruction code that tells a RepRap 3D printer what to
  * **M105** - Request the current temperature of all heaters
  * **M106** - Set the fan speed
  * **M107** - Set the fan speed to 0 (thus turning it off)
- * **M109** - Wait for an extruder to reach its target temperature. Optionally set the target temperature. Optionally enable * **AUTOTEMP**.
+ * **M109** - Wait for an extruder to reach its target temperature. Optionally set the target temperature.
  * **M140** - Set heated bed target temperature
  * **M145** - Set "heatup state" values for the LCD Menu
  * **M190** - Wait for the heated bed to reach its target temperature. Optionally set the target temperature.

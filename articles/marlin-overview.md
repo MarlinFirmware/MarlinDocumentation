@@ -31,10 +31,10 @@ A huge number of features are included, such as:
 -   Full endstop support
 -   SD Card support
 -   SD Card folders (works in pronterface)
--   SD Card \[\[Autostart\]\] support
+-   SD Card `@link Autostart` support
 -   LCD support (ideally 20x4)
--   \[\[LCD menu\]\] system for autonomous SD card printing, controlled by an click-encoder.
--   \[\[LCD Language\]\]
+-   `@link LCD menu` system for autonomous SD card printing, controlled by an click-encoder.
+-   `@link LCD Language`
 -   EEPROM storage of e.g. max-velocity, max-acceleration, and similar variables
 -   many small but handy things originating from bkubicek’s fork.
 -   Arc support
@@ -50,8 +50,8 @@ A huge number of features are included, such as:
 -   Configurable serial port to support connection of wireless adaptors.
 -   Automatic operation of extruder/cold-end cooling fans based on nozzle temperature
 -   RC Servo Support, specify angle or duration for continuous rotation servos.
--   \[\[Bed Auto Leveling\]\] & \[\[Mesh Bed Leveling\]\]
--   Support for a \[\[Filament Sensor\]\], which adjusts extrusion volume based on measured diameter
+-   `@link Bed Auto Leveling` & `@link Mesh Bed Leveling`
+-   Support for a `@link Filament Sensor`, which adjusts extrusion volume based on measured diameter
 - ...and more
 
 ### Look-ahead
@@ -84,13 +84,13 @@ To reduce noise and make the PID-differential term more useful, 16 ADC conversio
 If your gcode contains a wide spread of extruder velocities, or you realtime change the building speed, the temperature should be changed accordingly.
 Usually, higher speed requires higher temperature.
 This can now be performed by the AutoTemp function
-By calling M109 S<mintemp> B<maxtemp> F<factor> you enter the autotemp mode.
+By calling `M109` S<mintemp> B<maxtemp> F<factor> you enter the autotemp mode.
 
-You can leave it by calling M109 without any F.
+You can leave it by calling `M109` without any F.
 If active, the maximal extruder stepper rate of all buffered moves will be calculated, and named "maxerate" [steps/sec].
 The wanted temperature then will be set to t=tempmin+factor*maxerate, while being limited between tempmin and tempmax.
 If the target temperature is set manually or by gcode to a value less then tempmin, it will be kept without change.
-Ideally, your gcode can be completely free of temperature controls, apart from a M109 S T F in the start.gcode, and a M109 S0 in the end.gcode.
+Ideally, your gcode can be completely free of temperature controls, apart from a `M109` S T F in the start.gcode, and a `M109` S0 in the end.gcode.
 
 ---
 
@@ -156,4 +156,4 @@ This leads to less blocking in the heater management routine.
 
 For information related to **cutting-edge development and testing on Version 1.2 and beyond**, head over to the [Marlin Development Wiki](https://github.com/MarlinFirmware/MarlinDev/wiki). There you can find guidance on the new file layout, obtaining the hardware support package, and how to integrate Marlin with Arduino >= 1.6.7.
 
-For information related to **patching current releases and release candidates (beta releases)** see [[Reporting Bugs]] and [[Contributing]] here in this wiki.
+For information related to **patching current releases and release candidates (beta releases)** see `@link Reporting Bugs` and `@link Contributing` here in this wiki.
