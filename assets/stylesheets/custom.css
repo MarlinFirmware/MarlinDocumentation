@@ -19,22 +19,29 @@ p {
   font-size: 90%;
 }
 
+.custom-list-group-item {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
 #toc {
-    font-size: 90%;
-    min-width: 300px;
-    padding-left: 50px;
+  font-size: 90%;
+  min-width: 300px;
+  max-width: 300px;
+  padding-left: 50px;
 }
 
 #toc .toc-h1 {
-    font-weight: bold;
+  padding-left: 1em;
+  font-weight: bold;
 }
 
 #toc .toc-h2 {
-    font-weight: bold;
+  padding-left: 1.5em;
 }
 
 #toc .toc-h3 {
-
+  padding-left: 2em;
 }
 
 nav[data-toggle='toc'] {

@@ -8,7 +8,7 @@ $( document ).ready(function() {
         'highlightOffset':  70,
 
         'itemClass': function(i, heading, $heading, prefix) {
-            return 'clearfix ' + prefix + $heading[0].tagName.toLowerCase();;
+            return 'custom-list-group-item ' + prefix + $heading[0].tagName.toLowerCase();;
         }
     });
 
