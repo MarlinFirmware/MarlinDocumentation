@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/jbrazio/MarlinDocumentation.svg?branch=master)](https://travis-ci.org/jbrazio/MarlinDocumentation)
 
-The aim of this project is to provide a clear and consise documentation of the [Marlin 3D printer firmware](https://github.com/MarlinFirmware/Marlin), we made it open and available on Github so anyone is welcome to contribute by either completing, correcting or creating new arcticles. Please see the chapter [Wanted](#wanted) for a list of the current most valuable needed contributions for the documenation project.
+The aim of this project is to provide a clear and consise documentation of the [Marlin 3D printer firmware](https://github.com/MarlinFirmware/Marlin), we made it open and available on Github so anyone is welcome to contribute by either completing, correcting or creating new arcticles. Please see the chapter "[Most wanted contributions](#most-wanted-contributions)" for a list of the current most valuable needed contributions for the documenation project.
 
 ![Marlin logo](assets/images/logo/marlin/small.png)
 
@@ -22,15 +22,10 @@ We really recommend reading one of the following tutorials for a quick start wit
 
 ## How to contribute
 
-Let's pretend you want to add a new article to the project, you should start by forking the **MarlinDocumentation** repository.
+Let's pretend you want to add a new article to the project, you should start by forking the **MarlinDocumentation** repository. Then you should create a new branch, as the new article is about "mashed potatos" we do the following command:
 
 ```
 git clone https://github.com/jbrazio/MarlinDocumentation.git
-```
-
-Then you should create a new branch, as the new article is about "mashed potatos" we do the following command:
-
-```
 git checkout -b article-mashed_potatos
 ```
 
@@ -39,14 +34,22 @@ When you feel it is ready to be shared with the world just submit a commit into 
 
 ## Previewing content
 
-Jekyll allows you to preview the changes before submitted them to Github, just open a terminal/cmd window chdir to your local copy of the repository and start Jekyll using the following command: `jekyll serve --watch`.
-Jekyll will watch the local files and every save you do will trigger an automatic build of the site which can then be easly previewd from [your own computer](http://localhost:4000/).
+Jekyll allows you to preview the changes before submitted them to Github, just open a terminal/cmd window chdir to your local copy of the repository and execute the following commands:
+
+```
+bundle install
+bundle exec jekyll serve --watch
+```
+
+You only need to execute the `bundle install` once as it will make sure you have all the required dependencies installed.
+
+Jekyll will watch the local files and on every save you do will trigger an automatic build of the site which can then be easly previewed from [your own computer](http://localhost:4000/).
 
 ## Coding style
 
 The preferred format for article contribution is Markdown language.
 
-## Wanted
+## Most wanted contributions
 
 1. Transport all documents from old Marlin wiki into this new system.
 2. Create getting started guides to ease the Marlin learning curve for new users.
