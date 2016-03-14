@@ -15,6 +15,10 @@ p {
     border-left-color: #f0ad4e;
 }
 
+.custom-small-font {
+  font-size: 90%;
+}
+
 #toc {
     font-size: 90%;
     min-width: 300px;

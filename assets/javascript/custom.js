@@ -11,4 +11,8 @@ $( document ).ready(function() {
             return 'clearfix ' + prefix + $heading[0].tagName.toLowerCase();;
         }
     });
+
+    // Hack tables, Jekyll's default table formating is awfull
+    $( 'table' ).addClass( 'table table-hover table-condensed custom-small-font' );
+    //table-bordered
 });
