@@ -54,7 +54,7 @@ To select your particular board, in `Configuration.h` file you simply change the
 | Sanguinololu | 65 | AZTEEG_X1 | [Azteeg X1](http://reprap.org/wiki/Ultimaker%27s_v1.5.3_PCB) (ATmega644P/ATmega1284P) |
 | Sanguinololu | 63 | MELZI | [Melzi](http://reprap.org/wiki/Melzi) (ATmega644P/ATmega1284P) |
 | Sanguinololu | 66 | MELZI_MAKR3D | [MaKrMelzi](http://reprap.org/wiki/MaKrMelzi) (ATmega1284/ATmega1284P) |
-| Sanguinololu | 64 | STB_11 | [STB Electronics](STB Electronics V1.1 (ATmega1284P) V1.1 (ATmega1284P)) |
+| Sanguinololu | 64 | STB_11 | [STB Electronics V1.1](http://reprap.org/wiki/STB_Electronics) (ATmega1284P) |
 | Ultimaker | 7 | ULTIMAKER | [Ultimaker](http://reprap.org/wiki/Ultimaker%27s_v1.5.7_PCB) (ATmega1280/ATmega2560) |
 | Ultimaker | 71 | ULTIMAKER_OLD | [Ultimaker](http://reprap.org/wiki/Ultimaker%27s_v1.5.3_PCB) (ATmega1280/ATmega2560) with older electronics. Pre [1.5.4](http://reprap.org/wiki/Ultimaker%27s_v1.5.4_PCB). This is rare! |
 | Ultimaker | 72 | ULTIMAIN_2 | Ultimainboard 2.x (ATmega2560) (Uses TEMP_SENSOR 20) |
