@@ -3,8 +3,8 @@ layout: articles
 
 meta:
   title:        'Automatic bed leveling'
-  description:  ''
-  categories:   [ howto ]
+  description:  'Tutorial on how to use the automatic bed leveling feature of Marlin'
+  categories:   [ howto, needs-review ]
 
 navigation:
   show_description: false

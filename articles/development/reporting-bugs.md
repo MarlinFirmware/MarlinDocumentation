@@ -3,11 +3,8 @@ layout: articles
 
 meta:
   title:        'Reporting Bugs'
-  description:  ''
-  categories:   [ development, howto ]
-
-navigation:
-  show_description: false
+  description:  'Detailed guide about bugs and how to report them'
+  categories:   [ getting-started, development, needs-review ]
 ---
 Please submit bug reports to the [Marlin Issue Queue] so that we can try to resolve it. Use the [New Issue] button and follow the guidelines below. Before submitting an issue, please *search first to make sure the issue is new*. You can always add comments to an existing issue, even if it is closed, then we can re-open and continue to explore it.
 

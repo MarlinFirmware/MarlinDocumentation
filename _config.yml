@@ -15,7 +15,8 @@ img_url:          'assets/images'
 assets_url:       'assets'
 
 # Categories URL
-articles_url :    'articles'
+articles_url:     'articles'
+meta_url:         'meta'
 
 # Metadata
 meta:

@@ -3,23 +3,23 @@ layout: articles
 
 meta:
   title:        'Supported G-Code'
-  description:  'Marlin supports a rich subset of G-Code.'
-  categories:   [ features, gcode ]
+  description:  'List all the Marlin supported g-code with detailed description'
+  categories:   [ gcode, needs-review ]
 ---
 
 G-Code (or GCode) is the instruction code that tells a RepRap 3D printer what to do. For example, the G-Code `G0 X10` tells the machine to move the current tool to X position 10. Marlin's GCode is loosely based on the language specification for the [NIST RS274NGC Interpreter](http://www.nist.gov/customcf/get_pdf.cfm?pub_id=823374), but departs radically in its specific implementation details. (For example, RepRap G-Code doesn't care about "modal groups.")
 
 ## Movement
- * [G0](gcode-movement.html#g0)     - See [G1](gcode-movement.html#g1)
- * [G1](gcode-movement.html#g1)     - Coordinated Movement (XYZ E)
- * [G2](gcode-movement.html#g2)     - Clockwise Arc
- * [G3](gcode-movement.html#g3)     - Counter-clockwise Arc
- * [G4](gcode-movement.html#g4)     - Dwell/Wait
- * [G92](gcode-movement.html#g92)   - Set the *current position* for (XYZ E)
- * [M0](gcode-movement.html#m0)     - Wait for user, with optional prompt message <span class="label label-warning">Requires a LCD screen</span>
- * [M1](gcode-movement.html#m1)     - See [M0](gcode-movement.html#m0)
- * [M400](gcode-movement.html#m400) - Finish all moves
- * [M999](gcode-movement.html#m999) - Restart after an Emergency Stop
+ * [G0](movement.html#g0)     - See [G1](movement.html#g1)
+ * [G1](movement.html#g1)     - Coordinated Movement (XYZ E)
+ * [G2](movement.html#g2)     - Clockwise Arc
+ * [G3](movement.html#g3)     - Counter-clockwise Arc
+ * [G4](movement.html#g4)     - Dwell/Wait
+ * [G92](movement.html#g92)   - Set the *current position* for (XYZ E)
+ * [M0](movement.html#m0)     - Wait for user, with optional prompt message <span class="label label-warning">Requires a LCD screen</span>
+ * [M1](movement.html#m1)     - See [M0](movement.html#m0)
+ * [M400](movement.html#m400) - Finish all moves
+ * [M999](movement.html#m999) - Restart after an Emergency Stop
 
 ---
 

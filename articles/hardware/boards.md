@@ -3,8 +3,8 @@ layout: articles
 
 meta:
   title:        'Supported Hardware'
-  description:  ''
-  categories:   [ development, hardware ]
+  description:  'List of supported boards by Marlin'
+  categories:   [ hardware, needs-review ]
 
 navigation:
   show_description: false

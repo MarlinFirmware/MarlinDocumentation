@@ -4,10 +4,7 @@ layout: articles
 meta:
   title:        'Introduction'
   description:  'Learn how to get started using Marlin. Find out what Marlin has to offer and how it can help your 3D printer print faster, better and cleaner.'
-  categories:   [ features ]
-
-navigation:
-  show_description: false
+  categories:   [ getting-started, needs-review ]
 ---
 Marlin is a highly optimized firmware for 3D printers based on AVR microprocessor (such as those used on the [Arduino](http://arduino.cc) platform) with movement driven by stepper motors.
 
@@ -16,8 +13,7 @@ Through the use of a programmer tool, Marlin is flashed directly onto the PROM o
 Marlin aims to be adaptable to as many boards and as many configurations as possible, with a very lean default profile. Depending on configuration options, the size of the Marlin binary image may be as low as 50K or over 200K.
 
 ## Official Releases
-- Current Release: Marlin [version 1.0.2-1](https://github.com/MarlinFirmware/Marlin/releases/tag/1.0.2-1)
-- Upcoming Release: Marlin [version 1.1.0](https://github.com/MarlinFirmware/Marlin/releases)
+For the current stable release and nightly builds have a look at the download section.
 
 ## Features
 
@@ -105,7 +101,7 @@ After each reboot, it will magically load them from EEPROM, independent what you
 
 If your hardware supports it, you can build yourself a LCD-CardReader+Click+encoder combination. It will enable you to realtime tune temperatures,
 accelerations, velocities, flow rates, select and print files from the SD card, preheat, disable the steppers, and do other fancy stuff.
-One working hardware is documented here: http://www.thingiverse.com/thing:12663
+One working hardware is documented [here](http://www.thingiverse.com/thing:12663).
 Also, with just a 20x4 or 16x2 display, useful data is shown.
 
 ---
