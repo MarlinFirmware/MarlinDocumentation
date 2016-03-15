@@ -1,22 +1,4 @@
-<!--
-  Website version: {{ site.meta.version }}
-  Website author: {{ site.meta.author }} <{{ site.meta.feedback_email }}>
--->
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-{% include head.html %}
-  </head>
-  <body role="document" data-spy="scroll" data-target="#toc">
-    <div class="container" role="main">
-{% if page.navigation.show_navbar %}{% include navbar.html %}{% endif %}
-      <div class="content custom-top-offset">
-      <!-- content -->
+---
+layout: default
+---
 {{ content }}
-      <!-- /content -->
-      </div>
-{% if page.navigation.show_footer %}{% include footer.html %}{% endif %}
-{% include javascript.html %}
-    </div> <!-- /container -->
-  </body>
-</html>

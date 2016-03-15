@@ -1,36 +1,25 @@
-<!--
-  Website version: {{ site.meta.version }}
-  Website author: {{ site.meta.author }} <{{ site.meta.feedback_email }}>
--->
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-{% include head.html %}
-    {% if page.toc.selectors %}<!-- toc hack -->
+---
+layout: default
+---
+{% if page.toc.selectors %}<!-- toc hack -->
     <script language="javascript">
       toc_selectors = 'h1,h2';
     </script>
     <!-- /toc hack -->{% endif %}
-  </head>
-  <body role="document">
-    <div class="container" role="main">
-    {% if page.navigation.show_navbar %}{% include navbar.html %}{% endif %}
-        <div class="row">
-          <div class="col-sm-9">
-              <div class="page-header">
-                <h1>{{ page.meta.title }}</h1> <!-- {% if page.meta.description and page.navigation.show_description %}<small>{{ page.meta.description }}</small>{% endif %} --></small></h1>
-              </div>
-            <!-- content -->
-{{ content }}
-            <!-- /content -->
-          </div>
 
-          <div class="col-sm-3">
-            <nav id="toc" data-spy="affix" data-toggle="toc"></nav>
-          </div>
-        </div>
-{% if page.navigation.show_footer %}{% include footer.html %}{% endif %}
-{% include javascript.html %}
-    </div> <!-- /container -->
-  </body>
-</html>
+    <div class="container" role="main">
+      <div class="row">
+        <div class="col-sm-9">
+          <div class="page-header">
+            <h1>{{ page.meta.title }}</h1>
+          </div><!-- /.page-header -->
+          <!-- content -->
+{{ content }}
+          <!-- /content -->
+        </div><!-- /.col-sm-9 -->
+
+        <div class="col-sm-3">
+          <nav id="toc" data-spy="affix" data-toggle="toc"></nav>
+        </div><!-- /.col-sm-3 -->
+      </div><!-- /.row -->
+    </div><!-- /.container -->

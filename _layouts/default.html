@@ -8,11 +8,11 @@
 {% include head.html %}
   </head>
   <body role="document" data-spy="scroll" data-target="#toc">
-    <div class="container" role="main">
 {% if page.navigation.show_navbar %}{% include navbar.html %}{% endif %}
+      <!-- content -->
 {{ content }}
+      <!-- /content -->
 {% if page.navigation.show_footer %}{% include footer.html %}{% endif %}
 {% include javascript.html %}
-    </div> <!-- /container -->
   </body>
 </html>
