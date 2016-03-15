@@ -38,7 +38,7 @@ The branch “RCBugFix” starts out with the latest “RC”, but any patches t
 Sooner or later all the patches that survive in “RCBugFix” graduate to “RC” and we tag a new release candidate. Once we have a release candidate that holds up against aggressive testing by the community we move on to a full release.
 
   [Marlin Issue Queue]: https://github.com/MarlinFirmware/Marlin/issues
-  [Bug Reporting Guidelines]: Reporting_Bugs "wikilink"
+  [Bug Reporting Guidelines]: reporting-bugs.html
   [tell us about your machine!]: https://github.com/MarlinFirmware/Marlin/issues/1209
   [Marlin Development tree]: https://github.com/MarlinFirmware/MarlinDev
   [Marlin Development Wiki]: https://github.com/MarlinFirmware/MarlinDev/wiki

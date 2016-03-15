@@ -115,7 +115,7 @@ G2 I20 J20
 ## G4
 Dwell pauses the command queue, and waits for a given period of time.
 
-<span class="label label-success">Tip</span> `G4` with no arguments is effectively the same as [M400](gcode-movement.html#m400)
+<span class="label label-success">Tip</span> `G4` with no arguments is effectively the same as [M400](#m400)
 
 ### Arguments
 * `S <sec>` Amount of time (in seconds) to dwell
@@ -154,7 +154,7 @@ G92 X0 Y0 Z0 ; Make the current position the home position
 ## M0
 Pause and wait for a user reply, with an optional prompt message to display on the LCD controller screen.
 
-<span class="label label-warning">Watchout</span> [M1](gcode-movement.html#m1) is a deprecated alias for `M0`.
+<span class="label label-warning">Watchout</span> [M1](#m1) is a deprecated alias for `M0`.
 
 ### Arguments
 * `S<sec>`    Maximum time (in seconds) to wait before resuming
@@ -184,7 +184,7 @@ Display `Wait for user...` on the LCD screen and wait 10 seconds for a controlle
 
 ## M1
 <blockquote class="custom-border-warning">
-  <p>This g-code has been deprecated in favour of <a href="gcode-movement.html#m0">M0</a>.</p>
+  <p>This g-code has been deprecated in favour of <a href="#m0">M0</a>.</p>
 </blockquote>
 
 ---
