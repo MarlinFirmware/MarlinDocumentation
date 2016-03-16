@@ -3,7 +3,7 @@ safe:             'true'
 exclude:          [ 'README.md', 'public', '_config.yml', 'LICENSE', '.gitignore', 'vendor', 'script', 'Gemfile' ]
 
 # Site configuration
-url:              'http://jbrazio.github.io/MarlinDocumentation'
+url:              'http://test.marlinfw.org'
 title:            'Marlin Firmware'
 subtitle:         'Documentation Project'
 description:      'Learn how to get started using Marlin.'
@@ -20,9 +20,14 @@ meta_url:         'meta'
 
 # Metadata
 meta:
-  version:        '0.0.1'
+  version:        '0.0.2'
   author:         'Marlin Documentation Project'
   feedback_email: 'marlin-doc@this-is-not-a-valid-domain.org'
+
+# Repositories
+repository:
+  main:           'https://github.com/MarlinFirmware/Marlin'
+  dev:            'https://github.com/MarlinFirmware/MarlinDev'
 
 # Page defaults
 defaults:
