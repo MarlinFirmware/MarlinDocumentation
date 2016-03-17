@@ -3,13 +3,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <meta name="description" content="{% if page.meta.description %}{{ page.meta.description }}{% else %}{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}{% endif %}">
-    <meta name="author" content="{% if page.meta.author %}{{ page.meta.author }}{% else %}{{ site.meta.author }} <{{ site.meta.feedback_email }}>{% endif %}">
-    {% capture canonical %}{% if page.meta.canonical %}{{ page.meta.canonical }}{% else %}{{site.url}}{{page.url}}{% endif %}{% endcapture %}
-    <link rel="canonical" href="{{canonical}}"/>
+    <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
+    <meta name="author" content="{% if page.author %}{{ page.author }}{% else %}{{ site.meta.author }} <{{ site.meta.feedback_email }}>{% endif %}">
+    <link rel="canonical" href="{% if page.canonical %}{{ page.canonical }}{% else %}{{site.url}}{{page.url}}{% endif %}"/>
     <link rel="icon" href="{{ site.github.url }}/{{ site.assets_url }}/favicon.ico">
 
-    <title>{% if page.meta.title %}{{ page.meta.title }}{% else %}Default{% endif %} | {{ site.title }}</title>
+    <title>{% if page.title %}{{ page.title }}{% else %}Default{% endif %} | {{ site.title }}</title>
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"

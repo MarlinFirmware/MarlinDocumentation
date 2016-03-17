@@ -7,13 +7,14 @@ layout: default
       </div><!-- /.page-header -->
       <!-- content -->
         <div class="list-group">
-{% for p in site.pages %}
-  {% if p.meta.hidden != true %}
-    {% for pc in p.meta.categories %}
+{% assign pages_sorted = site.pages | sort: 'title' %}
+{% for p in pages_sorted %}
+  {% if p.hidden != true %}
+    {% for pc in p.category %}
       {% if pc == page.type %}
           <a href="{{ site.github.url }}{{ p.url }}" class="list-group-item">
-            <h4 class="list-group-item-heading">{{ p.meta.title }}</h4>
-            {% if p.meta.description %}<p class="list-group-item-text">{{ p.meta.description }}</p>{% endif %}
+            <h4 class="list-group-item-heading">{{ p.title }}</h4>
+            {% if p.description %}<p class="list-group-item-text">{{ p.description }}</p>{% endif %}
           </a>
       {% endif %}
     {% endfor %}

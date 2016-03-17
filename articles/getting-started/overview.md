@@ -1,10 +1,9 @@
 ---
 layout: articles
 
-meta:
-  title:        'Introduction'
-  description:  'Learn how to get started using Marlin. Find out what Marlin has to offer and how it can help your 3D printer print faster, better and cleaner.'
-  categories:   [ getting-started, needs-review ]
+title:        'Introduction'
+description:  'Learn how to get started using Marlin. Find out what Marlin has to offer and how it can help your 3D printer print faster, better and cleaner.'
+category:     [ getting-started, needs-review ]
 ---
 Marlin is a highly optimized firmware for 3D printers based on AVR microprocessor (such as those used on the [Arduino](http://arduino.cc) platform) with movement driven by stepper motors.
 

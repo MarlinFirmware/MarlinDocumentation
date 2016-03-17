@@ -1,13 +1,9 @@
 ---
 layout: articles
 
-meta:
-  title:        'Supported Hardware'
-  description:  'List of supported boards by Marlin'
-  categories:   [ hardware, needs-review ]
-
-navigation:
-  show_description: false
+title:        'Supported Hardware'
+description:  'List of supported boards by Marlin'
+category:     [ hardware, needs-review ]
 ---
 Marlin supports a wide variety of 3D printers, including all RAMPS variants, and is adaptable to virtually any Arduino-based electronics through pin-mapping – assigning the right name to each pin.
 

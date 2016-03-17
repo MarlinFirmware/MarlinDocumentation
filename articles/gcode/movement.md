@@ -1,13 +1,12 @@
 ---
 layout: articles
 
+title:        'Movement'
+description:  'List all the Marlin supported g-code related with movement'
+category:     [ gcode, needs-review ]
+
 toc:
   selectors: 'h1,h2'
-
-meta:
-  title:        'Movement'
-  description:  'List all the Marlin supported g-code related with movement'
-  categories:   [ gcode, needs-review ]
 ---
 ## G0
 In Marlin `G0` is exactly the same as [G1](#g1).

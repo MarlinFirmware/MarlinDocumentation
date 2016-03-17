@@ -1,10 +1,9 @@
 ---
 layout: articles
 
-meta:
-  title:        'Changelog'
-  description:  'Detailed project changelog group be release version'
-  categories:   [ development, needs-review ]
+title:        'Changelog'
+description:  'Detailed project changelog group be release version'
+category:     [ development, needs-review ]
 ---
 Version 1.1 (in Development)
 ----------------------------

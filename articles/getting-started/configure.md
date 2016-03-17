@@ -1,10 +1,9 @@
 ---
 layout: articles
 
-meta:
-  title:        'How to configure'
-  description:  'This howto will guide the user on how to configure Marlin for their needs'
-  categories:   [ getting-started, needs-review ]
+title:        'How to configure'
+description:  'This howto will guide the user on how to configure Marlin for their needs'
+category:     [ getting-started, needs-review ]
 ---
 # Introduction
 

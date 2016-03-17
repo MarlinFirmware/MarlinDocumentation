@@ -1,10 +1,9 @@
 ---
 layout: articles
 
-meta:
-  title:        'Supported G-Code'
-  description:  'List all the Marlin supported g-code with detailed description'
-  categories:   [ gcode, needs-review ]
+title:        'Supported G-Code'
+description:  'List all the Marlin supported g-code with detailed description'
+category:     [ gcode, needs-review ]
 ---
 
 G-Code (or GCode) is the instruction code that tells a RepRap 3D printer what to do. For example, the G-Code `G0 X10` tells the machine to move the current tool to X position 10. Marlin's GCode is loosely based on the language specification for the [NIST RS274NGC Interpreter](http://www.nist.gov/customcf/get_pdf.cfm?pub_id=823374), but departs radically in its specific implementation details. (For example, RepRap G-Code doesn't care about "modal groups.")

@@ -1,10 +1,9 @@
 ---
 layout: articles
 
-meta:
-  title:        'How to flash your board'
-  description:  'This howto will guide the user on how to flash their control board with Marlin'
-  categories:   [ getting-started, needs-review ]
+title:        'How to flash your board'
+description:  'This howto will guide the user on how to flash their control board with Marlin'
+category:     [ getting-started, needs-review ]
 ---
 ## Get the Arduino IDE
 
