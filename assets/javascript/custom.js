@@ -4,11 +4,12 @@ $( document ).ready(function() {
         'activeClass':      'active',
         'prefix':           'toc-',
 
-        'scrollToOffset':   70,
-        'highlightOffset':  70,
+        'scrollToOffset':   75,
+        'highlightOffset':  50,
 
         'itemClass': function(i, heading, $heading, prefix) {
-            return 'custom-list-group-item ' + prefix + $heading[0].tagName.toLowerCase();;
+            //return 'custom-list-group-item ' + prefix + $heading[0].tagName.toLowerCase();;
+            return prefix + $heading[0].tagName.toLowerCase();;
         }
     });
 
