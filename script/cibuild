@@ -5,4 +5,4 @@ set -e
 
 # Do the magic
 bundle exec jekyll build
-bundle exec htmlproofer ./_site --disable-external --allow-hash-href true
+bundle exec htmlproofer ./_site --only_4xx --allow-hash-href true
