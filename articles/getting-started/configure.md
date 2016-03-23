@@ -134,15 +134,15 @@ Define all your attached temperature sensors here. The following temperature sen
 -   `12` 100k 0603 SMD Vishay NTCS0603E3104FXT (4.7k pullup) (calibrated for Makibox hot bed)
 -   `13` 100k Hisens 3950 - 1% up to 300°C for hotend “Simple ONE” &amp; “All In ONE”
 -   `2` 0the PT100 circuit found in the Ultimainboard V2.x
--   `60100k Maker's Tool Works Kapton Bed Thermistor beta=3950. 1k ohm pullup tables - This</code> not normal, you would have to have changed out your 4.7k for 1k (but gives greater accuracy and more stable PID).
+-   `60` 100k Maker's Tool Works Kapton Bed Thermistor beta=3950. 1k ohm pullup tables - This</code> not normal, you would have to have changed out your 4.7k for 1k (but gives greater accuracy and more stable PID).
 -   `51` 100k thermistor - EPCOS (1k pullup)
 -   `52` 200k thermistor - ATC Semitec 204GT-2 (1k pullup)
 -   `55` 100k thermistor - ATC Semitec 104GT-2 (Used in ParCan &amp; J-Head) (1k pullup)
 -   `1047` Pt1000 with 4k7 pullup
 -   `1010` Pt1000 with 1k pullup (non standard)
 -   `147` Pt100 with 4k7 pullup
--   `110Pt100 with 1k pullup (non standard)
--   `998`and`999Dummy Tables. They will ALWAYS read 25°C or the temperature defined below.
+-   `110` Pt100 with 1k pullup (non standard)
+-   `998` and `999` Dummy Tables. They will ALWAYS read 25°C or the temperature defined below.
 
 ```
 // DUMMY_THERMISTOR_998_VALUE 25
