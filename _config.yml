@@ -1,5 +1,6 @@
 # Jekyll
 safe:             'true'
+markdown:         'kramdown'
 exclude:          [ 'README.md', 'public', '_config.yml', 'LICENSE', '.gitignore', 'vendor', 'script', 'Gemfile' ]
 
 # Site configuration
