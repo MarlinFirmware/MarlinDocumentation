@@ -1,13 +1,16 @@
 # Jekyll
-safe:             'true'
 markdown:         'kramdown'
 exclude:          [ 'README.md', 'public', '_config.yml', 'LICENSE', '.gitignore', 'vendor', 'script', 'Gemfile' ]
+
+gems:
+  - jekyll-mentions
 
 # Site configuration
 url:              'http://test.marlinfw.org'
 title:            'Marlin Firmware'
 subtitle:         'Documentation Project'
 description:      'Learn how to get started using Marlin.'
+permalink:        'news/:year/:month/:day/:title/'
 
 # Assets location
 css_url:          'assets/stylesheets'
