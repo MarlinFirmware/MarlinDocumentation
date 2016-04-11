@@ -4,6 +4,8 @@ exclude:          [ 'README.md', 'public', '_config.yml', 'LICENSE', '.gitignore
 
 gems:
   - jekyll-mentions
+  - jekyll-seo-tag
+  - jekyll-avatar
 
 # Site configuration
 url:              'http://test.marlinfw.org'
