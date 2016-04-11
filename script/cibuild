@@ -4,5 +4,6 @@
 set -e
 
 # Do the magic
+bundle install --path vendor/bundle
 bundle exec jekyll build
 bundle exec htmlproofer ./_site --only-4xx --allow-hash-href true
