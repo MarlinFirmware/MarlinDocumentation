@@ -1,6 +1,6 @@
 # Jekyll
 markdown:         'kramdown'
-exclude:          [ 'README.md', 'public', '_config.yml', 'LICENSE', '.gitignore', 'vendor', 'script', 'Gemfile' ]
+exclude:          [ 'README.md', 'public', '_config.yml', 'LICENSE', '.gitignore', 'vendor', 'script', 'Gemfile', 'CNAME' ]
 
 gems:
   - jekyll-mentions
@@ -10,7 +10,6 @@ url:              'http://test.marlinfw.org'
 title:            'Marlin Firmware'
 subtitle:         'Documentation Project'
 description:      'Learn how to get started using Marlin.'
-permalink:        'news/:year/:month/:day/:title/'
 
 # Assets location
 css_url:          'assets/stylesheets'
@@ -33,14 +32,25 @@ repository:
   main:           'https://github.com/MarlinFirmware/Marlin'
   dev:            'https://github.com/MarlinFirmware/MarlinDev'
 
+# Collections
+collections:
+  articles:
+    output: true
+
 # Page defaults
 defaults:
   -
     scope:
-      path:               ''
+      type:               'posts'
+
+    values:
+      permalink:          'news/:year/:month/:day/:title/'
+  -
+    scope:
       type:               'articles'
 
     values:
+      #permalink:          '/foo/:path'
       navigation:
         show_title:       true
         show_navbar:      true
@@ -53,7 +63,6 @@ defaults:
         categories:       [ 'default' ]
   -
     scope:
-      path:               ''
       type:               'pages'
 
     values:
