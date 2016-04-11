@@ -38,6 +38,7 @@ meta:
 repository:
   main:           'https://github.com/MarlinFirmware/Marlin'
   dev:            'https://github.com/MarlinFirmware/MarlinDev'
+  doc:            'https://github.com/MarlinFirmware/MarlinDocumentation'
 
 # Collections
 collections:
