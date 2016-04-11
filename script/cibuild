@@ -6,3 +6,6 @@ set -e
 # Do the magic
 bundle exec jekyll build
 bundle exec htmlproofer ./_site --only-4xx --allow-hash-href true
+
+# Check DNS
+bundle exec github-pages health-check
