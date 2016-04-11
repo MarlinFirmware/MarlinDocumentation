@@ -11,6 +11,11 @@ title:            'Marlin Firmware'
 subtitle:         'Documentation Project'
 description:      'Learn how to get started using Marlin.'
 
+# Analytics
+analytics:
+  id:             'UA-76230130-1'
+  domain:         'auto'
+
 # Assets location
 css_url:          'assets/stylesheets'
 js_url:           'assets/javascript'
@@ -50,7 +55,6 @@ defaults:
       type:               'articles'
 
     values:
-      #permalink:          '/foo/:path'
       navigation:
         show_title:       true
         show_navbar:      true
