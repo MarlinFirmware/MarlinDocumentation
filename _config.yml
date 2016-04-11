@@ -1,51 +1,55 @@
-# Jekyll
-markdown:         'kramdown'
-exclude:          [ 'README.md', 'public', '_config.yml', 'LICENSE', '.gitignore', 'vendor', 'script', 'Gemfile', 'CNAME' ]
+markdown: 'kramdown'
+highlighter: 'pygments'
+timezone: 'Europe/Lisbon'
+
+collections:
+  articles:
+    output: true
+
+exclude:
+  - '.gitignore'
+  - '_config.yml'
+  - 'CNAME'
+  - 'Gemfile'
+  - 'LICENSE'
+  - 'public'
+  - 'README.md'
+  - 'script'
+  - 'vendor'
+
+analytics:
+  id: 'UA-76230130-1'
+  domain: 'marlinfw.org'
+
+url: ' http://marlinfw.org'
+name: 'Marlin 3D Printer Firmware'
+logo: '/assets/images/logo/marlin/small.png'
+description: 'Learn how to get started using Marlin.'
 
 gems:
   - jekyll-mentions
   - jekyll-seo-tag
   - jekyll-avatar
 
-# Site configuration
-url:              'http://test.marlinfw.org'
-title:            'Marlin Firmware'
-subtitle:         'Documentation Project'
-description:      'Learn how to get started using Marlin.'
+base:
+  meta: 'meta'
+  assets: 'assets'
+  articles: 'articles'
+  images: 'assets/images'
+  javascript: 'assets/javascript'
+  stylesheet: 'assets/stylesheets'
 
-# Analytics
-analytics:
-  id:             'UA-76230130-1'
-  domain:         'auto'
 
-# Assets location
-css_url:          'assets/stylesheets'
-js_url:           'assets/javascript'
-img_url:          'assets/images'
-assets_url:       'assets'
-
-# Categories URL
-articles_url:     'articles'
-meta_url:         'meta'
-
-# Metadata
 meta:
-  version:        '0.0.2'
-  author:         'Marlin Documentation Project'
+  version: '0.0.4'
+  author: 'Marlin Documentation Project'
   feedback_email: 'marlin-doc@this-is-not-a-valid-domain.org'
 
-# Repositories
 repository:
-  main:           'https://github.com/MarlinFirmware/Marlin'
-  dev:            'https://github.com/MarlinFirmware/MarlinDev'
-  doc:            'https://github.com/MarlinFirmware/MarlinDocumentation'
+  main: 'https://github.com/MarlinFirmware/Marlin'
+  dev: 'https://github.com/MarlinFirmware/MarlinDev'
+  doc: 'https://github.com/MarlinFirmware/MarlinDocumentation'
 
-# Collections
-collections:
-  articles:
-    output: true
-
-# Page defaults
 defaults:
   -
     scope:

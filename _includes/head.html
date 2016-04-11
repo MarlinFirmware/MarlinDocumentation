@@ -3,20 +3,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>{% if page.title %}{{ page.title }}{% else %}Default{% endif %} | {{ site.title }}</title>
-
 {% seo %}
 
-    <link rel="icon" href="{{ site.github.url }}/{{ site.assets_url }}/favicon.ico">
+    <link rel="icon" href="{{ site.github.url }}/{{ site.base.assets }}/favicon.ico">
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
       integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
     <!-- Overall template theme and custom styles -->
-    <link href="{{ site.github.url }}/{{ site.css_url }}/bootstrap/readable.min.css" rel="stylesheet">
-    <link href="{{ site.github.url }}/{{ site.css_url }}/syntax.css" rel="stylesheet">
-    <link href="{{ site.github.url }}/{{ site.css_url }}/custom.css" rel="stylesheet">
+    <link href="{{ site.github.url }}/{{ site.base.stylesheet }}/bootstrap/readable.min.css" rel="stylesheet">
+    <link href="{{ site.github.url }}/{{ site.base.stylesheet }}/syntax.css" rel="stylesheet">
+    <link href="{{ site.github.url }}/{{ site.base.stylesheet }}/custom.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

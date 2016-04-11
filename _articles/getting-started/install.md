@@ -41,9 +41,9 @@ That's it. Now that you've flashed Marlin to your board, Enjoy Silky Smooth Prin
 
   [Arduino website]: http://www.arduino.cc/en/Main/Software
   [Latest Development version]: https://github.com/MarlinFirmware/MarlinDev
-  [Contributing to Marlin]: {{ site.github.url }}/{{ site.articles_url }}/development/contributing.html
+  [Contributing to Marlin]: {{ site.github.url }}/{{ site.base.articles }}/development/contributing.html
   [1.1.0 Release Candidate]: https://github.com/MarlinFirmware/Marlin/archive/RC.zip
   [Stable versions]: https://github.com/MarlinFirmware/Marlin/releases
   [Version 1.0.2-1]: https://github.com/MarlinFirmware/Marlin/archive/1.0.2-1.zip
   [Version 1.0.1]: https://github.com/MarlinFirmware/Marlin/archive/1.0.1.zip
-  [Marlin Configuration]: {{ site.github.url }}/{{ site.articles_url }}/getting-started/configure.html
+  [Marlin Configuration]: {{ site.github.url }}/{{ site.base.articles }}/getting-started/configure.html

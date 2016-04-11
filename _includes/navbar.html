@@ -3,7 +3,7 @@
       <div class="container-fluid">
         <div class="navbar-header">
           <a href="{{ site.github.url }}/" class="navbar-brand">
-            <img src="{{ site.github.url }}/{{ site.img_url }}/logo/marlin/text.png" alt="Marlin" height="40">
+            <img src="{{ site.github.url }}/{{ site.base.images }}/logo/marlin/text.png" alt="Marlin" height="40">
           </a>
           <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
             <span class="icon-bar"></span>
@@ -16,13 +16,13 @@
             <li class="dropdown">
               <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="getting-started">Getting Started <span class="caret"></span></a>
               <ul class="dropdown-menu" aria-labelledby="getting-started">
-                <li><a href="{{ site.github.url }}/{{ site.articles_url }}/getting-started/overview.html">Introduction</a></li>
+                <li><a href="{{ site.github.url }}/{{ site.base.articles }}/getting-started/overview.html">Introduction</a></li>
                 <li class="divider"></li>
                 <li><a href="#"><del>How to get</del></a></li>
-                <li><a href="{{ site.github.url }}/{{ site.articles_url }}/getting-started/configure.html">How to configure</a></li>
-                <li><a href="{{ site.github.url }}/{{ site.articles_url }}/getting-started/install.html">How to flash your board</a></li>
+                <li><a href="{{ site.github.url }}/{{ site.base.articles }}/getting-started/configure.html">How to configure</a></li>
+                <li><a href="{{ site.github.url }}/{{ site.base.articles }}/getting-started/install.html">How to flash your board</a></li>
                 <li class="divider"></li>
-                <li><a href="{{ site.github.url }}/{{ site.articles_url }}/development/reporting-bugs.html">Reporting bugs</a></li>
+                <li><a href="{{ site.github.url }}/{{ site.base.articles }}/development/reporting-bugs.html">Reporting bugs</a></li>
               </ul>
             </li>
 
@@ -33,23 +33,23 @@
             <li class="dropdown">
               <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="documentation">Documentation <span class="caret"></span></a>
               <ul class="dropdown-menu" aria-labelledby="documentation">
-                <li><a href="{{ site.github.url }}/{{ site.articles_url }}/development/changelog.html">Changelog</a></li>
+                <li><a href="{{ site.github.url }}/{{ site.base.articles }}/development/changelog.html">Changelog</a></li>
                 <li class="divider"></li>
                 <li><a href="#"><del>Current stable release</del></a></li>
                 <li><a href="#"><del>Current development release</del></a></li>
                 <li class="divider"></li>
-                <li><a href="{{ site.github.url }}/{{ site.meta_url }}/needs-review.html">Documentation needing review</a></li>
+                <li><a href="{{ site.github.url }}/{{ site.base.meta }}/needs-review.html">Documentation needing review</a></li>
               </ul>
             </li>
 
             <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="development">Development <span class="caret"></span></a>
               <ul class="dropdown-menu" aria-labelledby="development">
-                <li><a href="{{ site.github.url }}/{{ site.articles_url }}/development/contributing.html">Contributing</a></li>
-                <li><a href="{{ site.github.url }}/{{ site.articles_url }}/development/coding-standards.html">Coding standards</a></li>
+                <li><a href="{{ site.github.url }}/{{ site.base.articles }}/development/contributing.html">Contributing</a></li>
+                <li><a href="{{ site.github.url }}/{{ site.base.articles }}/development/coding-standards.html">Coding standards</a></li>
                 <li class="divider"></li>
                 <li><a href="https://github.com/MarlinFirmware/Marlin/issues">Bugtracker</a></li>
-                <li><a href="{{ site.github.url }}/{{ site.articles_url }}/development/reporting-bugs.html">Reporting bugs</a></li>
+                <li><a href="{{ site.github.url }}/{{ site.base.articles }}/development/reporting-bugs.html">Reporting bugs</a></li>
                 <li class="divider"></li>
                 <li><a href="https://github.com/MarlinFirmware/Marlin/">Source code</a></li>
                 <li><a href="https://github.com/MarlinFirmware/MarlinDev/">Development source code</a></li>
@@ -59,7 +59,7 @@
 
           <ul class="nav navbar-nav navbar-right">
             <li><a href="{{ site.repository.doc }}/edit/master/{{ page.path }}" data-proofer-ignore>
-              <i class="glyphicon glyphicon-pencil"></i> &nbsp;Improve this page</a></li>
+              <i class="glyphicon glyphicon-pencil text-muted btn-xs"></i>&nbsp;<span class="text-muted">Improve this page</span></a></li>
           </ul>
 
         </div>

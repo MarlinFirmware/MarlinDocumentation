@@ -100,7 +100,7 @@ Use `POWER_SUPPLY` to select the type of power supply, as below. Enable `PS_DEFA
 - 1 = ATX
 - 2 = X-Box 360 203Watts (the blue wire connected to `PS_ON` and the red wire to `VCC`)
 
-  [boards.h]: {{ site.github.url }}/{{ site.articles_url }}/hardware/boards.html
+  [boards.h]: {{ site.github.url }}/{{ site.base.articles }}/hardware/boards.html
   [an online service]: http://www.uuidgenerator.net/version4
 
 
