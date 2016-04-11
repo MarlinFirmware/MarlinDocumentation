@@ -37,7 +37,7 @@ When you feel it is ready to be shared with the world just submit a commit into 
 Jekyll allows you to preview the changes before submitted them to Github, just open a terminal/cmd window chdir to your local copy of the repository and execute the following commands:
 
 ```
-bundle install
+bundle install --path vendor/bundle
 bundle exec jekyll serve --watch
 ```
 
