@@ -1,9 +1,9 @@
 source 'https://rubygems.org'
 
-gem 'jekyll'
-gem 'jekyll-seo-tag'
-gem 'jekyll-avatar'
 gem 'github-pages'
+gem 'html-proofer'
+gem 'jekyll'
+gem 'jekyll-avatar'
+gem 'jekyll-seo-tag'
 gem 'kramdown'
 gem 'wdm'
-gem 'html-proofer'

@@ -1,5 +1,5 @@
 markdown: 'kramdown'
-highlighter: 'pygments'
+highlighter: 'rouge'
 timezone: 'Europe/Lisbon'
 
 collections:
@@ -51,6 +51,11 @@ repository:
   doc: 'https://github.com/MarlinFirmware/MarlinDocumentation'
 
 defaults:
+  -
+    scope:
+      path: ''
+    values:
+      author: 'MarlinFirmware'
   -
     scope:
       type:               'posts'

@@ -57,11 +57,13 @@
             </li>
           </ul>
 
+          {% if page.layout == 'articles' %}
           <ul class="nav navbar-nav navbar-right">
             <li><a href="{{ site.repository.doc }}/edit/master/{{ page.path }}" data-proofer-ignore>
-              <i class="glyphicon glyphicon-pencil text-muted btn-xs"></i>&nbsp;<span class="text-muted">Improve this page</span></a></li>
+              <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+              <span class="">Improve this page</span></a></li>
           </ul>
-
+          {% endif %}
         </div>
       </div>
     </nav>
