@@ -187,7 +187,8 @@ Maximum temperature for these heating element. If marlin reads the temperature p
 
 ***
 
-## PID <i class="fa fa-sticky-note-o text-info" aria-hidden="true"></i>
+## PID
+<i class="fa fa-sticky-note-o text-info pull-right" aria-hidden="true"></i>
 
 This is a setting to ensure stable temperature on your hotend and heated bed. Marlin will try to hit the target temperature based on the PID values. This is very important for hotends so that it won't overshoot when trying to reach the temperature and during printing
 
@@ -201,10 +202,8 @@ More detailed info about what PID are [here](https://en.wikipedia.org/wiki/PID_c
   <div class="panel-heading">
     <h4 class="panel-title"><i class="fa fa-sticky-note" aria-hidden="true"></i>
     EEPROM: PID settings</h4></div>
-  <div class="panel-body">
-    <code>M301</code> sets up Hotend PID,
-    <code>M304</code> sets up bed PID. LCD Accessible (Hotend only).
-</div>
+  <div class="panel-body" markdown="1">`M301` sets up Hotend PID, `M304` sets up bed PID. LCD Accessible (Hotend only).
+  </div>
 </div>
 
 ***

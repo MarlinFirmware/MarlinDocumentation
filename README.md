@@ -20,12 +20,22 @@ We really recommend reading one of the following tutorials for a quick start wit
 - [Jekyll running on Windows](http://jekyll-windows.juthilo.com/)
 - [Jekyll running on Linux, Unix, or Mac OS X](https://jekyllrb.com/docs/installation/)
 
+
+## Instaling buildroot on Windows
+
+ 1. [Get Ruby for Windows](http://dl.bintray.com/oneclick/rubyinstaller/rubyinstaller-2.2.4.exe), execute the installer and go through the steps of the installation, make sure to check the “Add Ruby executables to your PATH” box.
+ 2. [Get Ruby Devkit](http://dl.bintray.com/oneclick/rubyinstaller/DevKit-mingw64-32-4.7.2-20130224-1151-sfx.exe), the download is a self-extracting archive. When you execute the file, it’ll ask you for a destination for the files. Enter a path that has no spaces in it. We recommend something simple, like ` C:\RubyDevKit\` . Click Extract and wait until the process is finished.
+ 3. Open your favorite command line tool and do:
+  - `cd C:\RubyDevKit`
+  - `ruby dk.rb init`
+  - `ruby dk.rb install`
+
 ## How to contribute
 
 Let's pretend you want to add a new article to the project, you should start by forking the **MarlinDocumentation** repository. Then you should create a new branch, as the new article is about "mashed potatos" we do the following command:
 
 ```
-git clone https://github.com/jbrazio/MarlinDocumentation.git
+git clone https://github.com/MarlinFirmware/MarlinDocumentation.git
 git checkout -b article-mashed_potatos
 ```
 
