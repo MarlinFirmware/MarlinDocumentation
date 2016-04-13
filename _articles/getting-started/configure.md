@@ -35,6 +35,7 @@ If you've never calibrated a RepRap machine before, here are some links to resou
 -   <http://www.thingiverse.com/thing:5573>
 -   <https://sites.google.com/site/repraplogphase/calibration-of-your-reprap>
 -   <http://www.thingiverse.com/thing:298812>
+-   <http://reprap.org/wiki/G-code>
 
 The most important values to obtain are:
 
@@ -186,7 +187,7 @@ Maximum temperature for these heating element. If marlin reads the temperature p
 
 ***
 
-## PID
+## PID*
 
 This is a setting to ensure stable temperature on your hotend and heated bed. Marlin will try to hit the target temperature based on the PID values. This is very important for hotends so that it won't overshoot when trying to reach the temperature and during printing
 
@@ -196,6 +197,7 @@ The target temperature during auto tune process is your highest target temperatu
 
 More detailed info about what PID are here https://en.wikipedia.org/wiki/PID_controller
 
+* `PID settings:`; `M301` sets up Hotend PID, `M304` sets up bed PID. LCD Accessible (Hotend only).
 ***
 
 ## Extrusion Safety
@@ -300,7 +302,7 @@ These inverts the motor movement for each axis. Usually flipping the connector w
 
 ***
 
-## Axis Homing
+## Axis Homing*
 
 {% highlight cpp %}
 //#define MIN_Z_HEIGHT_FOR_HOMING 4
@@ -334,6 +336,7 @@ These are one of the safety features that prevents manual movement exceeding the
 
 Usually the `MIN_POS` are left at 0 value and `MAX_POS` depends on your maximum travel. Setting this too high would risk the printer's carriage crashing to each ends. This needs to be set in conjunctin with home offset eeprom variable to work properly. If you don't want to set using eeprom, you can fiddle with `MIN_POS` value above as a substitute to eeprom's Home Offset.
 
+*`Home offset` values are pulled from `MIN_POS`. Use `M206` from pronterface
 ***
 
 ## Filament Runout Sensor
@@ -360,7 +363,7 @@ Enable `//#define MANUAL_BED_LEVELING` to access mesh bed leveling option from l
 
 ***
 
-## Auto Bed Leveling
+## Auto Bed Leveling*
 
 {% highlight cpp %}
 #define AUTO_BED_LEVELING_FEATURE
@@ -410,7 +413,7 @@ These are the option for 3-point probing by specifying each one of their coordin
 
 ***
 
-### Offsets
+### Offsets*
 
 {% highlight cpp %}
 #define X_PROBE_OFFSET_FROM_EXTRUDER -44  // X offset: -left  [of the nozzle] +right
@@ -418,8 +421,9 @@ These are the option for 3-point probing by specifying each one of their coordin
 #define Z_PROBE_OFFSET_FROM_EXTRUDER -2.50   // Z offset: -below [the nozzle] (always negative!)`
 {% endhighlight %}
 
-This is the position of your probe from your nozzle.
+This is the position of your probe from your nozzle. To determine exact location, use relative position by specifying `G92 x0 y0 z0`, then slowly work your way to find exact probe point of your probe. Use Pronterface/repeter-host to get your own value for the above offset setup and issue `M114` to get the exact values.
 
+*`Z-probe offset` will be pulled from `#define Z_PROBE_OFFSET_FROM_EXTRUDER -2.50` and the command are `M851`, LCD Accessible.
 ***
 
 ### Procedure
@@ -475,7 +479,7 @@ These are the homing speed when doing auto home and auto bed leveling. It is adv
 
 ***
 
-## Steps/mm
+## Steps/mm*
 
 {% highlight cpp %}
 #define DEFAULT_AXIS_STEPS_PER_UNIT   {78.74, 78.74, 2560, 95}
@@ -494,9 +498,21 @@ Some presets to get you started (1/16 microstepping)
 | Standard MK8 Extruder Set | 95 |
 | T8 Acme Rod | 406 |
 
+*`steps per unit` configured via `M92` command.
 ***
 
-## Acceleration
+## Acceleration*
+### Max Acceleration*
+{% highlight cpp %}
+#define DEFAULT_MAX_FEEDRATE          {400, 400, 4, 45}    // (mm/sec)
+#define DEFAULT_MAX_ACCELERATION      {5000,5000,50,5000}    // X, Y, Z, E maximum start speed for accelerated moves. E default values are good for Skeinforge 40+, for older versions raise them a lot.
+{% endhighlight %}
+These are the maximum allowed acceleration rate that you limit on marlin to. No matter how high your specified acceleration on `G0` commands are, it will be limited to the above values. Avoid setting too high to avoid skipping steps during movement especially high speed movements.
+
+*`Maximum Acceleration (mm/s2)` on `M201` command.
+
+***
+### Default Acceleration*
 
 {% highlight cpp %}
 #define DEFAULT_ACCELERATION          1000    // X, Y, Z and E acceleration in mm/s^2 for printing moves
@@ -506,17 +522,21 @@ Some presets to get you started (1/16 microstepping)
 
 These are the default acceleration when movement such as `G0 x20` without `F` are issued (acceleration/speed). Do not set these too high as there are mechanical constraints too that might make your stepper motor make a whining noise or skipping steps when it starts to move or between movements.
 
+*`Accelerations: P=printing, R=retract and T=travel` on `M204`, LCD Menu accessible.
+***
+### Jerks*
 {% highlight cpp %}
 #define DEFAULT_XYJERK                15.0    // (mm/sec)
 {% endhighlight %}
 
 Jerk works in conjunction with acceleration above. Both of acceleration and jerk will affect your print quality too especially cube and round shape.
 
+*`Advanced variables: S=Min feedrate (mm/s), T=Min travel feedrate (mm/s), B=minimum segment time (ms), X=maximum XY jerk (mm/s),  Z=maximum Z jerk (mm/s),  E=maximum E jerk (mm/s)` on `M205`, LCD Menu accessible. 
 ***
 
-# Additional Features
+# Additional Features*
 
-## EEPROM
+## EEPROM*
 
 {% highlight cpp %}
 #define EEPROM_SETTINGS
@@ -531,9 +551,10 @@ M501 - Load/read the saved setting (not from config.h)
 M502 - Loads the setting from config.h (this are not saved to the eeeprom by default)
 {% endhighlight %}
 
+*By enabling this, you are able to access variables saved in non-volatile memory of your board and features that can be accessed are all marked with `*`.
 ***
 
-## Preheat Presets
+## Preheat Presets*
 
 {% highlight cpp %}
 #define PLA_PREHEAT_HOTEND_TEMP 180
@@ -547,6 +568,7 @@ M502 - Loads the setting from config.h (this are not saved to the eeeprom by def
 
 These are preset when you want to preheat your hotend/bed before printing without the need of going through control>temperature. These option are accessible from Prepare>Preheat ABS/PLA
 
+* `Material heatup parameters:` on `M145`; `M0` is PLA and `M1` is ABS. LCD Accessible.
 ***
 
 # LCD and SD
