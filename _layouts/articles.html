@@ -15,11 +15,25 @@ layout: default
 
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <div class="page-header">
-            <h1>{{ page.title }}</h1>
+            <h1>{{ page.title }}
+              <small class="page-author pull-right">by
+                {% assign authors = page.author | append: ',' | append: page.contrib | replace: ' ', '' | split: ',' %}
+                {% if authors %}
+                  {% for author in authors %}
+                    <a href="https://github.com/{{ author }}" data-toggle="tooltip" data-placement="bottom" title="{{ author }}">
+                    {% avatar user=author size=30 %}</a>
+                  {% endfor %}
+                {% endif %}
+              </small>
+            </h1>
           </div><!-- /.page-header -->
+
           <!-- content -->
-          {% if page.navigation.show_breadcrumbs %}{% include breadcrumbs.html %}{% endif %}
-{{ content }}
+          {% if page.navigation.show_breadcrumbs %}
+            {% include breadcrumbs.html %}
+          {% endif %}
+
+          {{ content }}
           <!-- /content -->
         </div><!-- /.col-sm-9 -->
       </div><!-- /.row -->

@@ -7,19 +7,20 @@ layout: default
       </div><!-- /.page-header -->
       <!-- content -->
         <div class="list-group">
-{% assign pages_sorted = site.pages | sort: 'title' %}
-{% for p in pages_sorted %}
-  {% if p.hidden != true %}
-    {% for pc in p.category %}
-      {% if pc == page.type %}
-          <a href="{{ site.github.url }}{{ p.url }}" class="list-group-item">
-            <h4 class="list-group-item-heading">{{ p.title }}</h4>
-            {% if p.description %}<p class="list-group-item-text">{{ p.description }}</p>{% endif %}
-          </a>
-      {% endif %}
-    {% endfor %}
-  {% endif %}
-{% endfor %}
+        {% assign pages_sorted = site.articles | sort: 'title' %}
+        {% for p in pages_sorted %}
+          {% if p.hidden != true %}
+            {% for pc in p.category %}
+              {% if pc == page.type %}
+                  <a href="{{ site.github.url }}{{ p.url }}" class="list-group-item">
+                    <h4 class="list-group-item-heading"><i class="fa fa-book" aria-hidden="true"></i>
+                      {{ p.title }}</h4>
+                    {% if p.description %}<p class="list-group-item-text">{{ p.description }}</p>{% endif %}
+                  </a>
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+        {% endfor %}
         </div>
       <!-- /content -->
     </div><!-- /.container -->

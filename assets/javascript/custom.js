@@ -14,5 +14,8 @@ $( document ).ready(function() {
     });
 
     // Hack tables, Jekyll's default table formating is awfull
-    $( 'table' ).addClass( 'table table-hover table-condensed custom-small-font' );
+    $( 'table' ).addClass( 'table table-bordered table-hover' );
+
+    // Activate tooltips
+    $('[data-toggle="tooltip"]').tooltip();
 });
