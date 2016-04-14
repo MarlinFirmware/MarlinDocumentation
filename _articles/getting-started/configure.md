@@ -187,7 +187,8 @@ Maximum temperature for these heating element. If marlin reads the temperature p
 
 ***
 
-## PID*
+## PID
+<i class="fa fa-sticky-note-o text-info pull-right" aria-hidden="true"></i>
 
 This is a setting to ensure stable temperature on your hotend and heated bed. Marlin will try to hit the target temperature based on the PID values. This is very important for hotends so that it won't overshoot when trying to reach the temperature and during printing
 
@@ -195,9 +196,16 @@ Kindly refer here http://reprap.org/wiki/PID_Tuning for having marlin to do the 
 
 The target temperature during auto tune process is your highest target temperature (In my opinion).
 
-More detailed info about what PID are here https://en.wikipedia.org/wiki/PID_controller
+More detailed info about what PID are [here](https://en.wikipedia.org/wiki/PID_controller).
 
-* `PID settings:`; `M301` sets up Hotend PID, `M304` sets up bed PID. LCD Accessible (Hotend only).
+<div class="panel panel-info">
+  <div class="panel-heading">
+    <h4 class="panel-title"><i class="fa fa-sticky-note" aria-hidden="true"></i>
+    EEPROM: PID settings</h4></div>
+  <div class="panel-body" markdown="1">`M301` sets up Hotend PID, `M304` sets up bed PID. LCD Accessible (Hotend only).
+  </div>
+</div>
+
 ***
 
 ## Extrusion Safety
@@ -337,6 +345,7 @@ These are one of the safety features that prevents manual movement exceeding the
 Usually the `MIN_POS` are left at 0 value and `MAX_POS` depends on your maximum travel. Setting this too high would risk the printer's carriage crashing to each ends. This needs to be set in conjunctin with home offset eeprom variable to work properly. If you don't want to set using eeprom, you can fiddle with `MIN_POS` value above as a substitute to eeprom's Home Offset.
 
 *`Home offset` values are pulled from `MIN_POS`. Use `M206` from pronterface
+
 ***
 
 ## Filament Runout Sensor
@@ -424,6 +433,7 @@ These are the option for 3-point probing by specifying each one of their coordin
 This is the position of your probe from your nozzle. To determine exact location, use relative position by specifying `G92 x0 y0 z0`, then slowly work your way to find exact probe point of your probe. Use Pronterface/repeter-host to get your own value for the above offset setup and issue `M114` to get the exact values.
 
 *`Z-probe offset` will be pulled from `#define Z_PROBE_OFFSET_FROM_EXTRUDER -2.50` and the command are `M851`, LCD Accessible.
+
 ***
 
 ### Procedure
@@ -499,10 +509,13 @@ Some presets to get you started (1/16 microstepping)
 | T8 Acme Rod | 406 |
 
 *`steps per unit` configured via `M92` command.
+
 ***
 
 ## Acceleration*
+
 ### Max Acceleration*
+
 {% highlight cpp %}
 #define DEFAULT_MAX_FEEDRATE          {400, 400, 4, 45}    // (mm/sec)
 #define DEFAULT_MAX_ACCELERATION      {5000,5000,50,5000}    // X, Y, Z, E maximum start speed for accelerated moves. E default values are good for Skeinforge 40+, for older versions raise them a lot.
@@ -523,15 +536,19 @@ These are the maximum allowed acceleration rate that you limit on marlin to. No 
 These are the default acceleration when movement such as `G0 x20` without `F` are issued (acceleration/speed). Do not set these too high as there are mechanical constraints too that might make your stepper motor make a whining noise or skipping steps when it starts to move or between movements.
 
 *`Accelerations: P=printing, R=retract and T=travel` on `M204`, LCD Menu accessible.
+
 ***
+
 ### Jerks*
+
 {% highlight cpp %}
 #define DEFAULT_XYJERK                15.0    // (mm/sec)
 {% endhighlight %}
 
 Jerk works in conjunction with acceleration above. Both of acceleration and jerk will affect your print quality too especially cube and round shape.
 
-*`Advanced variables: S=Min feedrate (mm/s), T=Min travel feedrate (mm/s), B=minimum segment time (ms), X=maximum XY jerk (mm/s),  Z=maximum Z jerk (mm/s),  E=maximum E jerk (mm/s)` on `M205`, LCD Menu accessible. 
+*`Advanced variables: S=Min feedrate (mm/s), T=Min travel feedrate (mm/s), B=minimum segment time (ms), X=maximum XY jerk (mm/s),  Z=maximum Z jerk (mm/s),  E=maximum E jerk (mm/s)` on `M205`, LCD Menu accessible.
+
 ***
 
 # Additional Features*
@@ -552,6 +569,7 @@ M502 - Loads the setting from config.h (this are not saved to the eeeprom by def
 {% endhighlight %}
 
 *By enabling this, you are able to access variables saved in non-volatile memory of your board and features that can be accessed are all marked with `*`.
+
 ***
 
 ## Preheat Presets*
@@ -569,6 +587,7 @@ M502 - Loads the setting from config.h (this are not saved to the eeeprom by def
 These are preset when you want to preheat your hotend/bed before printing without the need of going through control>temperature. These option are accessible from Prepare>Preheat ABS/PLA
 
 * `Material heatup parameters:` on `M145`; `M0` is PLA and `M1` is ABS. LCD Accessible.
+
 ***
 
 # LCD and SD
