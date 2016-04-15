@@ -1,6 +1,7 @@
 ---
 layout: articles
 author: Sarf2k4
+contrib: paulusjacobus
 
 title:        'How to configure'
 description:  'This howto will guide the user on how to configure Marlin for their needs'
