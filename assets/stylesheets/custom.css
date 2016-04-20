@@ -77,3 +77,13 @@ p {
 .main .page-header {
   margin-top: 0;
 }
+
+.preset th{
+  border: 1px solid;
+  text-align: center;
+}
+
+.preset td{
+border: 1px solid;
+  padding: 5px;
+}
