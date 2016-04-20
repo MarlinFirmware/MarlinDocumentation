@@ -29,20 +29,15 @@ We really recommend reading one of the following tutorials for a quick start wit
   - `cd C:\RubyDevKit`
   - `ruby dk.rb init`
   - `ruby dk.rb install`
-
-## How to contribute
-
-Let's pretend you want to add a new article to the project, you should start by forking the **MarlinDocumentation** repository. Then you should create a new branch, as the new article is about "mashed potatos" we do the following command:
-
-```
-git clone https://github.com/MarlinFirmware/MarlinDocumentation.git
-git checkout -b article-mashed_potatos
-```
-
-Then inside the articles folder you should add the new file `mashed-potatos.md` and let flow all your creativity into it.
-When you feel it is ready to be shared with the world just submit a commit into your own fork of **MarlinDocumentation** a start a new Pull Request to upstream.
+  - `gem install bundler`
 
 ## Previewing content
+
+You must clone localy a copy **your** MarlinDocumentation fork, to do this open a terminal/cmd window and do:
+  - `cd C:\`
+  - `git clone https://github.com/MarlinFirmware/MarlinDocumentation.git`
+
+This will create locally a `C:\MarlinDocumentation`.
 
 Jekyll allows you to preview the changes before submitted them to Github, just open a terminal/cmd window chdir to your local copy of the repository and execute the following commands:
 
@@ -54,6 +49,17 @@ bundle exec jekyll serve --watch
 You only need to execute the `bundle install` once as it will make sure you have all the required dependencies installed.
 
 Jekyll will watch the local files and on every save you do will trigger an automatic build of the site which can then be easly previewed from [your own computer](http://localhost:4000/).
+
+## How to contribute
+
+Let's pretend you want to add a new article to the project, you should start by forking the **MarlinDocumentation** repository. Then you should create a new branch, as the new article is about "mashed potatos" we do the following command:
+
+```
+git checkout -b article-mashed_potatos
+```
+
+Then inside the articles folder you should add the new file `mashed-potatos.md` and let flow all your creativity into it.
+When you feel it is ready to be shared with the world just submit a commit into your own fork of **MarlinDocumentation** a start a new Pull Request to upstream.
 
 ## Coding style
 

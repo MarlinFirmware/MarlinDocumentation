@@ -1,6 +1,7 @@
 ---
 layout: articles
 author: Sarf2k4
+contrib: paulusjacobus
 
 title:        'How to configure'
 description:  'This howto will guide the user on how to configure Marlin for their needs'
@@ -233,6 +234,10 @@ How it works is; target temperature at 190'c, after reaching 190'c this protecti
 
 The config of these parameters can be found in "configuration_adv.h" file.
 
+Tip: In case of false thermal runaways, increase the watch period.
+  #define WATCH_TEMP_PERIOD 20                // Seconds
+  #define WATCH_TEMP_INCREASE 2               // Degrees Celsius
+
 ***
 
 # Mechanical
@@ -291,6 +296,14 @@ Note to dev; Please make the comment explanation much simpler or the define vari
 {% endhighlight %}
 
 This typically disables your probe feature. Only applicable to `//#define Z_MIN_PROBE_ENDSTOP` enabled
+{% highlight cpp %}
+#define Z_MIN_PROBE_REPEATABILITY_TEST
+{% endhighlight %}
+
+This enables you to test the reliability of your probe.
+Issue a M48 command to start testing. It will give you a standard deviation for the probe.
+Tip: 0.02 mm is normally acceptable for bed leveling to work.
+
 
 ***
 
@@ -399,7 +412,7 @@ Enable `//#define MANUAL_BED_LEVELING` to access mesh bed leveling option from l
 #define AUTO_BED_LEVELING_FEATURE
 {% endhighlight %}
 
-If you want to use auto bed leveling feature, enable this. This works almost like mesh bed leveling except it will be done automatically. The command to do bed leveling squence is G29 after G28 has been issued.
+If you want to use auto bed leveling feature, enable this. This works almost like mesh bed leveling except it will be done automatically. The command to do bed leveling squence is G29 after G28 has been issued. (G29 is dependent on G28 to work properly)
 
 ***
 
@@ -448,7 +461,7 @@ These are the option for 3-point probing by specifying each one of their coordin
 {% highlight cpp %}
 #define X_PROBE_OFFSET_FROM_EXTRUDER -44  // X offset: -left  [of the nozzle] +right
 #define Y_PROBE_OFFSET_FROM_EXTRUDER -8  // Y offset: -front [of the nozzle] +behind
-#define Z_PROBE_OFFSET_FROM_EXTRUDER -2.50   // Z offset: -below [the nozzle] (always negative!)`
+#define Z_PROBE_OFFSET_FROM_EXTRUDER -2.50   // Z offset: -below [the nozzle] (for most negative! positive when using tilt probes or the nozzle based probes)`
 {% endhighlight %}
 
 This is the position of your probe from your nozzle. To determine exact location, use relative position by specifying `G92 x0 y0 z0`, then slowly work your way to find exact probe point of your probe. Use Pronterface/repeter-host to get your own value for the above offset setup and issue `M114` to get the exact values.
