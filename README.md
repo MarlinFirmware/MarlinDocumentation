@@ -23,8 +23,8 @@ We really recommend reading one of the following tutorials for a quick start wit
 
 ## Instaling buildroot on Windows
 
- 1. [Get Ruby for Windows](http://dl.bintray.com/oneclick/rubyinstaller/rubyinstaller-2.2.4.exe), execute the installer and go through the steps of the installation, make sure to check the “Add Ruby executables to your PATH” box.
- 2. [Get Ruby Devkit](http://dl.bintray.com/oneclick/rubyinstaller/DevKit-mingw64-32-4.7.2-20130224-1151-sfx.exe), the download is a self-extracting archive. When you execute the file, it’ll ask you for a destination for the files. Enter a path that has no spaces in it. We recommend something simple, like ` C:\RubyDevKit\` . Click Extract and wait until the process is finished.
+ 1. Get Ruby for Windows ([32 bit](http://dl.bintray.com/oneclick/rubyinstaller/rubyinstaller-2.2.2.exe), [64bit](http://dl.bintray.com/oneclick/rubyinstaller/rubyinstaller-2.2.2-x64.exe)), execute the installer and go through the steps of the installation, make sure to check the “Add Ruby executables to your PATH” box.
+ 2. Get Ruby Devkit ([32 bit](http://dl.bintray.com/oneclick/rubyinstaller/DevKit-mingw64-32-4.7.2-20130224-1151-sfx.exe), [64bit](http://dl.bintray.com/oneclick/rubyinstaller/DevKit-mingw64-64-4.7.2-20130224-1432-sfx.exe)), the download is a self-extracting archive. When you execute the file, it’ll ask you for a destination for the files. Enter a path that has no spaces in it. We recommend something simple, like ` C:\RubyDevKit\` . Click Extract and wait until the process is finished.
  3. Open your favorite command line tool and do:
   - `cd C:\RubyDevKit`
   - `ruby dk.rb init`
@@ -60,6 +60,12 @@ git checkout -b article-mashed_potatos
 
 Then inside the articles folder you should add the new file `mashed-potatos.md` and let flow all your creativity into it.
 When you feel it is ready to be shared with the world just submit a commit into your own fork of **MarlinDocumentation** a start a new Pull Request to upstream.
+
+```
+git add mashed-potatos.md
+git commit -m "Added a new article about potatos"
+git push
+```
 
 ## Coding style
 
