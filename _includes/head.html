@@ -15,3 +15,13 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
     <!-- /head -->
+
+    <script><!--
+        /**
+         * As Github pages do not support https for custom domains
+         * this is the current best workaround for #18.
+         */
+        var domains = ['www.marlinfw.org', 'marlinfw.org', 'localhost', '127.0.0.1' ];
+        if (domains.indexOf(window.location.hostname) == -1)
+            window.top.location.href = 'http://www.marlinfw.org' + location.pathname;
+    --></script>
