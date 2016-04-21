@@ -1,11 +1,14 @@
 ---
 layout: articles
 author: Sarf2k4
-contrib: paulusjacobus
+contrib: paulusjacobus, jbrazio
 
 title:        'How to configure'
 description:  'This howto will guide the user on how to configure Marlin for their needs'
 category:     [ getting-started, needs-review ]
+
+toc:
+  selectors:  h1,h2,h3,h4
 ---
 # Introduction
 
@@ -29,14 +32,14 @@ While there are some good articles and YouTube videos on the subject of Marlin c
 
 If you've never calibrated a RepRap machine before, here are some links to resources to help get you started:
 
--   <http://reprap.org/wiki/Calibration>
--   <http://youtu.be/wAL9d7FgInk>
--   <http://calculator.josefprusa.cz>
--   <http://reprap.org/wiki/Triffid_Hunter%27s_Calibration_Guide>
--   <http://www.thingiverse.com/thing:5573>
--   <https://sites.google.com/site/repraplogphase/calibration-of-your-reprap>
--   <http://www.thingiverse.com/thing:298812>
--   <http://reprap.org/wiki/G-code>
+-   [Calibration](http://reprap.org/wiki/Calibration)
+-   [Calibrating XY&Z Step/MM](http://youtu.be/wAL9d7FgInk)
+-   [Miscellaneous calculators](http://calculator.josefprusa.cz)
+-   [Triffid Hunter's Calibration Guide](http://reprap.org/wiki/Triffid_Hunter%27s_Calibration_Guide)
+-   [The Essential Calibration Set](http://www.thingiverse.com/thing:5573)
+-   [Calibration of your RepRap](https://sites.google.com/site/repraplogphase/calibration-of-your-reprap)
+-   [XY 20 mm Calibration Box](http://www.thingiverse.com/thing:298812)
+-   [G-Code reference](http://reprap.org/wiki/G-code)
 
 The most important values to obtain are:
 
@@ -48,11 +51,11 @@ The most important values to obtain are:
 -   Types of thermistors
 -   Type of LCD controller and other components
 
-# Configuration.h
+# Configuration
 
-# Board
+## Board
 
-## Setting Author
+### Setting Author
 
 {% highlight cpp %}
 #define STRING_CONFIG_H_AUTHOR "(none, default config)"
@@ -62,7 +65,7 @@ This is basically just to show who made the changes to the current firmware sett
 
 ***
 
-## Board Type
+### Board Type
 
 {% highlight cpp %}
 #define MOTHERBOARD BOARD_RAMPS_14_EFB
@@ -86,34 +89,33 @@ BOARD_RAMBO             // Rambo
 {% endhighlight %}
 
 NOTE:
-For those who're using sanguino board paired with arduino ide 1.6.8, to add sanguino board to the board list, kindly go to `File>Preference>Additional Boards Manager URLs`, add the link below
+For those who're using sanguino board paired with arduino ide 1.6.8, to add sanguino board to the board list, kindly go to `File > Preference > Additional Boards Manager URLs` and add [this source URL](https://raw.githubusercontent.com/Lauszus/Sanguino/master/package_lauszus_sanguino_index.json).
 
-`https://raw.githubusercontent.com/Lauszus/Sanguino/master/package_lauszus_sanguino_index.json`
-
-After adding the above URL, kindly go to `Tools > Boards > Boards Manager` then install Sanguino from the list. Internet connection required.
-
-Credit goes to dustreprap located at  : http://dustsreprap.blogspot.my/2015/06/better-way-to-install-sanguino-in.html
+After adding the above URL, kindly go to `Tools > Boards > Boards Manager` then install Sanguino from the list, an internet connection is required. Credit goes to [dustreprap](http://dustsreprap.blogspot.my/2015/06/better-way-to-install-sanguino-in.html).
 
 ***
+
+### Machine Name
 
 {% highlight cpp %}
 #define CUSTOM_MACHINE_NAME "3D Printer"
 {% endhighlight %}
+
 This is the name of your printer for example setting to delta would display "delta ready" after the printer has been turned on
 
 ***
 
-## UUID
+### UUID
 
 {% highlight cpp %}
 #define MACHINE_UUID "00000000-0000-0000-0000-000000000000"
 {% endhighlight %}
 
-A unique ID for your 3D printer, it is almost like a MAC Address and can be generated from here http://www.uuidgenerator.net/version4
+A unique ID for your 3D printer, it is almost like a MAC Address and can be generated from [here](http://www.uuidgenerator.net/version4).
 
 ***
 
-## Extruder
+### Extruder
 
 {% highlight cpp %}
 #define EXTRUDERS 1
@@ -142,9 +144,9 @@ What power supply you're using. ATX;1 or X-Box 360;2. If you're using LED Strip 
 
 ***
 
-# Thermal Settings 
+## Thermal Settings
 
-## Thermistor <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+### Thermistor <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
 
 {% highlight cpp %}
 #define TEMP_SENSOR_0 5 //This is your main extruder
@@ -160,7 +162,7 @@ This is crucial to ensure exact temperature measurement. If you're unsure, just 
 
 ***
 
-## Temperature Range
+### Temperature Range
 
 {% highlight cpp %}
 #define HEATER_0_MINTEMP 5
@@ -188,7 +190,7 @@ Maximum temperature for these heating element. If marlin reads the temperature p
 
 ***
 
-## PID <i class="fa fa-sticky-note-o text-info" aria-hidden="true"></i> <i class="fa fa-desktop text-info" aria-hidden="true"></i>
+### PID <i class="fa fa-sticky-note-o text-info" aria-hidden="true"></i> <i class="fa fa-desktop text-info" aria-hidden="true"></i>
 
 This is a setting to ensure stable temperature on your hotend and heated bed. Marlin will try to hit the target temperature based on the PID values. This is very important for hotends so that it won't overshoot when trying to reach the temperature and during printing
 
@@ -208,7 +210,11 @@ More detailed info about what PID are [here](https://en.wikipedia.org/wiki/PID_c
 
 ***
 
-## Extrusion Safety
+### Safety
+
+***
+
+#### Cold extrusion prevention
 
 {% highlight cpp %}
 #define EXTRUDE_MINTEMP 170
@@ -218,7 +224,7 @@ This will prevent the extruder motor from moving if the hotend temperature is le
 
 ***
 
-# Thermal Runaway Protection
+#### Thermal Runaway Protection
 
 {% highlight cpp %}
 // #define THERMAL_PROTECTION_HOTENDS // Enable thermal protection for all extruders
@@ -240,9 +246,9 @@ Tip: In case of false thermal runaways, increase the watch period.
 
 ***
 
-# Mechanical
+## Mechanical
 
-## Special Machines
+### Special Machines
 
 {% highlight cpp %}
 // Uncomment this option to enable CoreXY kinematics
@@ -257,7 +263,7 @@ These are for special type of machines and configurations because they uses diff
 
 ***
 
-## Endstops
+### Endstops
 
 {% highlight cpp %}
 const bool X_MIN_ENDSTOP_INVERTING = false; // set to true to invert the logic of the endstop.
@@ -273,7 +279,7 @@ Inverting between triggered and open state when issuing M119 command. Usually no
 
 ***
 
-## Z Probe Options
+### Z Probe Options
 
 {% highlight cpp %}
 //#define Z_MIN_PROBE_ENDSTOP
@@ -307,7 +313,7 @@ Tip: 0.02 mm is normally acceptable for bed leveling to work.
 
 ***
 
-## Motor Movement <i class="fa fa-exclamation-triangle text-danger" aria-hidden="true"></i>
+### Motor Movement <i class="fa fa-exclamation-triangle text-danger" aria-hidden="true"></i>
 
 {% highlight cpp %}
 #define INVERT_X_DIR true
@@ -330,7 +336,7 @@ These inverts the motor movement for each axis. Usually flipping the connector w
 
 ***
 
-## Axis Homing <i class="fa fa-exclamation-triangle text-warning" aria-hidden="true"></i> <i class="fa fa-sticky-note-o text-info" aria-hidden="true"></i> <i class="fa fa-desktop text-info" aria-hidden="true"></i>
+### Axis Homing <i class="fa fa-exclamation-triangle text-warning" aria-hidden="true"></i> <i class="fa fa-sticky-note-o text-info" aria-hidden="true"></i> <i class="fa fa-desktop text-info" aria-hidden="true"></i>
 
 {% highlight cpp %}
 //#define MIN_Z_HEIGHT_FOR_HOMING 4
@@ -382,7 +388,7 @@ Usually the `MIN_POS` are left at 0 value and `MAX_POS` depends on your maximum 
 
 ***
 
-## Filament Runout Sensor
+### Filament Runout Sensor
 
 {% highlight cpp %}
 //#define FILAMENT_RUNOUT_SENSOR
@@ -392,9 +398,9 @@ This one is optional yet cool feature to have. An extra endstop switch is requir
 
 ***
 
-# Bed Leveling
+## Bed Leveling
 
-## Mesh/Manual Bed Leveling
+### Mesh/Manual Bed Leveling
 
 {% highlight cpp %}
 //#define MESH_BED_LEVELING
@@ -406,7 +412,7 @@ Enable `//#define MANUAL_BED_LEVELING` to access mesh bed leveling option from l
 
 ***
 
-## Auto Bed Leveling <i class="fa fa-sticky-note" aria-hidden="true"></i> <i class="fa fa-desktop" aria-hidden="true"></i>
+### Auto Bed Leveling <i class="fa fa-sticky-note" aria-hidden="true"></i> <i class="fa fa-desktop" aria-hidden="true"></i>
 
 {% highlight cpp %}
 #define AUTO_BED_LEVELING_FEATURE
@@ -416,7 +422,7 @@ If you want to use auto bed leveling feature, enable this. This works almost lik
 
 ***
 
-### Grid
+#### Grid
 
 {% highlight cpp %}
 #define AUTO_BED_LEVELING_GRID
@@ -441,7 +447,7 @@ This option will tell marlin what is the probing resolution would be, 2 and 3 ar
 
 ***
 
-### 3-Point
+#### 3-Point
 
 {% highlight cpp %}
 #define ABL_PROBE_PT_1_X 15
@@ -456,7 +462,7 @@ These are the option for 3-point probing by specifying each one of their coordin
 
 ***
 
-### Offsets <i class="fa fa-sticky-note" aria-hidden="true"></i> <i class="fa fa-desktop" aria-hidden="true"></i>
+#### Offsets <i class="fa fa-sticky-note" aria-hidden="true"></i> <i class="fa fa-desktop" aria-hidden="true"></i>
 
 {% highlight cpp %}
 #define X_PROBE_OFFSET_FROM_EXTRUDER -44  // X offset: -left  [of the nozzle] +right
@@ -476,7 +482,7 @@ This is the position of your probe from your nozzle. To determine exact location
 
 ***
 
-### Procedure <i class="fa fa-exclamation-triangle text-warning" aria-hidden="true"></i>
+#### Procedure <i class="fa fa-exclamation-triangle text-warning" aria-hidden="true"></i>
 
 {% highlight cpp %}
 #define Z_RAISE_BEFORE_PROBING 15   // How much the Z axis will be raised before traveling to the first probing point.
@@ -502,7 +508,7 @@ This one is for custom script, each command are divided with `\n` (Newline) and 
 
 ***
 
-### Probe Type
+#### Probe Type
 
 {% highlight cpp %}
 #define FIX_MOUNTED_PROBE
@@ -517,7 +523,7 @@ This is almost the same like proximity sensors where there are another carriage 
 
 ***
 
-### Probe Safety <i class="fa fa-exclamation-triangle text-danger" aria-hidden="true"></i>
+#### Probe Safety <i class="fa fa-exclamation-triangle text-danger" aria-hidden="true"></i>
 {% highlight cpp %}
 #define Z_SAFE_HOMING
 {% endhighlight %}
@@ -526,9 +532,9 @@ This avoids the risk of z probe going out of the bed when homing all of the axis
 
 ***
 
-# Movement
+## Movement
 
-## Homing Speed <i class="fa fa-exclamation-triangle text-warning" aria-hidden="true"></i>
+### Homing Speed <i class="fa fa-exclamation-triangle text-warning" aria-hidden="true"></i>
 {% highlight cpp %}
 #define HOMING_FEEDRATE {50*45, 50*45, 4*45, 0}
 {% endhighlight %}
@@ -546,7 +552,7 @@ These are the homing speed when doing auto home and auto bed leveling.
 
 ***
 
-## Steps/mm <i class="fa fa-sticky-note-o text-info" aria-hidden="true"></i> <i class="fa fa-desktop text-info" aria-hidden="true"></i> <i class="fa fa-exclamation-triangle text-warning" aria-hidden="true"></i>
+### Steps/mm <i class="fa fa-sticky-note-o text-info" aria-hidden="true"></i> <i class="fa fa-desktop text-info" aria-hidden="true"></i> <i class="fa fa-exclamation-triangle text-warning" aria-hidden="true"></i>
 
 {% highlight cpp %}
 #define DEFAULT_AXIS_STEPS_PER_UNIT   {78.74, 78.74, 2560, 95}
@@ -612,9 +618,9 @@ You should go to `http://prusaprinters.org/calculator/` to calculate the steps
 
 ***
 
-## Acceleration <i class="fa fa-sticky-note-o text-info" aria-hidden="true"></i> <i class="fa fa-desktop text-info" aria-hidden="true"></i> <i class="fa fa-exclamation-triangle text-warning" aria-hidden="true"></i>
+### Acceleration <i class="fa fa-sticky-note-o text-info" aria-hidden="true"></i> <i class="fa fa-desktop text-info" aria-hidden="true"></i> <i class="fa fa-exclamation-triangle text-warning" aria-hidden="true"></i>
 
-### Max Acceleration <i class="fa fa-sticky-note-o text-info" aria-hidden="true"></i> <i class="fa fa-desktop text-info" aria-hidden="true"></i> <i class="fa fa-exclamation-triangle text-danger" aria-hidden="true"></i>
+#### Max Acceleration <i class="fa fa-sticky-note-o text-info" aria-hidden="true"></i> <i class="fa fa-desktop text-info" aria-hidden="true"></i> <i class="fa fa-exclamation-triangle text-danger" aria-hidden="true"></i>
 
 {% highlight cpp %}
 #define DEFAULT_MAX_FEEDRATE          {400, 400, 4, 45}    // (mm/sec)
@@ -640,7 +646,7 @@ These are the maximum allowed acceleration rate that you limit on marlin to. No 
 
 ***
 
-### Default Acceleration <i class="fa fa-sticky-note-o text-info" aria-hidden="true"></i> <i class="fa fa-desktop text-info" aria-hidden="true"></i> <i class="fa fa-exclamation-triangle text-danger" aria-hidden="true"></i>
+#### Default Acceleration <i class="fa fa-sticky-note-o text-info" aria-hidden="true"></i> <i class="fa fa-desktop text-info" aria-hidden="true"></i> <i class="fa fa-exclamation-triangle text-danger" aria-hidden="true"></i>
 
 {% highlight cpp %}
 #define DEFAULT_ACCELERATION          1000    // X, Y, Z and E acceleration in mm/s^2 for printing moves
@@ -668,7 +674,7 @@ These are the default acceleration when movement such as `G0 x20` without `F` ar
 
 ***
 
-### Jerks <i class="fa fa-sticky-note-o text-info" aria-hidden="true"></i> <i class="fa fa-desktop text-info" aria-hidden="true"></i>
+#### Jerks <i class="fa fa-sticky-note-o text-info" aria-hidden="true"></i> <i class="fa fa-desktop text-info" aria-hidden="true"></i>
 
 {% highlight cpp %}
 #define DEFAULT_XYJERK                15.0    // (mm/sec)
@@ -686,9 +692,9 @@ Jerk works in conjunction with acceleration above. Both of acceleration and jerk
 
 ***
 
-# Additional Features <i class="fa fa-sticky-note-o text-info" aria-hidden="true"></i>
+## Additional Features <i class="fa fa-sticky-note-o text-info" aria-hidden="true"></i>
 
-## EEPROM <i class="fa fa-sticky-note-o text-info" aria-hidden="true"></i>
+### EEPROM <i class="fa fa-sticky-note-o text-info" aria-hidden="true"></i>
 
 {% highlight cpp %}
 #define EEPROM_SETTINGS
@@ -713,7 +719,7 @@ M502 - Loads the setting from config.h (this are not saved to the eeeprom by def
 
 ***
 
-## Preheat Presets <i class="fa fa-sticky-note-o text-info" aria-hidden="true"></i> <i class="fa fa-desktop text-info" aria-hidden="true"></i>
+### Preheat Presets <i class="fa fa-sticky-note-o text-info" aria-hidden="true"></i> <i class="fa fa-desktop text-info" aria-hidden="true"></i>
 
 {% highlight cpp %}
 #define PLA_PREHEAT_HOTEND_TEMP 180
@@ -737,9 +743,9 @@ These are preset when you want to preheat your hotend/bed before printing withou
 
 ***
 
-# LCD and SD
+## LCD and SD
 
-## Language
+### Language
 
 {% highlight cpp %}
 #define LANGUAGE_INCLUDE GENERATE_LANGUAGE_INCLUDE(en)
@@ -749,13 +755,13 @@ This will translate marlin into your preferred language, check language.h for mo
 
 ***
 
-## Additional Hardware Support <i class="fa fa-sticky-note text-warning" aria-hidden="true"></i>
+### Additional Hardware Support <i class="fa fa-sticky-note text-warning" aria-hidden="true"></i>
 
 {% highlight cpp %}
 #define SDSUPPORT // Enable SD Card Support in Hardware Console
 {% endhighlight %}
 
-If you're using SD printing either from lcd or sdcard module plugged onto your board directly, enable this. 
+If you're using SD printing either from lcd or sdcard module plugged onto your board directly, enable this.
 
 <div class="panel panel-info">
   <div class="panel-heading">
@@ -767,7 +773,7 @@ If you're using SD printing either from lcd or sdcard module plugged onto your b
 
 ***
 
-## LCD Type
+### LCD Type
 
 {% highlight cpp %}
 #define REPRAP_DISCOUNT_SMART_CONTROLLER
@@ -787,7 +793,7 @@ The above LCD type are commonly used, the rest of the other LCD panel are listed
 
 ***
 
-# Servo
+## Servo
 
 {% highlight cpp %}
 #define NUM_SERVOS 1 // Servo index starts with 0 for M280 command
@@ -797,7 +803,7 @@ Will tell marlin how many servos you will be using. Enable this to enable servo 
 
 ***
 
-## Servo Placement and Angle
+### Servo Placement and Angle
 
 {% highlight cpp %}
 //#define X_ENDSTOP_SERVO_NR 1
@@ -810,7 +816,7 @@ This defines the servo location and extend/retract angle values. To find the val
 
 ***
 
-## Servo Deactivation
+### Servo Deactivation
 
 {% highlight cpp %}
 #define DEACTIVATE_SERVOS_AFTER_MOVE
@@ -826,7 +832,7 @@ Use a value with a margin so that servo able to move the probe to its position b
 
 ***
 
-# Filament Sensor
+## Filament Sensor
 
 {% highlight cpp %}
 //#define FILAMENT_WIDTH_SENSOR
