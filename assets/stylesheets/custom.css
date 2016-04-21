@@ -1,5 +1,9 @@
+/*
+ * Miscellaneous
+ */
+
 body {
-  padding-top: 50px;
+  padding-top: 70px;
   padding-bottom: 20px;
 }
 
@@ -7,83 +11,88 @@ p {
     text-align: justify;
 }
 
-.custom-top-offset {
-	padding-top: 40px;
-}
-
 .custom-border-warning {
     border-left-color: #f0ad4e;
-}
-
-.custom-small-font {
-  font-size: 90%;
 }
 
 /*
  * Sidebar
  */
-
-/* Hide for mobile, show later */
-.sidebar {
-  font-size: 90%;
-  display: none;
-}
-@media (min-width: 768px) {
-  .sidebar {
-    position: fixed;
-    top: 51px;
+.custom-fixed-sidebar {
+    background-color: #f5f5f5;
     bottom: 0;
-    left: 0;
-    z-index: 1000;
     display: block;
-    padding: 20px;
+    left: 0;
     overflow-x: hidden;
     overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-    background-color: #f5f5f5;
-    border-right: 1px solid #eee;
-  }
-}
-
-/* Sidebar navigation */
-.nav-sidebar {
-  margin-right: -21px; /* 20px padding + 1px border */
-  margin-bottom: 20px;
-  margin-left: -20px;
-}
-.nav-sidebar > li > a {
-  padding-right: 20px;
-  padding-left: 20px;
-}
-.nav-sidebar > .active > a,
-.nav-sidebar > .active > a:hover,
-.nav-sidebar > .active > a:focus {
-  color: #fff;
-  background-color: #428bca;
+    padding: 70px 0px 20px 0px;
+    position: fixed;
+    top: 0px;
 }
 
 /*
- * Main content
+ * Tables ??
  */
-
-.main {
-  padding: 20px;
-}
-@media (min-width: 768px) {
-  .main {
-    padding-right: 40px;
-    padding-left: 40px;
-  }
-}
-.main .page-header {
-  margin-top: 0;
-}
-
-.preset th{
+.preset th {
   border: 1px solid;
   text-align: center;
 }
 
-.preset td{
-border: 1px solid;
+.preset td {
+  border: 1px solid;
   padding: 5px;
+}
+
+/*
+ * Table of Contents
+ * by @gregfranko
+ */
+.tocify {
+    width: 100%;
+    max-height: 90%;
+}
+
+/* The Table of Contents is composed of multiple nested unordered lists.  These styles remove the default styling of an unordered list because it is ugly. */
+.tocify ul, .tocify li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border: none;
+    line-height: 30px;
+}
+
+/* Top level header elements */
+.tocify-header {
+    text-indent: 10px;
+}
+
+/* Top level subheader elements.  These are the first nested items underneath a header element. */
+.tocify-subheader {
+    text-indent: 20px;
+    display: none;
+}
+
+/* Makes the font smaller for all subheader elements. */
+.tocify-subheader li {
+    font-size: 12px;
+}
+
+/* Further indents second level subheader elements. */
+.tocify-subheader .tocify-subheader {
+    text-indent: 30px;
+}
+
+/* Further indents third level subheader elements. You can continue this pattern if you have more nested elements. */
+.tocify-subheader .tocify-subheader .tocify-subheader {
+    text-indent: 40px;
+}
+
+/* Twitter Bootstrap Override Style */
+.nav-list > li > a, .nav-list .nav-header {
+    margin: 0px;
+}
+
+/* Twitter Bootstrap Override Style */
+.nav-list > li > a {
+    padding: 5px;
 }
