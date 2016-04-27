@@ -61,7 +61,7 @@ The most important values to obtain are:
 #define STRING_CONFIG_H_AUTHOR "(none, default config)"
 {% endhighlight %}
 
-This is basically just to show who made the changes to the current firmware settings, this also can be a reference if you're having several config types or marlin versions. This will be displayed when you connect to the board like Pronterface.
+This is basically just to show who made the changes to the current firmware settings, this also can be a reference if you're having several config types or Marlin versions. This will be displayed when you connect to the board like Pronterface.
 
 ***
 
@@ -71,7 +71,7 @@ This is basically just to show who made the changes to the current firmware sett
 #define MOTHERBOARD BOARD_RAMPS_14_EFB
 {% endhighlight %}
 
-This defines what board that you used for your 3D printer. This is to tell marlin to use these specific pins and restrictions for these particular board. Below is the list of the board that can be used with marlin, taken from boards.h.
+This defines what board that you used for your 3D printer. This is to tell Marlin to use these specific pins and restrictions for these particular board. Below is the list of the board that can be used with Marlin, taken from boards.h.
 
 Change the `BOARD_RAMPS_14_EFB` into one of the listed constant below that matches your current board.
 The list below are often used by 3D printer owner, if not listed, kindly check the "boards.h" file
@@ -88,10 +88,9 @@ BOARD_RUMBA             // Rumba
 BOARD_RAMBO             // Rambo
 {% endhighlight %}
 
-NOTE:
-For those who're using sanguino board paired with arduino ide 1.6.8, to add sanguino board to the board list, kindly go to `File > Preference > Additional Boards Manager URLs` and add [this source URL](https://raw.githubusercontent.com/Lauszus/Sanguino/master/package_lauszus_sanguino_index.json).
-
-After adding the above URL, kindly go to `Tools > Boards > Boards Manager` then install Sanguino from the list, an internet connection is required. Credit goes to [dustreprap](http://dustsreprap.blogspot.my/2015/06/better-way-to-install-sanguino-in.html).
+{% alert info %}
+For those who're using sanguino board paired with arduino ide 1.6.8, to add sanguino board to the board list, kindly go to `File > Preference > Additional Boards Manager URLs` and add [this source URL](https://raw.githubusercontent.com/Lauszus/Sanguino/master/package_lauszus_sanguino_index.json). After adding the above URL, kindly go to `Tools > Boards > Boards Manager` then install Sanguino from the list, an internet connection is required. Credit goes to [dustreprap](http://dustsreprap.blogspot.my/2015/06/better-way-to-install-sanguino-in.html).
+{% endalert %}
 
 ***
 
@@ -146,7 +145,7 @@ What power supply you're using. ATX;1 or X-Box 360;2. If you're using LED Strip 
 
 ## Thermal Settings
 
-### Thermistor <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+### Thermistor
 
 {% highlight cpp %}
 #define TEMP_SENSOR_0 5 //This is your main extruder
@@ -158,7 +157,11 @@ What power supply you're using. ATX;1 or X-Box 360;2. If you're using LED Strip 
 
 These are the profile of your thermistors. Generic profile are often "1" which is "100K Thermistor". If you can get exact brand and thermistor type for your hotend/heated bed, use that particular number/value/profile. Because each thermistor has their own characteristics to report temperature.
 
-This is crucial to ensure exact temperature measurement. If you're unsure, just use 100k thermistor for `temp_sensor` and `temp_sensor_bed`
+{% alert warning %}
+This is crucial to ensure exact temperature measurement.
+
+If you're unsure, just use 100k thermistor for `temp_sensor` and `temp_sensor_bed`
+{% endalert %}
 
 ***
 
@@ -172,7 +175,7 @@ This is crucial to ensure exact temperature measurement. If you're unsure, just 
 #define BED_MINTEMP 5
 {% endhighlight %}
 
-One of the safety feature that will prevent the printer from working. Room temperature typically has a range of about 10-40'c, if one of the sensor goes below the specified value above, marlin would prevent the user from using it.
+One of the safety feature that will prevent the printer from working. Room temperature typically has a range of about 10-40'c, if one of the sensor goes below the specified value above, Marlin would prevent the user from using it.
 
 `MINTEMP ERROR`: This error means your thermistor isn't connected into the temperature pin
 
@@ -184,29 +187,29 @@ One of the safety feature that will prevent the printer from working. Room tempe
 #define BED_MAXTEMP 130
 {% endhighlight %}
 
-Maximum temperature for these heating element. If marlin reads the temperature past these values, it will stop working instantly for safety purpose. For E3D V6, 285 is the maximum value to most people.
+Maximum temperature for these heating element. If Marlin reads the temperature past these values, it will stop working instantly for safety purpose. For E3D V6, 285 is the maximum value to most people.
 
 `MAXTEMP ERROR`: This means the thermistor legs/wires are shorted each other.
 
 ***
 
-### PID <i class="fa fa-sticky-note-o text-info" aria-hidden="true"></i> <i class="fa fa-desktop text-info" aria-hidden="true"></i>
+### PID
 
 This is a setting to ensure stable temperature on your hotend and heated bed. Marlin will try to hit the target temperature based on the PID values. This is very important for hotends so that it won't overshoot when trying to reach the temperature and during printing
 
-Kindly refer [here](http://reprap.org/wiki/PID_Tuning) for having marlin to do the auto tune the PID. These are usually done once when you're changing thermistor, heating element, the board and power supply; 12v and 24v system.
+Kindly refer [here](http://reprap.org/wiki/PID_Tuning) for having Marlin to do the auto tune the PID. These are usually done once when you're changing thermistor, heating element, the board and power supply; 12v and 24v system.
 
 The target temperature during auto tune process is your highest target temperature (In my opinion).
 
 More detailed info about what PID are [here](https://en.wikipedia.org/wiki/PID_controller).
 
-<div class="panel panel-info">
-  <div class="panel-heading">
-    <h4 class="panel-title"><i class="fa fa-sticky-note" aria-hidden="true"></i> <i class="fa fa-desktop" aria-hidden="true"></i>
-    PID settings</h4></div>
-  <div class="panel-body" markdown="1">`M301` sets up Hotend PID, `M304` sets up bed PID. LCD Accessible (Hotend only).
-  </div>
-</div>
+{% alert info %}
+`M301` sets up Hotend PID.
+
+`M304` sets up bed PID.
+
+This function is accessible trough the LCD (Hotend only).
+{% endalert %}
 
 ***
 
@@ -231,18 +234,22 @@ This will prevent the extruder motor from moving if the hotend temperature is le
 // #define THERMAL_PROTECTION_BED     // Enable thermal protection for the heated bed
 {% endhighlight %}
 
-This one is a cool feature to have. This one actually measures the current temperature and then sets a timer to it. If the timeout has reached then marlin will stop the printing process.
+This one is a cool feature to have. This one actually measures the current temperature and then sets a timer to it. If the timeout has reached then Marlin will stop the printing process.
 
 The idea here is to avoid any loose thermistor fixture to its designated slot:
-For example it suddenly came loose in the hotend during printing; target temperature at 230'c, but thermistor reading on marlin shows 170'c, marlin thinks the hotend temperature is low and need to be powered. Without this, the hotend will heat up indefinitely until it is bright red and eventually burn everything due to misreading of the temperature from the loose thermistor.
+For example it suddenly came loose in the hotend during printing; target temperature at 230'c, but thermistor reading on Marlin shows 170'c, Marlin thinks the hotend temperature is low and need to be powered. Without this, the hotend will heat up indefinitely until it is bright red and eventually burn everything due to misreading of the temperature from the loose thermistor.
 
-How it works is; target temperature at 190'c, after reaching 190'c this protection will start its timeout. If the reading was below the target then marlin will power the hotend with timeout running as well. If the timeout has been triggered when the heating element still fully powered, marlin will stop the whole process. Same goes for the heated bed.
+How it works is; target temperature at 190'c, after reaching 190'c this protection will start its timeout. If the reading was below the target then Marlin will power the hotend with timeout running as well. If the timeout has been triggered when the heating element still fully powered, Marlin will stop the whole process. Same goes for the heated bed.
 
 The config of these parameters can be found in "configuration_adv.h" file.
 
-Tip: In case of false thermal runaways, increase the watch period.
-  #define WATCH_TEMP_PERIOD 20                // Seconds
-  #define WATCH_TEMP_INCREASE 2               // Degrees Celsius
+{% panel info %}
+In case of false thermal runaways, increase the watch period:
+{% highlight cpp %}
+#define WATCH_TEMP_PERIOD 20   // Seconds
+#define WATCH_TEMP_INCREASE 2  // Degrees Celsius
+{% endhighlight %}
+{% endpanel %}
 
 ***
 
@@ -313,7 +320,7 @@ Tip: 0.02 mm is normally acceptable for bed leveling to work.
 
 ***
 
-### Motor Movement <i class="fa fa-exclamation-triangle text-danger" aria-hidden="true"></i>
+### Motor Movement
 
 {% highlight cpp %}
 #define INVERT_X_DIR true
@@ -325,18 +332,14 @@ Tip: 0.02 mm is normally acceptable for bed leveling to work.
 #define INVERT_E3_DIR false
 {% endhighlight %}
 These inverts the motor movement for each axis. Usually flipping the connector will be okay but if that's such a hassle, just invert these without the need to fiddle with your electronic.
-<div class="panel panel-danger">
-  <div class="panel-heading">
-    <h4 class="panel-title"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-    WARNING</h4></div>
-  <div class="panel-body" markdown="1">
-  If you're not careful on this, your axis will crash to the wrong direction. Either flip the connector or invert the value above. Make sure you try to move your axis manually via pronterface/repetier-host or lcd menu. Make sure all of your axis are in the middle of their travel to avoid them crashing.
-  </div>
-</div>
+
+{% alert danger %}
+If you're not careful on this, your axis will crash to the wrong direction. Either flip the connector or invert the value above. Make sure you try to move your axis manually via pronterface/repetier-host or lcd menu. Make sure all of your axis are in the middle of their travel to avoid them crashing.
+{% endalert %}
 
 ***
 
-### Axis Homing <i class="fa fa-exclamation-triangle text-warning" aria-hidden="true"></i> <i class="fa fa-sticky-note-o text-info" aria-hidden="true"></i> <i class="fa fa-desktop text-info" aria-hidden="true"></i>
+### Axis Homing
 
 {% highlight cpp %}
 //#define MIN_Z_HEIGHT_FOR_HOMING 4
@@ -350,15 +353,11 @@ This works like how a probe based 3d printer works when homing. Instead of incre
 #define Z_HOME_DIR -1
 {% endhighlight %}
 
-This tells marlin where the head is at when all the endstop has been triggered. typical setup are all at min position; bottom front left side of the bed. In some cases, some owner puts the home endstops at max position and these needs to be changed if max position are used.
-<div class="panel panel-warning">
-  <div class="panel-heading">
-    <h4 class="panel-title"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-    WARNING</h4></div>
-  <div class="panel-body" markdown="1">
-Setting the home_dir would lead to a mirrored print after it has finished.
-  </div>
-  </div>
+This tells Marlin where the head is at when all the endstop has been triggered. typical setup are all at min position; bottom front left side of the bed. In some cases, some owner puts the home endstops at max position and these needs to be changed if max position are used.
+
+{% alert danger %}
+Setting the `home_dir` would lead to a mirrored print after it has finished.
+{% endalert %}
 
 {% highlight cpp %}
 #define min_software_endstops true
@@ -378,13 +377,9 @@ These are one of the safety features that prevents manual movement exceeding the
 
 Usually the `MIN_POS` are left at 0 value and `MAX_POS` depends on your maximum travel. Setting this too high would risk the printer's carriage crashing to each ends. This needs to be set in conjunctin with home offset eeprom variable to work properly. If you don't want to set using eeprom, you can fiddle with `MIN_POS` value above as a substitute to eeprom's Home Offset.
 
-<div class="panel panel-info">
-  <div class="panel-heading">
-    <h4 class="panel-title"><i class="fa fa-sticky-note" aria-hidden="true"></i> <i class="fa fa-desktop" aria-hidden="true"></i>
-    Home Offset</h4></div>
-  <div class="panel-body" markdown="1">Values are pulled from `MIN_POS`. Use `M206` from pronterface
-  </div>
-</div>
+{% panel info Home Offset %}
+Values are pulled from `MIN_POS`. Use `M206` from pronterface
+{% endpanel %}
 
 ***
 
@@ -412,7 +407,7 @@ Enable `//#define MANUAL_BED_LEVELING` to access mesh bed leveling option from l
 
 ***
 
-### Auto Bed Leveling <i class="fa fa-sticky-note" aria-hidden="true"></i> <i class="fa fa-desktop" aria-hidden="true"></i>
+### Auto Bed Leveling
 
 {% highlight cpp %}
 #define AUTO_BED_LEVELING_FEATURE
@@ -443,7 +438,7 @@ These specifies min and max position for grid matrix on your bed.
 #define AUTO_BED_LEVELING_GRID_POINTS 3
 {% endhighlight %}
 
-This option will tell marlin what is the probing resolution would be, 2 and 3 are often used. These value will be squared, E.g using 2 will probe 4 points, using 4 will probe 16 points.
+This option will tell Marlin what is the probing resolution would be, 2 and 3 are often used. These value will be squared, E.g using 2 will probe 4 points, using 4 will probe 16 points.
 
 ***
 
@@ -462,27 +457,23 @@ These are the option for 3-point probing by specifying each one of their coordin
 
 ***
 
-#### Offsets <i class="fa fa-sticky-note" aria-hidden="true"></i> <i class="fa fa-desktop" aria-hidden="true"></i>
+#### Offsets
 
 {% highlight cpp %}
 #define X_PROBE_OFFSET_FROM_EXTRUDER -44  // X offset: -left  [of the nozzle] +right
 #define Y_PROBE_OFFSET_FROM_EXTRUDER -8  // Y offset: -front [of the nozzle] +behind
-#define Z_PROBE_OFFSET_FROM_EXTRUDER -2.50   // Z offset: -below [the nozzle] (for most negative! positive when using tilt probes or the nozzle based probes)`
+#define Z_PROBE_OFFSET_FROM_EXTRUDER -2.50   // Z offset: -below [the nozzle](for most negative! positive when using tilt probes or the nozzle based probes)`
 {% endhighlight %}
 
 This is the position of your probe from your nozzle. To determine exact location, use relative position by specifying `G92 x0 y0 z0`, then slowly work your way to find exact probe point of your probe. Use Pronterface/repeter-host to get your own value for the above offset setup and issue `M114` to get the exact values.
 
-<div class="panel panel-info">
-  <div class="panel-heading">
-    <h4 class="panel-title"><i class="fa fa-sticky-note" aria-hidden="true"></i> <i class="fa fa-desktop" aria-hidden="true"></i>
-    EEPROM: Z-Probe Offset</h4></div>
-  <div class="panel-body" markdown="1">Will be pulled from `#define Z_PROBE_OFFSET_FROM_EXTRUDER -2.50` and the command are `M851`
-  </div>
-</div>
+{% panel info EEPROM: Z-Probe Offset %}
+Will be pulled from `#define Z_PROBE_OFFSET_FROM_EXTRUDER -2.50` and the command are `M851`.
+{% endpanel %}
 
 ***
 
-#### Procedure <i class="fa fa-exclamation-triangle text-warning" aria-hidden="true"></i>
+#### Procedure
 
 {% highlight cpp %}
 #define Z_RAISE_BEFORE_PROBING 15   // How much the Z axis will be raised before traveling to the first probing point.
@@ -492,13 +483,9 @@ This is the position of your probe from your nozzle. To determine exact location
 
 When the G29 command has been issued, z axis will move between these values. This too are important so that if your bed are not perpendicular, the probe will get triggered especially servo based probe that has switch, this is to avoid the lever from brushing against the bed
 
-<div class="panel panel-warning">
-  <div class="panel-heading">
-    <h4 class="panel-title"><i class="fa fa-exclamation-triangle text-warning" aria-hidden="true"></i>
-    G29 Movement</h4></div>
-  <div class="panel-body" markdown="1">Make sure you have enough clearance when the probe are moving between probing points to avoid complications. It is necessary not to let the probe get triggered during movement to the next probe point.
-  </div>
-</div>
+{% panel warning G29 Movement %}
+Make sure you have enough clearance when the probe are moving between probing points to avoid complications. It is necessary not to let the probe get triggered during movement to the next probe point.
+{% endpanel %}
 
 {% highlight cpp %}
 #define Z_PROBE_END_SCRIPT "G1 Z10 F12000\nG1 X15 Y330\nG1 Z0.5\nG1 Z10" // These commands will be executed in the end of G29 routine.
@@ -523,7 +510,8 @@ This is almost the same like proximity sensors where there are another carriage 
 
 ***
 
-#### Probe Safety <i class="fa fa-exclamation-triangle text-danger" aria-hidden="true"></i>
+#### Probe Safety
+
 {% highlight cpp %}
 #define Z_SAFE_HOMING
 {% endhighlight %}
@@ -534,25 +522,21 @@ This avoids the risk of z probe going out of the bed when homing all of the axis
 
 ## Movement
 
-### Homing Speed <i class="fa fa-exclamation-triangle text-warning" aria-hidden="true"></i>
+### Homing Speed
+
 {% highlight cpp %}
 #define HOMING_FEEDRATE {50*45, 50*45, 4*45, 0}
 {% endhighlight %}
 
 These are the homing speed when doing auto home and auto bed leveling.
 
-<div class="panel panel-warning">
-  <div class="panel-heading">
-    <h4 class="panel-title"><i class="fa fa-exclamation-triangle text-warning" aria-hidden="true"></i>
-    Warning</h4></div>
-  <div class="panel-body" markdown="1">It is advisable not to use high value to achieve better accuracies as well as avoid skipping steps on your stepper motor.
-  </div>
-</div>
-
+{% alert warning %}
+It is advisable not to use high value to achieve better accuracies as well as avoid skipping steps on your stepper motor.
+{% endalert %}
 
 ***
 
-### Steps/mm <i class="fa fa-sticky-note-o text-info" aria-hidden="true"></i> <i class="fa fa-desktop text-info" aria-hidden="true"></i> <i class="fa fa-exclamation-triangle text-warning" aria-hidden="true"></i>
+### Steps/mm
 
 {% highlight cpp %}
 #define DEFAULT_AXIS_STEPS_PER_UNIT   {78.74, 78.74, 2560, 95}
@@ -560,37 +544,23 @@ These are the homing speed when doing auto home and auto bed leveling.
 
 This is the most crucial setting for your settings. These will determine the printer head will move according to the specified distance/location or not. The value above (X, Y, Z, E) are the default value for (20 tooth gt2 pulley, M10 metric threaded rods, mk8 extruder style) and based on A4899 stepstick.
 
-<div class="panel panel-info">
-  <div class="panel-heading">
-    <h4 class="panel-title"><i class="fa fa-sticky-note-o text-info" aria-hidden="true"></i>
-    DRV8825</h4></div>
-  <div class="panel-body" markdown="1">These values had to be doubled; A4899 = 1/16 step, DRV8825 = 1/32 step
+{% panel info DRV8825 %}
+These values had to be doubled; A4899 = 1/16 step, DRV8825 = 1/32 step
 You should go to `http://prusaprinters.org/calculator/` to calculate the steps
-  </div>
-</div>
+{% endpanel %}
 
-<div class="panel panel-info">
-  <div class="panel-heading">
-    <h4 class="panel-title"><i class="fa fa-sticky-note-o text-info" aria-hidden="true"></i>
-    Steps Per Unit</h4></div>
-  <div class="panel-body" markdown="1">Pulled from the above setting, configured via `M92` command.
-  </div>
-</div>
+{% panel info Steps Per Unit %}
+Pulled from the above setting, configured via `M92` command.
+{% endpanel %}
 
-<div class="panel panel-warning">
-  <div class="panel-heading">
-    <h4 class="panel-title"><i class="fa fa-exclamation-triangle text-warning" aria-hidden="true"></i>
-    Warning</h4></div>
-  <div class="panel-body" markdown="1">It is advisable to use exact or reference value below so you're able to achieve higher precision and correct distance travelled.
-  </div>
-</div>
+{% alert warning %}
+It is advisable to use exact or reference value below so you're able to achieve higher precision and correct distance travelled.
+{% endalert %}
 
-<div class="panel panel-info">
-  <div class="panel-heading">
-    <h4 class="panel-title"><i class="fa fa-sticky-note-o text-info" aria-hidden="true"></i>
-    Some presets to get you started (1/16 microstepping)</h4></div>
-  <div class="panel-body" markdown="1">
-  <table class="preset">
+{% panel info %}
+Some presets to get you started (1/16 microstepping)
+
+<table class="preset">
 <tr>
 	<th>Type</th>
 	<th>Steps/mm</th>
@@ -612,41 +582,33 @@ You should go to `http://prusaprinters.org/calculator/` to calculate the steps
 	<td>406</td>
 </tr>
   </table>
-  </div>
-</div>
+{% endpanel %}
 
 
 ***
 
-### Acceleration <i class="fa fa-sticky-note-o text-info" aria-hidden="true"></i> <i class="fa fa-desktop text-info" aria-hidden="true"></i> <i class="fa fa-exclamation-triangle text-warning" aria-hidden="true"></i>
+### Acceleration
 
-#### Max Acceleration <i class="fa fa-sticky-note-o text-info" aria-hidden="true"></i> <i class="fa fa-desktop text-info" aria-hidden="true"></i> <i class="fa fa-exclamation-triangle text-danger" aria-hidden="true"></i>
+#### Max Acceleration
 
 {% highlight cpp %}
 #define DEFAULT_MAX_FEEDRATE          {400, 400, 4, 45}    // (mm/sec)
 #define DEFAULT_MAX_ACCELERATION      {5000,5000,50,5000}    // X, Y, Z, E maximum start speed for accelerated moves. E default values are good for Skeinforge 40+, for older versions raise them a lot.
 {% endhighlight %}
-These are the maximum allowed acceleration rate that you limit on marlin to. No matter how high your specified acceleration on `G0` commands are, it will be limited to the above values.
 
-<div class="panel panel-danger">
-  <div class="panel-heading">
-    <h4 class="panel-title"><i class="fa fa-exclamation-triangle text-danger" aria-hidden="true"></i>
-    </h4></div>
-  <div class="panel-body" markdown="1"> Avoid setting this too high to avoid skipping steps during movement especially on high speed movements.
-  </div>
-</div>
+These are the maximum allowed acceleration rate that you limit on Marlin to. No matter how high your specified acceleration on `G0` commands are, it will be limited to the above values.
 
-<div class="panel panel-info">
-  <div class="panel-heading">
-    <h4 class="panel-title"><i class="fa fa-sticky-note-o text-info" aria-hidden="true"></i> <i class="fa fa-desktop text-info" aria-hidden="true"></i>
-    Maximum Acceleration (mm/s2)</h4></div>
-  <div class="panel-body" markdown="1">Pulled from the above setting, on `M201` command.
-  </div>
-</div>
+{% alert danger %}
+Avoid setting this too high to avoid skipping steps during movement especially on high speed movements.
+{% endalert %}
+
+{% panel info Maximum Acceleration (mm/s2) %}
+Pulled from the above setting, on `M201` command.
+{% endpanel %}
 
 ***
 
-#### Default Acceleration <i class="fa fa-sticky-note-o text-info" aria-hidden="true"></i> <i class="fa fa-desktop text-info" aria-hidden="true"></i> <i class="fa fa-exclamation-triangle text-danger" aria-hidden="true"></i>
+#### Default Acceleration
 
 {% highlight cpp %}
 #define DEFAULT_ACCELERATION          1000    // X, Y, Z and E acceleration in mm/s^2 for printing moves
@@ -656,25 +618,18 @@ These are the maximum allowed acceleration rate that you limit on marlin to. No 
 
 These are the default acceleration when movement such as `G0 x20` without `F` are issued (acceleration/speed).
 
-<div class="panel panel-danger">
-  <div class="panel-heading">
-    <h4 class="panel-title"><i class="fa fa-exclamation-triangle text-danger" aria-hidden="true"></i>
-    </h4></div>
-  <div class="panel-body" markdown="1"> Do not set these too high as there are mechanical constraints too that might make your stepper motor make a whining noise or skipping steps when it starts to move or between movements.
-  </div>
-</div>
+{% alert danger %}
+Do not set these too high as there are mechanical constraints too that might make your stepper motor make a whining noise or skipping steps when it starts to move or between movements.
+{% endalert %}
 
-<div class="panel panel-info">
-  <div class="panel-heading">
-    <h4 class="panel-title"><i class="fa fa-sticky-note-o text-info" aria-hidden="true"></i> <i class="fa fa-desktop text-info" aria-hidden="true"></i>
-    Accelerations: P=printing, R=retract and T=travel</h4></div>
-  <div class="panel-body" markdown="1">Pulled from the above setting, on `M204` command.
-  </div>
-</div>
+{% alert info %}
+Accelerations: P=printing, R=retract and T=travel
+Pulled from the above setting, on `M204` command.
+{% endalert %}
 
 ***
 
-#### Jerks <i class="fa fa-sticky-note-o text-info" aria-hidden="true"></i> <i class="fa fa-desktop text-info" aria-hidden="true"></i>
+#### Jerks
 
 {% highlight cpp %}
 #define DEFAULT_XYJERK                15.0    // (mm/sec)
@@ -682,13 +637,9 @@ These are the default acceleration when movement such as `G0 x20` without `F` ar
 
 Jerk works in conjunction with acceleration above. Both of acceleration and jerk will affect your print quality too especially cube and round shape.
 
-<div class="panel panel-info">
-  <div class="panel-heading">
-    <h4 class="panel-title"><i class="fa fa-sticky-note-o text-info" aria-hidden="true"></i> <i class="fa fa-desktop text-info" aria-hidden="true"></i>
-    Advanced variables: S=Min feedrate (mm/s), T=Min travel feedrate (mm/s), B=minimum segment time (ms), X=maximum XY jerk (mm/s),  Z=maximum Z jerk (mm/s),  E=maximum E jerk (mm/s)</h4></div>
-  <div class="panel-body" markdown="1">Pulled from the above setting, on `M205` command.
-  </div>
-</div>
+{% alert info %}
+Advanced variables: S=Min feedrate (mm/s), T=Min travel feedrate (mm/s), B=minimum segment time (ms), pulled from the above setting, on `M205` command.
+{% endalert %}
 
 ***
 
@@ -751,7 +702,7 @@ These are preset when you want to preheat your hotend/bed before printing withou
 #define LANGUAGE_INCLUDE GENERATE_LANGUAGE_INCLUDE(en)
 {% endhighlight %}
 
-This will translate marlin into your preferred language, check language.h for more info
+This will translate Marlin into your preferred language, check language.h for more info
 
 ***
 
@@ -799,7 +750,7 @@ The above LCD type are commonly used, the rest of the other LCD panel are listed
 #define NUM_SERVOS 1 // Servo index starts with 0 for M280 command
 {% endhighlight %}
 
-Will tell marlin how many servos you will be using. Enable this to enable servo functionality else servo control will not work
+Will tell Marlin how many servos you will be using. Enable this to enable servo functionality else servo control will not work
 
 ***
 
@@ -826,7 +777,7 @@ This defines the servo location and extend/retract angle values. To find the val
 #endif
 {% endhighlight %}
 
-This is to deactivate the servo after movement. This is recommended to be enabled to avoid interference when marlin tries to hold the servo even on retract position. This is due to high amperage generated by the extruder motor wiring during movement (printing) and cause the servo gone mad or moves on its own when it wasn't supposed to.
+This is to deactivate the servo after movement. This is recommended to be enabled to avoid interference when Marlin tries to hold the servo even on retract position. This is due to high amperage generated by the extruder motor wiring during movement (printing) and cause the servo gone mad or moves on its own when it wasn't supposed to.
 
 Use a value with a margin so that servo able to move the probe to its position before deactivation.
 
@@ -838,7 +789,7 @@ Use a value with a margin so that servo able to move the probe to its position b
 //#define FILAMENT_WIDTH_SENSOR
 {% endhighlight %}
 
-This if you have filament width sensor `http://www.thingiverse.com/thing:454584`. This eliminates the need of doign flow rate calibration and marlin will adjust the flow rate according to the sensed filament width
+This if you have filament width sensor `http://www.thingiverse.com/thing:454584`. This eliminates the need of doign flow rate calibration and Marlin will adjust the flow rate according to the sensed filament width
 
 {% highlight cpp %}
 #define DEFAULT_NOMINAL_FILAMENT_DIA 3.00
