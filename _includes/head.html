@@ -7,7 +7,7 @@
 
     <link rel="icon" href="{{ site.github.url }}/{{ site.base.assets }}/favicon.ico">
     <link rel="stylesheet" href="{{ site.github.url }}/{{ site.base.stylesheet }}/bootstrap.min.css">
-    <script type="text/javascript" src="{{ site.github.url }}/{{ site.base.javascript }}/head.min.js"></script>
+    <link rel="stylesheet" href="{{ site.github.url }}/{{ site.base.stylesheet }}/readable.min.css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -16,6 +16,7 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <script type="text/javascript" src="{{ site.github.url }}/{{ site.base.javascript }}/head.min.js"></script>
     <script type="text/javascript"><!--
         /**
          * As Github pages do not support https for custom domains
@@ -31,7 +32,6 @@
          * with the main page.
          */
         head.load(
-            "{{ site.github.url }}/{{ site.base.stylesheet }}/readable.min.css",
             "{{ site.github.url }}/{{ site.base.stylesheet }}/font-awesome.min.css",
             "{{ site.github.url }}/{{ site.base.stylesheet }}/syntax.css",
             "{{ site.github.url }}/{{ site.base.stylesheet }}/custom.css",
@@ -41,14 +41,16 @@
             "{{ site.github.url }}/{{ site.base.javascript }}/jquery.tocify.min.js",
             "{{ site.github.url }}/{{ site.base.javascript }}/bootstrap.min.js",
             "{{ site.github.url }}/{{ site.base.javascript }}/holder.min.js",
-            "{{ site.github.url }}/{{ site.base.javascript }}/custom.js"{% if page.layout == 'forms' %},
-
+            "{{ site.github.url }}/{{ site.base.javascript }}/custom.js"
+            /*
+            "{{ site.github.url }}/{{ site.base.javascript }}/tv4.min.js",
             "{{ site.github.url }}/{{ site.base.javascript }}/angular.min.js",
             "{{ site.github.url }}/{{ site.base.javascript }}/angular-sanitize.min.js",
-            "{{ site.github.url }}/{{ site.base.javascript }}/tv4.min.js",
             "{{ site.github.url }}/{{ site.base.javascript }}/ObjectPath.js",
+            "{{ site.github.url }}/{{ site.base.javascript }}/ui-bootstrap-1.3.2.min.js",
             "{{ site.github.url }}/{{ site.base.javascript }}/schema-form.min.js",
-            "{{ site.github.url }}/{{ site.base.javascript }}/bootstrap-decorator.min.js"{% endif %}
+            "{{ site.github.url }}/{{ site.base.javascript }}/bootstrap-decorator.min.js"
+            */
         );
     --></script>
     <!-- /head -->
