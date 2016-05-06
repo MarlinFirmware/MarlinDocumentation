@@ -517,7 +517,12 @@ This is almost the same like proximity sensors where there are another carriage 
 {% endhighlight %}
 
 This avoids the risk of z probe going out of the bed when homing all of the axis especially when it is the z axis's turn to home. This will bring the z axis probe into the middle of the bed then wil do the z homing to find z position. Disable this `#define Z_SAFE_HOMING` if you're using more tan 1 z axis sensor (probes and switch) and enable this`#define Z_MIN_PROBE_USES_Z_MIN_ENDSTOP_PIN` if you want to have your printer head to be parked outside of the printing area. These will work together where usign the G28 command will not going to use the z-probe while using the G29 will use the z-probe instead of the default z min switch. If `#define Z_SAFE_HOMING` is enabled, then the z min switch will never be triggered since the head will always move to the center of the bed area.
-
+{% alert info %}
+As of 1.1.0-RC6, this has been disabled by default
+{% endalert %}
+{% alert danger %}
+Those who're using auto bed leveling and don't use another z min endstop, enable this option to avoid complications in the future
+{% endalert %}
 ***
 
 ## Movement
@@ -622,10 +627,9 @@ These are the default acceleration when movement such as `G0 x20` without `F` ar
 Do not set these too high as there are mechanical constraints too that might make your stepper motor make a whining noise or skipping steps when it starts to move or between movements.
 {% endalert %}
 
-{% alert info %}
-Accelerations: P=printing, R=retract and T=travel
+{% panel info Accelerations: P=printing, R=retract and T=travel %}
 Pulled from the above setting, on `M204` command.
-{% endalert %}
+{% endpanel %}
 
 ***
 
@@ -637,8 +641,10 @@ Pulled from the above setting, on `M204` command.
 
 Jerk works in conjunction with acceleration above. Both of acceleration and jerk will affect your print quality too especially cube and round shape.
 
+{% panel info Advanced variables: S=Min feedrate (mm/s), T=Min travel feedrate (mm/s), B=minimum segment time (ms) %}
+Pulled from the above setting, on `M205` command.
+{% endpanel %}
 {% alert info %}
-Advanced variables: S=Min feedrate (mm/s), T=Min travel feedrate (mm/s), B=minimum segment time (ms), pulled from the above setting, on `M205` command.
 {% endalert %}
 
 ***
@@ -660,13 +666,9 @@ M501 - Load/read the saved setting (not from config.h)
 M502 - Loads the setting from config.h (this are not saved to the eeeprom by default)
 {% endhighlight %}
 
-<div class="panel panel-info">
-  <div class="panel-heading">
-    <h4 class="panel-title"><i class="fa fa-sticky-note-o text-info" aria-hidden="true"></i> <i class="fa fa-desktop text-info" aria-hidden="true"></i>
-    EEPROM</h4></div>
-  <div class="panel-body" markdown="1">By enabling this, you are able to access variables saved in non-volatile memory of your board and features that can be accessed are all marked with <i class="fa fa-sticky-note-o text-info" aria-hidden="true"></i> while those options marked with <i class="fa fa-desktop text-info" aria-hidden="true"></i> can be accessed from LCD directly
-  </div>
-</div>
+{% alert info %}
+By enabling this, you are able to access variables saved in non-volatile memory of your board and features that can be accessed are all marked with <i class="fa fa-sticky-note-o" aria-hidden="true"></i> while those options marked with <i class="fa fa-desktop" aria-hidden="true"></i> can be accessed from LCD directly
+{% endalert %}
 
 ***
 
@@ -684,14 +686,9 @@ M502 - Loads the setting from config.h (this are not saved to the eeeprom by def
 
 These are preset when you want to preheat your hotend/bed before printing without the need of going through control>temperature. These option are accessible from Prepare>Preheat ABS/PLA
 
-<div class="panel panel-info">
-  <div class="panel-heading">
-    <h4 class="panel-title"><i class="fa fa-sticky-note-o text-info" aria-hidden="true"></i> <i class="fa fa-desktop text-info" aria-hidden="true"></i>
-    Material heatup parameters</h4></div>
-  <div class="panel-body" markdown="1">Pulled from the above setting, `M145` command to configure; `M0` is PLA, `M1` is ABS.
-  </div>
-</div>
-
+{% alert info %}
+Pulled from the above setting, `M145` command to configure; `M0` is PLA, `M1` is ABS.
+{% endalert %}
 ***
 
 ## LCD and SD
@@ -706,7 +703,7 @@ This will translate Marlin into your preferred language, check language.h for mo
 
 ***
 
-### Additional Hardware Support <i class="fa fa-sticky-note text-warning" aria-hidden="true"></i>
+### Additional Hardware Support
 
 {% highlight cpp %}
 #define SDSUPPORT // Enable SD Card Support in Hardware Console
@@ -714,13 +711,9 @@ This will translate Marlin into your preferred language, check language.h for mo
 
 If you're using SD printing either from lcd or sdcard module plugged onto your board directly, enable this.
 
-<div class="panel panel-info">
-  <div class="panel-heading">
-    <h4 class="panel-title"><i class="fa fa-sticky-note text-warning" aria-hidden="true"></i>
-    </h4></div>
-  <div class="panel-body" markdown="1">If this is not enabled, SDCard printing will not be supported even if you enabled LCD type with SDCard slot built-in
-  </div>
-</div>
+{% alert info %}
+If this is not enabled, SDCard printing will not be supported even if you enabled LCD type with SDCard slot built-in
+{% endalert %}
 
 ***
 
