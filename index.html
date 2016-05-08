@@ -24,9 +24,8 @@ navigation:
             <div class="row">
               {% for feature in site.data.features %}
                 <div class="col-md-3 col-sm-6">
-                  <img class="img-circle" src="{{ site.github.url }}/{{ site.base.images }}/features/{{ feature.img }}" alt="{{ feature.alt }}" width="120" height="120">
-                  <h3 class="custom-features-heading">{{ feature.title }}</h3>
-                  <p class="text-center"><a class="btn btn-sm custom-features-btn" href="{{ site.github.url }}/{{ site.base.articles }}/{{ feature.link }}" role="button">More info <i class="fa fa-chevron-right fa-1" aria-hidden="true"></i></a></p>
+                  <a href="{{ site.github.url }}/{{ site.base.articles }}/{{ feature.link }}"><img class="img-circle" src="{{ site.github.url }}/{{ site.base.images }}/features/{{ feature.img }}" alt="{{ feature.alt }}" width="120" height="120"></a>
+                  <h3 class="custom-features-heading">{{ feature.title }}</h3></p>
                 </div>
               {% endfor %}
             </div>
@@ -38,12 +37,14 @@ navigation:
             <div class="col-md-9">
               {% for post in site.posts %}
                 <div class="row">
+                  <div class="col-md-12">
                     <div class="custom-post-preview">
                       <a href="{{ post.url }}">
                       <h3 class="custom-post-title">{{ post.title }}</h3></a>
                       <p class="small">Posted by {{ post.author }} on {{ post.date | date: "%A, %B %d %Y" }}</p>
                       <p class="lead">{% if forloop.index == 1 %}{{ post.content }}{% else %}<i class="fa fa-quote-left fa-2x fa-pull-left fa-border" aria-hidden="true"></i> {{ post.excerpt }}{% endif %}</p>
                     </div>
+                  </div>
                 </div>
               {% if forloop.index >= 4 %}{% break %}{% endif %}
               {% endfor %}
