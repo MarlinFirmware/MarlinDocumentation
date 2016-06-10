@@ -601,10 +601,10 @@ Some presets to get you started (1/16 microstepping)
 #define DEFAULT_MAX_ACCELERATION      {5000,5000,50,5000}    // X, Y, Z, E maximum start speed for accelerated moves. E default values are good for Skeinforge 40+, for older versions raise them a lot.
 {% endhighlight %}
 
-These are the maximum allowed acceleration rate that you limit on Marlin to. No matter how high your specified acceleration on `G0` commands are, it will be limited to the above values.
+In any move, the velocities (in mm/sec) in the X,Y,Z and E directions will be limited to the corresponding DEFAULT_MAX_FEEDRATE.  When an axis' velocity is changed its acceleration (in mm/sec^2) will be limited to the corresponding DEFAULT_MAX_ACCELERATION.  However, discontinuous changes of velocity are permitted up to the corresponding *jerk* setting (see below). 
 
 {% alert danger %}
-Avoid setting this too high to avoid skipping steps during movement especially on high speed movements.
+Setting these too high will cause the corresponding stepper motor to lose steps, especially on high speed movements.
 {% endalert %}
 
 {% panel info Maximum Acceleration (mm/s2) %}
@@ -616,15 +616,15 @@ Pulled from the above setting, on `M201` command.
 #### Default Acceleration
 
 {% highlight cpp %}
-#define DEFAULT_ACCELERATION          1000    // X, Y, Z and E acceleration in mm/s^2 for printing moves
-#define DEFAULT_RETRACT_ACCELERATION  2000    // E acceleration in mm/s^2 for retracts
-#define DEFAULT_TRAVEL_ACCELERATION   3000    // X, Y, Z acceleration in mm/s^2 for travel (non printing) moves
+#define DEFAULT_ACCELERATION          1000    // acceleration in mm/s^2 for printing moves
+#define DEFAULT_RETRACT_ACCELERATION  2000    // acceleration in mm/s^2 for retracts
+#define DEFAULT_TRAVEL_ACCELERATION   3000    // acceleration in mm/s^2 for travel (non printing) moves
 {% endhighlight %}
 
-These are the default acceleration when movement such as `G0 x20` without `F` are issued (acceleration/speed).
+These are the default (requested) magnitudes of the acceleration for printing moves (in E and some combination of X, Y and Z), retraction moves (E only) and travel moves (X, Y and/or Z only), respectively. For travel and printing moves these accelerations represent accelerations along the path segment in 3D (XYZ).  Marlin reduces this acceleration if required to avoid exceeding the default maximum acceleration limits for any individual axis, as specified above. 
 
 {% alert danger %}
-Do not set these too high as there are mechanical constraints too that might make your stepper motor make a whining noise or skipping steps when it starts to move or between movements.
+Do not set these too high as there are mechanical constraints that might cause your printer to vibrate excessively or your stepper motor to whine or skip steps.  
 {% endalert %}
 
 {% panel info Accelerations: P=printing, R=retract and T=travel %}
@@ -639,7 +639,7 @@ Pulled from the above setting, on `M204` command.
 #define DEFAULT_XYJERK                15.0    // (mm/sec)
 {% endhighlight %}
 
-Jerk works in conjunction with acceleration above. Both of acceleration and jerk will affect your print quality too especially cube and round shape.
+Jerk works in conjunction with acceleration above. Jerk is the maximum change in velocity (in mm/sec) that can be commanded to occur instantaneously. Both acceleration and jerk can affect your print quality. Set too low, the extruder will linger too long at points of direction change, causing for instance, blobbing at the corners of a cube. Setting too high demands too much of your printers mechanics and you may see ringing artifacts or dropped steps.
 
 {% panel info Advanced variables: S=Min feedrate (mm/s), T=Min travel feedrate (mm/s), B=minimum segment time (ms) %}
 Pulled from the above setting, on `M205` command.
