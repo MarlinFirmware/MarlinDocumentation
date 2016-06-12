@@ -12,9 +12,9 @@ toc:
 ---
 # Introduction
 
-Marlin is a huge C++ program, but when it comes to configuring a build of Marlin there are only two files you need to worry about. To configure Marlin for a specific machine, edit or replace `Configuration.h` and `Configuration_adv.h` prior to building the binary .hex image or flashing the board. If you have these files from an older version of Marlin, you can usually just drop them in place to build the new version. (Marlin will give warnings about any deprecated options.)
+Marlin is a huge C++ program, but when it comes to configuring a build of Marlin there are only two files you need to worry about. To configure Marlin for a specific machine, edit or replace `Configuration.h` and `Configuration_adv.h` prior to building the binary .hex image or flashing the board. If you have these files from an older version of Marlin, you can usually just drop them in place to build the new version. (Marlin will give warnings about any deprecated options.)  Sample configurations for a variety of machines can be found in the example_configurations sub-directory.
 
-Marlin uses “directives” for most of its configuration options. Directives aren't pretty, but they allow Marlin to leave out blocks of code that aren't needed, producing the smallest, fastest code possible for your configuration. Settings are enabled, disabled, and given values using C preprocessor syntax like so:
+Marlin uses compiler “directives” for most of its configuration options. Directives aren't pretty, but they allow Marlin to leave out blocks of code that aren't needed, producing the smallest, fastest code possible for your configuration. Settings are enabled, disabled, and given values using C preprocessor syntax like so:
 
 {% highlight cpp %}
 #define THIS_IS_ENABLED // a comment about this switch
@@ -129,7 +129,7 @@ If you have more than one extruder, uncomment codes below
 //#define EXTRUDER_OFFSET_Y {0.0, 5.00}
 {% endhighlight %}
 
-As for more than 2 extruder at once, I'm not sure hwo to set them up.
+As for more than 2 extruder at once, I'm not sure how to set them up.
 
 ***
 
@@ -155,12 +155,12 @@ What power supply you're using. ATX;1 or X-Box 360;2. If you're using LED Strip 
 #define TEMP_SENSOR_BED 3 //Heated bed
 {% endhighlight %}
 
-These are the profile of your thermistors. Generic profile are often "1" which is "100K Thermistor". If you can get exact brand and thermistor type for your hotend/heated bed, use that particular number/value/profile. Because each thermistor has their own characteristics to report temperature.
+These are the profiles of your thermistors. A generic profile is "1" which is "100K Thermistor". If you can get the exact brand and thermistor type for your hotend/heated bed, use that particular number/value/profile. The thermistor type points to a table of thermistor electrical resistance versus temperature.
 
 {% alert warning %}
-This is crucial to ensure exact temperature measurement.
+This is crucial to obtain accurate temperature measurements.
 
-If you're unsure, just use 100k thermistor for `temp_sensor` and `temp_sensor_bed`
+As a last resort, just use 100k thermistor for `temp_sensor` and `temp_sensor_bed` but be sceptical of the temperature accuracy.
 {% endalert %}
 
 ***
@@ -175,9 +175,9 @@ If you're unsure, just use 100k thermistor for `temp_sensor` and `temp_sensor_be
 #define BED_MINTEMP 5
 {% endhighlight %}
 
-One of the safety feature that will prevent the printer from working. Room temperature typically has a range of about 10-40'c, if one of the sensor goes below the specified value above, Marlin would prevent the user from using it.
+One of the safety features that will prevent the printer from operating. Room temperature typically has a range of about 10-40'c. Should any sensor goes below its specified minimum above, Marlin will shut down the printer.
 
-`MINTEMP ERROR`: This error means your thermistor isn't connected into the temperature pin
+`MINTEMP ERROR`: This error means your thermistor has either disconnected from the temperature pin or has gone open-circuit (or you have your printer in a freezind cold room!)
 
 {% highlight cpp %}
 #define HEATER_0_MAXTEMP 285
@@ -187,28 +187,28 @@ One of the safety feature that will prevent the printer from working. Room tempe
 #define BED_MAXTEMP 130
 {% endhighlight %}
 
-Maximum temperature for these heating element. If Marlin reads the temperature past these values, it will stop working instantly for safety purpose. For E3D V6, 285 is the maximum value to most people.
+Maximum temperature for each heating element. If Marlin reads a temperature above these values, it will immediately shut down for safety reasons. For the E3D V6 hotend, 285 is a maximum value used by many.
 
-`MAXTEMP ERROR`: This means the thermistor legs/wires are shorted each other.
+`MAXTEMP ERROR`: This usually means the thermistor legs/wires are shorted each other.
 
 ***
 
 ### PID
 
-This is a setting to ensure stable temperature on your hotend and heated bed. Marlin will try to hit the target temperature based on the PID values. This is very important for hotends so that it won't overshoot when trying to reach the temperature and during printing
+These are settings to help Marlin attain and track a target temperature of your hotends and heated bed in a stable and accurate fashion. Marlin will try to hit the target temperature in a manner based on these PID values. This is potential safety issue for hotends to avoid excessive overshoots when trying to reach and maintain their target temperature.
 
-Kindly refer [here](http://reprap.org/wiki/PID_Tuning) for having Marlin to do the auto tune the PID. These are usually done once when you're changing thermistor, heating element, the board and power supply; 12v and 24v system.
+Kindly refer [here](http://reprap.org/wiki/PID_Tuning) to have Marlin auto tune the PID settings. This is usually done once any time you change the hot end, thermistor, the heating element, the board or the power supply voltage (12v/24v) - basically anything that changes the thermal characteristics of your hot-end or heated bed.
 
-The target temperature during auto tune process is your highest target temperature (In my opinion).
+The target temperature used during auto tune process calibration should be the highest target temperature you intend to use. (In my opinion- because that is where overshoots would be more likely to be critical).
 
-More detailed info about what PID are [here](https://en.wikipedia.org/wiki/PID_controller).
+More detailed info about PID control is [here](https://en.wikipedia.org/wiki/PID_controller).
 
 {% alert info %}
 `M301` sets up Hotend PID.
 
 `M304` sets up bed PID.
 
-This function is accessible trough the LCD (Hotend only).
+This function also is accessible through the LCD (Hotend only).
 {% endalert %}
 
 ***
@@ -223,28 +223,28 @@ This function is accessible trough the LCD (Hotend only).
 #define EXTRUDE_MINTEMP 170
 {% endhighlight %}
 
-This will prevent the extruder motor from moving if the hotend temperature is less than 170'c.
+This setting would prevent the extruder motor from moving if the hotend temperature is less than 170'c.  For testing purposes with no filament loaded, M302 overrides this setting and permits "cold extrudes".
 
 ***
 
 #### Thermal Runaway Protection
 
 {% highlight cpp %}
-// #define THERMAL_PROTECTION_HOTENDS // Enable thermal protection for all extruders
-// #define THERMAL_PROTECTION_BED     // Enable thermal protection for the heated bed
+#define THERMAL_PROTECTION_HOTENDS // Enable thermal protection for all extruders
+#define THERMAL_PROTECTION_BED     // Enable thermal protection for the heated bed
 {% endhighlight %}
 
-This one is a cool feature to have. This one actually measures the current temperature and then sets a timer to it. If the timeout has reached then Marlin will stop the printing process.
+This one is a cool safety feature to enable. If the current temperature drops below the one Marlin is maintaining, Marlin applies heat and sets a timer. If the time limit is exceeded before restoring the temperature, Marlin shuts down the printer.
 
-The idea here is to avoid any loose thermistor fixture to its designated slot:
-For example it suddenly came loose in the hotend during printing; target temperature at 230'c, but thermistor reading on Marlin shows 170'c, Marlin thinks the hotend temperature is low and need to be powered. Without this, the hotend will heat up indefinitely until it is bright red and eventually burn everything due to misreading of the temperature from the loose thermistor.
+The idea here is to detect when a thermister gets loose and no longer is in good thermal contact with the hotend or heat-bed.
+For example, if it suddenly came loose in the hotend during printing, with a target temperature of, say, 230'c, the thermistor reading on Marlin might drop to, say, 170'c. Marlin thinks the hotend temperature is low and need to be powered. Without this protection, if the thermistor reading failed to reach the target, the hotend would heat up indefinitely, getting red-hot and possibly setting fire to things - all due to misreading of the temperature from the loose thermistor.
 
-How it works is; target temperature at 190'c, after reaching 190'c this protection will start its timeout. If the reading was below the target then Marlin will power the hotend with timeout running as well. If the timeout has been triggered when the heating element still fully powered, Marlin will stop the whole process. Same goes for the heated bed.
+How it works is: with target temperature at 190'c, after reaching the target 190'c, should the reading drop below the target Marlin will power the hotend and start the timer countdown. If the countdown ends with the heating element still fully powered, Marlin will shut down the print. The same goes for the heated bed.
 
 The config of these parameters can be found in "configuration_adv.h" file.
 
 {% panel info %}
-In case of false thermal runaways, increase the watch period:
+In case of false thermal runaways, increase the watch period: (This can happen, for instance, when a part fan starts blowing on the bed thermistor.)
 {% highlight cpp %}
 #define WATCH_TEMP_PERIOD 20   // Seconds
 #define WATCH_TEMP_INCREASE 2  // Degrees Celsius
@@ -266,7 +266,7 @@ In case of false thermal runaways, increase the watch period:
 //#define CONFIG_STEPPERS_TOSHIBA
 {% endhighlight %}
 
-These are for special type of machines and configurations because they uses different types of algorithms to move around. If you're using prusa, mendel, airwolf, or basically a cartesian based printer, as well as nema based stepper motor, leave these commented
+These are for special types of machine configurations which require different algorithms to move around. If you're using a Prusa, Mendel, Airwolf, or basically any cartesian printer (one where each stepper is assigned to drive a separate (x/y/z) axis, leave these commented. For standard NEMA steppers, likewise leave CONFIG_STEPPERS_TOSHIBA alone.
 
 ***
 
@@ -282,7 +282,7 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
 const bool Z_MIN_PROBE_ENDSTOP_INVERTING = false; // set to true to invert the logic of the endstop.
 {% endhighlight %}
 
-Inverting between triggered and open state when issuing M119 command. Usually not touched but if you don't want to fiddle the wiring again, you can invert these.
+Inverting between triggered and open state when issuing M119 command. Usually not touched but if you don't want to fiddle with the wiring, you can invert these.
 
 ***
 
@@ -331,10 +331,10 @@ Tip: 0.02 mm is normally acceptable for bed leveling to work.
 #define INVERT_E2_DIR false
 #define INVERT_E3_DIR false
 {% endhighlight %}
-These inverts the motor movement for each axis. Usually flipping the connector will be okay but if that's such a hassle, just invert these without the need to fiddle with your electronic.
+These inverts the motor movement for each axis. Reversing the wiring of your stepper motor is probably the proper way to do this, but if you don't want to fiddle with the electronics this will fix it.
 
 {% alert danger %}
-If you're not careful on this, your axis will crash to the wrong direction. Either flip the connector or invert the value above. Make sure you try to move your axis manually via pronterface/repetier-host or lcd menu. Make sure all of your axis are in the middle of their travel to avoid them crashing.
+If you're not careful on this, your axis will crash to the wrong direction. Either change the wiring or invert the value above. Make sure when you try to move an axis manually via pronterface/repetier-host or lcd menu, in order to check this setting, that you start with the axis in the middle of its travel.
 {% endalert %}
 
 ***
@@ -345,7 +345,7 @@ If you're not careful on this, your axis will crash to the wrong direction. Eith
 //#define MIN_Z_HEIGHT_FOR_HOMING 4
 {% endhighlight %}
 
-This works like how a probe based 3d printer works when homing. Instead of increase z height after x and y has been homed, Z axis are raised first before homing procedure. This is also to avoid from the head crashing to the bed mounting such as screws, bulldog clip and some other stuffs. This works with auto bed leveling enabled and this will be triggered only when z axis are less than defined value, else the z axis will not move.
+This works like how a probe based 3d printer works when homing. This raises z a minimum height above the bed before homing in x or y. This can be used to prevent the head crashing into bed mountings such as screws, bulldog clips and the like that project above the printing bed surface. This also works with auto bed leveling enabled and will be triggered only when the z axis height is less than the defined value, otherwise the z axis will not move.
 
 {% highlight cpp %}
 #define X_HOME_DIR -1
@@ -353,7 +353,7 @@ This works like how a probe based 3d printer works when homing. Instead of incre
 #define Z_HOME_DIR -1
 {% endhighlight %}
 
-This tells Marlin where the head is at when all the endstop has been triggered. typical setup are all at min position; bottom front left side of the bed. In some cases, some owner puts the home endstops at max position and these needs to be changed if max position are used.
+This tells Marlin where the head is located when all the endstop have been triggered. In a typical setup are all at min position; bottom front left side of the bed. In some cases, owners put the home endstops at the max position, in which case these need to be changed.
 
 {% alert danger %}
 Setting the `home_dir` would lead to a mirrored print after it has finished.
@@ -364,7 +364,7 @@ Setting the `home_dir` would lead to a mirrored print after it has finished.
 #define max_software_endstops true
 {% endhighlight %}
 
-These are one of the safety features that prevents manual movement exceeding the below specified value. The head can only move within the specified value below.
+These enable the safety feature that prevent manual movement outside range specified below. 
 
 {% highlight cpp %}
 #define X_MIN_POS 0
@@ -375,7 +375,7 @@ These are one of the safety features that prevents manual movement exceeding the
 #define Z_MAX_POS 170
 {% endhighlight %}
 
-Usually the `MIN_POS` are left at 0 value and `MAX_POS` depends on your maximum travel. Setting this too high would risk the printer's carriage crashing to each ends. This needs to be set in conjunctin with home offset eeprom variable to work properly. If you don't want to set using eeprom, you can fiddle with `MIN_POS` value above as a substitute to eeprom's Home Offset.
+Usually the `MIN_POS` are left at 0 value, then `MAX_POS` depends on your maximum travel. Setting the maximum too high risks the printer's carriage crashing into the corresponding end. This needs to be set in conjunction with the home offset eeprom variable to work properly. If you don't want to set using eeprom, you can fiddle with `MIN_POS` value above as a substitute to eeprom's Home Offset.
 
 {% panel info Home Offset %}
 Values are pulled from `MIN_POS`. Use `M206` from pronterface
@@ -389,7 +389,7 @@ Values are pulled from `MIN_POS`. Use `M206` from pronterface
 //#define FILAMENT_RUNOUT_SENSOR
 {% endhighlight %}
 
-This one is optional yet cool feature to have. An extra endstop switch is required to detect if the filament is present or not and the switch usually in normally closed/open state when the filament is present. If filament ran out, M600 command will be issued immediately.
+This one is an optional but cool feature to have. An extra endstop switch is required to detect if the filament is present or not, with the switch in a normally closed/open state when the filament is present. If the filament runs out, an M600 command will be issued immediately.
 
 ***
 
@@ -536,7 +536,7 @@ Those who're using auto bed leveling and don't use another z min endstop, enable
 These are the homing speed when doing auto home and auto bed leveling.
 
 {% alert warning %}
-It is advisable not to use high value to achieve better accuracies as well as avoid skipping steps on your stepper motor.
+Setting these values too high may reduce accuracy and/or skipped steps. 
 {% endalert %}
 
 ***
@@ -621,7 +621,7 @@ Pulled from the above setting, on `M201` command.
 #define DEFAULT_TRAVEL_ACCELERATION   3000    // acceleration in mm/s^2 for travel (non printing) moves
 {% endhighlight %}
 
-These are the default (requested) magnitudes of the acceleration for printing moves (in E and some combination of X, Y and Z), retraction moves (E only) and travel moves (X, Y and/or Z only), respectively. For travel and printing moves these accelerations represent accelerations along the path segment in 3D (XYZ).  Marlin reduces this acceleration if required to avoid exceeding the default maximum acceleration limits for any individual axis, as specified above. 
+These are the default (requested) magnitudes of the acceleration for printing moves (in E and some combination of X, Y and Z), retraction moves (E only) and travel moves (X, Y and/or Z only), respectively. For travel and printing moves these accelerations represent accelerations along the path segment in 3D (XYZ). For retraction moves where only the E axis moves, DEFAULT_RETRACT_ACCELERATION refers to the acceleration of the *E*-axis. Marlin reduces these default accelerations if required to avoid exceeding the default maximum acceleration limits for any individual axis, as specified above. 
 
 {% alert danger %}
 Do not set these too high as there are mechanical constraints that might cause your printer to vibrate excessively or your stepper motor to whine or skip steps.  
@@ -657,17 +657,22 @@ Pulled from the above setting, on `M205` command.
 #define EEPROM_SETTINGS
 {% endhighlight %}
 
-This option are recommended to turn this on (enable). This option enables the EEPROM on your board and you can just change several settings without the need of re-uploading the firmware to your board again such as modifying the z-probe offset value (I often did this). Some of these settings are directly accissble from the lcd panel>control section
+This option is recommended to be turned on (enabled). This option enables the EEPROM on your board and allows you to change many configuration settings without editing Configuration/Configuration_adv.h and re-uploading the firmware to your board. This is a time saver while tuning adjustable parameters to your machine, such as the z-probe offset value. Some of these settings are directly accessible from the lcd panel>control section, others are altered by M-code.
 
 {% highlight cpp %}
 Several useful command on reading and storing commands are
 M500 - Save the applied setting
-M501 - Load/read the saved setting (not from config.h)
-M502 - Loads the setting from config.h (this are not saved to the eeeprom by default)
+M501 - Load/read the saved setting from EEPROM (not from config.h)
+M502 - Loads the setting from config.h (this are not saved to the eeprom by default)
+M503 - Print current settings in volatile memory
 {% endhighlight %}
 
 {% alert info %}
-By enabling this, you are able to access variables saved in non-volatile memory of your board and features that can be accessed are all marked with <i class="fa fa-sticky-note-o" aria-hidden="true"></i> while those options marked with <i class="fa fa-desktop" aria-hidden="true"></i> can be accessed from LCD directly
+By enabling this, you are able to access variables saved in non-volatile memory of your board and features that can be accessed are all marked with <i class="fa fa-sticky-note-o" aria-hidden="true"></i> while those options marked with <i class="fa fa-desktop" aria-hidden="true"></i> can be accessed from LCD directly.
+{% endalert %}
+
+{% alert info %}
+The EEPROM is a great convenience, but can cause confusion if you don't fully understand the process.  M-codes and the LCD change parameters in volatile memory. Unless saved to EEPROM with M500, the changes will not survive reboots. Once in EEPROM the parameters over-ride those in the firmware configuration files, so changing them there will have no effect unless you load them into volatile memory with M502 and save them to EEPROM with M500. If you change firmware versions your EEPROM settings may not be preserved, so it is wise to sync your configuration files with any permanent changes you save to EEPROM.  This will make the process of moving your configuration to the new firmware version simpler.  At any point, you can check the values in use with M503.
 {% endalert %}
 
 ***
@@ -731,9 +736,9 @@ The above is to be enabled if you're using Reprap Discount Smart Controller, typ
 
 This one if you're using a full graphic type typically has 128 x 64 pixels.
 
-Do enable the one that suits to your lcd panel, using incorrect option would not display anything
+Enable the one that matches your lcd panel, or it won't work.
 
-The above LCD type are commonly used, the rest of the other LCD panel are listed in `configuration.h` file
+The above LCD types are common options, other supported LCD panels are listed in `configuration.h` file
 
 ***
 
@@ -782,7 +787,7 @@ Use a value with a margin so that servo able to move the probe to its position b
 //#define FILAMENT_WIDTH_SENSOR
 {% endhighlight %}
 
-This if you have filament width sensor `http://www.thingiverse.com/thing:454584`. This eliminates the need of doign flow rate calibration and Marlin will adjust the flow rate according to the sensed filament width
+Uncomment this if you have a filament width sensor e.g.  `http://www.thingiverse.com/thing:454584`. This eliminates the need for flow rate calibration. Marlin will adjust the flow rate according to the sensed filament width. Then adjust the settings below for your setuo.
 
 {% highlight cpp %}
 #define DEFAULT_NOMINAL_FILAMENT_DIA 3.00
