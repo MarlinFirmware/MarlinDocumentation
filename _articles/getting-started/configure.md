@@ -68,24 +68,80 @@ This is basically just to show who made the changes to the current firmware sett
 ### Board Type
 
 {% highlight cpp %}
-#define MOTHERBOARD BOARD_RAMPS_14_EFB
+#define MOTHERBOARD BOARD_RAMPS_14_EFB  43  // comment
 {% endhighlight %}
 
-This defines what board that you used for your 3D printer. This is to tell Marlin to use these specific pins and restrictions for these particular board. Below is the list of the board that can be used with Marlin, taken from boards.h.
+This defines which motherboard you used for your 3D printer. It tells Marlin to use the specific pins and restrictions that apply to this particular board. Below is the list of the boards that can be used with Marlin, taken from boards.h.
 
-Change the `BOARD_RAMPS_14_EFB` into one of the listed constant below that matches your current board.
-The list below are often used by 3D printer owner, if not listed, kindly check the "boards.h" file
+Replace the `#define BOARD_RAMPS_14_EFB 43` line in Configuration.h with the line below that matches your current board.
+Check the boards,h file for the most up-to-date listing of supported boards, if you do not see yours listed here.
 
 {% highlight cpp %}
-BOARD_RAMPS_14_EFB      // RAMPS 1.4 (Power outputs: Extruder, Fan, Bed)
-BOARD_RAMPS_14_EEB      // RAMPS 1.4 (Power outputs: Extruder0, Extruder1, Bed)
-BOARD_RAMPS_14_EFF      // RAMPS 1.4 (Power outputs: Extruder, Fan, Fan)
-BOARD_RAMPS_14_EEF      // RAMPS 1.4 (Power outputs: Extruder0, Extruder1, Fan)`
-BOARD_RAMPS_14_SF       // RAMPS 1.4 (Power outputs: Spindle, Controller Fan)`
-BOARD_SANGUINOLOLU_12   // Sanguinololu 1.2 and above
-BOARD_MELZI             // Melzi
-BOARD_RUMBA             // Rumba
-BOARD_RAMBO             // Rambo
+
+#define BOARD_GEN7_CUSTOM       10   // Gen7 custom (Alfons3 Version) "https://github.com/Alfons3/Generation_7_Electronics"
+#define BOARD_GEN7_12           11   // Gen7 v1.1, v1.2
+#define BOARD_GEN7_13           12   // Gen7 v1.3
+#define BOARD_GEN7_14           13   // Gen7 v1.4
+#define BOARD_CHEAPTRONIC       2    // Cheaptronic v1.0
+#define BOARD_SETHI             20   // Sethi 3D_1
+#define BOARD_RAMPS_OLD         3    // MEGA/RAMPS up to 1.2
+#define BOARD_RAMPS_13_EFB      33   // RAMPS 1.3 (Power outputs: Hotend, Fan, Bed)
+#define BOARD_RAMPS_13_EEB      34   // RAMPS 1.3 (Power outputs: Hotend0, Hotend1, Bed)
+#define BOARD_RAMPS_13_EFF      35   // RAMPS 1.3 (Power outputs: Hotend, Fan0, Fan1)
+#define BOARD_RAMPS_13_EEF      36   // RAMPS 1.3 (Power outputs: Hotend0, Hotend1, Fan)
+#define BOARD_RAMPS_13_SF       38   // RAMPS 1.3 (Power outputs: Spindle, Controller Fan)
+#define BOARD_FELIX2            37   // Felix 2.0+ Electronics Board (RAMPS like)
+#define BOARD_RIGIDBOARD        42   // Invent-A-Part RigidBoard
+#define BOARD_RAMPS_14_EFB      43   // RAMPS 1.4 (Power outputs: Hotend, Fan, Bed)
+#define BOARD_RAMPS_14_EEB      44   // RAMPS 1.4 (Power outputs: Hotend0, Hotend1, Bed)
+#define BOARD_RAMPS_14_EFF      45   // RAMPS 1.4 (Power outputs: Hotend, Fan0, Fan1)
+#define BOARD_RAMPS_14_EEF      46   // RAMPS 1.4 (Power outputs: Hotend0, Hotend1, Fan)
+#define BOARD_RAMPS_14_SF       48   // RAMPS 1.4 (Power outputs: Spindle, Controller Fan)
+#define BOARD_GEN6              5    // Gen6
+#define BOARD_GEN6_DELUXE       51   // Gen6 deluxe
+#define BOARD_SANGUINOLOLU_11   6    // Sanguinololu < 1.2
+#define BOARD_SANGUINOLOLU_12   62   // Sanguinololu 1.2 and above
+#define BOARD_MELZI             63   // Melzi
+#define BOARD_STB_11            64   // STB V1.1
+#define BOARD_AZTEEG_X1         65   // Azteeg X1
+#define BOARD_MELZI_MAKR3D      66   // Melzi with ATmega1284 (MaKr3d version)
+#define BOARD_AZTEEG_X3         67   // Azteeg X3
+#define BOARD_AZTEEG_X3_PRO     68   // Azteeg X3 Pro
+#define BOARD_ULTIMAKER         7    // Ultimaker
+#define BOARD_ULTIMAKER_OLD     71   // Ultimaker (Older electronics. Pre 1.5.4. This is rare)
+#define BOARD_ULTIMAIN_2        72   // Ultimainboard 2.x (Uses TEMP_SENSOR 20)
+#define BOARD_3DRAG             77   // 3Drag Controller
+#define BOARD_K8200             78   // Vellemann K8200 Controller (derived from 3Drag Controller)
+#define BOARD_TEENSYLU          8    // Teensylu
+#define BOARD_RUMBA             80   // Rumba
+#define BOARD_PRINTRBOARD       81   // Printrboard (AT90USB1286)
+#define BOARD_PRINTRBOARD_REVF  811  // Printrboard Revision F (AT90USB1286)
+#define BOARD_BRAINWAVE         82   // Brainwave (AT90USB646)
+#define BOARD_SAV_MKI           83   // SAV Mk-I (AT90USB1286)
+#define BOARD_TEENSY2           84   // Teensy++2.0 (AT90USB1286) - CLI compile: DEFINES=AT90USBxx_TEENSYPP_ASSIGNMENTS HARDWARE_MOTHERBOARD=84  make
+#define BOARD_BRAINWAVE_PRO     85   // Brainwave Pro (AT90USB1286)
+#define BOARD_GEN3_PLUS         9    // Gen3+
+#define BOARD_GEN3_MONOLITHIC   22   // Gen3 Monolithic Electronics
+#define BOARD_MEGATRONICS       70   // Megatronics
+#define BOARD_MEGATRONICS_2     701  // Megatronics v2.0
+#define BOARD_MINITRONICS       702  // Minitronics v1.0/1.1
+#define BOARD_MEGATRONICS_3     703  // Megatronics v3.0
+#define BOARD_OMCA_A            90   // Alpha OMCA board
+#define BOARD_OMCA              91   // Final OMCA board
+#define BOARD_RAMBO             301  // Rambo
+#define BOARD_MINIRAMBO         302  // Mini-Rambo
+#define BOARD_AJ4P              303  // AJ4P
+#define BOARD_MEGACONTROLLER    310  // Mega controller
+#define BOARD_ELEFU_3           21   // Elefu Ra Board (v3)
+#define BOARD_5DPRINT           88   // 5DPrint D8 Driver Board
+#define BOARD_LEAPFROG          999  // Leapfrog
+#define BOARD_MKS_BASE          40   // MKS BASE 1.0
+#define BOARD_MKS_13            47   // MKS v1.3 or 1.4 (maybe higher)
+#define BOARD_SAINSMART_2IN1    49   // Sainsmart 2-in-1 board
+#define BOARD_BAM_DICE          401  // 2PrintBeta BAM&DICE with STK drivers
+#define BOARD_BAM_DICE_DUE      402  // 2PrintBeta BAM&DICE Due with STK drivers
+#define BOARD_BQ_ZUM_MEGA_3D    503  // bq ZUM Mega 3D
+
 {% endhighlight %}
 
 {% alert info %}
@@ -122,7 +178,7 @@ A unique ID for your 3D printer, it is almost like a MAC Address and can be gene
 
 This defines how many extruders you have for your 3d printer model.
 
-If you have more than one extruder, uncomment codes below
+If you have more than one extruder, uncomment and edit the lines below  {x,y} are the x and y offsets of extruder 1 from extruder 2 in mm.
 
 {% highlight cpp %}
 //#define EXTRUDER_OFFSET_X {0.0, 20.00}
@@ -155,12 +211,12 @@ What power supply you're using. ATX;1 or X-Box 360;2. If you're using LED Strip 
 #define TEMP_SENSOR_BED 3 //Heated bed
 {% endhighlight %}
 
-These are the profiles of your thermistors. A generic profile is "1" which is "100K Thermistor". If you can get the exact brand and thermistor type for your hotend/heated bed, use that particular number/value/profile. The thermistor type points to a table of thermistor electrical resistance versus temperature.
+These are the profiles of your thermistors. A generic profile is "1" which is "100K Thermistor". If you can get the exact brand and thermistor type for your hotend/heated bed, use that particular number/value/profile. The thermistor type points to a calibration table of thermistor electrical resistance versus temperature.
 
 {% alert warning %}
 This is crucial to obtain accurate temperature measurements.
 
-As a last resort, just use 100k thermistor for `temp_sensor` and `temp_sensor_bed` but be sceptical of the temperature accuracy.
+As a last resort, just use 100k thermistor for `temp_sensor` and `temp_sensor_bed` but be highly sceptical of the temperature accuracy.
 {% endalert %}
 
 ***
@@ -175,9 +231,9 @@ As a last resort, just use 100k thermistor for `temp_sensor` and `temp_sensor_be
 #define BED_MINTEMP 5
 {% endhighlight %}
 
-One of the safety features that will prevent the printer from operating. Room temperature typically has a range of about 10-40'c. Should any sensor goes below its specified minimum above, Marlin will shut down the printer.
+One of the safety features that will prevent the printer from operating. Room temperature typically has a range of about 10-40'c. Should any sensor goes below its specified minimum above, Marlin will shut down the printer, with a MINTEMP ERROR.
 
-`MINTEMP ERROR`: This error means your thermistor has either disconnected from the temperature pin or has gone open-circuit (or you have your printer in a freezind cold room!)
+`MINTEMP ERROR`: This error either means your thermistor has either disconnected from the temperature pin or has gone open-circuit, or you have your printer in a very cold room.
 
 {% highlight cpp %}
 #define HEATER_0_MAXTEMP 285
@@ -187,7 +243,7 @@ One of the safety features that will prevent the printer from operating. Room te
 #define BED_MAXTEMP 130
 {% endhighlight %}
 
-Maximum temperature for each heating element. If Marlin reads a temperature above these values, it will immediately shut down for safety reasons. For the E3D V6 hotend, 285 is a maximum value used by many.
+Maximum temperature for each heating element. If Marlin reads a temperature above these values, it will immediately shut down for safety reasons. For the E3D V6 hotend, many use 285 as a maximum value.
 
 `MAXTEMP ERROR`: This usually means the thermistor legs/wires are shorted each other.
 
@@ -223,7 +279,7 @@ This function also is accessible through the LCD (Hotend only).
 #define EXTRUDE_MINTEMP 170
 {% endhighlight %}
 
-This setting would prevent the extruder motor from moving if the hotend temperature is less than 170'c.  For testing purposes with no filament loaded, M302 overrides this setting and permits "cold extrudes".
+The above setting would prevent the extruder motor from moving if the hotend temperature is less than 170'c.  For testing purposes with no filament loaded, M302 overrides this setting and permits "cold extrudes".
 
 ***
 
@@ -236,8 +292,8 @@ This setting would prevent the extruder motor from moving if the hotend temperat
 
 This one is a cool safety feature to enable. If the current temperature drops below the one Marlin is maintaining, Marlin applies heat and sets a timer. If the time limit is exceeded before restoring the temperature, Marlin shuts down the printer.
 
-The idea here is to detect when a thermister gets loose and no longer is in good thermal contact with the hotend or heat-bed.
-For example, if it suddenly came loose in the hotend during printing, with a target temperature of, say, 230'c, the thermistor reading on Marlin might drop to, say, 170'c. Marlin thinks the hotend temperature is low and need to be powered. Without this protection, if the thermistor reading failed to reach the target, the hotend would heat up indefinitely, getting red-hot and possibly setting fire to things - all due to misreading of the temperature from the loose thermistor.
+The idea here is to detect if a thermister gets loose and no longer is in good thermal contact with the hotend or heat-bed.
+For example, if it suddenly came loose in the hotend during printing, with a target temperature of, say, 230'c, the thermistor reading on Marlin might drop to, say, 170'c. Marlin thinks the hotend temperature is low and need to be powered. Without this protection, if the thermistor reading failed to reach the target, the hotend would heat indefinitely, getting red-hot and possibly setting fire to things - all due to misreading of the temperature from the loose thermistor.
 
 How it works is: with target temperature at 190'c, after reaching the target 190'c, should the reading drop below the target Marlin will power the hotend and start the timer countdown. If the countdown ends with the heating element still fully powered, Marlin will shut down the print. The same goes for the heated bed.
 
@@ -282,7 +338,7 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
 const bool Z_MIN_PROBE_ENDSTOP_INVERTING = false; // set to true to invert the logic of the endstop.
 {% endhighlight %}
 
-Inverting between triggered and open state when issuing M119 command. Usually not touched but if you don't want to fiddle with the wiring, you can invert these.
+Inverting between triggered and open state when issuing M119 command. Usually not touched, but if you don't want to fiddle with the wiring, you can invert these.
 
 ***
 
@@ -639,7 +695,7 @@ Pulled from the above setting, on `M204` command.
 #define DEFAULT_XYJERK                15.0    // (mm/sec)
 {% endhighlight %}
 
-Jerk works in conjunction with acceleration above. Jerk is the maximum change in velocity (in mm/sec) that can be commanded to occur instantaneously. Both acceleration and jerk can affect your print quality. Set too low, the extruder will linger too long at points of direction change, causing for instance, blobbing at the corners of a cube. Setting too high demands too much of your printers mechanics and you may see ringing artifacts or dropped steps.
+Jerk works in conjunction with acceleration (see above). Jerk is the maximum change in velocity (in mm/sec) that can occur instantaneously. Both acceleration and jerk affect your print quality. Set too low, the extruder will linger too long at points of direction change, causing for instance, blobs at the corners of a cube. Set too high, direction changes apply too much torque to your printer's mechanics and you may see ringing artifacts or dropped steps.
 
 {% panel info Advanced variables: S=Min feedrate (mm/s), T=Min travel feedrate (mm/s), B=minimum segment time (ms) %}
 Pulled from the above setting, on `M205` command.
