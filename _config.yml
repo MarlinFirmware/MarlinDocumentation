@@ -1,35 +1,8 @@
-markdown: 'kramdown'
-highlighter: 'rouge'
-timezone: 'Europe/Lisbon'
-
-collections:
-  articles:
-    output: true
-
-exclude:
-  - '.gitignore'
-  - '_config.yml'
-  - 'CNAME'
-  - 'Gemfile'
-  - 'LICENSE'
-  - 'public'
-  - 'README.md'
-  - 'script'
-  - 'vendor'
-
-analytics:
-  id: 'UA-76230130-1'
-  domain: 'marlinfw.org'
-
+version: '0.0.6'
 url: ' http://marlinfw.org'
 name: 'Marlin 3D Printer Firmware'
 logo: '/assets/images/logo/marlin/small.png'
-description: 'Learn how to get started using Marlin.'
-
-gems:
-  - jekyll-mentions
-  - jekyll-seo-tag
-  - jekyll-avatar
+description: 'Marlin - The firmware we all trust'
 
 base:
   meta: 'meta'
@@ -39,56 +12,92 @@ base:
   javascript: 'assets/javascript'
   stylesheet: 'assets/stylesheets'
 
-
-meta:
-  version: '0.0.4'
-  author: 'Marlin Documentation Project'
-  feedback_email: 'marlin-doc@this-is-not-a-valid-domain.org'
-
 repository:
   main: 'https://github.com/MarlinFirmware/Marlin'
   dev: 'https://github.com/MarlinFirmware/MarlinDev'
   doc: 'https://github.com/MarlinFirmware/MarlinDocumentation'
 
+analytics:
+  id: 'UA-76230130-1'
+  domain: 'marlinfw.org'
+
+markdown: 'kramdown'
+highlighter: 'rouge'
+timezone: 'Europe/Lisbon'
+
+collections:
+  articles:
+    output: true
+
+#include: [ '_pages' ]
+
+exclude: [ '.gitignore', '_config.yml', 'CNAME', 'Gemfile', 'LICENSE', 'public', 'README.md', 'script', 'vendor' ]
+
+gems:
+  - jekyll-mentions
+  - jekyll-seo-tag
+  - jekyll-avatar
+
 defaults:
-  -
+  - # All types
     scope:
-      path: ''
+      path: '' # all files
     values:
+      layout: 'default'
       author: 'MarlinFirmware'
-  -
+      category: [ 'default' ]
+      show:
+        navbar: true
+        footer: true
+        breadcrumbs: false
+
+  - # Meta type
     scope:
-      type:               'posts'
-
+      path: 'meta'
     values:
-      permalink:          'news/:year/:month/:day/:title/'
-  -
+      category: [ 'meta' ]
+      show:
+        breadcrumbs: false
+
+  - # Article type settings
     scope:
-      type:               'articles'
-
+      type: 'articles'
     values:
-      navigation:
-        show_title:       true
-        show_navbar:      true
-        show_footer:      true
-        show_breadcrumbs: true
-        show_description: false
+      layout: 'articles'
+      show:
+        breadcrumbs: true
 
-      meta:
-        hidden:           false
-        categories:       [ 'default' ]
-  -
-    scope:
-      type:               'pages'
 
-    values:
-      navigation:
-        show_title:       true
-        show_navbar:      true
-        show_footer:      true
-        show_breadcrumbs: true
-        show_description: false
 
-      meta:
-        hidden:           false
-        categories:       [ 'default' ]
+
+
+
+
+
+
+#  - # Post type settings
+#    scope:
+#      type: 'posts'
+#
+#    values:
+#      permalink:           'news/:year/:month/:day/:title/'
+
+#  - # Pages type settings
+#    scope:
+#      type:               'pages'
+#
+#    values:
+#      navigation:
+#        show_title:       true
+#        show_navbar:      true
+#        show_footer:      true
+#        show_breadcrumbs: true
+#        show_description: false
+#
+#      meta:
+#        hidden:           false
+#        categories:       [ 'default' ]
+#
+#
+#
+      #permalink: "/:path/:basename/"

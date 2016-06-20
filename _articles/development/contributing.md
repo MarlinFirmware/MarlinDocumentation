@@ -1,10 +1,10 @@
 ---
-layout: articles
-
 title:        'Contributing'
 description:  'Quick overview how you can contribute and help the Marlin Firmware project'
-category:     [ development, needs-review ]
+
+category: [ development, needs-review ]
 ---
+
 There are many ways that RepRap enthusiasts, owners and builders of 3D printers, and sprightly startups can contribute to Marlin.
 
 -   **Report Issues**

@@ -5,9 +5,11 @@ rvm:
 before_script:
   - gem install bundler
   - bundle install
-  - chmod +x script/cibuild
 
-script: script/cibuild
+script:
+  - bundle exec jekyll build
+  - bundle exec htmlproofer ./_site --url-ignore /marlinfw.org/ --only-4xx --allow-hash-href --check-favicon --check-html
+  - bundle exec github-pages health-check
 
 env:
   global:

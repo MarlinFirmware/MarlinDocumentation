@@ -1,10 +1,10 @@
 ---
-layout: articles
-
 title:        'Coding Standards'
 description:  'Overview if formatting guidelines and coding standards to be used when contributing code to Marlin'
-category:     [ development, needs-review ]
+
+category: [ development, needs-review ]
 ---
+
 Please follow these formatting guidelines and coding standards when contributing code to Marlin. Pull requests that don't follow good coding standards may be postponed for cleanup.
 
 Coding Style

@@ -1,8 +1,0 @@
-
-          <!-- breadcrumbs -->
-          <ol class="breadcrumb">
-            <li><a href="{{ site.github.url }}/"><i class="glyphicon glyphicon-home"></i></a></li>
-            {% assign crumbs = page.url | split: '/' %}{% for crumb in crumbs offset: 1 %}{% if forloop.last %}
-            <li class="active">{{ page.title }}</li>{% else %}<li><a href="{% assign crumb_limit = forloop.index | plus: 1 %}{% for crumb in crumbs limit: crumb_limit %}{{ crumb | append: '/' }}{% endfor %}">{{ crumb | replace:'-',' ' | capitalize }}</a></li>{% endif %}{% endfor %}
-          </ol>
-          <!-- /breadcrumbs -->

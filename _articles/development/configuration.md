@@ -1,14 +1,10 @@
 ---
-layout: articles
+title:        'Configuration manual'
+description:  'Technical deep dive on all the configuration options'
+
 author: Sarf2k4
 contrib: paulusjacobus, jbrazio
-
-title:        'How to configure'
-description:  'This howto will guide the user on how to configure Marlin for their needs'
-category:     [ getting-started, needs-review ]
-
-toc:
-  selectors:  h1,h2,h3,h4
+category: [ articles, development, needs-review ]
 ---
 # Introduction
 
@@ -420,7 +416,7 @@ Setting the `home_dir` would lead to a mirrored print after it has finished.
 #define max_software_endstops true
 {% endhighlight %}
 
-These enable the safety feature that prevent manual movement outside range specified below. 
+These enable the safety feature that prevent manual movement outside range specified below.
 
 {% highlight cpp %}
 #define X_MIN_POS 0
@@ -592,7 +588,7 @@ Those who're using auto bed leveling and don't use another z min endstop, enable
 These are the homing speed when doing auto home and auto bed leveling.
 
 {% alert warning %}
-Setting these values too high may reduce accuracy and/or skipped steps. 
+Setting these values too high may reduce accuracy and/or skipped steps.
 {% endalert %}
 
 ***
@@ -657,7 +653,7 @@ Some presets to get you started (1/16 microstepping)
 #define DEFAULT_MAX_ACCELERATION      {5000,5000,50,5000}    // X, Y, Z, E maximum start speed for accelerated moves. E default values are good for Skeinforge 40+, for older versions raise them a lot.
 {% endhighlight %}
 
-In any move, the velocities (in mm/sec) in the X,Y,Z and E directions will be limited to the corresponding DEFAULT_MAX_FEEDRATE.  When an axis' velocity is changed its acceleration (in mm/sec^2) will be limited to the corresponding DEFAULT_MAX_ACCELERATION.  However, discontinuous changes of velocity are permitted up to the corresponding *jerk* setting (see below). 
+In any move, the velocities (in mm/sec) in the X,Y,Z and E directions will be limited to the corresponding DEFAULT_MAX_FEEDRATE.  When an axis' velocity is changed its acceleration (in mm/sec^2) will be limited to the corresponding DEFAULT_MAX_ACCELERATION.  However, discontinuous changes of velocity are permitted up to the corresponding *jerk* setting (see below).
 
 {% alert danger %}
 Setting these too high will cause the corresponding stepper motor to lose steps, especially on high speed movements.
@@ -677,10 +673,10 @@ Pulled from the above setting, on `M201` command.
 #define DEFAULT_TRAVEL_ACCELERATION   3000    // acceleration in mm/s^2 for travel (non printing) moves
 {% endhighlight %}
 
-These are the default (requested) magnitudes of the acceleration for printing moves (in E and some combination of X, Y and Z), retraction moves (E only) and travel moves (X, Y and/or Z only), respectively. For travel and printing moves these accelerations represent accelerations along the path segment in 3D (XYZ). For retraction moves where only the E axis moves, DEFAULT_RETRACT_ACCELERATION refers to the acceleration of the *E*-axis. Marlin reduces these default accelerations if required to avoid exceeding the default maximum acceleration limits for any individual axis, as specified above. 
+These are the default (requested) magnitudes of the acceleration for printing moves (in E and some combination of X, Y and Z), retraction moves (E only) and travel moves (X, Y and/or Z only), respectively. For travel and printing moves these accelerations represent accelerations along the path segment in 3D (XYZ). For retraction moves where only the E axis moves, DEFAULT_RETRACT_ACCELERATION refers to the acceleration of the *E*-axis. Marlin reduces these default accelerations if required to avoid exceeding the default maximum acceleration limits for any individual axis, as specified above.
 
 {% alert danger %}
-Do not set these too high as there are mechanical constraints that might cause your printer to vibrate excessively or your stepper motor to whine or skip steps.  
+Do not set these too high as there are mechanical constraints that might cause your printer to vibrate excessively or your stepper motor to whine or skip steps.
 {% endalert %}
 
 {% panel info Accelerations: P=printing, R=retract and T=travel %}
