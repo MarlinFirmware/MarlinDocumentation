@@ -143,7 +143,7 @@ Check the boards,h file for the most up-to-date listing of supported boards, if 
 {% endhighlight %}
 
 {% alert info %}
-For those who're using sanguino board paired with arduino ide 1.6.8, to add sanguino board to the board list, kindly go to `File > Preference > Additional Boards Manager URLs` and add [this source URL](https://raw.githubusercontent.com/Lauszus/Sanguino/master/package_lauszus_sanguino_index.json). After adding the above URL, kindly go to `Tools > Boards > Boards Manager` then install Sanguino from the list. An internet connection is required. Credit goes to [dustreprap](http://dustsreprap.blogspot.my/2015/06/better-way-to-install-sanguino-in.html).
+If you're using a Sanguino board with Arduino IDE 1.6.8 you'll need to add Sanguino to the Board list. Select menu item `File > Preference > Additional Boards Manager URLs` and add [this source URL](https://raw.githubusercontent.com/Lauszus/Sanguino/master/package_lauszus_sanguino_index.json). Then you can use `Tools > Boards > Boards Manager` to install Sanguino from the list. An internet connection is required. (Credit to [Dust's RepRap Blog](http://dustsreprap.blogspot.my/2015/06/better-way-to-install-sanguino-in.html).)
 {% endalert %}
 
 ***
@@ -174,16 +174,14 @@ A unique ID for your 3D printer, it is almost like a MAC Address and can be gene
 #define EXTRUDERS 1
 {% endhighlight %}
 
-This defines how many extruders you have for your 3d printer model.
-
-If you have more than one extruder, uncomment and edit the lines below  {x,y} are the x and y offsets of extruder 1 from extruder 2 in mm.
+This defines how many extruders (tools) the printer has. Further on you can specify the type of extruder (such as SINGLENOZZLE), and their arrangement (such as DUAL_X_CARRIAGE). These additional settings help Marlin determine how many steppers and hotends your extruders have and how they relate to one another.
 
 {% highlight cpp %}
-//#define EXTRUDER_OFFSET_X {0.0, 20.00}
-//#define EXTRUDER_OFFSET_Y {0.0, 5.00}
+//#define HOTEND_OFFSET_X {0.0, 20.00}
+//#define HOTEND_OFFSET_Y {0.0, 5.00}
 {% endhighlight %}
 
-As for more than 2 extruder at once, I'm not sure how to set them up.
+Hotend offsets are needed if you have more than one extruder (or if your extruder has more than one nozzle). These specify the offset in mm between your extruders' nozzles. Leave the first element set to 0.0. The second element in each array corresponds to the next hotend. You can add more offsets if you have 3 or more extruders.
 
 ***
 
@@ -193,7 +191,7 @@ As for more than 2 extruder at once, I'm not sure how to set them up.
 #define POWER_SUPPLY 1
 {% endhighlight %}
 
-What power supply you're using. ATX;1 or X-Box 360;2. If you're using LED Strip power supply, just use 1
+Use this option to specify which type of power supply you're using. Marlin uses this setting to decide how to switch the power supply on and off. The options are None (0), ATX (1), or X-Box 360 (2). For most power supplies (such as LED Strip power supplies) you should use 1.
 
 ***
 
