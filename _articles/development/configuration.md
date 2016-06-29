@@ -8,7 +8,7 @@ category: [ articles, development, needs-review ]
 ---
 # Introduction
 
-Marlin is a huge C++ program, but when it comes to configuring a build of Marlin there are only two files you need to worry about. To configure Marlin for a specific machine, edit or replace `Configuration.h` and `Configuration_adv.h` prior to building the binary .hex image or flashing the board. If you have these files from an older version of Marlin, you can usually just drop them in place to build the new version. (Marlin will give warnings about any deprecated options.)  Sample configurations for a variety of machines can be found in the example_configurations sub-directory.
+Marlin is a huge C++ program, but when it comes to configuring a build of Marlin there are only two files you need to worry about. To configure Marlin for a specific machine, edit or replace `Configuration.h` and `Configuration_adv.h` prior to building the binary .hex image or flashing the board. If you have these files from an older version of Marlin, you can usually just drop them in place to build the new version. (Marlin will give warnings about any deprecated options.) A variety of pre-built configurations are included in the example_configurations folder.
 
 Marlin uses compiler “directives” for most of its configuration options. Directives aren't pretty, but they allow Marlin to leave out blocks of code that aren't needed, producing the smallest, fastest code possible for your configuration. Settings are enabled, disabled, and given values using C preprocessor syntax like so:
 
@@ -78,6 +78,7 @@ Check the boards,h file for the most up-to-date listing of supported boards, if 
 #define BOARD_GEN7_12           11   // Gen7 v1.1, v1.2
 #define BOARD_GEN7_13           12   // Gen7 v1.3
 #define BOARD_GEN7_14           13   // Gen7 v1.4
+#define BOARD_CNCONTROLS_12     112  // Cartesio CN Controls V12
 #define BOARD_CHEAPTRONIC       2    // Cheaptronic v1.0
 #define BOARD_SETHI             20   // Sethi 3D_1
 #define BOARD_RAMPS_OLD         3    // MEGA/RAMPS up to 1.2
@@ -88,6 +89,7 @@ Check the boards,h file for the most up-to-date listing of supported boards, if 
 #define BOARD_RAMPS_13_SF       38   // RAMPS 1.3 (Power outputs: Spindle, Controller Fan)
 #define BOARD_FELIX2            37   // Felix 2.0+ Electronics Board (RAMPS like)
 #define BOARD_RIGIDBOARD        42   // Invent-A-Part RigidBoard
+#define BOARD_RIGIDBOARD_V2     52   // Invent-A-Part RigidBoard V2
 #define BOARD_RAMPS_14_EFB      43   // RAMPS 1.4 (Power outputs: Hotend, Fan, Bed)
 #define BOARD_RAMPS_14_EEB      44   // RAMPS 1.4 (Power outputs: Hotend0, Hotend1, Bed)
 #define BOARD_RAMPS_14_EFF      45   // RAMPS 1.4 (Power outputs: Hotend, Fan0, Fan1)
@@ -141,7 +143,7 @@ Check the boards,h file for the most up-to-date listing of supported boards, if 
 {% endhighlight %}
 
 {% alert info %}
-For those who're using sanguino board paired with arduino ide 1.6.8, to add sanguino board to the board list, kindly go to `File > Preference > Additional Boards Manager URLs` and add [this source URL](https://raw.githubusercontent.com/Lauszus/Sanguino/master/package_lauszus_sanguino_index.json). After adding the above URL, kindly go to `Tools > Boards > Boards Manager` then install Sanguino from the list, an internet connection is required. Credit goes to [dustreprap](http://dustsreprap.blogspot.my/2015/06/better-way-to-install-sanguino-in.html).
+For those who're using sanguino board paired with arduino ide 1.6.8, to add sanguino board to the board list, kindly go to `File > Preference > Additional Boards Manager URLs` and add [this source URL](https://raw.githubusercontent.com/Lauszus/Sanguino/master/package_lauszus_sanguino_index.json). After adding the above URL, kindly go to `Tools > Boards > Boards Manager` then install Sanguino from the list. An internet connection is required. Credit goes to [dustreprap](http://dustsreprap.blogspot.my/2015/06/better-way-to-install-sanguino-in.html).
 {% endalert %}
 
 ***
@@ -152,7 +154,7 @@ For those who're using sanguino board paired with arduino ide 1.6.8, to add sang
 #define CUSTOM_MACHINE_NAME "3D Printer"
 {% endhighlight %}
 
-This is the name of your printer for example setting to delta would display "delta ready" after the printer has been turned on
+This is the name of your printer as displayed on the LCD and by M115. For example, if you set this to "My Delta" the LCD will display "My Delta ready" when the printer is idle.
 
 ***
 
