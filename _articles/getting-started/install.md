@@ -1,49 +1,27 @@
 ---
-layout: articles
-
 title:        'How to flash your board'
-description:  'This howto will guide the user on how to flash their control board with Marlin'
-category:     [ getting-started, needs-review ]
+description:  'Quick start guide to Marlin installation process'
+
+author: jbrazio
+category: [ articles, getting-started ]
 ---
-## Get the Arduino IDE
 
--   Obtain the latest non-beta Arduino software IDE / toolset from the [Arduino website].
--   Install following the usual procedure for your computer system.
+In order to *install* Marlin on your printer we need first to [compile](https://en.wikipedia.org/wiki/Compiler) the source code and [upload](https://www.arduino.cc/en/Guide/Environment#toc9) it to your board. This process may seem a bit frighting at first sight. But once a newcomer has done it once it becomes very straight forward to make changes. **For a more detailed documentation about Marlin's installation process you should read the [@todo How to install](#)** article.
 
-## Download Marlin Firmware
+## Download Arduino's IDE
+The first step is to download the latest stable release of the Arduino IDE from their [official website](http://www.arduino.cc/en/Main/Software) and install it following the usual procedure for your operating system. Marlin can be compiled either on Linux, MacOS or Windows.
 
--   [Latest Development version]
-    -   Use the `Download` `Zip` button for the latest code (HEAD), or
-    -   For development use the `Fork` button to make a fork. See [Contributing to Marlin].
--   [1.1.0 Release Candidate]
--   [Stable versions]
-    -   [Version 1.0.2-1]
-    -   [Version 1.0.1]
+## Download Marlin's source code
+You should now download Marlin's source code, you have multiple [codebase](https://en.wikipedia.org/wiki/Codebase) to choose from, each of them having different maturity levels. You may download the latest **development version** [archive](https://github.com/MarlinFirmware/Marlin/archive/RCBugFix.zip) or [git](https://en.wikipedia.org/wiki/Git_%28software%29) clone it's [source tree](https://github.com/MarlinFirmware/Marlin/tree/RCBugFix), you may also download the latest **release candidate version** [archive](https://github.com/MarlinFirmware/Marlin/archive/RC.zip) or git clone it's [source tree](https://github.com/MarlinFirmware/Marlin/tree/RC) or if you have a legacy board you can download older versions such as [1.0.2-1](https://github.com/MarlinFirmware/Marlin/archive/1.0.2-1.zip) or [1.0.1](https://github.com/MarlinFirmware/Marlin/archive/1.0.1.zip).
 
-Some boards require special files and/or libraries from the `ArduinoAddons` directory. See the `README` file in `ArduinoAddons` for details.
+{% alert warning %}
+Some may require non-standard Arduino core such as *Sanguino* or *Teensy++* based boards, others may require additional libraries. This will be detailed near the relevant configuration section's notes.
+{% endalert %}
 
-## Edit Your Marlin Configuration
+## Configure Marlin
+Using the Arduino IDE or your favorite text editor, edit `Configuration.h` and `Configuration_adv.h` to suit your needs. Both files contain a lot of documentation for each option but you should read [@todo How to configure](#).
 
--   Start the Arduino IDE.
--   Open the `Marlin.ino` file, to load the project code.
--   Use the Arduino IDE (or your favorite text editor) to edit `Configuration.h` and `Configuration_adv.h`. There's a lot of documentation in these files, but please raise an issue on Github if you need help.
+## Flash the controller
+In the Arduino IDE make sure you're board and/or micro-controller is selected under the menu `Tools` > `Boards`, you must also make sure the correct serial port is selected under the menu `Tools` > `Serial Port`. Click the `Verify/Compile` menu bar button to check if there are no errors and proceed with the upload by clicking on the `Upload` button.
 
-See [Marlin Configuration] for more detailed documentation on configuring Marlin, currently a work-in-progress.
-
-## Flash The Controller
-
--   In Arduino IDE, select your micro-controller from the `Tools` > `Board` menu
--   Select the serial port to which the machine is connected from the `Tools` > `Serial Port` menu
--   Click the `Verify/Compile` button to see that the code is okay.
--   Click the `Upload` button. If all goes well the firmware will upload and restart.
-
-That's it. Now that you've flashed Marlin to your board, Enjoy Silky Smooth Printing!
-
-  [Arduino website]: http://www.arduino.cc/en/Main/Software
-  [Latest Development version]: https://github.com/MarlinFirmware/MarlinDev
-  [Contributing to Marlin]: {{ site.github.url }}/{{ site.base.articles }}/development/contributing.html
-  [1.1.0 Release Candidate]: https://github.com/MarlinFirmware/Marlin/archive/RC.zip
-  [Stable versions]: https://github.com/MarlinFirmware/Marlin/releases
-  [Version 1.0.2-1]: https://github.com/MarlinFirmware/Marlin/archive/1.0.2-1.zip
-  [Version 1.0.1]: https://github.com/MarlinFirmware/Marlin/archive/1.0.1.zip
-  [Marlin Configuration]: {{ site.github.url }}/{{ site.base.articles }}/getting-started/configure.html
+That’s it, now that you’ve flashed Marlin to your board, enjoy silky smooth printing !

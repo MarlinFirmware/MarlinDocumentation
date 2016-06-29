@@ -1,63 +1,55 @@
 ---
-layout: pages
+permalink: /
 
 title:        'Home'
-description:  'Marlin is *the best* firmware for 3D printers.'
-category:     [ core ]
-
-navigation:
-  show_title:       false
-  show_breadcrumbs: false
+description:  'Marlin, the most widely-used 3D printer firmware in the world'
+category:     [ default ]
 ---
 
-        <!-- Jumbotron  -->
-        <div class="jumbotron custom-no-margin">
-          <div class="container">
-            <h1>Marlin Firmware</h1>
-            <p class="text-justify">Marlin is an Open Source firmware for 3D printers based on AVR microprocessors such as those used on the <a href="http://arduino.cc" target="_blank" rel="nofollow">Arduino</a> platform, it allows full control over the 3D printer, extrusors and heated building plate either by being controlled from a host PC or in a standalone mode.</p>
-            <p><a class="btn btn-primary btn-lg" href="{{ site.github.url }}/{{ site.base.articles }}/getting-started/overview.html" role="button">Learn more &raquo;</a></p>
+        <!-- Carousel  -->
+        <div id="carousel-generic" class="carousel slide" data-ride="carousel">
+          <!-- Wrapper for slides -->
+          <div class="carousel-inner" role="listbox">
+            <div class="item active">
+              <img src="{{ site.github.url }}/{{ site.base.images }}/carousel/example-450.jpg" alt="...">
+            </div>
           </div>
         </div>
 
-        <div class="custom-features">
+        <div class="custom-tagline">
           <div class="container">
             <div class="row">
-              {% for feature in site.data.features %}
-                <div class="col-md-3 col-sm-6">
-                  <a href="{{ site.github.url }}/{{ site.base.articles }}/{{ feature.link }}"><img class="img-circle" src="{{ site.github.url }}/{{ site.base.images }}/features/{{ feature.img }}" alt="{{ feature.alt }}" width="120" height="120"></a>
-                  <h3 class="custom-features-heading">{{ feature.title }}</h3></p>
-                </div>
-              {% endfor %}
-            </div>
-          </div>
-        </div>
-
-        <div class="container" role="main">
-          <div class="row">
-            <div class="col-md-9">
-              {% for post in site.posts %}
-                <div class="row">
-                  <div class="col-md-12">
-                    <div class="custom-post-preview">
-                      <a href="{{ post.url }}">
-                      <h3 class="custom-post-title">{{ post.title }}</h3></a>
-                      <p class="small">Posted by {{ post.author }} on {{ post.date | date: "%A, %B %d %Y" }}</p>
-                      <p class="lead">{% if forloop.index == 1 %}{{ post.content }}{% else %}<i class="fa fa-quote-left fa-2x fa-pull-left fa-border" aria-hidden="true"></i> {{ post.excerpt }}{% endif %}</p>
-                    </div>
-                  </div>
-                </div>
-              {% if forloop.index >= 4 %}{% break %}{% endif %}
-              {% endfor %}
-            </div>
-            <div class="col-md-3 text-center">
-              <div class="alert alert-success">
-                <div class="panel-heading">
-                  <i class="fa fa-coffee fa-5x" aria-hidden="true"></i>
-                </div><div class="panel-body">
-                  <p>Marlin is built exclusive out of love from developers from all over the world, show them your <i class="fa fa-heart text-danger" aria-hidden="true"></i> and how much you appreciate their endless hours of free work by buying a cup of coffee.</p>
-                  <a href="https://www.gofundme.com/zmh9h9vc" class="btn btn-success">Click here</a>
-                </div>
+              <div class="col-sm-12 col-md-7">
+                <h1><strong>The firmware we all trust</strong></h1>
+                <p class="text-justify">Marlin is the <em>de facto standard</em> of Open Source firmware for 3D printers, reliable and precise it will deliver outstanding quality prints while keeping you in full control of the process.</p>
+              </div>
+              <div class="col-sm-12 col-md-5 custom-tagline-btn">
+                <p><a class="btn btn-success btn-block" href="{{ site.github.url }}/{{ site.base.articles }}/getting-started/overview.html" role="button">
+                  <i class="fa fa-book fa-1x" aria-hidden="true"></i>&nbsp; Learn more</a></p>
+                <p><a class="btn btn-info btn-block" href="{{ site.github.url }}/download/" role="button">
+                  <i class="fa fa-download fa-1x" aria-hidden="true"></i>&nbsp; Download</a></p>
               </div>
             </div>
           </div>
-        </div><!-- /.container -->
+        </div>
+
+        <div class="custom-tile">
+          <div class="container">
+            <div class="row">
+{% for feature in site.data.features %}
+                <div class="col-sm-4">
+                  <div class="custom-tile-image-wrapper">
+                    <a href="{{ site.github.url }}/{{ feature.link }}">
+                    <div class="custom-tile-image-block" style="background: url({{ site.github.url }}/{{ site.base.images }}/features/{{ feature.img }}) no-repeat center top; background-size: cover;">
+                      <div class="custom-tile-image-legend">
+                          {{ feature.title }}
+                          <i class="fa fa-arrow-circle-right fa-1x" aria-hidden="true"></i>
+                      </div>
+                    </div>
+                    </a>
+                  </div>
+                </div>
+{% endfor %}
+            </div>
+          </div>
+        </div>

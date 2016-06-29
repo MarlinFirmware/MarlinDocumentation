@@ -81,10 +81,17 @@ module Jekyll
     def render(context)
       @context = context
 
-      source  = "<div class=\"alert alert-#{@type}\">"
-      source += "<ul class=\"fa-ul\"><li>"
-      source += "<i class=\"fa #{@icon} fa-lg fa-li\" aria-hidden=\"true\"></i>"
-      source += "#{markdownify(super)}</li></ul></div>"
+      source  = "<div class='container-fluid'>"
+      source += "  <div class='row alert alert-#{@type} custom-alert'>"
+      source += "    <div class='col-lg-1 col-md-2 visible-lg-block visible-md-block custom-alert-icon'>"
+      source += "      <i class='fa #{@icon} fa-4x' aria-hidden='true'></i>"
+      source += "    </div>"
+      source += "    <div class='col-lg-11 col-md-10 custom-alert-text'>"
+      source += "      #{markdownify(super)}"
+      source += "    </div>"
+      source += "  </div>"
+      source += "</div>"
+
     end
   end
 end
