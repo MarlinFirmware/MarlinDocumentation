@@ -5,6 +5,7 @@ gem 'html-proofer', '>= 3.0.2'
 gem 'jekyll', '>= 3.0.3'
 gem 'jekyll-avatar', '>= 0.4.0'
 gem 'jekyll-mentions', '>= 1.1.2'
+gem 'jekyll-press', '>= 0.2.1'
 gem 'jekyll-seo-tag', '>= 1.3.3'
 gem 'kramdown', '>= 1.10.0'
 gem 'wdm', '>= 0.1.0' if Gem.win_platform?
