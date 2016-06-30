@@ -1,16 +1,12 @@
+baseurl: ''
+url: 'http://marlinfw.org'
+
 version: '0.0.6'
-url: ' http://marlinfw.org'
+environment: development
+
 name: 'Marlin 3D Printer Firmware'
 logo: '/assets/images/logo/marlin/small.png'
-description: 'Marlin - The firmware we all trust'
-
-base:
-  meta: 'meta'
-  assets: 'assets'
-  articles: 'articles'
-  images: 'assets/images'
-  javascript: 'assets/javascript'
-  stylesheet: 'assets/stylesheets'
+description: 'Printing the planet, one layer at a time.'
 
 repository:
   main: 'https://github.com/MarlinFirmware/Marlin'
@@ -66,38 +62,3 @@ defaults:
       layout: 'articles'
       show:
         breadcrumbs: true
-
-
-
-
-
-
-
-
-
-#  - # Post type settings
-#    scope:
-#      type: 'posts'
-#
-#    values:
-#      permalink:           'news/:year/:month/:day/:title/'
-
-#  - # Pages type settings
-#    scope:
-#      type:               'pages'
-#
-#    values:
-#      navigation:
-#        show_title:       true
-#        show_navbar:      true
-#        show_footer:      true
-#        show_breadcrumbs: true
-#        show_description: false
-#
-#      meta:
-#        hidden:           false
-#        categories:       [ 'default' ]
-#
-#
-#
-      #permalink: "/:path/:basename/"

@@ -6,12 +6,10 @@ description:  'Marlin, the most widely-used 3D printer firmware in the world'
 category:     [ default ]
 ---
 
-        <!-- Carousel  -->
         <div id="carousel-generic" class="carousel slide" data-ride="carousel">
-          <!-- Wrapper for slides -->
           <div class="carousel-inner" role="listbox">
             <div class="item active">
-              <img src="{{ site.github.url }}/{{ site.base.images }}/carousel/example-450.jpg" alt="...">
+              <img src="{{ '/assets/images/carousel/example-450.jpg' | prepend: site.baseurl }}" alt="Banner mage" class="iamg-responsive">
             </div>
           </div>
         </div>
@@ -24,7 +22,7 @@ category:     [ default ]
                 <p class="text-justify">Marlin is the <em>de facto standard</em> of Open Source firmware for 3D printers, reliable and precise it will deliver outstanding quality prints while keeping you in full control of the process.</p>
               </div>
               <div class="col-sm-12 col-md-5 custom-tagline-btn">
-                <p><a class="btn btn-success btn-block" href="{{ site.github.url }}/{{ site.base.articles }}/getting-started/overview.html" role="button">
+                <p><a class="btn btn-success btn-block" href="{{ '/articles/getting-started/overview.html' | prepend: site.baseurl }}" role="button">
                   <i class="fa fa-book fa-1x" aria-hidden="true"></i>&nbsp; Learn more</a></p>
                 <p><a class="btn btn-info btn-block" href="{{ site.github.url }}/download/" role="button">
                   <i class="fa fa-download fa-1x" aria-hidden="true"></i>&nbsp; Download</a></p>
@@ -40,7 +38,7 @@ category:     [ default ]
                 <div class="col-sm-4">
                   <div class="custom-tile-image-wrapper">
                     <a href="{{ site.github.url }}/{{ feature.link }}">
-                    <div class="custom-tile-image-block" style="background: url({{ site.github.url }}/{{ site.base.images }}/features/{{ feature.img }}) no-repeat center top; background-size: cover;">
+                    <div class="custom-tile-image-block" style="background: url({{ '/assets/images/features/' | append: feature.img | prepend: site.baseurl }}) no-repeat center top; background-size: cover;">
                       <div class="custom-tile-image-legend">
                           {{ feature.title }}
                           <i class="fa fa-arrow-circle-right fa-1x" aria-hidden="true"></i>

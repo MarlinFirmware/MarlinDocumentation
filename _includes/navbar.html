@@ -3,7 +3,7 @@
       <div class="container">
         <div class="navbar-header">
           <a href="{{ site.github.url }}/" class="navbar-brand">
-            <img src="{{ site.github.url }}/{{ site.base.images }}/logo/marlin/text.png" alt="Marlin" height="25">
+            <img src="{{ '/assets/images/logo/marlin/text.png' | prepend: site.baseurl }}" alt="Marlin" height="25">
           </a>
           <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
             <span class="icon-bar"></span>
@@ -18,9 +18,9 @@
               <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="navbar-getting-started">
               Getting Started <span class="caret"></span></a>
 
-              <ul class="dropdown-menu" aria-labelledby="getting-started">
+              <ul class="dropdown-menu">
                 <li>
-                  <a href="{{ site.github.url }}/{{ site.base.articles }}/getting-started/overview.html">
+                  <a href="{{ '/articles/getting-started/overview.html' | prepend: site.baseurl }}">
                   Introduction</a> </li>
 
                 <li class="divider"> </li>
@@ -30,17 +30,17 @@
                   <del>How to get</del></a> </li>
 
                 <li>
-                  <a href="{{ site.github.url }}/{{ site.base.articles }}/development/configuration.html">
+                  <a href="{{ '/articles/development/configuration.html' | prepend: site.baseurl }}">
                   How to configure</a> </li>
 
                 <li>
-                  <a href="{{ site.github.url }}/{{ site.base.articles }}/getting-started/install.html">
+                  <a href="{{ '/articles/getting-started/install.html' | prepend: site.baseurl }}">
                   How to flash your board</a> </li>
 
                 <li class="divider"> </li>
 
                 <li>
-                <a href="{{ site.github.url }}/{{ site.base.articles }}/development/reporting-bugs.html">
+                <a href="{{ '/articles/development/reporting-bugs.html' | prepend: site.baseurl }}">
                 Reporting bugs</a> </li>
               </ul>
             </li>
@@ -53,9 +53,9 @@
               <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="navbar-documentation">
               Documentation <span class="caret"></span></a>
 
-              <ul class="dropdown-menu" aria-labelledby="documentation">
+              <ul class="dropdown-menu">
                 <li>
-                  <a href="{{ site.github.url }}/{{ site.base.articles }}/development/changelog.html">
+                  <a href="{{ '/articles/development/changelog.html' | prepend: site.baseurl }}">
                   Changelog</a> </li>
 
                 <li class="divider"> </li>
@@ -71,7 +71,7 @@
                 <li class="divider"> </li>
 
                 <li>
-                  <a href="{{ site.github.url }}/{{ site.base.meta }}/needs-review/">
+                  <a href="{{ '/meta/needs-review/' | prepend: site.baseurl }}">
                   Documentation needing review</a> </li>
               </ul>
             </li>
@@ -80,13 +80,13 @@
               <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="navbar-development">
               Development <span class="caret"></span></a>
 
-              <ul class="dropdown-menu" aria-labelledby="development">
+              <ul class="dropdown-menu">
                 <li>
-                  <a href="{{ site.github.url }}/{{ site.base.articles }}/development/contributing.html">
+                  <a href="{{ '/articles/development/contributing.html' | prepend: site.baseurl }}">
                   Contributing</a> </li>
 
                 <li>
-                  <a href="{{ site.github.url }}/{{ site.base.articles }}/development/coding-standards.html">
+                  <a href="{{ '/articles/development/coding-standards.html' | prepend: site.baseurl }}">
                   Coding standards</a> </li>
 
                 <li class="divider"> </li>
@@ -96,7 +96,7 @@
                   Bugtracker</a> </li>
 
                 <li>
-                  <a href="{{ site.github.url }}/{{ site.base.articles }}/development/reporting-bugs.html">
+                  <a href="{{ '/articles/development/reporting-bugs.html' | prepend: site.baseurl }}">
                   Reporting bugs</a> </li>
 
                 <li class="divider"> </li>
@@ -104,6 +104,12 @@
                 <li>
                   <a href="https://github.com/MarlinFirmware/Marlin/">
                   Source code repository</a> </li>
+
+                <li class="divider"> </li>
+
+                <li>
+                  <a href="{{ '/tools/u8glib/converter.html' | prepend: site.baseurl }}">
+                  C/C++ bitmap converter</a> </li>
               </ul>
             </li>
           </ul>

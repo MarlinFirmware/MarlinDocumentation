@@ -30,8 +30,8 @@
 
 {% seo %}
 
-    <link rel="icon" href="{{ site.github.url }}/{{ site.base.assets }}/favicon.ico">
-    <link rel="stylesheet" href="{{ site.github.url }}/{{ site.base.stylesheet }}/bootstrap.min.css">
+    <link rel="icon" href="{{ '/assets/favicon.ico' | prepend: site.baseurl }}">
+    <link rel="stylesheet" href="{{ '/assets/stylesheets/bootstrap.min.css' | prepend: site.baseurl }}">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -40,7 +40,7 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    <script src="{{ site.github.url }}/{{ site.base.javascript }}/head.min.js"></script>
+    <script src="{{ '/assets/javascript/head.min.js' | prepend: site.baseurl }}"></script>
     <script type="text/javascript">
       /**
        * As Github pages do not support https for custom domains
@@ -56,19 +56,19 @@
        * with the main page.
        */
       head.load(
-          "{{ site.github.url }}/{{ site.base.stylesheet }}/font-awesome.min.css",
-          "{{ site.github.url }}/{{ site.base.stylesheet }}/syntax.css",
-          "{{ site.github.url }}/{{ site.base.stylesheet }}/custom.css",
+          "{{ '/assets/stylesheets/font-awesome.min.css' | prepend: site.baseurl }}",
+          "{{ '/assets/stylesheets/syntax.css' | prepend: site.baseurl }}",
+          "{{ '/assets/stylesheets/custom.css' | prepend: site.baseurl }}",
 
-          "{{ site.github.url }}/{{ site.base.javascript }}/jquery-2.2.1.min.js",
-          "{{ site.github.url }}/{{ site.base.javascript }}/jquery-ui.min.js",
-          "{{ site.github.url }}/{{ site.base.javascript }}/bootstrap.min.js",
-          "{{ site.github.url }}/{{ site.base.javascript }}/sheetrock.min.js",
-          "{{ site.github.url }}/{{ site.base.javascript }}/tocify.min.js",
-          "{{ site.github.url }}/{{ site.base.javascript }}/holder.min.js",
-          "{{ site.github.url }}/{{ site.base.javascript }}/custom.js",
+          "{{ '/assets/javascript/jquery-2.2.1.min.js' | prepend: site.baseurl }}",
+          "{{ '/assets/javascript/jquery-ui.min.js' | prepend: site.baseurl }}",
+          "{{ '/assets/javascript/bootstrap.min.js' | prepend: site.baseurl }}",
+          "{{ '/assets/javascript/tocify.min.js' | prepend: site.baseurl }}",
+          "{{ '/assets/javascript/custom.js' | prepend: site.baseurl }}",
 
-          "//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/1.0.9/cookieconsent.min.js"
+          "{{ '/assets/javascript/holder.min.js' | prepend: site.baseurl }}",
+          "{{ '/assets/javascript/sheetrock.min.js' | prepend: site.baseurl }}",
+          "{{ '/assets/javascript/cookieconsent.min.js' | prepend: site.baseurl }}"
       );
 
       head.ready(function() {
@@ -125,13 +125,20 @@
         <div class="row">
           <div class="col-lg-12">
             <hr>
-            <ul class="list-unstyled">
-              <li class="pull-right"><a href="#top" data-proofer-ignore>Back to top <i class="fa fa-level-up" aria-hidden="true"></i></a></li>
-              <li>Brought to you with <i class="fa fa-heart text-danger" aria-hidden="true"></i> lack of
-                <i class="fa fa-bed" aria-hidden="true"></i> and lots of
-                <i class="fa fa-coffee" aria-hidden="true"></i>.
-              <li>The contents of this website are &copy; {{ site.time | date: '%Y' }} under the terms of the <a href="http://www.gnu.org/licenses/gpl-3.0.txt">GPLv3</a> License.</li>
-            </ul>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-8">
+            <p>Brought to you with <i class="fa fa-heart text-danger" aria-hidden="true"></i> lack of
+              <i class="fa fa-bed" aria-hidden="true"></i> and lots of
+              <i class="fa fa-coffee" aria-hidden="true"></i>. <br />
+              The contents of this website are &copy; {{ site.time | date: '%Y' }} under the terms of the <a href="http://www.gnu.org/licenses/gpl-3.0.txt">GPLv3</a> License.</p>
+          </div>
+          <div class="col-lg-4">
+            <div class="pull-right">
+              <a href="#top" data-proofer-ignore>
+              Back to top <i class="fa fa-level-up" aria-hidden="true"></i></a>
+            </div>
           </div>
         </div>
       </div>
