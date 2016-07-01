@@ -24,6 +24,8 @@ timezone: 'Europe/Lisbon'
 collections:
   articles:
     output: true
+  gcode:
+    output: false
 
 #include: [ '_pages' ]
 

@@ -1,0 +1,36 @@
+---
+category: [ default ]
+---
+
+<div class="container" role="main">
+{% for gcode in site.gcode %}
+  <div class="row">
+    <div class="col-lg-12">
+      <h1 class="custom-no-margin-bottom">
+        {% for code in gcode.code %}
+          {{ code }}{% if forloop.last != true %}, {% endif %}
+        {% endfor %} - {{ gcode.title }}
+      </h1>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="text-info">
+        {% if gcode.experimental %}<i class="fa fa-flask" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Experimental feature"></i> {% endif %}
+        {% if gcode.since %}<i class="fa fa-code-fork" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Available since"></i> {{ gcode.since }} {% endif %}
+        {% if gcode.description %}<i class="fa fa-pencil-square" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Description"></i> {{gcode.description}} {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-12">
+      <ul>
+        {% for arg in gcode.parameters %}
+          <li><strong>{{ arg.tag }}</strong>: {{ arg.description }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+{% endfor %}
+</div>

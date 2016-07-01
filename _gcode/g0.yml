@@ -1,0 +1,46 @@
+---
+title: Linear Move
+group: movement
+description: Moves the tool in along a straight line
+experimental: true
+
+since: 1.0.0-beta
+
+code:
+  - G0
+  - G1
+
+parameters:
+  -
+    tag: X
+    type: float
+    description: The position to move to on the X axis
+  -
+    tag: Y
+    type: float
+    description: The position to move to on the Y axis
+  -
+    tag: Z
+    type: float
+    description: The position to move to on the Z axis
+  -
+    tag: E
+    type: float
+    description: The position to move to on the E axis
+  -
+    tag: F
+    type: float
+    description: The position to move to on the F axis
+  -
+    tag: S
+    description: The amount to extrude between the starting point and ending point
+
+
+example:
+
+  G1 F1500
+  G1 X50 Y25.3 E22.4
+
+  In the above example the feedrate is set to 1500mm/minute on line 1, then move 50mm on the X axis and 25.3mm on the Y axis while extruding 22.4mm of filament between the two points.
+
+---
