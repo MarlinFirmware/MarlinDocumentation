@@ -19,6 +19,10 @@ p {
     margin: 0px !important;
 }
 
+.custom-no-margin-bottom {
+    margin-bottom: 0px !important;
+}
+
 .custom-no-padding {
     padding: 0px !important;
 }

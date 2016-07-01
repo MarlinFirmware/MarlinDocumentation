@@ -69,78 +69,19 @@ This is basically just to show who made the changes to the current firmware sett
 
 This defines which motherboard you used for your 3D printer. It tells Marlin to use the specific pins and restrictions that apply to this particular board. Below is the list of the boards that can be used with Marlin, taken from boards.h.
 
-Replace the `#define BOARD_RAMPS_14_EFB 43` line in Configuration.h with the line below that matches your current board.
-Check the boards,h file for the most up-to-date listing of supported boards, if you do not see yours listed here.
+Replace the `#define BOARD_RAMPS_14_EFB` line in Configuration.h with the line below that matches your current board.
+Check the `boards.h` file for the most up-to-date listing of supported boards, if you do not see yours listed here.
 
-{% highlight cpp %}
-
-#define BOARD_GEN7_CUSTOM       10   // Gen7 custom (Alfons3 Version) "https://github.com/Alfons3/Generation_7_Electronics"
-#define BOARD_GEN7_12           11   // Gen7 v1.1, v1.2
-#define BOARD_GEN7_13           12   // Gen7 v1.3
-#define BOARD_GEN7_14           13   // Gen7 v1.4
-#define BOARD_CNCONTROLS_12     112  // Cartesio CN Controls V12
-#define BOARD_CHEAPTRONIC       2    // Cheaptronic v1.0
-#define BOARD_SETHI             20   // Sethi 3D_1
-#define BOARD_RAMPS_OLD         3    // MEGA/RAMPS up to 1.2
-#define BOARD_RAMPS_13_EFB      33   // RAMPS 1.3 (Power outputs: Hotend, Fan, Bed)
-#define BOARD_RAMPS_13_EEB      34   // RAMPS 1.3 (Power outputs: Hotend0, Hotend1, Bed)
-#define BOARD_RAMPS_13_EFF      35   // RAMPS 1.3 (Power outputs: Hotend, Fan0, Fan1)
-#define BOARD_RAMPS_13_EEF      36   // RAMPS 1.3 (Power outputs: Hotend0, Hotend1, Fan)
-#define BOARD_RAMPS_13_SF       38   // RAMPS 1.3 (Power outputs: Spindle, Controller Fan)
-#define BOARD_FELIX2            37   // Felix 2.0+ Electronics Board (RAMPS like)
-#define BOARD_RIGIDBOARD        42   // Invent-A-Part RigidBoard
-#define BOARD_RIGIDBOARD_V2     52   // Invent-A-Part RigidBoard V2
-#define BOARD_RAMPS_14_EFB      43   // RAMPS 1.4 (Power outputs: Hotend, Fan, Bed)
-#define BOARD_RAMPS_14_EEB      44   // RAMPS 1.4 (Power outputs: Hotend0, Hotend1, Bed)
-#define BOARD_RAMPS_14_EFF      45   // RAMPS 1.4 (Power outputs: Hotend, Fan0, Fan1)
-#define BOARD_RAMPS_14_EEF      46   // RAMPS 1.4 (Power outputs: Hotend0, Hotend1, Fan)
-#define BOARD_RAMPS_14_SF       48   // RAMPS 1.4 (Power outputs: Spindle, Controller Fan)
-#define BOARD_GEN6              5    // Gen6
-#define BOARD_GEN6_DELUXE       51   // Gen6 deluxe
-#define BOARD_SANGUINOLOLU_11   6    // Sanguinololu < 1.2
-#define BOARD_SANGUINOLOLU_12   62   // Sanguinololu 1.2 and above
-#define BOARD_MELZI             63   // Melzi
-#define BOARD_STB_11            64   // STB V1.1
-#define BOARD_AZTEEG_X1         65   // Azteeg X1
-#define BOARD_MELZI_MAKR3D      66   // Melzi with ATmega1284 (MaKr3d version)
-#define BOARD_AZTEEG_X3         67   // Azteeg X3
-#define BOARD_AZTEEG_X3_PRO     68   // Azteeg X3 Pro
-#define BOARD_ULTIMAKER         7    // Ultimaker
-#define BOARD_ULTIMAKER_OLD     71   // Ultimaker (Older electronics. Pre 1.5.4. This is rare)
-#define BOARD_ULTIMAIN_2        72   // Ultimainboard 2.x (Uses TEMP_SENSOR 20)
-#define BOARD_3DRAG             77   // 3Drag Controller
-#define BOARD_K8200             78   // Vellemann K8200 Controller (derived from 3Drag Controller)
-#define BOARD_TEENSYLU          8    // Teensylu
-#define BOARD_RUMBA             80   // Rumba
-#define BOARD_PRINTRBOARD       81   // Printrboard (AT90USB1286)
-#define BOARD_PRINTRBOARD_REVF  811  // Printrboard Revision F (AT90USB1286)
-#define BOARD_BRAINWAVE         82   // Brainwave (AT90USB646)
-#define BOARD_SAV_MKI           83   // SAV Mk-I (AT90USB1286)
-#define BOARD_TEENSY2           84   // Teensy++2.0 (AT90USB1286) - CLI compile: DEFINES=AT90USBxx_TEENSYPP_ASSIGNMENTS HARDWARE_MOTHERBOARD=84  make
-#define BOARD_BRAINWAVE_PRO     85   // Brainwave Pro (AT90USB1286)
-#define BOARD_GEN3_PLUS         9    // Gen3+
-#define BOARD_GEN3_MONOLITHIC   22   // Gen3 Monolithic Electronics
-#define BOARD_MEGATRONICS       70   // Megatronics
-#define BOARD_MEGATRONICS_2     701  // Megatronics v2.0
-#define BOARD_MINITRONICS       702  // Minitronics v1.0/1.1
-#define BOARD_MEGATRONICS_3     703  // Megatronics v3.0
-#define BOARD_OMCA_A            90   // Alpha OMCA board
-#define BOARD_OMCA              91   // Final OMCA board
-#define BOARD_RAMBO             301  // Rambo
-#define BOARD_MINIRAMBO         302  // Mini-Rambo
-#define BOARD_AJ4P              303  // AJ4P
-#define BOARD_MEGACONTROLLER    310  // Mega controller
-#define BOARD_ELEFU_3           21   // Elefu Ra Board (v3)
-#define BOARD_5DPRINT           88   // 5DPrint D8 Driver Board
-#define BOARD_LEAPFROG          999  // Leapfrog
-#define BOARD_MKS_BASE          40   // MKS BASE 1.0
-#define BOARD_MKS_13            47   // MKS v1.3 or 1.4 (maybe higher)
-#define BOARD_SAINSMART_2IN1    49   // Sainsmart 2-in-1 board
-#define BOARD_BAM_DICE          401  // 2PrintBeta BAM&DICE with STK drivers
-#define BOARD_BAM_DICE_DUE      402  // 2PrintBeta BAM&DICE Due with STK drivers
-#define BOARD_BQ_ZUM_MEGA_3D    503  // bq ZUM Mega 3D
-
-{% endhighlight %}
+<table id="board_list" class="table table-condensed table-striped"></table>
+<script type="text/javascript">
+  head.ready("sheetrock.min.js", function() {
+    // Load an entire worksheet.
+    $('#board_list').sheetrock({
+      url: "https://docs.google.com/spreadsheets/d/" +
+        "1K4e1GaA4xuNfUGyIw57vxPGuUzQSv5wktTQBHdCVCKU#gid=525308416",
+    });
+  });
+</script>
 
 {% alert info %}
 If you're using a Sanguino board with Arduino IDE 1.6.8 you'll need to add Sanguino to the Board list. Select menu item `File > Preference > Additional Boards Manager URLs` and add [this source URL](https://raw.githubusercontent.com/Lauszus/Sanguino/master/package_lauszus_sanguino_index.json). Then you can use `Tools > Boards > Boards Manager` to install Sanguino from the list. An internet connection is required. (Credit to [Dust's RepRap Blog](http://dustsreprap.blogspot.my/2015/06/better-way-to-install-sanguino-in.html).)
