@@ -1,46 +1,68 @@
 ---
 title: Linear Move
-group: movement
-description: Moves the tool in along a straight line
-experimental: true
+brief: Moves the tool in a straight line
 
+experimental: false
 since: 1.0.0-beta
+group: movement
 
-code:
+codes:
   - G0
   - G1
+
+long:
+  - Marlin treats G0 (rapid linear movement) as an alias to G1 (rapid movement).
+  - All parameters are optional but at least one of them must be provided.
 
 parameters:
   -
     tag: X
     type: float
+    optional: true
     description: The position to move to on the X axis
   -
     tag: Y
     type: float
+    optional: true
     description: The position to move to on the Y axis
   -
     tag: Z
     type: float
+    optional: true
     description: The position to move to on the Z axis
   -
     tag: E
     type: float
-    description: The position to move to on the E axis
+    optional: true
+    description: The amount to extrude between the starting point and ending point
   -
     tag: F
     type: float
-    description: The position to move to on the F axis
+    optional: true
+    description: The feedrate per minute of the move between the starting and ending point
+
+examples:
   -
-    tag: S
-    description: The amount to extrude between the starting point and ending point
+    pre:
+      The most basic example is to set a feedrate and them move the tool on the XY position.
+    code:
+      - G0 X12   ; move to 12mm on the X axis
+      - G0 F1500 ; set the feedrate to 1500mm/minute
+      - G1 X90.6 Y13.8 ; move to 90.6mm on the X axis and 13.8mm on the Y axis
 
-
-example:
-
-  G1 F1500
-  G1 X50 Y25.3 E22.4
-
-  In the above example the feedrate is set to 1500mm/minute on line 1, then move 50mm on the X axis and 25.3mm on the Y axis while extruding 22.4mm of filament between the two points.
+  -
+    pre:
+      There are some caveats related with feedrates, consider the following&#x3A;
+    code:
+      - G1 F1500 ; set the feedrate to 1500mm/minute
+      - G1 X50 Y25.3 E22.4 ; move while extruding
+    post:
+      In the above example the feedrate is set to 1500mm/minute on line 1, then move the tool 50mm on the X axis and 25.3mm on the Y axis while extruding 22.4mm of filament between the two points.
+  -
+    code:
+      - G1 F1500
+      - G1 X50 Y25.3 E22.4 F3000
+    post:
+      However, in the above example, we set a feedrate of 1500 mm/minute on line 1, then do the move described above accelerating to a feedrate of 3000 mm/minute as it does so. The extrusion will accelerate along with the X and Y movement, so everything stays synchronized.
 
 ---

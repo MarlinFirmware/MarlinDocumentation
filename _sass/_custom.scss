@@ -1,14 +1,18 @@
 /*
- * Miscellaneous
+ * Custom styles
  */
 
 body {
-  padding-top: 61px;
-  padding-bottom: 20px;
+  padding-top: 51px;
+  padding-bottom: 10px;
 }
 
 p {
     text-align: justify;
+}
+
+.navbar {
+    font-weight: 600;
 }
 
 .custom-border-warning {

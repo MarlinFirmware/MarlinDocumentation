@@ -17,9 +17,13 @@ analytics:
   id: 'UA-76230130-1'
   domain: 'marlinfw.org'
 
-markdown: 'kramdown'
-highlighter: 'rouge'
+markdown: kramdown
+highlighter: rouge
 timezone: 'Europe/Lisbon'
+
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
 
 collections:
   articles:
@@ -35,6 +39,7 @@ gems:
   - jekyll-mentions
   - jekyll-seo-tag
   - jekyll-avatar
+  - jekyll-bootstrap-sass
 
 defaults:
   - # All types
