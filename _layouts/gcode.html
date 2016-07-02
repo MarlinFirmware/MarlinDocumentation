@@ -1,26 +1,31 @@
 ---
 layout: default
 ---
-    <script language="javascript">
-      toc_selectors = 'h1,h2';
-    </script>
 
-    <!-- content -->
-    <div class="container" role="main">
+<!-- content -->
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-3 col-md-4 visible-lg-block visible-md-block custom-no-padding">
+      <div class="custom-fixed-sidebar">
+        placeholder
+      </div>
+    </div>
+    <div class="col-lg-9 col-md-8 custom-bg-white">
       <div class="row">
-        <div class="col-lg-3 col-md-4 visible-lg-block visible-md-block custom-no-padding">
-          <div class="custom-fixed-sidebar">
-            <div id="toc"></div>
-          </div>
-        </div>
-        <div class="col-lg-9 col-md-8 custom-bg-white">
-          <div class="row">
-            <div class="col-md-12 custom-article">
-              <p class="text-right pull-right visible-lg-block hidden-print small">
-              {{ content }}
-            </div>
-          </div>
+        <div class="col-md-12 custom-article">
+            {% if page.collection == 'gcode' %}
+                {% assign gcode = page %}
+                {% include gcode-info.html %}
+            {% else %}
+                {% for gcode in site.gcode %}
+                    {% assign gcode = site.gcode %}
+                    {% include gcode-info.html %}
+                    <hr />
+                {% endfor %}
+            {% endif %}
         </div>
       </div>
     </div>
-    <!-- /content -->
+  </div>
+</div>
+<!-- /content -->

@@ -1,7 +1,7 @@
 baseurl: ''
 url: 'http://marlinfw.org'
 
-version: '0.0.6'
+version: '0.0.8-beta'
 environment: development
 
 name: 'Marlin 3D Printer Firmware'
@@ -29,7 +29,8 @@ collections:
   articles:
     output: true
   gcode:
-    output: false
+    output: true
+    permalink: /meta/:collection/:path:output_ext
 
 #include: [ '_pages' ]
 
@@ -69,3 +70,11 @@ defaults:
       layout: 'articles'
       show:
         breadcrumbs: true
+
+  - # G-Code type settings
+    scope:
+      type: 'gcode'
+    values:
+      layout: 'gcode'
+      show:
+        breadcrumbs: false
