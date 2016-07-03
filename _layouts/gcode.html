@@ -13,16 +13,18 @@ layout: default
     <div class="col-lg-9 col-md-8 custom-bg-white">
       <div class="row">
         <div class="col-md-12 custom-article">
-            {% if page.collection == 'gcode' %}
-                {% assign gcode = page %}
+          {% if page.collection == 'gcode' and page.codes %}
+            {% assign gcode = page %}
+            {% include gcode-info.html %}
+          {% else %}
+            {% for gcode in site.gcode %}
+              {% if gcode.codes %}
+                {% assign gcode = site.gcode %}
                 {% include gcode-info.html %}
-            {% else %}
-                {% for gcode in site.gcode %}
-                    {% assign gcode = site.gcode %}
-                    {% include gcode-info.html %}
-                    <hr />
-                {% endfor %}
-            {% endif %}
+                <hr />
+              {% endif %}
+            {% endfor %}
+          {% endif %}
         </div>
       </div>
     </div>

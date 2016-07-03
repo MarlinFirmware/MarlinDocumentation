@@ -20,7 +20,7 @@
 
           <ul class="dropdown-menu">
             <li>
-              <a href="{{ '/articles/getting-started/overview.html' | prepend: site.baseurl }}">
+              <a href="{{ '/docs/basics/introduction.html' | prepend: site.baseurl }}">
               Introduction</a></li>
 
             <li class="divider"></li>
@@ -30,55 +30,66 @@
               How to get</a></li>
 
             <li>
-              <a href="{{ '/articles/development/configuration.html' | prepend: site.baseurl }}">
+              <a href="{{ '/docs/development/configuration.html' | prepend: site.baseurl }}">
               How to configure</a></li>
 
             <li>
-              <a href="{{ '/articles/getting-started/install.html' | prepend: site.baseurl }}">
+              <a href="{{ '/docs/basics/install.html' | prepend: site.baseurl }}">
               How to flash your board</a></li>
 
             <li class="divider"></li>
 
-            <li>
-            <a href="{{ '/articles/development/reporting-bugs.html' | prepend: site.baseurl }}">
+            <li class="disabled">
+            <a href="#">
             Reporting bugs</a></li>
           </ul>
         </li>
 
         <li>
-          <a href="{{ site.github.url }}/download/">
+          <a href="{{ site.github.url }}/meta/download/">
           Download</a></li>
 
         <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="navbar-documentation">
           Documentation <span class="caret"></span></a>
-
           <ul class="dropdown-menu">
-            <li class="dropdown-submenu">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">G-Code</a>
-              <ul class="dropdown-menu">
-                <li><a href="{{ '/meta/gcode/' | prepend: site.baseurl }}">
-                  All</a></li>
-                <li class="disabled"><a href="{{ '/meta/gcode/' | prepend: site.baseurl }}">
-                  Planner</a></li>
-              </ul>
-            </li>
+            {% assign list = ('' | split: '|') %}
+            {% for col in site.collections %}
+              {% if col.title %}
+                {% assign list = list | push: col %}
+              {% endif %}
+            {% endfor %}
 
-            <li class="divider"></li>
-
-            <li>
-              <a href="{{ '/articles/development/changelog.html' | prepend: site.baseurl }}">
-              Changelog</a></li>
-
-            <li class="divider"></li>
-
-            <li class="disabled">
-              <a href="#">
-              Current stable release</a></li>
-
-            <li class="disabled">
-              <a href="#">
-              Current development release</a></li>
+            {% if list.size > 0 %}
+              {% assign list = (list | sort: 'title') %}
+              {% for col in list %}
+                {% if col.title %}
+                    <li class="dropdown-submenu">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ col.title }}</a>
+                      <ul class="dropdown-menu">
+                        <li><a href="{{ '/meta/' | append: col.label | append: '/' | prepend: site.baseurl }}">All documents</a></li>
+                        <li class="divider"></li>
+                        {% if col.label == 'gcode' %}
+                          {% assign docs = (col.docs | sort: 'path') %}
+                        {% else %}
+                          {% assign docs = (col.docs | sort: 'title') %}
+                        {% endif %}
+                        {% for doc in docs %}
+                          {% if doc.title %}
+                            <li><a href="{{ doc.url | prepend: site.baseurl }}">
+                              {% if col.label == 'gcode' %}
+                                {{ doc.codes[0] }}: {{ doc.title }}
+                              {% else %}
+                                {{ doc.title }}
+                              {% endif %}
+                            </a></li>
+                          {% endif %}
+                        {% endfor %}
+                      </ul>
+                    </li>
+                  {% endif %}
+                {% endfor %}
+              {% endif %}
 
             <li class="divider"></li>
 
@@ -89,46 +100,29 @@
         </li>
 
         <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="navbar-development">
-          Development <span class="caret"></span></a>
-
-          <ul class="dropdown-menu">
-            <li>
-              <a href="{{ '/articles/development/contributing.html' | prepend: site.baseurl }}">
-              Contributing</a></li>
-
-            <li>
-              <a href="{{ '/articles/development/coding-standards.html' | prepend: site.baseurl }}">
-              Coding standards</a></li>
-
-            <li class="divider"></li>
-
-            <li>
-              <a href="https://github.com/MarlinFirmware/Marlin/issues">
-              Bugtracker</a></li>
-
-            <li>
-              <a href="{{ '/articles/development/reporting-bugs.html' | prepend: site.baseurl }}">
-              Reporting bugs</a></li>
-
-            <li class="divider"></li>
-
-            <li>
-              <a href="https://github.com/MarlinFirmware/Marlin/">
-              Source code repository</a></li>
-          </ul>
-        </li>
-        <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="navbar-tools">
           Tools <span class="caret"></span></a>
 
           <ul class="dropdown-menu">
             <li><a href="{{ '/tools/u8glib/converter.html' | prepend: site.baseurl }}">
-                    C/C++ bitmap converter</a></li>
+            C/C++ bitmap converter</a></li>
+
+            <li class="divider"></li>
+
+            <li><a href="https://github.com/MarlinFirmware/Marlin/issues">
+            Bugtracker</a></li>
+
+            <li><a href="{{ '/docs/basics/reporting-bugs.html' | prepend: site.baseurl }}">
+            Reporting bugs</a></li>
+
+            <li class="divider"></li>
+
+            <li><a href="https://github.com/MarlinFirmware/Marlin/">
+            Source code repository</a></li>
           </ul>
         </li>
       </ul>
-{% if page.layout == 'articles' %}
+{% if page.layout == 'docs' %}
       <ul class="nav navbar-nav navbar-right visible-lg-block">
         <li>
           <a href="{{ site.repository.doc }}/edit/master/{{ page.path }}" data-proofer-ignore>

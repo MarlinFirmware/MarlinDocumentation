@@ -4,7 +4,7 @@ description:  'Technical deep dive on all the configuration options'
 
 author: Sarf2k4
 contrib: paulusjacobus, jbrazio
-category: [ articles, development, needs-review ]
+category: [ development, needs-review ]
 ---
 # Introduction
 

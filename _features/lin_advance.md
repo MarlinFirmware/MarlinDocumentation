@@ -3,7 +3,7 @@ title:        'Linear Advance extrusion algorithm'
 description:  'A nozzle pressure control feature for improved print quality'
 
 author: Sebastianv650
-category: [ articles, features ]
+category: [ features, developer ]
 ---
 
 ## Purpose

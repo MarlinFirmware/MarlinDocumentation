@@ -1,9 +1,9 @@
 ---
-title:        'Supported Hardware'
+title:        'Supported hardware list'
 description:  'Complete list of hardware supported by Marlin'
 
 author: jbrazio
-category: [ articles, hardware ]
+category: [ development, hardware ]
 ---
 
 ## General information
@@ -26,7 +26,6 @@ To select your particular board, in `Configuration.h` file you simply change the
 <table id="board_list" class="table table-condensed table-striped"></table>
 <script type="text/javascript">
   head.ready("sheetrock.min.js", function() {
-    // Load an entire worksheet.
     $('#board_list').sheetrock({
       url: "https://docs.google.com/spreadsheets/d/" +
         "1K4e1GaA4xuNfUGyIw57vxPGuUzQSv5wktTQBHdCVCKU#gid=525308416",

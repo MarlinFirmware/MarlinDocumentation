@@ -25,16 +25,50 @@ kramdown:
   input: GFM
   syntax_highlighter: rouge
 
+sass:
+    style: compressed
+
 collections:
-  articles:
+  basics:
     output: true
+    permalink: /docs/:collection/:path:output_ext
+
+  development:
+    output: true
+    title: Development
+    permalink: /docs/:collection/:path:output_ext
+
+  features:
+    output: true
+    title: Marlin features
+    permalink: /docs/:collection/:path:output_ext
+
   gcode:
     output: true
-    permalink: /meta/:collection/:path:output_ext
+    title: G-Code
+    permalink: /docs/:collection/:path:output_ext
 
-#include: [ '_pages' ]
+  meta:
+    output: true
+    permalink: /:collection/:path/
 
-exclude: [ '.gitignore', '_config.yml', 'CNAME', 'Gemfile', 'LICENSE', 'public', 'README.md', 'script', 'vendor' ]
+  tools:
+    output: true
+    permalink: /:collection/:path:output_ext
+
+docs:
+  gs: '/docs/getting-started/'
+
+exclude:
+  - '.gitignore'
+  - '_config.yml'
+  - 'CNAME'
+  - 'Gemfile'
+  - 'LICENSE'
+  - 'public'
+  - 'README.md'
+  - 'script'
+  - 'vendor'
 
 gems:
   - jekyll-mentions
@@ -55,26 +89,43 @@ defaults:
         footer: true
         breadcrumbs: false
 
-  - # Meta type
+  - # Basics collection settings
     scope:
-      path: 'meta'
+      type: 'basics'
     values:
-      category: [ 'meta' ]
-      show:
-        breadcrumbs: false
+      layout: 'docs'
+      category: [ 'Basics' ]
 
-  - # Article type settings
+  - # Development collection settings
     scope:
-      type: 'articles'
+      type: 'development'
     values:
-      layout: 'articles'
-      show:
-        breadcrumbs: true
+      layout: 'docs'
+      category: [ 'development' ]
 
-  - # G-Code type settings
+  - # Features collection settings
+    scope:
+      type: 'features'
+    values:
+      layout: 'docs'
+      category: [ 'features' ]
+
+  - # G-Code collection settings
     scope:
       type: 'gcode'
     values:
       layout: 'gcode'
-      show:
-        breadcrumbs: false
+      category: [ 'gcode' ]
+
+  - # Meta collection settings
+    scope:
+      type: 'meta'
+    values:
+      category: [ 'meta' ]
+
+  - # Tools collection settings
+    scope:
+      type: 'gcode'
+    values:
+      layout: 'gcode'
+      category: [ 'gcode' ]

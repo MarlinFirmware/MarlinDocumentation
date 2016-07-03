@@ -2,17 +2,17 @@
   img: gcode.png
   alt: G-Code
   title: Rich G-Code Support
-  link: meta/missing.html
+  link: meta/missing/
 
 - name: ctrlboard
   img: boards.jpg
   alt: Controller Board
   title: A sea of boards
-  link: articles/hardware/boards.html
+  link: docs/development/boards.html
 
 - name: inductiveprobe
   img: probe.jpg
   alt: Inductive Probe
   title: Unified bed leveling
-  link: meta/missing.html
+  link: meta/missing/
 

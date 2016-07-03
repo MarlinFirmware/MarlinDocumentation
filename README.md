@@ -52,24 +52,24 @@ Jekyll will watch the local files and on every save you do will trigger an autom
 
 ## How to contribute
 
-Let's pretend you want to add a new article to the project, you should start by forking the **MarlinDocumentation** repository. Then you should create a new branch, as the new article is about "mashed potatos" we do the following command:
+Let's pretend you want to add a new document to the project, you should start by forking the **MarlinDocumentation** repository. Then you should create a new branch, as the new document is about "mashed potatos" we do the following command:
 
 ```
-git checkout -b article-mashed_potatos
+git checkout -b doc-mashed_potatos
 ```
 
-Then inside the articles folder you should add the new file `mashed-potatos.md` and let flow all your creativity into it.
+Then inside the `_docs` folder you should add the new file `mashed-potatos.md` and let flow all your creativity into it.
 When you feel it is ready to be shared with the world just submit a commit into your own fork of **MarlinDocumentation** a start a new Pull Request to upstream.
 
 ```
 git add mashed-potatos.md
-git commit -m "Added a new article about potatos"
+git commit -m "Added a new document about potatos"
 git push
 ```
 
 ## Coding style
 
-The preferred format for article contribution is Markdown language.
+The preferred format for new document contribution is Markdown language.
 
 ## Most wanted contributions
 

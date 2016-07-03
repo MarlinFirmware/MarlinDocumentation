@@ -1,6 +1,6 @@
 ---
-title:        'Getting started'
-description:  'Quick start guide to Marlin and overview'
+title:        'Introduction'
+description:  'A brief introduction to Marlin'
 
 author: jbrazio
 category: [ articles, getting-started ]
@@ -26,7 +26,7 @@ In contrast to other OSS firmware, Marlin aims to be adaptable to as many boards
  - Interrupt based movement with real time linear acceleration
  - Interrupt based temperature protection
  - LCD interface (16x2, 20x4, 128x64 dot-matrix)
- - [Linear Advance extrusion algorithm]({{url}}/articles/features/lin_advance.html)
+ - [Linear Advance extrusion algorithm]({{ '/docs/features/lin_advance.html' | prepend: site.baseurl }})
  - Look ahead
  - Multiple kinematics: Cartesian, Delta, CoreXY and DELTA
  - Multiple language support
