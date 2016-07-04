@@ -37,7 +37,7 @@ category:     [ default ]
 {% for feature in site.data.features %}
                 <div class="col-sm-4">
                   <div class="custom-tile-image-wrapper">
-                    <a href="{{ site.github.url }}/{{ feature.link }}">
+                    <a href="{{ feature.link | prepend: site.baseurll }}">
                     <div class="custom-tile-image-block" style="background: url({{ '/assets/images/features/' | append: feature.img | prepend: site.baseurl }}) no-repeat center top; background-size: cover;">
                       <div class="custom-tile-image-legend">
                           {{ feature.title }}

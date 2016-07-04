@@ -28,11 +28,13 @@ layout: default
           {% if list.size > 0 %}
             {% assign list = (list | sort: 'title') %}
             {% for doc in list %}
-              <a href="{{ doc.url }}" class="list-group-item">
+              <a href="{{ doc.url | prepend: site.baseurl }}" class="list-group-item">
                 <h4 class="list-group-item-heading">
                   <i class="fa fa-book" aria-hidden="true"></i> {{ doc.title }}</h4>
                 {% if doc.description %}
                   <p class="list-group-item-text">{{ doc.description }}</p>
+                {% else if doc.brief %}
+                  <p class="list-group-item-text">{{ doc.brief }}</p>
                 {% endif %}
               </a>
             {% endfor %}

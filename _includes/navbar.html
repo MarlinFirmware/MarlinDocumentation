@@ -2,7 +2,7 @@
 <nav class="navbar navbar-default navbar-fixed-top custom-no-margin">
   <div class="container">
     <div class="navbar-header">
-      <a href="{{ site.github.url }}/" class="navbar-brand">
+      <a href="{{ '/' | prepend: site.baseurl }}" class="navbar-brand">
         <img src="{{ '/assets/images/logo/marlin/text.png' | prepend: site.baseurl }}" alt="Marlin" height="25">
       </a>
       <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
@@ -46,7 +46,7 @@
         </li>
 
         <li>
-          <a href="{{ site.github.url }}/meta/download/">
+          <a href="{{ '/meta/download/' | prepend: site.baseurl }}">
           Download</a></li>
 
         <li class="dropdown">
@@ -122,7 +122,7 @@
           </ul>
         </li>
       </ul>
-{% if page.layout == 'docs' %}
+{% if page.collection %}
       <ul class="nav navbar-nav navbar-right visible-lg-block">
         <li>
           <a href="{{ site.repository.doc }}/edit/master/{{ page.path }}" data-proofer-ignore>
