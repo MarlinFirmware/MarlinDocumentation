@@ -1,7 +1,7 @@
 baseurl: ''
 url: 'http://marlinfw.org'
 
-version: '0.0.6'
+version: '0.0.8-beta'
 environment: development
 
 name: 'Marlin 3D Printer Firmware'
@@ -17,22 +17,64 @@ analytics:
   id: 'UA-76230130-1'
   domain: 'marlinfw.org'
 
-markdown: 'kramdown'
-highlighter: 'rouge'
+markdown: kramdown
+highlighter: rouge
 timezone: 'Europe/Lisbon'
 
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+sass:
+    style: compressed
+
 collections:
-  articles:
+  basics:
     output: true
+    permalink: /docs/:collection/:path:output_ext
 
-#include: [ '_pages' ]
+  development:
+    output: true
+    title: Development
+    permalink: /docs/:collection/:path:output_ext
 
-exclude: [ '.gitignore', '_config.yml', 'CNAME', 'Gemfile', 'LICENSE', 'public', 'README.md', 'script', 'vendor' ]
+  features:
+    output: true
+    title: Marlin features
+    permalink: /docs/:collection/:path:output_ext
+
+  gcode:
+    output: true
+    title: G-Code
+    permalink: /docs/:collection/:path:output_ext
+
+  meta:
+    output: true
+    permalink: /:collection/:path/
+
+  tools:
+    output: true
+    permalink: /:collection/:path:output_ext
+
+docs:
+  gs: '/docs/getting-started/'
+
+exclude:
+  - '.gitignore'
+  - '_config.yml'
+  - 'CNAME'
+  - 'Gemfile'
+  - 'LICENSE'
+  - 'public'
+  - 'README.md'
+  - 'script'
+  - 'vendor'
 
 gems:
   - jekyll-mentions
   - jekyll-seo-tag
   - jekyll-avatar
+  - jekyll-bootstrap-sass
 
 defaults:
   - # All types
@@ -47,18 +89,43 @@ defaults:
         footer: true
         breadcrumbs: false
 
-  - # Meta type
+  - # Basics collection settings
     scope:
-      path: 'meta'
+      type: 'basics'
+    values:
+      layout: 'docs'
+      category: [ 'Basics' ]
+
+  - # Development collection settings
+    scope:
+      type: 'development'
+    values:
+      layout: 'docs'
+      category: [ 'development' ]
+
+  - # Features collection settings
+    scope:
+      type: 'features'
+    values:
+      layout: 'docs'
+      category: [ 'features' ]
+
+  - # G-Code collection settings
+    scope:
+      type: 'gcode'
+    values:
+      layout: 'gcode'
+      category: [ 'gcode' ]
+
+  - # Meta collection settings
+    scope:
+      type: 'meta'
     values:
       category: [ 'meta' ]
-      show:
-        breadcrumbs: false
 
-  - # Article type settings
+  - # Tools collection settings
     scope:
-      type: 'articles'
+      type: 'gcode'
     values:
-      layout: 'articles'
-      show:
-        breadcrumbs: true
+      layout: 'gcode'
+      category: [ 'gcode' ]

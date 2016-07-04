@@ -1,0 +1,49 @@
+---
+layout: default
+---
+
+<!-- content -->
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-3 col-md-4 visible-lg-block visible-md-block custom-no-padding">
+      <div class="">
+        {% assign list = ('' | split: '|') %}
+        {% for gcode in site.gcode %}
+          {% if gcode.codes[0] %}
+            {% assign list = list | push: gcode %}
+          {% endif %}
+        {% endfor %}
+
+        {% if list.size > 0 %}
+          <div class="tocify">
+            <ul class="tocify-header nav nav-list">
+              {% for gcode in list %}
+                  <li class="tocify-item{% if page.codes[0] == gcode.codes[0] and page.title == gcode.title %} active{% endif %}" style="cursor: pointer;">
+                    <a href="{{ gcode.url | prepend: site.baseurl }}">{{ gcode.codes[0] }}: {{ gcode.title }}</a></li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+    <div class="col-lg-9 col-md-8 custom-bg-white">
+      <div class="row">
+        <div class="col-md-12 custom-article">
+          {% if page.collection == 'gcode' and page.codes %}
+            {% assign gcode = page %}
+            {% include gcode-info.html %}
+          {% else %}
+            {% for gcode in site.gcode %}
+              {% if gcode.codes %}
+                {% assign gcode = site.gcode %}
+                {% include gcode-info.html %}
+                <hr />
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /content -->

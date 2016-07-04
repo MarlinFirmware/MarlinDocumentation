@@ -1,128 +1,137 @@
-    <!-- navbar -->
-    <nav class="navbar navbar-default navbar-fixed-top custom-no-margin">
-      <div class="container">
-        <div class="navbar-header">
-          <a href="{{ site.github.url }}/" class="navbar-brand">
-            <img src="{{ '/assets/images/logo/marlin/text.png' | prepend: site.baseurl }}" alt="Marlin" height="25">
-          </a>
-          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-        </div>
+<!-- navbar -->
+<nav class="navbar navbar-default navbar-fixed-top custom-no-margin">
+  <div class="container">
+    <div class="navbar-header">
+      <a href="{{ '/' | prepend: site.baseurl }}" class="navbar-brand">
+        <img src="{{ '/assets/images/logo/marlin/text.png' | prepend: site.baseurl }}" alt="Marlin" height="25">
+      </a>
+      <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
 
-        <div class="navbar-collapse collapse" id="navbar-main">
-          <ul class="nav navbar-nav">
-            <li class="dropdown">
-              <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="navbar-getting-started">
-              Getting Started <span class="caret"></span></a>
+    <div class="navbar-collapse collapse" id="navbar-main">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="navbar-getting-started">
+          Getting Started <span class="caret"></span></a>
 
-              <ul class="dropdown-menu">
-                <li>
-                  <a href="{{ '/articles/getting-started/overview.html' | prepend: site.baseurl }}">
-                  Introduction</a> </li>
+          <ul class="dropdown-menu">
+            <li>
+              <a href="{{ '/docs/basics/introduction.html' | prepend: site.baseurl }}">
+              Introduction</a></li>
 
-                <li class="divider"> </li>
+            <li class="divider"></li>
 
-                <li>
-                  <a href="#">
-                  <del>How to get</del></a> </li>
-
-                <li>
-                  <a href="{{ '/articles/development/configuration.html' | prepend: site.baseurl }}">
-                  How to configure</a> </li>
-
-                <li>
-                  <a href="{{ '/articles/getting-started/install.html' | prepend: site.baseurl }}">
-                  How to flash your board</a> </li>
-
-                <li class="divider"> </li>
-
-                <li>
-                <a href="{{ '/articles/development/reporting-bugs.html' | prepend: site.baseurl }}">
-                Reporting bugs</a> </li>
-              </ul>
-            </li>
+            <li class="disabled">
+              <a href="#">
+              How to get</a></li>
 
             <li>
-              <a href="{{ site.github.url }}/download/">
-              Download</a> </li>
+              <a href="{{ '/docs/development/configuration.html' | prepend: site.baseurl }}">
+              How to configure</a></li>
 
-            <li class="dropdown">
-              <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="navbar-documentation">
-              Documentation <span class="caret"></span></a>
-
-              <ul class="dropdown-menu">
-                <li>
-                  <a href="{{ '/articles/development/changelog.html' | prepend: site.baseurl }}">
-                  Changelog</a> </li>
-
-                <li class="divider"> </li>
-
-                <li>
-                  <a href="#">
-                  <del>Current stable release</del></a> </li>
-
-                <li>
-                  <a href="#">
-                  <del>Current development release</del></a> </li>
-
-                <li class="divider"> </li>
-
-                <li>
-                  <a href="{{ '/meta/needs-review/' | prepend: site.baseurl }}">
-                  Documentation needing review</a> </li>
-              </ul>
-            </li>
-
-            <li class="dropdown">
-              <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="navbar-development">
-              Development <span class="caret"></span></a>
-
-              <ul class="dropdown-menu">
-                <li>
-                  <a href="{{ '/articles/development/contributing.html' | prepend: site.baseurl }}">
-                  Contributing</a> </li>
-
-                <li>
-                  <a href="{{ '/articles/development/coding-standards.html' | prepend: site.baseurl }}">
-                  Coding standards</a> </li>
-
-                <li class="divider"> </li>
-
-                <li>
-                  <a href="https://github.com/MarlinFirmware/Marlin/issues">
-                  Bugtracker</a> </li>
-
-                <li>
-                  <a href="{{ '/articles/development/reporting-bugs.html' | prepend: site.baseurl }}">
-                  Reporting bugs</a> </li>
-
-                <li class="divider"> </li>
-
-                <li>
-                  <a href="https://github.com/MarlinFirmware/Marlin/">
-                  Source code repository</a> </li>
-
-                <li class="divider"> </li>
-
-                <li>
-                  <a href="{{ '/tools/u8glib/converter.html' | prepend: site.baseurl }}">
-                  C/C++ bitmap converter</a> </li>
-              </ul>
-            </li>
-          </ul>
-{% if page.layout == 'articles' %}
-          <ul class="nav navbar-nav navbar-right visible-lg-block">
             <li>
-              <a href="{{ site.repository.doc }}/edit/master/{{ page.path }}" data-proofer-ignore>
-              <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-              <span class="">Improve this page</span></a>
-            </li>
+              <a href="{{ '/docs/basics/install.html' | prepend: site.baseurl }}">
+              How to flash your board</a></li>
+
+            <li class="divider"></li>
+
+            <li class="disabled">
+            <a href="#">
+            Reporting bugs</a></li>
           </ul>
+        </li>
+
+        <li>
+          <a href="{{ '/meta/download/' | prepend: site.baseurl }}">
+          Download</a></li>
+
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="navbar-documentation">
+          Documentation <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            {% assign list = ('' | split: '|') %}
+            {% for col in site.collections %}
+              {% if col.title %}
+                {% assign list = list | push: col %}
+              {% endif %}
+            {% endfor %}
+
+            {% if list.size > 0 %}
+              {% assign list = (list | sort: 'title') %}
+              {% for col in list %}
+                {% if col.title %}
+                    <li class="dropdown-submenu">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ col.title }}</a>
+                      <ul class="dropdown-menu">
+                        <li><a href="{{ '/meta/' | append: col.label | append: '/' | prepend: site.baseurl }}">All documents</a></li>
+                        <li class="divider"></li>
+                        {% if col.label == 'gcode' %}
+                          {% assign docs = (col.docs | sort: 'path') %}
+                        {% else %}
+                          {% assign docs = (col.docs | sort: 'title') %}
+                        {% endif %}
+                        {% for doc in docs %}
+                          {% if doc.title %}
+                            <li><a href="{{ doc.url | prepend: site.baseurl }}">
+                              {% if col.label == 'gcode' %}
+                                {{ doc.codes[0] }}: {{ doc.title }}
+                              {% else %}
+                                {{ doc.title }}
+                              {% endif %}
+                            </a></li>
+                          {% endif %}
+                        {% endfor %}
+                      </ul>
+                    </li>
+                  {% endif %}
+                {% endfor %}
+              {% endif %}
+
+            <li class="divider"></li>
+
+            <li>
+              <a href="{{ '/meta/needs-review/' | prepend: site.baseurl }}">
+              Documentation needing review</a></li>
+          </ul>
+        </li>
+
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="navbar-tools">
+          Tools <span class="caret"></span></a>
+
+          <ul class="dropdown-menu">
+            <li><a href="{{ '/tools/u8glib/converter.html' | prepend: site.baseurl }}">
+            C/C++ bitmap converter</a></li>
+
+            <li class="divider"></li>
+
+            <li><a href="https://github.com/MarlinFirmware/Marlin/issues">
+            Bugtracker</a></li>
+
+            <li><a href="{{ '/docs/basics/reporting-bugs.html' | prepend: site.baseurl }}">
+            Reporting bugs</a></li>
+
+            <li class="divider"></li>
+
+            <li><a href="https://github.com/MarlinFirmware/Marlin/">
+            Source code repository</a></li>
+          </ul>
+        </li>
+      </ul>
+{% if page.collection %}
+      <ul class="nav navbar-nav navbar-right visible-lg-block">
+        <li>
+          <a href="{{ site.repository.doc }}/edit/master/{{ page.path }}" data-proofer-ignore>
+          <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+          <span class="">Improve this page</span></a>
+        </li>
+      </ul>
 {% endif %}
-        </div>
-      </div>
-    </nav>
-    <!-- /navbar -->
+    </div>
+  </div>
+</nav>
+<!-- /navbar -->

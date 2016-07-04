@@ -22,9 +22,9 @@ category:     [ default ]
                 <p class="text-justify">Marlin is the <em>de facto standard</em> of Open Source firmware for 3D printers, reliable and precise it will deliver outstanding quality prints while keeping you in full control of the process.</p>
               </div>
               <div class="col-sm-12 col-md-5 custom-tagline-btn">
-                <p><a class="btn btn-success btn-block" href="{{ '/articles/getting-started/overview.html' | prepend: site.baseurl }}" role="button">
+                <p><a class="btn btn-success btn-block" href="{{ '/docs/basics/introduction.html' | prepend: site.baseurl }}" role="button">
                   <i class="fa fa-book fa-1x" aria-hidden="true"></i>&nbsp; Learn more</a></p>
-                <p><a class="btn btn-info btn-block" href="{{ site.github.url }}/download/" role="button">
+                <p><a class="btn btn-info btn-block" href="{{ '/meta/download/' | prepend: site.baseurl }}" role="button">
                   <i class="fa fa-download fa-1x" aria-hidden="true"></i>&nbsp; Download</a></p>
               </div>
             </div>
@@ -37,7 +37,7 @@ category:     [ default ]
 {% for feature in site.data.features %}
                 <div class="col-sm-4">
                   <div class="custom-tile-image-wrapper">
-                    <a href="{{ site.github.url }}/{{ feature.link }}">
+                    <a href="{{ feature.link | prepend: site.baseurll }}">
                     <div class="custom-tile-image-block" style="background: url({{ '/assets/images/features/' | append: feature.img | prepend: site.baseurl }}) no-repeat center top; background-size: cover;">
                       <div class="custom-tile-image-legend">
                           {{ feature.title }}
