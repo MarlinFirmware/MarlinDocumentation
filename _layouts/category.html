@@ -33,7 +33,7 @@ layout: default
                   <i class="fa fa-book" aria-hidden="true"></i> {{ doc.title }}</h4>
                 {% if doc.description %}
                   <p class="list-group-item-text">{{ doc.description }}</p>
-                {% else if doc.brief %}
+                {% elsif doc.brief %}
                   <p class="list-group-item-text">{{ doc.brief }}</p>
                 {% endif %}
               </a>

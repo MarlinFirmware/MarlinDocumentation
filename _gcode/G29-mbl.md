@@ -16,31 +16,27 @@ long:
 
 parameters:
   -
-    tag: S0
-    optional: true
-    description: Produce a mesh report (see example 1)
-  -
-    tag: S1
-    optional: true
-    description: Start probing mesh points
-  -
-    tag: S2
-    optional: true
-    description: Probe the next mesh point
-  -
-    tag: S3 XYZ
-    type: float
-    optional: true
-    description: Manually modify a single point
-  -
-    tag: S4 Z
-    type: float
-    optional: true
-    description: Set z-offset. Positive away from bed, negative closer to bed.
-  -
-    tag: S5
-    optional: true
-    description: Reset and disable mesh
+    tag: S
+    optional: false
+    values:
+      -
+        tag: 0
+        description: Produce a mesh report (see example 1)
+      -
+        tag: 1
+        description: Start probing mesh points
+      -
+        tag: 2
+        description: Probe the next mesh point
+      -
+        tag: 3
+        description: Manually modify a single point
+      -
+        tag: 4
+        description: Set Z-Offset, positive away from bed, negative closer to bed.
+      -
+        tag: 5
+        description: Reset and disable mesh
 
 examples:
   -
