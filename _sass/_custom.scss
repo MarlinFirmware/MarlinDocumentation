@@ -1,224 +1,122 @@
-/*
- * Custom styles
- */
-
-body {
-  padding-top: 51px;
-  padding-bottom: 10px;
-}
-
-p {
-    text-align: justify;
-}
-
-.navbar {
-    font-weight: 600;
-}
-
 .custom-border-warning {
-    border-left-color: #f0ad4e;
+  border-left-color: #f0ad4e;
 }
 
 .custom-no-margin {
-    margin: 0px !important;
+  margin: 0px !important;
 }
 
 .custom-no-margin-bottom {
-    margin-bottom: 0px !important;
+  margin-bottom: 0px !important;
 }
 
 .custom-no-padding {
-    padding: 0px !important;
+  padding: 0px !important;
 }
 
 .custom-article {
-    padding-top: 0px;
-    margin-top: 0px;
+  padding-top: 0px;
+  margin-top: 0px;
 }
 
 .custom-pl10 {
-    padding-left: 10px;
+  padding-left: 10px;
 }
 
 .custom-pt5 {
-    padding-top: 5px;
+  padding-top: 5px;
 }
 
 .custom-pt25 {
-    padding-top: 25px;
+  padding-top: 25px;
 }
 
 .custom-ptb40 {
-    padding: 40px 0px 40px 0px !important;
+  padding: 40px 0px 40px 0px !important;
 }
 
 .custom-bg-white {
-    background-color: white;
+  background-color: white;
 }
 
 .custom-bg-red {
-    background-color: red;
+  background-color: red;
 }
 
 .custom-bg-grey {
-    background-color: #f5f5f5;
+  background-color: #f5f5f5;
 }
 
 .custom-alert {
-    display: table;
+  display: table;
 }
 
 .custom-alert-icon {
-    display: table-cell;
-    vertical-align: middle;
-    float: none;
+  display: table-cell;
+  vertical-align: middle;
+  float: none;
 }
 
 .custom-alert-text {
-    display: table-cell;
-    vertical-align: middle;
-    float: none;
+  display: table-cell;
+  vertical-align: middle;
+  float: none;
 }
 
 .custom-alert-text > p {
-    margin: 0px;
+  margin: 0px;
 }
 
-/*
- * Sidebar
- */
-.custom-fixed-sidebar {
-    position: fixed;
-
-    display: block;
-    overflow-y: auto;
-    overflow-x: hidden;
-
-    width: inherit;
-}
-
-/*
- * Table of Contents
- * by @gregfranko
- */
-.tocify {
-    font-size: 14px;
-}
-
-/* The Table of Contents is composed of multiple nested unordered lists.
-   These styles remove the default styling of an unordered list because it is ugly. */
-.tocify ul, .tocify li {
-    margin: 0px;
-    padding: 0px;
-    border: none;
-    list-style: none;
-    line-height: 30px;
-}
-
-/* Top level header elements */
-.tocify-header {
-    text-indent: 5px;
-}
-
-/* Top level subheader elements.
-   These are the first nested items underneath a header element. */
-.tocify-subheader {
-    text-indent: 20px;
-    display: none;
-}
-
-/* Makes the font smaller for all subheader elements. */
-.tocify-subheader li {
-    font-size: 0.90em;
-}
-
-/* Further indents second level subheader elements. */
-.tocify-subheader .tocify-subheader {
-    text-indent: 30px;
-}
-
-/* Further indents third level subheader elements.
-   You can continue this pattern if you have more nested elements. */
-.tocify-subheader .tocify-subheader .tocify-subheader {
-    text-indent: 40px;
-}
-
-/* Twitter Bootstrap Override Style */
-.nav-list > li > a, .nav-list .nav-header {
-    margin: 0px;
-}
-
-/* Twitter Bootstrap Override Style */
-.nav-list > li > a {
-    padding: 5px 0px 5px 5px;
-}
-
-.nav-list > .active > a, .nav-list > .active > a:hover, .nav-list > .active > a:focus {
-    color: #ffffff;
-    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
-    background-color: #0088cc;
-}
-
-/*
-.active > a:before {
-    content: "\f0da";
-    padding-right: 5px;
-    font-weight: normal;
-    font-style: normal;
-    display: inline-block;
-    text-decoration: inherit;
-    font-family: FontAwesome;
-}
-*/
 
 /*
  * Tagline
  */
 .custom-tagline {
-    text-align: left;
-    padding: 48px 0px 48px 0px;
-    background-color: white;
+  text-align: left;
+  padding: 48px 0px 48px 0px;
+  background-color: white;
 }
 
 .custom-tagline-btn {
-    margin-top: 25px;
+  margin-top: 25px;
 }
+
 
 /*
  * Tiles
  */
 .custom-tile {
-    color: #94b6df;
-    padding: 48px 0px 48px 0px;
-    background-color: #f8f8f9;
+  color: #94b6df;
+  padding: 48px 0px 48px 0px;
+  background-color: #f8f8f9;
 }
 
 .custom-tile-image-wrapper {
-    float: left;
-    width: 100%;
-    position: relative;
-    border: 3px solid white;
+  float: left;
+  width: 100%;
+  position: relative;
+  border: 3px solid white;
 }
 
 .custom-tile-image-block {
-    margin: 0px;
-    padding: 0px;
-    height: 400px;
+  margin: 0px;
+  padding: 0px;
+  height: 400px;
 }
 
 .custom-tile-image-legend {
-    position: absolute;
-    bottom: 0px;
-    width: 100%;
-    left: 0px;
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  left: 0px;
 
-    font-size: 26px;
+  font-size: 26px;
 
-    color: white;
-    background-color: rgba(3,3,3,0.5);
-    padding-left: 10px;
+  color: white;
+  background-color: rgba(3,3,3,0.5);
+  padding-left: 10px;
 }
 
 .custom-tile-image-block:hover > div {
-    background-color: rgba(3,3,3,0.8);
+  background-color: rgba(3,3,3,0.8);
 }
