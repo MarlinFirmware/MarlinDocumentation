@@ -9,6 +9,7 @@ gem 'jekyll-mentions', '>= 1.1.2'
 gem 'jekyll-press', '>= 0.2.1'
 gem 'jekyll-seo-tag', '>= 1.3.3'
 gem 'kramdown', '>= 1.10.0'
+gem 'naturally', '>= 2.1.0'
 gem 'wdm', '>= 0.1.0' if Gem.win_platform?
 
 # If you have issues installing rdiscount make sure you're using one

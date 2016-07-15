@@ -52,9 +52,9 @@ You're reading a document which has been marked as `needs-review`, this means th
 {% endfor %}
 
 <div class="row">
-    <div class="col-lg-12">
-      <h2>Usage</h2>
-      <code>{{ gcode.codes[0] }}
+  <div class="col-lg-12">
+    <h2>Usage</h2>
+    <code>{{ gcode.codes[0] }}
       {% if gcode.parameters %}
         {% assign list = ('' | split: '|') %}
         {% for parm in gcode.parameters %}
@@ -67,9 +67,8 @@ You're reading a document which has been marked as `needs-review`, this means th
           {% assign list = (list | sort: 'tag') %}
           {% for parm in list %}
             <span data-toggle="tooltip" data-placement="bottom" data-original-title="{{ parm.description }}">
-            {% if parm.optional == true%}&#x5B;{% else %}&lt;{% endif %}<!--
+              {% if parm.optional == true%}&#x5B;{% else %}&lt;{% endif %}<!--
               -->{{ parm.tag }}<!--
-
               -->{% if parm.values.size > 0 %}<!--
                 -->{% if parm.values.size == 1 %}<!--
                   -->{% assign pv = parm.values[0] %}<!--
@@ -100,40 +99,86 @@ You're reading a document which has been marked as `needs-review`, this means th
                   -->&gt;<!--
                 -->{% endif %}<!--
               -->{% endif %}<!--
-            -->{% if parm.optional == true%}&#x5D;{% else %}&gt;{% endif %}
+              -->{% if parm.optional == true%}&#x5D;{% else %}&gt;{% endif %}
             </span>
           {% endfor %}
         {% endif %}
-      {% endif %}</code>
+      {% endif %}
+    </code>
   </div>
 </div>
 
 
-<!--
-{% if gcode.parameters %}
-  <div class="row">
-    <div class="col-lg-12">
-      <h2>Argument list</h2>
-      <div class="list-group">
-        {% for parameter in gcode.parameters %}
-          <div class="list-group-item">
-            <h4 class="list-group-item-heading">
-              {{ parameter.tag }}{% if parameter.type %}&lt;{{ parameter.type }}{% if parameter.unit %} in {{ parameter.unit }}{% endif %}&gt;{% endif %}
-            </h4>
-            <p class="list-group-item-text">
-              {% if parameter.optional == true%}
-                <span class="label label-default">Optional</span>
-              {% else %}
-                <span class="label label-primary">Mandatory</span>
-              {% endif %}
-              {{ parameter.description }}</p>
-          </div>
-        {% endfor %}
-      </div>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="table-responsive">
+      <p>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Argument</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% if gcode.parameters %}
+              {% assign list = ('' | split: '|') %}
+              {% for parm in gcode.parameters %}
+                {% if parm.tag %}
+                  {% assign list = list | push: parm %}
+                {% endif %}
+              {% endfor %}
+
+              {% if list.size > 0 %}
+                {% assign list = (list | sort: 'tag') %}
+                {% for parm in list %}
+                  <tr>
+                    <td><code>
+                      {% if parm.optional == true%}&#x5B;{% else %}&lt;{% endif %}<!--
+                      -->{{ parm.tag }}<!--
+                      -->{% if parm.values.size > 0 %}<!--
+                        -->{% if parm.values.size == 1 %}<!--
+                          -->{% assign pv = parm.values[0] %}<!--
+                          -->{% if pv.optional == true%}&#x5B;{% else %}&lt;{% endif %}<!--
+                          -->{% if pv.tag %}<!--
+                            -->{{ pv.tag }}<!--
+                            -->{% if pv.unit %}<!--
+                              --> in {{ pv.unit }}<!--
+                            -->{% endif %}<!--
+                          -->{% elsif pv.unit %}<!--
+                            -->{{ pv.unit }}<!--
+                          -->{% elsif pv.type %}<!--
+                            -->{{ pv.type }}<!--
+                          -->{% else %}<!--
+                            -->Unknown<!--
+                          -->{% endif %}<!--
+                          -->{% if pv.optional == true%}&#x5D;{% else %}&gt;{% endif %}<!--
+                        -->{% else %}<!--
+                          -->&lt;<!--
+                          -->{% for pv in parm.values %}<!--
+                            -->{% if pv.description %}<!--
+                              --><span data-toggle="tooltip" data-placement="bottom" data-original-title="{{ pv.description }}">{% endif %}{{ pv.tag }}{% if pv.description %}</span><!--
+                            -->{% endif %}<!--
+                            -->{% if forloop.last != true %}<!--
+                              -->&#x7C;<!--
+                            -->{% endif %}<!--
+                          -->{% endfor %}<!--
+                          -->&gt;<!--
+                        -->{% endif %}<!--
+                      -->{% endif %}<!--
+                      -->{% if parm.optional == true%}&#x5D;{% else %}&gt;{% endif %}
+                    </code></td>
+                    <td>{{ parm.description }}</td>
+                  </tr>
+            {% endfor %}
+          {% endif %}
+        {% endif %}
+          </tbody>
+        </table>
+      </p>
     </div>
   </div>
-{% endif %}
--->
+</div>
 
 {% if gcode.notes %}
   <div class="row">
