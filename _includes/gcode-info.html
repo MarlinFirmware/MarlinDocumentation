@@ -26,30 +26,26 @@
   </div>
 </div>
 
-{% if gcode.long %}
-  <div class="row">
-    <div class="col-lg-12">
-      <p>
+<div class="row">
+  <div class="col-lg-12">
+    <p>
+    {% if gcode.long %}
       {% for line in gcode.long %}
         {{ line | markdownify }}
         {% if forloop.last != true %}<br /> {% endif %}
       {% endfor %}
-      </p>
-    </div>
-  </div>
-{% endif %}
+    {% endif %}
+    </p>
 
 {% for cat in page.category %}
   {% if cat == 'needs-review' %}
-    <div class="row">
-      <div class="col-lg-12">
-        {% alert info %}
+    {% alert info %}
 You're reading a document which has been marked as `needs-review`, this means that the following information maybe outdated or no longer applies to the latest Marlin versions.
-        {% endalert %}
-      </div>
-    </div>
+    {% endalert %}
   {% endif %}
 {% endfor %}
+  </div>
+</div>
 
 <div class="row">
   <div class="col-lg-12">
@@ -108,28 +104,27 @@ You're reading a document which has been marked as `needs-review`, this means th
   </div>
 </div>
 
+{% if gcode.parameters %}
+  {% assign list = ('' | split: '|') %}
+  {% for parm in gcode.parameters %}
+    {% if parm.tag %}
+      {% assign list = list | push: parm %}
+    {% endif %}
+  {% endfor %}
 
-<div class="row">
-  <div class="col-lg-12">
-    <div class="table-responsive">
-      <p>
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Argument</th>
-              <th>Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% if gcode.parameters %}
-              {% assign list = ('' | split: '|') %}
-              {% for parm in gcode.parameters %}
-                {% if parm.tag %}
-                  {% assign list = list | push: parm %}
-                {% endif %}
-              {% endfor %}
-
-              {% if list.size > 0 %}
+  {% if list.size > 0 %}
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="table-responsive">
+          <p>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Argument</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
                 {% assign list = (list | sort: 'tag') %}
                 {% for parm in list %}
                   <tr>
@@ -170,15 +165,15 @@ You're reading a document which has been marked as `needs-review`, this means th
                     </code></td>
                     <td>{{ parm.description }}</td>
                   </tr>
-            {% endfor %}
-          {% endif %}
-        {% endif %}
-          </tbody>
-        </table>
-      </p>
+                {% endfor %}
+              </tbody>
+            </table>
+          </p>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
+  {% endif %}
+{% endif %}
 
 {% if gcode.notes %}
   <div class="row">
