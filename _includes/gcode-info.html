@@ -85,9 +85,7 @@ You're reading a document which has been marked as `needs-review`, this means th
                 -->{% else %}<!--
                   -->&lt;<!--
                   -->{% for pv in parm.values %}<!--
-                    -->{% if pv.description %}<!--
-                      --><span data-toggle="tooltip" data-placement="bottom" data-original-title="{{ pv.description }}">{% endif %}{{ pv.tag }}{% if pv.description %}</span><!--
-                    -->{% endif %}<!--
+                    -->{{ pv.tag }}<!--
                     -->{% if forloop.last != true %}<!--
                       -->&#x7C;<!--
                     -->{% endif %}<!--
@@ -151,9 +149,7 @@ You're reading a document which has been marked as `needs-review`, this means th
                         -->{% else %}<!--
                           -->&lt;<!--
                           -->{% for pv in parm.values %}<!--
-                            -->{% if pv.description %}<!--
-                              --><span data-toggle="tooltip" data-placement="bottom" data-original-title="{{ pv.description }}">{% endif %}{{ pv.tag }}{% if pv.description %}</span><!--
-                            -->{% endif %}<!--
+                            -->{{ pv.tag }}<!--
                             -->{% if forloop.last != true %}<!--
                               -->&#x7C;<!--
                             -->{% endif %}<!--
@@ -163,7 +159,19 @@ You're reading a document which has been marked as `needs-review`, this means th
                       -->{% endif %}<!--
                       -->{% if parm.optional == true%}&#x5D;{% else %}&gt;{% endif %}
                     </code></td>
-                    <td>{{ parm.description }}</td>
+                    <td>
+                      <p>{{ parm.description }}</p>
+                      {% if parm.values.size > 0 %}
+                        {% for pv in parm.values %}
+                          {% if pv.description %}
+                            <div class="custom-gcode-inline">
+                              <p><strong>{{ parm.tag }}{{ pv.tag }}:</strong></p>
+                              {{ pv.description | markdownify }}
+                            </div>
+                          {% endif %}
+                        {% endfor %}
+                      {% endif %}
+                    </td>
                   </tr>
                 {% endfor %}
               </tbody>
