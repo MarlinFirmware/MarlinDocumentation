@@ -27,7 +27,7 @@ You must replace `<start>`/`<end>` by your indexes and `<font_name>` by your fon
 
 Edit the generated `dogm_font_data_<font_name>.h` and do the following changes to it:
 
-- Replace `#include "u8g.h"` with `#include #include <U8glib.h>`
+- Replace `#include "u8g.h"` with `#include <U8glib.h>`
 - Replace `U8G_FONT_SECTION` with `U8G_SECTION`
 - Insert `.progmem.` right after the first quote `"` on `U8G_SECTION`
 
