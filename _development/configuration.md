@@ -527,10 +527,10 @@ Those who're using auto bed leveling and don't use another z min endstop, enable
 #define HOMING_FEEDRATE {50*45, 50*45, 4*45, 0}
 {% endhighlight %}
 
-These are the homing speed when doing auto home and auto bed leveling.
+These are the values for homing speed when doing auto home and auto bed leveling.
 
 {% alert warning %}
-Setting these values too high may reduce accuracy and/or skipped steps.
+Setting these values too high may result in reduced accuracy and/or skipped steps.
 {% endalert %}
 
 ***
@@ -541,11 +541,15 @@ Setting these values too high may reduce accuracy and/or skipped steps.
 #define DEFAULT_AXIS_STEPS_PER_UNIT   {78.74, 78.74, 2560, 95}
 {% endhighlight %}
 
-This is the most crucial setting for your settings. These will determine the printer head will move according to the specified distance/location or not. The value above (X, Y, Z, E) are the default value for (20 tooth gt2 pulley, M10 metric threaded rods, mk8 extruder style) and based on A4899 stepstick.
+This is the most crucial setting for your printer. These values determine how accurately the steppers will position the printhead/platform. We are telling the driver how many individual steps equal a certain distance. This is dependent on a variety of factors including: belt type/profile/pitch, number of teeth on the pulley, thread pitch on screws, stepper driver, and extruder style.
 
 {% panel info DRV8825 %}
-These values had to be doubled; A4899 = 1/16 step, DRV8825 = 1/32 step
-You should go to `http://prusaprinters.org/calculator/` to calculate the steps
+These values need to be doubled if you want to use the DRV8825 at 1/32 microstepping. The most noticable difference is that the steppers will run more quietly as the driver output more closely resembles a sine wave.
+WARNING: By using 1/32 microstepping you are doubling the required steps per motor and thus doubling the load on your processor. If your processor is unable to handle the load steps will be skipped. This will significantly degrade print quality.
+{% endpanel %}
+
+{% panel info Step Calculator %}
+You can go to `http://prusaprinters.org/calculator/` and use the calculator tool to find good starting values for your specific printer configuration.
 {% endpanel %}
 
 {% panel info Steps Per Unit %}
@@ -553,11 +557,12 @@ Pulled from the above setting, configured via `M92` command.
 {% endpanel %}
 
 {% alert warning %}
-It is advisable to use exact or reference value below so you're able to achieve higher precision and correct distance travelled.
+It is advisable to use the provided reference values for some common part types below to achieve better results without manual calibration. As every set up is slightly different and we are dealing with very small units it is necessary to perform manual calibration to achieve the greatest accuracy and best results.
 {% endalert %}
 
 {% panel info %}
-Some presets to get you started (1/16 microstepping)
+Some presets for common part types to get you started (1/16 microstepping)
+This table may™ be updated in the future.
 
 <table class="preset">
 <tr>
@@ -573,13 +578,14 @@ Some presets to get you started (1/16 microstepping)
 	<td>2560</td>
 </tr>
 <tr>
+	<td>T8 Acme Lead Screw</td>
+	<td>406</td>
+</tr>
+<tr>
 	<td>Standard MK8 Extruder Set</td>
 	<td>95</td>
 </tr>
-<tr>
-	<td>T8 Acme Rod</td>
-	<td>406</td>
-</tr>
+
   </table>
 {% endpanel %}
 
