@@ -70,7 +70,7 @@ This is basically just to show who made the changes to the current firmware sett
 
 This defines which motherboard you used for your 3D printer. It tells Marlin to use the specific pins and restrictions that apply to this particular board. Below is the list of the boards that can be used with Marlin, taken from boards.h.
 
-Replace the `#define BOARD_RAMPS_14_EFB` line in Configuration.h with the line below that matches your current board.
+Replace `#define MOTHERBOARD __BOARD_RAMPS_14_EFB  43__` in Configuration.h with the profile that matches your current board.
 Check the `boards.h` file for the most up-to-date listing of supported boards, if you do not see yours listed here.
 
 <table id="board_list" class="table table-condensed table-striped"></table>
