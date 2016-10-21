@@ -133,7 +133,7 @@ Hotend offsets are needed if you have more than one extruder (or if your extrude
 #define POWER_SUPPLY 1
 {% endhighlight %}
 
-Use this option to specify which type of power supply you're using. Marlin uses this setting to decide how to switch the power supply on and off. The options are None (0), ATX (1), or X-Box 360 (2). For most power supplies (such as LED Strip power supplies) you should use 1.
+Use this option to specify which type of power supply you're using. Marlin uses this setting to decide how to switch the power supply on and off. The options are None (0), ATX (1), or X-Box 360 (2). If you have a non-switchable power supply use 0, a common example of this is the power "brick" (like a big laptop power supply). If you use a computer power supply (ATX) or LED Constant Voltage Power Supply you should select 1, these are the most commonly used power supplies that are reliable.
 
 ***
 
@@ -149,12 +149,12 @@ Use this option to specify which type of power supply you're using. Marlin uses 
 #define TEMP_SENSOR_BED 3 //Heated bed
 {% endhighlight %}
 
-These are the profiles of your thermistors. A generic profile is "1" which is "100K Thermistor". If you can get the exact brand and thermistor type for your hotend/heated bed, use that particular number/value/profile. The thermistor type points to a calibration table of thermistor electrical resistance versus temperature.
+These are the profiles for your temperature sensor. Most users will only have two, one for the hotend and a second one if you have a heated bed. The generic profile is "1" which is labeled "100K Thermistor". If you can get the exact brand and model, make sure you check for a matching profile in the table and edit the corresponding line with the number for your profile. We don't have a profile for every temperature sensor in the world so you may need to use a profile for a similar sensor of the same brand or worst case use the generic profile. Each profile is calibrated for the unique properties of the specified temperature sensor so it's important to be as precise as possible.
 
 {% alert warning %}
 This is crucial to obtain accurate temperature measurements.
 
-As a last resort, just use 100k thermistor for `temp_sensor` and `temp_sensor_bed` but be highly sceptical of the temperature accuracy.
+As a last resort, just use 100k thermistor for `TEMP_SENSOR` and `TEMP_SENSOR_BED` but be highly skeptical of the temperature accuracy.
 {% endalert %}
 
 ***
@@ -169,9 +169,11 @@ As a last resort, just use 100k thermistor for `temp_sensor` and `temp_sensor_be
 #define BED_MINTEMP 5
 {% endhighlight %}
 
-One of the safety features that will prevent the printer from operating. Room temperature typically has a range of about 10-40'c. Should any sensor goes below its specified minimum above, Marlin will shut down the printer, with a MINTEMP ERROR.
+This one of the safety features that will prevent the printer from overheating. Temperature sensors will report abnormally low numbers when they fail so we use this value to try and detect a bad temperature sensor. You should set this to the lowest value (in degrees C) that you think your printer will experience. I use a value of 0 because my printer is in my detached workshop that is unheated. Room temperature typically in the range of 10-40'c. Should any sensor go below its specified minimum temperature, Marlin will SHUT DOWN the printer, with a "MINTEMP ERROR".
 
+{% alert ERROR %}
 `MINTEMP ERROR`: This error either means your thermistor has either disconnected from the temperature pin or has gone open-circuit, or you have your printer in a very cold room.
+{% endalert %}
 
 {% highlight cpp %}
 #define HEATER_0_MAXTEMP 285
@@ -181,27 +183,26 @@ One of the safety features that will prevent the printer from operating. Room te
 #define BED_MAXTEMP 130
 {% endhighlight %}
 
-Maximum temperature for each heating element. If Marlin reads a temperature above these values, it will immediately shut down for safety reasons. For the E3D V6 hotend, many use 285 as a maximum value.
+Maximum temperature for the temperature sensor. If Marlin reads a temperature above these values, it will immediately shut down for safety reasons. For the E3D V6 hotend, many use 285 as a maximum value.
 
-`MAXTEMP ERROR`: This usually means the thermistor legs/wires are shorted each other.
-
+{% alert ERROR %}
+`MAXTEMP ERROR`: This could mean the temperature sensor legs/wires are shorted to each other. If not there could be an issue with the driver for your heater.
+{% endalert %}
 ***
 
 ### PID
 
 These are settings to help Marlin attain and track a target temperature of your hotends and heated bed in a stable and accurate fashion. Marlin will try to hit the target temperature in a manner based on these PID values. This is potential safety issue for hotends to avoid excessive overshoots when trying to reach and maintain their target temperature.
 
-Kindly refer [here](http://reprap.org/wiki/PID_Tuning) to have Marlin auto tune the PID settings. This is usually done once any time you change the hot end, thermistor, the heating element, the board or the power supply voltage (12v/24v) - basically anything that changes the thermal characteristics of your hot-end or heated bed.
+Kindly refer to: (http://reprap.org/wiki/PID_Tuning) for instructions on how to start the auto tune process. This is should be done any time you change the hot end, temperature sensor, heating element, board, or power supply voltage (12v/24v) - In other words anything that is part of the "HOT" system of your printer.
 
 The target temperature used during auto tune process calibration should be the highest target temperature you intend to use. (In my opinion- because that is where overshoots would be more likely to be critical).
 
-More detailed info about PID control is [here](https://en.wikipedia.org/wiki/PID_controller).
+More detailed info about PID control can be found here: (https://en.wikipedia.org/wiki/PID_controller).
 
 {% alert info %}
 `M301` sets up Hotend PID.
-
 `M304` sets up bed PID.
-
 This function also is accessible through the LCD (Hotend only).
 {% endalert %}
 
@@ -217,7 +218,11 @@ This function also is accessible through the LCD (Hotend only).
 #define EXTRUDE_MINTEMP 170
 {% endhighlight %}
 
-The above setting would prevent the extruder motor from moving if the hotend temperature is less than 170'c.  For testing purposes with no filament loaded, M302 overrides this setting and permits "cold extrudes".
+This setting prevents the extruder motor from moving if the hotend temperature is less than the chosen value. This is to avoid "Cold Extruding" which can damage your printer in several ways. For testing or calibration purposes this setting can be overridden with M302. 
+
+{% alert Cold Extrusion %}
+Be EXTREMELY careful if you chose to override this. We will probably laugh at you if you ignore our advice and damage your printer!
+{% endalert %}
 
 ***
 
@@ -230,16 +235,16 @@ The above setting would prevent the extruder motor from moving if the hotend tem
 
 This one is a cool safety feature to enable. If the current temperature drops below the one Marlin is maintaining, Marlin applies heat and sets a timer. If the time limit is exceeded before restoring the temperature, Marlin shuts down the printer.
 
-The idea here is to detect if a thermister gets loose and no longer is in good thermal contact with the hotend or heat-bed.
-For example, if it suddenly came loose in the hotend during printing, with a target temperature of, say, 230'c, the thermistor reading on Marlin might drop to, say, 170'c. Marlin thinks the hotend temperature is low and need to be powered. Without this protection, if the thermistor reading failed to reach the target, the hotend would heat indefinitely, getting red-hot and possibly setting fire to things - all due to misreading of the temperature from the loose thermistor.
+The idea here is to detect if a temperature sensor gets loose and no longer is in good thermal contact with the hotend or heat-bed. For example, if it suddenly comes loose in the hotend during printing, with a target temperature of say 230'c, the temperature sensor reading on Marlin might drop to, say, 170'c. Marlin thinks the hotend temperature is low and needed to be powered. Without this protection, if the temperature sensor reading failed to reach the target, the hotend would heat indefinitely, getting red-hot and possibly setting fire to things - all due to misreading of the temperature from the loose temperature sensor.
 
-How it works is: with target temperature at 190'c, after reaching the target 190'c, should the reading drop below the target Marlin will power the hotend and start the timer countdown. If the countdown ends with the heating element still fully powered, Marlin will shut down the print. The same goes for the heated bed.
+How it works: with a target temperature at 190'c, and after reaching the target 190'c, should the reading drop below the target Marlin will power the hotend and start the timer countdown. If the countdown ends with the heating element still fully powered, Marlin will shut down the print. The same goes for the heated bed.
 
-The config of these parameters can be found in "configuration_adv.h" file.
+The config of these parameters can be found in "configuration_adv.h" file, but you shouldn't need to edit them.
 
 {% panel info %}
-In case of false thermal runaways, increase the watch period: (This can happen, for instance, when a part fan starts blowing on the bed thermistor.)
+In the case of repeated false thermal runaways that are NOT the result of a loose temperature sensor, you can increase the watch period. This could happen for instance if a part fan started blowing on the bed thermistor.
 {% highlight cpp %}
+For example:
 #define WATCH_TEMP_PERIOD 20   // Seconds
 #define WATCH_TEMP_INCREASE 2  // Degrees Celsius
 {% endhighlight %}
@@ -260,7 +265,7 @@ In case of false thermal runaways, increase the watch period: (This can happen, 
 //#define CONFIG_STEPPERS_TOSHIBA
 {% endhighlight %}
 
-These are for special types of machine configurations which require different algorithms to move around. If you're using a Prusa, Mendel, Airwolf, or basically any cartesian printer (one where each stepper is assigned to drive a separate (x/y/z) axis, leave these commented. For standard NEMA steppers, likewise leave CONFIG_STEPPERS_TOSHIBA alone.
+These are for special types of machine configurations which require different algorithms to move around. They consist of unique drive architectures that employ a shared drive line for a pair of axis'. If you've no idea what I just said or don't know what these are then it probably doesn't apply to you. If you're using a Prusa, Mendel, Airwolf, or basically any simple cartesian printer (one where each axis has an independent drive line), leave these commented. For standard NEMA steppers, leave CONFIG_STEPPERS_TOSHIBA alone.
 
 ***
 
@@ -276,7 +281,7 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
 const bool Z_MIN_PROBE_ENDSTOP_INVERTING = false; // set to true to invert the logic of the endstop.
 {% endhighlight %}
 
-Inverting between triggered and open state when issuing M119 command. Usually not touched, but if you don't want to fiddle with the wiring, you can invert these.
+These value can be toggled by issuing the M119 command. Usually these are left alone. However if you would rather change it here then mess with your wiring go ahead. 
 
 ***
 
@@ -286,23 +291,22 @@ Inverting between triggered and open state when issuing M119 command. Usually no
 //#define Z_MIN_PROBE_ENDSTOP
 {% endhighlight %}
 
-If you want to use both probe and default z min switch for your 3D printer, enable this. However, This requires extra setups to be done. If you're using Ramps 1.4, the probe pins are located in D32 of the aux4 array that used by the lcd panel. You have to change the pin manually from the board pin file for example "pins_RAMPS_14.h" located at `#define Z_MIN_PROBE_PIN  32`. I would change this to pin 19 (z max) since it never really been used. This extra ports is actually the Z Probe that is used for your auto bed leveling.
+If you want to use both probe and end-switch for homing and endstop, enable this. However, This requires extra setups to be done. If you're using Ramps 1.4, the probe pins are located in D32 of the aux4 array that is also used by the lcd panel. You will have to change the pin assignments from your specified board pin file (for example "pins_RAMPS_14.h") located at `#define Z_MIN_PROBE_PIN  32`. I would change this to pin 19 (z max) since it is rarely if ever used. This extra port is actually the Z Probe that is used for your auto bed leveling.
 
-Another way is to change between these `#define Z_MIN_PROBE_PIN  32`, `#define Z_MIN_PIN          18` and `#define Z_MAX_PIN          19`  according to your board. This is not for beginners.
+Another way is to change between these pins: `#define Z_MIN_PROBE_PIN  32`, `#define Z_MIN_PIN 18`, and `#define Z_MAX_PIN 19`  according to your board. This is not for beginners.
 
 {% highlight cpp %}
 #define Z_MIN_PROBE_USES_Z_MIN_ENDSTOP_PIN
 {% endhighlight %}
 
-This however uses single switch for your z axis only. If you only want to use z probe for everything related to homing and bed leveling, enable this option. Note that either one of them can be enabled at a time.
-
-Note to dev; Please make the comment explanation much simpler or the define variable, it's so confusing that reading it again can took me 1-5 minutes to figure out
+This uses the same pin for the end-switch and the probe. The advantage is that you don't need to alter any pin-out assignments, however you can only have ONE active at a time.
 
 {% highlight cpp %}
 //#define DISABLE_Z_MIN_PROBE_ENDSTOP
 {% endhighlight %}
 
 This typically disables your probe feature. Only applicable to `//#define Z_MIN_PROBE_ENDSTOP` enabled
+
 {% highlight cpp %}
 #define Z_MIN_PROBE_REPEATABILITY_TEST
 {% endhighlight %}
@@ -325,10 +329,10 @@ Tip: 0.02 mm is normally acceptable for bed leveling to work.
 #define INVERT_E2_DIR false
 #define INVERT_E3_DIR false
 {% endhighlight %}
-These inverts the motor movement for each axis. Reversing the wiring of your stepper motor is probably the proper way to do this, but if you don't want to fiddle with the electronics this will fix it.
+This value inverts the motor movement for each axis. Reversing the wiring of your stepper motor is probably the proper way to do this, but if you don't want to fiddle with the wiring this will also work.
 
 {% alert danger %}
-If you're not careful on this, your axis will crash to the wrong direction. Either change the wiring or invert the value above. Make sure when you try to move an axis manually via pronterface/repetier-host or lcd menu, in order to check this setting, that you start with the axis in the middle of its travel.
+If you're not careful on this, your axis will crash to the wrong direction. Either change the wiring or invert the value above. Make sure when you try to move an axis manually via pronterface/repetier-host or lcd menu, that you start with the axis in the middle of its travel so you know if it is reacting as expected.
 {% endalert %}
 
 ***
@@ -527,10 +531,10 @@ Those who're using auto bed leveling and don't use another z min endstop, enable
 #define HOMING_FEEDRATE {50*45, 50*45, 4*45, 0}
 {% endhighlight %}
 
-These are the homing speed when doing auto home and auto bed leveling.
+These are the values for homing speed when doing auto home and auto bed leveling.
 
 {% alert warning %}
-Setting these values too high may reduce accuracy and/or skipped steps.
+Setting these values too high may result in reduced accuracy and/or skipped steps.
 {% endalert %}
 
 ***
@@ -541,11 +545,15 @@ Setting these values too high may reduce accuracy and/or skipped steps.
 #define DEFAULT_AXIS_STEPS_PER_UNIT   {78.74, 78.74, 2560, 95}
 {% endhighlight %}
 
-This is the most crucial setting for your settings. These will determine the printer head will move according to the specified distance/location or not. The value above (X, Y, Z, E) are the default value for (20 tooth gt2 pulley, M10 metric threaded rods, mk8 extruder style) and based on A4899 stepstick.
+This is the most crucial setting for your printer. These values determine how accurately the steppers will position the printhead/platform. We are telling the driver how many individual steps equal a certain distance. This is dependent on a variety of factors including: belt type/profile/pitch, number of teeth on the pulley, thread pitch on screws, stepper driver, and extruder style.
 
 {% panel info DRV8825 %}
-These values had to be doubled; A4899 = 1/16 step, DRV8825 = 1/32 step
-You should go to `http://prusaprinters.org/calculator/` to calculate the steps
+These values need to be doubled if you want to use the DRV8825 at 1/32 microstepping. The most noticable difference is that the steppers will run more quietly as the driver output more closely resembles a sine wave.
+WARNING: By using 1/32 microstepping you are doubling the required steps per motor and thus doubling the load on your processor. If your processor is unable to handle the load steps will be skipped. This will significantly degrade print quality.
+{% endpanel %}
+
+{% panel info Step Calculator %}
+You can go to `http://prusaprinters.org/calculator/` and use the calculator tool to find good starting values for your specific printer configuration.
 {% endpanel %}
 
 {% panel info Steps Per Unit %}
@@ -553,11 +561,12 @@ Pulled from the above setting, configured via `M92` command.
 {% endpanel %}
 
 {% alert warning %}
-It is advisable to use exact or reference value below so you're able to achieve higher precision and correct distance travelled.
+It is advisable to use the provided reference values for some common part types below to achieve better results without manual calibration. As every set up is slightly different and we are dealing with very small units it is necessary to perform manual calibration to achieve the greatest accuracy and best results.
 {% endalert %}
 
 {% panel info %}
-Some presets to get you started (1/16 microstepping)
+Some presets for common part types to get you started (1/16 microstepping)
+This table may™ be updated in the future.
 
 <table class="preset">
 <tr>
@@ -573,13 +582,14 @@ Some presets to get you started (1/16 microstepping)
 	<td>2560</td>
 </tr>
 <tr>
+	<td>T8 Acme Lead Screw</td>
+	<td>406</td>
+</tr>
+<tr>
 	<td>Standard MK8 Extruder Set</td>
 	<td>95</td>
 </tr>
-<tr>
-	<td>T8 Acme Rod</td>
-	<td>406</td>
-</tr>
+
   </table>
 {% endpanel %}
 
