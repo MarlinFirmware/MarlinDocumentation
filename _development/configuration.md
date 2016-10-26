@@ -3,12 +3,13 @@ title:        'Configuration manual'
 description:  'Technical deep dive on all the configuration options'
 
 author: Sarf2k4
-contrib: paulusjacobus, jbrazio
+contrib: paulusjacobus, jbrazio, landodragon141
 category: [ development, needs-review ]
 ---
+This documentation is based on: 1.1.0 RC7
 # Introduction
 
-Marlin is a huge C++ program, but when it comes to configuring a build of Marlin there are only two files you need to worry about. To configure Marlin for a specific machine, edit or replace `Configuration.h` and `Configuration_adv.h` prior to building the binary .hex image or flashing the board. If you have these files from an older version of Marlin, you can usually just drop them in place to build the new version. (Marlin will give warnings about any deprecated options.) A variety of pre-built configurations are included in the example_configurations folder.
+Marlin is a huge program written in C++, but when it comes to configuring a build of Marlin there are only two files you need to worry about. To configure Marlin for a specific machine, edit or replace `Configuration.h` and `Configuration_adv.h` prior to building the binary .hex image or flashing the board. If you have these files from an older version of Marlin, you can usually just drop them in place to build the new version. (Marlin will give warnings about any deprecated options.) A variety of pre-built configurations are included in the example_configurations folder.
 
 Marlin uses compiler “directives” for most of its configuration options. Directives aren't pretty, but they allow Marlin to leave out blocks of code that aren't needed, producing the smallest, fastest code possible for your configuration. Settings are enabled, disabled, and given values using C preprocessor syntax like so:
 
@@ -20,7 +21,7 @@ Marlin uses compiler “directives” for most of its configuration options. Dir
 
 # Sources of Documentation
 
-The documentation begun below is very incomplete. We should really give each option a wiki page and organize by theme. This takes time and effort, but we do consider documentation an important part of a release. So any help in improving this documentation is welcome. Please join in the [discussion at Github](https://github.com/MarlinFirmware/Marlin/issues/3088).
+The documentation begun below is very incomplete. Developing robust documentation takes time and effort, but we do consider documentation an important part of a release. So any help in improving this documentation is welcome.
 
 While there are some good articles and YouTube videos on the subject of Marlin configuration and customization, we realize they are no substitute for comprehensive and robust documentation. So while we get it together, please keep in mind that **the configuration files themselves will always contain the most up-to-date documentation about configuration options**. Marlin developers have done a laudable job in these files of explaining (at least in a fuzzy way) what each setting is about, that the potential pitfalls are, and so on. We've also tried to make sure that if you forget something obvious, `SanityCheck.h` will catch it.
 
@@ -44,8 +45,8 @@ The most important values to obtain are:
 -   Specific electronics (RAMPS, RUMBA, Teensy, etc.)
 -   Number of extruders
 -   Steps-per-mm for each axis
--   Dialed-in steps-per-mm for each extruder
--   Types of thermistors
+-   Steps-per-mm for each extruder
+-   Specs for thermal sensors
 -   Type of LCD controller and other components
 
 # Configuration
@@ -62,15 +63,48 @@ This is basically just to show who made the changes to the current firmware sett
 
 ***
 
+### Serial Port
+
+{% highlight serial_port %}
+#define SERIAL_PORT 0
+{% endhighlight %}
+
+This value selects the serial port to be used for communication with the host.
+This allows the connection of wireless adapters (for instance) to non-default port pins.
+Serial port 0 is still used by the Arduino bootloader regardless of this setting.
+
+***
+
+### Baudrate
+
+{% highlight baudrate %}
+#define BAUDRATE 115200
+{% endhighlight %}
+
+This determines the communication speed of the printer the importance of this setting depends on your Board. For instance my board is a Sanguinololu clone. It uses an ATMEGA1284P, if I set the baudrate any higher than 57600 it throws a fit and doesn't connect properly. For most cases 115200 should be a good balance between speed and stability.
+Baudrate values:[2400,9600,19200,38400,57600,115200,250000]
+
+***
+
+### Bluetooth
+
+{% highlight bluetooth %}
+#define BLUETOOTH
+{% endhighlight %}
+
+This enables the bluetooth serial interface on boards with the AT90USB.
+
+***
+
 ### Board Type
 
 {% highlight cpp %}
-#define MOTHERBOARD BOARD_RAMPS_14_EFB  43  // comment
+#define MOTHERBOARD BOARD_RAMPS_14_EFB
 {% endhighlight %}
 
 This defines which motherboard you used for your 3D printer. It tells Marlin to use the specific pins and restrictions that apply to this particular board. Below is the list of the boards that can be used with Marlin, taken from boards.h.
 
-Replace the `#define BOARD_RAMPS_14_EFB` line in Configuration.h with the line below that matches your current board.
+Replace `#define MOTHERBOARD __BOARD_RAMPS_14_EFB  43__` in Configuration.h with the profile that matches your current board.
 Check the `boards.h` file for the most up-to-date listing of supported boards, if you do not see yours listed here.
 
 <table id="board_list" class="table table-condensed table-striped"></table>
@@ -106,19 +140,37 @@ This is the name of your printer as displayed on the LCD and by M115. For exampl
 #define MACHINE_UUID "00000000-0000-0000-0000-000000000000"
 {% endhighlight %}
 
-A unique ID for your 3D printer, it is almost like a MAC Address and can be generated from [here](http://www.uuidgenerator.net/version4).
+A unique ID for your 3D printer, it is almost like a MAC Address and can be generated from [here](http://www.uuidgenerator.net/version4). Some host programs and slicers use this to differentiate between machines.
 
 ***
 
 ### Extruder
 
-{% highlight cpp %}
+{% highlight extruders %}
 #define EXTRUDERS 1
 {% endhighlight %}
 
-This defines how many extruders (tools) the printer has. Further on you can specify the type of extruder (such as SINGLENOZZLE), and their arrangement (such as DUAL_X_CARRIAGE). These additional settings help Marlin determine how many steppers and hotends your extruders have and how they relate to one another.
+Available values:[1,2,3,4]
+This value defines how many extruders (tools) the printer has. You probably only have one but dual extruders are becoming more common. Further on you can specify the type of extruder (such as SINGLENOZZLE), and their arrangement (such as DUAL_X_CARRIAGE). These additional settings help Marlin determine how many steppers and hotends your extruders have and how they relate to one another.
 
-{% highlight cpp %}
+{% highlight singlenozzle %}
+#define SINGLENOZZLE
+{% endhighlight %}
+
+Enable this if you have an E3D Cyclops or any other "multi-extruder" that shares a single nozzle.
+
+{% highlight singlenozzle %}
+//#define SWITCHING_EXTRUDER
+#if ENABLED(SWITCHING_EXTRUDER)
+  #define SWITCHING_EXTRUDER_SERVO_NR 0
+  #define SWITCHING_EXTRUDER_SERVO_ANGLES { 0, 90 } // Angles for E0, E1
+  //#define HOTEND_OFFSET_Z {0.0, 0.0}
+#endif
+{% endhighlight %}
+
+Enable this if you have a dual extruder that uses a single stepper motor, don't forget to set SSDE_SERVO_ANGLES and HOTEND_OFFSET_X/Y/Z.
+
+{% highlight HOTEND_OFFSET_XY %}
 //#define HOTEND_OFFSET_X {0.0, 20.00}
 //#define HOTEND_OFFSET_Y {0.0, 5.00}
 {% endhighlight %}
@@ -129,20 +181,25 @@ Hotend offsets are needed if you have more than one extruder (or if your extrude
 
 ## Power Supply
 
-{% highlight cpp %}
+{% highlight POWER_SUPPLY %}
 #define POWER_SUPPLY 1
 {% endhighlight %}
 
 Use this option to specify which type of power supply you're using. Marlin uses this setting to decide how to switch the power supply on and off. The options are None (0), ATX (1), or X-Box 360 (2). If you have a non-switchable power supply use 0, a common example of this is the power "brick" (like a big laptop power supply). If you use a computer power supply (ATX) or LED Constant Voltage Power Supply you should select 1, these are the most commonly used power supplies that are reliable.
 
+{% highlight PS_DEFAULT_OFF %}
+//#define PS_DEFAULT_OFF
+{% endhighlight %}
+Enable this if you don't want the power supply to switch on when you turn on the printer. This is for printers that have dual powersupplies. For instance some setups have a separate powersupply for the heaters. In this situation you can save power by leaving the powersupply off until called for. If you don't know what this is leave it.
+
 ***
 
 ## Thermal Settings
 
-### Thermistor
+### Temperature Sensor
 
 {% highlight cpp %}
-#define TEMP_SENSOR_0 5 //This is your main extruder
+#define TEMP_SENSOR_0 5   //This is your main extruder
 #define TEMP_SENSOR_1 0
 #define TEMP_SENSOR_2 0
 #define TEMP_SENSOR_3 0
@@ -153,15 +210,42 @@ These are the profiles for your temperature sensor. Most users will only have tw
 
 {% alert warning %}
 This is crucial to obtain accurate temperature measurements.
-
 As a last resort, just use 100k thermistor for `TEMP_SENSOR` and `TEMP_SENSOR_BED` but be highly skeptical of the temperature accuracy.
 {% endalert %}
 
+
+{% highlight temp_sensor_1_as_redundant %}
+//#define TEMP_SENSOR_1_AS_REDUNDANT
+#define MAX_REDUNDANT_TEMP_SENSOR_DIFF 10
+{% endhighlight %}
+
+Enable this if you want to use sensor 1 as a redundant sensor for sensor 0. This is a advanced way to protect against temp sensor failure. If the temperature delta between these sensors exceeds the value for **MAX_REDUNDANT_TEMP_SENSOR_DIFF**  the heater will be shutdown and the print aborted.
+
 ***
 
-### Temperature Range
+### Temperature Stability Check
 
-{% highlight cpp %}
+{% highlight Hotend temp residency %}
+#define TEMP_RESIDENCY_TIME 10  // (seconds)
+#define TEMP_HYSTERESIS 3       // (degC) range of +/- temperatures considered "close" to the target one
+#define TEMP_WINDOW 1           // (degC) Window around target to start the residency timer x degC early.
+{% endhighlight %}
+
+Extruder must maintain a stable temperature for **TEMP_RESIDENCY_TIME** before M109 will return success and start the print.
+
+{% highlight Bed temp residency %}
+#define TEMP_BED_RESIDENCY_TIME 10  // (seconds)
+#define TEMP_BED_HYSTERESIS 3       // (degC) range of +/- temperatures considered "close" to the target one
+#define TEMP_BED_WINDOW 1           // (degC) Window around target to start the residency timer x degC early.
+{% endhighlight %}
+
+Bed must maintain a stable temperature for **TEMP_BED_RESIDENCY_TIME** before M109 will return success and start the print.
+
+***
+
+### Temperature Ranges
+
+{% highlight HEATER_MINTEMP %}
 #define HEATER_0_MINTEMP 5
 #define HEATER_1_MINTEMP 5
 #define HEATER_2_MINTEMP 5
@@ -169,13 +253,13 @@ As a last resort, just use 100k thermistor for `TEMP_SENSOR` and `TEMP_SENSOR_BE
 #define BED_MINTEMP 5
 {% endhighlight %}
 
-This one of the safety features that will prevent the printer from overheating. Temperature sensors will report abnormally low numbers when they fail so we use this value to try and detect a bad temperature sensor. You should set this to the lowest value (in degrees C) that you think your printer will experience. I use a value of 0 because my printer is in my detached workshop that is unheated. Room temperature typically in the range of 10-40'c. Should any sensor go below its specified minimum temperature, Marlin will SHUT DOWN the printer, with a "MINTEMP ERROR".
+This one of the safety features that will prevent the printer from overheating. Temperature sensors will report abnormally low numbers when they fail so we use this value to try and detect a bad temperature sensor. You should set this to the lowest value (in degrees C) that you think your printer will experience. I use a value of 0 because my printer is in my detached workshop that is unheated. Room temperature is typically in the range of 10-40'c. Should any sensor go below its specified minimum temperature, Marlin will SHUT DOWN the printer, with a "MINTEMP ERROR".
 
 {% alert ERROR %}
 `MINTEMP ERROR`: This error either means your thermistor has either disconnected from the temperature pin or has gone open-circuit, or you have your printer in a very cold room.
 {% endalert %}
 
-{% highlight cpp %}
+{% highlight HEATER_MAXTEMP %}
 #define HEATER_0_MAXTEMP 285
 #define HEATER_1_MAXTEMP 275
 #define HEATER_2_MAXTEMP 275
@@ -192,19 +276,80 @@ Maximum temperature for the temperature sensor. If Marlin reads a temperature ab
 
 ### PID
 
-These are settings to help Marlin attain and track a target temperature of your hotends and heated bed in a stable and accurate fashion. Marlin will try to hit the target temperature in a manner based on these PID values. This is potential safety issue for hotends to avoid excessive overshoots when trying to reach and maintain their target temperature.
+Marlin uses these values to understand the behavior of the particular hot system whether hotend or bed. When PID is set correctly your heaters will reach temperature faster, maintain it much more accurately, and produces less wear on the hot system. Correct settings can also prevent excessive heater overshoots which is a safety hazard.
 
-Kindly refer to: (http://reprap.org/wiki/PID_Tuning) for instructions on how to start the auto tune process. This is should be done any time you change the hot end, temperature sensor, heating element, board, or power supply voltage (12v/24v) - In other words anything that is part of the "HOT" system of your printer.
+Kindly refer to: [PID_Tuning](http://reprap.org/wiki/PID_Tuning) for instructions on how to start the auto tune process. This is should be done any time you change the hot end, temperature sensor, heating element, board, or power supply voltage (12v/24v) - In other words anything that is part of the "HOT" system of your printer.
 
 The target temperature used during auto tune process calibration should be the highest target temperature you intend to use. (In my opinion- because that is where overshoots would be more likely to be critical).
 
-More detailed info about PID control can be found here: (https://en.wikipedia.org/wiki/PID_controller).
+More detailed info about PID control can be found here: [PID_Control](https://en.wikipedia.org/wiki/PID_controller).
+
+***
+
+#### PID Hotend
+
+{% highlight bang_bang %}
+#define PIDTEMP
+#define BANG_MAX 255     // limits current to nozzle while in bang-bang mode; 255=full current
+#define PID_MAX BANG_MAX // limits current to nozzle while PID is active (see PID_FUNCTIONAL_RANGE below); 255=full current
+{% endhighlight %}
+
+Disable **PIDTEMP** if you want to run your heater in bang-bang mode. Bang_bang is a pure binary mode where the heater is either full on or full off. PID control is PWM and in most cases is superior in it's ability to maintain a stable temperature.
+
+{% highlight pidtemp %}
+#if ENABLED(PIDTEMP)
+  //#define PID_AUTOTUNE_MENU 
+  //#define PID_DEBUG         
+  //#define PID_OPENLOOP 1    
+  //#define SLOW_PWM_HEATERS  
+  //#define PID_PARAMS_PER_HOTEND
+  #define PID_FUNCTIONAL_RANGE 10                                  
+  #define PID_INTEGRAL_DRIVE_MAX PID_MAX
+  #define K1 0.95
+{% endhighlight %}
+
+Enable **PID_AUTOTUNE_MENU** to add an option on the LCD to run an Autotune cycle and automatically apply the result. 
+Enable **PID_PARAMS_PER_HOTEND** if you have more than one extruder and they are different models. 
+
+{% highlight pre-sets %}
+  // Ultimaker
+  #define  DEFAULT_Kp 22.2
+  #define  DEFAULT_Ki 1.08
+  #define  DEFAULT_Kd 114
+
+  // MakerGear
+  //#define  DEFAULT_Kp 7.0
+  //#define  DEFAULT_Ki 0.1
+  //#define  DEFAULT_Kd 12
+
+  // Mendel Parts V9 on 12V
+  //#define  DEFAULT_Kp 63.0
+  //#define  DEFAULT_Ki 2.25
+  //#define  DEFAULT_Kd 440
+{% endhighlight %}
+
+You can use any of these pre-configured sets by disabling the current active set and enabling the desired set.
 
 {% alert info %}
-`M301` sets up Hotend PID.
+`M301` sets up Hotend PID and is also accessible through the LCD
 `M304` sets up bed PID.
-This function also is accessible through the LCD (Hotend only).
 {% endalert %}
+
+***
+
+#### PID Bed
+
+{% highlight PIDTEMPBED %}
+//#define PIDTEMPBED
+{% endhighlight %}
+
+Enable **PIDTEMPBED** if you want to use PID for your bed heater. It uses the same frequency PWM as the extruder. If your PID_dT is the default, and correct for your hardware/configuration, that means 7.689Hz, which is fine for driving a square wave into a resistive load and does not significantly impact you FET heating. This also works fine on a Fotek SSR-10DA Solid State Relay into a 250W heater. If your configuration is significantly different than this and you don't understand the issues involved, you probably shouldn't use bed PID until someone else verifies your hardware works. If this is enabled, find your own PID constants below.
+
+{% highlight PIDTEMPBED %}
+#define MAX_BED_POWER 255
+{% endhighlight %}
+
+This sets the max power delivered to the bed, and replaces the HEATER_BED_DUTY_CYCLE_DIVIDER option. All forms of bed control obey this (PID, bang-bang, bang-bang with hysteresis) setting this to anything other than 255 enables a form of PWM to the bed, so you shouldn't use it unless you are OK with PWM on your bed. (see the comment above on enabling PIDTEMPBED)
 
 ***
 
