@@ -401,29 +401,66 @@ For example:
 
 ### Special Machines
 
-{% highlight cpp %}
-// Uncomment this option to enable CoreXY kinematics
+{% highlight Kinematics %}
+// Uncomment one of these options to enable CoreXY, CoreXZ, or CoreYZ kinematics
 //#define COREXY
-// Uncomment this option to enable CoreXZ kinematics
-//#define COREXZ`
+//#define COREXZ
+//#define COREYZ
+{% endhighlight %}
+
+These settings are for special types of machine configurations which require different algorithms to move around. They take advantage of a unique mechanical property called kinematics constraints. Kinematics use multiple connected links to produce a motion. Hinges, slides, and ball joints are all commonly used for kinematic links.  A very common example of kinematic constrained motion is found in the piston driven automobile engine. A series of linear sliding links (piston and rod) are connected with rotating joints onto a cylindrical drive shaft. The motion of each piston effects the others because they are kinematically constrained. The most common types of kinematic machines with regards to 3d printers are: SCARA, CORE XY (and variants), Delta (usually linear delta), and Polar. They each consist of unique drive architectures that employ kinematic links and constraints to produce motion in the standard XYZ system. While Delta and CORE XY architechtures are gaining popularity the majority of printers use standard Cartesian (XYZ) drives.
+
+For Delta or SCARA printers copy the coresponding files from the "Example Configurations" folder.
+
+{% highlight Tos_Steppers %}
 // Enable this option for Toshiba steppers
 //#define CONFIG_STEPPERS_TOSHIBA
 {% endhighlight %}
 
-These are for special types of machine configurations which require different algorithms to move around. They consist of unique drive architectures that employ a shared drive line for a pair of axis'. If you've no idea what I just said or don't know what these are then it probably doesn't apply to you. If you're using a Prusa, Mendel, Airwolf, or basically any simple cartesian printer (one where each axis has an independent drive line), leave these commented. For standard NEMA steppers, leave CONFIG_STEPPERS_TOSHIBA alone.
+ For standard NEMA steppers, leave CONFIG_STEPPERS_TOSHIBA alone.
 
 ***
 
 ### Endstops
 
-{% highlight cpp %}
-const bool X_MIN_ENDSTOP_INVERTING = false; // set to true to invert the logic of the endstop.
-const bool Y_MIN_ENDSTOP_INVERTING = false; // set to true to invert the logic of the endstop.
-const bool Z_MIN_ENDSTOP_INVERTING = false; // set to true to invert the logic of the endstop.
-const bool X_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of the endstop.
-const bool Y_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of the endstop.
-const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of the endstop.
-const bool Z_MIN_PROBE_ENDSTOP_INVERTING = false; // set to true to invert the logic of the endstop.
+{% highlight End_Min_Max %}
+#define USE_XMIN_PLUG
+#define USE_YMIN_PLUG
+#define USE_ZMIN_PLUG
+//#define USE_XMAX_PLUG
+//#define USE_YMAX_PLUG
+//#define USE_ZMAX_PLUG
+{% endhighlight %}
+
+This allows you to select where the endstops are located on your printer. Most printers will use a single endstop per axis on the min side. It is possible to place endstops on both ends of an axis but it is rarely necessary in practice. Instead you should make sure that your stepper and build area setting are correct. One noteable exception here is that Delta's use three endstops on the max side of the towers. 
+
+{% highlight End_Pullup %}
+// coarse Endstop Settings
+#define ENDSTOPPULLUPS // Comment this out to disable the endstop pullup resistors
+
+#if DISABLED(ENDSTOPPULLUPS)
+  // fine endstop settings: Individual pullups. will be ignored if ENDSTOPPULLUPS is defined
+  //#define ENDSTOPPULLUP_XMAX
+  //#define ENDSTOPPULLUP_YMAX
+  //#define ENDSTOPPULLUP_ZMAX
+  //#define ENDSTOPPULLUP_XMIN
+  //#define ENDSTOPPULLUP_YMIN
+  //#define ENDSTOPPULLUP_ZMIN
+  //#define ENDSTOPPULLUP_ZMIN_PROBE
+#endif
+{% endhighlight %}
+
+Edit these values if you need to disable the pullup resistors for your endstop. Most likely you will not need to edit this.
+
+{% highlight End_Inv_Logic %}
+// Mechanical endstop with COM to ground and NC to Signal uses "false" here (most common setup).
+#define X_MIN_ENDSTOP_INVERTING false // set to true to invert the logic of the endstop.
+#define Y_MIN_ENDSTOP_INVERTING false // set to true to invert the logic of the endstop.
+#define Z_MIN_ENDSTOP_INVERTING false // set to true to invert the logic of the endstop.
+#define X_MAX_ENDSTOP_INVERTING false // set to true to invert the logic of the endstop.
+#define Y_MAX_ENDSTOP_INVERTING false // set to true to invert the logic of the endstop.
+#define Z_MAX_ENDSTOP_INVERTING false // set to true to invert the logic of the endstop.
+#define Z_MIN_PROBE_ENDSTOP_INVERTING false // set to true to invert the logic of the endstop.
 {% endhighlight %}
 
 These value can be toggled by issuing the M119 command. Usually these are left alone. However if you would rather change it here then mess with your wiring go ahead. 
@@ -605,7 +642,7 @@ These are the option for 3-point probing by specifying each one of their coordin
 {% highlight cpp %}
 #define X_PROBE_OFFSET_FROM_EXTRUDER -44  // X offset: -left  [of the nozzle] +right
 #define Y_PROBE_OFFSET_FROM_EXTRUDER -8  // Y offset: -front [of the nozzle] +behind
-#define Z_PROBE_OFFSET_FROM_EXTRUDER -2.50   // Z offset: -below [the nozzle](for most negative! positive when using tilt probes or the nozzle based probes)`
+#define Z_PROBE_OFFSET_FROM_EXTRUDER -2.50   // Z offset: -below [the nozzle](for most negative! positive when using tilt probes or the nozzle based probes)
 {% endhighlight %}
 
 This is the position of your probe from your nozzle. To determine exact location, use relative position by specifying `G92 x0 y0 z0`, then slowly work your way to find exact probe point of your probe. Use Pronterface/repeter-host to get your own value for the above offset setup and issue `M114` to get the exact values.
