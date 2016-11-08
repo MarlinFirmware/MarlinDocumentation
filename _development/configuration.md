@@ -469,6 +469,8 @@ These value can be toggled by issuing the M119 command. Usually these are left a
 
 ### Z Probe Options
 
+
+
 {% highlight cpp %}
 //#define Z_MIN_PROBE_ENDSTOP
 {% endhighlight %}
@@ -502,7 +504,37 @@ Tip: 0.02 mm is normally acceptable for bed leveling to work.
 
 ### Motor Movement
 
-{% highlight cpp %}
+{% highlight inverting_pin %}
+// For Inverting Stepper Enable Pins (Active Low) use 0, Non Inverting (Active High) use 1
+// :{0:'Low',1:'High'}
+#define X_ENABLE_ON 0
+#define Y_ENABLE_ON 0
+#define Z_ENABLE_ON 0
+#define E_ENABLE_ON 0 // For all extruders
+{% endhighlight %}
+
+{% highlight stepper_disable %}
+#define DISABLE_X false
+#define DISABLE_Y false
+#define DISABLE_Z false
+{% endhighlight %}
+
+This enabling this value will disable the given stepper when it is not in use. In most situations you should leave the default setting. The reason you would want this is you are running your steppers at higher than normal currents in order to get extra torque from them. By disabling the steppers in between moves it will allow them to run cooler. That sounds good but there's a catch. Because the steppers are disabled they will not be holding the axis stable. This WILL result in bad accuracy and carries a strong posibility of axis drift. Remember most 3d printers use open loop control systems. This means that the software has no idea what the actual position of the axis is. In practice with a well calibrated machine this is not an issue and using an open loop is one of the major cost savings. To be honest I can't really recommend this in any situation as the cons outweigh the pros. There are better solutions to this problem: stepper motor heatsink, dual motors on the axis, active cooling, etc. 
+
+{% highlight stepper_disable_warning %}
+//#define DISABLE_REDUCED_ACCURACY_WARNING
+{% endhighlight %}
+
+Enable this if you ignored the entire last paragraph and don't want to be reminded on screen about the consequences of your actions. 
+
+{% highlight extruder_disable %}
+#define DISABLE_E false // For all extruders
+#define DISABLE_INACTIVE_EXTRUDER true //disable only inactive extruders and keep active extruder enabled
+{% endhighlight %}
+
+This is similar to the above stepper disable but is a little different because we are talking about the extruder. The default value is to keep the active extruder enabled, and to disable inactive extruders. A good situation where this would apply would be the experimental 4 extruder setup for the new Prusa i3 MK2. 
+
+{% highlight invert_stepper %}
 #define INVERT_X_DIR true
 #define INVERT_Y_DIR false
 #define INVERT_Z_DIR true
@@ -511,42 +543,35 @@ Tip: 0.02 mm is normally acceptable for bed leveling to work.
 #define INVERT_E2_DIR false
 #define INVERT_E3_DIR false
 {% endhighlight %}
-This value inverts the motor movement for each axis. Reversing the wiring of your stepper motor is probably the proper way to do this, but if you don't want to fiddle with the wiring this will also work.
 
-{% alert danger %}
-If you're not careful on this, your axis will crash to the wrong direction. Either change the wiring or invert the value above. Make sure when you try to move an axis manually via pronterface/repetier-host or lcd menu, that you start with the axis in the middle of its travel so you know if it is reacting as expected.
-{% endalert %}
+This value inverts the motor movement for each axis. If you're not careful when setting this, your axis WILL crash to the wrong direction when you attempt to home. Make sure when you try to move an axis that you do it manually via pronterface/repetier-host or lcd menu, and that you start with the axis in the middle of its travel so you know if it is reacting as expected. If you discover that it is backward you should either change the wiring or invert the value above, not both.
 
 ***
 
 ### Axis Homing
 
-{% highlight cpp %}
+{% highlight z_height_homing %}
 //#define MIN_Z_HEIGHT_FOR_HOMING 4
 {% endhighlight %}
 
-This works like how a probe based 3d printer works when homing. This raises z a minimum height above the bed before homing in x or y. This can be used to prevent the head crashing into bed mountings such as screws, bulldog clips and the like that project above the printing bed surface. This also works with auto bed leveling enabled and will be triggered only when the z axis height is less than the defined value, otherwise the z axis will not move.
+This value raises z to the specified height above the bed before homing in x or y. This is useful to prevent the head crashing into bed mountings such as screws, bulldog clips and the like that project above the printing bed surface. This also works with auto bed leveling enabled and will be triggered only when the z axis height is less than the defined value, otherwise the z axis will not move.
 
-{% highlight cpp %}
+{% highlight home_dir %}
 #define X_HOME_DIR -1
 #define Y_HOME_DIR -1
 #define Z_HOME_DIR -1
 {% endhighlight %}
 
-This tells Marlin where the head is located when all the endstop have been triggered. In a typical setup are all at min position; bottom front left side of the bed. In some cases, owners put the home endstops at the max position, in which case these need to be changed.
+This tells Marlin where the head is located when all the endstop have been triggered. -1 indicates min and 1 indicates max. The typical configuration for cartesian and core xy is to put the endstops at the min and for deltas to put the endstops at the max. If your machine is custom it's up to you to set these values correctly. Setting the `home_dir` incorrectly will lead to a mirrored print.
 
-{% alert danger %}
-Setting the `home_dir` would lead to a mirrored print after it has finished.
-{% endalert %}
-
-{% highlight cpp %}
+{% highlight software_endstops %}
 #define min_software_endstops true
 #define max_software_endstops true
 {% endhighlight %}
 
-These enable the safety feature that prevent manual movement outside range specified below.
+These values when enabled (default) allow you to set software limits on how far these axis can travel via manual control. 
 
-{% highlight cpp %}
+{% highlight min_max_pos %}
 #define X_MIN_POS 0
 #define Y_MIN_POS 0
 #define Z_MIN_POS 0
@@ -555,21 +580,27 @@ These enable the safety feature that prevent manual movement outside range speci
 #define Z_MAX_POS 170
 {% endhighlight %}
 
-Usually the `MIN_POS` are left at 0 value, then `MAX_POS` depends on your maximum travel. Setting the maximum too high risks the printer's carriage crashing into the corresponding end. This needs to be set in conjunction with the home offset eeprom variable to work properly. If you don't want to set using eeprom, you can fiddle with `MIN_POS` value above as a substitute to eeprom's Home Offset.
+Usually the `MIN_POS` values are left at 0. `MAX_POS` is the maximum travel distance from the minimum. Setting the maximum too high will result in the axis crashing. If your home position is not in the printable area you will also need to set the home offset variable in the eeprom. If you don't want to set it using eeprom, you can fiddle with the `MIN_POS` value above instead.
 
 {% panel info Home Offset %}
-Values are pulled from `MIN_POS`. Use `M206` from pronterface
+Values are pulled from `MIN_POS`. Use `M206` from host program console.
 {% endpanel %}
 
 ***
 
 ### Filament Runout Sensor
 
-{% highlight cpp %}
+{% highlight filament_runout %}
 //#define FILAMENT_RUNOUT_SENSOR
+In RAMPS uses servo pin 2. Can be changed in pins file. For other boards pin definition should be made.
+#if ENABLED(FILAMENT_RUNOUT_SENSOR)
+  const bool FIL_RUNOUT_INVERTING = false;
+  #define ENDSTOPPULLUP_FIL_RUNOUT
+  #define FILAMENT_RUNOUT_SCRIPT "M600"
+#endif
 {% endhighlight %}
 
-This one is an optional but cool feature to have. An extra endstop switch is required to detect if the filament is present or not, with the switch in a normally closed/open state when the filament is present. If the filament runs out, an M600 command will be issued immediately.
+This is an optional but cool feature to have. A switch is used to detect if the filament is present in the feeder (usually an extra endstop switch located at the inlet of the feeder, with the switch in a closed state when the filament is present. If the filament runs out, an M600 command will be issued immediately. If you are using a RAMPS board the default input is servo pin 2. For all other boards you will need to create a pin definition in the corresponding file in order to use this feature.
 
 ***
 
