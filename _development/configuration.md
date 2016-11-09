@@ -519,20 +519,26 @@ Tip: 0.02 mm is normally acceptable for bed leveling to work.
 #define DISABLE_Z false
 {% endhighlight %}
 
-This enabling this value will disable the given stepper when it is not in use. In most situations you should leave the default setting. The reason you would want this is you are running your steppers at higher than normal currents in order to get extra torque from them. By disabling the steppers in between moves it will allow them to run cooler. That sounds good but there's a catch. Because the steppers are disabled they will not be holding the axis stable. This WILL result in bad accuracy and carries a strong posibility of axis drift. Remember most 3d printers use open loop control systems. This means that the software has no idea what the actual position of the axis is. In practice with a well calibrated machine this is not an issue and using an open loop is one of the major cost savings. To be honest I can't really recommend this in any situation as the cons outweigh the pros. There are better solutions to this problem: stepper motor heatsink, dual motors on the axis, active cooling, etc. 
+Enabling this value will disable the given stepper when it is not being issued a movement. This is a hack for running steppers at higher than normal current in an effort to produce more torque at the cost of increased thermals for driver and stepper. 
+
+Disabling the steppers in between moves gives the motors and drivers have a chance to cool off. That sounds good but there's a catch. Because the steppers are disabled they will not be holding the carriage stable. This WILL result in bad accuracy and carries a strong probability of axial drift. The most benefit is achieved where long moves on a single axis are performed.
+
+Most 3d printers use open loop control systems. This means that the software has no idea what the actual position of the carriage is at a given time. It simply sends commands and assumes they have been obeyed. In practice with a well calibrated machine this is not an issue and using an open loop is a major cost saving with excellent quality. 
+
+We really don't recommend this hack as the cons far outweigh the pros. There are much better ways to address the problem of stepper/driver overheating. Some examples: stepper/driver heatsink, active cooling, dual motors on the axis, reduce microstepping, check belt for over tension, check components for smooth motion, etc. 
 
 {% highlight stepper_disable_warning %}
 //#define DISABLE_REDUCED_ACCURACY_WARNING
 {% endhighlight %}
 
-Enable this if you ignored the entire last paragraph and don't want to be reminded on screen about the consequences of your actions. 
+This can be enabled to prevent a warning displaying on the screen if the warning given above is ignored. 
 
 {% highlight extruder_disable %}
 #define DISABLE_E false // For all extruders
 #define DISABLE_INACTIVE_EXTRUDER true //disable only inactive extruders and keep active extruder enabled
 {% endhighlight %}
 
-This is similar to the above stepper disable but is a little different because we are talking about the extruder. The default value is to keep the active extruder enabled, and to disable inactive extruders. A good situation where this would apply would be the experimental 4 extruder setup for the new Prusa i3 MK2. 
+This is similar to the above stepper disable but is a little different because it is regards to the extruder. The default value is to keep the active extruder enabled, and to disable inactive extruders. An example situation where this applies is  the experimental 4 extruder 1 hotend setup for the Original Prusa i3 MK2. 
 
 {% highlight invert_stepper %}
 #define INVERT_X_DIR true
@@ -544,7 +550,7 @@ This is similar to the above stepper disable but is a little different because w
 #define INVERT_E3_DIR false
 {% endhighlight %}
 
-This value inverts the motor movement for each axis. If you're not careful when setting this, your axis WILL crash to the wrong direction when you attempt to home. Make sure when you try to move an axis that you do it manually via pronterface/repetier-host or lcd menu, and that you start with the axis in the middle of its travel so you know if it is reacting as expected. If you discover that it is backward you should either change the wiring or invert the value above, not both.
+This value inverts the motor movement for each axis. If proper caution is not exercised when setting this, the axes WILL crash to the wrong direction when you attempt to home potentially causing damage. Make sure before homing that the carriage is close to the middle and manually move each axis via the lcd menu or printer host to check that the carriage moves as expected. If it is discovered that an axis is inverted, change the wiring or invert the value above, not both.
 
 ***
 
