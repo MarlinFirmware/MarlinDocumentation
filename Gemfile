@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
 
-gem 'github-pages', '>= 72'
+gem 'github-pages', '>= 105'
 gem 'html-proofer', '>= 3.0.2'
-gem 'jekyll', '>= 3.0.3'
+gem 'jekyll', '>= 3.3.1'
 gem 'jekyll-avatar', '>= 0.4.0'
 gem 'jekyll-bootstrap-sass', '>= 0.1.0'
 gem 'jekyll-mentions', '>= 1.1.2'
