@@ -39,7 +39,7 @@ git push
 
 ## Coding style
 
-The preferred format for new document contribution is Markdown language. With this format you must be careful, because small typos can cause Jekyll to reject the page. Your local auto-building Jekyll server will tell you where your errors are.
+The preferred format for new document contribution is Markdown language. With this format you must be careful, because small typos can cause Jekyll to reject the page. If you've installed Jekyll as described below, your local auto-building Jekyll server will tell you where your errors are.
 
 ## Editorial style
 
