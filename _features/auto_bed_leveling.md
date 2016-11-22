@@ -21,6 +21,7 @@ ABL requires a bed probe or some other mechanism to be able to test the bed heig
  - `AUTO_BED_LEVELING_3POINT`
  - `AUTO_BED_LEVELING_PLANAR`
  - `AUTO_BED_LEVELING_BILINEAR`
+
 Unless you know you have a very flat bed, you should always use `AUTO_BED_LEVELING_BILINEAR`.
 
 2. Configure the points (for 3-point leveling) or boundaries (for the others) where probing will occur. For the grid-based leveling options specify how many points to probe in X and Y. These may be set to different values, but for a square bed they should be equal.
