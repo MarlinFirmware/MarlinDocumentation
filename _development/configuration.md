@@ -6,7 +6,7 @@ author: Sarf2k4
 contrib: paulusjacobus, jbrazio, landodragon141
 category: [ development, needs-review ]
 ---
-This documentation is based on: 1.1.0 RC7
+
 # Introduction
 
 Marlin is a huge program written in C++, but when it comes to configuring a build of Marlin there are only two files you need to worry about. To configure Marlin for a specific machine, edit or replace `Configuration.h` and `Configuration_adv.h` prior to building the binary .hex image or flashing the board. If you have these files from an older version of Marlin, you can usually just drop them in place to build the new version. (Marlin will give warnings about any deprecated options.) A variety of pre-built configurations are included in the example_configurations folder.
@@ -18,6 +18,10 @@ Marlin uses compiler “directives” for most of its configuration options. Dir
 //#define THIS_IS_DISABLED // a comment about this disabled switch
 #define OPTION_VALUE 22 // a comment about this parameter
 {% endhighlight %}
+
+{% alert info %}
+This document is based on Marlin 1.1.0 RC7.
+{% endalert %}
 
 # Sources of Documentation
 
