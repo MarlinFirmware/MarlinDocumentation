@@ -98,6 +98,46 @@ You'll only need to execute the `bundle install` command once. It will make sure
 
 With the `serve` option, Jekyll watches the local files and on every save triggers an automatic build of the site. It also runs a mini-webserver at [http://localhost:4000/](http://localhost:4000/) so the documentation can be previewed in the browser right on [your own computer](http://localhost:4000/).
 
+## Publishing changes
+
+If you're a developer with enough access rights to publish changes into `gh-pages` branch the following bash script will ease your life and create a consistent process between website publications. It should be ran inside your local working copy of the repo.
+
+### pub-marlindoc.sh
+
+```bash
+#!/bin/bash
+TMPFOLDER=$( mktemp -d )
+COMMIT=$( git log --format="%H" -n 1 )
+
+set -e
+
+git reset --hard
+git clean -d -f
+
+# Uncomment to compress the final html files
+#mv ./_plugins/jekyll-press.rb-disabled ./_plugins/jekyll-press.rb
+
+bundle install
+bundle exec jekyll build --profile --trace --no-watch
+bundle exec htmlproofer ./_site --only-4xx --allow-hash-href --check-favicon --check-html --url-swap ".*marlinfw.org/:/"
+
+rsync -av _site/ ${TMPFOLDER}/
+
+git reset --hard HEAD
+git clean -d -f
+git checkout gh-pages
+
+rsync -av ${TMPFOLDER}/ ./
+
+git add --all
+git commit --message "Built from ${COMMIT}"
+git push
+
+rm -rf ${TMPFOLDER}
+
+git checkout master
+```
+
 ## License
 
 Marlin is published under the [GPL license](/LICENSE) because we believe in open development. The GPL comes with both rights and obligations. Whether you use Marlin firmware as the driver for your open or closed-source product, you must keep Marlin open, and you must provide your compatible Marlin source code to end users upon request. The most straightforward way to comply with the Marlin license is to make a fork of Marlin on Github, perform your modifications, and direct users to your modified fork.
