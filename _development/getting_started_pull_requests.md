@@ -1,11 +1,15 @@
 ---
-title:        'Getting Started - Code Changes &amp; Pull Requests (Windows)'
+title:        'Contributing code with pull requests'
 description:  'How to get Marlin code, modify it, upload it &amp; do a pull request'
 
-author: Bob Kuhn
-contrib: 
+author: Bob-the-Kuhn
+contrib:
 category: [ development ]
 ---
+
+{% alert info %}
+The current version of this document is targeted at Windows users.
+{% endalert %}
 
 
 ## Intro
