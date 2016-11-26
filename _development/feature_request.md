@@ -27,6 +27,11 @@ We consider a good example of a feature request title:
 
 ## Feature request list
 
+{% alert warning %}
+The following table is outdated, check [Github issue tracker](https://github.com/MarlinFirmware/Marlin/issues?q=is%3Aissue+is%3Aopen+label%3A%22Feature+Request%22) for the latest overview. <br />
+TODO: Is it possible to use the Github API to keep table in sync ?
+{% endalert %}
+
 <table id="fr_list" class="table table-condensed table-striped"></table>
 <script type="text/javascript">
   head.ready("sheetrock.min.js", function() {
