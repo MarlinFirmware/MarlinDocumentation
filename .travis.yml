@@ -7,7 +7,7 @@ before_script:
   - bundle install
 
 script:
-  - mv ${TRAVIS_BUILD_DIR}/_plugins/jekyll-press.rb-disabled ${TRAVIS_BUILD_DIR}/_plugins/jekyll-press.rb
+# - mv ${TRAVIS_BUILD_DIR}/_plugins/jekyll-press.rb-disabled ${TRAVIS_BUILD_DIR}/_plugins/jekyll-press.rb
   - bundle exec jekyll build --profile --trace --no-watch
   - bundle exec htmlproofer ${TRAVIS_BUILD_DIR}/_site --only-4xx --allow-hash-href --check-favicon --check-html --url-swap ".*marlinfw.org/:/"
   - bundle exec github-pages health-check
