@@ -195,6 +195,7 @@ You're reading a document which has been marked as `needs-review`, this means th
 {% if gcode.notes %}
   <div class="row">
     <div class="col-lg-12">
+      <h2>Notes</h2>
         {% for line in gcode.notes %}
           <p>{{ line | markdownify }}</p>
         {% endfor %}
