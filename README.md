@@ -100,7 +100,7 @@ With the `serve` option, Jekyll watches the local files and on every save trigge
 
 ## Publishing changes
 
-If you're a developer with enough access rights to publish changes into `gh-pages` branch the following bash script will ease your life and create a consistent process between website publications. It should be ran inside your local working copy of the repo.
+If you're a developer with enough access rights to publish changes to the `gh-pages` branch, the following bash script will ease your life by applying a consistent process for website publication. Run this from inside your local working copy of the repo.
 
 ### pub-marlindoc.sh
 
