@@ -110,6 +110,8 @@ This defines which motherboard you used for your 3D printer. It tells Marlin to 
 
 Replace `#define MOTHERBOARD __BOARD_RAMPS_14_EFB  43__` in Configuration.h with the profile that matches your current board.
 Check the `boards.h` file for the most up-to-date listing of supported boards, if you do not see yours listed here.
+NOTE: You MUST prefix the Board name with "MOTHERBOARD" in other words if you have done this correctly the line will read:
+#define MOTHERBOARD BOARD_RAMPS_14_EFB  43
 
 <table id="board_list" class="table table-condensed table-striped"></table>
 <script type="text/javascript">
