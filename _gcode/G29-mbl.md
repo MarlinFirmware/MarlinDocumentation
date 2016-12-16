@@ -3,6 +3,7 @@ category: [ 'gcode', 'needs-review' ]
 
 title: Manual Bed Leveling
 brief: Probes a grid and produces a mesh
+author: thinkyhead
 
 experimental: false
 since: 1.0.0-beta
