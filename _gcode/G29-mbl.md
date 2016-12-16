@@ -1,7 +1,7 @@
 ---
 category: [ 'gcode', 'needs-review' ]
 
-title: Mesh-based Z-Probe
+title: Manual Bed Leveling
 brief: Probes a grid and produces a mesh
 
 experimental: false
@@ -12,7 +12,8 @@ codes:
   - G29
 
 long:
-  - Probes a grid and produces a mesh to compensate for variable bed height. The printer must be homed with G28 before G29.
+  - With Mesh Bed Leveling (MBL) you can interactively measure a grid of Z heights without a bed probe. MBL then produces a mesh to compensate for variable bed height (in the same manner as `AUTO_BED_LEVELING_BILINEAR`).
+  - The printer must be homed with `G28` before `G29`.
 
 parameters:
   -
