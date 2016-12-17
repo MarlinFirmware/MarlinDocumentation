@@ -3,7 +3,7 @@
   <div class="container">
     <div class="navbar-header">
       <a href="{{ '/' | prepend: site.baseurl }}" class="navbar-brand">
-        <img src="{{ '/assets/images/logo/marlin/text.png' | prepend: site.baseurl }}" alt="Marlin" height="25">
+        <img src="{{ '/assets/images/logo/marlin/text-25.png' | prepend: site.baseurl }}" alt="Marlin" />
       </a>
       <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
         <span class="icon-bar"></span>
@@ -128,6 +128,12 @@
           <a href="{{ site.repository.doc }}/edit/master/{{ page.path }}" data-proofer-ignore>
           <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
           <span class="">Improve this page</span></a>
+        </li>
+      </ul>
+{% else %}
+      <ul class="nav navbar-nav navbar-right visible-lg-block">
+        <li>
+          <a href="https://twitter.com/MarlinFirmware" class="twitter-follow-button" data-show-count="false">Follow @MarlinFirmware</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
         </li>
       </ul>
 {% endif %}
