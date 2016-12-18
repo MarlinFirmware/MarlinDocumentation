@@ -7,11 +7,15 @@ contrib: paulusjacobus, jbrazio, landodragon141, thinkyhead
 category: [ development, needs-review ]
 ---
 
+{% alert info %}
+This document is based on Marlin 1.1.0 RC8.
+{% endalert %}
+
 # Introduction
 
 Marlin is a huge C++ program composed of many files, but only two —`Configuration.h` and `Configuration_adv.h`— are used to configure Marlin for a specific machine. Just edit or replace them prior to building the binary (`.hex` file) or flashing the board. If you have these files from an older version of Marlin, you can usually just drop them in place to build the new version. (Marlin will give warnings about any deprecated options.) A variety of pre-built configurations are included in the example_configurations folder.
 
-Marlin uses compiler “directives” for most of its configuration options. Directives aren't pretty, but they allow Marlin to leave out blocks of code that aren't needed, producing the smallest, fastest code possible for your configuration. Settings are enabled, disabled, and given values using C preprocessor syntax like so:
+Marlin uses "compiler directives" for its configuration options. This method allows Marlin to include only the blocks of code that are needed for your specific setup. Settings are enabled, disabled, and assigned values using C preprocessor syntax like so:
 
 ```cpp
 #define THIS_IS_ENABLED // a comment about this switch
@@ -19,74 +23,64 @@ Marlin uses compiler “directives” for most of its configuration options. Dir
 #define OPTION_VALUE 22 // a comment about this parameter
 ```
 
-{% alert info %}
-This document is based on Marlin 1.1.0 RC7.
-{% endalert %}
-
 # Sources of Documentation
-
-This documentation is incomplete. Developing robust documentation takes time and effort, but we do consider documentation an important part of a release. So any help in improving this documentation is welcome.
 
 While there are some good articles and YouTube videos on the subject of Marlin configuration and customization, we realize they are no substitute for comprehensive and up-to-date documentation. So while we get it together, please keep in mind that **the configuration files themselves will always contain the most up-to-date documentation**. Marlin developers have done a laudable job of providing a general description of each option, potential pitfalls, and so on. We've also tried to make sure that if you forget something obvious, `SanityCheck.h` will catch it.
 
-# Getting Started
+# Before You Begin
 
-If you've never calibrated a RepRap machine before, here are some links to resources to help get you started:
+If you've never calibrated a RepRap machine before, here are some good resources to help get you started:
 
--   [Calibration](http://reprap.org/wiki/Calibration)
--   [Calibrating XY&Z Step/MM](http://youtu.be/wAL9d7FgInk)
--   [Miscellaneous calculators](http://calculator.josefprusa.cz)
--   [Triffid Hunter's Calibration Guide](http://reprap.org/wiki/Triffid_Hunter%27s_Calibration_Guide)
--   [The Essential Calibration Set](http://www.thingiverse.com/thing:5573)
--   [Calibration of your RepRap](https://sites.google.com/site/repraplogphase/calibration-of-your-reprap)
--   [XY 20 mm Calibration Box](http://www.thingiverse.com/thing:298812)
--   [G-Code reference](http://reprap.org/wiki/G-code)
--   [Marlin3DprinterTool](https://github.com/cabbagecreek/Marlin3DprinterTool)
+- [Calibration](http://reprap.org/wiki/Calibration)
+- [Calibrating XY&Z Step/MM](http://youtu.be/wAL9d7FgInk)
+- [Prusa 3D printer calculators](http://calculator.josefprusa.cz)
+- [Triffid Hunter's Calibration Guide](http://reprap.org/wiki/Triffid_Hunter%27s_Calibration_Guide)
+- [The Essential Calibration Set](http://www.thingiverse.com/thing:5573)
+- [Calibration of your RepRap](https://sites.google.com/site/repraplogphase/calibration-of-your-reprap)
+- [XY 20 mm Calibration Box](http://www.thingiverse.com/thing:298812)
+- [G-Code reference](http://reprap.org/wiki/G-code)
+- [Marlin3DprinterTool](https://github.com/cabbagecreek/Marlin3DprinterTool)
 
-The most important values to obtain are:
+The settings in `Configuration.h` you'll need to know include:
 
--   Type of printer (Cartesian, Delta, SCARA, etc.)
--   Specific electronics (RAMPS, RUMBA, Teensy, etc.)
--   Number of extruders
--   Steps-per-mm for each axis
--   Steps-per-mm for each extruder
--   Specs for thermal sensors
--   Type of LCD controller and other components
+- Type of printer (Cartesian, Delta, CoreXY, SCARA, etc.)
+- Driver board (RAMPS, RUMBA, Teensy, etc.)
+- Number of extruders
+- Steps-per-mm for each axis
+- Steps-per-mm for each extruder
+- Endstop positions
+- Thermistors and/or thermocouples
+- Probes and probing settings
+- Your LCD controller
+- Add-ons and custom components
 
 # Configuration
 
 ## Board
 
-### Setting Author
+### Author Info
 
 ```cpp
 #define STRING_CONFIG_H_AUTHOR "(none, default config)"
 ```
 
-This is basically just to show who made the changes to the current firmware settings, this also can be a reference if you're having several config types or Marlin versions. This will be displayed when you connect to the board like Pronterface.
+This setting is shown in the Marlin startup message, and is meant to identify the author (and optional variant) of the firmware. Use this setting as a way to uniquely identify all your custom configurations. The startup message is printed when connecting to host software, and whenever the board reboots.
 
 ***
 
-### Serial Port
+### Serial Settings
 
 ```cpp
 #define SERIAL_PORT 0
 ```
 
-This value selects the serial port to be used for communication with the host.
-This allows the connection of wireless adapters (for instance) to non-default port pins.
-Serial port 0 is still used by the Arduino bootloader regardless of this setting.
-
-***
-
-### Baudrate
+The index of the on-board serial port that will be used for primary host communication. Change this if, for example, you need to connect a wireless adapter to non-default port pins. Serial port 0 will be used by the Arduino bootloader regardless of this setting.
 
 ```cpp
 #define BAUDRATE 115200
 ```
 
-This determines the communication speed of the printer the importance of this setting depends on your Board. For instance my board is a Sanguinololu clone. It uses an ATMEGA1284P, if I set the baudrate any higher than 57600 it throws a fit and doesn't connect properly. For most cases 115200 should be a good balance between speed and stability.
-Baudrate values:[2400,9600,19200,38400,57600,115200,250000]
+The serial communication speed of the printer should be as fast as it can manage without generating errors. In most cases 115200 gives a good balance between speed and stability. Start with 250000 and only go lower if "line number" and "checksum" errors start to appear. Note that some boards (e.g., a temperamental Sanguinololu clone based on the ATMEGA1284P) may not be able to handle a baudrate over 57600. Allowed values: 2400, 9600, 19200, 38400, 57600, 115200, 250000.
 
 ***
 
@@ -96,7 +90,7 @@ Baudrate values:[2400,9600,19200,38400,57600,115200,250000]
 #define BLUETOOTH
 ```
 
-This enables the bluetooth serial interface on boards with the AT90USB.
+Enable the Bluetooth serial interface. For boards based on the AT90USB.
 
 ***
 
@@ -106,10 +100,9 @@ This enables the bluetooth serial interface on boards with the AT90USB.
 #define MOTHERBOARD BOARD_RAMPS_14_EFB
 ```
 
-This defines which motherboard you used for your 3D printer. It tells Marlin to use the specific pins and restrictions that apply to this particular board. Below is the list of the boards that can be used with Marlin, taken from boards.h.
+The motherboard setting allows Marlin to determine how to allocate pins to various functions and restrictions that apply to this particular board. Below is the list of the boards that can be used with Marlin, taken from boards.h.
 
-Replace `#define MOTHERBOARD __BOARD_RAMPS_14_EFB  43__` in Configuration.h with the profile that matches your current board.
-Check the `boards.h` file for the most up-to-date listing of supported boards, if you do not see yours listed here.
+Using `boards.h` as a reference, replace `BOARD_RAMPS_14_EFB` above with the named ID that matches your board. The `boards.h` file has the most up-to-date listing of supported boards, so check it first if you don't see yours listed below.
 
 <table id="board_list" class="table table-condensed table-striped"></table>
 <script type="text/javascript">
@@ -123,7 +116,7 @@ Check the `boards.h` file for the most up-to-date listing of supported boards, i
 </script>
 
 {% alert info %}
-If you're using a Sanguino board with Arduino IDE 1.6.8 you'll need to add Sanguino to the Board list. Select menu item `File > Preference > Additional Boards Manager URLs` and add [this source URL](https://raw.githubusercontent.com/Lauszus/Sanguino/master/package_lauszus_sanguino_index.json). Then you can use `Tools > Boards > Boards Manager` to install Sanguino from the list. An internet connection is required. (Credit to [Dust's RepRap Blog](http://dustsreprap.blogspot.my/2015/06/better-way-to-install-sanguino-in.html).)
+If you're using a Sanguino board with Arduino IDE 1.6.8 you'll need to add Sanguino to the Board list. Select menu item `File` > `Preferences` > `Additional Boards Manager URLs` and add [this source URL](https://raw.githubusercontent.com/Lauszus/Sanguino/master/package_lauszus_sanguino_index.json). Then you can use `Tools > Boards > Boards Manager` to install Sanguino from the list. An internet connection is required. (Credit to [Dust's RepRap Blog](http://dustsreprap.blogspot.my/2015/06/better-way-to-install-sanguino-in.html).)
 {% endalert %}
 
 ***
@@ -134,7 +127,7 @@ If you're using a Sanguino board with Arduino IDE 1.6.8 you'll need to add Sangu
 #define CUSTOM_MACHINE_NAME "3D Printer"
 ```
 
-This is the name of your printer as displayed on the LCD and by M115. For example, if you set this to "My Delta" the LCD will display "My Delta ready" when the printer is idle.
+This is the name of your printer as displayed on the LCD and by `M115`. For example, if you set this to "My Delta" the LCD will display "My Delta ready" when the printer starts up.
 
 ***
 
@@ -144,7 +137,7 @@ This is the name of your printer as displayed on the LCD and by M115. For exampl
 #define MACHINE_UUID "00000000-0000-0000-0000-000000000000"
 ```
 
-A unique ID for your 3D printer, it is almost like a MAC Address and can be generated from [here](http://www.uuidgenerator.net/version4). Some host programs and slicers use this to differentiate between machines.
+A unique ID for your 3D printer. A suitable unique ID can be generated randomly at [uuidgenerator.net](http://www.uuidgenerator.net/version4). Some host programs and slicers may use this identifier to differentiate between specific machines on your network.
 
 ***
 
@@ -154,14 +147,21 @@ A unique ID for your 3D printer, it is almost like a MAC Address and can be gene
 #define EXTRUDERS 1
 ```
 
-Available values:[1,2,3,4]
-This value defines how many extruders (tools) the printer has. You probably only have one but dual extruders are becoming more common. Further on you can specify the type of extruder (such as SINGLENOZZLE), and their arrangement (such as DUAL_X_CARRIAGE). These additional settings help Marlin determine how many steppers and hotends your extruders have and how they relate to one another.
+This value, from 1 to 4, defines how many extruders (E steppers) the printer has. By default Marlin will assume that there are separate nozzles, all moving together on a single carriage. If you have a single nozzle, a switching extruder, a mixing extruder, or dual X carriages, specify below.
+
+This value should be set to the total number of E stepper motors on the machine, even if there's only a single nozzle.
+
+```cpp
+//#define DISTINCT_E_FACTORS
+```
+
+Enable `DISTINCT_E_FACTORS` if your extruders are not all mechanically identical. With this setting you can optionally specify different steps-per-mm, max feedrate, and max acceleration for each extruder.
 
 ```cpp
 #define SINGLENOZZLE
 ```
 
-Enable this if you have an E3D Cyclops or any other "multi-extruder" that shares a single nozzle.
+Enable `SINGLENOZZLE` if you have an E3D Cyclops or any other "multi-extruder" system that shares a single nozzle. In a single-nozzle setup, only one filament drive is engaged at a time, and each needs to retract before the next filament can be loaded and begin purging and extruding.
 
 ```cpp
 //#define SWITCHING_EXTRUDER
@@ -172,7 +172,26 @@ Enable this if you have an E3D Cyclops or any other "multi-extruder" that shares
 #endif
 ```
 
-Enable this if you have a dual extruder that uses a single stepper motor, don't forget to set SSDE_SERVO_ANGLES and HOTEND_OFFSET_X/Y/Z.
+A Switching Extruder is a dual extruder that uses a single stepper motor to drive two filaments, but only one at a time. The servo is used to switch the side of the extruder that will drive the filament. The E motor also reverses direction for the second filament. Set the servo sub-settings above according to your particular extruder's setup instructions.
+
+```cpp
+/**
+ * "Mixing Extruder"
+ *   - Adds a new code, M165, to set the current mix factors.
+ *   - Extends the stepping routines to move multiple steppers in proportion to the mix.
+ *   - Optional support for Repetier Host M163, M164, and virtual extruder.
+ *   - This implementation supports only a single extruder.
+ *   - Enable DIRECT_MIXING_IN_G1 for Pia Taubert's reference implementation
+ */
+//#define MIXING_EXTRUDER
+#if ENABLED(MIXING_EXTRUDER)
+  #define MIXING_STEPPERS 2        // Number of steppers in your mixing extruder
+  #define MIXING_VIRTUAL_TOOLS 16  // Use the Virtual Tool method with M163 and M164
+  //#define DIRECT_MIXING_IN_G1    // Allow ABCDHI mix factors in G1 movement commands
+#endif
+```
+
+A Mixing Extruder uses two or more stepper motors to drive multiple filaments into a mixing chamber, with the mixed filaments extruded from a single nozzle. This option adds the ability to set a mixture, to save mixtures, and to recall mixtures using the `T` command. The extruder still uses a single E axis, while the current mixture is used to determine the proportion of each filament to use. An "experimental" `G1` direct mixing option is included.
 
 ```cpp
 //#define HOTEND_OFFSET_X { 0.0, 20.00 }
@@ -622,29 +641,31 @@ This is an optional but cool feature to have. A switch is used to detect if the 
 //#define MESH_BED_LEVELING
 ```
 
-Bed elevation are not equal and the bed shape might be a bow shaped in the middle when it is hot nor manual bed calibration works perfect on all 4 point during initial setup. This one is slightly more advanced technique of bed leveling process where each point will have their respective elevation values
+If your machine lacks a probe, it is still possible to measure and correct for imperfections in the bed. The `MESH_BED_LEVELING` option provides a procedure for measuring the bed height at several points using a piece of paper or feeler gauge. See [`G29` for MBL](/docs/gcode/G29-mbl.html) for more details.
 
-Enable `//#define MANUAL_BED_LEVELING` to access mesh bed leveling option from lcd panel.
+Enable `MANUAL_BED_LEVELING` to be able to do interactive Mesh Bed Leveling from the LCD controller.
 
 ***
 
 ### Auto Bed Leveling
 
 ```cpp
-#define AUTO_BED_LEVELING_FEATURE
+//#define AUTO_BED_LEVELING_3POINT
+//#define AUTO_BED_LEVELING_LINEAR
+//#define AUTO_BED_LEVELING_BILINEAR
 ```
 
-If you want to use auto bed leveling feature, enable this. This works almost like mesh bed leveling except it will be done automatically. The command to do bed leveling squence is G29 after G28 has been issued. (G29 is dependent on G28 to work properly)
+If you have a bed probe, you can enable one of these options to use Auto Bed Leveling. The `G29` command can then be used to automatically probe the bed and measure its height at various points and produce a correction grid or matrix.
+
+```cpp
+//#define DEBUG_LEVELING_FEATURE
+```
+
+Use this option to enable extra debugging of homing and leveling. You can then use `M111 S32` before issuing `G28` and `G29 V4` to get a detailed log of the process for diagnosis. This option is useful to figure out the cause of unexpected behaviors, or when reporting issues to the project.
 
 ***
 
-#### Grid
-
-```cpp
-#define AUTO_BED_LEVELING_GRID
-```
-
-Whether or not you want to use grid probing matrix or 3-point probing method.
+## `LINEAR` / `BILINEAR` options
 
 ```cpp
 #define LEFT_PROBE_BED_POSITION 15
@@ -653,17 +674,36 @@ Whether or not you want to use grid probing matrix or 3-point probing method.
 #define BACK_PROBE_BED_POSITION 150
 ```
 
-These specifies min and max position for grid matrix on your bed.
+These settings specify the boundaries for probing with `G29`. This will most likely be a sub-section of the bed because probes are not usually able to reach every point that the nozzle can. Take account of the probe's XY offsets when setting these boundaries.
 
 ```cpp
-#define AUTO_BED_LEVELING_GRID_POINTS 3
+#define ABL_GRID_MAX_POINTS_X 3
+#define ABL_GRID_MAX_POINTS_Y ABL_GRID_MAX_POINTS_X
 ```
 
-This option will tell Marlin what is the probing resolution would be, 2 and 3 are often used. These value will be squared, E.g using 2 will probe 4 points, using 4 will probe 16 points.
+These options specify the default number of points to probe in each dimension during `G29`.
+
+```cpp
+//#define PROBE_Y_FIRST
+```
+
+Enable this option if probing should proceed in the Y dimension first instead of X first.
 
 ***
 
-#### 3-Point
+## Leveling Fade Height
+
+```cpp
+#define ENABLE_LEVELING_FADE_HEIGHT
+```
+
+Available only with `AUTO_BED_LEVELING_BILINEAR` and `MESH_BED_LEVELING`. With this option the `M420 Zn` command can be used to set a fade distance over which leveling will be gradually reduced. Above the given Z height, leveling compensation will no longer be applied.
+
+Example: `M420 Z10` sets leveling to fade within the first 10mm of layer printing. If each layer is 0.2mm high, then leveling compensation is reduced by 1/50th (2%) after each layer. Above 10mm the machine will move without compensation.
+
+***
+
+## `3POINT` options
 
 ```cpp
 #define ABL_PROBE_PT_1_X 15
@@ -674,11 +714,11 @@ This option will tell Marlin what is the probing resolution would be, 2 and 3 ar
 #define ABL_PROBE_PT_3_Y 20
 ```
 
-These are the option for 3-point probing by specifying each one of their coordinates on XY plane
+These options specify the three points that will be probed during `G29`.
 
 ***
 
-#### Offsets
+#### Probe Offsets <em class="fa fa-sticky-note-o" aria-hidden="true"></em> <em class="fa fa-desktop" aria-hidden="true"></em>
 
 ```cpp
 #define X_PROBE_OFFSET_FROM_EXTRUDER -44  // X offset: -left  [of the nozzle] +right
@@ -686,33 +726,33 @@ These are the option for 3-point probing by specifying each one of their coordin
 #define Z_PROBE_OFFSET_FROM_EXTRUDER -2.50   // Z offset: -below [the nozzle](for most negative! positive when using tilt probes or the nozzle based probes)
 ```
 
-This is the position of your probe from your nozzle. To determine exact location, use relative position by specifying `G92 x0 y0 z0`, then slowly work your way to find exact probe point of your probe. Use Pronterface/repeter-host to get your own value for the above offset setup and issue `M114` to get the exact values.
-
-{% panel info EEPROM: Z-Probe Offset %}
-Will be pulled from `#define Z_PROBE_OFFSET_FROM_EXTRUDER -2.50` and the command are `M851`.
-{% endpanel %}
+These offsets specify the distance from the tip of the nozzle to the probe — or more precisely, to the point at which the probe triggers. The X and Y offsets are specified as integers. The Z offset should be specified as exactly as possible using a decimal value. The Z offset can be overridden with `M851 Z` or the LCD controller. The `M851` offset is saved to EEPROM with `M500`.
 
 ***
 
-#### Procedure
+#### Probing Behavior
 
 ```cpp
-#define Z_RAISE_BEFORE_PROBING 15   // How much the Z axis will be raised before traveling to the first probing point.
-#define Z_RAISE_BETWEEN_PROBINGS 5  // How much the Z axis will be raised when traveling from between next probing points.
-#define Z_RAISE_AFTER_PROBING 15    // How much the Z axis will be raised after the last probing point.
+#define Z_CLEARANCE_DEPLOY_PROBE   10 // Z Clearance for Deploy/Stow
+#define Z_CLEARANCE_BETWEEN_PROBES  5 // Z Clearance between probe points
 ```
 
-When the G29 command has been issued, z axis will move between these values. This too are important so that if your bed are not perpendicular, the probe will get triggered especially servo based probe that has switch, this is to avoid the lever from brushing against the bed
+Z probes require clearance when deploying, stowing, and moving between probe points to avoid hitting the bed and other hardware. Servo-mounted probes require extra space for the arm to rotate. Inductive probes need space to keep from triggering early.
+
+Use these settings to specify the distance (mm) to raise the probe (or lower the bed). The values set here apply over and above any (negative) probe Z Offset set with `Z_PROBE_OFFSET_FROM_EXTRUDER`, `M851`, or the LCD. Only integer values >= 1 are valid for these settings.
+
+- *Example*: `M851 Z-5` with a CLEARANCE of 4  =>  9mm from bed to nozzle.
+- *But*: `M851 Z+1` with a CLEARANCE of 2  =>  2mm from bed to nozzle.
 
 {% panel warning G29 Movement %}
-Make sure you have enough clearance when the probe are moving between probing points to avoid complications. It is necessary not to let the probe get triggered during movement to the next probe point.
+Make sure you have enough clearance for the probe to move between points!
 {% endpanel %}
 
 ```cpp
-#define Z_PROBE_END_SCRIPT "G1 Z10 F12000\nG1 X15 Y330\nG1 Z0.5\nG1 Z10" // These commands will be executed in the end of G29 routine.
+//#define Z_PROBE_END_SCRIPT "G1 Z10 F12000\nG1 X15 Y330\nG1 Z0.5\nG1 Z10"
 ```
 
-This one is for custom script, each command are divided with `\n` (Newline) and executed after G29 are done
+A custom script to do at the very end of `G29`. If multiple commands are needed, divide them with `\n` (the newline character).
 
 ***
 
@@ -888,22 +928,22 @@ Jerk works in conjunction with acceleration (see above). Jerk is the maximum cha
 
 ***
 
-## Additional Features <em class="fa fa-sticky-note-o text-info" aria-hidden="true"></em>
+## Additional Features
 
-### EEPROM <em class="fa fa-sticky-note-o text-info" aria-hidden="true"></em>
+### EEPROM
 
 ```cpp
 #define EEPROM_SETTINGS
 ```
 
-Commands like `M92` only alter volatile memory, and these settings are lost when the machine is powered off. This option enables the EEPROM on your board, allowing you to preserve altered settings across reboots. Settings saved to EEPROM (with `M500`) are loaded automatically whenever the machine restarts (and in most setups, when connecting to a host), overriding the defaults set in the configuration files. This option is highly recommended, as it makes configurations easier to manage.
+Commands like `M92` only change the settings in volatile memory, so these settings may be lost when the machine is powered off. This option enables the built-in EEPROM to preserve these settings across reboots. Settings saved to EEPROM (with `M500`) are loaded automatically whenever the machine restarts (and in most setups, when connecting to a host), overriding the defaults set in the configuration files. This option is highly recommended, as it makes configurations easier to manage.
 
 The EEPROM-related commands are:
 
-  - `M500`: Save all current settings to EEPROM.
-  - `M501`: Load all settings last saved to EEPROM.
-  - `M502`: Reset all settings to their default values (as set by `Configuration.h`)
-  - `M503`: Print the current settings (in RAM, not EEPROM)
+- `M500`: Save all current settings to EEPROM.
+- `M501`: Load all settings last saved to EEPROM.
+- `M502`: Reset all settings to their default values (as set by `Configuration.h`)
+- `M503`: Print the current settings (in RAM, not EEPROM)
 
 {% alert info %}
 Settings that can be changed and saved to EEPROM are marked with <em class="fa fa-sticky-note-o" aria-hidden="true"></em>. Options marked with <em class="fa fa-desktop" aria-hidden="true"></em> can be changed from the LCD controller.
@@ -915,91 +955,142 @@ Certain EEPROM behaviors may be confusing. For example, when you edit the config
 
 ***
 
-### Preheat Presets <em class="fa fa-sticky-note-o text-info" aria-hidden="true"></em> <em class="fa fa-desktop text-info" aria-hidden="true"></em>
+### Inch Units Support
 
 ```cpp
-#define PLA_PREHEAT_HOTEND_TEMP 180
-#define PLA_PREHEAT_HPB_TEMP 70
-#define PLA_PREHEAT_FAN_SPEED 0   // Insert Value between 0 and 255
-
-#define ABS_PREHEAT_HOTEND_TEMP 240
-#define ABS_PREHEAT_HPB_TEMP 110
-#define ABS_PREHEAT_FAN_SPEED 0   // Insert Value between 0 and 255
+//#define INCH_MODE_SUPPORT
 ```
 
-These are preset when you want to preheat your hotend/bed before printing without the need of going through control>temperature. These option are accessible from Prepare>Preheat ABS/PLA
-
-{% alert info %}
-Pulled from the above setting, `M145` command to configure; `M0` is PLA, `M1` is ABS.
-{% endalert %}
-***
-
-## LCD and SD
-
-### Language
-
-```cpp
-#define LANGUAGE_INCLUDE GENERATE_LANGUAGE_INCLUDE(en)
-```
-
-This will translate Marlin into your preferred language, check language.h for more info
+This option adds support for the `G20` and `G21` commands, allowing GCode to specify units in inches.
 
 ***
 
-### Additional Hardware Support
+### Material Preheat Presets <em class="fa fa-sticky-note-o text-info" aria-hidden="true"></em> <em class="fa fa-desktop text-info" aria-hidden="true"></em>
+
+```cpp
+#define PREHEAT_1_TEMP_HOTEND 180
+#define PREHEAT_1_TEMP_BED     70
+#define PREHEAT_1_FAN_SPEED     0 // Value from 0 to 255
+
+#define PREHEAT_2_TEMP_HOTEND 240
+#define PREHEAT_2_TEMP_BED    110
+#define PREHEAT_2_FAN_SPEED     0 // Value from 0 to 255
+```
+
+These are the default values for the `Prepare` > `Preheat` LCD menu options. These values can be overridden using the `M145` command or the `Control` > `Temperature` > `Preheat Material X conf` submenus.
+
+***
+
+## LCD and SD Card
+
+### LCD Language
+
+```cpp
+#define LCD_LANGUAGE en
+```
+
+Choose your preferred language for the LCD controller here. See `language.h` for the current list of languages and their international language codes.
+
+### LCD Character Set
+
+```cpp
+#define DISPLAY_CHARSET_HD44780 JAPANESE
+```
+
+This option applies only to character-based displays. Character-based displays (based on the Hitachi HD44780) provide an ASCII character set plus one of the following language extensions:
+
+- `JAPANESE` ... the most common
+- `WESTERN` .... with more accented characters
+- `CYRILLIC` ... for the Russian language
+
+To determine the language extension installed on your controller:
+
+- Compile and upload with `LCD_LANGUAGE` set to 'test'
+- Click the controller to view the LCD menu
+- The LCD will display Japanese, Western, or Cyrillic text
+
+See https://github.com/MarlinFirmware/Marlin/wiki/LCD-Language
+
+### SD Card Slot
 
 ```cpp
 #define SDSUPPORT // Enable SD Card Support in Hardware Console
 ```
 
-If you're using SD printing either from lcd or sdcard module plugged onto your board directly, enable this.
+Required to use SD printing, whether as part of an LCD controller or as a standalone SDCard module.
 
 {% alert info %}
-If this is not enabled, SDCard printing will not be supported even if you enabled LCD type with SDCard slot built-in
+The `SDSUPPORT` option must be enabled or SD printing will not be supported. It is no longer enabled automatically for LCD controllers with built-in SDCard slot.
 {% endalert %}
 
 ***
 
 ### LCD Type
 
-```cpp
-#define REPRAP_DISCOUNT_SMART_CONTROLLER
-```
+Marlin includes support for several controllers. The two most popular controllers supported by Marlin are:
 
-The above is to be enabled if you're using Reprap Discount Smart Controller, typically has 20 x 4 lcd panel
+- `REPRAP_DISCOUNT_SMART_CONTROLLER` A 20 x 4 character-based LCD controller with click-wheel.
+- `REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER` A monochrome 128 x 64 pixel-based LCD controller with click-wheel.
 
-```cpp
-#define REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER
-```
-
-This one if you're using a full graphic type typically has 128 x 64 pixels.
-
-Enable the one that matches your lcd panel, or it won't work.
-
-The above LCD types are common options, other supported LCD panels are listed in `configuration.h` file
+See `Configuration.h` for the full list of supported controllers.
 
 ***
 
-## Servo
+## Paste Extruder
+
+```cpp
+// Support for the BariCUDA Paste Extruder.
+//#define BARICUDA
+```
+
+Marlin includes support for the [Baricuda Extruder for 3D Printing Sugar and Chocolate](http://www.thingiverse.com/thing:26343) also [hosted on GitHub](http://www.github.com/jmil/BariCUDA). The feature adds the codes `M126`, `M127`, `M128`, and `M129` for controlling the pump and valve of the Baricuda.
+
+***
+
+## Indicator LEDs
+
+Marlin currently supplies two options for RGB-addressable color indicators. The color is set using `M150 Rr Ug Bb` to specify R, G, and B components from 0 to 255.
+
+```cpp
+//define BlinkM/CyzRgb Support
+//#define BLINKM
+```
+
+The BLINKM board supplies the backlighting for some LCD controllers. Its color is set using I2C messages.
+
+
+```cpp
+// Support for an RGB LED using 3 separate pins with optional PWM
+//#define RGB_LED
+#if ENABLED(RGB_LED)
+  #define RGB_LED_R_PIN 34
+  #define RGB_LED_G_PIN 43
+  #define RGB_LED_B_PIN 35
+#endif
+```
+
+An inexpensive RGB LED can be used simply by assigning digital pins for each component. If the pins are able to do hardware PWM then a wide range of colors will be available. With simple digital pins only 7 colors are possible.
+
+***
+
+## Servos
 
 ```cpp
 #define NUM_SERVOS 1 // Servo index starts with 0 for M280 command
 ```
 
-Will tell Marlin how many servos you will be using. Enable this to enable servo functionality else servo control will not work
+The total number of servos to enable for use. One common application for a servo is a Z bed probe consisting of an endstop switch mounted on a rotating arm. To use one of the servo connectors for this type of probe, set `Z_ENDSTOP_SERVO_NR` below.
 
 ***
 
 ### Servo Placement and Angle
 
 ```cpp
-//#define X_ENDSTOP_SERVO_NR 1
-//#define Y_ENDSTOP_SERVO_NR 2
-#define Z_ENDSTOP_SERVO_NR 0
-#define SERVO_ENDSTOP_ANGLES {\{0,0}, {0,0}, {12,90}} // X,Y,Z Axis Extend and Retract angles
+//#define Z_ENDSTOP_SERVO_NR 0
+//#define Z_SERVO_ANGLES {70,0} // Z Servo Deploy and Stow angles
 ```
 
-This defines the servo location and extend/retract angle values. To find the value, you have to play with M280 command several time to get the right extend/retract angles that suits your needs
+The Z probe's servo index and the servo deploy/stow angles. To determine the best angles, experiment with the `M280` command.
 
 ***
 
@@ -1013,9 +1104,9 @@ This defines the servo location and extend/retract angle values. To find the val
 #endif
 ```
 
-This is to deactivate the servo after movement. This is recommended to be enabled to avoid interference when Marlin tries to hold the servo even on retract position. This is due to high amperage generated by the extruder motor wiring during movement (printing) and cause the servo gone mad or moves on its own when it wasn't supposed to.
+This setting causes servos to deactivate after every movement. It is recommended to enable this option to keep the electrical noise from active servos from interfering with other components. The high amperage generated by extruder motor wiring during movement can also induce movement in active servos. Leave this option enabled to avoid all such servo-related troubles.
 
-Use a value with a margin so that servo able to move the probe to its position before deactivation.
+Specify a large enough delay so the servo has enough time to complete a full motion before deactivation.
 
 ***
 
@@ -1025,42 +1116,41 @@ Use a value with a margin so that servo able to move the probe to its position b
 //#define FILAMENT_WIDTH_SENSOR
 ```
 
-Uncomment this if you have a filament width sensor e.g.  `http://www.thingiverse.com/thing:454584`. This eliminates the need for flow rate calibration. Marlin will adjust the flow rate according to the sensed filament width. Then adjust the settings below for your setuo.
+Enable if you have a filament width sensor (e.g., [Filament Width Sensor Prototype Version 3](http://www.thingiverse.com/thing:454584)). With a filament sensor installed, Marlin can adjust the flow rate according to the measured filament width. Adjust the sub-options below according to your setup.
 
 ```cpp
 #define DEFAULT_NOMINAL_FILAMENT_DIA 3.00
 ```
 
-Set to the value that the typical filament diameter size. If you're typically using 1.75 and physically measured the filament at 1.70, just put 1.75. Marlin will compensate the diameter automatically. Same goes for 3.00mm as well
+The "nominal" filament diameter as written on the filament spool. If you typically use 1.75mm filament, but physically measure the diameter as 1.70mm, you should still use 1.75. Marlin will compensate automatically. The same goes for 3.00mm filament that measures closer to 2.85mm.
 
 ```cpp
 #define FILAMENT_SENSOR_EXTRUDER_NUM 0
 ```
 
-Filament sensor used on which extruder
+Only one extruder can have a filament sensor. Specify here which extruder has it.
 
 ```cpp
 #define MEASUREMENT_DELAY_CM        14
 ```
 
-Distance from the filament width sensor to the middle of the barrel (or middle of the heater block)
-NOTE TO DEV: Can you clarify on this one either it is in the middle of the heatbreak or the heater block?
+Distance from the filament width sensor to the middle of the filament path (i.e., the nozzle opening).
 
 ```cpp
 #define MEASURED_UPPER_LIMIT         3.30  //upper limit factor used for sensor reading validation in mm
 #define MEASURED_LOWER_LIMIT         1.90  //lower limit factor for sensor reading validation in mm
 ```
 
-The range of your filament width. Set them according to your filament preferences. Above value are for 3mm while 1.75mm should be ranging from 1.60 to 1.90 (theoretically).
+The range of your filament width. Set these according to your filament preferences. The sample values here apply to 3mm. For 1.75mm you'll use a range more like 1.60 to 1.90.
 
 ```cpp
 #define MAX_MEASUREMENT_DELAY       20
 ```
 
-This defines the maximum memory allocated to be used in conjunction with `#define MEASUREMENT_DELAY_CM        14` and the value must be larger than `#define MEASUREMENT_DELAY_CM        14`. Avoid setting this too high to reduce RAM usage
+This defines the size of the buffer to allocate for use with `MEASUREMENT_DELAY_CM`. The value must be greater than or equal to `MEASUREMENT_DELAY_CM`. Keep this setting low to reduce RAM usage.
 
 ```cpp
 #define FILAMENT_LCD_DISPLAY
 ```
 
-Displays the measured filament data on the lcd screen instead of just a static status.
+Periodically display a message on the LCD showing the measured filament diameter.
