@@ -9,7 +9,7 @@ category: [ development, needs-review ]
 
 # Introduction
 
-Marlin is a huge program written in C++, but when it comes to configuring a build of Marlin there are only two files you need to worry about. To configure Marlin for a specific machine, edit or replace `Configuration.h` and `Configuration_adv.h` prior to building the binary .hex image or flashing the board. If you have these files from an older version of Marlin, you can usually just drop them in place to build the new version. (Marlin will give warnings about any deprecated options.) A variety of pre-built configurations are included in the example_configurations folder.
+Marlin is a huge C++ program composed of many files, but only two —`Configuration.h` and `Configuration_adv.h`— are used to configure Marlin for a specific machine. Just edit or replace them prior to building the binary (`.hex` file) or flashing the board. If you have these files from an older version of Marlin, you can usually just drop them in place to build the new version. (Marlin will give warnings about any deprecated options.) A variety of pre-built configurations are included in the example_configurations folder.
 
 Marlin uses compiler “directives” for most of its configuration options. Directives aren't pretty, but they allow Marlin to leave out blocks of code that aren't needed, producing the smallest, fastest code possible for your configuration. Settings are enabled, disabled, and given values using C preprocessor syntax like so:
 
@@ -25,9 +25,9 @@ This document is based on Marlin 1.1.0 RC7.
 
 # Sources of Documentation
 
-The documentation begun below is very incomplete. Developing robust documentation takes time and effort, but we do consider documentation an important part of a release. So any help in improving this documentation is welcome.
+This documentation is incomplete. Developing robust documentation takes time and effort, but we do consider documentation an important part of a release. So any help in improving this documentation is welcome.
 
-While there are some good articles and YouTube videos on the subject of Marlin configuration and customization, we realize they are no substitute for comprehensive and robust documentation. So while we get it together, please keep in mind that **the configuration files themselves will always contain the most up-to-date documentation about configuration options**. Marlin developers have done a laudable job in these files of explaining (at least in a fuzzy way) what each setting is about, that the potential pitfalls are, and so on. We've also tried to make sure that if you forget something obvious, `SanityCheck.h` will catch it.
+While there are some good articles and YouTube videos on the subject of Marlin configuration and customization, we realize they are no substitute for comprehensive and up-to-date documentation. So while we get it together, please keep in mind that **the configuration files themselves will always contain the most up-to-date documentation**. Marlin developers have done a laudable job of providing a general description of each option, potential pitfalls, and so on. We've also tried to make sure that if you forget something obvious, `SanityCheck.h` will catch it.
 
 # Getting Started
 
@@ -733,17 +733,12 @@ This is almost the same like proximity sensors where there are another carriage 
 
 #### Probe Safety
 
-{% highlight cpp %}
+```cpp
 #define Z_SAFE_HOMING
-{% endhighlight %}
+```
 
-This avoids the risk of z probe going out of the bed when homing all of the axis especially when it is the z axis's turn to home. This will bring the z axis probe into the middle of the bed then wil do the z homing to find z position. Disable this `#define Z_SAFE_HOMING` if you're using more tan 1 z axis sensor (probes and switch) and enable this`#define Z_MIN_PROBE_USES_Z_MIN_ENDSTOP_PIN` if you want to have your printer head to be parked outside of the printing area. These will work together where usign the G28 command will not going to use the z-probe while using the G29 will use the z-probe instead of the default z min switch. If `#define Z_SAFE_HOMING` is enabled, then the z min switch will never be triggered since the head will always move to the center of the bed area.
-{% alert info %}
-As of 1.1.0-RC6, this has been disabled by default
-{% endalert %}
-{% alert danger %}
-Those who're using auto bed leveling and don't use another z min endstop, enable this option to avoid complications in the future
-{% endalert %}
+Move the nozzle towards the middle of the bed before homing Z. This option is needed when using a probe (rather than an endstop) to home the Z axis. It isn't needed if you're using the Z endstop for homing, though it may still be used without harm.
+
 ***
 
 ## Movement
@@ -755,7 +750,7 @@ Those who're using auto bed leveling and don't use another z min endstop, enable
 #define HOMING_FEEDRATE_Z  (4*60)
 ```
 
-These are the values for homing speed when doing auto home and auto bed leveling.
+Homing speed for use in auto home and auto bed leveling. These values may be set to the fastest speeds your machine can achieve. Homing and probing speeds are constrained by the current max feedrate and max acceleration settings.
 
 {% alert warning %}
 Setting these values too high may result in reduced accuracy and/or skipped steps.
@@ -763,149 +758,164 @@ Setting these values too high may result in reduced accuracy and/or skipped step
 
 ***
 
-### Steps/mm
+### Default Steps per mm
 
-{% highlight cpp %}
-#define DEFAULT_AXIS_STEPS_PER_UNIT   {78.74, 78.74, 2560, 95}
-{% endhighlight %}
+```cpp
+/**
+ * Default Axis Steps Per Unit (steps/mm)
+ * Override with M92
+ *                                      X, Y, Z, E0 [, E1[, E2[, E3]]]
+ */
+#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 4000, 500 }
+```
 
-This is the most crucial setting for your printer. These values determine how accurately the steppers will position the printhead/platform. We are telling the driver how many individual steps equal a certain distance. This is dependent on a variety of factors including: belt type/profile/pitch, number of teeth on the pulley, thread pitch on screws, stepper driver, and extruder style.
+These are the most crucial settings for your printer, as they determine how accurately the steppers will position the axes. Here we're telling the firmware how many individual steps produce a single millimeter (or degree on SCARA) of movement. These depend on various factors, including belt pitch, number of teeth on the pulley, thread pitch on leadscrews, micro-stepping settings, and extruder style.
 
-{% panel info DRV8825 %}
-These values need to be doubled if you want to use the DRV8825 at 1/32 microstepping. The most noticable difference is that the steppers will run more quietly as the driver output more closely resembles a sine wave.
-WARNING: By using 1/32 microstepping you are doubling the required steps per motor and thus doubling the load on your processor. If your processor is unable to handle the load steps will be skipped. This will significantly degrade print quality.
-{% endpanel %}
+A useful trick is to let the compiler do the calculations for you and just supply the raw values. For example:
+
+```cpp
+#define NEMA17_FULL_STEPS 200.0
+#define NEMA17_MICROSTEPS 16.0
+#define NEMA17_MOTOR_STEPS (NEMA17_FULL_STEPS * NEMA17_MICROSTEPS)
+#define PULLEY_PITCH 2.0
+#define PULLEY_TEETH 20.0
+#define Z_ROD_PITCH 0.8
+
+#define WADE_PULLEY_TEETH 11.0
+#define WADE_GEAR_TEETH 45.0
+#define HOBBED_BOLT_DIAM 6.0
+
+#define XY_STEPS (NEMA17_MOTOR_STEPS / (PULLEY_PITCH * PULLEY_TEETH))
+#define Z_STEPS (NEMA17_MOTOR_STEPS / Z_ROD_PITCH)
+#define WADE_GEAR_RATIO (WADE_GEAR_TEETH / WADE_PULLEY_TEETH)
+#define HOBBED_BOLD_CIRC (M_PI * HOBBED_BOLT_DIAM)
+#define WADE_E_STEPS (NEMA17_MOTOR_STEPS * WADE_GEAR_RATIO / HOBBED_BOLD_CIRC)
+
+#define DEFAULT_AXIS_STEPS_PER_UNIT   { XY_STEPS, XY_STEPS, Z_STEPS, ENG2_E_STEPS }
+```
 
 {% panel info Step Calculator %}
-You can go to `http://prusaprinters.org/calculator/` and use the calculator tool to find good starting values for your specific printer configuration.
+The [Prusa Calculator](http://prusaprinters.org/calculator/) is a great tool to help find the right values for your specific printer configuration.
 {% endpanel %}
-
-{% panel info Steps Per Unit %}
-Pulled from the above setting, configured via `M92` command.
-{% endpanel %}
-
-{% alert warning %}
-It is advisable to use the provided reference values for some common part types below to achieve better results without manual calibration. As every set up is slightly different and we are dealing with very small units it is necessary to perform manual calibration to achieve the greatest accuracy and best results.
-{% endalert %}
-
-{% panel info %}
-Some presets for common part types to get you started (1/16 microstepping)
-This table may™ be updated in the future.
-
-<table class="preset">
-<tr>
-	<th>Type</th>
-	<th>Steps/mm</th>
-</tr>
-<tr>
-	<td>GT2 20T Pulley</td>
-	<td>78.74</td>
-</tr>
-<tr>
-	<td>M10 Metric Threaded Rod</td>
-	<td>2560</td>
-</tr>
-<tr>
-	<td>T8 Acme Lead Screw</td>
-	<td>406</td>
-</tr>
-<tr>
-	<td>Standard MK8 Extruder Set</td>
-	<td>95</td>
-</tr>
-
-  </table>
-{% endpanel %}
-
 
 ***
 
-### Acceleration
+#### Default Max Feed Rate
 
-#### Max Acceleration
+```cpp
+/**
+ * Default Max Feed Rate (mm/s)
+ * Override with M203
+ *                                      X, Y, Z, E0 [, E1[, E2[, E3]]]
+ */
+#define DEFAULT_MAX_FEEDRATE { 500, 500, 2.25, 45 }
+```
 
-{% highlight cpp %}
-#define DEFAULT_MAX_FEEDRATE          {400, 400, 4, 45}    // (mm/sec)
-#define DEFAULT_MAX_ACCELERATION      {5000,5000,50,5000}    // X, Y, Z, E maximum start speed for accelerated moves. E default values are good for Skeinforge 40+, for older versions raise them a lot.
-{% endhighlight %}
-
-In any move, the velocities (in mm/sec) in the X,Y,Z and E directions will be limited to the corresponding DEFAULT_MAX_FEEDRATE.  When an axis' velocity is changed its acceleration (in mm/sec^2) will be limited to the corresponding DEFAULT_MAX_ACCELERATION.  However, discontinuous changes of velocity are permitted up to the corresponding *jerk* setting (see below).
+In any move, the velocities (in mm/sec) in the X, Y, Z, and E directions will be limited to the corresponding `DEFAULT_MAX_FEEDRATE`.
 
 {% alert danger %}
 Setting these too high will cause the corresponding stepper motor to lose steps, especially on high speed movements.
 {% endalert %}
 
-{% panel info Maximum Acceleration (mm/s2) %}
-Pulled from the above setting, on `M201` command.
-{% endpanel %}
+***
+
+### Acceleration
+
+#### Default Max Acceleration
+
+```cpp
+/**
+ * Default Max Acceleration (change/s) change = mm/s
+ * (Maximum start speed for accelerated moves)
+ * Override with M201
+ *                                      X, Y, Z, E0 [, E1[, E2[, E3]]]
+ */
+#define DEFAULT_MAX_ACCELERATION      { 3000, 3000, 100, 10000 }
+```
+
+When the velocity of any axis changes, its acceleration (or deceleration) in mm/s/s is limited by the current max acceleration setting. Also see the *jerk* settings below, which specify the largest instant speed change that can occur between segments.
 
 ***
 
 #### Default Acceleration
 
-{% highlight cpp %}
-#define DEFAULT_ACCELERATION          1000    // acceleration in mm/s^2 for printing moves
-#define DEFAULT_RETRACT_ACCELERATION  2000    // acceleration in mm/s^2 for retracts
-#define DEFAULT_TRAVEL_ACCELERATION   3000    // acceleration in mm/s^2 for travel (non printing) moves
-{% endhighlight %}
+```cpp
+/**
+ * Default Acceleration (change/s) change = mm/s
+ * Override with M204
+ *
+ *   M204 P    Acceleration
+ *   M204 R    Retract Acceleration
+ *   M204 T    Travel Acceleration
+ */
+#define DEFAULT_ACCELERATION          3000    // X, Y, Z and E acceleration for printing moves
+#define DEFAULT_RETRACT_ACCELERATION  3000    // E acceleration for retracts
+#define DEFAULT_TRAVEL_ACCELERATION   3000    // X, Y, Z acceleration for travel (non printing) moves
+```
 
-These are the default (requested) magnitudes of the acceleration for printing moves (in E and some combination of X, Y and Z), retraction moves (E only) and travel moves (X, Y and/or Z only), respectively. For travel and printing moves these accelerations represent accelerations along the path segment in 3D (XYZ). For retraction moves where only the E axis moves, DEFAULT_RETRACT_ACCELERATION refers to the acceleration of the *E*-axis. Marlin reduces these default accelerations if required to avoid exceeding the default maximum acceleration limits for any individual axis, as specified above.
+The planner uses the default accelerations set here (or by `M204`) as the starting values for movement acceleration, and then constrains them further, if needed. There are separate default acceleration values for printing moves, retraction moves, and travel moves.
+
+- Printing moves include E plus at least one of the XYZ axes.
+- Retraction moves include only the E axis.
+- Travel moves include only the XYZ axes.
+
+In print/travel moves, `DEFAULT_ACCELERATION` and `DEFAULT_TRAVEL_ACCELERATION` apply to the XYZ axes. In retraction moves, `DEFAULT_RETRACT_ACCELERATION` applies only to the *E*-axis. During movement planning, Marlin constrains the default accelerations to the maximum acceleration of all axes involved in the move.
 
 {% alert danger %}
-Do not set these too high as there are mechanical constraints that might cause your printer to vibrate excessively or your stepper motor to whine or skip steps.
-{% endalert %}
-
-{% panel info Accelerations: P=printing, R=retract and T=travel %}
-Pulled from the above setting, on `M204` command.
-{% endpanel %}
-
-***
-
-#### Jerks
-
-{% highlight cpp %}
-#define DEFAULT_XYJERK                15.0    // (mm/sec)
-{% endhighlight %}
-
-Jerk works in conjunction with acceleration (see above). Jerk is the maximum change in velocity (in mm/sec) that can occur instantaneously. Both acceleration and jerk affect your print quality. Set too low, the extruder will linger too long at points of direction change, causing for instance, blobs at the corners of a cube. Set too high, direction changes apply too much torque to your printer's mechanics and you may see ringing artifacts or dropped steps.
-
-{% panel info Advanced variables: S=Min feedrate (mm/s), T=Min travel feedrate (mm/s), B=minimum segment time (ms) %}
-Pulled from the above setting, on `M205` command.
-{% endpanel %}
-{% alert info %}
+Don't set these too high. Larger acceleration values can lead to excessive vibration, noisy steppers, or even skipped steps. Lower acceleration produces smoother motion, eliminates vibration, and helps reduce wear on mechanical parts.
 {% endalert %}
 
 ***
 
-## Additional Features <i class="fa fa-sticky-note-o text-info" aria-hidden="true"></i>
+#### Jerk
 
-### EEPROM <i class="fa fa-sticky-note-o text-info" aria-hidden="true"></i>
+```cpp
+/**
+ * Default Jerk (mm/s)
+ * Override with M205 X Y Z E
+ *
+ * "Jerk" specifies the minimum speed change that requires acceleration.
+ * When changing speed and direction, if the difference is less than the
+ * value set here, it may happen instantaneously.
+ */
+#define DEFAULT_XJERK                 20.0
+#define DEFAULT_YJERK                 20.0
+#define DEFAULT_ZJERK                  0.4
+#define DEFAULT_EJERK                  5.0
+```
 
-{% highlight cpp %}
+Jerk works in conjunction with acceleration (see above). Jerk is the maximum change in velocity (in mm/sec) that can occur instantaneously. Both acceleration and jerk affect your print quality. Set too low, the extruder will linger too long at points where direction changes occur —such as at the corners of a cube— possibly leaving blobs. If the jerk is set too high, direction changes will apply too much torque and you may see "ringing" artifacts or dropped steps.
+
+***
+
+## Additional Features <em class="fa fa-sticky-note-o text-info" aria-hidden="true"></em>
+
+### EEPROM <em class="fa fa-sticky-note-o text-info" aria-hidden="true"></em>
+
+```cpp
 #define EEPROM_SETTINGS
-{% endhighlight %}
+```
 
-This option is recommended to be turned on (enabled). This option enables the EEPROM on your board and allows you to change many configuration settings without editing Configuration/Configuration_adv.h and re-uploading the firmware to your board. This is a time saver while tuning adjustable parameters to your machine, such as the z-probe offset value. Some of these settings are directly accessible from the lcd panel>control section, others are altered by M-code.
+Commands like `M92` only alter volatile memory, and these settings are lost when the machine is powered off. This option enables the EEPROM on your board, allowing you to preserve altered settings across reboots. Settings saved to EEPROM (with `M500`) are loaded automatically whenever the machine restarts (and in most setups, when connecting to a host), overriding the defaults set in the configuration files. This option is highly recommended, as it makes configurations easier to manage.
 
-{% highlight cpp %}
-Several useful command on reading and storing commands are
-M500 - Save the applied setting
-M501 - Load/read the saved setting from EEPROM (not from config.h)
-M502 - Loads the setting from config.h (this are not saved to the eeprom by default)
-M503 - Print current settings in volatile memory
-{% endhighlight %}
+The EEPROM-related commands are:
+
+  - `M500`: Save all current settings to EEPROM.
+  - `M501`: Load all settings last saved to EEPROM.
+  - `M502`: Reset all settings to their default values (as set by `Configuration.h`)
+  - `M503`: Print the current settings (in RAM, not EEPROM)
 
 {% alert info %}
-By enabling this, you are able to access variables saved in non-volatile memory of your board and features that can be accessed are all marked with <i class="fa fa-sticky-note-o" aria-hidden="true"></i> while those options marked with <i class="fa fa-desktop" aria-hidden="true"></i> can be accessed from LCD directly.
+Settings that can be changed and saved to EEPROM are marked with <em class="fa fa-sticky-note-o" aria-hidden="true"></em>. Options marked with <em class="fa fa-desktop" aria-hidden="true"></em> can be changed from the LCD controller.
 {% endalert %}
 
 {% alert info %}
-The EEPROM is a great convenience, but can cause confusion if you don't fully understand the process.  M-codes and the LCD change parameters in volatile memory. Unless saved to EEPROM with M500, the changes will not survive reboots. Once in EEPROM the parameters over-ride those in the firmware configuration files, so changing them there will have no effect unless you load them into volatile memory with M502 and save them to EEPROM with M500. If you change firmware versions your EEPROM settings may not be preserved, so it is wise to sync your configuration files with any permanent changes you save to EEPROM.  This will make the process of moving your configuration to the new firmware version simpler.  At any point, you can check the values in use with M503.
+Certain EEPROM behaviors may be confusing. For example, when you edit the configurations and re-flash the firmware, you may discover that your new settings don't have any effect! What's going on? They are still being overridden by the EEPROM! To apply and preserve your new settings, use `M502` to restore settings to the configured defaults, then `M500` to write them to EEPROM. You can always use `M503` to view the current settings in volatile memory (even without EEPROM enabled).
 {% endalert %}
 
 ***
 
-### Preheat Presets <i class="fa fa-sticky-note-o text-info" aria-hidden="true"></i> <i class="fa fa-desktop text-info" aria-hidden="true"></i>
+### Preheat Presets <em class="fa fa-sticky-note-o text-info" aria-hidden="true"></em> <em class="fa fa-desktop text-info" aria-hidden="true"></em>
 
 ```cpp
 #define PLA_PREHEAT_HOTEND_TEMP 180
