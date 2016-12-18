@@ -137,3 +137,10 @@
  */
 #navbar-main .twitter-follow-button { margin-top: 16px; }
 
+/*
+ * Scrolling code blocks
+ */
+div.language-cpp {
+  overflow: scroll;
+  pre.highlight { width: 1200px; }
+}
