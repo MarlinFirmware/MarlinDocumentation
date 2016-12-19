@@ -25,15 +25,15 @@ Marlin uses "compiler directives" for its configuration options. This method all
 
 # Sources of Documentation
 
-While there are some good articles and YouTube videos on the subject of Marlin configuration and customization, we realize they are no substitute for comprehensive and up-to-date documentation. So while we get it together, please keep in mind that **the configuration files themselves will always contain the most up-to-date documentation**. Marlin developers have done a laudable job of providing a general description of each option, potential pitfalls, and so on. We've also tried to make sure that if you forget something obvious, `SanityCheck.h` will catch it.
+While there are some good articles and YouTube videos on the subject of Marlin configuration and customization, they're no substitute for comprehensive and up-to-date documentation. This site aims to do that, but there's still a lot of work left to do. While we get it together, the most authoritative source on configuration is **the configuration files themselves**. They provide a good general description of each option. A `SanityCheck.h` file is also included to catch most common configuration mistakes.
 
 # Before You Begin
 
-If you've never calibrated a RepRap machine before, here are some good resources to help get you started:
+If you've never configured and calibrated a RepRap machine before, here are some good resources:
 
 - [Calibration](http://reprap.org/wiki/Calibration)
-- [Calibrating XY&Z Step/MM](http://youtu.be/wAL9d7FgInk)
-- [Prusa 3D printer calculators](http://calculator.josefprusa.cz)
+- [Calibrating Steps-per-unit](http://youtu.be/wAL9d7FgInk)
+- [Prusa's calculators](http://calculator.josefprusa.cz)
 - [Triffid Hunter's Calibration Guide](http://reprap.org/wiki/Triffid_Hunter%27s_Calibration_Guide)
 - [The Essential Calibration Set](http://www.thingiverse.com/thing:5573)
 - [Calibration of your RepRap](https://sites.google.com/site/repraplogphase/calibration-of-your-reprap)
@@ -43,66 +43,70 @@ If you've never calibrated a RepRap machine before, here are some good resources
 
 The settings in `Configuration.h` you'll need to know include:
 
-- Type of printer (Cartesian, Delta, CoreXY, SCARA, etc.)
-- Driver board (RAMPS, RUMBA, Teensy, etc.)
+- Printer style, such as Cartesian, Delta, CoreXY, or SCARA
+- Driver board, such as RAMPS, RUMBA, Teensy, etc.
 - Number of extruders
-- Steps-per-mm for each axis
-- Steps-per-mm for each extruder
+- Steps-per-mm for XYZ axes and extruders (can be tuned later)
 - Endstop positions
 - Thermistors and/or thermocouples
 - Probes and probing settings
-- Your LCD controller
+- LCD controller brand and model
 - Add-ons and custom components
 
-# Configuration
+# `Configuration.h`
 
-## Board
+This document covers the `Configuration.h` file, following the order of settings as they appear. The order isn't always logical, so "Search In Page" may be helpful. We've tried to keep descriptions brief and to the point. For more detailed information on various topics, please read the main articles and follow the links provided here in option descriptions.
 
-### Author Info
+## Configuration versioning
+
+```cpp
+#define CONFIGURATION_H_VERSION 010100
+```
+Marlin now checks for a configuration version and won't compile without this setting. If you want to upgrade from an earlier version of Marlin, add this line to your old configuration file. During compilation, Marlin will throw errors explaining what needs to be changed.
+
+## Firmware Info
 
 ```cpp
 #define STRING_CONFIG_H_AUTHOR "(none, default config)"
+#define SHOW_BOOTSCREEN
+#define STRING_SPLASH_LINE1 SHORT_BUILD_VERSION // will be shown during bootup in line 1
+#define STRING_SPLASH_LINE2 WEBSITE_URL         // will be shown during bootup in line 2
 ```
+- `STRING_CONFIG_H_AUTHOR` is shown in the Marlin startup message, and is meant to identify the author (and optional variant) of the firmware. Use this setting as a way to uniquely identify all your custom configurations. The startup message is printed when connecting to host software, and whenever the board reboots.
+- `SHOW_BOOTSCREEN` enables the boot screen for LCD controllers.
+- `STRING_SPLASH_LINE1` and `STRING_SPLASH_LINE1` are shown on the boot screen.
 
-This setting is shown in the Marlin startup message, and is meant to identify the author (and optional variant) of the firmware. Use this setting as a way to uniquely identify all your custom configurations. The startup message is printed when connecting to host software, and whenever the board reboots.
+## Hardware Info
 
-***
-
-### Serial Settings
+### Serial Port
 
 ```cpp
 #define SERIAL_PORT 0
 ```
-
 The index of the on-board serial port that will be used for primary host communication. Change this if, for example, you need to connect a wireless adapter to non-default port pins. Serial port 0 will be used by the Arduino bootloader regardless of this setting.
+
+### Baud Rate
 
 ```cpp
 #define BAUDRATE 115200
 ```
-
 The serial communication speed of the printer should be as fast as it can manage without generating errors. In most cases 115200 gives a good balance between speed and stability. Start with 250000 and only go lower if "line number" and "checksum" errors start to appear. Note that some boards (e.g., a temperamental Sanguinololu clone based on the ATMEGA1284P) may not be able to handle a baudrate over 57600. Allowed values: 2400, 9600, 19200, 38400, 57600, 115200, 250000.
-
-***
 
 ### Bluetooth
 
 ```cpp
 #define BLUETOOTH
 ```
-
 Enable the Bluetooth serial interface. For boards based on the AT90USB.
 
-***
-
-### Board Type
+### Motherboard
 
 ```cpp
 #define MOTHERBOARD BOARD_RAMPS_14_EFB
 ```
+The motherboard setting allows Marlin to allocate the correct pins to various functions and determine the available capabilities of the hardware.
 
-The motherboard setting allows Marlin to determine how to allocate pins to various functions and restrictions that apply to this particular board. Below is the list of the boards that can be used with Marlin, taken from boards.h.
-
-Using `boards.h` as a reference, replace `BOARD_RAMPS_14_EFB` above with the named ID that matches your board. The `boards.h` file has the most up-to-date listing of supported boards, so check it first if you don't see yours listed below.
+Using `boards.h` as a reference, replace `BOARD_RAMPS_14_EFB` with your board's ID. The `boards.h` file has the most up-to-date listing of supported boards, so check it first if you don't see yours listed here.
 
 <table id="board_list" class="table table-condensed table-striped"></table>
 <script type="text/javascript">
@@ -116,52 +120,49 @@ Using `boards.h` as a reference, replace `BOARD_RAMPS_14_EFB` above with the nam
 </script>
 
 {% alert info %}
-If you're using a Sanguino board with Arduino IDE 1.6.8 you'll need to add Sanguino to the Board list. Select menu item `File` > `Preferences` > `Additional Boards Manager URLs` and add [this source URL](https://raw.githubusercontent.com/Lauszus/Sanguino/master/package_lauszus_sanguino_index.json). Then you can use `Tools > Boards > Boards Manager` to install Sanguino from the list. An internet connection is required. (Credit to [Dust's RepRap Blog](http://dustsreprap.blogspot.my/2015/06/better-way-to-install-sanguino-in.html).)
+For the Sanguino board with Arduino IDE 1.6.8 you'll need to add Sanguino to the Board list. Select menu item `File` > `Preferences` > `Additional Boards Manager URLs` and add [this source URL](https://raw.githubusercontent.com/Lauszus/Sanguino/master/package_lauszus_sanguino_index.json). Then use `Tools > Boards > Boards Manager` to install Sanguino from the list. An internet connection is required. (Credit to [Dust's RepRap Blog](http://dustsreprap.blogspot.my/2015/06/better-way-to-install-sanguino-in.html).)
 {% endalert %}
 
-***
-
-### Machine Name
+### Custom Machine Name
 
 ```cpp
-#define CUSTOM_MACHINE_NAME "3D Printer"
+//#define CUSTOM_MACHINE_NAME "3D Printer"
 ```
-
 This is the name of your printer as displayed on the LCD and by `M115`. For example, if you set this to "My Delta" the LCD will display "My Delta ready" when the printer starts up.
 
-***
-
-### UUID
+### Machine UUID
 
 ```cpp
-#define MACHINE_UUID "00000000-0000-0000-0000-000000000000"
+//#define MACHINE_UUID "00000000-0000-0000-0000-000000000000"
 ```
-
 A unique ID for your 3D printer. A suitable unique ID can be generated randomly at [uuidgenerator.net](http://www.uuidgenerator.net/version4). Some host programs and slicers may use this identifier to differentiate between specific machines on your network.
 
-***
+## Extruder Info
 
-### Extruder
+### Extruders
 
 ```cpp
 #define EXTRUDERS 1
 ```
-
 This value, from 1 to 4, defines how many extruders (E steppers) the printer has. By default Marlin will assume that there are separate nozzles, all moving together on a single carriage. If you have a single nozzle, a switching extruder, a mixing extruder, or dual X carriages, specify below.
 
 This value should be set to the total number of E stepper motors on the machine, even if there's only a single nozzle.
 
+### Distinct E Factors
+
 ```cpp
 //#define DISTINCT_E_FACTORS
 ```
-
 Enable `DISTINCT_E_FACTORS` if your extruders are not all mechanically identical. With this setting you can optionally specify different steps-per-mm, max feedrate, and max acceleration for each extruder.
+
+### Single Nozzle
 
 ```cpp
 #define SINGLENOZZLE
 ```
-
 Enable `SINGLENOZZLE` if you have an E3D Cyclops or any other "multi-extruder" system that shares a single nozzle. In a single-nozzle setup, only one filament drive is engaged at a time, and each needs to retract before the next filament can be loaded and begin purging and extruding.
+
+### Switching Extruder
 
 ```cpp
 //#define SWITCHING_EXTRUDER
@@ -171,8 +172,9 @@ Enable `SINGLENOZZLE` if you have an E3D Cyclops or any other "multi-extruder" s
   //#define HOTEND_OFFSET_Z {0.0, 0.0}
 #endif
 ```
-
 A Switching Extruder is a dual extruder that uses a single stepper motor to drive two filaments, but only one at a time. The servo is used to switch the side of the extruder that will drive the filament. The E motor also reverses direction for the second filament. Set the servo sub-settings above according to your particular extruder's setup instructions.
+
+### Mixing Extruder
 
 ```cpp
 /**
@@ -190,81 +192,75 @@ A Switching Extruder is a dual extruder that uses a single stepper motor to driv
   //#define DIRECT_MIXING_IN_G1    // Allow ABCDHI mix factors in G1 movement commands
 #endif
 ```
-
 A Mixing Extruder uses two or more stepper motors to drive multiple filaments into a mixing chamber, with the mixed filaments extruded from a single nozzle. This option adds the ability to set a mixture, to save mixtures, and to recall mixtures using the `T` command. The extruder still uses a single E axis, while the current mixture is used to determine the proportion of each filament to use. An "experimental" `G1` direct mixing option is included.
 
+### Hotend Offsets
+
 ```cpp
-//#define HOTEND_OFFSET_X { 0.0, 20.00 }
-//#define HOTEND_OFFSET_Y { 0.0, 5.00 }
+//#define HOTEND_OFFSET_X {0.0, 20.00} // (in mm) for each extruder, offset of the hotend on the X axis
+//#define HOTEND_OFFSET_Y {0.0, 5.00}  // (in mm) for each extruder, offset of the hotend on the Y axis
 ```
-
-Hotend offsets are needed if you have more than one extruder (or if your extruder has more than one nozzle). These specify the offset in mm between your extruders' nozzles. Leave the first element set to 0.0. The second element in each array corresponds to the next hotend. You can add more offsets if you have 3 or more extruders.
-
-***
+Hotend offsets are needed if your extruder has more than one nozzle. These values specify the offset from the first nozzle to each nozzle. So the first element is always set to 0.0. The next element corresponds to the next nozzle, and so on. Add more offsets if you have 3 or more nozzles.
 
 ## Power Supply
 
 ```cpp
 #define POWER_SUPPLY 1
 ```
-
-Use this option to specify which type of power supply you're using. Marlin uses this setting to decide how to switch the power supply on and off. The options are None (0), ATX (1), or X-Box 360 (2). If you have a non-switchable power supply use 0, a common example of this is the power "brick" (like a big laptop power supply). If you use a computer power supply (ATX) or LED Constant Voltage Power Supply you should select 1, these are the most commonly used power supplies that are reliable.
+Use this option to specify the type of power supply you're using. Marlin uses this setting to decide how to switch the power supply on and off. The options are None (0), ATX (1), or X-Box 360 (2). For a non-switchable power supply use 0. A common example of this is the power "brick" (like a big laptop power supply). For a PC power supply (ATX) or LED Constant-Voltage Power Supply select 1. These are the most commonly-used power supplies.
 
 ```cpp
 //#define PS_DEFAULT_OFF
 ```
 Enable this if you don't want the power supply to switch on when you turn on the printer. This is for printers that have dual powersupplies. For instance some setups have a separate powersupply for the heaters. In this situation you can save power by leaving the powersupply off until called for. If you don't know what this is leave it.
 
-***
-
 ## Thermal Settings
 
-### Temperature Sensor
+### Temperature Sensors
 
 ```cpp
-#define TEMP_SENSOR_0 5   //This is your main extruder
+#define TEMP_SENSOR_0 5
 #define TEMP_SENSOR_1 0
 #define TEMP_SENSOR_2 0
 #define TEMP_SENSOR_3 0
-#define TEMP_SENSOR_BED 3 //Heated bed
+#define TEMP_SENSOR_BED 3
 ```
+Temperature sensors are vital components in a 3D printer. Fast and accurate sensors ensure that the temperature will be well controlled, to keep plastic flowing smoothly and to prevent mishaps. Use these settings to specify the hotend and bed temperature sensors. Every 3D printer will have a hotend thermistor, and most will have a bed thermistor.
 
-These are the profiles for your temperature sensor. Most users will only have two, one for the hotend and a second one if you have a heated bed. The generic profile is "1" which is labeled "100K Thermistor". If you can get the exact brand and model, make sure you check for a matching profile in the table and edit the corresponding line with the number for your profile. We don't have a profile for every temperature sensor in the world so you may need to use a profile for a similar sensor of the same brand or worst case use the generic profile. Each profile is calibrated for the unique properties of the specified temperature sensor so it's important to be as precise as possible.
+The listing above these options in `Configuration.h` contains all the thermistors and thermocouples that Marlin knows and supports. Try to match your brand and model with one of the sensors in the list. If no match is found, use a profile for a similar sensor of the same brand, or try "1" – the generic profile. Each profile is calibrated for a particular temperature sensor so it's important to be as precise as possible.
 
 {% alert warning %}
-This is crucial to obtain accurate temperature measurements.
-As a last resort, just use 100k thermistor for `TEMP_SENSOR` and `TEMP_SENSOR_BED` but be highly skeptical of the temperature accuracy.
+It is crucial to obtain accurate temperature measurements. As a last resort, use 100k thermistor for `TEMP_SENSOR` and `TEMP_SENSOR_BED` but be highly skeptical of the temperature accuracy.
 {% endalert %}
 
+```cpp
+// Dummy thermistor constant temperature readings, for use with 998 and 999
+#define DUMMY_THERMISTOR_998_VALUE 25
+#define DUMMY_THERMISTOR_999_VALUE 100
+```
+Marlin provides two dummy sensors for testing purposes. Set their constant temperature readings here.
 
 ```cpp
 //#define TEMP_SENSOR_1_AS_REDUNDANT
 #define MAX_REDUNDANT_TEMP_SENSOR_DIFF 10
 ```
+Enable this option to use sensor 1 as a redundant sensor for sensor 0. This is an advanced way to protect against temp sensor failure. If the temperature difference between sensors exceeds `MAX_REDUNDANT_TEMP_SENSOR_DIFF` Marlin will abort the print and disable the heater.
 
-Enable this if you want to use sensor 1 as a redundant sensor for sensor 0. This is a advanced way to protect against temp sensor failure. If the temperature delta between these sensors exceeds the value for **MAX_REDUNDANT_TEMP_SENSOR_DIFF**  the heater will be shutdown and the print aborted.
-
-***
-
-### Temperature Stability Check
+### Temperature Stability
 
 ```cpp
 #define TEMP_RESIDENCY_TIME 10  // (seconds)
 #define TEMP_HYSTERESIS 3       // (degC) range of +/- temperatures considered "close" to the target one
 #define TEMP_WINDOW 1           // (degC) Window around target to start the residency timer x degC early.
 ```
-
-Extruder must maintain a stable temperature for **TEMP_RESIDENCY_TIME** before M109 will return success and start the print.
+Extruders must maintain a stable temperature for `TEMP_RESIDENCY_TIME` before `M109` will return success and start the print. Tune what "stable" means using `TEMP_HYSTERESIS` and `TEMP_WINDOW`.
 
 ```cpp
 #define TEMP_BED_RESIDENCY_TIME 10  // (seconds)
 #define TEMP_BED_HYSTERESIS 3       // (degC) range of +/- temperatures considered "close" to the target one
 #define TEMP_BED_WINDOW 1           // (degC) Window around target to start the residency timer x degC early.
 ```
-
-Bed must maintain a stable temperature for **TEMP_BED_RESIDENCY_TIME** before M109 will return success and start the print.
-
-***
+Bed must maintain a stable temperature for `TEMP_BED_RESIDENCY_TIME` before `M109` will return success and start the print. Tune what "stable" means using `TEMP_BED_HYSTERESIS` and `TEMP_BED_WINDOW`.
 
 ### Temperature Ranges
 
@@ -275,11 +271,12 @@ Bed must maintain a stable temperature for **TEMP_BED_RESIDENCY_TIME** before M1
 #define HEATER_3_MINTEMP 5
 #define BED_MINTEMP 5
 ```
+These parameters help prevent the printer from overheating and catching fire. Temperature sensors report abnormally low values when they fail or become disconnected. Set these to the lowest value (in degrees C) that the machine is likely to experience. Indoor temperatures range from 10C-40C, but a value of 0 might be appropriate for an unheated workshop.
 
-This one of the safety features that will prevent the printer from overheating. Temperature sensors will report abnormally low numbers when they fail so we use this value to try and detect a bad temperature sensor. You should set this to the lowest value (in degrees C) that you think your printer will experience. I use a value of 0 because my printer is in my detached workshop that is unheated. Room temperature is typically in the range of 10-40'c. Should any sensor go below its specified minimum temperature, Marlin will SHUT DOWN the printer, with a "MINTEMP ERROR".
+If any sensor goes below the minimum temperature set here, Marlin will **shut down the printer** with a "MINTEMP" error.
 
-{% alert ERROR %}
-`MINTEMP ERROR`: This error either means your thermistor has either disconnected from the temperature pin or has gone open-circuit, or you have your printer in a very cold room.
+{% alert error MINTEMP %}
+`Err: MINTEMP`: This error means your thermistor has disconnected or become an open circuit. (Or the machine is just very cold.)
 {% endalert %}
 
 ```cpp
@@ -290,22 +287,20 @@ This one of the safety features that will prevent the printer from overheating. 
 #define BED_MAXTEMP 130
 ```
 
-Maximum temperature for the temperature sensor. If Marlin reads a temperature above these values, it will immediately shut down for safety reasons. For the E3D V6 hotend, many use 285 as a maximum value.
+Maximum temperature for each temperature sensor. If Marlin reads a temperature above these values, it will immediately shut down for safety reasons. For the E3D V6 hotend, many use 285 as a maximum value.
 
-{% alert ERROR %}
-`MAXTEMP ERROR`: This could mean the temperature sensor legs/wires are shorted to each other. If not there could be an issue with the driver for your heater.
+{% alert error MAXTEMP %}
+`Err: MAXTEMP`: This error usually means that the temperature sensor wires are shorted together. It may also indicate an issue with the heater MOSFET or relay that is causing it to stay on.
 {% endalert %}
 ***
 
 ### PID
 
-Marlin uses these values to understand the behavior of the particular hot system whether hotend or bed. When PID is set correctly your heaters will reach temperature faster, maintain it much more accurately, and produces less wear on the hot system. Correct settings can also prevent excessive heater overshoots which is a safety hazard.
+Marlin uses PID (Proportional, Integral, Derivative) control ([Wikipedia](https://en.wikipedia.org/wiki/PID_controller)) to stabilize the dynamic heating system for the hotends and bed. When PID values are set correctly, heaters reach their target temperatures faster, maintain temperature better, and experience less wear over time.
 
-Kindly refer to: [PID_Tuning](http://reprap.org/wiki/PID_Tuning) for instructions on how to start the auto tune process. This is should be done any time you change the hot end, temperature sensor, heating element, board, or power supply voltage (12v/24v) - In other words anything that is part of the "HOT" system of your printer.
+Most vitally, correct PID settings will prevent excessive overshoot, which is a safety hazard. During PID calibration, use the highest target temperature you intend to use (where overshoots are more critical).
 
-The target temperature used during auto tune process calibration should be the highest target temperature you intend to use. (In my opinion- because that is where overshoots would be more likely to be critical).
-
-More detailed info about PID control can be found here: [PID_Control](https://en.wikipedia.org/wiki/PID_controller).
+See the [PID Tuning](http://reprap.org/wiki/PID_Tuning) topic on the RepRap wiki for detailed instructions on `M303` auto-tuning. The PID settings should be tuned whenever changing a hotend, temperature sensor, heating element, board, power supply voltage (12v/24v), or anything else related to the high-voltage circuitry.
 
 ***
 
@@ -771,13 +766,30 @@ This is almost the same like proximity sensors where there are another carriage 
 
 ***
 
-#### Probe Safety
+#### Z Safe Homing
 
 ```cpp
+/**
+ * Z Safe Homing
+ *
+ * Enable this option to avoid homing with a Z probe outside the bed area.
+ *
+ * With safe homing enabled:
+ *
+ * - Allow Z homing only after X and Y homing AND stepper drivers still enabled.
+ * - If stepper drivers time out, it will need X and Y homing again before Z homing.
+ * - Move the Z probe (or nozzle) to a defined XY point before Z Homing when homing all axes (G28).
+ * - Prevent Z homing when the Z probe is outside bed area.
+ */
 #define Z_SAFE_HOMING
+
+#if ENABLED(Z_SAFE_HOMING)
+  #define Z_SAFE_HOMING_X_POINT ((X_MIN_POS + X_MAX_POS) / 2)    // X point for Z homing when homing all axis (G28).
+  #define Z_SAFE_HOMING_Y_POINT ((Y_MIN_POS + Y_MAX_POS) / 2)    // Y point for Z homing when homing all axis (G28).
+#endif
 ```
 
-Move the nozzle towards the middle of the bed before homing Z. This option is needed when using a probe (rather than an endstop) to home the Z axis. It isn't needed if you're using the Z endstop for homing, though it may still be used without harm.
+This option causes the nozzle to move to a selected point (by default, the middle of the bed) when homing the Z axis. As a side-effect, homing of XY is required for Z to home. Enable this option if a probe (not an endstop) is being used for Z homing. Z Safe Homing isn't needed if a Z endstop is used for homing, but it may also be enabled just to have XY move to some custom position after homing.
 
 ***
 
@@ -786,6 +798,7 @@ Move the nozzle towards the middle of the bed before homing Z. This option is ne
 ### Homing Speed
 
 ```cpp
+// Homing speeds (mm/m)
 #define HOMING_FEEDRATE_XY (50*60)
 #define HOMING_FEEDRATE_Z  (4*60)
 ```
@@ -793,7 +806,7 @@ Move the nozzle towards the middle of the bed before homing Z. This option is ne
 Homing speed for use in auto home and auto bed leveling. These values may be set to the fastest speeds your machine can achieve. Homing and probing speeds are constrained by the current max feedrate and max acceleration settings.
 
 {% alert warning %}
-Setting these values too high may result in reduced accuracy and/or skipped steps.
+Setting these values too high may result in reduced accuracy and/or skipped steps. Reducing acceleration may help to achieve higher top speeds.
 {% endalert %}
 
 ***
@@ -875,6 +888,10 @@ Setting these too high will cause the corresponding stepper motor to lose steps,
 
 When the velocity of any axis changes, its acceleration (or deceleration) in mm/s/s is limited by the current max acceleration setting. Also see the *jerk* settings below, which specify the largest instant speed change that can occur between segments.
 
+A value of 3000 means that an axis may accelerate from 0 to 3000mm/m (50mm/s) within a one second movement.
+
+Jerk sets the floor for accelerated moves. If the change in top speed for a given axis between segments is less than the jerk value for the axis, an instantaneous change in speed may be allowed. Limits placed on other axes also apply. Basically, lower jerk values result in more accelerated moves, which may be near-instantaneous in some cases, depending on the final acceleration determined by the planner.
+
 ***
 
 #### Default Acceleration
@@ -924,7 +941,9 @@ Don't set these too high. Larger acceleration values can lead to excessive vibra
 #define DEFAULT_EJERK                  5.0
 ```
 
-Jerk works in conjunction with acceleration (see above). Jerk is the maximum change in velocity (in mm/sec) that can occur instantaneously. Both acceleration and jerk affect your print quality. Set too low, the extruder will linger too long at points where direction changes occur —such as at the corners of a cube— possibly leaving blobs. If the jerk is set too high, direction changes will apply too much torque and you may see "ringing" artifacts or dropped steps.
+Jerk works in conjunction with acceleration (see above). Jerk is the maximum change in velocity (in mm/sec) that can occur instantaneously. It can also be thought of as the minimum change in velocity that will be done as an accelerated (not instantaneous) move.
+
+Both acceleration and jerk affect your print quality. If jerk is too low, the extruder will linger too long on small segments and corners, possibly leaving blobs. If the jerk is set too high, direction changes will apply too much torque and you may see "ringing" artifacts or dropped steps.
 
 ***
 
