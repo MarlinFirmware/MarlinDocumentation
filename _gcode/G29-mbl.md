@@ -16,7 +16,7 @@ long:
   - |
     With Mesh Bed Leveling (MBL) you can interactively measure a grid of Z heights without a bed probe. The only tool required is a piece of paper or a feeler gauge. MBL uses the mesh to compensate for variations in height across the bed.
 
-    This feature is enabled with the `MESH_BED_LEVELING` option in `Configuration.h`. Users with a probe should enable one of the [AUTO_BED_LEVELING_*](G29.html) options instead.
+    This feature is enabled with the `MESH_BED_LEVELING` option in `Configuration.h`. Users with a probe should enable one of the [`AUTO_BED_LEVELING_*`](G29.html) options instead.
 
     The procedure for Mesh Bed Leveling from your host software:
 
