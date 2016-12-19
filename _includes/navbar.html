@@ -80,7 +80,7 @@
                           {% if doc.title %}
                             <li><a href="{{ doc.url | prepend: site.baseurl }}">
                               {% if col.label == 'gcode' %}
-                                {{ doc.codes[0] }}: {{ doc.title }}
+                                {{ doc.codes[0] }}{% if doc.codes[1] %}-{{ doc.codes[1] }}{% endif %}: {{ doc.title }}
                               {% else %}
                                 {{ doc.title }}
                               {% endif %}
