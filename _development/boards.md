@@ -1,5 +1,5 @@
 ---
-title:        'Supported hardware list'
+title:        'Boards'
 description:  'Complete list of hardware supported by Marlin'
 
 author: jbrazio
@@ -7,19 +7,19 @@ category: [ development, hardware ]
 ---
 
 ## General information
-Marlin supports a wide variety of 3D printers, including all RAMPS variants, and is adaptable to virtually any Arduino/Genuino based electronics through pin-mapping - assigning the right name to each pin.
+Marlin supports a wide variety of 3D printers, including all RAMPS variants, and is adaptable to virtually any Arduino/Genuino based electronics through pin-mapping - assigning a specific use to each pin.
 
 Several files in the Marlin source code provide hardware support, but the core files supporting electronics are:
 
- - `boards.h` contains the full list of boards supported by Marlin. Set `MOTHERBOARD` to one of the boards listed here.
- - `pins.h` manages pin definitions and includes the appropriate `pins_BOARD.h` file for the `MOTHERBOARD`.
- - `pins_BOARDNAME.h` files contain the pin definitions for each board.
+- `boards.h` contains the full list of boards supported by Marlin. Set `MOTHERBOARD` to one of the boards listed here.
+- `pins.h` manages pin definitions, including the appropriate `pins_BOARD.h` file for the specified `MOTHERBOARD`.
+- `pins_BOARDNAME.h` files contain the pin definitions for each board.
 
 {% alert warning %}
-If you're making a custom Arduino-based board, you should try to use a standard RAMPS 1.3 pinouts as much as possible or choose a pin mapping similar to some other board having good Arduino and Marlin support. The closer a new board is like an existing board, the easier it will be to integrate.
+If you're making a custom Arduino-based board, try to use standard RAMPS 1.4 pinouts as much as possible, or choose a pin-mapping similar to some other board that Marlin supports. The more that a new board resembles an existing board, the easier it will be to integrate.
 {% endalert %}
 
-To select your particular board, in `Configuration.h` file you simply change the line `#define MOTHERBOARD BOARD_RAMPS_EFB` to your particular board's name, which can be found on the table below.
+When bulding Marlin, specify the main driver board by changing the line `#define MOTHERBOARD BOARD_RAMPS_EFB` in `Configuration.h` to one of the board IDs from the table below:
 
 ## Board list
 
