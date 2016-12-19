@@ -18,6 +18,10 @@
   hash: 4ccf7c5e9ae5c124599ad822cce2feabbe3d4fe4
   date: 30/5/2015
 
+- version: 1.0.2-2
+  hash: f522a7435fd8d61af10d4deb58d77aa95921fcb2
+  date: 1/12/2016
+
 - version: 1.1.0-RC1
   hash: 6effa6f19595311020dbe1653489273257502d34
   date: 19/9/2015
@@ -43,5 +47,9 @@
   date: 29/5/2015
 
 - version: 1.1.0-RC7
-  hash:
-  date:
+  hash: d97dc10216d9a431278052e5b60973bafeeed7e0
+  date: 20/08/2016
+
+- version: 1.1.0-RC8
+  hash: 7bea5e5e5701de0b90b6c422c954337ce860bb0f
+  date: 6/12/2016
