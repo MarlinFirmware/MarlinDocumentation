@@ -33,14 +33,19 @@ collections:
     output: true
     permalink: /docs/:collection/:path:output_ext
 
+  features:
+    output: true
+    title: Marlin Features
+    permalink: /docs/:collection/:path:output_ext
+
+  configuration:
+    output: true
+    title: Configuration
+    permalink: /docs/:collection/:path:output_ext
+
   development:
     output: true
     title: Development
-    permalink: /docs/:collection/:path:output_ext
-
-  features:
-    output: true
-    title: Marlin features
     permalink: /docs/:collection/:path:output_ext
 
   gcode:
@@ -95,6 +100,13 @@ defaults:
     values:
       layout: 'docs'
       category: [ 'Basics' ]
+
+  - # Configuration collection settings
+    scope:
+      type: 'configuration'
+    values:
+      layout: 'docs'
+      category: [ 'configuration' ]
 
   - # Development collection settings
     scope:

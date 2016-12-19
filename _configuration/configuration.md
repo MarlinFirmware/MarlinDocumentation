@@ -1,10 +1,10 @@
 ---
 title:        'Configuring Marlin'
-description:  'Detailed description of all configuration options'
+description:  'Complete guide to Marlin configuration options.'
 
 author: Sarf2k4
 contrib: paulusjacobus, jbrazio, landodragon141, thinkyhead
-category: [ development, needs-review ]
+category: [ configuration, needs-review ]
 ---
 
 {% alert info %}
@@ -13,21 +13,30 @@ This document is based on Marlin 1.1.0 RC8.
 
 # Introduction
 
-Marlin is a huge C++ program composed of many files, but only two —`Configuration.h` and `Configuration_adv.h`— are used to configure Marlin for a specific machine. Just edit or replace them prior to building the binary (`.hex` file) or flashing the board. If you have these files from an older version of Marlin, you can usually just drop them in place to build the new version. (Marlin will give warnings about any deprecated options.) A variety of pre-built configurations are included in the example_configurations folder.
+Marlin is a huge C++ program composed of many files, but here we'll only be talking about the two files that contain all of Marlin's compile-time configuration options:
 
-Marlin uses "compiler directives" for its configuration options. This method allows Marlin to include only the blocks of code that are needed for your specific setup. Settings are enabled, disabled, and assigned values using C preprocessor syntax like so:
+- `Configuration.h` contains the core settings for the hardware, language and controller selection, and settings for the most common features and components.
+- `Configuration_adv.h` serves up more detailed customization options, add-ons, experimental features, and other esoterica.
+
+These two files contain all of Marlin's build-time configuration options. Simply edit or replace these files before building and uploading Marlin to the board. A variety of pre-built configurations are included in the `example_configurations` folder to get you started.
+
+To use configurations from an earlier version of Marlin, try dropping them into the newer Marlin and building. As part of the build process, the `SanityCheck.h` will print helpful error messages explaining what needs to be changed.
+
+## Compiler Directives
+
+Marlin is configured using C++ compiler directives. This allows Marlin to leverage the C++ preprocessor and include only the code and data needed for the enabled options. This results in the smallest possible binary. A build of Marlin can range from 50K to over 230K in size.
+
+Settings can be enabled, disabled, and assigned values using C preprocessor syntax like so:
 
 ```cpp
-#define THIS_IS_ENABLED // a comment about this switch
-//#define THIS_IS_DISABLED // a comment about this disabled switch
-#define OPTION_VALUE 22 // a comment about this parameter
+#define THIS_IS_ENABLED    // this switch is enabled
+//#define THIS_IS_DISABLED // this switch is disabled
+#define OPTION_VALUE 22    // this setting is "22"
 ```
 
-# Sources of Documentation
+## Sources of Documentation
 
-While there are some good articles and YouTube videos on the subject of Marlin configuration and customization, they're no substitute for comprehensive and up-to-date documentation. This site aims to do that, but there's still a lot of work left to do. While we get it together, the most authoritative source on configuration is **the configuration files themselves**. They provide a good general description of each option. A `SanityCheck.h` file is also included to catch most common configuration mistakes.
-
-# Before You Begin
+While we're getting this site together, the most authoritative source on configuration options will always be **the configuration files themselves**. They provide good descriptions of each option, and are themselves the source for most of the information presented here.
 
 If you've never configured and calibrated a RepRap machine before, here are some good resources:
 
@@ -40,6 +49,8 @@ If you've never configured and calibrated a RepRap machine before, here are some
 - [XY 20 mm Calibration Box](http://www.thingiverse.com/thing:298812)
 - [G-Code reference](http://reprap.org/wiki/G-code)
 - [Marlin3DprinterTool](https://github.com/cabbagecreek/Marlin3DprinterTool)
+
+## Before You Begin
 
 The settings in `Configuration.h` you'll need to know include:
 
@@ -144,7 +155,7 @@ A unique ID for your 3D printer. A suitable unique ID can be generated randomly 
 ```cpp
 #define EXTRUDERS 1
 ```
-This value, from 1 to 4, defines how many extruders (E steppers) the printer has. By default Marlin will assume that there are separate nozzles, all moving together on a single carriage. If you have a single nozzle, a switching extruder, a mixing extruder, or dual X carriages, specify below.
+This value, from 1 to 4, defines how many extruders (or E steppers) the printer has. By default Marlin will assume separate nozzles all moving together on a single carriage. If you have a single nozzle, a switching extruder, a mixing extruder, or dual X carriages, specify that below.
 
 This value should be set to the total number of E stepper motors on the machine, even if there's only a single nozzle.
 
