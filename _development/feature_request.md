@@ -1,6 +1,7 @@
 ---
 title:        'Feature requests'
 description:  'Complete list of all the user requested features'
+tag: feature requests
 
 author: jbrazio
 category: [ development ]

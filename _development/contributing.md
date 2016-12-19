@@ -1,6 +1,7 @@
 ---
 title:        'Contributing to Marlin'
 description:  'Ways that you can help improve Marlin'
+tag: contributing 1
 
 author: thinkyhead
 category: [ development ]

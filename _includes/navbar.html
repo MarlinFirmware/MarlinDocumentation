@@ -70,7 +70,9 @@
                         <li><a href="{{ '/meta/' | append: col.label | append: '/' | prepend: site.baseurl }}">All documents</a></li>
                         <li class="divider"></li>
                         {% if col.label == 'gcode' %}
-                          {% assign docs = (col.docs | sort: 'path') %}
+                          {% assign docs = (col.docs | sort: 'tag') %}
+                        {% elsif col.label == 'development' %}
+                          {% assign docs = (col.docs | sort: 'tag') %}
                         {% else %}
                           {% assign docs = (col.docs | sort: 'title') %}
                         {% endif %}

@@ -1,6 +1,7 @@
 ---
 title:        'Contributing Code with Pull Requests'
 description:  'How to get Marlin code, modify it, upload it &amp; do a pull request'
+tag: contributing 2
 
 author: Bob-the-Kuhn, thinkyhead
 contrib:

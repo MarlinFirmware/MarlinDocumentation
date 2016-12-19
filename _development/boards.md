@@ -1,6 +1,7 @@
 ---
 title:        'Boards'
 description:  'Complete list of hardware supported by Marlin'
+tag: boards
 
 author: jbrazio
 category: [ development, hardware ]
