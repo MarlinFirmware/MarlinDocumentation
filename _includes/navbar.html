@@ -64,7 +64,7 @@
               {% assign list = (list | sort: 'title') %}
               {% for col in list %}
                 {% if col.title %}
-                    <li class="dropdown-submenu">
+                    <li class="dropdown-submenu {{ col.label }}">
                       <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ col.title }}</a>
                       <ul class="dropdown-menu">
                         <li><a href="{{ '/meta/' | append: col.label | append: '/' | prepend: site.baseurl }}">All documents</a></li>
