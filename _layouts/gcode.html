@@ -15,11 +15,11 @@ layout: default
         {% endfor %}
 
         {% if list.size > 0 %}
-          <div class="tocify">
+          <div class="tocify gcode">
             <ul class="tocify-header nav nav-list">
               {% assign list = (list | sort: 'tag') %}
               {% for gcode in list %}
-                  <li class="tocify-item{% if page.codes[0] == gcode.codes[0] and page.title == gcode.title %} active{% endif %}" style="cursor: pointer;">
+                  <li class="tocify-item{% if page.codes[0] == gcode.codes[0] and page.title == gcode.title %} active{% endif %}">
                     <a href="{{ gcode.url | prepend: site.baseurl }}">{{ gcode.codes[0] }}{% if gcode.codes[1] %}-{{ gcode.codes[1] }}{% endif %}: {{ gcode.title }}</a></li>
               {% endfor %}
             </ul>
