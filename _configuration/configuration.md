@@ -315,30 +315,26 @@ See the [PID Tuning](http://reprap.org/wiki/PID_Tuning) topic on the RepRap wiki
 
 ***
 
-#### PID Hotend
+#### Hotend PID
 
 ```cpp
 #define PIDTEMP
 #define BANG_MAX 255     // limits current to nozzle while in bang-bang mode; 255=full current
 #define PID_MAX BANG_MAX // limits current to nozzle while PID is active (see PID_FUNCTIONAL_RANGE below); 255=full current
 ```
-
-Disable **PIDTEMP** if you want to run your heater in bang-bang mode. Bang_bang is a pure binary mode where the heater is either full on or full off. PID control is PWM and in most cases is superior in it's ability to maintain a stable temperature.
+Disable `PIDTEMP` if you want to run your heater in bang-bang mode. Bang_bang is a pure binary mode where the heater is either full on or full off. PID control is PWM and in most cases is superior in it's ability to maintain a stable temperature.
 
 ```cpp
 #if ENABLED(PIDTEMP)
-  //#define PID_AUTOTUNE_MENU 
-  //#define PID_DEBUG         
-  //#define PID_OPENLOOP 1    
-  //#define SLOW_PWM_HEATERS  
+  //#define PID_AUTOTUNE_MENU
+  //#define PID_DEBUG
+  //#define PID_OPENLOOP 1
+  //#define SLOW_PWM_HEATERS
   //#define PID_PARAMS_PER_HOTEND
-  #define PID_FUNCTIONAL_RANGE 10                                  
-  #define PID_INTEGRAL_DRIVE_MAX PID_MAX
+  #define PID_FUNCTIONAL_RANGE 10
   #define K1 0.95
 ```
-
-Enable **PID_AUTOTUNE_MENU** to add an option on the LCD to run an Autotune cycle and automatically apply the result. 
-Enable **PID_PARAMS_PER_HOTEND** if you have more than one extruder and they are different models. 
+Enable `PID_AUTOTUNE_MENU` to add an option on the LCD to run an Autotune cycle and automatically apply the result. Enable `PID_PARAMS_PER_HOTEND` if you have more than one extruder and they are different models.
 
 ```cpp
   // Ultimaker
@@ -356,90 +352,93 @@ Enable **PID_PARAMS_PER_HOTEND** if you have more than one extruder and they are
   //#define  DEFAULT_Ki 2.25
   //#define  DEFAULT_Kd 440
 ```
-
-You can use any of these pre-configured sets by disabling the current active set and enabling the desired set.
+Sample PID values are included for reference, but they won't apply to most setups. The PID values you get from `M303` may be very different, but will be better for your specific machine.
 
 {% alert info %}
-`M301` sets up Hotend PID and is also accessible through the LCD
-`M304` sets up bed PID.
+`M301` can be used to set Hotend PID and is also accessible through the LCD. `M304` can be used to set bed PID. `M303` should be used to tune PID values before using any new hotend components.
 {% endalert %}
 
 ***
 
-#### PID Bed
+#### Bed PID
 
 ```cpp
 //#define PIDTEMPBED
 ```
-
-Enable **PIDTEMPBED** if you want to use PID for your bed heater. It uses the same frequency PWM as the extruder. If your PID_dT is the default, and correct for your hardware/configuration, that means 7.689Hz, which is fine for driving a square wave into a resistive load and does not significantly impact you FET heating. This also works fine on a Fotek SSR-10DA Solid State Relay into a 250W heater. If your configuration is significantly different than this and you don't understand the issues involved, you probably shouldn't use bed PID until someone else verifies your hardware works. If this is enabled, find your own PID constants below.
+Enable `PIDTEMPBED` to use PID for the bed heater (at the same PWM frequency as the extruders). With the default PID_dT the PWM frequency is 7.689Hz, fine for driving a square wave into a resistive load without significant impact on FET heating. This also works fine on a Fotek SSR-10DA Solid State Relay into a 250W heater. If your configuration is significantly different than this and you don't understand the issues involved, you probably shouldn't use bed PID until it's verified that your hardware works. Use `M303 E-1` to tune the bed PID for this option.
 
 ```cpp
 #define MAX_BED_POWER 255
 ```
-
-This sets the max power delivered to the bed, and replaces the HEATER_BED_DUTY_CYCLE_DIVIDER option. All forms of bed control obey this (PID, bang-bang, bang-bang with hysteresis) setting this to anything other than 255 enables a form of PWM to the bed, so you shouldn't use it unless you are OK with PWM on your bed. (see the comment above on enabling PIDTEMPBED)
-
-***
+The max power delivered to the bed. All forms of bed control obey this (PID, bang-bang, bang-bang with hysteresis). Setting this to anything other than 255 enables a form of PWM. As with `PIDTEMPBED`, don't enable this unless your bed hardware is ok with PWM.
 
 ### Safety
 
-***
-
-#### Cold extrusion prevention
-
+#### Prevent Cold Extrusion <em class="fa fa-sticky-note-o" aria-hidden="true"></em>
 ```cpp
+#define PREVENT_COLD_EXTRUSION
 #define EXTRUDE_MINTEMP 170
 ```
+So-called "cold extrusion" can damage a machine in several ways, but it usually just results in gouged filament and a jammed extruder. With this option, the extruder motor won't move if the hotend is below the specified temperature. Override this setting with `M302` if needed.
 
-This setting prevents the extruder motor from moving if the hotend temperature is less than the chosen value. This is to avoid "Cold Extruding" which can damage your printer in several ways. For testing or calibration purposes this setting can be overridden with M302. 
+#### Prevent Lengthy Extrude
+```cpp
+#define PREVENT_LENGTHY_EXTRUDE
+#define EXTRUDE_MAXLENGTH 200
+```
+A lengthy extrusion may not damage your machine, but it can be an awful waste of filament. This feature is meant to prevent a typo or glitch in a `G1` command from extruding some enormous amount of filament. For Bowden setups, the max length should be set greater than or equal to the load/eject length.
 
-{% alert Cold Extrusion %}
-Be EXTREMELY careful if you chose to override this. We will probably laugh at you if you ignore our advice and damage your printer!
-{% endalert %}
-
-***
-
-#### Thermal Runaway Protection
+#### Thermal Protection
 
 ```cpp
 #define THERMAL_PROTECTION_HOTENDS // Enable thermal protection for all extruders
 #define THERMAL_PROTECTION_BED     // Enable thermal protection for the heated bed
 ```
+Thermal protection is one of the most vital safety features in Marlin, allowing the firmware to catch a bad situation and shut down heaters before it goes too far. Consider what happens when a thermistor comes loose during printing. The firmware sees a low temperature reading so it keeps the heat on. As long as the temperature reading is low, the hotend will continue to heat up indefinitely, leading to smoke, oozing, a ruined print, and possibly even fire.
 
-This one is a cool safety feature to enable. If the current temperature drops below the one Marlin is maintaining, Marlin applies heat and sets a timer. If the time limit is exceeded before restoring the temperature, Marlin shuts down the printer.
+Marlin offers two levels of thermal protection:
 
-The idea here is to detect if a temperature sensor gets loose and no longer is in good thermal contact with the hotend or heat-bed. For example, if it suddenly comes loose in the hotend during printing, with a target temperature of say 230'c, the temperature sensor reading on Marlin might drop to, say, 170'c. Marlin thinks the hotend temperature is low and needed to be powered. Without this protection, if the temperature sensor reading failed to reach the target, the hotend would heat indefinitely, getting red-hot and possibly setting fire to things - all due to misreading of the temperature from the loose temperature sensor.
+1. Check that the temperature is actually increasing when a heater is on. If the temperature fails to rise enough within a certain time period (by default, 2 degrees in 20 seconds), the machine will shut down with a "`Heating failed`" error. This will detect a disconnected, loose, or misconfigured thermistor, or a disconnected heater.
+2. Monitor thermal stability. If the measured temperature drifts too far from the target temperature for too long, the machine will shut down with a "`Thermal runaway`" error. This error may indicate poor contact between thermistor and hot end, poor PID tuning, or a cold environment.
 
-How it works: with a target temperature at 190'c, and after reaching the target 190'c, should the reading drop below the target Marlin will power the hotend and start the timer countdown. If the countdown ends with the heating element still fully powered, Marlin will shut down the print. The same goes for the heated bed.
-
-The config of these parameters can be found in "configuration_adv.h" file, but you shouldn't need to edit them.
+More thermal protection options are located in `Configuration_adv.h`. In most setups these can be left unchanged, but should be tuned as needed to prevent false positives.
 
 {% panel info %}
-In the case of repeated false thermal runaways that are NOT the result of a loose temperature sensor, you can increase the watch period. This could happen for instance if a part fan started blowing on the bed thermistor.
-```cpp
-For example:
-#define WATCH_TEMP_PERIOD 20   // Seconds
-#define WATCH_TEMP_INCREASE 2  // Degrees Celsius
-```
+For false thermal runaways _not_ caused by a loose temperature sensor, try increasing `WATCH_TEMP_PERIOD` or decreasing `WATCH_TEMP_INCREASE`. Heating may be slowed in a cold environment, if a fan is blowing on the thermistor, or if the heater has high resistance.
 {% endpanel %}
 
-***
+## Kinematics
 
-## Mechanical
+Marlin supports four kinematic motion systems: Cartesian, Core (H-Bot), Delta, and SCARA. Cartesian is the simplest, applying each stepper directly to an axis. CoreXY uses a special belt arrangement to do XY motion, requiring a little extra maths. Delta robots convert the motion of three vertical carriages into XYZ motion in an "effector" attached to the carriages by six arms. SCARA robots move an arm in the XY plane using two angular joints.
 
-### Special Machines
+### CoreXY
 
 ```cpp
 // Uncomment one of these options to enable CoreXY, CoreXZ, or CoreYZ kinematics
+// either in the usual order or reversed
 //#define COREXY
 //#define COREXZ
 //#define COREYZ
+//#define COREYX
+//#define COREZX
+//#define COREZY
 ```
+Enable the option that applies to the specific Core setup. Both normal and reversed options are included for completeness.
 
-These settings are for special types of machine configurations which require different algorithms to move around. They take advantage of a unique mechanical property called kinematics constraints. Kinematics use multiple connected links to produce a motion. Hinges, slides, and ball joints are all commonly used for kinematic links.  A very common example of kinematic constrained motion is found in the piston driven automobile engine. A series of linear sliding links (piston and rod) are connected with rotating joints onto a cylindrical drive shaft. The motion of each piston effects the others because they are kinematically constrained. The most common types of kinematic machines with regards to 3d printers are: SCARA, CORE XY (and variants), Delta (usually linear delta), and Polar. They each consist of unique drive architectures that employ kinematic links and constraints to produce motion in the standard XYZ system. While Delta and CORE XY architechtures are gaining popularity the majority of printers use standard Cartesian (XYZ) drives.
+### Delta
 
-For Delta or SCARA printers copy the coresponding files from the "Example Configurations" folder.
+```cpp
+//#define DELTA
+```
+For Delta use one of the sample configurations in the `example_configurations/delta` folder as a starting point.
+
+### SCARA
+
+```cpp
+//#define SCARA
+```
+For SCARA use the sample configuration in the `example_configurations/SCARA` folder as a starting point.
+
 
 ```cpp
 // Enable this option for Toshiba steppers
@@ -671,7 +670,7 @@ Use this option to enable extra debugging of homing and leveling. You can then u
 
 ***
 
-## `LINEAR` / `BILINEAR` options
+#### `LINEAR` / `BILINEAR` options
 
 ```cpp
 #define LEFT_PROBE_BED_POSITION 15
@@ -697,7 +696,7 @@ Enable this option if probing should proceed in the Y dimension first instead of
 
 ***
 
-## Leveling Fade Height
+#### Leveling Fade Height
 
 ```cpp
 #define ENABLE_LEVELING_FADE_HEIGHT
@@ -709,7 +708,7 @@ Example: `M420 Z10` sets leveling to fade within the first 10mm of layer printin
 
 ***
 
-## `3POINT` options
+#### `3POINT` options
 
 ```cpp
 #define ABL_PROBE_PT_1_X 15
@@ -722,9 +721,52 @@ Example: `M420 Z10` sets leveling to fade within the first 10mm of layer printin
 
 These options specify the three points that will be probed during `G29`.
 
-***
+## Z Probe Options
 
-#### Probe Offsets <em class="fa fa-sticky-note-o" aria-hidden="true"></em> <em class="fa fa-desktop" aria-hidden="true"></em>
+### Probe Type
+
+Marlin supports any kind of probe that can be made to work like a switch. Specific types of probes have different needs.
+
+#### Fix Mounted Probe
+
+```cpp
+#define FIX_MOUNTED_PROBE
+```
+This option is for any probe that's fixed in place, with no need to be deployed or stowed. Specify this type for an inductive probe or when using the nozzle itself as the probe.
+
+#### BLTouch
+
+```cpp
+//#define BLTOUCH
+```
+The ANTCLABS BLTouch probe uses custom circuitry and a magnet to raise and lower a metal pin which acts as a touch probe. The BLTouch uses the servo connector and is controlled using specific servo angles.
+
+#### Servo Z Probe
+
+```cpp
+//#define Z_ENDSTOP_SERVO_NR 0
+//#define Z_SERVO_ANGLES {70,0} // Z Servo Deploy and Stow angles
+```
+To indicate a Servo Z Probe (e.g., an endstop switch mounted on a rotating arm) just specify the servo index. Use the `M280` command to find the best `Z_SERVO_ANGLES` values.
+
+#### Z Probe Sled
+
+```cpp
+//#define Z_PROBE_SLED
+//#define SLED_DOCKING_OFFSET 5
+```
+This type of probe is mounted on a detachable "sled" that sits at the far end of the X axis. Before probing, the X carriage moves to the far end and picks up the sled. When probing is completed, it drops the sled off. The `SLED_DOCKING_OFFSET` specifies the extra distance the X axis must travel to pickup the sled. 0 should be fine but it may be pushed further if needed.
+
+See the [Prusa i3 Z-probe Sled Mount](http://www.thingiverse.com/thing:396692) for an example of this kind of probe.
+
+#### Allen Key
+
+```cpp
+//#define Z_PROBE_ALLEN_KEY
+```
+A retractable z-probe for deltas that uses an Allen key as the probe. See "[Kossel automatic bed leveling probe](http://reprap.org/wiki/Kossel#Automatic_bed_leveling_probe)" at the RepRap wiki. It deploys by leveraging against the z-axis belt, and retracts by pushing the probe down.
+
+### Probe Offsets <em class="fa fa-sticky-note-o" aria-hidden="true"></em> <em class="fa fa-desktop" aria-hidden="true"></em>
 
 ```cpp
 #define X_PROBE_OFFSET_FROM_EXTRUDER -44  // X offset: -left  [of the nozzle] +right
@@ -734,9 +776,7 @@ These options specify the three points that will be probed during `G29`.
 
 These offsets specify the distance from the tip of the nozzle to the probe — or more precisely, to the point at which the probe triggers. The X and Y offsets are specified as integers. The Z offset should be specified as exactly as possible using a decimal value. The Z offset can be overridden with `M851 Z` or the LCD controller. The `M851` offset is saved to EEPROM with `M500`.
 
-***
-
-#### Probing Behavior
+### Probe Clearance
 
 ```cpp
 #define Z_CLEARANCE_DEPLOY_PROBE   10 // Z Clearance for Deploy/Stow
@@ -754,30 +794,35 @@ Use these settings to specify the distance (mm) to raise the probe (or lower the
 Make sure you have enough clearance for the probe to move between points!
 {% endpanel %}
 
+### Probing Speed
+
+```cpp
+// X and Y axis travel speed (mm/m) between probes
+#define XY_PROBE_SPEED 4000
+// Speed for the first approach when double-probing (with PROBE_DOUBLE_TOUCH)
+#define Z_PROBE_SPEED_FAST HOMING_FEEDRATE_Z
+// Speed for the "accurate" probe of each point
+#define Z_PROBE_SPEED_SLOW (Z_PROBE_SPEED_FAST / 2)
+```
+Probing should be done quickly, but the Z speed should be tuned for best repeatability. Depending on the probe, a slower Z probing speed may be needed for repeatable results.
+
+### Probe Double Touch
+
+```cpp
+// Use double touch for probing
+//#define PROBE_DOUBLE_TOUCH
+```
+Some probes may be more accurate with this option, which causes all probes to be done twice — first fast, then slow. The second result is used as the measured Z position.
+
+### Z Probe End Script
+
 ```cpp
 //#define Z_PROBE_END_SCRIPT "G1 Z10 F12000\nG1 X15 Y330\nG1 Z0.5\nG1 Z10"
 ```
 
 A custom script to do at the very end of `G29`. If multiple commands are needed, divide them with `\n` (the newline character).
 
-***
-
-#### Probe Type
-
-```cpp
-#define FIX_MOUNTED_PROBE
-```
-
-This in theory are for proximity sensors. Since using proximity sensors are fixed probe (not retractable), this feature will ignore the z probe triggered state during printing or other than G28/G29 command so that you're able to bring the nozzle closer to the bed.
-
-```cpp
-#define Z_PROBE_SLED
-```
-This is almost the same like proximity sensors where there are another carriage that are meant for the sensor. The x carriage will move to the sled and latch itself to bring the sled for probing process, then when it is done the sled will be parked again. Default: Disabled
-
-***
-
-#### Z Safe Homing
+### Z Safe Homing
 
 ```cpp
 /**
@@ -1110,17 +1155,6 @@ An inexpensive RGB LED can be used simply by assigning digital pins for each com
 ```
 
 The total number of servos to enable for use. One common application for a servo is a Z bed probe consisting of an endstop switch mounted on a rotating arm. To use one of the servo connectors for this type of probe, set `Z_ENDSTOP_SERVO_NR` below.
-
-***
-
-### Servo Placement and Angle
-
-```cpp
-//#define Z_ENDSTOP_SERVO_NR 0
-//#define Z_SERVO_ANGLES {70,0} // Z Servo Deploy and Stow angles
-```
-
-The Z probe's servo index and the servo deploy/stow angles. To determine the best angles, experiment with the `M280` command.
 
 ***
 
