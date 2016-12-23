@@ -143,7 +143,15 @@
 div.language-cpp {
   overflow: scroll;
   pre.highlight { width: 1200px; }
-}
+  }
 
-.tocify.gcode { font-size: 12px; cursor: pointer; }
-.tocify.gcode li { line-height: 1em; margin: -1px 0 0; }
+.tocify.gcode,
+.custom-fixed-sidebar .tocify {
+  font-size: 13px;
+  cursor: pointer;
+  }
+.tocify.gcode li,
+.custom-fixed-sidebar .tocify li {
+  line-height: 1em;
+  margin: -1px 0 0;
+  }
