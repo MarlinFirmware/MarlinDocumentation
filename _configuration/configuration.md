@@ -1337,9 +1337,11 @@ Files sliced with SkeinForge contain the wrong arc GCodes when using "Arc Point"
 Marlin includes support for the [Baricuda Extruder for 3D Printing Sugar and Chocolate](http://www.thingiverse.com/thing:26343) also [hosted on GitHub](http://www.github.com/jmil/BariCUDA). The feature adds the codes `M126`, `M127`, `M128`, and `M129` for controlling the pump and valve of the Baricuda.
 
 
+[![LED Lights](/assets/images/config/led-lights.jpg){: .floater.framed}](http://www.instructables.com/id/3D-Printer-RGB-LED-Feedback/){:target="_blank"}
+
 ## Indicator LEDs
 
-Marlin currently supplies two options for RGB-addressable color indicators. The color is set using `M150 Rr Ug Bb` to specify R, G, and B components from 0 to 255.
+Marlin currently supplies two options for RGB-addressable color indicators. In both cases the color is set using `M150 Rr Ug Bb` to specify RGB components from 0 to 255.
 
 ```cpp
 //define BlinkM/CyzRgb Support
@@ -1360,6 +1362,8 @@ An inexpensive RGB LED can be used simply by assigning digital pins for each com
 
 
 ## Servos
+
+![Servo](/assets/images/config/servo.png){: .floater}
 
 ### Number of Servos
 
@@ -1382,6 +1386,8 @@ With this option servos are powered only during movement, then turned off to pre
 
 
 ## Filament Width Sensor
+
+<iframe style="float:right;margin:0 0 1em 1em;" title="YouTube video player" width="240" height="195" src="http://www.youtube.com/embed/W93dFxF425s?autoplay=0" frameborder="0" allowfullscreen></iframe>
 
 ```cpp
 //#define FILAMENT_WIDTH_SENSOR
