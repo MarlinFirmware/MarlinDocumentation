@@ -950,34 +950,51 @@ Example: To have leveling fade out over the first 10mm of layer printing use `M4
 ```cpp
 //#define MESH_BED_LEVELING
 ```
-If your machine lacks a probe, it is still possible to measure and correct for imperfections in the bed. The `MESH_BED_LEVELING` option provides a custom `G29` command for measuring the bed height at several points using a piece of paper or feeler gauge. See [`G29` for MBL](/docs/gcode/G29-mbl.html) for more details.
+If your machine lacks a probe, it is still possible to measure and correct for imperfections in the bed. The `MESH_BED_LEVELING` option (MBL) provides a custom `G29` command for measuring the bed height at several points using a piece of paper or feeler gauge.
 
-Not compatible with Delta and SCARA.
+With MBL enabled:
+
+- `G29 S1` initiates bed probing. A piece of paper or feeler gauge is used to test the nozzle height while manually adjusting the Z position. See [`G29` for MBL](/docs/gcode/G29-mbl.html) for the full procedure.
+- `M500` saves the bed leveling data to EEPROM. Use `M501` to load it, `M502` to clear it, and `M503` to report it.
+- `M420 S<bool>` can be used to enable/disable bed leveling. For example, `M420 S1` must be used after `M501` to enable the loaded mesh or matrix.
+
+{% alert info %}
+`MESH_BED_LEVELING` is not compatible with Delta and SCARA.
+{% endalert %}
 
 ### MBL LCD Menu
 
 ```cpp
 //#define MANUAL_BED_LEVELING
 ```
-Enable to add interactive Mesh Bed Leveling to the LCD controller. See [`G29` for MBL](/docs/gcode/G29-mbl.html) for more details.
+Enable to add a "Level Bed" menu item to the LCD that initiates a fully guided leveling procedure. See [`G29` for MBL](/docs/gcode/G29-mbl.html) for more details.
 
 
 ## Auto Bed Leveling
 
-Auto Bed Leveling is a standard feature on many 3D printers. It takes the guess-work out of getting a good first layer and good bed adhesion.
+Auto Bed Leveling (ABL) is a standard feature on many 3D printers. It takes the guess-work out of getting a good first layer and good bed adhesion.
+
+With ABL enabled:
+
+- `G29` automatically probes the bed at various points, measures the bed height, calculates a correction grid or matrix, and turns on leveling compensation.
+- The item "Level Bed" is added to the LCD menu.
+- `M500` saves the bed leveling data to EEPROM. Use `M501` to load it, `M502` to clear it, and `M503` to report it.
+- `M420 S<bool>` can be used to enable/disable bed leveling. For example, `M420 S1` must be used after `M501` to enable the loaded mesh or matrix.
 
 ```cpp
 //#define AUTO_BED_LEVELING_3POINT
 //#define AUTO_BED_LEVELING_LINEAR
 //#define AUTO_BED_LEVELING_BILINEAR
 ```
-If you have a bed probe, you can enable one of three types of Auto Bed Leveling (described below). With this feature you can use `G29` to automatically probe the bed, measure its height at various points, and produce a correction grid or matrix.
+Enable just one type of Auto Bed Leveling:
 
-New in Marlin 1.1.0: For all forms of bed leveling you can save the results to EEPROM and re-use them later. Use `M500` to save the bed probing data gathered by `G29`. `M501` to load, `M502` to clear, `M503` to report.
+- Use `AUTO_BED_LEVELING_3POINT` to probe three points. The flat triangle gives a transform suitable to compensate for a flat but tilted bed.
+- Use `AUTO_BED_LEVELING_LINEAR` to probe a grid. A transform is produced by least-squares method to compensate for a flat but tilted bed.
+- Use `AUTO_BED_LEVELING_BILINEAR` to probe a grid. The mesh data is used to adjust Z height across the bed using bilinear interpolation.
 
-Auto Bed Leveling also adds the `M420 S<bool>` command to enable / disable Auto Bed Leveling. Outside of a dry-run or a probing error, `G29` enables bed compensation automatically. Use `M420 S0` to disable it. The `M501` command disables leveling compensation before loading the last-saved bed leveling data, but it is not automatically enabled. Use `M420 S1` to enable bed compensation.
-
-Only `AUTO_BED_LEVELING_BILINEAR` is supported for Delta and SCARA.
+{% alert info %}
+For Delta and SCARA, only `AUTO_BED_LEVELING_BILINEAR` is supported.
+{% endalert %}
 
 
 ### Linear / Bilinear Options
@@ -1035,7 +1052,7 @@ Enable this option if a probe (not an endstop) is being used for Z homing. Z Saf
 ```cpp
 #define EEPROM_SETTINGS
 ```
-Commands like `M92` only change the settings in volatile memory, so these settings may be lost when the machine is powered off. This option enables the built-in EEPROM to preserve these settings across reboots. Settings saved to EEPROM (with `M500`) are loaded automatically whenever the machine restarts (and in most setups, when connecting to a host), overriding the defaults set in the configuration files. This option is highly recommended, as it makes configurations easier to manage.
+Commands like `M92` only change the settings in volatile memory, and these settings are lost when the machine is powered off. With this option enabled, Marlin uses the built-in EEPROM to preserve settings across reboots. Settings saved to EEPROM (with `M500`) are loaded automatically whenever the machine restarts (and in most setups, when connecting to a host), overriding the defaults set in the configuration files. This option is highly recommended, as it makes configurations easier to manage.
 
 The EEPROM-related commands are:
 
@@ -1049,7 +1066,7 @@ Settings that can be changed and saved to EEPROM are marked with <em class="fa f
 {% endalert %}
 
 {% alert info %}
-Certain EEPROM behaviors may be confusing. For example, when you edit the configurations and re-flash the firmware, you may discover that your new settings don't have any effect! What's going on? They are still being overridden by the EEPROM! To apply and preserve your new settings, use `M502` to restore settings to the configured defaults, then `M500` to write them to EEPROM. You can always use `M503` to view the current settings in volatile memory (even without EEPROM enabled).
+Certain EEPROM behaviors may be confusing. For example, when you edit the configurations and re-flash the firmware, you may discover that your new settings don't have any effect! What's going on? They are still overridden by the settings last saved to EEPROM! To apply and preserve your new settings, use `M502` to restore settings to your defaults, then use `M500` to save them to EEPROM. You can always use `M503` to view the current settings in volatile memory (even without `EEPROM_SETTINGS` enabled).
 {% endalert %}
 
 
