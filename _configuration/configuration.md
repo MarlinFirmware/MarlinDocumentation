@@ -458,6 +458,10 @@ Leave this option disabled for standard NEMA steppers.
 
 ## Endstops
 
+In open loop systems, endstops are an inexpensive way to establish the actual position of the carriage on all axes. In the procedure known as "homing," each axis is moved towards one end until the endstop switch is triggered, at which point the machine knows that the axis is at the endstop (home) position. From this point on, the machine "knows" its position by keeping track of how far the steppers have been moved. If the machine gets out of step for any reason, re-homing may be required.
+
+### Endstop Plugs
+
 ```cpp
 #define USE_XMIN_PLUG
 #define USE_YMIN_PLUG
@@ -468,9 +472,10 @@ Leave this option disabled for standard NEMA steppers.
 ```
 Specify all the endstop connectors that are connected to any endstop or probe. Most printers will use all three min plugs. On delta machines, all the max plugs should be used. Probes can share the Z min plug, or can use one or more of the extra connectors. Don't enable plugs used for non-endstop and non-probe purposes here.
 
+### Endstop Pullups
+
 ```cpp
-// coarse Endstop Settings
-#define ENDSTOPPULLUPS // Comment this out to disable the endstop pullup resistors
+#define ENDSTOPPULLUPS
 
 #if DISABLED(ENDSTOPPULLUPS)
   // fine endstop settings: Individual pullups. will be ignored if ENDSTOPPULLUPS is defined
@@ -483,7 +488,9 @@ Specify all the endstop connectors that are connected to any endstop or probe. M
   //#define ENDSTOPPULLUP_ZMIN_PROBE
 #endif
 ```
-Edit these values if you need to disable the pullup resistors for your endstop. Most likely you will not need to edit this.
+By default all endstops have pullup resistors enabled. This is best for NC switches, preventing the values from "floating." If only some endstops should have pullup resistors, you can disable `ENDSTOPPULLUPS` and enable pullups individually.
+
+### Endstop Inverting
 
 ```cpp
 // Mechanical endstop with COM to ground and NC to Signal uses "false" here (most common setup).
@@ -523,7 +530,7 @@ Setting these values too high may result in reduced accuracy and/or skipped step
 
 ***
 
-### Default Steps per mm
+### Default Steps per mm <em class="fa fa-sticky-note-o" aria-hidden="true"></em> <em class="fa fa-desktop" aria-hidden="true"></em>
 
 ```cpp
 /**
@@ -562,9 +569,7 @@ A useful trick is to let the compiler do the calculations for you and just suppl
 The [Prusa Calculator](http://prusaprinters.org/calculator/) is a great tool to help find the right values for your specific printer configuration.
 {% endpanel %}
 
-***
-
-#### Default Max Feed Rate
+#### Default Max Feed Rate <em class="fa fa-sticky-note-o" aria-hidden="true"></em> <em class="fa fa-desktop" aria-hidden="true"></em>
 
 ```cpp
 /**
@@ -580,11 +585,9 @@ In any move, the velocities (in mm/sec) in the X, Y, Z, and E directions will be
 Setting these too high will cause the corresponding stepper motor to lose steps, especially on high speed movements.
 {% endalert %}
 
-***
-
 ### Acceleration
 
-#### Default Max Acceleration
+#### Default Max Acceleration <em class="fa fa-sticky-note-o" aria-hidden="true"></em> <em class="fa fa-desktop" aria-hidden="true"></em>
 
 ```cpp
 /**
@@ -601,9 +604,7 @@ A value of 3000 means that an axis may accelerate from 0 to 3000mm/m (50mm/s) wi
 
 Jerk sets the floor for accelerated moves. If the change in top speed for a given axis between segments is less than the jerk value for the axis, an instantaneous change in speed may be allowed. Limits placed on other axes also apply. Basically, lower jerk values result in more accelerated moves, which may be near-instantaneous in some cases, depending on the final acceleration determined by the planner.
 
-***
-
-#### Default Acceleration
+#### Default Acceleration <em class="fa fa-sticky-note-o" aria-hidden="true"></em> <em class="fa fa-desktop" aria-hidden="true"></em>
 
 ```cpp
 /**
@@ -632,7 +633,7 @@ Don't set these too high. Larger acceleration values can lead to excessive vibra
 
 ***
 
-#### Jerk
+#### Jerk <em class="fa fa-sticky-note-o" aria-hidden="true"></em> <em class="fa fa-desktop" aria-hidden="true"></em>
 
 ```cpp
 /**
@@ -925,7 +926,7 @@ This feature exists to prevent irregularities in the bed from propagating throug
 Example: To have leveling fade out over the first 10mm of layer printing use `M420 Z10`. If each layer is 0.2mm high, leveling compensation will be reduced by 1/50th (2%) after each layer. Above 10mm the machine will move without compensation.
 
 
-## Mesh (Manual) Bed Leveling
+### Mesh (Manual) Bed Leveling
 
 ```cpp
 //#define MESH_BED_LEVELING
@@ -942,7 +943,7 @@ Not compatible with Delta and SCARA.
 Enable to add interactive Mesh Bed Leveling to the LCD controller. See [`G29` for MBL](/docs/gcode/G29-mbl.html) for more details.
 
 
-## Auto Bed Leveling
+### Auto Bed Leveling
 
 Auto Bed Leveling is a standard feature on many 3D printers. It takes the guess-work out of getting a good first layer and good bed adhesion.
 
@@ -960,7 +961,7 @@ Auto Bed Leveling also adds the `M420 S<bool>` command to enable / disable Auto 
 Only `AUTO_BED_LEVELING_BILINEAR` is supported for Delta and SCARA.
 
 
-### Linear / Bilinear Options
+#### Linear / Bilinear Options
 
 ```cpp
 #define LEFT_PROBE_BED_POSITION 15
@@ -982,7 +983,7 @@ These options specify the default number of points to probe in each dimension du
 Enable this option if probing should proceed in the Y dimension first instead of X first.
 
 
-### 3-Point Options
+#### 3-Point Options
 
 ```cpp
 #define ABL_PROBE_PT_1_X 15
@@ -1175,7 +1176,7 @@ Marlin includes support for several controllers. The two most popular controller
 - `REPRAP_DISCOUNT_SMART_CONTROLLER` A 20 x 4 character-based LCD controller with click-wheel.
 - `REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER` A monochrome 128 x 64 pixel-based LCD controller with click-wheel. Able to display simple bitmap graphics and up to 5 lines of text.
 
-Most other LCD controllers are variants of these.
+Most other LCD controllers are variants of these. Enable just one of the following options for your specific controller:
 
 ### Character LCDs
 
@@ -1321,7 +1322,7 @@ With this option servos are powered only during movement, then turned off to pre
 ```cpp
 //#define FILAMENT_WIDTH_SENSOR
 ```
-Enable if you have a filament width sensor (e.g., [Filament Width Sensor Prototype Version 3](http://www.thingiverse.com/thing:454584)). With a filament sensor installed, Marlin can adjust the flow rate according to the measured filament width. Adjust the sub-options below according to your setup.
+Enable to add support for a filament width sensor such as [Filament Width Sensor Prototype Version 3](http://www.thingiverse.com/thing:454584). With a filament sensor installed, Marlin can adjust the flow rate according to the measured filament width. Adjust the sub-options below according to your setup.
 
 ```cpp
 #define DEFAULT_NOMINAL_FILAMENT_DIA 3.00
