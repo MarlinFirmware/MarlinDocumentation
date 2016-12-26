@@ -896,34 +896,69 @@ With this feature, a mechanical or opto endstop switch is used to check for the 
 
 ## Bed Leveling
 
-### Mesh/Manual Bed Leveling
+There are many cases where it's useful to measure variances in bed height. Even if the bed on a 3D printer is perfectly flat and level, there may still be imperfections in the mechanics. For example, a machine may have a very flat bed, but a corner of the XY gantry is a half-mm high. The ends of the Z axis may not be perfectly level. The bed may move slightly in the Z plane as it moves in the X and/or Y plane. On a Delta there may be a lingering bowl-shape to its XY trajectory.
 
-```cpp
-//#define MESH_BED_LEVELING
-```
-If your machine lacks a probe, it is still possible to measure and correct for imperfections in the bed. The `MESH_BED_LEVELING` option provides a procedure for measuring the bed height at several points using a piece of paper or feeler gauge. See [`G29` for MBL](/docs/gcode/G29-mbl.html) for more details.
+Bed Compensation or "--- Bed Leveling" allows the machine —with a bed probe or user assistance— to take accurate measurements of the "bed height" at various points in the XY plane. With this data the machine can then adjust movement to align better to the tilt or "height" variances in the bed. (I'm scare-quoting "height" here because variances may come from other than the bed.)
 
-Enable `MANUAL_BED_LEVELING` to be able to do interactive Mesh Bed Leveling from the LCD controller.
+For more details on these features, see [`G29` for MBL](/docs/gcode/G29-mbl.html) and [`G29` for ABL](/docs/gcode/G29-abl.html).
 
-***
 
-### Auto Bed Leveling
-
-```cpp
-//#define AUTO_BED_LEVELING_3POINT
-//#define AUTO_BED_LEVELING_LINEAR
-//#define AUTO_BED_LEVELING_BILINEAR
-```
-If you have a bed probe, you can enable one of these options to use Auto Bed Leveling. The `G29` command can then be used to automatically probe the bed and measure its height at various points and produce a correction grid or matrix.
+### Debug Leveling
 
 ```cpp
 //#define DEBUG_LEVELING_FEATURE
 ```
 Use this option to enable extra debugging of homing and leveling. You can then use `M111 S32` before issuing `G28` and `G29 V4` to get a detailed log of the process for diagnosis. This option is useful to figure out the cause of unexpected behaviors, or when reporting issues to the project.
 
-***
 
-#### `LINEAR` / `BILINEAR` options
+### Leveling Fade Height
+
+```cpp
+#define ENABLE_LEVELING_FADE_HEIGHT
+```
+Available with both `AUTO_BED_LEVELING_BILINEAR` and `MESH_BED_LEVELING`, this option adds the `M420 Zn` command to set a fade distance over which leveling will be gradually reduced. Above the given Z height, leveling compensation will no longer be applied.
+
+This feature exists to prevent irregularities in the bed from propagating through the model's entire height. This reduces computational requirements and resonance from the Z axis above the fade height.
+
+Example: To have leveling fade out over the first 10mm of layer printing use `M420 Z10`. If each layer is 0.2mm high, leveling compensation will be reduced by 1/50th (2%) after each layer. Above 10mm the machine will move without compensation.
+
+
+## Mesh (Manual) Bed Leveling
+
+```cpp
+//#define MESH_BED_LEVELING
+```
+If your machine lacks a probe, it is still possible to measure and correct for imperfections in the bed. The `MESH_BED_LEVELING` option provides a custom `G29` command for measuring the bed height at several points using a piece of paper or feeler gauge. See [`G29` for MBL](/docs/gcode/G29-mbl.html) for more details.
+
+Not compatible with Delta and SCARA.
+
+### MBL LCD Menu
+
+```cpp
+//#define MANUAL_BED_LEVELING
+```
+Enable to add interactive Mesh Bed Leveling to the LCD controller. See [`G29` for MBL](/docs/gcode/G29-mbl.html) for more details.
+
+
+## Auto Bed Leveling
+
+Auto Bed Leveling is a standard feature on many 3D printers. It takes the guess-work out of getting a good first layer and good bed adhesion.
+
+```cpp
+//#define AUTO_BED_LEVELING_3POINT
+//#define AUTO_BED_LEVELING_LINEAR
+//#define AUTO_BED_LEVELING_BILINEAR
+```
+If you have a bed probe, you can enable one of three types of Auto Bed Leveling (described below). With this feature you can use `G29` to automatically probe the bed, measure its height at various points, and produce a correction grid or matrix.
+
+New in Marlin 1.1.0: For all forms of bed leveling you can save the results to EEPROM and re-use them later. Use `M500` to save the bed probing data gathered by `G29`. `M501` to load, `M502` to clear, `M503` to report.
+
+Auto Bed Leveling also adds the `M420 S<bool>` command to enable / disable Auto Bed Leveling. Outside of a dry-run or a probing error, `G29` enables bed compensation automatically. Use `M420 S0` to disable it. The `M501` command disables leveling compensation before loading the last-saved bed leveling data, but it is not automatically enabled. Use `M420 S1` to enable bed compensation.
+
+Only `AUTO_BED_LEVELING_BILINEAR` is supported for Delta and SCARA.
+
+
+### Linear / Bilinear Options
 
 ```cpp
 #define LEFT_PROBE_BED_POSITION 15
@@ -944,20 +979,8 @@ These options specify the default number of points to probe in each dimension du
 ```
 Enable this option if probing should proceed in the Y dimension first instead of X first.
 
-***
 
-#### Leveling Fade Height
-
-```cpp
-#define ENABLE_LEVELING_FADE_HEIGHT
-```
-Available only with `AUTO_BED_LEVELING_BILINEAR` and `MESH_BED_LEVELING`. With this option the `M420 Zn` command can be used to set a fade distance over which leveling will be gradually reduced. Above the given Z height, leveling compensation will no longer be applied.
-
-Example: `M420 Z10` sets leveling to fade within the first 10mm of layer printing. If each layer is 0.2mm high, then leveling compensation is reduced by 1/50th (2%) after each layer. Above 10mm the machine will move without compensation.
-
-***
-
-#### `3POINT` options
+### 3-Point Options
 
 ```cpp
 #define ABL_PROBE_PT_1_X 15
@@ -973,18 +996,6 @@ These options specify the three points that will be probed during `G29`.
 ## Z Safe Homing
 
 ```cpp
-/**
- * Z Safe Homing
- *
- * Enable this option to avoid homing with a Z probe outside the bed area.
- *
- * With safe homing enabled:
- *
- * - Allow Z homing only after X and Y homing AND stepper drivers still enabled.
- * - If stepper drivers time out, it will need X and Y homing again before Z homing.
- * - Move the Z probe (or nozzle) to a defined XY point before Z Homing when homing all axes (G28).
- * - Prevent Z homing when the Z probe is outside bed area.
- */
 #define Z_SAFE_HOMING
 
 #if ENABLED(Z_SAFE_HOMING)
@@ -992,7 +1003,9 @@ These options specify the three points that will be probed during `G29`.
   #define Z_SAFE_HOMING_Y_POINT ((Y_MIN_POS + Y_MAX_POS) / 2)    // Y point for Z homing when homing all axis (G28).
 #endif
 ```
-This option causes the nozzle to move to a selected point (by default, the middle of the bed) when homing the Z axis. As a side-effect, homing of XY is required for Z to home. Enable this option if a probe (not an endstop) is being used for Z homing. Z Safe Homing isn't needed if a Z endstop is used for homing, but it may also be enabled just to have XY move to some custom position after homing.
+**Z Safe Homing** prevents Z from homing when the probe (or nozzle) is outside bed area by moving to a defined XY point (by default, the middle of the bed) before Z Homing when homing all axes with `G28`. As a side-effect, X and Y homing are required before Z homing. If stepper drivers time out, X and Y homing will be required again.
+
+Enable this option if a probe (not an endstop) is being used for Z homing. Z Safe Homing isn't needed if a Z endstop is used for homing, but it may also be enabled just to have XY always move to some custom position after homing.
 
 
 ## Additional Features
@@ -1046,14 +1059,14 @@ These are the default values for the `Prepare` > `Preheat` LCD menu options. The
 
 ## LCD Language
 
-### LCD Language
+### UI Language
 
 ```cpp
 #define LCD_LANGUAGE en
 ```
 Choose your preferred language for the LCD controller here. See `language.h` for the current list of languages and their international language codes.
 
-### LCD Character Set
+### HD44780 Character Set
 
 ```cpp
 #define DISPLAY_CHARSET_HD44780 JAPANESE
@@ -1160,37 +1173,50 @@ Marlin includes support for several controllers. The two most popular controller
 - `REPRAP_DISCOUNT_SMART_CONTROLLER` A 20 x 4 character-based LCD controller with click-wheel.
 - `REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER` A monochrome 128 x 64 pixel-based LCD controller with click-wheel. Able to display simple bitmap graphics and up to 5 lines of text.
 
-### Standard Controllers
+Most other LCD controllers are variants of these.
+
+### Character LCDs
 
 - `ULTIMAKERCONTROLLER`: The original Ultimaker Controller.
 - `ULTIPANEL`: [ULTIPANEL](http://www.thingiverse.com/thing:15081) as seen on Thingiverse.
+- `PANEL_ONE`: [PanelOne from T3P3](http://reprap.org/wiki/PanelOne) (via RAMPS 1.4 AUX2/AUX3). A variant of `ULTIMAKERCONTROLLER`.
+- `REPRAP_DISCOUNT_SMART_CONTROLLER`: [RepRapDiscount Smart Controller](http://reprap.org/wiki/RepRapDiscount_Smart_Controller). Usually sold with a white PCB.
+- `G3D_PANEL`: [Gadgets3D G3D LCD/SD Controller](http://reprap.org/wiki/RAMPS_1.3/1.4_GADGETS3D_Shield_with_Panel). Usually sold with a blue PCB.
+- `RIGIDBOT_PANEL`: [RigidBot Panel V1.0](http://www.inventapart.com/).
+
+### Graphical LCDs
+
 - `CARTESIO_UI`: [Cartesio UI](http://mauk.cc/webshop/cartesio-shop/electronics/user-interface).
-- `PANEL_ONE`: [PanelOne from T3P3](http://reprap.org/wiki/PanelOne) (via RAMPS 1.4 AUX2/AUX3).
 - `MAKRPANEL`: [MaKr3d Makr-Panel](http://reprap.org/wiki/MaKr3d_MaKrPanel) with graphic controller and SD support.
 - `REPRAPWORLD_GRAPHICAL_LCD`: [ReprapWorld Graphical LCD](https://reprapworld.com/?products_details&products_id/1218).
 - `VIKI2`: [Panucatt Devices](http://panucatt.com) [Viki 2.0](http://panucatt.com).
 - `miniVIKI`: [mini Viki with Graphic LCD](http://panucatt.com).
-- `ELB_FULL_GRAPHIC_CONTROLLER`: (Adafruit ST7565 Full Graphic Controller)(https://github.com/eboston/Adafruit-ST7565-Full-Graphic-Controller/).
-- `REPRAP_DISCOUNT_SMART_CONTROLLER`: [RepRapDiscount Smart Controller](http://reprap.org/wiki/RepRapDiscount_Smart_Controller). Usually sold with a white PCB.
-- `G3D_PANEL`: [Gadgets3D G3D LCD/SD Controller](http://reprap.org/wiki/RAMPS_1.3/1.4_GADGETS3D_Shield_with_Panel). Usually sold with a blue PCB.
+- `ELB_FULL_GRAPHIC_CONTROLLER`: [Adafruit ST7565 Full Graphic Controller](https://github.com/eboston/Adafruit-ST7565-Full-Graphic-Controller/).
 - `REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER`: [RepRapDiscount Full Graphic Smart Controller](http://reprap.org/wiki/RepRapDiscount_Full_Graphic_Smart_Controller).
 - `MINIPANEL`: [MakerLab Mini Panel](http://reprap.org/wiki/Mini_panel) with graphic controller and SD support.
-- `REPRAPWORLD_KEYPAD`: [RepRapWorld Keypad v1.1](http://reprapworld.com/?products_details&products_id=202&cPath=1591_1626) Use `REPRAPWORLD_KEYPAD_MOVE_STEP` to set how much the robot should move on each keypress (e.g., 10mm per click).
-- `RIGIDBOT_PANEL`: [RigidBot Panel V1.0](http://www.inventapart.com/).
 - `BQ_LCD_SMART_CONTROLLER`: BQ LCD Smart Controller shipped with the BQ Hephestos 2 and Witbox 2.
 
-### I2C Controllers
+### Keypad
+
+- `REPRAPWORLD_KEYPAD`: [RepRapWorld Keypad v1.1](http://reprapworld.com/?products_details&products_id=202&cPath=1591_1626) Use `REPRAPWORLD_KEYPAD_MOVE_STEP` to set how much the robot should move on each keypress (e.g., 10mm per click).
+
+### I2C Character LCDs
 
 These controllers all require the [LiquidCrystal_I2C library](https://github.com/kiyoshigawa/LiquidCrystal_I2C).
 
 - `RA_CONTROL_PANEL`: [Elefu RA Board Control Panel](http://www.elefu.com/index.php?route=product/product&product_id=53)
-- `LCD_I2C_SAINSMART_YWROBOT`: Sainsmart YW Robot (LCM1602) LCD Display.
+- `LCD_I2C_SAINSMART_YWROBOT`: Sainsmart [YWRobot LCM1602 LCD Display](http://henrysbench.capnfatz.com/henrys-bench/arduino-displays/ywrobot-lcm1602-iic-v1-lcd-arduino-tutorial/).
 - `LCM1602`: Generic LCM1602 LCD adapter
 - `LCD_I2C_PANELOLU2`: PANELOLU2 LCD with status LEDs, separate encoder and click inputs. The click input can either be directly connected to a pin (if `BTN_ENC` is defined) or read through I2C (with `BTN_ENC` undefined). Requires [LiquidTWI2 library](https://github.com/lincomatic/LiquidTWI2) v1.2.3 or later.
 - `LCD_I2C_VIKI`: Panucatt VIKI LCD with status LEDs, integrated click & L/R/U/D buttons, separate encoder inputs.
+- `SAV_3DLCD`: Shift register panels. [2 wire Non-latching LCD SR](https://goo.gl/aJJ4sH). See [LCD configuration](http://reprap.org/wiki/SAV_3D_LCD).
+
+### I2C Graphical LCDs
+
+These controllers all require the [LiquidCrystal_I2C library](https://github.com/kiyoshigawa/LiquidCrystal_I2C).
+
 - `U8GLIB_SSD1306`: SSD1306 OLED full graphics generic display.
 - `SAV_3DGLCD`: SAV OLED LCD module support using either SSD1306 or SH1106 based LCD modules.
-- `SAV_3DLCD`: Shift register panels. [2 wire Non-latching LCD SR](https://goo.gl/aJJ4sH). See [LCD configuration](http://reprap.org/wiki/SAV_3D_LCD).
 
 
 ## Fan PWM
