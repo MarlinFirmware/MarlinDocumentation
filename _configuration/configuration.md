@@ -945,7 +945,7 @@ This feature exists to prevent irregularities in the bed from propagating throug
 Example: To have leveling fade out over the first 10mm of layer printing use `M420 Z10`. If each layer is 0.2mm high, leveling compensation will be reduced by 1/50th (2%) after each layer. Above 10mm the machine will move without compensation.
 
 
-### Mesh (Manual) Bed Leveling
+## Mesh (Manual) Bed Leveling
 
 ```cpp
 //#define MESH_BED_LEVELING
@@ -962,7 +962,7 @@ Not compatible with Delta and SCARA.
 Enable to add interactive Mesh Bed Leveling to the LCD controller. See [`G29` for MBL](/docs/gcode/G29-mbl.html) for more details.
 
 
-### Auto Bed Leveling
+## Auto Bed Leveling
 
 Auto Bed Leveling is a standard feature on many 3D printers. It takes the guess-work out of getting a good first layer and good bed adhesion.
 
@@ -980,7 +980,7 @@ Auto Bed Leveling also adds the `M420 S<bool>` command to enable / disable Auto 
 Only `AUTO_BED_LEVELING_BILINEAR` is supported for Delta and SCARA.
 
 
-#### Linear / Bilinear Options
+### Linear / Bilinear Options
 
 ```cpp
 #define LEFT_PROBE_BED_POSITION 15
@@ -1002,7 +1002,7 @@ These options specify the default number of points to probe in each dimension du
 Enable this option if probing should proceed in the Y dimension first instead of X first.
 
 
-#### 3-Point Options
+### 3-Point Options
 
 ```cpp
 #define ABL_PROBE_PT_1_X 15
