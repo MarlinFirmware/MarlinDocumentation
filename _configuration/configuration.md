@@ -4,7 +4,7 @@ description:  'Complete guide to Marlin configuration options.'
 
 author: Sarf2k4
 contrib: paulusjacobus, jbrazio, landodragon141, thinkyhead
-category: [ configuration, needs-review ]
+category: [ configuration ]
 ---
 
 {% alert info %}
@@ -226,6 +226,8 @@ Hotend offsets are needed if your extruder has more than one nozzle. These value
 
 
 ## Power Supply
+
+![ATX](/assets/images/config/atx.jpg){: .floater}
 
 ```cpp
 #define POWER_SUPPLY 1
@@ -1122,35 +1124,17 @@ These are the default values for the `Prepare` > `Preheat` LCD menu options. The
 ```
 Choose your preferred language for the LCD controller here. Supported languages include:
 
-Code|Language
-----|--------
-an|Aragonese
-bg|Bulgarian
-ca|Catalan
-cn|Chinese
-cz|Czech
-de|German
-el|Greek
-el-gr|Greek (Greece)
-en|English
-es|Spanish
-eu|Basque-Euskera
-fi|Finnish
-fr|French
-gl|Galician
-hr|Croatian
-it|Italian
-kana|Japanese
-kana_utf8|Japanese (UTF8)
-nl|Dutch
-pl|Polish
-pt|Portuguese
-pt-br|Portuguese (Brazilian)
-pt-|Portuguese (Brazilian UTF8)
-pt_utf8|Portuguese (UTF8)
-ru|Russian
-tr|Turkish
-uk|Ukrainian
+Code|Language||Code|Language||Code|Language
+----|--------||----|--------||----|--------
+en|English (Default)||an|Aragonese||bg|Bulgarian
+ca|Catalan||cn|Chinese||cz|Czech
+de|German||el|Greek||el-gr|Greek (Greece)
+es|Spanish||eu|Basque-Euskera||fi|Finnish
+fr|French||gl|Galician||hr|Croatian
+it|Italian||kana|Japanese||kana_utf8|Japanese (UTF8)
+nl|Dutch||pl|Polish||pt|Portuguese
+pt-br|Portuguese (Brazilian)||pt-|Portuguese (Brazilian UTF8)||pt_utf8|Portuguese (UTF8)
+ru|Russian||tr|Turkish||uk|Ukrainian
 
 See `language.h` for the latest list of supported languages and their international language codes.
 
