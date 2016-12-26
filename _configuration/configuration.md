@@ -827,6 +827,8 @@ Enable this option to suppress the warning given in cases when reduced accuracy 
 ```
 The E disable option works like `DISABLE_[XYZ]` but pertains to one or more extruders. The default setting keeps the active extruder enabled, disabling all inactive extruders. This is reasonable for situations where a "wipe tower" or other means is used to ensure that the nozzle is primed and not oozing between uses.
 
+### Motor Direction
+
 ```cpp
 #define INVERT_X_DIR true
 #define INVERT_Y_DIR false
