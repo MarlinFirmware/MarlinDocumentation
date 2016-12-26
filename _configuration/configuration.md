@@ -234,6 +234,8 @@ Use this option to specify the type of power supply you're using. Marlin uses th
 Enable this if you don't want the power supply to switch on when you turn on the printer. This is for printers that have dual powersupplies. For instance some setups have a separate powersupply for the heaters. In this situation you can save power by leaving the powersupply off until called for. If you don't know what this is leave it.
 
 
+![Thermometer](/assets/images/config/thermal.jpg){: .floater}
+
 ## Thermal Settings
 
 ### Temperature Sensors
@@ -380,6 +382,8 @@ Enable `PIDTEMPBED` to use PID for the bed heater (at the same PWM frequency as 
 ```
 The max power delivered to the bed. All forms of bed control obey this (PID, bang-bang, bang-bang with hysteresis). Setting this to anything other than 255 enables a form of PWM. As with `PIDTEMPBED`, don't enable this unless your bed hardware is ok with PWM.
 
+![Safety](/assets/images/config/safety.gif){: .floater}
+
 ### Safety
 
 #### Prevent Cold Extrusion <em class="fa fa-sticky-note-o" aria-hidden="true"></em>
@@ -416,6 +420,8 @@ For false thermal runaways _not_ caused by a loose temperature sensor, try incre
 {% endpanel %}
 
 
+![Kinematics](/assets/images/config/kinematics.jpg){: .floater}
+
 ## Kinematics
 
 Marlin supports four kinematic motion systems: Cartesian, Core (H-Bot), Delta, and SCARA. Cartesian is the simplest, applying each stepper directly to an axis. CoreXY uses a special belt arrangement to do XY motion, requiring a little extra maths. Delta robots convert the motion of three vertical carriages into XYZ motion in an "effector" attached to the carriages by six arms. SCARA robots move an arm in the XY plane using two angular joints.
@@ -423,8 +429,6 @@ Marlin supports four kinematic motion systems: Cartesian, Core (H-Bot), Delta, a
 ### CoreXY
 
 ```cpp
-// Uncomment one of these options to enable CoreXY, CoreXZ, or CoreYZ kinematics
-// either in the usual order or reversed
 //#define COREXY
 //#define COREXZ
 //#define COREYZ
@@ -455,6 +459,8 @@ For SCARA use the sample configuration in the `example_configurations/SCARA` fol
 ```
 Leave this option disabled for standard NEMA steppers.
 
+
+![Endstop switch](/assets/images/config/endstop.jpg){: .floater}
 
 ## Endstops
 
@@ -512,6 +518,7 @@ Use `M119` to test if these are set correctly. If an endstop shows up as "TRIGGE
 Enable this feature if all enabled endstop pins are interrupt-capable.
 This will remove the need to poll the interrupt pins, saving many CPU cycles.
 
+![Movement](/assets/images/config/movement.png){: .floater}
 
 ## Movement
 
@@ -654,6 +661,8 @@ Jerk works in conjunction with acceleration (see above). Jerk is the maximum cha
 Both acceleration and jerk affect your print quality. If jerk is too low, the extruder will linger too long on small segments and corners, possibly leaving blobs. If the jerk is set too high, direction changes will apply too much torque and you may see "ringing" artifacts or dropped steps.
 
 
+![Probe](/assets/images/config/probe.jpg){: .floater.framed}
+
 ## Z Probe Options
 
 ### Probe Type
@@ -736,8 +745,7 @@ Some probes may be more accurate with this option, which causes all probes to be
 A custom script to do at the very end of `G29`. If multiple commands are needed, divide them with `\n` (the newline character).
 
 
-### Z Probe Connection
-
+### Probe Pins
 
 ```cpp
 //#define Z_MIN_PROBE_ENDSTOP
@@ -756,7 +764,7 @@ This uses the same pin for the end-switch and the probe. The advantage is that y
 ```
 This typically disables your probe feature. Only applicable to `//#define Z_MIN_PROBE_ENDSTOP` enabled
 
-### Z Probe Testing
+### Probe Testing
 
 ```cpp
 #define Z_MIN_PROBE_REPEATABILITY_TEST
@@ -789,18 +797,19 @@ Make sure you have enough clearance for the probe to move between points!
 For `M851` and LCD menus give a range for adjusting the Z probe offset.
 
 
+![Motor Movement](/assets/images/config/motor-dir.jpg){: .floater}
+
 ## Motor Movement
 
 ### Motor Direction
 
 ```cpp
-// For Inverting Stepper Enable Pins (Active Low) use 0, Non Inverting (Active High) use 1
-// :{0:'Low',1:'High'}
 #define X_ENABLE_ON 0
 #define Y_ENABLE_ON 0
 #define Z_ENABLE_ON 0
 #define E_ENABLE_ON 0 // For all extruders
 ```
+These options set the pin states used for stepper enable. The most common setting is 0 (`LOW`) for Active Low. For Active High use 1 or `HIGH`.
 
 ### Motor Disable
 
@@ -843,12 +852,18 @@ The E disable option works like `DISABLE_[XYZ]` but pertains to one or more extr
 These settings reverse the motor direction for each axis. Be careful when first setting these. Axes moving the wrong direction can cause damage. Get these right without belts attached first, if possible. Before testing, move the carriage and bed to the middle. Test each axis for proper movemnt using the host or LCD "Move Axis" menu. If an axis is inverted, either flip the plug around or change its invert setting.
 
 
-## Axis Homing
+## Homing and Bounds
+
+### Z Homing Height
+
+![Home Icon](/assets/images/config/home.jpg){: .floater}
 
 ```cpp
 //#define Z_HOMING_HEIGHT 4
 ```
 This value raises Z to the specified height above the bed before homing X or Y. This is useful to prevent the head crashing into bed mountings such as screws, bulldog clips, etc. This also works with auto bed leveling enabled and will be triggered only when the Z axis height is less than the defined value, otherwise the Z axis will not move.
+
+### Homing Direction
 
 ```cpp
 #define X_HOME_DIR -1
@@ -858,7 +873,7 @@ This value raises Z to the specified height above the bed before homing X or Y. 
 Homing direction for each axis: -1 = min, 1 = max. Most cartesian and core machines have three min endstops. Deltas have three max endstops. For other configurations set these values appropriately.
 
 
-## Software Endstops
+### Software Endstops
 
 ```cpp
 #define min_software_endstops true
@@ -867,7 +882,7 @@ Homing direction for each axis: -1 = min, 1 = max. Most cartesian and core machi
 Set to `true` to enable the option to constrain movement to the physical boundaries of the machine (as set by `[XYZ]_(MIN|MAX)_POS`). For example, `G1 Z-100` can be min constrained to `G1 Z0`. It is recommended to enable these options as a safety feature. If software endstops need to be disabled, use `M211 S0`.
 
 
-## Movement Bounds
+### Movement Bounds
 
 ```cpp
 #define X_MIN_POS 0
@@ -886,6 +901,8 @@ Values are pulled from `MIN_POS`. Use `M206` from host program console.
 
 ## Filament Runout Sensor
 
+![Filament Sensor](/assets/images/config/filament-sensor.jpg){: .floater.framed}
+
 ```cpp
 //#define FILAMENT_RUNOUT_SENSOR
 #if ENABLED(FILAMENT_RUNOUT_SENSOR)
@@ -898,6 +915,8 @@ With this feature, a mechanical or opto endstop switch is used to check for the 
 
 
 ## Bed Leveling
+
+![Bed Level](/assets/images/config/bedlevel.png){: .floater}
 
 There are many cases where it's useful to measure variances in bed height. Even if the bed on a 3D printer is perfectly flat and level, there may still be imperfections in the mechanics. For example, a machine may have a very flat bed, but a corner of the XY gantry is a half-mm high. The ends of the Z axis may not be perfectly level. The bed may move slightly in the Z plane as it moves in the X and/or Y plane. On a Delta there may be a lingering bowl-shape to its XY trajectory.
 
@@ -1011,9 +1030,7 @@ These options specify the three points that will be probed during `G29`.
 Enable this option if a probe (not an endstop) is being used for Z homing. Z Safe Homing isn't needed if a Z endstop is used for homing, but it may also be enabled just to have XY always move to some custom position after homing.
 
 
-## Additional Features
-
-### EEPROM
+## EEPROM
 
 ```cpp
 #define EEPROM_SETTINGS
@@ -1035,18 +1052,16 @@ Settings that can be changed and saved to EEPROM are marked with <em class="fa f
 Certain EEPROM behaviors may be confusing. For example, when you edit the configurations and re-flash the firmware, you may discover that your new settings don't have any effect! What's going on? They are still being overridden by the EEPROM! To apply and preserve your new settings, use `M502` to restore settings to the configured defaults, then `M500` to write them to EEPROM. You can always use `M503` to view the current settings in volatile memory (even without EEPROM enabled).
 {% endalert %}
 
-***
 
-### Inch Units Support
+## Inch Units Support
 
 ```cpp
 //#define INCH_MODE_SUPPORT
 ```
 This option adds support for the `G20` and `G21` commands, allowing GCode to specify units in inches.
 
-***
 
-### Material Preheat Presets <em class="fa fa-sticky-note-o text-info" aria-hidden="true"></em> <em class="fa fa-desktop text-info" aria-hidden="true"></em>
+## LCD Material Presets <em class="fa fa-sticky-note-o text-info" aria-hidden="true"></em> <em class="fa fa-desktop text-info" aria-hidden="true"></em>
 
 ```cpp
 #define PREHEAT_1_TEMP_HOTEND 180
@@ -1062,12 +1077,44 @@ These are the default values for the `Prepare` > `Preheat` LCD menu options. The
 
 ## LCD Language
 
-### UI Language
+### User Interface Language
 
 ```cpp
 #define LCD_LANGUAGE en
 ```
-Choose your preferred language for the LCD controller here. See `language.h` for the current list of languages and their international language codes.
+Choose your preferred language for the LCD controller here. Supported languages include:
+
+Code|Language
+----|--------
+an|Aragonese
+bg|Bulgarian
+ca|Catalan
+cn|Chinese
+cz|Czech
+de|German
+el|Greek
+el-gr|Greek (Greece)
+en|English
+es|Spanish
+eu|Basque-Euskera
+fi|Finnish
+fr|French
+gl|Galician
+hr|Croatian
+it|Italian
+kana|Japanese
+kana_utf8|Japanese (UTF8)
+nl|Dutch
+pl|Polish
+pt|Portuguese
+pt-br|Portuguese (Brazilian)
+pt-|Portuguese (Brazilian UTF8)
+pt_utf8|Portuguese (UTF8)
+ru|Russian
+tr|Turkish
+uk|Ukrainian
+
+See `language.h` for the latest list of supported languages and their international language codes.
 
 ### HD44780 Character Set
 
