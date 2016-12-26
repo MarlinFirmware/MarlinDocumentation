@@ -116,6 +116,8 @@ The serial communication speed of the printer should be as fast as it can manage
 ```
 Enable the Bluetooth serial interface. For boards based on the AT90USB.
 
+![Motherboard](/assets/images/config/motherboard.jpg){: .floater}
+
 ### Motherboard
 
 ```cpp
@@ -156,6 +158,8 @@ A unique ID for your 3D printer. A suitable unique ID can be generated randomly 
 
 
 ## Extruder Info
+
+[![Extruders](/assets/images/config/extruders.png){: .floater.framed}](https://www.youtube.com/watch?v=ocgPAAJouPs){:target="_blank"}
 
 ### Extruders
 
@@ -661,9 +665,9 @@ Jerk works in conjunction with acceleration (see above). Jerk is the maximum cha
 Both acceleration and jerk affect your print quality. If jerk is too low, the extruder will linger too long on small segments and corners, possibly leaving blobs. If the jerk is set too high, direction changes will apply too much torque and you may see "ringing" artifacts or dropped steps.
 
 
-![Probe](/assets/images/config/probe.jpg){: .floater.framed}
-
 ## Z Probe Options
+
+![Probe](/assets/images/config/probe.jpg){: .floater.framed}
 
 ### Probe Type
 
@@ -797,11 +801,11 @@ Make sure you have enough clearance for the probe to move between points!
 For `M851` and LCD menus give a range for adjusting the Z probe offset.
 
 
-![Motor Movement](/assets/images/config/motor-dir.jpg){: .floater}
+![Stepper Spin](/assets/images/config/motor-dir.jpg){: .floater}
 
-## Motor Movement
+## Stepper Drivers
 
-### Motor Direction
+### Motor Enable
 
 ```cpp
 #define X_ENABLE_ON 0
@@ -895,7 +899,7 @@ Set to `true` to enable the option to constrain movement to the physical boundar
 These values specify the physical limits of the machine. Usually the `[XYZ]_MIN_POS` values are set to 0, because endstops are positioned at the bed limits. `[XYZ]_MAX_POS` should be set to the farthest reachable point. By default, these positions are used for homing as well. However, the `MANUAL_[XYZ]_HOME_POS` options can be used to override these, if needed.
 
 {% panel info Home Offset %}
-Values are pulled from `MIN_POS`. Use `M206` from host program console.
+Although home positions are fixed, `M206` can be used to apply offsets to the home position if needed.
 {% endpanel %}
 
 
@@ -1031,8 +1035,25 @@ Enable this option if probing should proceed in the Y dimension first instead of
 ```
 These options specify the three points that will be probed during `G29`.
 
+## Homing Options
 
-## Z Safe Homing
+### Bed Center at 0,0
+
+```cpp
+//#define BED_CENTER_AT_0_0
+```
+Enable this option if the bed center is at X0 Y0. This setting affects the way automatic home positions (those not set with `MANUAL_[XYZ]_POS`) are calculated. This should always be enabled with `DELTA`.
+
+### Manual Home Position
+
+```cpp
+//#define MANUAL_X_HOME_POS 0
+//#define MANUAL_Y_HOME_POS 0
+//#define MANUAL_Z_HOME_POS 0 // Distance from nozzle to printbed after homing
+```
+These settings are used to override the home position. Leave them undefined for automatic settings. For `DELTA` Z home must be set to the top-most position.
+
+### Z Safe Homing
 
 ```cpp
 #define Z_SAFE_HOMING
@@ -1135,6 +1156,8 @@ See `language.h` for the latest list of supported languages and their internatio
 
 ### HD44780 Character Set
 
+![LCD Charset](/assets/images/config/lcd-charset.png){: .floater.framed}
+
 ```cpp
 #define DISPLAY_CHARSET_HD44780 JAPANESE
 ```
@@ -1152,6 +1175,7 @@ To determine the language extension installed on your controller:
 
 See https://github.com/MarlinFirmware/Marlin/wiki/LCD-Language
 
+![SD Card](/assets/images/config/sdcard.jpg){: .floater}
 
 ## SD Card
 
@@ -1180,6 +1204,8 @@ Uncomment ONE of these options to use a slower SPI transfer speed. This is usual
 ```
 Use CRC checks and retries on the SD communication.
 
+
+![Encoder Knob](/assets/images/config/encoder.jpg){: .floater}
 
 ## Encoder
 
@@ -1219,6 +1245,8 @@ This option reverses the encoder direction for navigating LCD menus. If CLOCKWIS
 Add individual axis homing items (Home X, Home Y, and Home Z) to the LCD menu.
 
 
+![Piezo](/assets/images/config/piezo.png){: .floater}
+
 ## Speaker
 
 ```cpp
@@ -1234,6 +1262,8 @@ The duration and frequency for the UI feedback sound. Set these to 0 to disable 
 
 
 ## LCD Controller
+
+![LCD Controllers](/assets/images/config/controllers.png){: .floater}
 
 Marlin includes support for several controllers. The two most popular controllers supported by Marlin are:
 
