@@ -170,7 +170,7 @@ You're reading a document which has been marked as `needs-review`, this means th
                       -->{% if parm.optional == true%}&#x5D;{% endif %}
                     </code></td>
                     <td>
-                      <p>{{ parm.description }}</p>
+                      {{ parm.description | markdownify }}
                       {% if parm.values.size > 0 %}
                         {% for pv in parm.values %}
                           {% if pv.description %}
