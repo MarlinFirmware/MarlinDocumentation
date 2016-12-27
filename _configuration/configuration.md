@@ -826,7 +826,7 @@ These options set the pin states used for stepper enable. The most common settin
 ```
 Use these options to disable steppers when not being issued a movement. This was implemented as a hack to run steppers at higher-than-normal current in an effort to produce more torque at the cost of increased heat for drivers and steppers.
 
-Disabling the steppers between moves gives the motors and drivers a chance to cool off. It sounds good in theory, but in practice it has drawbacks. Disabled steppers can't hold the carriage stable. This results in poor accuracy and carries a strong probability of axial drift.
+Disabling the steppers between moves gives the motors and drivers a chance to cool off. It sounds good in theory, but in practice it has drawbacks. Disabled steppers can't hold the carriage stable. This results in poor accuracy and carries a strong probability of axial drift (i.e., lost steps).
 
 Most 3D printers use an "open loop" control system, meaning the software can't ascertain the actual carriage position at a given time. It simply sends commands and assumes they have been obeyed. In practice with a well-calibrated machine this is not an issue and using open loop is a major cost saving with excellent quality.
 
@@ -1069,8 +1069,9 @@ These settings are used to override the home position. Leave them undefined for 
 
 Enable this option if a probe (not an endstop) is being used for Z homing. Z Safe Homing isn't needed if a Z endstop is used for homing, but it may also be enabled just to have XY always move to some custom position after homing.
 
+## Extras 1
 
-## EEPROM
+### EEPROM
 
 ```cpp
 #define EEPROM_SETTINGS
@@ -1092,8 +1093,22 @@ Settings that can be changed and saved to EEPROM are marked with <em class="fa f
 Certain EEPROM behaviors may be confusing. For example, when you edit the configurations and re-flash the firmware, you may discover that your new settings don't have any effect! What's going on? They are still overridden by the settings last saved to EEPROM! To apply and preserve your new settings, use `M502` to restore settings to your defaults, then use `M500` to save them to EEPROM. You can always use `M503` to view the current settings in volatile memory (even without `EEPROM_SETTINGS` enabled).
 {% endalert %}
 
+### Host Keepalive
 
-## Inch Units Support
+```cpp
+#define HOST_KEEPALIVE_FEATURE
+#define DEFAULT_KEEPALIVE_INTERVAL 2
+```
+When Host Keepalive is enabled Marlin will send a busy status message to the host every couple of seconds when it can't accept commands. Disable if your host doesn't like keepalive messages. Use `DEFAULT_KEEPALIVE_INTERVAL` for the default number of seconds between "busy" messages. Override with [`M113`](M113.html).
+
+### Free Memory Watcher
+
+```cpp
+//#define M100_FREE_MEMORY_WATCHER
+```
+Uncomment to add the `M100` Free Memory Watcher for debugging purposes.
+
+### Inch Units Support
 
 ```cpp
 //#define INCH_MODE_SUPPORT
@@ -1101,7 +1116,7 @@ Certain EEPROM behaviors may be confusing. For example, when you edit the config
 This option adds support for the `G20` and `G21` commands, allowing GCode to specify units in inches.
 
 
-## LCD Material Presets <em class="fa fa-sticky-note-o text-info" aria-hidden="true"></em> <em class="fa fa-desktop text-info" aria-hidden="true"></em>
+### LCD Material Presets <em class="fa fa-sticky-note-o text-info" aria-hidden="true"></em> <em class="fa fa-desktop text-info" aria-hidden="true"></em>
 
 ```cpp
 #define PREHEAT_1_TEMP_HOTEND 180
@@ -1300,7 +1315,9 @@ These controllers all require the [LiquidCrystal_I2C library](https://github.com
 - `SAV_3DGLCD`: SAV OLED LCD module support using either SSD1306 or SH1106 based LCD modules.
 
 
-## Fan PWM
+## Extras 2
+
+### Fan PWM
 
 ```cpp
 //#define FAST_PWM_FAN
@@ -1318,7 +1335,7 @@ Use software PWM to drive the fan, as with the heaters. This uses a very low fre
 Incrementing this by 1 will double the software PWM frequency, affecting heaters (and the fan if `FAN_SOFT_PWM` is enabled). However, control resolution will be halved for each increment; at zero value, there are 128 effective control positions.
 
 
-## Temperature Status LEDs
+### Temperature Status LEDs
 
 ```cpp
 //#define TEMP_STAT_LEDS
@@ -1326,7 +1343,7 @@ Incrementing this by 1 will double the software PWM frequency, affecting heaters
 Temperature status LEDs that display the hotend and bed temperature. If all hotend and bed temperature setpoint are < 54C then the BLUE led is on. Otherwise the RED led is on. There is 1C hysteresis.
 
 
-## Photo Pin
+### Photo Pin
 
 ```cpp
 //#define PHOTOGRAPH_PIN     23
@@ -1334,7 +1351,7 @@ Temperature status LEDs that display the hotend and bed temperature. If all hote
 `M240` triggers a camera by emulating a Canon RC-1 Remote Data as described on [this site](http://www.doc-diy.net/photo/rc-1_hacked/).
 
 
-## SkeinForge Arc Fix
+### SkeinForge Arc Fix
 
 ```cpp
 //#define SF_ARC_FIX
@@ -1342,7 +1359,9 @@ Temperature status LEDs that display the hotend and bed temperature. If all hote
 Files sliced with SkeinForge contain the wrong arc GCodes when using "Arc Point" as fillet procedure. This option works around that bug, but otherwise should be left off.
 
 
-## Paste Extruder
+## Extras 3
+
+### Paste Extruder
 
 ```cpp
 // Support for the BariCUDA Paste Extruder.
@@ -1353,7 +1372,7 @@ Marlin includes support for the [Baricuda Extruder for 3D Printing Sugar and Cho
 
 [![LED Lights](/assets/images/config/led-lights.jpg){: .floater.framed}](http://www.instructables.com/id/3D-Printer-RGB-LED-Feedback/){:target="_blank"}
 
-## Indicator LEDs
+### Indicator LEDs
 
 Marlin currently supplies two options for RGB-addressable color indicators. In both cases the color is set using `M150 Rr Ug Bb` to specify RGB components from 0 to 255.
 
@@ -1375,18 +1394,18 @@ The BLINKM board supplies the backlighting for some LCD controllers. Its color i
 An inexpensive RGB LED can be used simply by assigning digital pins for each component. If the pins are able to do hardware PWM then a wide range of colors will be available. With simple digital pins only 7 colors are possible.
 
 
-## Servos
+### Servos
 
 ![Servo](/assets/images/config/servo.png){: .floater}
 
-### Number of Servos
+#### Number of Servos
 
 ```cpp
 #define NUM_SERVOS 1 // Servo index starts with 0 for M280 command
 ```
 The total number of servos to enable for use. One common application for a servo is a Z bed probe consisting of an endstop switch mounted on a rotating arm. To use one of the servo connectors for this type of probe, set `Z_ENDSTOP_SERVO_NR` in the probe options above.
 
-### Servo Deactivation
+#### Servo Deactivation
 
 ```cpp
 #define SERVO_DELAY 300
@@ -1399,7 +1418,7 @@ Delay (in microseconds) before the next move will start, to give the servo time 
 With this option servos are powered only during movement, then turned off to prevent jitter. We recommend enabling this option to keep electrical noise from active servos from interfering with other components. The high amperage generated by extruder motor wiring during movement can also induce movement in active servos. Leave this option enabled to avoid all such servo-related troubles.
 
 
-## Filament Width Sensor
+### Filament Width Sensor
 
 <iframe style="float:right;margin:0 0 1em 1em;" title="YouTube video player" width="240" height="195" src="http://www.youtube.com/embed/W93dFxF425s?autoplay=0" frameborder="0" allowfullscreen></iframe>
 
