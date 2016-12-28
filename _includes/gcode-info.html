@@ -198,7 +198,7 @@ You're reading a document which has been marked as `needs-review`, this means th
     <div class="col-lg-12">
       <h2>Notes</h2>
         {% for line in gcode.notes %}
-          <p>{{ line | markdownify }}</p>
+          {{ line | markdownify }}
         {% endfor %}
     </div>
   </div>
@@ -211,15 +211,17 @@ You're reading a document which has been marked as `needs-review`, this means th
       {% for example in gcode.examples %}
         {% if example.pre %}
           {% for line in example.pre %}
-            <p>{{ line | markdownify }}</p>
+            {{ line | markdownify }}
           {% endfor %}
         {% endif %}
         {% highlight gcode %}{% for line in example.code %}{{ line }}
 {% endfor %}{% endhighlight %}
         {% if example.post %}
-          {% for line in example.post %}
-            <p>{{ line | markdownify }}</p>
-          {% endfor %}
+          <div class="post">
+            {% for line in example.post %}
+              {{ line | markdownify }}
+            {% endfor %}
+          </div>
         {% endif %}
       {% endfor %}
     </div>

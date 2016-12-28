@@ -115,12 +115,25 @@ img.floater {
 img.floater.framed { border: 4px solid black; }
 
 .custom-article {
-  table { margin-bottom: 1.1em; }
+  table {
+    margin-bottom: 1.1em;
+    border-top: 1px solid #888;
+    }
 
   th, td {
     padding: 2px 0.5em;
     border: 1px solid #888;
     }
 
-  th { background-color: #DDD; }
-}
+  .table>thead>tr>th {
+    background-color: #DDD;
+    border-bottom: 1px solid #888;
+    }
+  }
+
+.post {
+  margin: -1em 0 1em;
+  background-color: #EEE;
+  padding: 0.5em 0.5em 0.25em;
+  p { font-size: 85%; }
+  }
