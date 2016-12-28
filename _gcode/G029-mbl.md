@@ -1,7 +1,5 @@
 ---
 tag: g29a
-category: [ 'gcode', 'needs-review' ]
-
 title: Manual Bed Leveling
 brief: Probes a grid and produces a mesh
 author: thinkyhead

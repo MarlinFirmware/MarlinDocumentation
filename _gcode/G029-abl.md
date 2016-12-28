@@ -1,7 +1,5 @@
 ---
 tag: g29b
-category: [ 'gcode' ]
-
 title: Automatic Bed Leveling
 brief: Probes the bed at 3 or more points
 author: thinkyhead
