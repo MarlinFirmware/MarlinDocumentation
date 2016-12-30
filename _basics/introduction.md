@@ -7,51 +7,49 @@ category: [ articles, getting-started ]
 ---
 
 ## What is Marlin
-Marlin is a high-performance 3D printer [firmware](https://en.wikipedia.org/wiki/Firmware) derived from [Sprinter](http://reprap.org/wiki/List_of_Firmware#Sprinter) and [grbl](http://reprap.org/wiki/Grbl#Grbl). Marlin became an [Open Source](https://en.wikipedia.org/wiki/Open-source_software) project on [12 Aug 2011](https://github.com/MarlinFirmware/Marlin/tree/f850af5c1ca343ed65b94c4b9da5dd1ab4c4a53c) with its initial public [Github release](https://github.com/MarlinFirmware/Marlin/commit/f850af5c1ca343ed65b94c4b9da5dd1ab4c4a53c).
 
-Since 2011 the project has gained a lot of traction within the [RepRap community](http://reprap.org/wiki/) and it's now the *de facto standard* for OSS 3D printing firmware. There are many forks and derivative implementations of Marlin, many of which have been migrating improvements into the main project.
+Marlin is a [firmware](https://en.wikipedia.org/wiki/Firmware) for the RepRap family of replicating rapid prototypers, also called "3D printers." Specifically, Marlin runs on those printers that extrude plastic filament using a heated nozzle in a process called Fused Deposition Modeling (FDM) — aka Fused Filament Fabrication (FFF). Marlin is the software at the heart of the machine that controls and coordinates the motors, heaters, sensors, etc. in obedience to your commands.
 
-Marlin officially supports many boards based on the 8-bit [Atmel ATmega AVR](http://www.atmel.com/products/microcontrollers/avr/) family of [micro-controllers](http://en.wikipedia.org/wiki/Microcontroller) — the same CPU family that powers the popular [open source](https://en.wikipedia.org/wiki/Open-source_hardware) [Arduino/Genuino](http://arduino.cc) development platform. In fact, the reference platform for Marlin is generic RAMPS 1.4 hardware, a voltage regulator and signals shield plugged into an Arduino Mega2560.
+Derived from [Sprinter](http://reprap.org/wiki/List_of_Firmware#Sprinter) and [grbl](http://reprap.org/wiki/Grbl#Grbl), Marlin became a standalone [open source](https://en.wikipedia.org/wiki/Open-source_software) project on August 12, 2011 with its [Github release](https://github.com/MarlinFirmware/Marlin/commit/f850af5c1ca343ed65b94c4b9da5dd1ab4c4a53c). Marlin is licensed under the GPLv3 and is free for personal or commercial use. It stipulates that any vendor who includes Marlin on their printer must make its source code available.
 
-As an open source community project, Marlin aims to be adaptable to as many boards and configurations as possible. We want Marlin to be configurable, customizable, extensible, and economical for users and vendors alike. A Marlin build can be very small, for use on a headless printer with only modest hardware. As the hardware is upgraded, additional features can be enabled to adapt Marlin to the new components.
+From the start Marlin has been built by and for [RepRap](http://reprap.org/wiki/) enthusiasts to be a straightforward, reliable, and adaptable printer driver that "just works." As a testament to its robustness, Marlin 1.0.2 has been adopted by many respected makers of commercial 3D printers. Ultimaker, Printrbot, AlephObjects (Lulzbot), Prusa Research, and many others ship their printers with a variant of Marlin installed.
 
-## Marlin's main features
- - Optimized [GCode](/meta/gcode/) parser
+Marlin runs on modest 8-bit [Atmel AVR](http://www.atmel.com/products/microcontrollers/avr/) [micro-controllers](http://en.wikipedia.org/wiki/Microcontroller). These are the chips at the center of the popular [open source](https://en.wikipedia.org/wiki/Open-source_hardware) [Arduino/Genuino](http://arduino.cc) platform. In fact, the reference platform for Marlin is a Arduino Mega2560 with RAMPS 1.4.
+
+As a community product, Marlin aims to be adaptable to as many extant boards and configurations as possible. We want it to be configurable, customizable, extensible, and economical for hobbyists and vendors alike. A Marlin build can be very small, for use on a headless printer with only modest hardware. As the hardware is upgraded, additional features can be enabled to adapt Marlin to the new components.
+
+## Main features
+
+ - Optimized, full-featured [G-Code](/meta/gcode/) dialect
  - Intelligent motion planner with lookahead
  - Fast, interrupt-based movement, linear acceleration
- - [Advance extrusion option](/docs/features/lin_advance.html)
- - [Automatic bed leveling](/meta/gcode/g29-abl.html) (3-point, Linear, Bilinear)
- - [Manual bed leveling](/meta/gcode/G29-mbl.html)
- - Filament width sensor
- - Full endstop support
- - Full G-Code movement, including arcs and Bézier curves
- - Automatic PID tuning
- - Up to 4 hotends or extruders with PID
- - Heated bed with PID
- - Interrupt-based thermal protection, watchdog timer
- - Automatic cold-end fan management
- - Support for many LCD controllers
+ - Closed-loop PID heater controller
+ - Thermal protection / safety features
+ - Host-based and SD Card printing, autostart
+ - LCD controller driver in more than 20 languages
+ - Bed Leveling: [Automatic](/meta/gcode/g29-abl.html) (Plane or Mesh) and [Manual](/meta/gcode/G29-mbl.html) (Mesh)
+ - [Advance extrusion](/docs/features/lin_advance.html) option
+ - Volumetric extrusion option
+ - Full G-Code movement with lines, arcs, Bézier curves
  - Kinematics: Cartesian, Delta, SCARA, and Core/H-Bot
- - Dozens of languages supported
- - Print job timer and counter
- - SD Card support, folder depth, autostart
- - Multi-extruder support (Cyclops, Chimera, Diamond)
- - Mixing extruder support
- - Volumetric extrusion support
+ - Support for up to 4 hotends and heated bed, with automatic PID tuning
+ - Support for mixing and multi-extruders (Cyclops, Chimera, Diamond)
+ - Support for Filament Runout/Width Sensors
+ - Print job timer / counter
 
 ## How Marlin Works
 
-Marlin is an open source firmware for 3D printers that utilize the FDM (also called FFF) additive manufacturing process. In this process, a nozzle is heated up and, under computer control, plastic filament is pushed through the nozzle to extrude and cure the plastic in successive layers, each supported by the one below. After many hours of building up a form in this way, the result is a physical object.
+Marlin is made for 3D printers which perform additive manufacturing by Fused Deposition Modeling. In this process, a nozzle is heated up and, under computer control, plastic filament is pushed through the nozzle to extrude and cure the plastic in successive layers, each supported by the one below. After several minutes (or many hours) of building up a form in this way, the result is a physical object.
 
-As the firmware part of the process, Marlin resides on the 3D printer's main board and runs whenever the machine is turned on. The firmware manages all the realtime activities of the machine, coordinating heaters, steppers, sensors, lights, LCD display, buttons, and everything else that needs doing as part of the 3D printing process.
+Marlin Firmware resides on the 3D printer's main board and runs whenever the machine is turned on. Its job is to manage all the realtime activities of the machine. It coordinates the heaters, steppers, sensors, lights, LCD display, buttons, and everything else that needs doing as part of the 3D printing process.
 
-In order to act as a printing device, Marlin monitors the USB port for input and can read from an SD card, obeying each command as it comes in. Marlin interprets commands written out in a very simple language called GCode. GCode commands tell the machine to "set heater 1 to 180," "move to XY at speed F," and so on.
+In order make the machine act as an obedient printing device, Marlin monitors the USB port for input and can read files on SD card, interpreting and running each command as it comes in. Marlin takes commands in a very simple language called G-Code. G-Code commands tell the machine to do simple things like "set heater 1 to 180," or "move to XY at speed F."
 
 ## Printing Things
 
 ### Modeling
 
-Regardless of your [CAD](https://en.wikipedia.org/wiki/Computer-aided_design) toolchain, as long as a solid model can be exported out of it, one of the FDM slicers will be able to convert the model into GCode, and Marlin firmware will try its best to print the final result.
+Regardless of your [CAD](https://en.wikipedia.org/wiki/Computer-aided_design) toolchain, as long as a solid model can be exported out of it, one of the FDM slicers will be able to convert the model into G-Code, and Marlin firmware will try its best to print the final result.
 
 Before Marlin can dream of printing, first you'll need a [3D model](http://www.thingiverse.com/thing:7900) of some object. Either [download](http://www.thingiverse.com/thing:7900/zip) one or model something with one of the many free [CAD programs](https://en.wikipedia.org/wiki/Computer-aided_design), such as [FreeCAD](http://www.freecadweb.org/), [OpenSCAD](http://www.openscad.org/), [Tinkercad](https://www.tinkercad.com/), [Autodesk 123D](http://www.123dapp.com/), or [SketchUp](http://www.sketchup.com/).
 
@@ -59,7 +57,7 @@ A high degree of knowledge is needed to model complex objects like a [T-Rex Skul
 
 ### Slicing
 
-With a model chosen, now it needs to be "sliced" for 3D printing. A slicer prepares the solid 3D model by dividing it up into thin slices (layers). In the process it generates a [G-Code](https://en.wikipedia.org/wiki/G-code) file that tells the printer in minute detail how to reproduce the model. There are many slicers to choose from, including:
+With a model chosen, next it needs to be "sliced" for 3D printing. A "slicer" prepares the solid 3D model by dividing it up into thin slices (layers). In the process it generates a [G-Code](https://en.wikipedia.org/wiki/G-code) file that tells the printer in minute detail how to reproduce the model. There are many slicers to choose from, including:
 
 - [Cura](https://ultimaker.com/en/products/cura-software) produces nice results.
 - [Slic3r](http://slic3r.org/) continues to advance.
@@ -68,7 +66,7 @@ With a model chosen, now it needs to be "sliced" for 3D printing. A slicer prepa
 
 ### Printing
 
-Once the GCode is created you're almost ready to print. Marlin can be controlled entirely from a host or it can print in standalone mode from an LCD controller or SD Card slot.
+Once the G-Code is created you're almost ready to print. Marlin can be controlled entirely from a host or it can print in standalone mode from an LCD controller or SD Card slot.
 
 Host software is available for several platforms, including desktop systems, Raspberry Pi, Android tablets, etc. Any device with a USB port and serial terminal can technically act as a host, but a better printing experience is had with host software designed specifically for 3D printers such as:
 
@@ -76,4 +74,3 @@ Host software is available for several platforms, including desktop systems, Ras
 - [OctoPrint](http://octoprint.org/) is an open source host for Raspberry Pi by Gina Häußge
 - [Cura](https://ultimaker.com/en/products/cura-software) is an open source host by Ultimaker.
 - [Repetier Host](https://www.repetier.com/) is a host by Repetier Software.
-

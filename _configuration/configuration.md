@@ -1113,7 +1113,7 @@ Uncomment to add the `M100` Free Memory Watcher for debugging purposes.
 ```cpp
 //#define INCH_MODE_SUPPORT
 ```
-This option adds support for the `G20` and `G21` commands, allowing GCode to specify units in inches.
+This option adds support for the `G20` and `G21` commands, allowing G-Code to specify units in inches.
 
 
 ### LCD Material Presets <em class="fa fa-sticky-note-o text-info" aria-hidden="true"></em> <em class="fa fa-desktop text-info" aria-hidden="true"></em>
