@@ -19,7 +19,7 @@ ABL requires a bed probe or some other mechanism to be able to test the bed heig
 ## Configuring Automatic Bed Leveling
 1. Enable one of the automatic bed leveling options:
  - `AUTO_BED_LEVELING_3POINT`
- - `AUTO_BED_LEVELING_PLANAR`
+ - `AUTO_BED_LEVELING_LINEAR`
  - `AUTO_BED_LEVELING_BILINEAR`
 
 Unless you know you have a very flat bed, you should always use `AUTO_BED_LEVELING_BILINEAR`.
