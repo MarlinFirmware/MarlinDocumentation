@@ -459,13 +459,6 @@ For Delta use one of the sample configurations in the `example_configurations/de
 For SCARA use the sample configuration in the `example_configurations/SCARA` folder as a starting point.
 
 
-```cpp
-// Enable this option for Toshiba steppers
-//#define CONFIG_STEPPERS_TOSHIBA
-```
-Leave this option disabled for typical stepper drivers such as A4988 or DVR8825.
-
-
 ![Endstop switch](/assets/images/config/endstop.jpg){: .floater}
 
 ## Endstops
@@ -856,6 +849,14 @@ The E disable option works like `DISABLE_[XYZ]` but pertains to one or more extr
 #define INVERT_E3_DIR false
 ```
 These settings reverse the motor direction for each axis. Be careful when first setting these. Axes moving the wrong direction can cause damage. Get these right without belts attached first, if possible. Before testing, move the carriage and bed to the middle. Test each axis for proper movemnt using the host or LCD "Move Axis" menu. If an axis is inverted, either flip the plug around or change its invert setting.
+
+### Toshiba Drivers
+
+```cpp
+// Enable this option for Toshiba stepper drivers
+//#define CONFIG_STEPPERS_TOSHIBA
+```
+Leave this option disabled for typical stepper drivers such as A4988 or DVR8825.
 
 
 ## Homing and Bounds
