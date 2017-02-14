@@ -463,7 +463,7 @@ For SCARA use the sample configuration in the `example_configurations/SCARA` fol
 // Enable this option for Toshiba steppers
 //#define CONFIG_STEPPERS_TOSHIBA
 ```
-Leave this option disabled for standard NEMA steppers.
+Leave this option disabled for typical stepper drivers such as A4988 or DVR8825.
 
 
 ![Endstop switch](/assets/images/config/endstop.jpg){: .floater}
