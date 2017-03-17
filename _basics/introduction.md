@@ -27,7 +27,7 @@ As a community product, Marlin aims to be adaptable to as many extant boards and
  - Thermal protection / safety features
  - Host-based and SD Card printing, autostart
  - LCD controller driver in more than 20 languages
- - Bed Leveling: [Automatic](/meta/gcode/g29-abl.html) (Plane or Mesh) and [Manual](/meta/gcode/G29-mbl.html) (Mesh)
+ - Bed Leveling: [Automatic](/docs/gcode/G029-abl.html) (Plane or Mesh) and [Manual](/docs/gcode/G029-mbl.html) (Mesh)
  - [Advance extrusion](/docs/features/lin_advance.html) option
  - Volumetric extrusion option
  - Full G-Code movement with lines, arcs, Bézier curves

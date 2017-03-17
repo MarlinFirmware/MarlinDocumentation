@@ -18,7 +18,7 @@ long:
     * `AUTO_BED_LEVELING_3POINT` probes 3 points and uses a matrix to compensate for bed tilt.
     * `AUTO_BED_LEVELING_LINEAR` also uses a tilt matrix but probes a grid and applies "least-squares."
     * `AUTO_BED_LEVELING_BILINEAR` probes a grid and produces a mesh to adjust Z across the bed.
-    * There is also a manual [`MESH_BED_LEVELING`](G29-mbl.html) option for setups without a probe.
+    * There is also a manual [`MESH_BED_LEVELING`](/docs/gcode/G029-mbl.html) option for setups without a probe.
 
   - The printer must be homed with `G28` before `G29`.
 
