@@ -90,7 +90,7 @@ Marlin now checks for a configuration version and won't compile without this set
 ```
 - `STRING_CONFIG_H_AUTHOR` is shown in the Marlin startup message, and is meant to identify the author (and optional variant) of the firmware. Use this setting as a way to uniquely identify all your custom configurations. The startup message is printed when connecting to host software, and whenever the board reboots.
 - `SHOW_BOOTSCREEN` enables the boot screen for LCD controllers.
-- `STRING_SPLASH_LINE1` and `STRING_SPLASH_LINE1` are shown on the boot screen.
+- `STRING_SPLASH_LINE1` and `STRING_SPLASH_LINE2` are shown on the boot screen.
 
 
 ## Hardware Info
