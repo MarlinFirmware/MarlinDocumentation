@@ -219,3 +219,162 @@ Here's the pull request that was just created.
 ![image36]({{ '/assets/images/docs/development/pull_images/pull_36.jpg' | prepend: site.baseurl }})
 
 If you have an open issue associated with your pull request, include that issue's number in your pull request description (e.g., "`#1536`"), and a link to the pull request will automatically appear on the issue's page. The same goes for individual commit descriptions.
+
+
+## Updating the PR
+
+Typically you`ll get requests to correct, improve and add features to your code.
+The top level steps of doing this are:
+1.	Open your branch in Windows Explorer
+2.	Edit & test your code
+3.	Move the code to the PR (commit & sync your code)
+4.	Repeat the above as necessary
+5.	Resolve `All checks have failed' issues
+6.	Make the PR pretty & sync to main repository ( may need to be done multiple times)
+
+### Open your branch in Windows Explorer
+
+You've done most of this before when you created your branch. 
+
+Open Desktop, select your repository (on the left side), select your branch (top left), click on `Changes` (top middle) and then click on `open this repository` (right middle)
+ 
+![image37]({{ '/assets/images/docs/development/pull_images/pull_37.jpg' | prepend: site.baseurl }})
+A Windows Explorer window will popup.  Copy the `Marlin` directory to your work area.  Close the Windows Explorer window and close Desktop.
+ 
+![image38]({{ '/assets/images/docs/development/pull_images/pull_38.jpg' | prepend: site.baseurl }})
+
+### Edit & test your code
+
+As before, do all your work & testing in your local copy.
+
+### Move the code to the PR (commit & sync your code)
+
+Open Desktop and the Windows Explorer window as before
+
+Copy the changed files into the new Windows Explorer window.  Alternatively you can just copy your entire directory over.  GitHub will check the newly copied files against the old and only list the ones that have changed.
+
+Finish the commit and sync as you did previously in `Commit changes to your working copy`
+
+_**Since this branch is tied to a PR, the PR is also updated when you do the sync. **_
+
+Most of the time you've made changes to the Configuration.h and Configuration_adv.h files that are specific to your printer.  Do NOT upload those to the PR.  This can be done multiple ways:
+*	Don't copy them into the GitHub directory
+*	Don't include them in the commit
+
+### Repeat the above as necessary
+
+### Resolve `All checks have failed' issues
+
+Tests are run on the code when you created the PR and every time you commit new code to the PR.  The tests basically consist of multiple cycles of enabling various options and then compiling.  These must be resolved before the PR can be merged into the mainstream Marlin code.
+
+Within 30-90 seconds of doing the sync the PR will have a section that looks like this:
+ 
+![image39]({{ '/assets/images/docs/development/pull_images/pull_39.jpg' | prepend: site.baseurl }})
+
+5 – 90 minutes later the PR will change to this if there are no problems.  
+ 
+![image40]({{ '/assets/images/docs/development/pull_images/pull_40.jpg' | prepend: site.baseurl }})
+
+If you see this instead then there are problems that need to be fixed.  You don't have to fix them immediately but they must be fixed before the PR can be merged into the mainstream Marlin code. 
+
+To see the errors click on `Details`
+ 
+![image41]({{ '/assets/images/docs/development/pull_images/pull_41.jpg' | prepend: site.baseurl }})
+
+This will bring up the `Travis` log.  Green means that the test has passed.  Red means there's a problem. 
+
+![image42]({{ '/assets/images/docs/development/pull_images/pull_42.jpg' | prepend: site.baseurl }})
+
+It's recommended that you include the fixes in the next code you commit.
+
+The errors you`re looking at come from the compiler.  Resolve just like you do when compiling on your local machine.
+
+Unfortunately the Travis log does not include the options that were enabled when the errors were found.  That makes it harder to reproduce the problem locally.
+
+### Make the PR pretty & sync to main repository 
+
+Before a PR is merged we need to get the number of commits down to one.  It's so much easier to see what's going on when all the changes are easily available.  If you have multiple commits then you need to go to each individual commit to see what that one changed and pretty soon you've lost track.
+
+The other thing this process does is incorporate any code changes in the main Marlin code that have been done since the PR was created or the last time this process was run.
+
+_**COMBINING ALL THE COMMITS INTO ONE MEANS YOU NO LONGER HAVE THE ABILITY TO REVERT THE NO LONGER EXISTING COMMITS. **_
+
+This process uses a command window/shell to issue GIT commands.
+
+Open Desktop and open the Windows Explorer window.  Make a copy of the directory.  You may use it later.
+
+Next right click on the repository.  A submenu will popup.  Click on `Open in Git Shell`  
+
+![image43]({{ '/assets/images/docs/development/pull_images/pull_43.jpg' | prepend: site.baseurl }})
+
+The Git command window/shell pops up.
+ 
+![image44]({{ '/assets/images/docs/development/pull_images/pull_44.jpg' | prepend: site.baseurl }})
+
+Copy `Git remote –v` and paste it into the Git Shell window and then hit return.  
+ 
+![image45]({{ '/assets/images/docs/development/pull_images/pull_45.jpg' | prepend: site.baseurl }})
+
+If the upstream section is missing then copy & paste `Git remote add upstream https://Github.com/MarlinFirmware/Marlin.Git`  and then hit return.
+
+Next copy & paste `Git fetch upstream` followed by `Git rebase upstream/RCBugFix` . If no problems are encountered the next text will look like this.
+ 
+![image46]({{ '/assets/images/docs/development/pull_images/pull_46.jpg' | prepend: site.baseurl }})
+
+If Git can't automatically combine the two code bases then it`ll look like this. 
+
+![image47]({{ '/assets/images/docs/development/pull_images/pull_47.jpg' | prepend: site.baseurl }})
+
+It`ll tell you the number of files that need to be looked at and the names of the files.  In this example there is one file that needs attention.
+
+Git marks the areas of concern within the file and then writes the modified file to the directory you opened with Desktop.  
+
+Open the modified file (the file name didn't change but the time stamp did) and search for  `<<<<<<< HEAD`.  This marks the beginning of the code that could be newer than what you started with.  The `=======`  marks the boundary between the newer code and the original code in your file.  `>>>>>>>` marks the end of of the code that needs attention.  `#endif in wrong place` is the title of the commit that GIT couldn't automatically handle.
+
+It can be helpful to consult the copy you made just before opening the Git Shell.  Sometimes you even have to download the latest RCBugFix to understand.
+ 
+![image48]({{ '/assets/images/docs/development/pull_images/pull_48.jpg' | prepend: site.baseurl }})
+
+Write the file back.
+
+Go to Git Shell and enter this `Git add Marlin/configuration_store.cpp` .  The circled number will decrement. 
+
+![image49]({{ '/assets/images/docs/development/pull_images/pull_49.jpg' | prepend: site.baseurl }})
+
+Repeat the `edit-save-Git-add` cycle until all the files have been addressed.  
+
+If you couldn't address all the files then you can enter the following to abort the process:  `Git rebase –abort`
+
+If all the files have been addressed then enter this into the Git Shell: `Git rebase –continue`
+
+The next step is to "squash" the commits.  This takes all the commits and combines them per your instructions.  To start the "squash" process enter this `Git rebase -i upstream/RCBugFix`
+
+In about 5-10 seconds a Notepad window will pop up.  It starts with the list of the commits that are currently on the PR.  To the extreme left of each line is the action you want performed.  Sometimes extra commits are added if the main code base is being updated while you're doing a squash.  Check that the first pick is one that you've done for this PR. If it isn't then change it to `drop`.  Keep on changing them to `drop` until you get to your first commit.  Leave your first commit as `pick`.  Change all the other picks in the list to `squash`
+ 
+![image50]({{ '/assets/images/docs/development/pull_images/pull_50.jpg' | prepend: site.baseurl }})
+
+Once you've changed the file then click `File`, then `Save` and then close the file.
+ 
+![image51]({{ '/assets/images/docs/development/pull_images/pull_51.jpg' | prepend: site.baseurl }})
+
+In a few seconds a second Notepad window will pop up.  In this one you specify the description portion of the squashed commit.
+
+All the lines WITHOUT a leading # will be in the description in the order as in the Notepad window.  Edit the text as desired.  When done save the file and close it.
+ 
+![image52]({{ '/assets/images/docs/development/pull_images/pull_52.jpg' | prepend: site.baseurl }})
+
+A few seconds after closing Notepad the Git Shell will show this.
+ 
+![image53]({{ '/assets/images/docs/development/pull_images/pull_53.jpg' | prepend: site.baseurl }})
+
+In Git Shell enter `Git push –f` to finish the process.  In a few seconds the following text will start to scroll up the page.  When the command prompt appears then everything is done.
+ 
+![image54]({{ '/assets/images/docs/development/pull_images/pull_54.jpg' | prepend: site.baseurl }})
+
+You can now close Git Shell.
+
+In Desktop notice that there is now only one commit with all your code changes in it.
+
+You do not need to click `Sync` in Desktop. That was done as part of the `push` command.
+
+You can now close Desktop and the Windows Explorer window you opened from Desktop.
