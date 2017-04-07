@@ -609,7 +609,7 @@ When the velocity of any axis changes, its acceleration (or deceleration) in mm/
 A value of e.g 50 means that an axis can accelerate from 0 to 50 mm/s in one second. 
 It is to be noted that in G-code, speed unit is mm/m. (e.g 1500 mm/minute = 25 mm/s).
 Intuitively, we can relate to acceleration as G-forces. 1G is roughly  10 m/^2 = 10000 mm/s^2.
-An acleration value of 3000 [mm/^2] is 3 m/^2 (approximately 0.3G).
+An acleration value of 3000 [mm/s^2] is 3 m/s^2 (approximately 0.3G).
 
 Jerk sets the floor for accelerated moves. If the change in top speed for a given axis between segments is less than the jerk value for the axis, an instantaneous change in speed may be allowed. Limits placed on other axes also apply. Basically, lower jerk values result in more accelerated moves, which may be near-instantaneous in some cases, depending on the final acceleration determined by the planner.
 
