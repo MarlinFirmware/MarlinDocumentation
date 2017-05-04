@@ -13,7 +13,7 @@ Please follow these formatting guidelines and coding standards when contributing
 ### Indentation
 Indentation is important for readability and maintainability of code, and provides guidance for naïve code editors (e.g., TextMate, Sublime, et. al.) to properly fold code blocks by level.
 
- - 2 spaces. Don't use tabs at all.
+ - 2 spaces. Don't use tabs at all. _Set your editor to use spaces! Tabs will bite you in the end._
  - All blocks indented, including `#if` blocks and other non-brace compiler blocks
 <pre>
 void myFunction() {
@@ -172,6 +172,3 @@ Since Marlin is an Arduino firmware and not a desktop application, much care has
   #endif // !HISFEATURE
 #endif // MYFEATURE
 </pre>
-
-## Useful links
- - [Atmel AVR4027: Tips and Tricks to Optimize Your C Code for 8-bit AVR Microcontrollers](http://www.atmel.com/images/doc8453.pdf)

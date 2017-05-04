@@ -26,7 +26,7 @@ long:
     5. Repeat steps 3-4 until completed.
     6. Use `M500` to save the mesh to EEPROM, if desired.
 
-    The procedure for Manual Bed Leveling from your LCD controller:
+    The procedure for LCD Bed Leveling with your controller (Requires `LCD_BED_LEVELING`):
 
     1. Select `Level Bed` then choose `Level Bed` (not `Cancel`) in the sub-menu.
     2. Wait for `Homing XYZ` to complete.
