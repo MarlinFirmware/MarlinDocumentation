@@ -1,15 +1,11 @@
 ---
-title:        'Configuring Marlin'
+title:        'Configuring Marlin 1.1'
 description:  'Complete guide to Marlin configuration options.'
 
 author: Sarf2k4
 contrib: paulusjacobus, jbrazio, landodragon141, thinkyhead
 category: [ configuration ]
 ---
-
-{% alert info %}
-This document is based on Marlin 1.1.0 RC8.
-{% endalert %}
 
 # Introduction
 
@@ -170,13 +166,6 @@ This value, from 1 to 4, defines how many extruders (or E steppers) the printer 
 
 This value should be set to the total number of E stepper motors on the machine, even if there's only a single nozzle.
 
-### Distinct E Factors
-
-```cpp
-//#define DISTINCT_E_FACTORS
-```
-Enable `DISTINCT_E_FACTORS` if your extruders are not all mechanically identical. With this setting you can optionally specify different steps-per-mm, max feedrate, and max acceleration for each extruder.
-
 ### Single Nozzle
 
 ```cpp
@@ -251,6 +240,7 @@ Enable this if you don't want the power supply to switch on when you turn on the
 #define TEMP_SENSOR_1 0
 #define TEMP_SENSOR_2 0
 #define TEMP_SENSOR_3 0
+#define TEMP_SENSOR_4 0
 #define TEMP_SENSOR_BED 3
 ```
 Temperature sensors are vital components in a 3D printer. Fast and accurate sensors ensure that the temperature will be well controlled, to keep plastic flowing smoothly and to prevent mishaps. Use these settings to specify the hotend and bed temperature sensors. Every 3D printer will have a hotend thermistor, and most will have a bed thermistor.
@@ -297,6 +287,7 @@ Bed must maintain a stable temperature for `TEMP_BED_RESIDENCY_TIME` before `M10
 #define HEATER_1_MINTEMP 5
 #define HEATER_2_MINTEMP 5
 #define HEATER_3_MINTEMP 5
+#define HEATER_4_MINTEMP 5
 #define BED_MINTEMP 5
 ```
 These parameters help prevent the printer from overheating and catching fire. Temperature sensors report abnormally low values when they fail or become disconnected. Set these to the lowest value (in degrees C) that the machine is likely to experience. Indoor temperatures range from 10C-40C, but a value of 0 might be appropriate for an unheated workshop.
@@ -312,6 +303,7 @@ If any sensor goes below the minimum temperature set here, Marlin will **shut do
 #define HEATER_1_MAXTEMP 275
 #define HEATER_2_MAXTEMP 275
 #define HEATER_3_MAXTEMP 275
+#define HEATER_4_MAXTEMP 275
 #define BED_MAXTEMP 130
 ```
 Maximum temperature for each temperature sensor. If Marlin reads a temperature above these values, it will immediately shut down for safety reasons. For the E3D V6 hotend, many use 285 as a maximum value.
@@ -521,20 +513,12 @@ This will remove the need to poll the interrupt pins, saving many CPU cycles.
 
 ## Movement
 
-### Homing Speed
+### Distinct E Factors
 
 ```cpp
-// Homing speeds (mm/m)
-#define HOMING_FEEDRATE_XY (50*60)
-#define HOMING_FEEDRATE_Z  (4*60)
+//#define DISTINCT_E_FACTORS
 ```
-Homing speed for use in auto home and auto bed leveling. These values may be set to the fastest speeds your machine can achieve. Homing and probing speeds are constrained by the current max feedrate and max acceleration settings.
-
-{% alert warning %}
-Setting these values too high may result in reduced accuracy and/or skipped steps. Reducing acceleration may help to achieve higher top speeds.
-{% endalert %}
-
-***
+Enable `DISTINCT_E_FACTORS` if your extruders are not all mechanically identical. With this setting you can optionally specify different steps-per-mm, max feedrate, and max acceleration for each extruder.
 
 ### Default Steps per mm <em class="fa fa-sticky-note-o" aria-hidden="true"></em> <em class="fa fa-desktop" aria-hidden="true"></em>
 
@@ -664,14 +648,40 @@ Both acceleration and jerk affect your print quality. If jerk is too low, the ex
 
 ![Probe](/assets/images/config/probe.jpg){: .floater.framed}
 
+### Probe Pins
+
+```cpp
+//#define Z_MIN_PROBE_ENDSTOP
+```
+If you want to use both probe and end-switch for homing and endstop, enable this. However, This requires extra setups to be done. If you're using Ramps 1.4, the probe pins are located in D32 of the aux4 array that is also used by the lcd panel. You will have to change the pin assignments from your specified board pin file (for example "pins_RAMPS_14.h") located at `#define Z_MIN_PROBE_PIN  32`. I would change this to pin 19 (z max) since it is rarely if ever used. This extra port is actually the Z Probe that is used for your auto bed leveling.
+
+Another way is to change between these pins: `#define Z_MIN_PROBE_PIN  32`, `#define Z_MIN_PIN 18`, and `#define Z_MAX_PIN 19`  according to your board. This is not for beginners.
+
+```cpp
+#define Z_MIN_PROBE_USES_Z_MIN_ENDSTOP_PIN
+```
+This uses the same pin for the end-switch and the probe. The advantage is that you don't need to alter any pin-out assignments, however you can only have ONE active at a time.
+
+```cpp
+//#define DISABLE_Z_MIN_PROBE_ENDSTOP
+```
+This typically disables your probe feature. Only applicable to `//#define Z_MIN_PROBE_ENDSTOP` enabled
+
 ### Probe Type
 
 Marlin supports any kind of probe that can be made to work like a switch. Specific types of probes have different needs.
 
+#### Manual Probe (no probe)
+
+```cpp
+//#define PROBE_MANUALLY
+```
+Even if you have no bed probe you can still use any of the core `AUTO_BED_LEVELING_*` options below by selecting this option. With `PROBE_MANUALLY` the `G29` command only moves the nozzle to the next probe point where it pauses. You adjust the Z height with a piece of paper or feeler gauge, then send `G29` again to continue to the next point. You can also enable `LCD_BED_LEVELING` to add a "Level Bed" Menu item to the LCD for a fully interactive leveling process.
+
 #### Fix Mounted Probe
 
 ```cpp
-#define FIX_MOUNTED_PROBE
+//#define FIX_MOUNTED_PROBE
 ```
 This option is for any probe that's fixed in place, with no need to be deployed or stowed. Specify this type for an inductive probe or when using the nozzle itself as the probe.
 
@@ -689,6 +699,13 @@ The ANTCLABS BLTouch probe uses custom circuitry and a magnet to raise and lower
 //#define Z_SERVO_ANGLES {70,0} // Z Servo Deploy and Stow angles
 ```
 To indicate a Servo Z Probe (e.g., an endstop switch mounted on a rotating arm) just specify the servo index. Use the `M280` command to find the best `Z_SERVO_ANGLES` values.
+
+#### Solenoid Probe
+
+```cpp
+//#define SOLENOID_PROBE
+```
+A probe that is deployed and stowed with a solenoid pin (Defined as `SOL1_PIN`.)
 
 #### Z Probe Sled
 
@@ -735,33 +752,6 @@ Probing should be done quickly, but the Z speed should be tuned for best repeata
 //#define PROBE_DOUBLE_TOUCH
 ```
 Some probes may be more accurate with this option, which causes all probes to be done twice — first fast, then slow. The second result is used as the measured Z position.
-
-### Z Probe End Script
-
-```cpp
-//#define Z_PROBE_END_SCRIPT "G1 Z10 F12000\nG1 X15 Y330\nG1 Z0.5\nG1 Z10"
-```
-A custom script to do at the very end of `G29`. If multiple commands are needed, divide them with `\n` (the newline character).
-
-
-### Probe Pins
-
-```cpp
-//#define Z_MIN_PROBE_ENDSTOP
-```
-If you want to use both probe and end-switch for homing and endstop, enable this. However, This requires extra setups to be done. If you're using Ramps 1.4, the probe pins are located in D32 of the aux4 array that is also used by the lcd panel. You will have to change the pin assignments from your specified board pin file (for example "pins_RAMPS_14.h") located at `#define Z_MIN_PROBE_PIN  32`. I would change this to pin 19 (z max) since it is rarely if ever used. This extra port is actually the Z Probe that is used for your auto bed leveling.
-
-Another way is to change between these pins: `#define Z_MIN_PROBE_PIN  32`, `#define Z_MIN_PIN 18`, and `#define Z_MAX_PIN 19`  according to your board. This is not for beginners.
-
-```cpp
-#define Z_MIN_PROBE_USES_Z_MIN_ENDSTOP_PIN
-```
-This uses the same pin for the end-switch and the probe. The advantage is that you don't need to alter any pin-out assignments, however you can only have ONE active at a time.
-
-```cpp
-//#define DISABLE_Z_MIN_PROBE_ENDSTOP
-```
-This typically disables your probe feature. Only applicable to `//#define Z_MIN_PROBE_ENDSTOP` enabled
 
 ### Probe Testing
 
@@ -945,11 +935,42 @@ Use this option to enable extra debugging of homing and leveling. You can then u
 ```cpp
 #define ENABLE_LEVELING_FADE_HEIGHT
 ```
-Available with both `AUTO_BED_LEVELING_BILINEAR` and `MESH_BED_LEVELING`, this option adds the `M420 Zn` command to set a fade distance over which leveling will be gradually reduced. Above the given Z height, leveling compensation will no longer be applied.
+Available with `MESH_BED_LEVELING`, `AUTO_BED_LEVELING_BILINEAR`, and `AUTO_BED_LEVELING_UBL`.
 
-This feature exists to prevent irregularities in the bed from propagating through the model's entire height. This reduces computational requirements and resonance from the Z axis above the fade height.
+This option adds the `Z` parameter to `M420` which sets a fade distance over which leveling will be gradually reduced. Above the given Z height, leveling compensation will no longer be applied.
+
+This feature exists to prevent irregularities in the bed from propagating through the model's entire height. Fading out leveling also reduces computational requirements and resonance from the Z axis above the fade height. For a well-aligned machine, this feature can improve print results.
 
 Example: To have leveling fade out over the first 10mm of layer printing use `M420 Z10`. If each layer is 0.2mm high, leveling compensation will be reduced by 1/50th (2%) after each layer. Above 10mm the machine will move without compensation.
+
+## Auto Bed Leveling
+
+Auto Bed Leveling (ABL) is a standard feature on many 3D printers. It takes the guess-work out of getting a good first layer and good bed adhesion.  All forms of bed leveling add `G29` Bed Probing, `M420` enable/disable, and can save their results to EEPROM with `M500`. Bravo!
+
+With ABL enabled:
+
+- `G28` disables bed leveling, but leaves previous leveling data intact.
+- `G29` automatically probes the bed at various points, measures the bed height, calculates a correction grid or matrix, and turns on leveling compensation.
+- The item "Level Bed" is added to the LCD menu.
+- `M500` saves the bed leveling data to EEPROM. Use `M501` to load it, `M502` to clear it, and `M503` to report it.
+- `M420 S<bool>` can be used to enable/disable bed leveling. For example, `M420 S1` must be used after `M501` to enable the loaded mesh or matrix, and to re-enable leveling after `G28`, which disables leveling compensation.
+
+```cpp
+//#define AUTO_BED_LEVELING_3POINT
+//#define AUTO_BED_LEVELING_LINEAR
+//#define AUTO_BED_LEVELING_BILINEAR
+//#define AUTO_BED_LEVELING_UBL
+```
+Enable just one type of Auto Bed Leveling.
+
+- `AUTO_BED_LEVELING_3POINT` probes three points in a triangle. The flat plane gives a transform matrix suitable to compensate for a flat but tilted bed.
+- `AUTO_BED_LEVELING_LINEAR` probes the bed in a grid. A transform matrix is produced by least-squares method to compensate for a flat but tilted bed.
+- `AUTO_BED_LEVELING_BILINEAR` probes the bed in a grid, with optional Catmull-Rom subdivision. The mesh data is used to adjust Z height across the bed using bilinear interpolation. Good for delta, large, or uneven beds.
+- `AUTO_BED_LEVELING_UBL` (recommended) combines the features of 3-point, linear, bilinear, and mesh leveling. As with bilinear leveling, the mesh data generated by UBL is used to adjust Z height across the bed using bilinear interpolation. An LCD controller is currently required.
+
+{% alert info %}
+Only `AUTO_BED_LEVELING_BILINEAR` and `AUTO_BED_LEVELING_UBL` support `DELTA`. Only `AUTO_BED_LEVELING_BILINEAR` currently supports `SCARA`.
+{% endalert %}
 
 
 ## Mesh (Manual) Bed Leveling
@@ -969,40 +990,6 @@ With MBL enabled:
 `MESH_BED_LEVELING` is not compatible with Delta and SCARA.
 {% endalert %}
 
-### MBL LCD Menu
-
-```cpp
-//#define MANUAL_BED_LEVELING
-```
-Enable to add a "Level Bed" menu item to the LCD that initiates a fully guided leveling procedure. See [`G29` for MBL](/docs/gcode/G029-mbl.html) for more details.
-
-
-## Auto Bed Leveling
-
-Auto Bed Leveling (ABL) is a standard feature on many 3D printers. It takes the guess-work out of getting a good first layer and good bed adhesion.
-
-With ABL enabled:
-
-- `G29` automatically probes the bed at various points, measures the bed height, calculates a correction grid or matrix, and turns on leveling compensation.
-- The item "Level Bed" is added to the LCD menu.
-- `M500` saves the bed leveling data to EEPROM. Use `M501` to load it, `M502` to clear it, and `M503` to report it.
-- `M420 S<bool>` can be used to enable/disable bed leveling. For example, `M420 S1` must be used after `M501` to enable the loaded mesh or matrix.
-
-```cpp
-//#define AUTO_BED_LEVELING_3POINT
-//#define AUTO_BED_LEVELING_LINEAR
-//#define AUTO_BED_LEVELING_BILINEAR
-```
-Enable just one type of Auto Bed Leveling:
-
-- Use `AUTO_BED_LEVELING_3POINT` to probe three points. The flat triangle gives a transform suitable to compensate for a flat but tilted bed.
-- Use `AUTO_BED_LEVELING_LINEAR` to probe a grid. A transform is produced by least-squares method to compensate for a flat but tilted bed.
-- Use `AUTO_BED_LEVELING_BILINEAR` to probe a grid. The mesh data is used to adjust Z height across the bed using bilinear interpolation.
-
-{% alert info %}
-For Delta and SCARA, only `AUTO_BED_LEVELING_BILINEAR` is supported.
-{% endalert %}
-
 
 ### Linear / Bilinear Options
 
@@ -1015,8 +1002,8 @@ For Delta and SCARA, only `AUTO_BED_LEVELING_BILINEAR` is supported.
 These settings specify the boundaries for probing with `G29`. This will most likely be a sub-section of the bed because probes are not usually able to reach every point that the nozzle can. Take account of the probe's XY offsets when setting these boundaries.
 
 ```cpp
-#define ABL_GRID_MAX_POINTS_X 3
-#define ABL_GRID_MAX_POINTS_Y ABL_GRID_MAX_POINTS_X
+#define GRID_MAX_POINTS_X 3
+#define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
 ```
 These options specify the default number of points to probe in each dimension during `G29`.
 
@@ -1025,6 +1012,21 @@ These options specify the default number of points to probe in each dimension du
 ```
 Enable this option if probing should proceed in the Y dimension first instead of X first.
 
+### Bilinear Options
+
+```cpp
+//#define EXTRAPOLATE_BEYOND_GRID
+```
+Usually the probed grid doesn't extend all the way to the edges of the bed. So, outside the bounds of the probed grid, Z adjustment can take one of two approaches. Either the Z height can continue to raise/lower by the established tilt of the nearest grid box (best when most of the bed was probed), or it can follow the contour of the nearest edge (the default). Enable this option for extrapolation.
+
+```cpp
+//#define ABL_BILINEAR_SUBDIVISION
+#if ENABLED(ABL_BILINEAR_SUBDIVISION)
+  // Number of subdivisions between probe points
+  #define BILINEAR_SUBDIVISIONS 3
+#endif
+```
+If you have SRAM to spare, this option will multiply the resolution of the bilinear grid using the Catmull-Rom subdivision method. This option only applies to bilinear leveling. If the default value of 3 is too expensive, try 2 or 1. (In Marlin 1.1.1, the default grid will be stored in PROGMEM, as UBL now does.)
 
 ### 3-Point Options
 
@@ -1037,6 +1039,44 @@ Enable this option if probing should proceed in the Y dimension first instead of
 #define ABL_PROBE_PT_3_Y 20
 ```
 These options specify the three points that will be probed during `G29`.
+
+### Unified Bed Leveling Options
+
+```cpp
+#define UBL_MESH_INSET 1          // Mesh inset margin on print area
+#define GRID_MAX_POINTS_X 10      // Don't use more than 15 points per axis, implementation limited.
+#define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
+#define UBL_PROBE_PT_1_X 39       // These set the probe locations for when UBL does a 3-Point leveling
+#define UBL_PROBE_PT_1_Y 180      // of the mesh.
+#define UBL_PROBE_PT_2_X 39
+#define UBL_PROBE_PT_2_Y 20
+#define UBL_PROBE_PT_3_X 180
+#define UBL_PROBE_PT_3_Y 20
+```
+These options specify the inset, grid, and 3-point triangle to use for UBL. Note that probe XY offsets and movement limits may constrain the probeable area of the bed.
+
+```cpp
+//#define UBL_G26_MESH_EDITING
+```
+Enable this option for `G26` Mesh Editing. (Documentation coming soon!)
+
+### LCD "Level Bed" Menu
+
+```cpp
+#define LCD_BED_LEVELING
+```
+Available with `MESH_BED_LEVELING` and `PROBE_MANUALLY` (with Auto Bed Leveling).
+
+`LCD_BED_LEVELING` adds a "Level Bed" menu to the LCD that starts a step-by-step guided leveling procedure that requires no probe. For Mesh Bed Leveling see [`G29` for MBL](/docs/gcode/G029-mbl.html), and for `PROBE_MANUALLY` see the corresponding article [`G29` for ABL](http://marlinfw.org/docs/gcode/G029-abl.html).
+
+See the `Configuration.h` file for sub-options.
+
+### Z Probe End Script
+
+```cpp
+//#define Z_PROBE_END_SCRIPT "G1 Z10 F12000\nG1 X15 Y330\nG1 Z0.5\nG1 Z10"
+```
+A custom script to do at the very end of `G29`. If multiple commands are needed, divide them with `\n` (the newline character).
 
 ## Homing Options
 
@@ -1070,6 +1110,21 @@ These settings are used to override the home position. Leave them undefined for 
 
 Enable this option if a probe (not an endstop) is being used for Z homing. Z Safe Homing isn't needed if a Z endstop is used for homing, but it may also be enabled just to have XY always move to some custom position after homing.
 
+### Homing Speed
+
+```cpp
+// Homing speeds (mm/m)
+#define HOMING_FEEDRATE_XY (50*60)
+#define HOMING_FEEDRATE_Z  (4*60)
+```
+Homing speed for use in auto home and auto bed leveling. These values may be set to the fastest speeds your machine can achieve. Homing and probing speeds are constrained by the current max feedrate and max acceleration settings.
+
+{% alert warning %}
+Setting these values too high may result in reduced accuracy and/or skipped steps. Reducing acceleration may help to achieve higher top speeds.
+{% endalert %}
+
+***
+
 ## Extras 1
 
 ### EEPROM
@@ -1091,7 +1146,7 @@ Settings that can be changed and saved to EEPROM are marked with <em class="fa f
 {% endalert %}
 
 {% alert info %}
-Certain EEPROM behaviors may be confusing. For example, when you edit the configurations and re-flash the firmware, you may discover that your new settings don't have any effect! What's going on? They are still overridden by the settings last saved to EEPROM! To apply and preserve your new settings, use `M502` to restore settings to your defaults, then use `M500` to save them to EEPROM. You can always use `M503` to view the current settings in volatile memory (even without `EEPROM_SETTINGS` enabled).
+Certain EEPROM behaviors may be confusing. For example, when you edit the configurations and re-flash the firmware, you may discover that your new settings don't have any effect! What's going on? They are still overridden by the settings last saved to EEPROM! Use `M502` to restore settings to defaults, then `M500` to save them. Note that `M503` shows current settings in volatile memory even without `EEPROM_SETTINGS`.
 {% endalert %}
 
 ### Host Keepalive
@@ -1103,19 +1158,22 @@ Certain EEPROM behaviors may be confusing. For example, when you edit the config
 When Host Keepalive is enabled Marlin will send a busy status message to the host every couple of seconds when it can't accept commands. Disable if your host doesn't like keepalive messages. Use `DEFAULT_KEEPALIVE_INTERVAL` for the default number of seconds between "busy" messages. Override with [`M113`](/docs/gcode/M113.html).
 
 ### Free Memory Watcher
-
 ```cpp
 //#define M100_FREE_MEMORY_WATCHER
 ```
 Uncomment to add the `M100` Free Memory Watcher for debugging purposes.
 
-### Inch Units Support
-
+### Inch Units
 ```cpp
 //#define INCH_MODE_SUPPORT
 ```
 This option adds support for the `G20` and `G21` commands, allowing G-Code to specify units in inches.
 
+### Temperature Units
+```cpp
+//#define TEMPERATURE_UNITS_SUPPORT
+```
+This option adds support for `M149 C`, `M149 K`, and `M149 F` to set temperature units to Celsius, Kelvin, or Fahrenheit. Without this option all temperatures must be specified in Celsius units.
 
 ### LCD Material Presets <em class="fa fa-sticky-note-o text-info" aria-hidden="true"></em> <em class="fa fa-desktop text-info" aria-hidden="true"></em>
 
@@ -1130,6 +1188,49 @@ This option adds support for the `G20` and `G21` commands, allowing G-Code to sp
 ```
 These are the default values for the `Prepare` > `Preheat` LCD menu options. These values can be overridden using the `M145` command or the `Control` > `Temperature` > `Preheat Material X conf` submenus.
 
+### Nozzle Park
+```cpp
+//#define NOZZLE_PARK_FEATURE
+#if ENABLED(NOZZLE_PARK_FEATURE)
+  // Specify a park position as { X, Y, Z }
+  #define NOZZLE_PARK_POINT { (X_MIN_POS + 10), (Y_MAX_POS - 10), 20 }
+#endif
+```
+Park the nozzle at the given XYZ position on idle or `G27`.
+
+The "P" parameter controls the action applied to the Z axis:
+
+- `P0` - (Default) If Z is below park Z raise the nozzle.
+- `P1` - Raise the nozzle always to Z-park height.
+- `P2` - Raise the nozzle by Z-park amount, limited to `Z_MAX_POS`.
+
+### Nozzle Clean
+```cpp
+//#define NOZZLE_CLEAN_FEATURE
+```
+Adds the `G12` command to perform a nozzle cleaning process. See `Configuration.h` for additional configuration options.
+
+### Print Job Timer
+```cpp
+#define PRINTJOB_TIMER_AUTOSTART
+```
+Automatically start and stop the print job timer when `M104`/`M109`/`M190` commands are received. Also adds the following commands to control the timer:
+- `M75` - Start the print job timer.
+- `M76` - Pause the print job timer.
+- `M77` - Stop the print job timer.
+
+### Print Counter
+```cpp
+//#define PRINTCOUNTER
+```
+When enabled Marlin will keep track of some print statistics such as:
+
+- Total print jobs
+- Total successful print jobs
+- Total failed print jobs
+- Total time printing
+
+This information can be viewed by the `M78` command.
 
 ## LCD Language
 
@@ -1173,7 +1274,7 @@ To determine the language extension installed on your controller:
 - Click the controller to view the LCD menu
 - The LCD will display Japanese, Western, or Cyrillic text
 
-See https://github.com/MarlinFirmware/Marlin/wiki/LCD-Language
+For in-depth info on the Marlin display system, see [LCD Language Font System](https://github.com/MarlinFirmware/Marlin/wiki/LCD-Language) on the Marlin wiki.
 
 ![SD Card](/assets/images/config/sdcard.jpg){: .floater}
 
@@ -1274,46 +1375,56 @@ Most other LCD controllers are variants of these. Enable just one of the followi
 
 ### Character LCDs
 
-- `ULTIMAKERCONTROLLER`: The original Ultimaker Controller.
-- `ULTIPANEL`: [ULTIPANEL](http://www.thingiverse.com/thing:15081) as seen on Thingiverse.
-- `PANEL_ONE`: [PanelOne from T3P3](http://reprap.org/wiki/PanelOne) (via RAMPS 1.4 AUX2/AUX3). A variant of `ULTIMAKERCONTROLLER`.
-- `REPRAP_DISCOUNT_SMART_CONTROLLER`: [RepRapDiscount Smart Controller](http://reprap.org/wiki/RepRapDiscount_Smart_Controller). Usually sold with a white PCB.
-- `G3D_PANEL`: [Gadgets3D G3D LCD/SD Controller](http://reprap.org/wiki/RAMPS_1.3/1.4_GADGETS3D_Shield_with_Panel). Usually sold with a blue PCB.
-- `RIGIDBOT_PANEL`: [RigidBot Panel V1.0](http://www.inventapart.com/).
+Option|Description
+----|--------
+`ULTIMAKERCONTROLLER`|The original Ultimaker Controller.
+`ULTIPANEL`|[ULTIPANEL](http://www.thingiverse.com/thing:15081) as seen on Thingiverse.
+`PANEL_ONE`|[PanelOne from T3P3](http://reprap.org/wiki/PanelOne) (via RAMPS 1.4 AUX2/AUX3). A variant of `ULTIMAKERCONTROLLER`.
+`REPRAP_DISCOUNT_SMART_CONTROLLER`|[RepRapDiscount Smart Controller](http://reprap.org/wiki/RepRapDiscount_Smart_Controller). Usually sold with a white PCB.
+`G3D_PANEL`|[Gadgets3D G3D LCD/SD Controller](http://reprap.org/wiki/RAMPS_1.3/1.4_GADGETS3D_Shield_with_Panel). Usually sold with a blue PCB.
+`RIGIDBOT_PANEL`|[RigidBot Panel V1.0](http://www.inventapart.com/).
 
 ### Graphical LCDs
 
-- `CARTESIO_UI`: [Cartesio UI](http://mauk.cc/webshop/cartesio-shop/electronics/user-interface).
-- `MAKRPANEL`: [MaKr3d Makr-Panel](http://reprap.org/wiki/MaKr3d_MaKrPanel) with graphic controller and SD support.
-- `REPRAPWORLD_GRAPHICAL_LCD`: [ReprapWorld Graphical LCD](https://reprapworld.com/?products_details&products_id/1218).
-- `VIKI2`: [Panucatt Devices](http://panucatt.com) [Viki 2.0](http://panucatt.com).
-- `miniVIKI`: [mini Viki with Graphic LCD](http://panucatt.com).
-- `ELB_FULL_GRAPHIC_CONTROLLER`: [Adafruit ST7565 Full Graphic Controller](https://github.com/eboston/Adafruit-ST7565-Full-Graphic-Controller/).
-- `REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER`: [RepRapDiscount Full Graphic Smart Controller](http://reprap.org/wiki/RepRapDiscount_Full_Graphic_Smart_Controller).
-- `MINIPANEL`: [MakerLab Mini Panel](http://reprap.org/wiki/Mini_panel) with graphic controller and SD support.
-- `BQ_LCD_SMART_CONTROLLER`: BQ LCD Smart Controller shipped with the BQ Hephestos 2 and Witbox 2.
+Option|Description
+----|--------
+`CARTESIO_UI`|[Cartesio UI](http://mauk.cc/webshop/cartesio-shop/electronics/user-interface).
+`MAKRPANEL`|[MaKr3d Makr-Panel](http://reprap.org/wiki/MaKr3d_MaKrPanel) with graphic controller and SD support.
+`REPRAPWORLD_GRAPHICAL_LCD`|[ReprapWorld Graphical LCD](https://reprapworld.com/?products_details&products_id/1218).
+`VIKI2`|[Panucatt Devices](http://panucatt.com) [Viki 2.0](http://panucatt.com).
+`miniVIKI`|[mini Viki with Graphic LCD](http://panucatt.com).
+`ELB_FULL_GRAPHIC_CONTROLLER`|[Adafruit ST7565 Full Graphic Controller](https://github.com/eboston/Adafruit-ST7565-Full-Graphic-Controller/).
+`REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER`|[RepRapDiscount Full Graphic Smart Controller](http://reprap.org/wiki/RepRapDiscount_Full_Graphic_Smart_Controller).
+`MINIPANEL`|[MakerLab Mini Panel](http://reprap.org/wiki/Mini_panel) with graphic controller and SD support.
+`BQ_LCD_SMART_CONTROLLER`|BQ LCD Smart Controller shipped with the BQ Hephestos 2 and Witbox 2.
 
-### Keypad
+### Keypads
 
-- `REPRAPWORLD_KEYPAD`: [RepRapWorld Keypad v1.1](http://reprapworld.com/?products_details&products_id=202&cPath=1591_1626) Use `REPRAPWORLD_KEYPAD_MOVE_STEP` to set how much the robot should move on each keypress (e.g., 10mm per click).
+Option|Description
+----|--------
+`REPRAPWORLD_KEYPAD`|[RepRapWorld Keypad v1.1](http://reprapworld.com/?products_details&products_id=202&cPath=1591_1626) Use `REPRAPWORLD_KEYPAD_MOVE_STEP` to set how much the robot should move on each keypress (e.g., 10mm per click).
 
 ### I2C Character LCDs
 
 These controllers all require the [LiquidCrystal_I2C library](https://github.com/kiyoshigawa/LiquidCrystal_I2C).
 
-- `RA_CONTROL_PANEL`: Elefu RA Board Control Panel
-- `LCD_I2C_SAINSMART_YWROBOT`: Sainsmart [YWRobot LCM1602 LCD Display](http://henrysbench.capnfatz.com/henrys-bench/arduino-displays/ywrobot-lcm1602-iic-v1-lcd-arduino-tutorial/).
-- `LCM1602`: Generic LCM1602 LCD adapter
-- `LCD_I2C_PANELOLU2`: PANELOLU2 LCD with status LEDs, separate encoder and click inputs. The click input can either be directly connected to a pin (if `BTN_ENC` is defined) or read through I2C (with `BTN_ENC` undefined). Requires [LiquidTWI2 library](https://github.com/lincomatic/LiquidTWI2) v1.2.3 or later.
-- `LCD_I2C_VIKI`: Panucatt VIKI LCD with status LEDs, integrated click & L/R/U/D buttons, separate encoder inputs.
-- `SAV_3DLCD`: Shift register panels. [2 wire Non-latching LCD SR](https://goo.gl/aJJ4sH). See [LCD configuration](http://reprap.org/wiki/SAV_3D_LCD).
+Option|Description
+----|--------
+`RA_CONTROL_PANEL`|Elefu RA Board Control Panel
+`LCD_I2C_SAINSMART_YWROBOT`|Sainsmart [YWRobot LCM1602 LCD Display](http://henrysbench.capnfatz.com/henrys-bench/arduino-displays/ywrobot-lcm1602-iic-v1-lcd-arduino-tutorial/).
+`LCM1602`|Generic LCM1602 LCD adapter
+`LCD_I2C_PANELOLU2`|PANELOLU2 LCD with status LEDs, separate encoder and click inputs. The click input can either be directly connected to a pin (if `BTN_ENC` is defined) or read through I2C (with `BTN_ENC` undefined). Requires [LiquidTWI2 library](https://github.com/lincomatic/LiquidTWI2) v1.2.3 or later.
+`LCD_I2C_VIKI`|Panucatt VIKI LCD with status LEDs, integrated click & L/R/U/D buttons, separate encoder inputs.
+`SAV_3DLCD`|Shift register panels. [2 wire Non-latching LCD SR](https://goo.gl/aJJ4sH). See [LCD configuration](http://reprap.org/wiki/SAV_3D_LCD).
 
 ### I2C Graphical LCDs
 
 These controllers all require the [LiquidCrystal_I2C library](https://github.com/kiyoshigawa/LiquidCrystal_I2C).
 
-- `U8GLIB_SSD1306`: SSD1306 OLED full graphics generic display.
-- `SAV_3DGLCD`: SAV OLED LCD module support using either SSD1306 or SH1106 based LCD modules.
+Option|Description
+----|--------
+`U8GLIB_SSD1306`|SSD1306 OLED full graphics generic display.
+`SAV_3DGLCD`|SAV OLED LCD module support using either SSD1306 or SH1106 based LCD modules.
 
 
 ## Extras 2
