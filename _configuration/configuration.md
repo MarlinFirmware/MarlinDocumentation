@@ -169,6 +169,7 @@ A unique ID for your 3D printer. A suitable unique ID can be generated randomly 
 This value, from 1 to 4, defines how many extruders (or E steppers) the printer has. By default Marlin will assume separate nozzles all moving together on a single carriage. If you have a single nozzle, a switching extruder, a mixing extruder, or dual X carriages, specify that below.
 
 This value should be set to the total number of E stepper motors on the machine, even if there's only a single nozzle.
+In case you use switching extruder, it should be set to 2 for one switching extruder, respectively to 4 for two switching extruder.
 
 ### Distinct E Factors
 
@@ -195,6 +196,21 @@ Enable `SINGLENOZZLE` if you have an E3D Cyclops or any other "multi-extruder" s
 #endif
 ```
 A Switching Extruder is a dual extruder that uses a single stepper motor to drive two filaments, but only one at a time. The servo is used to switch the side of the extruder that will drive the filament. The E motor also reverses direction for the second filament. Set the servo sub-settings above according to your particular extruder's setup instructions.
+
+### Single Nozzle Switching Extruder
+
+```cpp
+//#define SINGLENOZZLE_SWITCHING_EXTRUDER
+#if ENABLED(SINGLENOZZLE_SWITCHING_EXTRUDER)
+  #define SWITCHING_EXTRUDER_SERVO_E1_E2_NR 0
+  #define SWITCHING_EXTRUDER_SERVO_E1_E2_ANGLES { 0, 90 } // Angles for E1, E2
+  #if EXTRUDERS > 2 
+    #define SWITCHING_EXTRUDER_SERVO_E3_E4_NR 1
+    #define SWITCHING_EXTRUDER_SERVO_E3_E4_ANGLES { 0, 90 } // Angles for E3, E4
+  #endif
+#endif
+```
+A Single Nozzle Switching Extruder is a dual extruder that uses a single stepper motor to drive two filaments, but only one at a time. In contrast to the Switching Extruder, it only use one Hotend. It is possible to use one or two Switching Extruder, so you can drive up to four filaments. The servos are used to switch the side of the extruder that will drive the filament. The E motor also reverses direction for the second or fourth filament. Set the servo sub-settings above according to your particular extruder's setup instructions.
 
 ### Mixing Extruder
 
