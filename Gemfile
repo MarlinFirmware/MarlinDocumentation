@@ -11,6 +11,7 @@ gem 'jekyll-seo-tag', '>= 2.1.0'
 gem 'kramdown', '>= 1.11.1'
 gem 'naturally', '>= 2.1.0'
 gem 'wdm', '>= 0.1.0' if Gem.win_platform?
+gem 'tzinfo-data'
 
 # If you have issues installing rdiscount make sure you're using one
 # of the following Ruby versions:
