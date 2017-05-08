@@ -42,12 +42,12 @@ For a Greg's Wade extruder start with `K = 75` for PLA and `K = 150` for nGen. `
 
 Use a test cube with the dimensions 25x25x2mm for testing. Set the acceleration of your printer to a low value like 500mm/s² to eliminate other effects like overshooting fluid filament on direction changes. Set all print speeds for the cube to the same high value, 70mm/s for 0.2mm layer height for example - but be sure to not exceed the flow rate your hotend can handle! Ensure your slicers cooling settings will not slow down the print speed. If it would do this, disable the cooling feature or increase the length and width of the test cube.
 
-Print some test cubes, each with another `K` value. You can set the value with "M905 `K`.." before you start the print, where .. is the value you want it to be. Start with K0 to disable the pressure control, which will give you a reference print how your cube would look like without the feature enabled.
+Print some test cubes, each with another `K` value. You can set the value with "M900 `K`.." before you start the print, where .. is the value you want it to be. Start with K0 to disable the pressure control, which will give you a reference print how your cube would look like without the feature enabled.
 Then increase `K` maybe in 25 units steps. On every print note down the used `K` value.
 
 The best value is the one where you have no bleeding edges (bleeding edges = `K` too low) and no inward rounded edges (`K` too high). Check by holding a metal ruler on each of the 4 sides of the test prints. You will also see and even more feel the difference in the quality of the top infill, where it changes print direction at the perimeters. But top infill alone is no sufficient calibration criterion as it is also influenced by the infill overlap % that's between 15-20% in most slicers.
 
-When you have found a good value, there are two ways to make them permanent in your firmware. If you are using only one filament material, the best way is to set the `K` value inside Configuration_adv.h and reflash the firmware. If you are using different materials, you might want to insert a "M905 `K`.." line into the start code inside your slicer profile used for the corresponding material.
+When you have found a good value, there are two ways to make them permanent in your firmware. If you are using only one filament material, the best way is to set the `K` value inside Configuration_adv.h and reflash the firmware. If you are using different materials, you might want to insert a "M900 `K`.." line into the start code inside your slicer profile used for the corresponding material.
 
 ## Developer Information
 
