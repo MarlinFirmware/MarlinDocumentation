@@ -1,9 +1,9 @@
 ---
 tag: g29c
-title: Coming Soon
-brief: Description Here
+title: Unified Bed Leveling - Coming Soon!
+brief: Probe the bed and enable leveling compensation.
 
-experimental: false
+experimental: true
 group: none
 
 codes:
