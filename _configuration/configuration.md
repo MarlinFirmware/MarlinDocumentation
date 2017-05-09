@@ -1424,7 +1424,7 @@ Most other LCD controllers are variants of these. Enable just one of the followi
 ### Character LCDs
 
 Option|Description
-----|--------
+------|-----------
 `ULTIMAKERCONTROLLER`|The original Ultimaker Controller.
 `ULTIPANEL`|[ULTIPANEL](http://www.thingiverse.com/thing:15081) as seen on Thingiverse.
 `PANEL_ONE`|[PanelOne from T3P3](http://reprap.org/wiki/PanelOne) (via RAMPS 1.4 AUX2/AUX3). A variant of `ULTIMAKERCONTROLLER`.
@@ -1435,7 +1435,7 @@ Option|Description
 ### Graphical LCDs
 
 Option|Description
-----|--------
+------|-----------
 `CARTESIO_UI`|[Cartesio UI](http://mauk.cc/webshop/cartesio-shop/electronics/user-interface).
 `MAKRPANEL`|[MaKr3d Makr-Panel](http://reprap.org/wiki/MaKr3d_MaKrPanel) with graphic controller and SD support.
 `REPRAPWORLD_GRAPHICAL_LCD`|[ReprapWorld Graphical LCD](https://reprapworld.com/?products_details&products_id/1218).
@@ -1449,7 +1449,7 @@ Option|Description
 ### Keypads
 
 Option|Description
-----|--------
+------|-----------
 `REPRAPWORLD_KEYPAD`|[RepRapWorld Keypad v1.1](http://reprapworld.com/?products_details&products_id=202&cPath=1591_1626) Use `REPRAPWORLD_KEYPAD_MOVE_STEP` to set how much the robot should move on each keypress (e.g., 10mm per click).
 
 ### I2C Character LCDs
@@ -1457,7 +1457,7 @@ Option|Description
 These controllers all require the [LiquidCrystal_I2C library](https://github.com/kiyoshigawa/LiquidCrystal_I2C).
 
 Option|Description
-----|--------
+------|-----------
 `RA_CONTROL_PANEL`|Elefu RA Board Control Panel
 `LCD_I2C_SAINSMART_YWROBOT`|Sainsmart [YWRobot LCM1602 LCD Display](http://henrysbench.capnfatz.com/henrys-bench/arduino-displays/ywrobot-lcm1602-iic-v1-lcd-arduino-tutorial/).
 `LCM1602`|Generic LCM1602 LCD adapter
@@ -1470,7 +1470,7 @@ Option|Description
 These controllers all require the [LiquidCrystal_I2C library](https://github.com/kiyoshigawa/LiquidCrystal_I2C).
 
 Option|Description
-----|--------
+------|-----------
 `U8GLIB_SSD1306`|SSD1306 OLED full graphics generic display.
 `SAV_3DGLCD`|SAV OLED LCD module support using either SSD1306 or SH1106 based LCD modules.
 
