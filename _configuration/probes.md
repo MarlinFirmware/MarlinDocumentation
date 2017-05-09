@@ -70,7 +70,7 @@ What kind of probe do you have?
 - `Z_PROBE_ALLEN_KEY`
   This is a popular solution on deltas. A spare Allen key is used with an endstop switch to make a probe that's deployed and stowed by turning the key 90 degrees. You can either deploy and stow the key manually or configure movements that bump the key against some fixed point. Options for this type of probe are included in the delta example configurations that come with Marlin.
 - `PROBE_MANUALLY`
-  The bed-nozzle distance can be measured without a probe by following a [manual procedure](link). The nozzle moves to each point and pauses. You adjust the Z height so that the nozzle is touching the bed. Once the Z height is adjusted, you tell the machine to go to the next point. Continue until all points are probed. This option can be used with all Auto Bed Leveling options except UBL, which is freestanding.
+  The bed-nozzle distance can be measured without a probe by following a [`manual procedure`](/docs/gcode/G029-mbl.html). The nozzle moves to each point and pauses. You adjust the Z height so that the nozzle is touching the bed. Once the Z height is adjusted, you tell the machine to go to the next point. Continue until all points are probed. This option can be used with all Auto Bed Leveling options except UBL, which is freestanding.
 
 #### 3. Other Probe Options
 
