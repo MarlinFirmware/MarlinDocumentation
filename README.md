@@ -2,11 +2,11 @@
 
 [![Build Status](https://travis-ci.org/MarlinFirmware/MarlinDocumentation.svg?branch=master)](https://travis-ci.org/MarlinFirmware/MarlinDocumentation)
 
-The aim of this project is to provide clear and concise documentation for [Marlin 3D printer firmware](https://github.com/MarlinFirmware/Marlin). This documentation is made open and available on Github so anyone is welcome to contribute by either completing, correcting or creating new articles. Please see the chapter "[Most wanted contributions](#most-wanted-contributions)" for a current list of contributions needed for the documentation project.
+The aim of this project is to provide clear and concise documentation for [Marlin 3D printer firmware](https://github.com/MarlinFirmware/Marlin). This documentation is made open and available on Github so anyone is welcome to contribute by either completing, correcting or creating new articles. See the section below, "[What We Need Most](#what-we-need-most)," for a current list of... what we need most.
 
 ![Marlin logo](assets/images/logo/marlin/small.png)
 
-Be safe, have fun and build anything.
+Be safe, have fun and build all the things!
 
 ## Technical details
 
@@ -18,13 +18,13 @@ The Marlin Documentation Project is built using the following technologies:
 
 ## How to contribute
 
-To work with the documentation, you must first make a Fork of this repository under your own Github account, then locally clone a copy of **your** MarlinDocumentation fork. You should do all your work within your own fork before submitting it to us. You can use Github's "Open in Desktop" option, or from your own desktop open a terminal/cmd window and do:
+To work with the documentation, first you need to make a Fork of this repository in your own Github account, then locally clone **your MarlinDocumentation fork**. You should do all work within your own fork before submitting it to us. You can use Github's "Open in Desktop" option, or from your own desktop open a terminal/cmd window and do:
   - `cd C:\` (for example)
   - `git clone https://github.com/MarlinFirmware/MarlinDocumentation.git`
 
 This will create a local `C:\MarlinDocumentation` folder linked to your fork.
 
-To add a new document to the project, start by creating a new branch as a copy of the 'master' branch. You can do this using the Github web interface, from within Github Desktop, or from the command line.
+To add new documentation or edit existing documentation, start by creating a new branch as a copy of the 'master' branch. You can do this using the Github web interface, from within Github Desktop, or from the command line.
 
 If your new document is about "mashed potatoes" then name the new branch accordingly:
 ```
@@ -45,12 +45,12 @@ The preferred format for new document contribution is Markdown language. With th
 
 Try to be neutral, concise, and straightforward. Avoid use of personal pronouns, unless avoiding them proves awkward. Provide images and give examples where needed. Check your spelling, grammar, and punctuation.
 
-## Most wanted contributions
+## What we need most
 
-1. Transfer all documents from the old Marlin wiki into this new system.
-1. Transfer descriptions of the options in Configuration.h and Configuration_adv.h to the new system.
+1. Transfer documents from the old Marlin wiki into the new site.
+1. Transfer descriptions of the options in `Configuration.h` and `Configuration_adv.h` to the new system.
 1. Create "Getting Started" guides to ease the Marlin learning curve for new users.
-1. Documentation of GCodes with notes specific to Marlin.
+1. Document all supported GCodes with notes specific to Marlin.
 
 ## Going Deeper
 
