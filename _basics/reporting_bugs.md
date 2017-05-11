@@ -59,11 +59,13 @@ You will need to create a free Github account to report bugs. Please pay attenti
 
 In addition to following the guidelines above, we ask that you follow a thorough process of troubleshooting and research before submitting your issue.
 
--   Use a process of elimination to narrow down the root cause as far as possible.
--   Try changing settings related to the issue to see how they affect behavior.
--   Search the [RepRap forums] for others who may have similar issues.
+  - Use a process of elimination to narrow down the root cause as far as possible.
+  - Try changing settings related to the issue to see how they affect behavior.
+  - Search the [RepRap forums] for others who may have similar issues.
 
-  [Marlin Issue Queue]: https://github.com/MarlinFirmware/Marlin/issues
-  [New Issue]: https://github.com/MarlinFirmware/Marlin/issues/new
-  [the Development branch]: https://github.com/MarlinFirmware/Marlin/tree/RCBugFix
-  [RepRap forums]: http://forums.reprap.org/
+## Links
+
+  - [Issue Queue](https://github.com/MarlinFirmware/Marlin/issues)
+  - [Post a New Issue](https://github.com/MarlinFirmware/Marlin/issues/new)
+  - [Bug Fix branch](https://github.com/MarlinFirmware/Marlin/tree/bugfix-1.1.x)
+  - [RepRap forums](http://forums.reprap.org/)
