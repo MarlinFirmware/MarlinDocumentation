@@ -34,8 +34,8 @@
   }
 .custom-alert-text > p { margin: 0; }
 
-.custom-gcode-inline { margin-bottom: 10px; }
-.custom-gcode-inline > p { display: inline; }
+.param-desc-list p { display: inline; }
+td.arg code { white-space: nowrap; }
 
 /*
  * Tagline
@@ -137,3 +137,16 @@ img.floater.framed { border: 4px solid black; }
   padding: 0.5em 0.5em 0.25em;
   p { font-size: 85%; }
   }
+
+#usage.row h2 { margin-top: -0.5em; }
+
+//** Secondary label background color
+$brand-requires: #380 !default;
+$label-requires-bg: $brand-requires !default;
+.label-requires {
+  @include label-variant($label-requires-bg);
+}
+.label-requires code {
+  background: none;
+  color: yellow;
+}

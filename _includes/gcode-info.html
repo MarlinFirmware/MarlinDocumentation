@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-lg-12">
         {% alert info %}
-You're reading a document which has been marked as `needs-review`, this means that the following information maybe outdated or no longer applies to the latest Marlin versions.
+This document has been marked `needs-review`. The following information maybe outdated or may no longer apply to the latest Marlin.
         {% endalert %}
       </div>
     </div>
@@ -44,6 +44,13 @@ You're reading a document which has been marked as `needs-review`, this means th
     {% if gcode.brief %}
       <span class="label label-primary"><i class="fa fa-pencil-square" aria-hidden="true"></i> {{gcode.brief}}</span>
     {% endif %}
+
+    {% if gcode.requires %}
+      {% assign list = (gcode.requires | split: ',') %}
+      {% for item in list %}
+        <span class="label label-requires"><code>{{item}}</code></span>
+      {% endfor %}
+    {% endif %}
   </div>
 </div>
 
@@ -52,12 +59,13 @@ You're reading a document which has been marked as `needs-review`, this means th
     {% if gcode.long %}
       {% for line in gcode.long %}
         {{ line | markdownify }}
+        <hr />
       {% endfor %}
     {% endif %}
   </div>
 </div>
 
-<div class="row">
+<div class="row" id="usage">
   <div class="col-lg-12">
     <h2>Usage</h2>
     <code>{{ gcode.codes[0] }}
@@ -136,7 +144,7 @@ You're reading a document which has been marked as `needs-review`, this means th
                 {% assign list = (list | sort: 'tag') %}
                 {% for parm in list %}
                   <tr>
-                    <td><code>
+                    <td class="arg"><code>
                       {% if parm.optional == true%}&#x5B;{% endif %}<!--
                       -->{{ parm.tag }}<!--
                       -->{% if parm.values.size > 0 %}<!--
@@ -172,14 +180,15 @@ You're reading a document which has been marked as `needs-review`, this means th
                     <td>
                       {{ parm.description | markdownify }}
                       {% if parm.values.size > 0 %}
-                        {% for pv in parm.values %}
-                          {% if pv.description %}
-                            <div class="custom-gcode-inline">
-                              <p><strong>{{ parm.tag }}{{ pv.tag }}:</strong></p>
-                              {{ pv.description | markdownify }}
-                            </div>
-                          {% endif %}
-                        {% endfor %}
+                        <ul class="param-desc-list">
+                          {% for pv in parm.values %}
+                            {% if pv.description %}
+                              <li>
+                                <code>{{ parm.tag }}{{ pv.tag }}</code>: {{ pv.description | markdownify }}
+                              </li>
+                            {% endif %}
+                          {% endfor %}
+                        </ul>
                       {% endif %}
                     </td>
                   </tr>
@@ -205,10 +214,20 @@ You're reading a document which has been marked as `needs-review`, this means th
 {% endif %}
 
 {% if gcode.examples %}
+  {% assign ex = gcode.examples %}
+  {% assign plural = "s" %}
+{% else %}
+  {% if gcode.example %}
+    {% assign ex = gcode.example %}
+    {% assign plural = "" %}
+  {% endif %}
+{% endif %}
+
+{% if ex %}
   <div class="row">
     <div class="col-lg-12">
-      <h2>Examples</h2>
-      {% for example in gcode.examples %}
+      <h2>Example{{ plural }}</h2>
+      {% for example in ex %}
         {% if example.pre %}
           {% for line in example.pre %}
             {{ line | markdownify }}
