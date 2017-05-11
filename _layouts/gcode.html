@@ -36,9 +36,11 @@ layout: default
           {% else %}
             {% for gcode in site.gcode %}
               {% if gcode.codes %}
-                {% assign gcode = site.gcode %}
-                {% include gcode-info.html %}
-                <hr />
+                {% assign odd = forloop.index | modulo: 2 %}
+                <div class="gcode-row{% if odd == 0 %} odd{% endif %}">
+                  {% assign gcode = site.gcode %}
+                  {% include gcode-info.html %}
+                </div>
               {% endif %}
             {% endfor %}
           {% endif %}
