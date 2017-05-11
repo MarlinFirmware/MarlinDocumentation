@@ -6,6 +6,7 @@ author: thinkyhead
 
 experimental: false
 since: 1.0.0-beta
+requires: AUTO_BED_LEVELING_*
 group: planner
 
 codes:

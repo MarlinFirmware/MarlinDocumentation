@@ -34,8 +34,8 @@
   }
 .custom-alert-text > p { margin: 0; }
 
-.custom-gcode-inline { margin-bottom: 10px; }
-.custom-gcode-inline > p { display: inline; }
+.param-desc-list p { display: inline; }
+td.arg code { white-space: nowrap; }
 
 /*
  * Tagline
@@ -136,4 +136,54 @@ img.floater.framed { border: 4px solid black; }
   background-color: #EEE;
   padding: 0.5em 0.5em 0.25em;
   p { font-size: 85%; }
+  }
+
+.row.usage h2 { margin-top: -0.5em; }
+
+.gcode-row { border-bottom: 2px solid #888; }
+.gcode-row.odd {
+  background: #F8F8FF;
+  code, pre, .table>thead>tr>th {
+    background-color: #E0E0F0;
+    }
+  .post {
+    background-color: #EAEAFC;
+    }
+  }
+
+#lcd_menu-page .col-lg-9 {
+  th { background-color: #DDD; }
+  td {
+    background-color: #0639FF;
+    border-color: #000;
+    color: #72D5FB;
+    white-space: nowrap;
+    font-family: monospace;
+    a { color: #C2F5FF; }
+    code { background-color: #3669FF; color: #E2D5FB; }
+    strong {
+      display: inline-block;
+      float: right;
+      color: #72D5FB;
+      }
+    }
+  td+td {
+    background-color: inherit;
+    border-color: inherit;
+    color: inherit;
+    white-space: inherit;
+    font-family: inherit;
+    code { background-color: #F9F2F4; color: #C7254E; }
+    }
+}
+
+//** Secondary label background color
+$brand-requires: #380 !default;
+$label-requires-bg: $brand-requires !default;
+.label-requires {
+  @include label-variant($label-requires-bg);
+  }
+.label-requires code {
+  background: none !important;
+  color: yellow;
   }
