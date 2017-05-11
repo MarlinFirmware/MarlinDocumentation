@@ -61,7 +61,7 @@ Type in the new title and click `Save`.
 
 ## Change the Default Branch
 
-`RCBugFix` is the work branch for our next release. For convenience you may want to change the "Default Branch" to `RCBugFix` in your fork to make it easier to do Pull Requests later.
+`bugfix-1.1.x` is the work branch for our next release. For convenience you may want to change the "Default Branch" to `bugfix-1.1.x` in your fork to make it easier to do Pull Requests later.
 
 Click on the `# branches` tab to view all branches in your fork.
 
@@ -71,7 +71,7 @@ Click on the `Change default branch` button.
 
 ![image9]({{ '/assets/images/docs/development/pull_images/pull_9.jpg' | prepend: site.baseurl }})
 
-Click on the branch dropdown button. Select `RCBugFix` and click `Update`.
+Click on the branch dropdown button. Select `bugfix-1.1.x` and click `Update`.
 
 ![image10]({{ '/assets/images/docs/development/pull_images/pull_10.jpg' | prepend: site.baseurl }})
 
@@ -121,7 +121,7 @@ A Windows Explorer window pops up. Open the `Marlin` directory and then open the
 
 ![image20]({{ '/assets/images/docs/development/pull_images/pull_20.jpg' | prepend: site.baseurl }})
 
-Scroll down until the &quot;#define SHORT\_BUILD\_VERSION&quot; is visible. The text should say RCBugFix in it.
+Scroll down until the &quot;#define SHORT\_BUILD\_VERSION&quot; is visible. The text should say bugfix-1.1.x in it.
 
 ![image21]({{ '/assets/images/docs/development/pull_images/pull_21.jpg' | prepend: site.baseurl }})
 
@@ -131,7 +131,7 @@ If you downloaded the wrong branch, go back to the GitHub website, select the co
 
 ## Make a feature branch
 
-You should keep an unaltered copy of the `RCBugFix` branch that you can keep up to date from the main project. To make patches or add a new feature, make a copy of `RCBugFix` with a descriptive name.
+You should keep an unaltered copy of the `bugfix-1.1.x` branch that you can keep up to date from the main project. To make patches or add a new feature, make a copy of `bugfix-1.1.x` with a descriptive name.
 
 ![image22]({{ '/assets/images/docs/development/pull_images/pull_22.jpg' | prepend: site.baseurl }})
 
@@ -182,7 +182,7 @@ Before submitting the Pull Request:
 
 ### Submit from GitHub Desktop
 
-You can use GitHub Desktop to submit a pull request by using the `Pull Request` button, but you must be careful to _**specifically target the `MarlinFirmware/RCBugFix` branch!**_
+You can use GitHub Desktop to submit a pull request by using the `Pull Request` button, but you must be careful to _**specifically target the `MarlinFirmware/bugfix-1.1.x` branch!**_
 
 ### Submit from the GitHub website
 
@@ -190,11 +190,11 @@ Return to your fork's page on GitHub, select your updated branch, and click the 
 
 ![image29]({{ '/assets/images/docs/development/pull_images/pull_29.jpg' | prepend: site.baseurl }})
 
-GitHub should automatically detect the target for the pull request as `RCBugFix` in the main `MarlinFirmware` project. However, you may instead see a page like the one below. In that case, click the `Compare across forks` button:
+GitHub should automatically detect the target for the pull request as `bugfix-1.1.x` in the main `MarlinFirmware` project. However, you may instead see a page like the one below. In that case, click the `Compare across forks` button:
 
 ![image30]({{ '/assets/images/docs/development/pull_images/pull_30.jpg' | prepend: site.baseurl }})
 
-To target the `RCBugFix` branch in the main Marlin repository, click the `base` button and select `RCBugFix`.
+To target the `bugfix-1.1.x` branch in the main Marlin repository, click the `base` button and select `bugfix-1.1.x`.
 
 ![image31]({{ '/assets/images/docs/development/pull_images/pull_31.jpg' | prepend: site.baseurl }})
 
@@ -317,7 +317,7 @@ Copy `Git remote –v` and paste it into the Git Shell window and then hit retur
 
 If the upstream section is missing then copy & paste `Git remote add upstream https://github.com/MarlinFirmware/Marlin.git` and then hit return.
 
-Next copy & paste `Git fetch upstream` followed by `Git rebase upstream/RCBugFix` . If no problems are encountered the next text will look like this.
+Next copy & paste `Git fetch upstream` followed by `Git rebase upstream/bugfix-1.1.x` . If no problems are encountered the next text will look like this.
 
 ![image46]({{ '/assets/images/docs/development/pull_images/pull_46.jpg' | prepend: site.baseurl }})
 
@@ -331,7 +331,7 @@ Git marks the areas of concern within the file and then writes the modified file
 
 Open the modified file (the file name didn't change but the time stamp did) and search for `<<<<<<< HEAD`. This marks the beginning of the code that could be newer than what you started with. The `=======` marks the boundary between the newer code and the original code in your file. `>>>>>>>` marks the end of of the code that needs attention. `#endif in wrong place` is the title of the commit that GIT couldn't automatically handle.
 
-It can be helpful to consult the copy you made just before opening the Git Shell. Sometimes you even have to download the latest RCBugFix to understand.
+It can be helpful to consult the copy you made just before opening the Git Shell. Sometimes you even have to download the latest bugfix-1.1.x to understand.
 
 ![image48]({{ '/assets/images/docs/development/pull_images/pull_48.jpg' | prepend: site.baseurl }})
 
@@ -347,7 +347,7 @@ If you couldn't address all the files then you can enter the following to abort 
 
 If all the files have been addressed then enter this into the Git Shell: `Git rebase –continue`
 
-The next step is to "squash" the commits. This takes all the commits and combines them per your instructions. To start the "squash" process enter this `Git rebase -i upstream/RCBugFix`
+The next step is to "squash" the commits. This takes all the commits and combines them per your instructions. To start the "squash" process enter this `Git rebase -i upstream/bugfix-1.1.x`
 
 In about 5-10 seconds a Notepad window will pop up. It starts with the list of the commits that are currently on the PR. To the extreme left of each line is the action you want performed. Sometimes extra commits are added if the main code base is being updated while you're doing a squash. Check that the first pick is one that you've done for this PR. If it isn't then change it to `drop`. Keep on changing them to `drop` until you get to your first commit. Leave your first commit as `pick`. Change all the other picks in the list to `squash`
 
