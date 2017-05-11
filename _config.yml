@@ -25,6 +25,11 @@ kramdown:
   input: GFM
   syntax_highlighter: rouge
 
+jekyll_tidy:
+  compress_html: true
+  # exclude: ["index.html"]
+  # ignore_env: development
+
 sass:
     style: compressed
 
@@ -80,6 +85,7 @@ gems:
   - jekyll-seo-tag
   - jekyll-avatar
   - jekyll-bootstrap-sass
+  - jekyll-tidy
 
 defaults:
   - # All types
