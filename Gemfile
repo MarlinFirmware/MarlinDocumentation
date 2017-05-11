@@ -8,6 +8,7 @@ gem 'jekyll-bootstrap-sass', '>= 0.1.0'
 gem 'jekyll-mentions', '>= 1.2.0'
 gem 'jekyll-press', '>= 0.2.1'
 gem 'jekyll-seo-tag', '>= 2.1.0'
+gem 'jekyll-tidy'
 gem 'kramdown', '>= 1.11.1'
 gem 'naturally', '>= 2.1.0'
 gem 'wdm', '>= 0.1.0' if Gem.win_platform?
