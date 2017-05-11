@@ -1,7 +1,7 @@
 ---
 tag: g29b
 title: Automatic Bed Leveling
-brief: Probes the bed at 3 or more points
+brief: Probe the bed and enable leveling compensation.
 author: thinkyhead
 
 experimental: false
@@ -28,18 +28,17 @@ long:
 
     To do manual probing simply repeat `G29` until the procedure is complete.
 
-    The first `G29` accepts parameters, shown below. The parameters accepted depend on the enabled form of bed leveling. Note that UBL parameters are not covered on this page unless they coincide. See the [`G29` for UBL](/docs/gcode/G029-ubl.html) page for a full list of its options.
+    The first `G29` accepts the same parameters , shown in the [Usage](#usage) section below. The exact parameters available will depend on which style of bed leveling is enabled. (***Note:** UBL parameters are not covered on this page unless they coincide. See the [`G29` for UBL](/docs/gcode/G029-ubl.html) page for a full list of its options.*)
 
-    Additionally, these parameters can be used:
+    **`PROBE_MANUALLY` adds these parameters to `G29`:**
     - `Q` : Query leveling and `G29` state
     - `A` : Abort current leveling procedure
-
-    To write a mesh point manually:
     - `W`  Write a mesh point. (Ignored during leveling.)
     - `X`  Required X for mesh point
     - `Y`  Required Y for mesh point
     - `Z`  Required Z for mesh point
 
+    **To probe the bed using GCode:**
     1. Use `G29 Q` to get the current status. If leveling data exists, you can send `M420 S1` to use it.
     2. Use `G29` to move to the first point for Z adjustment.
     3. Adjust Z so a piece of paper can just pass under the nozzle.
@@ -47,9 +46,9 @@ long:
     5. Repeat steps 3-4 until completed.
     6. Use `M500` to save the leveling data to EEPROM, if desired.
 
-    The procedure for LCD Bed Leveling with your controller (Requires `LCD_BED_LEVELING`):
+    **To probe the bed using your LCD controller:** (Requires `LCD_BED_LEVELING`)
 
-    1. Select `Level Bed` then choose `Level Bed` (not `Cancel`) in the sub-menu.
+    1. Select the `Level Bed` sub-menu, then choose `Level Bed` (not `Cancel`).
     2. Wait for `Homing XYZ` to complete.
     3. When `Click to Begin` appears, press the controller button to move to the first point.
     4. Use the controller wheel to adjust Z so that a piece of paper can just pass under the nozzle.
@@ -106,14 +105,14 @@ parameters:
   -
     tag: P
     optional: true
-    description: Set the size of the square grid that will be probed - P x P points (Linear, UBL)
+    description: Set the size of the square grid that will be probed - P x P points (`AUTO_BED_LEVELING_LINEAR`, `AUTO_BED_LEVELING_UBL`)
     values:
       -
         type: int
   -
     tag: S
     optional: true
-    description: Set the XY travel speed between probe points (Linear and Bilinear)
+    description: Set the XY travel speed between probe points (`AUTO_BED_LEVELING_LINEAR` and `AUTO_BED_LEVELING_BILINEAR`)
     values:
       -
         tag: rate
@@ -141,14 +140,14 @@ parameters:
   -
     tag: T
     optional: true
-    description: Generate a Bed Topology Report (Linear only)
+    description: Generate a Bed Topology Report (`AUTO_BED_LEVELING_LINEAR`)
     values:
       -
         tag: flag
   -
     tag: F
     optional: true
-    description: Set the front limit of the probing grid (Linear and Bilinear)
+    description: Set the front limit of the probing grid (`AUTO_BED_LEVELING_LINEAR` and `AUTO_BED_LEVELING_BILINEAR`)
     values:
       -
         tag: pos
@@ -156,7 +155,7 @@ parameters:
   -
     tag: B
     optional: true
-    description: Set the back limit of the probing grid (Linear and Bilinear)
+    description: Set the back limit of the probing grid (`AUTO_BED_LEVELING_LINEAR` and `AUTO_BED_LEVELING_BILINEAR`)
     values:
       -
         tag: pos
@@ -164,7 +163,7 @@ parameters:
   -
     tag: L
     optional: true
-    description: Set the left limit of the probing grid (Linear and Bilinear)
+    description: Set the left limit of the probing grid (`AUTO_BED_LEVELING_LINEAR` and `AUTO_BED_LEVELING_BILINEAR`)
     values:
       -
         tag: pos
@@ -172,7 +171,7 @@ parameters:
   -
     tag: R
     optional: true
-    description: Set the right limit of the probing grid (Linear and Bilinear)
+    description: Set the right limit of the probing grid (`AUTO_BED_LEVELING_LINEAR` and `AUTO_BED_LEVELING_BILINEAR`)
     values:
       -
         tag: pos
