@@ -5,6 +5,7 @@ brief: Measure Z heights in a grid, enable leveling compensation
 author: thinkyhead
 
 experimental: false
+requires: MESH_BED_LEVELING
 since: 1.0.0-beta
 group: planner
 
@@ -60,7 +61,7 @@ parameters:
         tag: 5
         description: Reset and disable mesh
 
-examples:
+example:
   -
     pre:
       - 'S0 produces a mesh report as follows:'
