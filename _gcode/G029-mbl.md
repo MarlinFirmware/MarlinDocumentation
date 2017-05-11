@@ -1,7 +1,7 @@
 ---
 tag: g29a
-title: Manual Bed Leveling
-brief: Probes a grid and produces a mesh
+title: Mesh Bed Leveling
+brief: Measure Z heights in a grid, enable leveling compensation
 author: thinkyhead
 
 experimental: false
@@ -13,11 +13,11 @@ codes:
 
 long:
   - |
-    With Mesh Bed Leveling (MBL) you can interactively measure a grid of Z heights without a bed probe. The only tool required is a piece of paper or a feeler gauge. MBL uses the mesh to compensate for variations in height across the bed.
+    With Mesh Bed Leveling (MBL) you can interactively measure a grid of Z heights without a bed probe. The only tool required is a piece of paper or a feeler gauge. MBL uses the mesh to compensate for variations in height across the bed. Comparable to using `AUTO_BED_LEVELING_BILINEAR` with `PROBE_MANUALLY`.
 
     This feature is enabled with the `MESH_BED_LEVELING` option in `Configuration.h`. Users with a probe should enable one of the [`AUTO_BED_LEVELING_*`](/docs/gcode/G029-abl.html) options instead.
 
-    The procedure for Mesh Bed Leveling from your host software:
+    **To do Mesh Bed Leveling from your host software:**
 
     1. Use `G29 S0` to get the current status and mesh. If there’s an existing mesh, you can send M420 S1 to use it.
     2. Use `G29 S1` to move to the first point for Z adjustment.
@@ -26,7 +26,7 @@ long:
     5. Repeat steps 3-4 until completed.
     6. Use `M500` to save the mesh to EEPROM, if desired.
 
-    The procedure for LCD Bed Leveling with your controller (Requires `LCD_BED_LEVELING`):
+    **To do LCD Bed Leveling with your controller:** (Requires `LCD_BED_LEVELING`)
 
     1. Select `Level Bed` then choose `Level Bed` (not `Cancel`) in the sub-menu.
     2. Wait for `Homing XYZ` to complete.
