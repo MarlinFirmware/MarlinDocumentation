@@ -37,7 +37,7 @@ Marlin includes various methods of probing and leveling:
 
 - "3-Point" probes a triangle to determine the height and tilt of the bed plane. During printing the nozzle is adjusted in X, Y, and Z, so you can even print on a badly-tilted bed. However, this method requires a very flat and even surface.
 - "Linear Grid" probes a square grid (as much as possible on `DELTA`) to determine the height and tilt of the bed. After that it works just the same way as 3-point leveling.
-- "Bilinear Grid" probes a grid in the same manner as Linear Grid, but during printing the Z axis is adjusted according to bilinear interpolation between the measured points. This allows the printer to compensate for an uneven surface, 
+- "Bilinear Grid" probes a grid in the same manner as Linear Grid, but during printing the Z axis is adjusted according to bilinear interpolation between the measured points. This allows the printer to compensate for an uneven surface,
 - "Mesh Bed Leveling" works in the same manner as "Bilinear Grid" but takes different `G29` parameters. (This feature is superseded by combining the manual probe option with bilinear leveling,  and will not be included in future versions of Marlin.)
 - "Unified Bed Leveling" combines elements of bilinear and planar leveling and includes extra utilities to help improve measurement accuracy, especially for deltas. See (link) for an article specifically about this feature.
 

@@ -51,5 +51,13 @@
   date: 20/08/2016
 
 - version: 1.1.0-RC8
-  hash: 7bea5e5e5701de0b90b6c422c954337ce860bb0f
-  date: 6/12/2016
+  hash: 7224854cf8086281112b1d25d0c386bd4028b8f8
+  date: 22/12/2016
+
+- version: 1.1.0
+  hash: 03f94a7a18efbd1964d75cdb30b046053bcb1e94
+  date: 3/5/2017
+
+- version: 1.1.1
+  hash: 5996c3a907cf0b25c54e5a90c7fe111f4bb93e31
+  date: 12/5/2017
