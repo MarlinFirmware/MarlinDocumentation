@@ -16,42 +16,44 @@
       <ul class="nav navbar-nav">
         <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="navbar-getting-started">
-          Getting Started <span class="caret"></span></a>
+            Getting Started <span class="caret"></span>
+          </a>
 
           <ul class="dropdown-menu">
-            <li>
-              <a href="{{ '/docs/basics/introduction.html' | prepend: site.baseurl }}">
-              Introduction</a></li>
+            <li><a href="{{ '/docs/basics/introduction.html' | prepend: site.baseurl }}">
+              Introduction
+            </a></li>
 
             <li class="divider"></li>
 
-            <li class="disabled">
-              <a href="#">
-              How to get</a></li>
+            <li><a href="{{ '/meta/download/' | prepend: site.baseurl }}">
+              Download Marlin
+            </a></li>
 
-            <li>
-              <a href="{{ '/docs/configuration/configuration.html' | prepend: site.baseurl }}">
-              Configuring Marlin</a></li>
+            <li><a href="{{ '/docs/basics/install.html' | prepend: site.baseurl }}">
+              Installing Marlin
+            </a></li>
 
-            <li>
-              <a href="{{ '/docs/basics/install.html' | prepend: site.baseurl }}">
-              How to flash your board</a></li>
+            <li><a href="{{ '/docs/configuration/configuration.html' | prepend: site.baseurl }}">
+              Configuring Marlin
+            </a></li>
 
             <li class="divider"></li>
 
-            <li class="disabled">
-            <a href="#">
-            Reporting bugs</a></li>
+            <li><a href="{{ '/docs/basics/reporting_bugs.html' | prepend: site.baseurl }}">
+              Reporting bugs
+            </a></li>
           </ul>
         </li>
 
-        <li>
-          <a href="{{ '/meta/download/' | prepend: site.baseurl }}">
-          Download</a></li>
+        <li><a href="{{ '/meta/download/' | prepend: site.baseurl }}">
+          Download
+        </a></li>
 
         <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="navbar-documentation">
-          Documentation <span class="caret"></span></a>
+            Documentation <span class="caret"></span>
+          </a>
           <ul class="dropdown-menu">
             {% assign list = ('' | split: '|') %}
             {% for col in site.collections %}
@@ -67,7 +69,9 @@
                     <li class="dropdown-submenu {{ col.label }}">
                       <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ col.title }}</a>
                       <ul class="dropdown-menu">
-                        <li><a href="{{ '/meta/' | append: col.label | append: '/' | prepend: site.baseurl }}">All documents</a></li>
+                        <li><a href="{{ '/meta/' | append: col.label | append: '/' | prepend: site.baseurl }}">
+                          All documents
+                        </a></li>
                         <li class="divider"></li>
                         {% if col.label == 'gcode' %}
                           {% assign docs = (col.docs | sort: 'tag') %}
@@ -95,9 +99,9 @@
 
             <li class="divider"></li>
 
-            <li>
-              <a href="{{ '/meta/needs-review/' | prepend: site.baseurl }}">
-              Documentation needing review</a></li>
+            <li><a href="{{ '/meta/needs-review/' | prepend: site.baseurl }}">
+              Documentation Needing Review
+            </a></li>
           </ul>
         </li>
 
@@ -107,30 +111,33 @@
 
           <ul class="dropdown-menu">
             <li><a href="{{ '/tools/u8glib/converter.html' | prepend: site.baseurl }}">
-            C/C++ bitmap converter</a></li>
+              Customize the Bootscreen
+            </a></li>
 
             <li class="divider"></li>
 
             <li><a href="https://github.com/MarlinFirmware/Marlin/issues">
-            Bugtracker</a></li>
+              Bugtracker
+            </a></li>
 
-            <li><a href="{{ '/docs/basics/reporting-bugs.html' | prepend: site.baseurl }}">
-            Reporting bugs</a></li>
+            <li><a href="{{ '/docs/basics/reporting_bugs.html' | prepend: site.baseurl }}">
+              Reporting bugs
+            </a></li>
 
             <li class="divider"></li>
 
-            <li><a href="https://github.com/MarlinFirmware/Marlin/">
-            Source code repository</a></li>
+            <li><a href="https://github.com/MarlinFirmware/Marlin">
+              Source Code Repository
+            </a></li>
           </ul>
         </li>
       </ul>
 {% if page.collection %}
       <ul class="nav navbar-nav navbar-right visible-lg-block">
-        <li>
-          <a href="{{ site.repository.doc }}/edit/master/{{ page.path }}" data-proofer-ignore>
+        <li><a href="{{ site.repository.doc }}/edit/master/{{ page.path }}" data-proofer-ignore>
           <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-          <span class="">Improve this page</span></a>
-        </li>
+          <span>Improve this page</span>
+        </a></li>
       </ul>
 {% else %}
       <ul class="nav navbar-nav navbar-right visible-lg-block">
