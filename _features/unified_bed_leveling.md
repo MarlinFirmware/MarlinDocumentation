@@ -249,30 +249,17 @@ As you print parts you may notice that further fine-tuning is needed. The `G29 P
 
 #### MESH areas
 
-If you have Z probe offsets from the nozzle, after `G29 P1`, your matrix have areas that do not have Z compensation values. This is because the probe can’t be positioned in these areas.
+After `G29 P1` your matrix will probably have areas that do not have Z compensation values.  This is because the probe can’t be positioned in these areas.  The only ways to avoid this are:
+- Use the nozzle as the probe (no offsets).
+- Build your system so that the nozzle can travel outside the bed.
 
 If your probe is in front and to the right of your nozzle then the matrix will look like one of these.
 
-(image needed)
+![image1]({{ '/assets/images/features/bed_probe_areas.jpg' | prepend: site.baseurl }})
 
-The delta area doesn’t look correct
-
-(image needed)
 
 The green area is where the probing was done.
 
-(image needed)
+The blue area is where the probe couldn’t get to.
 
-The other sections are where the probe couldn’t get to.
 
-(image needed)
-
-The yellow area is where the probe couldn’t reach because the probe is in front of the nozzle.
-
-(image needed)
-
-The red area is where the probe couldn’t reach because the probe is to the right of the nozzle.
-
-(image needed)
-
-The blue area is just the overlap of the red & yellow areas.
