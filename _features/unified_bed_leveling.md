@@ -5,11 +5,11 @@ tag:
 
 author: Bob-the-Kuhn, thinkyhead, Roxy-3D
 contrib:
-category: [ feature ]
+category: feature
 ---
 
 {% alert info %}
-This page is a work in progress. Corrections/improvements are welcome.
+This page is a work in progress, based on Marlin 1.1.2. Corrections/improvements are welcome.
 {% endalert %}
 
  - A comprehensive LCD menu system for UBL is coming soon.
@@ -20,7 +20,7 @@ This page is a work in progress. Corrections/improvements are welcome.
 The **Unified Bed Leveling (UBL)** system is a superset of the previous leveling systems.
 
 The main improvements over the previous systems are:
- - Finer X Y resolution of the Z compensation. This is accomplished by Updating the Z compensation whenever a mesh boundary is crossed.
+ - Optimized line-splitting algorithm. For all mesh-based leveling methods, on Cartesians each linear move is split on grid line boundaries, respecting the best-known measured heights on the bed. UBL highly optimizes this boundary-splitting with pre-calculation, optimized handling of special cases, and avoiding recursion.
  - The user is able to fill in the portions of the mesh that can’t be reached by automated probing. This allows the entire bed to be compensated.
  - It allows the user to fine tune the system. The user is able to modify the mesh based on print results. Really good first layer adhesion and height can be achieved over the entire bed.
 
@@ -39,16 +39,16 @@ M104 S210     ; Not required, but having the printer at temperature helps accura
 
 G28           ; Home XYZ.
 G29 P1        ; Do automated probing of the bed.
-G29 P2 B O    ; Do manual probing of unprobed points. Requires LCD.
-G29 P3 O      ; Repeat until all mesh points are filled in.
+G29 P2 B T    ; Do manual probing of unprobed points. Requires LCD.
+G29 P3 T      ; Repeat until all mesh points are filled in.
 
-G29 O         ; View the Z compensation values.
+G29 T         ; View the Z compensation values.
 M420 S1       ; Activate leveling compensation.
 G29 S1        ; Save UBL mesh points to EEPROM.
 M500          ; Save current setup. WARNING: UBL will be active at power up, before any `G28`.
 
-G26 C P O3.0  ; Produce mesh validation pattern with primed nozzle
-G29 P4 O      ; Move nozzle to 'bad' areas and fine tune the values if needed
+G26 C P T3.0  ; Produce mesh validation pattern with primed nozzle
+G29 P4 T      ; Move nozzle to 'bad' areas and fine tune the values if needed
               ; Repeat G26 and G29 P4 O commands as needed.
 
 G29 S1        ; Save UBL mesh values to EEPROM.
@@ -152,9 +152,9 @@ Command|Description
 `G29 P4`|Phase 4 – Fine tune the mesh.
 `G29 Snn`|Store the mesh in EEPROM slot `nn`.
 `G29 Lnn` or `M420 Lnn`|Load a mesh from EEPROM slot `nn`. (Other leveling systems use `M501`.)
-`G29 A` or `M420 S1`|Activate the Z compensation bed leveling. (Use `M420 S1` for public/shared Gcode.)
-`G29 D` or `M420 S0`|Disable the Z compensation bed leveling. (Use `M420 S0` for public/shared Gcode.)
-`G29 O` or `M420 V`|Print a map of the mesh.
+`G29 A` or `M420 S1`|Activate the Z compensation bed leveling.
+`G29 D` or `M420 S0`|Disable the Z compensation bed leveling.
+`G29 T` or `M420 V`|Print a map of the mesh.
 `G26`|Print a pattern to test mesh accuracy.
 `M502`, `M500`|Reset settings to defaults, save to EEPROM.
 
@@ -162,7 +162,7 @@ Command|Description
 
 The first step in the process is to use the Z probe to populate as much of the mesh as possible.
 
-To start the process issue `G29 P1` or, if you want to see the values as they are measured, `G29 P1 O`
+To start the process issue `G29 P1` or, if you want to see the values as they are measured, `G29 P1 T`
 
 If the EEPROM hasn’t been initialized then it’ll tell you to issue the `M502, M500, M501` sequence. If that happens then you’ll need to re-issue the `G29 P1` command.
 
@@ -170,7 +170,7 @@ If a `G28` hasn’t already been done then the `G28` sequence will automatically
 
 No further action is required of the user for this phase.
 
-If you do a `G29 O` or `M420 V` command you’ll most likely see areas that do not have Z compensation values. See the addendum **Automatically probed area** for details.
+If you do a `G29 T` or `M420 V` command you’ll most likely see areas that do not have Z compensation values. See the addendum **Automatically probed area** for details.
 
 #### Manual probing
 This step uses the encoder wheel to move the nozzle up and down in 0.01mm steps. BE VERY CAREFUL when doing this. Nasty things can happen if too much force is applied to the bed by the nozzle.
@@ -183,7 +183,7 @@ The idea is to stop lowering when there is the first sign of resistance to movin
 
 The first step is to measure the thickness of the feeler gauge.
 
-Issue `G29 P2 B O` to start.
+Issue `G29 P2 B T` to start.
 
 The nozzle will move to the center of the bed.
 
@@ -222,9 +222,9 @@ There are several options for the `G26` command. See [GCode G26](http://marlinfw
 
 Look over the results of the `G26` print and note where adjustments are needed.
 
-To edit a single point move the nozzle close to the point that needs adjustment. Issue a `G29 P4 O`. The head will move to nearest point. Use the encoder wheel to change the value. **The nozzle will not change height during this process.**
+To edit a single point move the nozzle close to the point that needs adjustment. Issue a `G29 P4 T`. The head will move to nearest point. Use the encoder wheel to change the value. **The nozzle will not change height during this process.**
 
-To edit multiple points move the nozzle close to the first point and issue `G29 P4 O Rxx` where `xx` is the number of points you want to edit. You can look at the host interface screen to see where in the grid you are currently editing.
+To edit multiple points move the nozzle close to the first point and issue `G29 P4 T Rxx` where `xx` is the number of points you want to edit. You can look at the host interface screen to see where in the grid you are currently editing.
 
 Press and hold the encoder button/wheel when you are finished.
 
@@ -232,15 +232,16 @@ There are options to make it easier to move to the desired probe locations.
 
 It’s probably a good idea to issue a `G29 S` command to save the mesh to EEPROM at this stage.
 
-Repeat the `G26`, `G29 P4 O` sequence until you have the desired first layer height quality.
+Repeat the `G26`, `G29 P4 T` sequence until you have the desired first layer height quality.
 
 Issue a `G29 S` command periodically to save your mesh.
 
-As you print parts you may notice that further fine-tuning is needed. The `G29 P4 O` command can be used anytime to make adjustments.
+As you print parts you may notice that further fine-tuning is needed. The `G29 P4 T` command can be used anytime to make adjustments.
 
 ### Addenda
 
 #### Bilinear computation
+
 1. Uses the Z heights at the 4 corners of the current XY position's grid box.
 2. Performs a bilinear interpolation of the Z heights:
   - Calculates Z height (z1) at the left&nbsp; edge of the box for the current Y by linear interpolation.
@@ -257,9 +258,11 @@ If your probe is in front and to the right of your nozzle then the matrix will l
 
 ![image1]({{ '/assets/images/features/bed_probe_areas.jpg' | prepend: site.baseurl }})
 
+- GREEN: Probing is possible
+- BLUE: Probe can’t reach
 
-The green area is where the probing was done.
+#### Further Optimization
 
-The blue area is where the probe couldn’t get to.
+Going forward, we've been thinking anew about boundary-splitting and delta-style line-splitting. On kinematic systems, moves are split into small segments, so the nozzle already closely follows the (bilinear approx.) curve of the bed on those machines. Thus, on kinematic systems we can theoretically skip the boundary-splitting step.
 
-
+At the same time, we also realize that for mesh-based bed leveling, splitting up lines into smaller segments has extra benefit for Cartesians too. So, if we simply enable move-splitting for cartesians when mesh leveling is enabled, we can skip boundary-splitting while also improving leveling accuracy. Since it requires some extra computation, this ought to be an optional feature.
