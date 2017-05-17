@@ -6,8 +6,8 @@ author: thinkyhead
 
 experimental: false
 since: 1.0.0-beta
-requires: AUTO_BED_LEVELING_*
-group: planner
+requires: AUTO_BED_LEVELING_(3POINT|LINEAR|BILINEAR)
+group: calibration
 
 codes:
   - G29
@@ -25,11 +25,13 @@ long:
   - The printer must be homed with `G28` before `G29`.
 
   - |
+    ### Manual Probing
+
     Auto Bed Leveling now includes a `PROBE_MANUALLY` option for systems lacking a probe.
 
     To do manual probing simply repeat `G29` until the procedure is complete.
 
-    The first `G29` accepts the same parameters , shown in the [Usage](#usage) section below. The exact parameters available will depend on which style of bed leveling is enabled. (***Note:** UBL parameters are not covered on this page unless they coincide. See the [`G29` for UBL](/docs/gcode/G029-ubl.html) page for a full list of its options.*)
+    The first `G29` accepts the same parameters , shown in the [Usage](#usage-g29b) section below. The exact parameters available will depend on which style of bed leveling is enabled. (***Note:** UBL parameters are not covered on this page unless they coincide. See the [`G29` for UBL](/docs/gcode/G029-ubl.html) page for a full list of its options.*)
 
     **`PROBE_MANUALLY` adds these parameters to `G29`:**
     - `Q` : Query leveling and `G29` state
@@ -151,7 +153,7 @@ parameters:
     description: Set the front limit of the probing grid (`AUTO_BED_LEVELING_LINEAR` and `AUTO_BED_LEVELING_BILINEAR`)
     values:
       -
-        tag: pos
+        tag: linear
         type: float
   -
     tag: B
@@ -159,7 +161,7 @@ parameters:
     description: Set the back limit of the probing grid (`AUTO_BED_LEVELING_LINEAR` and `AUTO_BED_LEVELING_BILINEAR`)
     values:
       -
-        tag: pos
+        tag: linear
         type: float
   -
     tag: L
@@ -167,7 +169,7 @@ parameters:
     description: Set the left limit of the probing grid (`AUTO_BED_LEVELING_LINEAR` and `AUTO_BED_LEVELING_BILINEAR`)
     values:
       -
-        tag: pos
+        tag: linear
         type: float
   -
     tag: R
@@ -175,7 +177,7 @@ parameters:
     description: Set the right limit of the probing grid (`AUTO_BED_LEVELING_LINEAR` and `AUTO_BED_LEVELING_BILINEAR`)
     values:
       -
-        tag: pos
+        tag: linear
         type: float
   -
     tag: J
@@ -187,18 +189,12 @@ parameters:
 
 examples:
   -
-    pre:
-      - '`G29` is most commonly used without any arguments. This uses the parameters set in `Configuration.h`.'
-    code:
-      - G29 ; execute ABL
+    pre: '`G29` is most commonly used without any arguments. This uses the parameters set in `Configuration.h`.'
+    code: G29 ; execute ABL
   -
-    pre:
-      - 'Probe a 5x5 matrix:'
-    code:
-      - G29 P5 ; 5x5 matrix
+    pre: 'Probe a 5x5 matrix:'
+    code: G29 P5 ; 5x5 matrix
   -
-    pre:
-      - 'Probe a 4x8 matrix from `X50` `Y50` to `X150` `Y150`, printing a full report:'
-    code:
-      - G29 X4 Y8 L50 R150 F50 B150 T V4
+    pre: 'Probe a 4x8 matrix from `X50` `Y50` to `X150` `Y150`, printing a full report:'
+    code: G29 X4 Y8 L50 R150 F50 B150 T V4
 ---
