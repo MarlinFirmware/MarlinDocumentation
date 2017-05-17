@@ -7,7 +7,7 @@ author: thinkyhead
 experimental: false
 requires: MESH_BED_LEVELING
 since: 1.0.0-beta
-group: planner
+group: calibration
 
 codes:
   - G29
