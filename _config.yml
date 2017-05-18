@@ -55,7 +55,7 @@ collections:
 
   gcode:
     output: true
-    title: G-Code
+    title: G-code
     permalink: /docs/:collection/:path:output_ext
 
   meta:
@@ -128,7 +128,7 @@ defaults:
       layout: 'docs'
       category: [ 'features' ]
 
-  - # G-Code collection settings
+  - # G-code collection settings
     scope:
       type: 'gcode'
     values:

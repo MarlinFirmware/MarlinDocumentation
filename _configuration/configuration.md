@@ -45,7 +45,7 @@ If you've never configured and calibrated a RepRap machine before, here are some
 - [The Essential Calibration Set](http://www.thingiverse.com/thing:5573)
 - [Calibration of your RepRap](https://sites.google.com/site/repraplogphase/calibration-of-your-reprap)
 - [XY 20 mm Calibration Box](http://www.thingiverse.com/thing:298812)
-- [G-Code reference](http://reprap.org/wiki/G-code)
+- [G-code reference](http://reprap.org/wiki/G-code)
 - [Marlin3DprinterTool](https://github.com/cabbagecreek/Marlin3DprinterTool)
 
 
@@ -1208,7 +1208,7 @@ Uncomment to add the `M100` Free Memory Watcher for debugging purposes.
 ```cpp
 //#define INCH_MODE_SUPPORT
 ```
-This option adds support for the `G20` and `G21` commands, allowing G-Code to specify units in inches.
+This option adds support for the `G20` and `G21` commands, allowing G-code to specify units in inches.
 
 ### Temperature Units
 ```cpp
@@ -1407,7 +1407,7 @@ By default Marlin assumes you have a buzzer with a fixed frequency. If you have 
 //#define LCD_FEEDBACK_FREQUENCY_DURATION_MS 100
 //#define LCD_FEEDBACK_FREQUENCY_HZ 1000
 ```
-The duration and frequency for the UI feedback sound. Set these to 0 to disable audio feedback in the LCD menus. Test audio output with the G-Code `M300 S<frequency Hz> P<duration ms>`
+The duration and frequency for the UI feedback sound. Set these to 0 to disable audio feedback in the LCD menus. Test audio output with the G-code `M300 S<frequency Hz> P<duration ms>`
 
 
 ## LCD Controller

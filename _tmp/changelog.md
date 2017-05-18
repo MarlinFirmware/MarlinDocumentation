@@ -16,7 +16,7 @@ category: [ development, needs-review ]
  - Fix handling of invisible files. Files and folders starting with underscore are now visible.
  - Enhanced `G29` with improved grid bed leveling based on Roxy code. See documentation.
  - EEPROM layout updated to `V21`.
- - Short EEPROM output as G-Code – Replay to restore settings.
+ - Short EEPROM output as G-code – Replay to restore settings.
  - Added `M204` travel acceleration options.
  - Added `S0` option to `M503` for pure G-code output.
  - `M204` `P` parameter replaces `S`. (`S` retained for backward compatibility.)
@@ -34,7 +34,7 @@ category: [ development, needs-review ]
  - Support for TMC and L6470 stepper drivers.
  - Improved support for Texas Instruments DRV8811 stepper drivers.
  - Support for the [SSD1306 Monochrome 128X32 I2C OLED Graphic Display].
- - Better support of G-Code `;` comments, `\`, `N` line numbers, and `*` checksums.
+ - Better support of G-code `;` comments, `\`, `N` line numbers, and `*` checksums.
  - Moved GCode handling code into individual functions per-code.
  - Only one "cold extrusion prevented" message per command.
  - Fixed lcd display of Volumetric Multiplier, to show percent rather than scaling value.

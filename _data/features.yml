@@ -1,7 +1,7 @@
 - name: gcode
   img: gcode.png
-  alt: G-Code
-  title: Rich G-Code Support
+  alt: G-code
+  title: Rich G-code Support
   link: meta/gcode/
 
 - name: ctrlboard

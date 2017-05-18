@@ -119,7 +119,7 @@ Note: if you haven't enabled the EEPROM then you need to re-flash the MEGA. If y
 Configure G-start up sequence code of your slicer to include `G28`, `G29`.
 Every print will start with an auto bed leveling.
 
-## Example start G-Code
+## Example start G-code
 
 ```
 M190 S{print_bed_temperature} ;Uncomment to add your own bed temperature line
