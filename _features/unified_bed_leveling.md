@@ -32,6 +32,7 @@ The following command sequence can be used to home, level, and then fine-tune th
 ```gcode
 M502          ; Reset settings to configuration defaults...
 M500          ; ...and Save to EEPROM. Use this on a new install.
+M501          ; Read back in the saved EEPROM.  
 
 M190 S65      ; Not required, but having the printer at temperature helps accuracy
 M104 S210     ; Not required, but having the printer at temperature helps accuracy
@@ -42,15 +43,20 @@ G29 P2 B T    ; Do manual probing of unprobed points. Requires LCD.
 G29 P3 T      ; Repeat until all mesh points are filled in.
 
 G29 T         ; View the Z compensation values.
-M420 S1       ; Activate leveling compensation.
 G29 S1        ; Save UBL mesh points to EEPROM.
+G29 F 10.0    ; Set Fade Height for correction at 10.0 mm.
+G29 A         ; Activate the UBL System.
 M500          ; Save current setup. WARNING: UBL will be active at power up, before any `G28`.
-
-G26 C P T3.0  ; Produce mesh validation pattern with primed nozzle
+;---------------------------------------------
+;--- Fine Tuning of the mesh happens below ---
+;---------------------------------------------
+G26 C P T3.0  ; Produce mesh validation pattern with primed nozzle  PLA temperatures
+              ; are assumed unless you specify B 105 H 225   for ABS Plastic
 G29 P4 T      ; Move nozzle to 'bad' areas and fine tune the values if needed
-              ; Repeat G26 and G29 P4 O commands as needed.
+              ; Repeat G26 and G29 P4 T  commands as needed.
 
 G29 S1        ; Save UBL mesh values to EEPROM.
+M500          ; Resave UBL's state information.
 ```
 
 ### Scope
