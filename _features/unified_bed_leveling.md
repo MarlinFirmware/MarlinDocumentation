@@ -50,6 +50,7 @@ G26 C P T3.0  ; Produce mesh validation pattern with primed nozzle
 G29 P4 T      ; Move nozzle to 'bad' areas and fine tune the values if needed
               ; Repeat G26 and G29 P4 O commands as needed.
 
+G29 A         ; Activate the UBL System.
 G29 S1        ; Save UBL mesh values to EEPROM.
 ```
 
