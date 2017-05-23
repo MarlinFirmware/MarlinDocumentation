@@ -49,8 +49,8 @@ Before configuring any bed probe be sure to read its documentation and the docum
 
 In general, on a delta a switch-based probe will be connected to unused the Z-Min endstop pin (if there is one). For machines that have a Z-Min endstop, Marlin assumes you'll connect the probe to the Z-Max pin - since this pin is the least-likely to be used for something else.
 
-- If the probe is connected to the Z-Min pin, enable `Z_MIN_PROBE_USES_Z_MIN_ENDSTOP_PIN`.
-- If the probe is connected to any other pin, enable `Z_MIN_PROBE_ENDSTOP`.
+- If the probe is to be used for homing, connect it to the Z-Min pin and enable `Z_MIN_PROBE_USES_Z_MIN_ENDSTOP_PIN`.
+- If the probe is **NOT** to be used for homing, connect to any other pin and enable `Z_MIN_PROBE_ENDSTOP`.
 - If the probe is not connected to the Z-Max pin, you can also set `Z_MIN_PROBE_PIN` to the digital (DIO) pin number where the probe is connected.
 
 #### 2. Probe Type
