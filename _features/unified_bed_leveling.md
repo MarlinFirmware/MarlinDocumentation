@@ -47,9 +47,9 @@ G29 S1        ; Save UBL mesh points to EEPROM.
 G29 F 10.0    ; Set Fade Height for correction at 10.0 mm.
 G29 A         ; Activate the UBL System.
 M500          ; Save current setup. WARNING: UBL will be active at power up, before any `G28`.
-;-------------------------------
-;--- Fine Tuning of the mesh ---
-;-------------------------------
+;---------------------------------------------
+;--- Fine Tuning of the mesh happens below ---
+;---------------------------------------------
 G26 C P T3.0  ; Produce mesh validation pattern with primed nozzle
 G29 P4 T      ; Move nozzle to 'bad' areas and fine tune the values if needed
               ; Repeat G26 and G29 P4 T  commands as needed.
