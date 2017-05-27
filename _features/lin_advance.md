@@ -25,7 +25,7 @@ Since the root cause is pressure, `LIN_ADVANCE` de-couples extrusion from the ot
 
 ## Before Using Linear Advance
 
-Please consider the following points before you enable `LIN_ADVANCE` or you may end up with strange and intractible issues:
+Please consider the following points before you enable `LIN_ADVANCE` or you may end up with strange and intractable issues:
 
 - Your printer has to produce good prints to start with. The extruder steps/mm value has to be calibrated precisely and should be tuned at low print speeds (20mm/s) to elimiate nozzle pressure effects.
 - Check for any backlash in the extruder drive gears (if any). Excessive backlash will cause strange noises during the extra extruder movements!
