@@ -7,6 +7,10 @@ author: thinkyhead
 category: feature
 ---
 
+{% alert info %}
+This page is a work in progress, based on Marlin 1.1.2.
+{% endalert %}
+
 In addition to a serial/usb/host interface, Marlin also includes a comprehensive user interface designed for inexpensive character and graphical LCD controllers. Rotate a knob or use buttons to navigate menu items, edit values, and make other adjustments. Click the knob or press a button to choose menu items, exit adjustment screens, and perform other actions.
 
 _Note: In low-level contexts we refer to the first extruder as `E0`, the second as `E1`, etc. However, at "user level" in the LCD menus, we refer to the first extruder as `E1`, the second as `E2`, etc. (This may change in future depending on user-preference.)_
@@ -244,50 +248,73 @@ The motion settings provide control over tunable movement parameters which can b
 Item|Description|Requirements
 ----|-----------|------------
 **[<< Control](#control)** ||
-Z Offset               |`M851 Z`| `HAS_BED_PROBE` (with `BABYSTEP_ZPROBE_OFFSET` it babysteps)
-Bed Z: -–-             |MBL Z Offset| `MESH_BED_LEVELING && LCD_BED_LEVELING`
-Accel: -–-             |Nominal Acceleration|
-                       ||
-Vx-Jerk: -–-           |Max X Jerk|
-Vy-Jerk: -–-           |Max Y Jerk|
-Vz-Jerk: -–-           |Max Z Jerk|
-Ve-Jerk: -–-           |Max E Jerk|
-                       ||
-Vmax X: -–-            |Max X Velocity (mm/s)|
-Vmax Y: -–-            |Max Y Velocity (mm/s)|
-Vmax Z: -–-            |Max Z Velocity (mm/s)|
-Vmax E: -–-            |Max E Velocity (mm/s)|
-Vmax E1: -–-           |Max E1 Velocity (mm/s)| `DISTINCT_E_FACTORS`
-Vmax E2: -–-           |Max E2 Velocity (mm/s)| `DISTINCT_E_FACTORS`
-Vmax E3: -–-           |Max E3 Velocity (mm/s)| `DISTINCT_E_FACTORS && E_STEPPERS >= 3`
-Vmax E4: -–-           |Max E4 Velocity (mm/s)| `DISTINCT_E_FACTORS && E_STEPPERS >= 4`
-Vmax E5: -–-           |Max E5 Velocity (mm/s)| `DISTINCT_E_FACTORS && E_STEPPERS == 5`
-Vmin: -–-              |Min Feedrate (mm/s)|
-VTrav min: -–-         |Min Travel Velocity (mm/s)|
-                       ||
-Amax X: -–-            |Max X Acceleration (mm/s<sup>2</sup>)|
-Amax Y: -–-            |Max Y Acceleration (mm/s<sup>2</sup>)|
-Amax Z: -–-            |Max Z Acceleration (mm/s<sup>2</sup>)|
-Amax E: -–-            |Max E Acceleration (mm/s<sup>2</sup>)|
-Amax E1: -–-           |Max E1 Acceleration (mm/s<sup>2</sup>)| `DISTINCT_E_FACTORS`
-Amax E2: -–-           |Max E2 Acceleration (mm/s<sup>2</sup>)| `DISTINCT_E_FACTORS`
-Amax E3: -–-           |Max E3 Acceleration (mm/s<sup>2</sup>)| `DISTINCT_E_FACTORS && E_STEPPERS >= 3`
-Amax E4: -–-           |Max E4 Acceleration (mm/s<sup>2</sup>)| `DISTINCT_E_FACTORS && E_STEPPERS >= 4`
-Amax E5: -–-           |Max E5 Acceleration (mm/s<sup>2</sup>)| `DISTINCT_E_FACTORS && E_STEPPERS == 5`
-A-retract: -–-         |Retract Acceleration (mm/s<sup>2</sup>)|
-A-travel: -–-          |Travel Acceleration (mm/s<sup>2</sup>)|
-                       ||
-Xsteps/mm: -–-         |X steps-per-mm|
-Ysteps/mm: -–-         |Y steps-per-mm|
-Zsteps/mm: -–-         |Z steps-per-mm|
-Esteps/mm: -–-         |E steps-per-mm|
-E1steps/mm: -–-        |E1 steps-per-mm| `DISTINCT_E_FACTORS`
-E2steps/mm: -–-        |E2 steps-per-mm| `DISTINCT_E_FACTORS`
-E3steps/mm: -–-        |E3 steps-per-mm| `DISTINCT_E_FACTORS && E_STEPPERS >= 3`
-E4steps/mm: -–-        |E4 steps-per-mm| `DISTINCT_E_FACTORS && E_STEPPERS >= 4`
-E5steps/mm: -–-        |E5 steps-per-mm| `DISTINCT_E_FACTORS && E_STEPPERS == 5`
-                       ||
-Endstop abort ON/OFF   || `ABORT_ON_ENDSTOP_HIT_FEATURE_ENABLED`
+Z Offset                        |`M851 Z`| `HAS_BED_PROBE` (with `BABYSTEP_ZPROBE_OFFSET` it babysteps)
+Bed Z: -–-                      |MBL Z Offset| `MESH_BED_LEVELING && LCD_BED_LEVELING`
+[Feedrate >>](#feedrate)        |Feedrate settings|
+[Acceleration >>](#acceleration)|Acceleration settings|
+[Jerk >>](#jerk)                |Jerk settings|
+[Steps/mm >>](#stepsmm)         |Steps/mm for XYZ axes and extruders|
+Endstop abort ON/OFF            || `ABORT_ON_ENDSTOP_HIT_FEATURE_ENABLED`
+
+#### Feedrate
+
+Item|Description|Requirements
+----|-----------|------------
+**[<< Motion](#motion)** ||
+Vmax X: -–-   |Max X Velocity (mm/s)|
+Vmax Y: -–-   |Max Y Velocity (mm/s)|
+Vmax Z: -–-   |Max Z Velocity (mm/s)|
+Vmax E: -–-   |Max E Velocity (mm/s)|
+Vmax E1: -–-  |Max E1 Velocity (mm/s)| `DISTINCT_E_FACTORS`
+Vmax E2: -–-  |Max E2 Velocity (mm/s)| `DISTINCT_E_FACTORS`
+Vmax E3: -–-  |Max E3 Velocity (mm/s)| `DISTINCT_E_FACTORS && E_STEPPERS >= 3`
+Vmax E4: -–-  |Max E4 Velocity (mm/s)| `DISTINCT_E_FACTORS && E_STEPPERS >= 4`
+Vmax E5: -–-  |Max E5 Velocity (mm/s)| `DISTINCT_E_FACTORS && E_STEPPERS == 5`
+Vmin: -–-     |Min Feedrate (mm/s)|
+VTrav min: -–-|Min Travel Velocity (mm/s)|
+
+#### Acceleration
+
+Item|Description|Requirements
+----|-----------|------------
+**[<< Motion](#motion)** ||
+Accel: -–-    |Nominal Acceleration|
+Amax X: -–-   |Max X Acceleration (mm/s<sup>2</sup>)|
+Amax Y: -–-   |Max Y Acceleration (mm/s<sup>2</sup>)|
+Amax Z: -–-   |Max Z Acceleration (mm/s<sup>2</sup>)|
+Amax E: -–-   |Max E Acceleration (mm/s<sup>2</sup>)|
+Amax E1: -–-  |Max E1 Acceleration (mm/s<sup>2</sup>)| `DISTINCT_E_FACTORS`
+Amax E2: -–-  |Max E2 Acceleration (mm/s<sup>2</sup>)| `DISTINCT_E_FACTORS`
+Amax E3: -–-  |Max E3 Acceleration (mm/s<sup>2</sup>)| `DISTINCT_E_FACTORS && E_STEPPERS >= 3`
+Amax E4: -–-  |Max E4 Acceleration (mm/s<sup>2</sup>)| `DISTINCT_E_FACTORS && E_STEPPERS >= 4`
+Amax E5: -–-  |Max E5 Acceleration (mm/s<sup>2</sup>)| `DISTINCT_E_FACTORS && E_STEPPERS == 5`
+A-retract: -–-|Retract Acceleration (mm/s<sup>2</sup>)|
+A-travel: -–- |Travel Acceleration (mm/s<sup>2</sup>)|
+
+#### Jerk
+
+Item|Description|Requirements
+----|-----------|------------
+**[<< Motion](#motion)** ||
+Vx-Jerk: -–-|Max X Jerk|
+Vy-Jerk: -–-|Max Y Jerk|
+Vz-Jerk: -–-|Max Z Jerk|
+Ve-Jerk: -–-|Max E Jerk|
+
+#### Steps/mm
+
+Item|Description|Requirements
+----|-----------|------------
+**[<< Motion](#motion)** ||
+Xsteps/mm: -–- |X steps-per-mm|
+Ysteps/mm: -–- |Y steps-per-mm|
+Zsteps/mm: -–- |Z steps-per-mm|
+Esteps/mm: -–- |E steps-per-mm|
+E1steps/mm: -–-|E1 steps-per-mm| `DISTINCT_E_FACTORS`
+E2steps/mm: -–-|E2 steps-per-mm| `DISTINCT_E_FACTORS`
+E3steps/mm: -–-|E3 steps-per-mm| `DISTINCT_E_FACTORS && E_STEPPERS >= 3`
+E4steps/mm: -–-|E4 steps-per-mm| `DISTINCT_E_FACTORS && E_STEPPERS >= 4`
+E5steps/mm: -–-|E5 steps-per-mm| `DISTINCT_E_FACTORS && E_STEPPERS == 5`
 
 ### Filament
 
@@ -297,13 +324,13 @@ Item|Description|Requirements
 ----|-----------|------------
 **[<< Control](#control)** ||
 E in mm<sup>3</sup> ON/OFF |Volumetric Units|
-Advance K: -–-       || `LIN_ADVANCE`
-Fil. Dia.: -–-       || `EXTRUDERS == 1` and volumetirc enabled
-Fil. Dia. E1: -–-    || `EXTRUDERS >= 2` and volumetirc enabled
-Fil. Dia. E2: -–-    || `EXTRUDERS >= 2` and volumetirc enabled
-Fil. Dia. E3: -–-    || `EXTRUDERS >= 3` and volumetirc enabled
-Fil. Dia. E4: -–-    || `EXTRUDERS >= 4` and volumetirc enabled
-Fil. Dia. E5: -–-    || `EXTRUDERS == 5` and volumetirc enabled
+Advance K: -–-   || `LIN_ADVANCE`
+Fil. Dia.: -–-   || `EXTRUDERS == 1` and volumetirc enabled
+Fil. Dia. E1: -–-|| `EXTRUDERS >= 2` and volumetirc enabled
+Fil. Dia. E2: -–-|| `EXTRUDERS >= 2` and volumetirc enabled
+Fil. Dia. E3: -–-|| `EXTRUDERS >= 3` and volumetirc enabled
+Fil. Dia. E4: -–-|| `EXTRUDERS >= 4` and volumetirc enabled
+Fil. Dia. E5: -–-|| `EXTRUDERS == 5` and volumetirc enabled
 
 ### BLTouch
 
