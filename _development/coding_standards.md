@@ -1,7 +1,7 @@
 ---
 title:        'Coding Standards'
 description:  'Guidelines for Marlin code formatting, methodologies, and standards.'
-tag: contributing 1
+tag: contributing 2
 
 author: thinkyhead
 category: [ development ]
@@ -71,6 +71,7 @@ Comments are good, but avoid over-commenting. _Never_ try to explain _how_ your 
 Generally, you want your comments to explain _what_ your code does, not _how_. Keep comments inside a function body short. If a function is so complex that you need to separately comment parts of it, consider splitting it up into simpler units. Make small comments to note or warn about something particularly clever (or ugly), but avoid excess. Reserve detailed comments for the head of the function, telling people what it does, and possibly _why_ it does it.
 
  - Use Doxygen-style comments for functions, classes, and other defined entities, and concentrate documentation in the `.h` files.
+
 ```cpp
 /**
  * This is the preferred style for multi-line comments in the
@@ -81,7 +82,9 @@ Generally, you want your comments to explain _what_ your code does, not _how_. K
  * complete development guidance.
  */
 ```
+
 - Use C++ single-line style with `//` for comments under 3 lines.
+
 ```cpp
 // A short comment that takes up only a line or two
 // should just use end-of-line comment style.

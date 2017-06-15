@@ -1,7 +1,7 @@
 ---
 title:        'Adding new fonts'
 description:  'How to add new font files to Marlin'
-tag: fonts
+tag: contributing 3
 
 author: jbrazio
 contrib: thinkyhead, AnHardt

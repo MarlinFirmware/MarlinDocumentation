@@ -1,7 +1,7 @@
 ---
 title:        'Boards'
 description:  'Complete list of hardware supported by Marlin'
-tag: boards
+tag: contributing 3
 
 author: jbrazio
 contrib: thinkyhead
