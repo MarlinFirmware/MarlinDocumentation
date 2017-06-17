@@ -347,7 +347,7 @@ See the [PID Tuning](http://reprap.org/wiki/PID_Tuning) topic on the RepRap wiki
 #define BANG_MAX 255     // limits current to nozzle while in bang-bang mode; 255=full current
 #define PID_MAX BANG_MAX // limits current to nozzle while PID is active (see PID_FUNCTIONAL_RANGE below); 255=full current
 ```
-Disable `PIDTEMP` if you want to run your heater in bang-bang mode. Bang_bang is a pure binary mode where the heater is either full on or full off. PID control is PWM and in most cases is superior in it's ability to maintain a stable temperature.
+Disable `PIDTEMP` to run extruders in bang-bang mode. Bang-bang is a pure binary mode - the heater is either fully-on or fully-off for a long period. PID control uses higher frequency PWM and (in most cases) is superior for maintaining a stable temperature.
 
 ```cpp
 #if ENABLED(PIDTEMP)
@@ -695,19 +695,14 @@ Both acceleration and jerk affect your print quality. If jerk is too low, the ex
 ```cpp
 //#define Z_MIN_PROBE_ENDSTOP
 ```
-If you want to use both probe and end-switch for homing and endstop, enable this. However, This requires extra setups to be done. If you're using Ramps 1.4, the probe pins are located in D32 of the aux4 array that is also used by the lcd panel. You will have to change the pin assignments from your specified board pin file (for example "pins_RAMPS_14.h") located at `#define Z_MIN_PROBE_PIN  32`. I would change this to pin 19 (z max) since it is rarely if ever used. This extra port is actually the Z Probe that is used for your auto bed leveling.
-
-Another way is to change between these pins: `#define Z_MIN_PROBE_PIN  32`, `#define Z_MIN_PIN 18`, and `#define Z_MAX_PIN 19`  according to your board. This is not for beginners.
+Use this option if you've connected the probe to a pin other than the Z MIN endstop pin. With this option enabled, by default Marlin will assume the probe is connected to the Z MAX endstop pin (since this is the most likely to be unused). If you need to use a different pin, you can set a custom pin number for `Z_MIN_PROBE_PIN` in `Configuration.h`.
 
 ```cpp
 #define Z_MIN_PROBE_USES_Z_MIN_ENDSTOP_PIN
 ```
-This uses the same pin for the end-switch and the probe. The advantage is that you don't need to alter any pin-out assignments, however you can only have ONE active at a time.
+Use this option in all cases when the probe is connected to the Z MIN endstop plug. This option is used for `DELTA` robots, which always home to MAX, and may be used in other setups.
 
-```cpp
-//#define DISABLE_Z_MIN_PROBE_ENDSTOP
-```
-This typically disables your probe feature. Only applicable to `//#define Z_MIN_PROBE_ENDSTOP` enabled
+You can use this option to configure a machine with no Z endstops. In that case the probe will be used to home Z and you will need to enable `Z_SAFE_HOMING` to ensure that the probe is positioned over the bed when homing the Z axis - done after X and Y.
 
 ### Probe Type
 
@@ -1171,7 +1166,7 @@ Setting these values too high may result in reduced accuracy and/or skipped step
 ### EEPROM
 
 ```cpp
-#define EEPROM_SETTINGS
+//#define EEPROM_SETTINGS
 ```
 Commands like `M92` only change the settings in volatile memory, and these settings are lost when the machine is powered off. With this option enabled, Marlin uses the built-in EEPROM to preserve settings across reboots. Settings saved to EEPROM (with `M500`) are loaded automatically whenever the machine restarts (and in most setups, when connecting to a host), overriding the defaults set in the configuration files. This option is highly recommended, as it makes configurations easier to manage.
 
@@ -1431,6 +1426,7 @@ Option|Description
 `REPRAP_DISCOUNT_SMART_CONTROLLER`|[RepRapDiscount Smart Controller](http://reprap.org/wiki/RepRapDiscount_Smart_Controller). Usually sold with a white PCB.
 `G3D_PANEL`|[Gadgets3D G3D LCD/SD Controller](http://reprap.org/wiki/RAMPS_1.3/1.4_GADGETS3D_Shield_with_Panel). Usually sold with a blue PCB.
 `RIGIDBOT_PANEL`|[RigidBot Panel V1.0](http://www.inventapart.com/).
+`ANET_KEYPAD_LCD`|[Anet Keypad LCD](http://www.anet3d.com/English/3D_Printer/107.html) for the Anet A3
 
 ### Graphical LCDs
 
@@ -1445,6 +1441,7 @@ Option|Description
 `REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER`|[RepRapDiscount Full Graphic Smart Controller](http://reprap.org/wiki/RepRapDiscount_Full_Graphic_Smart_Controller).
 `MINIPANEL`|[MakerLab Mini Panel](http://reprap.org/wiki/Mini_panel) with graphic controller and SD support.
 `BQ_LCD_SMART_CONTROLLER`|BQ LCD Smart Controller shipped with the BQ Hephestos 2 and Witbox 2.
+`ANET_FULL_GRAPHICS_LCD`|[Anet Full Graphics LCD](http://www.anet3d.com/English/3D_Printer/107.html) for the Anet A3
 
 ### Keypads
 
@@ -1473,6 +1470,7 @@ Option|Description
 ------|-----------
 `U8GLIB_SSD1306`|SSD1306 OLED full graphics generic display.
 `SAV_3DGLCD`|SAV OLED LCD module support using either SSD1306 or SH1106 based LCD modules.
+`OLED_PANEL_TINYBOY2`|TinyBoy2 128x64 OLED / Encoder Panel
 
 
 ## Extras 2
@@ -1494,6 +1492,10 @@ Use software PWM to drive the fan, as with the heaters. This uses a very low fre
 ```
 Incrementing this by 1 will double the software PWM frequency, affecting heaters (and the fan if `FAN_SOFT_PWM` is enabled). However, control resolution will be halved for each increment; at zero value, there are 128 effective control positions.
 
+```cpp
+//#define SOFT_PWM_DITHER
+```
+If `SOFT_PWM_SCALE` is set to a value higher than 0, dithering can be used to mitigate the associated resolution loss. If enabled, some of the PWM cycles are stretched so on average the desired duty cycle is attained.
 
 ### Temperature Status LEDs
 
@@ -1532,7 +1534,7 @@ Marlin includes support for the [Baricuda Extruder for 3D Printing Sugar and Cho
 
 [![LED Lights](/assets/images/config/led-lights.jpg){: .floater.framed}](http://www.instructables.com/id/3D-Printer-RGB-LED-Feedback/){:target="_blank"}
 
-### Indicator LEDs
+### RGB Color LEDs
 
 Marlin currently supplies two options for RGB-addressable color indicators. In both cases the color is set using `M150 Rr Ug Bb` to specify RGB components from 0 to 255.
 
@@ -1540,19 +1542,44 @@ Marlin currently supplies two options for RGB-addressable color indicators. In b
 //define BlinkM/CyzRgb Support
 //#define BLINKM
 ```
-The BLINKM board supplies the backlighting for some LCD controllers. Its color is set using I2C messages.
+The [BLINKM board](https://thingm.com/products/blinkm/) supplies the backlighting for some LCD controllers. Its color is set using I2C messages.
 
 ```cpp
-// Support for an RGB LED using 3 separate pins with optional PWM
+//define PCA9632 PWM LED driver Support
+//#define PCA9632
+```
+The [Philips PCA9632](https://www.digchip.com/datasheets/3286493-pca9632.html) is a common PWM LED driver, controlled (like BlinkM) using I2C.
+
+```cpp
 //#define RGB_LED
-#if ENABLED(RGB_LED)
+//#define RGBW_LED
+#if ENABLED(RGB_LED) || ENABLED(RGBW_LED)
   #define RGB_LED_R_PIN 34
   #define RGB_LED_G_PIN 43
   #define RGB_LED_B_PIN 35
+  #define RGB_LED_W_PIN -1
 #endif
 ```
-An inexpensive RGB LED can be used simply by assigning digital pins for each component. If the pins are able to do hardware PWM then a wide range of colors will be available. With simple digital pins only 7 colors are possible.
+Enable support for an RGB(W) LED connected to 5V digital pins, or an RGB(W) Strip connected to MOSFETs controlled by digital pins. An inexpensive RGB LED can be used simply by assigning digital pins for each component. If the pins are able to do hardware PWM then a wide range of colors will be available. With simple digital pins only 7 colors are possible.
 
+Adds the `M150` command to set the LED (or LED strip) color. If pins are PWM capable (e.g., 4, 5, 6, 11) then a range of luminance values can be set from 0 to 255.
+
+{% alert warning %}
+LED Strips require a MOFSET Chip between PWM lines and LEDs, as the Arduino cannot handle the current the LEDs will require. Failure to follow this precaution can destroy your Arduino!
+{% endalert %}
+
+#### Printer Event LEDs
+```cpp
+#if ENABLED(BLINKM) || ENABLED(RGB_LED) || ENABLED(RGBW_LED) || ENABLED(PCA9632)
+  #define PRINTER_EVENT_LEDS
+#endif
+```
+This option causes the printer to give status feedback on the installed color LED, BLINKM, or PCA9632:
+- Gradually change from blue to violet as the heated bed gets to target temp.
+- Gradually change from violet to red as the hotend gets to temperature.
+- Change to white to illuminate work surface.
+- Change to green once print has finished.
+- Turn off after the print has finished and the user has pushed a button.
 
 ### Servos
 
@@ -1617,3 +1644,108 @@ This defines the size of the buffer to allocate for use with `MEASUREMENT_DELAY_
 #define FILAMENT_LCD_DISPLAY
 ```
 Periodically display a message on the LCD showing the measured filament diameter.
+
+
+# `Configuration_adv.h`
+
+## Temperature Options
+
+### Bang-Bang Bed Heating
+```cpp
+#if DISABLED(PIDTEMPBED)
+  #define BED_CHECK_INTERVAL 5000 // ms between checks in bang-bang control
+  #if ENABLED(BED_LIMIT_SWITCHING)
+    #define BED_HYSTERESIS 2 // Only disable heating if T>target+BED_HYSTERESIS and enable heating if T>target-BED_HYSTERESIS
+  #endif
+#endif
+```
+These sub-options can be used when the bed isn't using PID heating. A "bang-bang" heating method will be used instead, simply checking against current temperature at regular intervals.
+
+### Thermal Protection Settings
+#### Hotend Thermal Protection
+```cpp
+#if ENABLED(THERMAL_PROTECTION_HOTENDS)
+  #define THERMAL_PROTECTION_PERIOD 40        // Seconds
+  #define THERMAL_PROTECTION_HYSTERESIS 4     // Degrees Celsius
+  #define WATCH_TEMP_PERIOD 20                // Seconds
+  #define WATCH_TEMP_INCREASE 2               // Degrees Celsius
+#endif
+```
+Hot end thermal protection can be tuned with these sub-options.
+
+The first two options deal with continuous thermal protection during an entire print job.
+
+The second set of options applies to changes in target temperature. Whenever an `M104` or `M109` increases the target temperature the firmware will wait for the `WATCH_TEMP_PERIOD` to expire, and if the temperature hasn't increased by `WATCH_TEMP_INCREASE` degrees, the machine is halted, requiring a hard reset. This test restarts with any `M104`/`M109`, but only if the current temperature is far enough below the target for a reliable test.
+
+If you get false positives for "Heating failed" increase `WATCH_TEMP_PERIOD` and/or decrease `WATCH_TEMP_INCREASE`. (`WATCH_TEMP_INCREASE` should not be set below 2.)
+
+#### Bed Thermal Protection
+```cpp
+#if ENABLED(THERMAL_PROTECTION_BED)
+  #define THERMAL_PROTECTION_BED_PERIOD 20    // Seconds
+  #define THERMAL_PROTECTION_BED_HYSTERESIS 2 // Degrees Celsius
+  #define WATCH_BED_TEMP_PERIOD 60            // Seconds
+  #define WATCH_BED_TEMP_INCREASE 2           // Degrees Celsius
+#endif
+```
+Heated bed thermal protection can be tuned with these sub-options.
+
+The first two options deal with continuous thermal protection during an entire print job.
+
+The second set of options applies to changes in target temperature. Whenever an `M140` or `M190` increases the target temperature the firmware will wait for the `WATCH_BED_TEMP_PERIOD` to expire, and if the temperature hasn't increased by `WATCH_BED_TEMP_INCREASE` degrees, the machine is halted, requiring a hard reset. This test restarts with any `M140`/`M190`, but only if the current temperature is far enough below the target for a reliable test.
+
+If you get too many "Heating failed" errors, increase `WATCH_BED_TEMP_PERIOD` and/or decrease `WATCH_BED_TEMP_INCREASE`. (`WATCH_BED_TEMP_INCREASE` should not be set below 2.)
+
+### PID Extrusion Scaling
+```cpp
+#if ENABLED(PIDTEMP)
+  // this adds an experimental additional term to the heating power, proportional to the extrusion speed.
+  // if Kc is chosen well, the additional required power due to increased melting should be compensated.
+  //#define PID_EXTRUSION_SCALING
+  #if ENABLED(PID_EXTRUSION_SCALING)
+    #define DEFAULT_Kc (100) //heating power=Kc*(e_speed)
+    #define LPQ_MAX_LEN 50
+  #endif
+#endif
+```
+This option further improves hotend temperature control by accounting for the extra heat energy consumed by cold filament entering the hotend melt chamber. If material enters the hotend more quickly, then more heat will need to be added to maintain energy balance. This option adds a scaling factor that must be tuned for your setup and material.
+
+Extrusion scaling keeps a circular buffer of forward E movements done at each temperature measurement which acts to delay the applied factor and allow for heat dissipation. The size of this queue during printing is set by `M301 L`, limited by `LPQ_MAX_LEN`.
+
+{% alert info %}
+Your `M301 C` `M301 L` values are saved to EEPROM when `EEPROM_SETTINGS` is enabled.
+{% endalert %}
+
+### Automatic Temperature
+```cpp
+#define AUTOTEMP
+#if ENABLED(AUTOTEMP)
+  #define AUTOTEMP_OLDWEIGHT 0.98
+#endif
+```
+With Automatic Temperature the hotend target temperature is calculated by all the buffered lines of gcode. The maximum buffered steps/sec of the extruder motor is called "`se`".
+Start autotemp mode with `M109 F<factor> S<mintemp> B<maxtemp>`, giving a range of temperatures. The target temperature is set to `mintemp + factor * se[steps/sec]` and is limited by
+`mintemp` and `maxtemp`. Turn this off by executing `M109` without `F`. If the temperature is set to a value below `mintemp` (e.g., by `M104`) autotemp will not be applied.
+
+Example: Try `M109 S215 B260 F1` in your `start.gcode` to set a minimum temperature of 215 when idle, which will boost up to 260 as extrusion increases in speed.
+
+### Temperature Report ADC
+```cpp
+//#define SHOW_TEMP_ADC_VALUES
+```
+Enable this option to have `M105` and automatic temperature reports include raw ADC values from the temperature sensors.
+
+### High Temperature Thermistors
+```cpp
+//#define MAX_CONSECUTIVE_LOW_TEMPERATURE_ERROR_ALLOWED 0
+```
+High temperature thermistors may give aberrant readings. If this is an issue, use this option to set the maximum number of consecutive low temperature errors that can occur before Min Temp Error is triggered. If you require a value over 10, this could indicate a problem.
+```cpp
+//#define MILLISECONDS_PREHEAT_TIME 0
+```
+High Temperature Thermistors tend to give poor readings at ambient and lower temperatures. Until they reach a sufficient temperature, these sensors usually return the lowest raw value, and this will cause a Min Temp Error.
+
+To solve this issue, this option sets the number of milliseconds a hotend will preheat before Marlin starts to check the temperature. Set a delay sufficient to reach a temperature your sensor can reliably read. Lower values are better and safer. If you require a value over 30000, this could indicate a problem.
+
+
+## To Be Continued...
