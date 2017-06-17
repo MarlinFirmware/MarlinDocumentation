@@ -1,7 +1,7 @@
 ---
 title:        'Coding Standards'
 description:  'Guidelines for Marlin code formatting, methodologies, and standards.'
-tag: contributing 1
+tag: contributing 2
 
 author: thinkyhead
 category: [ development ]
@@ -71,6 +71,7 @@ Comments are good, but avoid over-commenting. _Never_ try to explain _how_ your 
 Generally, you want your comments to explain _what_ your code does, not _how_. Keep comments inside a function body short. If a function is so complex that you need to separately comment parts of it, consider splitting it up into simpler units. Make small comments to note or warn about something particularly clever (or ugly), but avoid excess. Reserve detailed comments for the head of the function, telling people what it does, and possibly _why_ it does it.
 
  - Use Doxygen-style comments for functions, classes, and other defined entities, and concentrate documentation in the `.h` files.
+
 ```cpp
 /**
  * This is the preferred style for multi-line comments in the
@@ -81,7 +82,9 @@ Generally, you want your comments to explain _what_ your code does, not _how_. K
  * complete development guidance.
  */
 ```
+
 - Use C++ single-line style with `//` for comments under 3 lines.
+
 ```cpp
 // A short comment that takes up only a line or two
 // should just use end-of-line comment style.
@@ -186,15 +189,14 @@ const char blue =
 
 Marlin provides several shorthand macros in the `macros.h` file. Get to know them and use them. Here are some of the most common:
 
-- `ENABLED(OPTION)`/`DISABLED(OPTION)`: Test whether an option is on/off. Precompiler only.
+- `ENABLED(OPTION)`/`DISABLED(OPTION)`: Test whether an option is on/off. (Precompiler only.) These macros are required so that `make` can set options.
 - `COUNT(array)`: Count the number of items in an array in-place. e.g., `for (i = 0; i < COUNT(my_arr); i++)`…
 - `WITHIN(var,low,high)`: Check that a variable is within a given range, inclusive.
-- `NUMERIC(c)`: Check whether a character is `0123456789`.
-- `DECIMAL(c)`: Check whether a character is `.0123456789`.
-- `NUMERIC_SIGNED(c)`: Check whether a character is `+-0123456789`.
-- `DECIMAL_SIGNED(c)`: Check whether a character is `+-.0123456789`.
-- `NOLESS(var,min)`: Constrain a variable to a minimum value.
-- `NOMORE(var,max)`: Constrain a variable to a maximum value.
+- `NUMERIC(c)`: True if a character is numeric: `0123456789`
+- `DECIMAL(c)`: True if a character is decimal: `0123456789.`
+- `NUMERIC_SIGNED(c)`: True if a character is signed numeric: `0123456789+-`
+- `DECIMAL_SIGNED(c)`: True if a character is signed decimal: `0123456789+-.`
+- `NOLESS(var,min)`/`NOMORE(var,max)`: Constrain a variable to a minimum or maximum value.
 - `FORCE_INLINE`: Force a function or method to be compiled inline (almost like a macro).
 - `STRINGIFY(DEFINE)`: Resolve a define to a quoted string. (If undefined, the name of the define.)
 - `ARRAY_N(N,values)`: Expand into a prepopulated array of size N (based on an option like `EXTRUDERS`).
@@ -209,8 +211,8 @@ Marlin provides several shorthand macros in the `macros.h` file. Get to know the
 
 Use the following macros when comparing two millis count values:
 
-- `PENDING(ms,time)`: The `time` is pending, compared to `ms`.
-- `ELAPSED(ms,time)`: The `time` has elapsed, compared to `ms`.
+- `PENDING(ms,time)`: Relative to `ms`, `time` is pending.
+- `ELAPSED(ms,time)`: Relative to `ms`, `time` has elapsed.
 
 When using `ELAPSED` and `PENDING`, always compare against the _next time_ rather than the _last time_. This...
 ```cpp
@@ -251,9 +253,9 @@ Since Marlin needs to runs on the most modest hardware, much care has been taken
  - `#define` is used liberally, especially for configuration values
  - Use `#define MYFEATURE` for feature switches.
  - Feature settings have some flexibility, and can have values.
- - Test features with `#if ENABLED(MYFEATURE)` / `#if DISABLED(MYFEATURE)`. (Using these macros allows features to be set externally.)
- - Indent the code between `#if…` and `#endif` for editors that only have naive code-folding.
- - Add a comment: `#endif // MYFEATURE` — Only if the `#endif` is ''far away''!
+ - Use `#if ENABLED(MYFEATURE)` / `#if DISABLED(MYFEATURE)` rather than `#ifdef` or `#if defined()`. The `ENABLED`/`DISABLED` macros allow features to be overridden by `make`.
+ - Indent `#if…`/`#endif` blocks and their contents with the rest of the cascade. This allows editors that only have naive code-folding to fold blocks properly.
+ - Add a comment: `#endif // MYFEATURE` — but only if the `#endif` is far away (lets say, over 10 lines) from the starting `#if`.
 
 #### New Feature Example
 **In Configuration.h:**

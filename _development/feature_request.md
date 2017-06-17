@@ -1,73 +1,32 @@
 ---
 title:        'Feature requests'
 description:  'Complete list of all the user requested features'
-tag: feature requests
+tag: contributing 1
 
 author: jbrazio
+contrib: thinkyhead
 category: [ development ]
 ---
 
 ## About
 
-The following table contains the list of user requested features for Marlin which haven't yet been merged into Marlin, each feature will have an associated [Github Issue](https://github.com/MarlinFirmware/Marlin/issues).
+Marlin has _a lot_ of features, and there are several more in development, but we're always open to more ideas and contributions! We keep track of feature requests in the Marlin Issue Queue. Open tagged feature requests appear on this page:
 
-The list can be [edited here](https://docs.google.com/spreadsheets/d/1mVTZnJbekS2tJtcfQ3mnHGtBHukd76AohlemK8Za8Ig/edit#gid=0).
+#### &nbsp;&nbsp;&nbsp;&nbsp; [Open Marlin Feature Requests](https://github.com/MarlinFirmware/Marlin/labels/Feature%20Request)
 
+## Before Submitting
 
-## How to submit
+**Scan the [Feature Requests](https://github.com/MarlinFirmware/Marlin/labels/Feature%20Request) list** to see if a similar request is already in the queue. If there is, you can add comments to the existing request.
 
-To submit a feature you must be a Github [registered user](https://github.com/join) and open a [new issue](https://github.com/MarlinFirmware/Marlin/issues/new) following a few simple rules:
+**Read the [Coding Standards](coding_standards.html)** (especially "[Adding a New Feature](coding_standards.html#adding-a-new-feature)") and review them when preparing your code for submission.
 
- - The issue title should start by **'[Feature Request]'** or it's short form **'[FR]'**
- - The title should be short and clear about your request
- - You should provide all the relevant information
+**[Sign up for a free Github account](https://github.com/join)**. A Github account is required to submit a Feature Request. The process only takes a few minutes, and then you will be notified on Github as your feature progresses and be able to contribute to the feature.
 
-We consider a good example of a feature request title:
+## Submitting a Feature Request
 
- > [FR] Add support for ACME Stepper Driver
+Go to the Marlin project page to [Open a New Issue](https://github.com/MarlinFirmware/Marlin/issues/new) and follow these guidelines:
 
-## Feature request list
-
-{% alert warning %}
-The following table is outdated, check [Github issue tracker](https://github.com/MarlinFirmware/Marlin/issues?q=is%3Aissue+is%3Aopen+label%3A%22Feature+Request%22) for the latest overview. <br />
-TODO: Is it possible to use the Github API to keep table in sync ?
-{% endalert %}
-
-<table id="fr_list" class="table table-condensed table-striped"></table>
-<script type="text/javascript">
-  head.ready("sheetrock.min.js", function() {
-    $('#fr_list').sheetrock({
-      url: "https://docs.google.com/spreadsheets/d/" +
-        "1mVTZnJbekS2tJtcfQ3mnHGtBHukd76AohlemK8Za8Ig#gid=0",
-        query: "SELECT A, B, C, D, G WHERE C != 'Implemented' ORDER BY A DESC",
-        rowTemplate: function(row) {
-          var html = '<tr>';
-          switch(row['num']) {
-            case 0:
-              for (var col = 0; col < row['labels'].length; col++) {
-                html += '<th>';
-                html += row['labels'][col];
-                html += '</th>'
-              }
-              break;
-
-            default:
-              for (var col = 0; col < row['cellsArray'].length; col++) {
-                html += '<td>';
-                if (row['labels'][col] == 'Issue') {
-                  html += '<a href="';
-                  html += 'https://github.com/MarlinFirmware/Marlin/issues/'
-                    + row['cellsArray'][col];
-                  html += '">';
-                  html += row['cellsArray'][col];
-                  html += '</a>';
-                } else html += row['cellsArray'][col];
-                html += '</td>'
-              }
-          }
-          html += '</tr>'
-          return html;
-        }
-    });
-  });
-</script>
+- Prefix the title with **'[Feature Request]'** or its short form, **'[FR]'**.
+- Keep the title short and to the point. A good example would be:
+  **[FR] Add support for ACME Stepper Driver**
+- Provide all relevant information about the feature.
