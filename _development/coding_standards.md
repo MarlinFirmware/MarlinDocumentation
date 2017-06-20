@@ -7,7 +7,7 @@ author: thinkyhead
 category: [ development ]
 ---
 
-Please follow these formatting guidelines and coding standards when contributing code to Marlin. Pull requests that don't follow good coding standards will be postponed for cleanup.
+Please follow the formatting guidelines and coding standards below when contributing code to Marlin. Pull requests that don't follow the existing coding style closely may be postponed for cleanup. Your code reviewer should point out where changes are needed.
 
 ## Coding Style
 ### Indentation
@@ -15,6 +15,7 @@ Indentation is important for readability and maintainability of code, and provid
 
  - Entab lines with 2 spaces and don't use tabs. _Set your editor to use 2 Spaces! Tabs will bite you in the end._
  - All block elements should increase the indentation level, including `#if` blocks and other non-brace compiler blocks:
+
 ```cpp
 void myFunction() {
   if (myCondition == 0) {
@@ -28,11 +29,18 @@ void myFunction() {
 ```
 
 ### Brace-style
-Marlin uses a brace style that maximizes the number of code lines on-screen, and which causes folded code blocks to appear at the end of the line where they begin. If vertical spacing makes code more readable, add a blank line rather than using a different bracket style.
 
- - "One True Bracket" Style – "1TBS" – to rule them all.
- - Place opening braces at the end of lines, including in declarations.
- - Closing braces should always align with the starting column of the opening line.
+Marlin uses a brace style intended to
+ - show the folded code block at the end of its opening line: `{``(...)`,
+ - maintain consistency and develop a single style habit, and
+ - maximize the number of code lines on-screen.
+
+If vertical spacing makes code more readable, add _one_ extra blank line rather than using a different brace style.
+
+ - Known by the Ancients as ["One True Brace Style"](https://en.wikipedia.org/wiki/Indent_style#Variant:_1TBS_.28OTBS.29)
+ - Place opening braces at the end of the line: `if (a == 1) {`
+ - Do the same for a declaration line: `void pizza(int slices) {`
+ - Vertically align closing braces to the opening line.
 
 Here's an example of 1TBS style applied to a faux function:
 ```cpp
@@ -53,9 +61,11 @@ void my_function(void) {
 
 ### Spacing
 
- - Use one space between keywords and their conditions:<br />`if (…)`, `while (…)`, `do {…} while(…)` etc. No space is needed for `sizeof()` and other "function-like" built-ins.
- - No spaces between functions and their arguments:<br />`myFunction(…);`
- - No spaces around `.` or `->` operators.
+ - One space after control keywords:<br />`if (…)`, `while (…)`, `do {…} while(…)`, `switch (…)` etc.
+ - No space is needed for `sizeof()` and other "function-like" language features.
+ - No space between a function and its arguments: `val = myFunction(…);`
+ - No spaces around `.` or `->` operators: `the_place = state->parks[echo];`
+ - No space between a cast and its target: `old_state = (int)state;`
  - Use one space around (on each side of) most binary and ternary operators:<br />`myVar = aVar + bVar * cVar;`<br />`myVal = (a * b + b * c);`
 
 ### Trailing Whitespace
@@ -245,6 +255,20 @@ The `serial.h` file also includes several macros to make it easier to create PRO
 - `SERIAL_ECHO(S)`, `SERIAL_ECHOLN(S)`, `SERIAL_ECHOPGM(S)`, etc., just like the `PROTOCOL_*` macros above.
 - `SERIAL_ERROR_START()`: Print "`error:`" to the serial output.
 - `SERIAL_ERROR(S)`, `SERIAL_ERRORLN(S)`, `SERIAL_ERRORPGM(S)`, etc.
+
+### Maths macros
+
+Use the following macros in place of their normal lower-case versions. These ensure the smaller 32-bit `float` on all architectures. The initial 32-bit targets for Marlin, while significantly faster, do not have a floating-point unit either, so `float` maths is more compatible while not sacrificing performance.
+
+- `ATAN2(y, x)`
+- `FABS(x)`
+- `POW(x, y)`
+- `SQRT(x)`
+- `CEIL(x)`
+- `FLOOR(x)`
+- `LROUND(x)`
+- `FMOD(x, y)`
+- `HYPOT(x,y)`
 
 ### Adding a New Feature
 

@@ -72,7 +72,8 @@ Auto Home              |[`G28`](/docs/gcode/G028.html)|
 Auto Home X            |[`G28 X`](/docs/gcode/G028.html)| `INDIVIDUAL_AXIS_HOMING_MENU`
 Auto Home Y            |[`G28 Y`](/docs/gcode/G028.html)| `INDIVIDUAL_AXIS_HOMING_MENU`
 Auto Home Z            |[`G28 Z`](/docs/gcode/G028.html)| `INDIVIDUAL_AXIS_HOMING_MENU`
-Level Bed              |[`G29`](/docs/gcode/G029-abl.html) or guided probing| `LCD_BED_LEVELING || HAS_ABL`
+[Bed Leveling >>](#bed-leveling)|[`G29`](/docs/gcode/G029-abl.html) guided manual probing| `LCD_BED_LEVELING`
+[Unified Bed Leveling >>](#unified-bed-leveling)|[`G29`](/docs/gcode/G029-ubl.html)| `UNIFIED_BED_LEVELING`
 Set Home Offsets       |[`M428`](/docs/gcode/M428.html)| `!DELTA && !NO_WORKSPACE_OFFSETS`
 Disable Steppers       |[`M18`](/docs/gcode/M018.html)|
 Change Filament        |[`M600`](/docs/gcode/M600.html)| `FILAMENT_CHANGE_FEATURE` and not too cold
@@ -103,6 +104,27 @@ Select E1/E2           |Sends "`T0`" / "`T1`"| `SWITCHING_EXTRUDER`
 **Move E3 >>**         |Select E3 move size, do moves| `EXTRUDERS >= 3` (if not too cold)
 **Move E4 >>**         |Select E4 move size, do moves| `EXTRUDERS >= 4` (if not too cold)
 **Move E5 >>**         |Select E5 move size, do moves| `EXTRUDERS == 5` (if not too cold)
+
+### Bed Leveling
+
+The Bed Leveling menu groups together commands for calibrating the nozzle-to-bed distance. Different options will appear depending on your setup and the type of leveling you've enabled. **Level Bed** runs the default `G29` procedure. For auto bed leveling this will deploy the probe, measure all points, and stop. For manual leveling (`PROBE_MANUALLY` or `MESH_BED_LEVELING`) you'll be taken through a step-by-step process.
+
+Item|Description|Requirements
+----|-----------|------------
+**[<< Prepare](#prepare)** ||
+Free XY                |Move Z down to safe-zone      | `DELTA` (above safe zone)
+Auto Home              |`G28`                         | Unknown position
+Leveling On/Off        |`M420 S`                      | Valid mesh, known position
+Level Bed              |`G29`/`G29 S1`                | Known position
+Fade Height: -–-       |`M420 Z`                      | `ENABLE_LEVELING_FADE_HEIGHT`
+Mesh Z Offset: -–-     |`G29 Z`                       | `MESH_BED_LEVELING`
+Z Probe Offset: -–-    |`M851 Z`                      | `HAS_BED_PROBE` (`BABYSTEP_ZPROBE_OFFSET` for active Z adjust)
+Load Settings          |`M501`                        | `EEPROM_SETTINGS`
+Save Settings          |`M500`                        | `EEPROM_SETTINGS`
+
+### Unified Bed Leveling
+
+The Unified Bed Leveling menu groups together commands for leveling and mesh editing. Since this menu is very large and complex, it will be described in a separate document - coming soon.
 
 ### Preheat PLA
 
@@ -339,9 +361,15 @@ When the ANTCLABS BLTouch probe acts up you can use the items in this sub-menu t
 Item|Description|Requirements
 ----|-----------|------------
 **[<< Control](#control)** ||
-Reset BLTouch          ||
-BLTouch Self-Test      ||
+Reset BLTouch          |Revive after an error|
+BLTouch Self-Test      |Run the built-in self-test|
 Deploy BLTouch         ||
 Stow BLTouch           ||
+
+----
+
+## UBL Submenus
+
+Unified Bed Leveling aims to be a comprehensive all-in-one system to calibrate the bed based on every available datapoint.
 
 ---
