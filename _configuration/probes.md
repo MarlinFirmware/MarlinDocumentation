@@ -47,7 +47,7 @@ Marlin includes various methods of probing and leveling:
 
 Before configuring any bed probe be sure to read its documentation and the documentation for your electronics. Make sure you know to which pins the probe will be connected. Marlin provides reasonable defaults, but they will not apply to every situation.
 
-In general, on a delta a switch-based probe will be connected to unused the Z-Min endstop pin (if there is one). For machines that have a Z-Min endstop, Marlin assumes you'll connect the probe to the Z-Max pin - since this pin is the least-likely to be used for something else.
+In general, on a delta a switch-based probe will be connected to unused the Z-Min endstop pin (if there is one).
 
 - If the probe is connected to the Z-Min pin, enable `Z_MIN_PROBE_USES_Z_MIN_ENDSTOP_PIN`.
 - If the probe is connected to any other pin, enable `Z_MIN_PROBE_ENDSTOP`.
