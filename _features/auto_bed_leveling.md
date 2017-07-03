@@ -6,7 +6,16 @@ author: thinkyhead
 category: [ features, leveling ]
 ---
 
+{% alert info %}
+This page is based on Marlin 1.1.2. Corrections/improvements are welcome.
+{% endalert %}
+
+{% alert info %}
+This page pertains to core Automatic Bed Leveling. Also soo [Unified Bed Leveling](unified_bed_leveling.html) and [Mesh Bed Leveling](/docs/gcode/G029-mbl.html).
+{% endalert %}
+
 ## Introduction
+
 Automatic Bed Leveling (ABL) helps improve the quality of printing and bed adhesion by taking several measurements of the bed surface and then adjusting all movement to follow the tilt or contours of the bed. Most beds appear quite flat and even, but even when the bed is flat, there may be irregularities due to tape or other matter on the surface. Or there may be irregularities in the bed or nozzle height due to mechanical flaws. ABL is able to compensate for all these kinds of height irregularities.
 
 ABL requires a bed probe or some other mechanism to be able to test the bed height at various positions. Fortunately, probes come in many varieties, so there's a probe for every kind of printer. One popular solution is to use a mechanical switch mounted on a servo arm. The popular BLTouch probe emulates a servo but uses a retractable pin. There are infrared and inductive probes that trigger at some known distance from the bed. The nozzle itself may be used by mounting it on a spring-loaded carriage that presses a switch, or on a floating carriage that opens a contact.
