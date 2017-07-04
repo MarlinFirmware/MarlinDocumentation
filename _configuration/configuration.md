@@ -1310,7 +1310,7 @@ To determine the language extension installed on your controller:
 - Click the controller to view the LCD menu
 - The LCD will display Japanese, Western, or Cyrillic text
 
-For in-depth info on the Marlin display system, see [LCD Language Font System](https://github.com/MarlinFirmware/Marlin/wiki/LCD-Language) on the Marlin wiki.
+See [LCD Language System](/docs/development/lcd_language.html) for in-depth info on how the Marlin display system currently works.
 
 ![SD Card](/assets/images/config/sdcard.jpg){: .floater}
 
