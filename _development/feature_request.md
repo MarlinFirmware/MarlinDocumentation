@@ -1,7 +1,7 @@
 ---
 title:        'Feature requests'
 description:  'Complete list of all the user requested features'
-tag: contributing 1
+tag: contributing
 
 author: jbrazio
 contrib: thinkyhead

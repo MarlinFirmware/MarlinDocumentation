@@ -1,7 +1,7 @@
 ---
 title:        'LCD Language System'
 description:  'How Marlin handles LCD languages'
-tag: contributing 4
+tag: language
 
 author: thinkyhead
 category: [ development ]

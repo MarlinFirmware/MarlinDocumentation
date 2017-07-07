@@ -1,7 +1,7 @@
 ---
 title:        'Coding Standards'
 description:  'Guidelines for Marlin code formatting, methodologies, and standards.'
-tag: contributing 2
+tag: coding
 
 author: thinkyhead
 category: [ development ]
@@ -195,27 +195,40 @@ const char blue =
  - Use `#define` macros to avoid repeating boilerplate code.<br />Consider both readability and maintainability.
  - Label `#endif` with the opening `#if` condition(s) if the block is over ~15 lines. Make the label compact. For example, `#endif // SDSUPPORT || ULTRALCD`.
 
+### FastIO
+
+Marlin uses FastIO macros to read and write pins.
+
+{:.pretty-list.headless}
+Macro|Description
+----|-----------
+`READ(PIN)`|Read the state of a digital pin. Returns either `HIGH` or `LOW`.
+`WRITE(PIN, STATE)`|Set a digital pin's state to either `HIGH` or `LOW`.
+
 ### Macros
 
 Marlin provides several shorthand macros in the `macros.h` file. Get to know them and use them. Here are some of the most common:
 
-- `ENABLED(OPTION)`/`DISABLED(OPTION)`: Test whether an option is on/off. (Precompiler only.) These macros are required so that `make` can set options.
-- `COUNT(array)`: Count the number of items in an array in-place. e.g., `for (i = 0; i < COUNT(my_arr); i++)`…
-- `WITHIN(var,low,high)`: Check that a variable is within a given range, inclusive.
-- `NUMERIC(c)`: True if a character is numeric: `0123456789`
-- `DECIMAL(c)`: True if a character is decimal: `0123456789.`
-- `NUMERIC_SIGNED(c)`: True if a character is signed numeric: `0123456789+-`
-- `DECIMAL_SIGNED(c)`: True if a character is signed decimal: `0123456789+-.`
-- `NOLESS(var,min)`/`NOMORE(var,max)`: Constrain a variable to a minimum or maximum value.
-- `FORCE_INLINE`: Force a function or method to be compiled inline (almost like a macro).
-- `STRINGIFY(DEFINE)`: Resolve a define to a quoted string. (If undefined, the name of the define.)
-- `ARRAY_N(N,values)`: Expand into a prepopulated array of size N (based on an option like `EXTRUDERS`).
-- `PIN_EXISTS(NAME)`: True if the pin is defined. Precompiler only. (Takes the name minus `_PIN`.)
-- `NEAR_ZERO(V)`/`UNEAR_ZERO(V)`/`NEAR(V1,V2)`: Check whether a float value is very near zero or another value.
-- `RECIPROCAL(N)`: The reciprocal of a value, except return 0.0 (not infinity) for 0.0.
-- `RADIANS(d)`/`DEGREES(r)`: Convert degrees to radians and back again.
-- `FIXFLOAT(N)`: Add a tiny value to a float to compensate for rounding errors.
-- `NOOP`: A do-nothing macro to use for empty macro functions.
+{:.pretty-list.headless}
+Macro|Description
+----|-----------
+`ENABLED(OPTION)`/`DISABLED(OPTION)`| Test whether an option is on/off. (Precompiler only.) These macros are required so that `make` can set options.
+`COUNT(array)`| Count the number of items in an array in-place. e.g., `for (i = 0; i < COUNT(my_arr); i++)`…
+`WITHIN(var,low,high)`| Check that a variable is within a given range, inclusive.
+`NUMERIC(c)`| True if a character is numeric: `0123456789`
+`DECIMAL(c)`| True if a character is decimal: `0123456789.`
+`NUMERIC_SIGNED(c)`| True if a character is signed numeric: `0123456789+-`
+`DECIMAL_SIGNED(c)`| True if a character is signed decimal: `0123456789+-.`
+`NOLESS(var,min)`/`NOMORE(var,max)`| Constrain a variable to a minimum or maximum value.
+`FORCE_INLINE`| Force a function or method to be compiled inline (almost like a macro).
+`STRINGIFY(DEFINE)`| Resolve a define to a quoted string. (If undefined, the name of the define.)
+`ARRAY_N(N,values)`| Expand into a prepopulated array of size N (based on an option like `EXTRUDERS`).
+`PIN_EXISTS(NAME)`| True if the pin is defined. Precompiler only. (Takes the name minus `_PIN`.)
+`NEAR_ZERO(V)`/`UNEAR_ZERO(V)`/`NEAR(V1,V2)`| Check whether a float value is very near zero or another value.
+`RECIPROCAL(N)`| The reciprocal of a value, except return 0.0 (not infinity) for 0.0.
+`RADIANS(d)`/`DEGREES(r)`| Convert degrees to radians and back again.
+`FIXFLOAT(N)`| Add a tiny value to a float to compensate for rounding errors.
+`NOOP`| A do-nothing macro to use for empty macro functions.
 
 ### Time Comparison
 
@@ -245,16 +258,19 @@ if (ELAPSED(ms, last_event_ms + TIME_INTERVAL)) {
 
 The `serial.h` file also includes several macros to make it easier to create PROGMEM strings and print them to the serial output. Below are a few of them. See the `serial.h` file for others.
 
-- `SERIAL_PROTOCOL("hello")`: Print an ASCII string stored in SRAM to serial out.
-- `SERIAL_PROTOCOLLN("hello")`: Print an ASCII string stored in SRAM to serial out, appending a newline.
-- `SERIAL_PROTOCOLPGM("hello")`: Wrap the given ASCII string in `PSTR` and print it to serial out.
-- `SERIAL_PROTOCOLLNPGM("hello")`: Wrap the given ASCII string in `PSTR` and print it to serial out, appending a newline.
-- `SERIAL_PROTOCOLPAIR("Hello:",val)`: Wrap an ASCII string in `PSTR`; print it and a value to serial out.
-- `SERIAL_PROTOCOLLNPAIR("Hello:",val)`: Wrap an ASCII string in `PSTR`; print it, a value, and a newline to serial out.
-- `SERIAL_ECHO_START()`: Send "`echo:`" to the serial output.
-- `SERIAL_ECHO(S)`, `SERIAL_ECHOLN(S)`, `SERIAL_ECHOPGM(S)`, etc., just like the `PROTOCOL_*` macros above.
-- `SERIAL_ERROR_START()`: Print "`error:`" to the serial output.
-- `SERIAL_ERROR(S)`, `SERIAL_ERRORLN(S)`, `SERIAL_ERRORPGM(S)`, etc.
+{:.pretty-list.headless}
+Macro|Description
+----|-----------
+`SERIAL_ECHO_START()`| Send "`echo:`" to the serial output.
+`SERIAL_ERROR_START()`| Print "`error:`" to the serial output.
+`SERIAL_PROTOCOL("hello")`| Print an ASCII string stored in SRAM to serial out.
+`SERIAL_PROTOCOLLN("hello")`| Print an ASCII string stored in SRAM to serial out, appending a newline.
+`SERIAL_PROTOCOLPGM("hello")`| Wrap the given ASCII string in `PSTR` and print it to serial out.
+`SERIAL_PROTOCOLLNPGM("hello")`| Wrap the given ASCII string in `PSTR` and print it to serial out, appending a newline.
+`SERIAL_PROTOCOLPAIR("Hello:",val)`| Wrap an ASCII string in `PSTR`; print it and a value to serial out.
+`SERIAL_PROTOCOLLNPAIR("Hello:",val)`| Wrap an ASCII string in `PSTR`; print it, a value, and a newline to serial out.
+`SERIAL_ECHO(S)`<br/>`SERIAL_ECHOLN(S)`<br/>`SERIAL_ECHOPGM(S)`|just like the `PROTOCOL_*` macros above.
+`SERIAL_ERROR(S)`<br/>`SERIAL_ERRORLN(S)`<br/>`SERIAL_ERRORPGM(S)`|
 
 ### Maths macros
 

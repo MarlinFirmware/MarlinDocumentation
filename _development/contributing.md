@@ -1,11 +1,10 @@
 ---
 title:        'Contributing to Marlin'
 description:  'Ways that you can help improve Marlin'
-tag: contributing 1
+tag: contributing
 
 author: thinkyhead
 category: [ development ]
-tag: contributing 1
 ---
 
 ## The Layers of Marlin
