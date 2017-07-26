@@ -47,4 +47,8 @@ Begin Automatic Bed Leveling with a plain `G29` command. This will use the setti
 If all goes well, move the nozzle down close to the bed and use a piece of paper to test the nozzle height. The paper should slide with a little bit of catch, but not too much. Now move the nozzle to different points on the bed with `G1` and re-test the height with the paper at each point. The feel should be close to the same at all points. If you find that the leveling isn't very accurate, use `M48` to test the accuracy of the bed probe.
 
 ## Bed Leveling and Printing
-Currently, Marlin doesn't save the bed leveling results to EEPROM, and it throws away the probe results on `G28`. So the machine must always do a new `G29` after any `G28`. Marlin will be getting a Save Leveling function in the near future, and we'll make an announcement at that time.
+Marlin is save the bed leveling results to EEPROM after each `G29` command. It will remain in memory until the next `G29` or homing by `G28`. After each `G28` a simple `M420 S1` will restore the saved mesh to memory. It is advised to set your slicer to add the `M420 S1` in the starting code.
+
+In order to load the mesh from the printer boot up, after the `M420 S1` you can save this ABL active satus with `M500`. 
+
+If using UBL instead of ABL, refer to the proper [Unified Bed Leveling](unified_bed_leveling.html) documentation and commands.
