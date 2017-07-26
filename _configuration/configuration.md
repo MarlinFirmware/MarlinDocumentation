@@ -922,14 +922,20 @@ Set to `true` to enable the option to constrain movement to the physical boundar
 ### Movement Bounds
 
 ```cpp
+#define X_BED_SIZE 200
+#define Y_BED_SIZE 200
+```
+With Marlin 1.1.5 and up you can directly specify the bed size. This allows Marlin to do extra logic related to the bed size when it differs from the movement limits below. If the XY carriage is able to move outside of the bed, you can specify a wider range below.
+
+```cpp
 #define X_MIN_POS 0
 #define Y_MIN_POS 0
 #define Z_MIN_POS 0
-#define X_MAX_POS 200
-#define Y_MAX_POS 200
+#define X_MAX_POS X_BED_SIZE
+#define Y_MAX_POS Y_BED_SIZE
 #define Z_MAX_POS 170
 ```
-These values specify the physical limits of the machine. Usually the `[XYZ]_MIN_POS` values are set to 0, because endstops are positioned at the bed limits. `[XYZ]_MAX_POS` should be set to the farthest reachable point. By default, these positions are used for homing as well. However, the `MANUAL_[XYZ]_HOME_POS` options can be used to override these, if needed.
+These values specify the physical limits of the machine. Usually the `[XYZ]_MIN_POS` values are set to 0, because endstops are positioned at the bed limits. `[XYZ]_MAX_POS` should be set to the farthest reachable point. By default, these are used as your homing positions as well. However, the `MANUAL_[XYZ]_HOME_POS` options can be used to override these, if needed.
 
 {% panel info Home Offset %}
 Although home positions are fixed, `M206` can be used to apply offsets to the home position if needed.
@@ -1177,21 +1183,29 @@ The EEPROM-related commands are:
 - `M502`: Reset all settings to their default values (as set by `Configuration.h`)
 - `M503`: Print the current settings (in RAM, not EEPROM)
 
+#### EEPROM Options
+```cpp
+//#define DISABLE_M503    // Saves ~2700 bytes of PROGMEM. Disable for release!
+#define EEPROM_CHITCHAT   // Give feedback on EEPROM commands. Disable to save PROGMEM.
+```
+These EEPROM options should be left as they are, but for 128K and smaller boards they may be used to recover some program memory. Vendors are strongly discouraged from using `DISABLE_M503`.
+
 {% alert info %}
 Settings that can be changed and saved to EEPROM are marked with <em class="fa fa-sticky-note-o" aria-hidden="true"></em>. Options marked with <em class="fa fa-desktop" aria-hidden="true"></em> can be changed from the LCD controller.
 {% endalert %}
 
 {% alert info %}
-Certain EEPROM behaviors may be confusing. For example, when you edit the configurations and re-flash the firmware, you may discover that your new settings don't have any effect! What's going on? They are still overridden by the settings last saved to EEPROM! Use `M502` to restore settings to defaults, then `M500` to save them. Note that `M503` shows current settings in volatile memory even without `EEPROM_SETTINGS`.
+When you change saveable settings in the configuration files and re-flash, the new values don't take effect right away. They are still overridden by the saved values in EEPROM. To get your new default settings into the EEPROM, use `M502` followed by `M500`.
 {% endalert %}
 
 ### Host Keepalive
 
 ```cpp
-#define HOST_KEEPALIVE_FEATURE
-#define DEFAULT_KEEPALIVE_INTERVAL 2
+#define HOST_KEEPALIVE_FEATURE        // Disable this if your host doesn't like keepalive messages
+#define DEFAULT_KEEPALIVE_INTERVAL 2  // Number of seconds between "busy" messages. Set with M113.
+#define BUSY_WHILE_HEATING            // Some hosts require "busy" messages even during heating
 ```
-When Host Keepalive is enabled Marlin will send a busy status message to the host every couple of seconds when it can't accept commands. Disable if your host doesn't like keepalive messages. Use `DEFAULT_KEEPALIVE_INTERVAL` for the default number of seconds between "busy" messages. Override with [`M113`](/docs/gcode/M113.html).
+When Host Keepalive is enabled Marlin will send a busy status message to the host every couple of seconds when it can't accept commands. Disable if your host doesn't like keepalive messages. Use `DEFAULT_KEEPALIVE_INTERVAL` for the default number of seconds between "busy" messages. Override with [`M113`](/docs/gcode/M113.html). Marlin 1.1.5 and up include the `BUSY_WHILE_HEATING` option for hosts that treat host keepalive as a strict busy protocol.
 
 ### Free Memory Watcher
 ```cpp
