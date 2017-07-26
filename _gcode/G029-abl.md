@@ -150,6 +150,16 @@ parameters:
         tag: rate
         type: float
   -
+    tag: E
+    optional: true
+    description: |
+                 - By default G29 will engage the Z probe, test the bed, then disengage. 
+                 - Include "E" to engage/disengage the Z probe for each sample. 
+                 - There's no extra effect if you have a fixed Z probe. (without `PROBE_MANUALLY`)
+    values:
+      -
+        type: bool
+  -
     tag: D
     optional: true
     description: Dry-Run mode. Just probe the grid but don't update the bed leveling data
