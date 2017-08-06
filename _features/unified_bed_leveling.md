@@ -30,7 +30,7 @@ The printer must be already fully functional and tested, with a well-constrained
 
 The printer should be able to successfully print a small object at the center of the bed.   Most problems bringing up the UBL Bed Leveling system occur when this step has been ignored.  It is very important to verify the configuration.h settings can make this happen.
 
-The following command sequence can be used to home, level, and then fine-tune the results:
+The following command sequence can then be used to home, level, and then fine-tune the results:
 ```gcode
 M502          ; Reset settings to configuration defaults...
 M500          ; ...and Save to EEPROM. Use this on a new install.
