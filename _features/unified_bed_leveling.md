@@ -41,7 +41,7 @@ M104 S210     ; Not required, but having the printer at temperature helps accura
 
 G28           ; Home XYZ.
 G29 P1        ; Do automated probing of the bed.
-G29 P2 B T    ; Do manual probing of unprobed points. Requires LCD.
+G29 P2 B T    ; Manual probing of locations USUALLY NOT NEEDED!!!!
 G29 P3 T      ; Repeat until all mesh points are filled in.
 
 G29 T         ; View the Z compensation values.
