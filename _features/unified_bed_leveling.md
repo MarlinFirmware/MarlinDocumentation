@@ -28,7 +28,7 @@ UBL currently requires both a host and an LCD display with a rotary encoder. Wor
 
 The printer must be already fully functional and tested, with a well-constrained movement system. The more physically level and straight the bed is, the better your results will be. See `Configuration.h` and `Configuration_adv.h` for all of UBL's settings.
 
-The printer should be able to successfully print a small object at the center of the bed.   Most problems bringing up the UBL Bed Leveling system occur when this step has been ignored.  It is very important to verify the configuration.h settings can make this happen.
+The printer should be able to successfully print a small object at the center of the bed with no bed leveling system active.   Most problems bringing up the UBL Bed Leveling system occur when this step has been ignored.  It is very important to verify the configuration.h settings can make this happen.
 
 The following command sequence can then be used to home, level, and then fine-tune the results:
 ```gcode
