@@ -11,7 +11,7 @@ This page is based on Marlin 1.1.2. Corrections/improvements are welcome.
 {% endalert %}
 
 {% alert info %}
-This page pertains to core Automatic Bed Leveling. Also soo [Unified Bed Leveling](unified_bed_leveling.html) and [Mesh Bed Leveling](/docs/gcode/G029-mbl.html).
+This page pertains to core Automatic Bed Leveling. Also see [Unified Bed Leveling](unified_bed_leveling.html) and [Mesh Bed Leveling](/docs/gcode/G029-mbl.html).
 {% endalert %}
 
 ## Introduction
