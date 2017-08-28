@@ -218,12 +218,12 @@ The easiest way to do this is to use the `G26` command.
 
 There are several options for the `G26` command. See [GCode G26](http://marlinfw.org/docs/gcode/G026.html) for details.
 
-`G26 Bxx Hyy F1.75 L0.2 N0.4` will usually get you something reasonable:
+`G26 Bxx Hyy F1.75 L0.2 S0.4` will usually get you something reasonable:
 - `Bxx` – bed temperature
 - `Hyy` – hotend temperature
 - `F1.75` – filament width of 1.75mm (default)
 - `L0.2` – layer height of 0.2mm (default)
-- `N0.4` – nozzle diameter of 0.4mm (default)
+- `S0.4` – nozzle diameter of 0.4mm (default)
 
 #### Fine-tuning of the matrix
 
