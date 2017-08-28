@@ -343,3 +343,14 @@ Since Marlin needs to runs on the most modest hardware, much care has been taken
   #endif // !HISFEATURE
 #endif // MYFEATURE
 ```
+
+### Other Considerations
+
+- Follow best practices for `#include`.
+  - Only include the headers needed to provide the definitions required by the current source file. This helps provide an accurate view of dependencies.
+  - Don't include `Marlin.h` when just `MarlinConfig.h` will do, or just to get its includes. Try to only include `Marlin.h` when you actually need its functions.
+  - Included headers should be arranged in the following order:
+    - `MarlinConfig.h`, if configuration values are needed for `#if` or other uses.
+    - The file's corresponding header.
+    - Next, arrange project headers to prevent hiding broken dependencies. For example, if `grape.h` depends on `orange.h`, try to include `grape.h` before `orange.h` so that if `grape.h` fails to include `orange.h` an error will be thrown.
+    - Lastly, include any system headers, such as `#include <inttypes.h>`.
