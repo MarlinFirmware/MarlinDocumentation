@@ -125,7 +125,7 @@ Enable the Bluetooth serial interface. For boards based on the AT90USB.
 ```cpp
 #define MOTHERBOARD BOARD_RAMPS_14_EFB
 ```
-The most important setting is Marlin is the motherboard. The firmware needs to know what board it will be running on so it can assign the right functions to all pins and take advantage of the full capabilities of the board. Setting this incorrectly will lead to unpredictable results.
+The most important setting in Marlin is the motherboard. The firmware needs to know what board it will be running on so it can assign the right functions to all pins and take advantage of the full capabilities of the board. Setting this incorrectly will lead to unpredictable results.
 
 Using `boards.h` as a reference, replace `BOARD_RAMPS_14_EFB` with your board's ID. The `boards.h` file has the most up-to-date listing of supported boards, so check it first if you don't see yours listed here.
 
