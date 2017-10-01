@@ -1301,7 +1301,8 @@ fr|French||gl|Galician||hr|Croatian
 it|Italian||kana|Japanese||kana_utf8|Japanese (UTF8)
 nl|Dutch||pl|Polish||pt|Portuguese
 pt-br|Portuguese (Brazilian)||pt-|Portuguese (Brazilian UTF8)||pt_utf8|Portuguese (UTF8)
-ru|Russian||tr|Turkish||uk|Ukrainian
+ru|Russian||sk_utf8|Slovak (UTF8)||tr|Turkish
+uk|Ukrainian||||||
 
 See `language.h` for the latest list of supported languages and their international language codes.
 
