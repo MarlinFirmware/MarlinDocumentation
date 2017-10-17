@@ -5,7 +5,7 @@ set -e
 
 # Do the magic
 bundle exec jekyll build
-bundle exec htmlproofer ./_site --only-4xx --allow-hash-href true
+bundle exec htmlproofer ./_site --url-ignore /marlinfw.org\/news/ --only-4xx --allow-hash-href --check-favicon --check-html --log-level 1
 
 # Check DNS
 bundle exec github-pages health-check

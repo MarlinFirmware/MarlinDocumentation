@@ -1,0 +1,23 @@
+- name: gcode
+  img: gcode.png
+  alt: G-Code
+  title: Rich G-Code Support
+  link: gcode/overview.html  
+
+- name: ctrlboard
+  img: boards.png
+  alt: Controller Board
+  title: A sea of boards
+  link: hardware/boards.html
+
+- name: inductiveprobe
+  img: probe.png
+  alt: Inductive Probe
+  title: Automatic bed leveling
+  link: howto/bed-auto-leveling.html
+
+- name: kinematics
+  img: kinematics.png
+  alt: Kinematics
+  title: Multiple Kinematics
+  link: #
