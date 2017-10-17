@@ -1,10 +1,73 @@
-markdown: 'kramdown'
-highlighter: 'rouge'
+baseurl: ''
+url: 'http://marlinfw.org'
+
+version: '0.0.8-beta'
+environment: development
+
+name: 'Marlin 3D Printer Firmware'
+logo: '/assets/images/logo/marlin/small.png'
+description: 'Printing the planet, one layer at a time.'
+
+repository:
+  main: 'https://github.com/MarlinFirmware/Marlin'
+  dev: 'https://github.com/MarlinFirmware/MarlinDev'
+  doc: 'https://github.com/MarlinFirmware/MarlinDocumentation'
+
+analytics:
+  id: 'UA-76230130-1'
+  domain: 'marlinfw.org'
+
+markdown: kramdown
+highlighter: rouge
 timezone: 'Europe/Lisbon'
 
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+jekyll_tidy:
+  compress_html: true
+  # exclude: ["index.html"]
+  # ignore_env: development
+
+sass:
+    style: compressed
+
 collections:
-  articles:
+  basics:
     output: true
+    permalink: /docs/:collection/:path:output_ext
+
+  features:
+    output: true
+    title: Marlin Features
+    permalink: /docs/:collection/:path:output_ext
+
+  configuration:
+    output: true
+    title: Configuration
+    permalink: /docs/:collection/:path:output_ext
+
+  development:
+    output: true
+    title: Development
+    permalink: /docs/:collection/:path:output_ext
+
+  gcode:
+    output: true
+    title: G-code
+    permalink: /docs/:collection/:path:output_ext
+
+  meta:
+    output: true
+    permalink: /:collection/:path/
+
+  tools:
+    output: true
+    permalink: /:collection/:path:output_ext
+
+docs:
+  gs: '/docs/getting-started/'
 
 exclude:
   - '.gitignore'
@@ -17,78 +80,70 @@ exclude:
   - 'script'
   - 'vendor'
 
-analytics:
-  id: 'UA-76230130-1'
-  domain: 'marlinfw.org'
-
-url: ' http://marlinfw.org'
-name: 'Marlin 3D Printer Firmware'
-logo: '/assets/images/logo/marlin/small.png'
-description: 'Learn how to get started using Marlin.'
-
 gems:
   - jekyll-mentions
   - jekyll-seo-tag
   - jekyll-avatar
-
-base:
-  meta: 'meta'
-  assets: 'assets'
-  articles: 'articles'
-  images: 'assets/images'
-  javascript: 'assets/javascript'
-  stylesheet: 'assets/stylesheets'
-
-
-meta:
-  version: '0.0.4'
-  author: 'Marlin Documentation Project'
-  feedback_email: 'marlin-doc@this-is-not-a-valid-domain.org'
-
-repository:
-  main: 'https://github.com/MarlinFirmware/Marlin'
-  dev: 'https://github.com/MarlinFirmware/MarlinDev'
-  doc: 'https://github.com/MarlinFirmware/MarlinDocumentation'
+  - jekyll-bootstrap-sass
+  - jekyll-tidy
 
 defaults:
-  -
+  - # All types
     scope:
-      path: ''
+      path: '' # all files
     values:
+      layout: 'default'
       author: 'MarlinFirmware'
-  -
+      category: [ 'default' ]
+      show:
+        navbar: true
+        footer: true
+        breadcrumbs: false
+
+  - # Basics collection settings
     scope:
-      type:               'posts'
-
+      type: 'basics'
     values:
-      permalink:          'news/:year/:month/:day/:title/'
-  -
+      layout: 'docs'
+      category: [ 'Basics' ]
+
+  - # Configuration collection settings
     scope:
-      type:               'articles'
-
+      type: 'configuration'
     values:
-      navigation:
-        show_title:       true
-        show_navbar:      true
-        show_footer:      true
-        show_breadcrumbs: true
-        show_description: false
+      layout: 'docs'
+      category: [ 'configuration' ]
 
-      meta:
-        hidden:           false
-        categories:       [ 'default' ]
-  -
+  - # Development collection settings
     scope:
-      type:               'pages'
-
+      type: 'development'
     values:
-      navigation:
-        show_title:       true
-        show_navbar:      true
-        show_footer:      true
-        show_breadcrumbs: true
-        show_description: false
+      layout: 'docs'
+      category: [ 'development' ]
 
-      meta:
-        hidden:           false
-        categories:       [ 'default' ]
+  - # Features collection settings
+    scope:
+      type: 'features'
+    values:
+      layout: 'docs'
+      category: [ 'features' ]
+
+  - # G-code collection settings
+    scope:
+      type: 'gcode'
+    values:
+      layout: 'gcode'
+      category: [ 'gcode' ]
+
+  - # Meta collection settings
+    scope:
+      type: 'meta'
+    values:
+      category: [ 'meta' ]
+
+  - # Tools collection settings
+    scope:
+      type: 'gcode'
+    values:
+      layout: 'gcode'
+      category: [ 'gcode' ]

@@ -1,13 +1,16 @@
 language: ruby
 rvm:
-  - 2.2.3
+  - 2.3.0
 
 before_script:
   - gem install bundler
   - bundle install
-  - chmod +x script/cibuild
 
-script: script/cibuild
+script:
+# - mv ${TRAVIS_BUILD_DIR}/_plugins/jekyll-press.rb-disabled ${TRAVIS_BUILD_DIR}/_plugins/jekyll-press.rb
+  - bundle exec jekyll build --profile --trace --no-watch
+  - bundle exec htmlproofer ${TRAVIS_BUILD_DIR}/_site --only-4xx --allow-hash-href --check-favicon --check-html --url-swap ".*marlinfw.org/:/"
+  - bundle exec github-pages health-check
 
 env:
   global:

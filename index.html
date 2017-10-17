@@ -1,73 +1,60 @@
 ---
-layout: pages
+permalink: /
 
 title:        'Home'
-description:  'Marlin is *the best* firmware for 3D printers.'
-category:     [ core ]
-
-navigation:
-  show_title:       false
-  show_breadcrumbs: false
+description:  'Marlin, the most widely-used 3D printer firmware in the world'
+category:     [ default ]
 ---
 
-        <!-- Jumbotron  -->
-        <div class="jumbotron">
-          <div class="container">
-            <h1>Marlin Firmware</h1>
-            <p class="text-justify">Marlin is an Open Source firmware for 3D printers based on AVR microprocessors such as those used on the <a href="http://arduino.cc" target="_blank" rel="nofollow">Arduino</a> platform, it allows full control over the 3D printer, extrusors and heated building plate either by being controlled from a host PC or in a standalone mode.</p>
-            <p><a class="btn btn-primary btn-lg" href="{{ site.github.url }}/{{ site.base.articles }}/getting-started/overview.html" role="button">Learn more &raquo;</a></p>
+<div id="carousel-generic" class="carousel slide" data-ride="carousel">
+  <div class="carousel-inner">
+    <div class="item active">
+      <img src="{{ '/assets/images/carousel/banner-01.jpg' | prepend: site.baseurl }}" alt="Banner" />
+    </div>
+    <div class="item">
+      <img src="{{ '/assets/images/carousel/example-450.jpg' | prepend: site.baseurl }}" alt="Banner" />
+    </div>
+    <div class="item">
+      <img src="{{ '/assets/images/carousel/controller.jpg' | prepend: site.baseurl }}" alt="Banner" />
+    </div>
+  </div>
+</div>
+
+<div class="custom-tagline">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 col-md-7">
+        <h1><strong>Open Source 3D Printer Firmware</strong></h1>
+        <p class="text-justify">First created in 2011 for RepRap and Ultimaker, today Marlin drives most of the world's 3D printers. Reliable and precise, it delivers outstanding print quality while keeping you in full control of the process. As an open source project hosted on <a href="https://github.com/">Github</a>, Marlin is owned and maintained by the maker community.</p>
+        <p><a href="/docs/development/contributing.html">Learn how you can contribute!</p>
+      </div>
+      <div class="col-sm-12 col-md-5 custom-tagline-btn">
+        <p><a class="btn btn-success btn-block btn-lg" href="{{ '/docs/basics/introduction.html' | prepend: site.baseurl }}" role="button">
+          <em class="fa fa-book fa-1x" aria-hidden="true"></em>&nbsp; Learn more</a></p>
+        <p><a class="btn btn-info btn-block btn-lg" href="{{ '/meta/download/' | prepend: site.baseurl }}" role="button">
+          <em class="fa fa-download fa-1x" aria-hidden="true"></em>&nbsp; Download</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="custom-tile">
+  <div class="container">
+    <div class="row">
+{% for feature in site.data.features %}
+        <div class="col-sm-4">
+          <div class="custom-tile-image-wrapper">
+            <a href="{{ feature.link | prepend: site.baseurll }}">
+            <div class="custom-tile-image-block" style="background: url({{ '/assets/images/features/' | append: feature.img | prepend: site.baseurl }}) no-repeat center top; background-size: cover;">
+              <div class="custom-tile-image-legend">
+                {{ feature.title }}
+                <em class="fa fa-arrow-circle-right fa-1x" aria-hidden="true"></em>
+              </div>
+            </div>
+            </a>
           </div>
         </div>
-
-        <!-- Feature list row #1 -->
-        <div class="container" role="main">
-          <div class="row">
-            <div class="col-lg-4 text-center">
-              <img class="img-circle" src="{{ site.github.url }}/{{ site.base.images }}/features/gcode.png" alt="G-Code" width="140" height="140">
-              <h2>Rich G-Code Support</h2>
-              <p class="text-justify">G-Code is the instruction code that tells a 3D printer what to do. Marlin's G-Code is loosely based on the NIST standard introducing the required changes for operating a 3D printer.</p>
-              <p><a class="btn btn-default" href="{{ site.github.url }}/{{ site.base.articles }}/gcode/overview.html" role="button">View details &raquo;</a></p>
-            </div><!-- /.col-lg-4 -->
-
-            <div class="col-lg-4 text-center">
-              <img class="img-circle" src="{{ site.github.url }}/{{ site.base.images }}/features/boards.png" alt="Controller Board" width="140" height="140">
-              <h2>A sea of boards</h2>
-              <p class="text-justify">Marlin supports a wide variety of 3D printers, including all RAMPS variants, and is adaptable to virtually any Arduino-based electronics through pin-mapping.</p>
-              <p><a class="btn btn-default" href="{{ site.github.url }}/{{ site.base.articles }}/hardware/boards.html" role="button">View details &raquo;</a></p>
-            </div><!-- /.col-lg-4 -->
-
-            <div class="col-lg-4 text-center">
-              <img class="img-circle" src="{{ site.github.url }}/{{ site.base.images }}/features/probe.png" alt="Inductive Probe" width="140" height="140">
-              <h2>Automatic Leveling</h2>
-              <p class="text-justify">You'll never have to fine tune the inclination of the table, Marlin will do all the hard work for you, just select one from the multiple available probing options and execute a <code>G29</code> before printing.</p>
-              <p><a class="btn btn-default" href="{{ site.github.url }}/{{ site.base.articles }}/howto/bed-auto-leveling.html" role="button">View details &raquo;</a></p>
-            </div><!-- /.col-lg-4 -->
-          </div><!-- /.row -->
-
-          <!-- spacer -->
-          <div class="row">&nbsp;</div>
-
-          <!-- Feature list row #2 -->
-          <div class="row">
-            <div class="col-lg-4 text-center">
-              <img class="img-circle" src="{{ site.github.url }}/{{ site.base.images }}/features/thermal.png" alt="Thermistor" width="140" height="140">
-              <h2>Thermal Protection</h2>
-              <p class="text-justify">Thermal Runaway Protection protects your printer from damage and fire if a thermistor falls out or temperature sensors fail in any way.</p>
-              <p><a class="btn btn-default" href="#" role="button"><del>View details &raquo;</del></a></p>
-            </div><!-- /.col-lg-4 -->
-
-            <div class="col-lg-4 text-center">
-              <img class="img-circle" src="{{ site.github.url }}/{{ site.base.images }}/features/kinematics.png" alt="Delta Kinematics" width="140" height="140">
-              <h2>Multiple Kinematics</h2>
-              <p class="text-justify">Marlin supports Delta, SCARA, and Cartesian kinematics.</p>
-              <p><a class="btn btn-default" href="#" role="button"><del>View details &raquo;</del></a></p>
-            </div><!-- /.col-lg-4 -->
-
-            <div class="col-lg-4 text-center">
-              <img class="img-circle" src="{{ site.github.url }}/{{ site.base.images }}/features/usb.png" alt="USB Symbol" width="140" height="140">
-              <h2>USB Printing</h2>
-              <p class="text-justify">You can connect Marlin to Octoprint, Slic3r, Cura, Simplify 3D or any other host software which supports USB serial printing.</p>
-              <p><a class="btn btn-default" href="#" role="button"><del>View details &raquo;</del></a></p>
-            </div><!-- /.col-lg-4 -->
-          </div><!-- /.row -->
-        </div><!-- /.container -->
+{% endfor %}
+    </div>
+  </div>
+</div>

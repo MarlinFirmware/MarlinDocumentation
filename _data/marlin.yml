@@ -1,0 +1,83 @@
+- version: 1.0.0-beta
+  hash: 5535e51bf678a367aa6e5d53068f5d20b1c15e0c
+  date: 20/11/2011
+
+- version: 1.0.0
+  hash: 4de419e26ed3509bc00f627e57b08af800b1181e
+  date: 2/6/2013
+
+- version: 1.0.1
+  hash: a0959366af01202c7d0e84791df04257b5d36222
+  date: 28/12/2014
+
+- version: 1.0.2
+  hash: da192c521f1b808f1f38d691adc897fc6b10fcd8
+  date: 7/1/2015
+
+- version: 1.0.2-1
+  hash: 4ccf7c5e9ae5c124599ad822cce2feabbe3d4fe4
+  date: 30/5/2015
+
+- version: 1.0.2-2
+  hash: f522a7435fd8d61af10d4deb58d77aa95921fcb2
+  date: 1/12/2016
+
+- version: 1.1.0-RC1
+  hash: 6effa6f19595311020dbe1653489273257502d34
+  date: 19/9/2015
+
+- version: 1.1.0-RC2
+  hash: 845cda367da4f7ddd664418879f1b972b485967f
+  date: 3/10/2015
+
+- version: 1.1.0-RC3
+  hash: 5a54204f723f7fd110b57d19f0de01cecd8d47e7
+  date: 1/12/2015
+
+- version: 1.1.0-RC4
+  hash: 122bdd187f9df02a6d9b59495630e40da307e82c
+  date: 25/3/2016
+
+- version: 1.1.0-RC5
+  hash: ce6c07d231ac0fbc8aa22269f02e46477df2b987
+  date: 13/4/2016
+
+- version: 1.1.0-RC6
+  hash: 70ad4478ae35de90889d20f8185c7290babcdb02
+  date: 29/5/2015
+
+- version: 1.1.0-RC7
+  hash: d97dc10216d9a431278052e5b60973bafeeed7e0
+  date: 20/08/2016
+
+- version: 1.1.0-RC8
+  hash: 7224854cf8086281112b1d25d0c386bd4028b8f8
+  date: 22/12/2016
+
+- version: 1.1.0
+  hash: 03f94a7a18efbd1964d75cdb30b046053bcb1e94
+  date: 3/5/2017
+
+- version: 1.1.1
+  hash: 5996c3a907cf0b25c54e5a90c7fe111f4bb93e31
+  date: 12/5/2017
+
+- version: 1.1.2
+  hash: 515f05093f23abd2802ed3844f0d1281948421b3
+  date: 30/5/2017
+
+- version: 1.1.3
+  hash: b2c20a8c0f5f16ae175f2839d72ad699036754e8
+  date: 4/6/2017
+
+- version: 1.1.4
+  hash: d3bc877007ceaeaeed11898998ee83b54f83de46
+  date: 4/7/2017
+
+- version: 1.1.5
+  hash: 9c00cff89836706776f6353635368a47cc5bf881
+  date: 28/8/2017
+
+- version: 1.1.6
+  hash: 8dc10fb4c206e4bbcbe9ea21a25d5a9802aa54a8
+  date: 10/10/2017
