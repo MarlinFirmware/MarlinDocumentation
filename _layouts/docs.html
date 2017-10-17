@@ -1,0 +1,45 @@
+---
+layout: default
+---
+{% if page.toc.selectors %}
+    <script language="javascript">
+      toc_selectors = '{{ page.toc.selectors }}';
+    </script>
+{% endif %}
+
+    <!-- content -->
+    <div class="container" role="main">
+      <div class="row">
+        <div class="col-lg-3 col-md-4 visible-lg-block visible-md-block custom-no-padding">
+          <div class="custom-fixed-sidebar">
+            <div id="toc"></div>
+          </div>
+        </div>
+        <div class="col-lg-9 col-md-8 custom-bg-white">
+          <div class="row">
+            <div class="col-md-12 custom-article">
+              <p class="text-right pull-right visible-lg-block hidden-print small custom-pt25">
+{% assign authors = page.author | append: ',' | append: page.contrib | replace: ' ', '' | split: ',' %}
+{% if authors %}
+  {% for author in authors %}
+                <a href="https://github.com/{{ author }}" data-toggle="tooltip" data-placement="bottom" title="Visit {{ author }}'s profile on Github">{% avatar user=author size=30 %}</a>
+  {% endfor %}
+{% endif %}
+              </p>
+              <h1 class="custom-article-header">{{ page.title }}</h1><hr>
+
+{% for cat in page.category %}
+  {% if cat == 'needs-review' %}
+    {% alert info %}
+You're reading a document which has been marked as `needs-review`, this means that the following information maybe outdated or no longer applies to the latest Marlin versions.
+    {% endalert %}
+  {% endif %}
+{% endfor %}
+
+              {{ content }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /content -->

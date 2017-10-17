@@ -1,0 +1,61 @@
+/*
+ * Table of Contents
+ * by @gregfranko
+ */
+.tocify {
+  font-size: 14px;
+}
+
+/* The Table of Contents is composed of multiple nested unordered lists.
+These styles remove the default styling of an unordered list because it is ugly. */
+.tocify ul, .tocify li {
+  margin: 0px;
+  padding: 0px;
+  border: none;
+  list-style: none;
+  line-height: 30px;
+}
+
+/* Top level header elements */
+.tocify-header {
+  text-indent: 5px;
+}
+
+/* Top level subheader elements.
+These are the first nested items underneath a header element. */
+.tocify-subheader {
+  text-indent: 20px;
+  display: none;
+}
+
+/* Makes the font smaller for all subheader elements. */
+.tocify-subheader li {
+  font-size: 0.90em;
+}
+
+/* Further indents second level subheader elements. */
+.tocify-subheader .tocify-subheader {
+  text-indent: 30px;
+}
+
+/* Further indents third level subheader elements.
+You can continue this pattern if you have more nested elements. */
+.tocify-subheader .tocify-subheader .tocify-subheader {
+  text-indent: 40px;
+}
+
+/* Twitter Bootstrap Override Style */
+.nav-list > li > a, .nav-list .nav-header {
+  margin: 0px;
+}
+
+/* Twitter Bootstrap Override Style */
+.nav-list > li > a {
+  padding: 5px 0px 5px 5px;
+}
+
+.nav-list > .active > a, .nav-list > .active > a:hover, .nav-list > .active > a:focus {
+  color: #ffffff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
+  background-color: #0088cc;
+}

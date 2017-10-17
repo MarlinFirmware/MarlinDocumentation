@@ -1,0 +1,28 @@
+---
+# Empty front matter
+---
+
+$icon-font-path: '/assets/fonts/';
+
+$headings-font-weight: 600 !default;
+$font-family-sans-serif: 'Open Sans', sans-serif !default;
+$font-family-monospace: 'Roboto Mono', monospace !default;
+
+$btn-font-weight: 500 !default;
+
+$navbar-font-weight: 500 !default;
+$navbar-default-link-hover-bg: #eee !default;
+$navbar-default-brand-hover-bg: #eee !default;
+
+$link-color: #eb6864 !default;
+$link-hover-color: #e22620 !default;
+
+@import 'bootstrap';
+@import 'basics';
+@import 'carousel';
+@import 'custom';
+@import 'dropdown-submenu';
+@import 'sidebar';
+@import 'syntax-highlighting';
+@import 'toc';
+@import 'https://fonts.googleapis.com/css?family=Open+Sans:400,600|Roboto+Mono';
