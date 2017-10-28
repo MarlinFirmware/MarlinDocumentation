@@ -8,23 +8,18 @@ category:     [ tools ]
 
 <div class="container" role="main">
   <div class="row">
-    <div class="col-lg-12">
+    <div class="col-lg-12" id="bitmap-converter">
       <h1>U8Glib bitmap converter</h1>
-      <p>This tool converts a JPEG or PNG image file to a C/C++ array.<br />
-         This array can then be used by the OSS Arduino library <a href="https://github.com/olikraus/u8glib">U8Glib</a> to draw custom images on screen.</p>
-      <p>Use this tool to create your own custom `_Bootscreen.h` file for display on Graphical Displays.</p>
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-1">
-            <canvas id="preview" width="128" height="64"></canvas>
-          </div>
-          <div class="col-lg-11 custom-pt5">
-            <input type="file" id="file-input" accept="image/*" />
-          </div>
-        </div>
+      <p>This tool converts a JPEG or PNG image file to a <a href="https://github.com/olikraus/u8glib">U8Glib</a>-compatible C/C++ array that can be used in Marlin as a custom <code>_Bootscreen.h</code> file or as icons for Graphical Displays. Darker colors in the source image will produce "on" pixels, while lighter colors will be converted to transparent pixels.</p>
+      <p>If this tool doesn't work in your browser, use the server-side tool <a href="http://www.digole.com/tools/PicturetoC_Hex_converter.php">at digole.com</a>.</p>
+      <div class="file-selector">
+        <canvas id="preview" width="128" height="64"></canvas>
+        <input type="file" id="file-input" accept="image/*" />
       </div>
-      <p>Copy the following array into your program.</p>
-      <p><code id="output">You must load an image first.</code></p>
+      <div class="bitmap-container">
+        <p>Copy the following array into your program:</p>
+        <textarea id="output" cols="80" rows="30" readonly="readonly">Select or drop an image above.</textarea>
+      </div>
     </div>
   </div>
 </div>

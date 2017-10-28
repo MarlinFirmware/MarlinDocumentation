@@ -16,100 +16,86 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 head.ready(function() {
-  var img = null;
-  var ctx = null;
 
-  var input  = document.getElementById('file-input');
   var canvas = document.getElementById('preview');
 
   if (canvas.getContext) {
-    img = new Image();
-    ctx = canvas.getContext('2d');
+
+  var img     = new Image(),
+      ctx     = canvas.getContext('2d'),
+      input   = document.getElementById('file-input'),
+      output  = document.getElementById('output'),
+      tohex   = function(b) { return '0x' + ('0' + (b & 0xFF).toString(16)).slice(-2); },
+      dosel = function() { this.select(); };
+
+    output.addEventListener('focus', dosel, true);
+    output.addEventListener('click', dosel, true);
 
     input.addEventListener('change', function() {
-      var file = input.files[0];
-      var reader = new FileReader();
+
+      var file = input.files[0],
+          reader = new FileReader();
 
       if (!file) {
         console.log("Error opening file.");
         return;
       }
 
-      reader.addEventListener("load", function () {
+      reader.addEventListener('load', function() {
         img.src = reader.result;
 
-        if (img.width > 128 || img.height > 64) {
-          console.log("Image dimensions too big for processing.")
-          return;
-        }
+        img.addEventListener('load', function() {
 
-        ctx.canvas.width  = img.width;
-        ctx.canvas.height = img.height;
-        ctx.drawImage(img, 0, 0);
-
-        var buffer = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
-        var out = [];
-
-        var bytewidth = Math.ceil(ctx.canvas.width /8);
-        var bytesused = bytewidth * canvas.height;
-        var padding   = bytewidth * 8 - ctx.canvas.width;
-
-        var name = Math.random().toString(36).substring(7);
-
-        var j = 0;
-        for (var i = 0; i < buffer.length; i += 4) {
-          var lum = buffer[i] * 0.3 + buffer[i+1] * 0.59 + buffer[i+2] * 0.11;
-          var bit = (lum < 127) ? 1 : 0;
-          out.push(bit);
-        }
-
-        document.getElementById('output').innerHTML
-          = '// Width: ' + ctx.canvas.width + ', Height: ' + ctx.canvas.height + '<br />';
-
-        document.getElementById('output').innerHTML
-          += 'const unsigned char ' + name + '[' + bytesused + '] PROGMEM = {' + '<br />'
-
-        document.getElementById('output').innerHTML
-          += '&nbsp;&nbsp';
-
-        var k = 0;
-        var byte = null;
-        for (var i = 0; i < out.length; i++) {
-          if (i > 0 && i % img.width == 0) {
-            // Padding
-            for(;k < 8; k++) byte += (0 << (7-k));
-
-            document.getElementById('output').innerHTML += '0x'
-              + ('0' + (byte & 0xFF).toString(16)).slice(-2) + ', ';
-
-            document.getElementById('output').innerHTML
-              += '<br/>' + '&nbsp;&nbsp';
-
-            byte = null;
-            k = 0;
+          if (img.width > 128 || img.height > 64) {
+            console.log("Image dimensions too big for processing.")
+            return;
           }
 
-          if (k > 7) {
-            document.getElementById('output').innerHTML += '0x'
-              + ('0' + (byte & 0xFF).toString(16)).slice(-2) + ', ';
-            byte = null;
-            k = 0;
+          ctx.canvas.width  = img.width;
+          ctx.canvas.height = img.height;
+          ctx.drawImage(img, 0, 0);
+
+          var buffer = ctx.getImageData(0, 0, canvas.width, canvas.height).data,
+              out = [],
+              bytewidth = Math.ceil(ctx.canvas.width /8),
+              bytesused = bytewidth * canvas.height,
+              padding   = bytewidth * 8 - ctx.canvas.width,
+              name = Math.random().toString(36).substring(7),
+              j = 0;
+
+          for (var i = 0; i < buffer.length; i += 4) {
+            var lum = buffer[i] * 0.3 + buffer[i+1] * 0.59 + buffer[i+2] * 0.11,
+                bit = (lum < 127) ? 1 : 0;
+            out.push(bit);
           }
 
-          byte += (out[i] << (7-k)); k++;
-        }
+          output.value =  '// Width: ' + ctx.canvas.width + ', Height: ' + ctx.canvas.height + '\n' +
+                          'const unsigned char ' + name + '[' + bytesused + '] PROGMEM = {' + '\n' +
+                          '  ';
 
-        // Padding
-        for(;k < 8; k++) byte += (0 << (7-k));
+          var k = 0, byte = null;
+          for (var i = 0; i < out.length; i++) {
+            if (i > 0 && i % img.width == 0) {
+              output.value += tohex(byte) + ', \n  ';
+              byte = null;
+              k = 0;
+            }
+            if (k > 7) {
+              output.value += tohex(byte) + ', ';
+              byte = null;
+              k = 0;
+            }
+            byte += (out[i] << (7 - k)); k++;
+          }
 
-        document.getElementById('output').innerHTML += '0x'
-          + ('0' + (byte & 0xFF).toString(16)).slice(-2) + ', ';
+          output.value += tohex(byte) + ', \n};';
 
-        document.getElementById('output').innerHTML
-          += '<br />' + '};';
-      }, false);
+        }, false); // img load
+  
+      }, false); // reader load
 
       reader.readAsDataURL(file);
+
     }, false);
   }
 });

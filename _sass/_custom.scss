@@ -177,6 +177,21 @@ img.floater.framed { border: 4px solid black; }
     }
   }
 
+#bitmap-converter {
+  p { font-size: 120%; }
+  canvas#preview {
+    display: block;
+    border: 1px solid gray;
+    margin: 0.5em;
+    }
+  textarea#output {
+    font-family: monospace;
+    }
+  div.file-selector {
+    margin: 1em 0;
+    }
+  }
+
 //** Secondary label background color
 $brand-requires: #380 !default;
 $label-requires-bg: $brand-requires !default;
