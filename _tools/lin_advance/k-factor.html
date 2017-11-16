@@ -1,0 +1,148 @@
+---
+title:        'K-Factor Calibration Pattern'
+description:  'Create Gcode to calibrate LIN_ADVANCE setting'
+category:     [ tools ]
+--- 
+<script type="text/javascript" src="./k-factor.js"></script>
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-12" id="k-factor">
+      <h1>K-Factor Calibration Pattern</h1>
+      <p>The below Javascript will generate gcode that will support the user in calibrating the K-Factor for Marlin's Linear Advance Feature. The default values should work for a standard PLA material with a 0.4 mm nozzle. </p>
+      <h3>Notes on the settings:</h3>
+      <ul>
+        <li>Fast and slow speed should be significantly different or the K-Factor effect will barely be visible</li>
+        <li>Use bed levelling requires a probe</li>
+        <li>The printer's bed is assumed to be rectangular. For round beds use the diameter as approximation but  extra care should be taken that the pattern size matches the bed. The overall width (X-direction) of the print is always 100 mm. The length (Y-direction) depends on the K-Factor Settings. The sanity check will only work for rectangular beds.</li>
+        <li>Start and End value for the K-Factor determines the range that the test pattern will cover. For example a start value of 50 and an end value of 150 will test a range of 100.</li>
+        <li>The K-Factor stepping determines how many test lines are printed for the above range. For example, a Stepping of 10 and a range of 100 results in 10 test lines. A stepping of 3 would not work in this example as 100 cannot be exactly divided by 3. The script will throw an error message if an exact division is not possible. In this case either the range or the  stepping needs to be adjusted.</li>
+        <li>The proper K-Factor depends on the filament, nozzle size, nozzle geometry and printing temperature. If any of these values change, the calibration might need to be repeated.</li>
+      </ul>
+      <form id="form1" name="form1" method="get">
+        <table width="100%" border="0" cellpadding="2" cellspacing="2">
+          <tbody>
+            <tr>
+              <td width="82%"><h3>Settings</h3></td>
+              <td width="18%"><h3>GCode:</h3></td>
+            </tr>
+            <tr>
+              <td valign="top"><table width="100%" border="1" cellpadding="5" cellspacing="2">
+                  <tbody>
+                    <tr>
+                      <td colspan="3" align="left" valign="middle"><h4>Printer Settings:</h4></td>
+                    </tr>
+                    <tr>
+                      <td align="left" valign="middle"><label for="FIL_DIA">Filament Diameter:</label></td>
+                      <td valign="middle"><input type="number" name="FIL_DIA" id="FIL_DIA" value="1.75"></td>
+                      <td valign="middle">Diameter of the used filament in mm</td>
+                    </tr>
+                    <tr>
+                      <td align="left" valign="middle"><label for="NOZ_DIA">Nozzle Diameter:</label></td>
+                      <td valign="middle"><input type="number" name="NOZ_DIA" id="NOZ_DIA" value="0.4"></td>
+                      <td valign="middle">Diameter of the nozzle in mm</td>
+                    </tr>
+                    <tr>
+                      <td width="28%" align="left" valign="middle"><label for="NOZZLE_TEMP">Nozzle Temperature:</label></td>
+                      <td width="10%" valign="middle"><input type="number" name="NOZZLE_TEMP" id="NOZZLE_TEMP" value="205"></td>
+                      <td width="62%" valign="middle">Nozzle Temperature in °C</td>
+                    </tr>
+                    <tr>
+                      <td align="left" valign="middle"><label for="BED_TEMP">Bed Temperature:</label></td>
+                      <td valign="middle"><input type="number" name="BED_TEMP" id="BED_TEMP" value="60"></td>
+                      <td valign="middle">Bed Temperature in °C</td>
+                    </tr>
+                    <tr>
+                      <td align="left" valign="middle"><label for="RETRACTION">Retraction Distance:</label></td>
+                      <td valign="middle"><input type="number" name="RETRACTION" id="RETRACTION" value="1.000"></td>
+                      <td valign="middle">Retraction distance in mm</td>
+                    </tr>
+                    <tr>
+                      <td align="left" valign="middle"><label for="BEDSIZE_X">Bed size X:</label></td>
+                      <td valign="middle"><input type="number" name="BEDSIZE_X" id="BEDSIZE_X" value="200"></td>
+                      <td valign="middle">Size in mm of the bed in X</td>
+                    </tr>
+                    <tr>
+                      <td align="left" valign="middle"><label for="BEDSIZE_Y">Bed Size Y:</label></td>
+                      <td valign="middle"><input type="number" name="BEDSIZE_Y" id="BEDSIZE_Y" value="200"></td>
+                      <td valign="middle">Size in mm of the bed in Y</td>
+                    </tr>
+                    <tr>
+                      <td align="left" valign="middle"><label for="LAYER_HEIGHT">Layer Height:</label></td>
+                      <td valign="middle"><input type="number" name="LAYER_HEIGHT" id="LAYER_HEIGHT" value="0.200"></td>
+                      <td valign="middle">Layer Height in mm</td>
+                    </tr>
+                    <tr>
+                      <td colspan="3" align="left" valign="middle"><h4>Speed Settings:</h4></td>
+                    </tr>
+                    <tr>
+                      <td align="left" valign="middle"><label for="MM_S">Use mm/s for speeds: </label></td>
+                      <td valign="middle"><input type="checkbox" name="MM_S" id="MM_S" checked></td>
+                      <td valign="middle">Use mm/s instead of mm/min</td>
+                    </tr>
+                    <tr>
+                      <td align="left" valign="middle"><label for="SLOW_SPEED">Slow printing speed:</label></td>
+                      <td valign="middle"><input type="number" name="SLOW_SPEED" id="SLOW_SPEED" value="20"></td>
+                      <td valign="middle">Slow printing speed</td>
+                    </tr>
+                    <tr>
+                      <td align="left" valign="middle"><label for="FAST_SPEED">Fast printing speed:</label></td>
+                      <td valign="middle"><input type="number" name="FAST_SPEED" id="FAST_SPEED" value="70"></td>
+                      <td valign="middle">Fast printing speed. </td>
+                    </tr>
+                    <tr>
+                      <td align="left" valign="middle"><label for="MOVE_SPEED">Movement Speed:</label></td>
+                      <td valign="middle"><input type="number" name="MOVE_SPEED" id="MOVE_SPEED" value="120"></td>
+                      <td valign="middle">Movement speed</td>
+                    </tr>
+                    <tr>
+                      <td colspan="3" align="left" valign="middle"><h4>K-Factor Settings:</h4></td>
+                    </tr>
+                    <tr>
+                      <td align="left" valign="middle"><label for="K_START">Start value for K:</label></td>
+                      <td valign="middle"><input type="number" name="K_START" id="K_START" value="0"></td>
+                      <td valign="middle">Start value for the K-Factor. Usually 0 but for bowden setups you might want to start higher, e.g. 30</td>
+                    </tr>
+                    <tr>
+                      <td align="left" valign="middle"><label for="K_END">End value for K:</label></td>
+                      <td valign="middle"><input type="number" name="K_END" id="K_END" value="100"></td>
+                      <td valign="middle">End value of the K-Factor. Bowden setups may be higher than 100</td>
+                    </tr>
+                    <tr>
+                      <td align="left" valign="middle"><label for="K_STEP">K-Factor Stepping:</label></td>
+                      <td valign="middle"><input type="number" name="K_STEP" id="K_STEP" value="5"></td>
+                      <td valign="middle">Stepping of the K-Factor in the test pattern. Needs to be an exact divisor of the K-Factor Range (End - Start)</td>
+                    </tr>
+                    <tr>
+                      <td colspan="3" align="left" valign="middle"><h4>Advanced Settings:</h4></td>
+                    </tr>
+                    <tr>
+                      <td align="left" valign="middle"><label for="NOZ_LIN_R">Nozze Line Ratio:</label></td>
+                      <td valign="middle"><input name="NOZ_LIN_R" type="number" id="NOZ_LIN_R" value="1.2"></td>
+                      <td valign="middle">Ratio between nozzle diameter and extruded line width. Should be between 1.05 and 1.2</td>
+                    </tr>
+                    <tr>
+                      <td align="left" valign="middle"><label for="USE_UBL">Use Bed Levelling:</label></td>
+                      <td valign="middle"><input type="checkbox" name="USE_UBL" id="USE_UBL"></td>
+                      <td valign="middle">Activate UBL and level bed before printing</td>
+                    </tr>
+                    <tr>
+                      <td align="left" valign="middle"><label for="EXTRUSION_MULT">Extrusion Multiplier:</label></td>
+                      <td valign="middle"><input type="number" name="EXTRUSION_MULT" id="EXTRUSION_MULT" value="1.0"></td>
+                      <td valign="middle">Usually 1.0</td>
+                    </tr>
+                  </tbody>
+                </table></td>
+              <td valign="top"><p>
+                  <textarea name="textarea" cols="60" rows="35" id="textarea"></textarea>
+                </p></td>
+            </tr>
+            <tr>
+              <td valign="top"><input name="button" type="button" id="button" form="form1" value="Generate GCode" onClick="gengcode(this.form)"></td>
+              <td valign="top"><input type="button" name="button2" id="button2" value="Download as file" onClick="saveTextAsFile(this.form)"></td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+    </div>
+  </div>
+</div>
