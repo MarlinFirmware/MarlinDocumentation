@@ -7,7 +7,7 @@ layout: default
   <div class="row">
     <div class="col-lg-3 col-md-4 visible-lg-block visible-md-block custom-no-padding">
       <div class="">
-        {% assign list = ('' | split: '|') %}
+        {% assign list = '' | split: '|' %}
         {% for gcode in site.gcode %}
           {% if gcode.codes[0] %}
             {% assign list = list | push: gcode %}
@@ -17,7 +17,7 @@ layout: default
         {% if list.size > 0 %}
           <div class="tocify gcode">
             <ul class="tocify-header nav nav-list">
-              {% assign list = (list | sort: 'tag') %}
+              {% assign list = list | sort: 'tag' %}
               {% for gcode in list %}
                   <li class="tocify-item{% if page.codes[0] == gcode.codes[0] and page.title == gcode.title %} active{% endif %}">
                     <a href="{{ gcode.url | prepend: site.baseurl }}">{{ gcode.codes[0] }}{% if gcode.codes[1] %}-{{ gcode.codes[1] }}{% endif %}: {{ gcode.title }}</a></li>

@@ -11,7 +11,7 @@ This article pertains to Marlin 1.1.6 and some earlier versions. Corrections/imp
 {% endalert %}
 
 {% alert info %}
-Marlin also includes [Unified Bed Leveling](unified_bed_leveling.html) and [Mesh Bed Leveling](/docs/gcode/G029-mbl.html) which have their own unique options. The information provided here does not fully apply to those features.
+Marlin also includes [Unified Bed Leveling](unified_bed_leveling.html) and [Mesh Bed Leveling](/docs/gcode/G029-mbl.html) which have their own unique options. The information on this page only fully applies to ABL.
 {% endalert %}
 
 ## Introduction

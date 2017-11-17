@@ -28,7 +28,9 @@ UBL currently requires both a host and an LCD display with a rotary encoder. Wor
 
 The printer must be already fully functional and tested, with a well-constrained movement system. The more physically level and straight the bed is, the better your results will be. See `Configuration.h` and `Configuration_adv.h` for all of UBL's settings.
 
-The following command sequence can be used to home, level, and then fine-tune the results:
+The printer should be able to successfully print a small object at the center of the bed with no bed leveling system active.   Most problems bringing up the UBL Bed Leveling system occur when this step has been ignored.  It is very important to verify the configuration.h settings can make this happen.
+
+The following command sequence can then be used to home, level, and then fine-tune the results:
 ```gcode
 M502          ; Reset settings to configuration defaults...
 M500          ; ...and Save to EEPROM. Use this on a new install.
@@ -39,7 +41,7 @@ M104 S210     ; Not required, but having the printer at temperature helps accura
 
 G28           ; Home XYZ.
 G29 P1        ; Do automated probing of the bed.
-G29 P2 B T    ; Do manual probing of unprobed points. Requires LCD.
+G29 P2 B T    ; Manual probing of locations USUALLY NOT NEEDED!!!!
 G29 P3 T      ; Repeat until all mesh points are filled in.
 
 G29 T         ; View the Z compensation values.
@@ -216,12 +218,12 @@ The easiest way to do this is to use the `G26` command.
 
 There are several options for the `G26` command. See [GCode G26](http://marlinfw.org/docs/gcode/G026.html) for details.
 
-`G26 Bxx Hyy F1.75 L0.2 N0.4` will usually get you something reasonable:
+`G26 Bxx Hyy F1.75 L0.2 S0.4` will usually get you something reasonable:
 - `Bxx` – bed temperature
 - `Hyy` – hotend temperature
 - `F1.75` – filament width of 1.75mm (default)
 - `L0.2` – layer height of 0.2mm (default)
-- `N0.4` – nozzle diameter of 0.4mm (default)
+- `S0.4` – nozzle diameter of 0.4mm (default)
 
 #### Fine-tuning of the matrix
 
