@@ -16,23 +16,25 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 function gengcode(form1) {
-    
+
     var FILAMENT_DIAMETER = parseFloat(document.forms['form1']['FIL_DIA'].value);
     var NOZZLE_DIAMETER = parseFloat(document.forms['form1']['NOZ_DIA'].value);
     var NOZZLE_TEMP = parseInt(document.forms['form1']['NOZZLE_TEMP'].value);
-    var NOZZLE_LINE_RATIO = parseFloat(document.forms['form1']['NOZ_LIN_R'].value);  
+    var NOZZLE_LINE_RATIO = parseFloat(document.forms['form1']['NOZ_LIN_R'].value);
     var BED_TEMP = parseInt(document.forms['form1']['BED_TEMP'].value);
     var SPEED_SLOW = parseInt(document.forms['form1']['SLOW_SPEED'].value);
     var SPEED_FAST = parseInt(document.forms['form1']['FAST_SPEED'].value);
-    var SPEED_MOVE = parseInt(document.forms['form1']['MOVE_SPEED'].value); 
+    var SPEED_MOVE = parseInt(document.forms['form1']['MOVE_SPEED'].value);
     var RETRACT_DIST = parseFloat(document.forms['form1']['RETRACTION'].value);
     var BED_X = parseInt(document.forms['form1']['BEDSIZE_X'].value);
     var BED_Y = parseInt(document.forms['form1']['BEDSIZE_Y'].value);
-    var HEIGHT_LAYER = parseFloat(document.forms['form1']['LAYER_HEIGHT'].value);   
+    var HEIGHT_LAYER = parseFloat(document.forms['form1']['LAYER_HEIGHT'].value);
     var EXT_MULT = parseFloat(document.forms['form1']['EXTRUSION_MULT'].value);
     var START_K = parseInt(document.forms['form1']['K_START'].value);
     var END_K = parseInt(document.forms['form1']['K_END'].value);
     var STEP_K = parseFloat(document.forms['form1']['K_STEP'].value);
+    var SELECT_DIR = document.getElementById('PAT_DIR');
+    var DIR_PAT = SELECT_DIR.options[SELECT_DIR.selectedIndex].value;
 
     // Check if K-Factor Stepping is a multiple of the K-Factor Range
     var RANGE_K =  END_K - START_K;
@@ -40,15 +42,24 @@ function gengcode(form1) {
       alert("Your K-Factor range cannot be cleanly divided. Check Start / End / Steps for the K-Factor");
       document.forms['form1']['textarea'].value = '';
       return;
-    }   
-    // Check if the Test Pattern size does not exceed the Y Bed Size
-    var PRINT_SIZE_Y = RANGE_K / STEP_K * 5 + 25;
-    if (PRINT_SIZE_Y > BED_Y - 20) {
-      alert("Your K-Factor settings exceed your Y bed size. Check Start / End / Steps for the K-Factor");
-      document.forms['form1']['textarea'].value = '';
-      return;
     }
-    var START_Y = (BED_Y - PRINT_SIZE_Y) / 2;   
+    // Check if the Test Pattern size does not exceed the Bed Size
+    var PRINT_SIZE = RANGE_K / STEP_K * 5 + 25;
+    if (DIR_PAT === "X") {
+      if (PRINT_SIZE > BED_Y - 20) {
+        alert("Your K-Factor settings exceed your Y bed size. Check Start / End / Steps for the K-Factor");
+        document.forms['form1']['textarea'].value = '';
+        return;
+      }
+      var START_Y = (BED_Y - PRINT_SIZE) / 2;
+    } else {
+      if (PRINT_SIZE > BED_X - 20) {
+        alert("Your K-Factor settings exceed your X bed size. Check Start / End / Steps for the K-Factor");
+        document.forms['form1']['textarea'].value = '';
+        return;
+      }
+      var START_X = (BED_X - PRINT_SIZE) / 2;
+    }
 
     // Convert speeds from mm/s to mm/min if needed
     if (document.getElementById('MM_S').checked) {
@@ -61,7 +72,7 @@ function gengcode(form1) {
     var EXTRUSION_RATIO = NOZZLE_DIAMETER * NOZZLE_LINE_RATIO * HEIGHT_LAYER / (Math.pow(FILAMENT_DIAMETER / 2,2) * Math.PI);
     var EXT_20 = roundNumber(EXTRUSION_RATIO * EXT_MULT * 20, 5);
     var EXT_40 = roundNumber(EXTRUSION_RATIO * EXT_MULT * 40, 5);
-    
+
     document.forms['form1']['textarea'].value = '';
     document.forms['form1']['textarea'].value = '; K-Factor Test\n' +
                                                 ';\n' +
@@ -84,61 +95,101 @@ function gengcode(form1) {
                                                 '; Starting Value K-Factor = ' + START_K + '\n' +
                                                 '; Ending value K-Factor = ' + END_K + '\n' +
                                                 '; K-Factor Stepping = ' + STEP_K + '\n' +
+												'; Printing Direction = ' + (DIR_PAT === "X" ? "X" : "Y") + '\n' +
                                                 ';\n' +
-                                                'G28 ; home all axes\n' +                                                   
+                                                'G28 ; home all axes\n' +
                                                 'M190 S' + BED_TEMP + ' ; set and wait for bed temp\n' +
                                                 'M104 S' + NOZZLE_TEMP + ' ; set nozzle temp and continue\n';
 
-    if (document.getElementById('USE_UBL').checked)
+    if (document.getElementById('USE_UBL').checked) {
       document.forms['form1']['textarea'].value += 'G29 ; execute bed automatic levelling compensation\n';
-    
+    }
+
     document.forms['form1']['textarea'].value += 'M109 S' + NOZZLE_TEMP + ' ; block waiting for nozzle temp\n' +
                                                  'G21 ; set units to millimetres\n' +
                                                  'M204 S500 ; lower acceleration to 500mm/s2 during the test\n' +
-                                                 'M83 ; use relative distances for extrusion\n' + 
+                                                 'M83 ; use relative distances for extrusion\n' +
                                                  'G90 ; use absolute coordinates\n' +
                                                  ';\n' +
                                                  '; go to layer height and prime nozzle on a line to the left\n' +
-                                                 ';\n' +
-                                                 'G1 X' + ((BED_X - 120) / 2) + ' Y' + START_Y + ' F' + SPEED_MOVE + '\n' +
-                                                 'G1 Z' + HEIGHT_LAYER + ' F' + SPEED_SLOW + '\n' +
-                                                 'G1 X' + ((BED_X - 120) / 2) + ' Y' + (START_Y + 100) + ' E10' + ' F' + SPEED_SLOW + ' ; extrude some to start clean\n' +
-                                                 'G1 E-' + RETRACT_DIST + '\n' +
-                                                 ';\n' +
-                                                 '; start the test (all values are relative coordinates)\n' +
-                                                 ';\n' +
-                                                 'G1 X' + ((BED_X - 80) / 2) + ' Y' + START_Y + ' F' + SPEED_MOVE + ' ; move to pattern start\n' +
-                                                 'G91 ; use relative coordinates\n';
-    
-    
-    for (i = START_K; i <= END_K; i = i + STEP_K)
-        document.forms['form1']['textarea'].value += 'M900 K' + i + ' ; set K-factor\n' +
-                                                     'G1 E' + RETRACT_DIST + '\n' +
-                                                     'G1 X20 Y0 E' + EXT_20 + ' F' + SPEED_SLOW + '\n' +
-                                                     'G1 X40 Y0 E' + EXT_40 + ' F' + SPEED_FAST + '\n' +
-                                                     'G1 X20 Y0 E' + EXT_20 + ' F' + SPEED_SLOW + '\n' +
-                                                     'G1 E-' + RETRACT_DIST + '\n' +
-                                                     'G1 X-80 Y5 F' + SPEED_MOVE + '\n';
-    
+                                                 ';\n';
+    if (DIR_PAT === "X") {
+      document.forms['form1']['textarea'].value += 'G1 X' + ((BED_X - 100) / 2) + ' Y' + START_Y + ' F' + SPEED_MOVE + '\n' +
+                                                   'G1 Z' + HEIGHT_LAYER + ' F' + SPEED_SLOW + '\n' +
+                                                   'G1 X' + ((BED_X - 100) / 2) + ' Y' + (START_Y + 100) + ' E10' + ' F' + SPEED_SLOW + ' ; extrude some to start clean\n' +
+                                                   'G1 E-' + RETRACT_DIST + '\n' +
+                                                   ';\n' +
+                                                   '; start the test (all values are relative coordinates)\n' +
+                                                   ';\n' +
+                                                   'G1 X' + ((BED_X - 100) / 2 + 20) + ' Y' + START_Y + ' F' + SPEED_MOVE + ' ; move to pattern start\n' +
+                                                   'G91 ; use relative coordinates\n';
+    } else {
+      document.forms['form1']['textarea'].value += 'G1 X' + START_X + ' Y' + ((BED_Y - 100) / 2) + ' F' + SPEED_MOVE + '\n' +
+                                                   'G1 Z' + HEIGHT_LAYER + ' F' + SPEED_SLOW + '\n' +
+                                                   'G1 X' + (START_X + 100) + ' Y' + ((BED_Y - 100) / 2) + ' E10' + ' F' + SPEED_SLOW + ' ; extrude some to start clean\n' +
+                                                   'G1 E-' + RETRACT_DIST + '\n' +
+                                                   ';\n' +
+                                                   '; start the test (all values are relative coordinates)\n' +
+                                                   ';\n' +
+                                                   'G1 X' + START_X + ' Y' + ((BED_Y - 100) / 2 + 20) + ' F' + SPEED_MOVE + ' ; move to pattern start\n' +
+                                                   'G91 ; use relative coordinates\n';
+    }
+
+    for (i = START_K; i <= END_K; i = i + STEP_K) {
+        if (DIR_PAT === "X") {
+          document.forms['form1']['textarea'].value += 'M900 K' + i + ' ; set K-factor\n' +
+                                                       'G1 E' + RETRACT_DIST + '\n' +
+                                                       'G1 X20 Y0 E' + EXT_20 + ' F' + SPEED_SLOW + '\n' +
+                                                       'G1 X40 Y0 E' + EXT_40 + ' F' + SPEED_FAST + '\n' +
+                                                       'G1 X20 Y0 E' + EXT_20 + ' F' + SPEED_SLOW + '\n' +
+                                                       'G1 E-' + RETRACT_DIST + '\n' +
+                                                       'G1 X-80 Y5 F' + SPEED_MOVE + '\n';
+        } else {
+          document.forms['form1']['textarea'].value += 'M900 K' + i + ' ; set K-factor\n' +
+                                                       'G1 E' + RETRACT_DIST + '\n' +
+                                                       'G1 X0 Y20 E' + EXT_20 + ' F' + SPEED_SLOW + '\n' +
+                                                       'G1 X0 Y40 E' + EXT_40 + ' F' + SPEED_FAST + '\n' +
+                                                       'G1 X0 Y20 E' + EXT_20 + ' F' + SPEED_SLOW + '\n' +
+                                                       'G1 E-' + RETRACT_DIST + '\n' +
+                                                       'G1 X5 Y-80 F' + SPEED_MOVE + '\n';
+
+        }
+    }
+
+    if (DIR_PAT === "X") {
+      document.forms['form1']['textarea'].value += ';\n' +
+                                                   '; mark the test area for reference\n' +
+                                                   ';\n' +
+                                                   'G1 X20 Y0 F' + SPEED_MOVE + '\n' +
+                                                   'G1 E' + RETRACT_DIST + '\n' +
+                                                   'G1 X0 Y20 E' + EXT_20 + ' F' + SPEED_SLOW + '\n' +
+                                                   'G1 E-' + RETRACT_DIST + '\n' +
+                                                   'G1 X40 Y-20 F' + SPEED_MOVE + '\n' +
+                                                   'G1 E' + RETRACT_DIST + '\n' +
+                                                   'G1 X0 Y20 E' + EXT_20 + ' F' + SPEED_SLOW + '\n' +
+                                                   'G1 E-' + RETRACT_DIST + '\n';
+    } else {
+      document.forms['form1']['textarea'].value += ';\n' +
+                                                   '; mark the test area for reference\n' +
+                                                   ';\n' +
+                                                   'G1 X0 Y20 F' + SPEED_MOVE + '\n' +
+                                                   'G1 E' + RETRACT_DIST + '\n' +
+                                                   'G1 X20 Y0 E' + EXT_20 + ' F' + SPEED_SLOW + '\n' +
+                                                   'G1 E-' + RETRACT_DIST + '\n' +
+                                                   'G1 X-20 Y40 F' + SPEED_MOVE + '\n' +
+                                                   'G1 E' + RETRACT_DIST + '\n' +
+                                                   'G1 X20 Y0 E' + EXT_20 + ' F' + SPEED_SLOW + '\n' +
+                                                   'G1 E-' + RETRACT_DIST + '\n';
+    }
     document.forms['form1']['textarea'].value += ';\n' +
-                                                 '; mark the test area for reference\n' +
-                                                 ';\n' +
-                                                 'G1 X20 Y0 F' + SPEED_MOVE + '\n' +
-                                                 'G1 E' + RETRACT_DIST + '\n' +
-                                                 'G1 X0 Y20 E' + EXT_20 + ' F' + SPEED_SLOW + '\n' +
-                                                 'G1 E-' + RETRACT_DIST + '\n' +
-                                                 'G1 X40 Y-20 F' + SPEED_MOVE + '\n' +
-                                                 'G1 E' + RETRACT_DIST + '\n' +
-                                                 'G1 X0 Y20 E' + EXT_20 + ' F' + SPEED_SLOW + '\n' +
-                                                 'G1 E-' + RETRACT_DIST + '\n' +
-                                                 ';\n' +
                                                  '; finish\n' +
                                                  ';\n' +
                                                  'G4 ; wait\n' +
                                                  'M104 S0 ; turn off hotend\n' +
                                                  'M140 S0 ; turn off bed\n' +
                                                  'G90 ; use absolute coordinates\n' +
-                                                 'G1 Z30 Y200 F' + SPEED_MOVE + ' ; move away from the print\n' +
+                                                 'G1 Z30 F' + SPEED_MOVE + ' ; move away from the print\n' +
+                                                 'G28 X0 Y0 ; move X/Y to min endstops\n' +
                                                  'M84 ; disable motors\n' +
                                                  'M502 ; resets parameters from ROM (for those who do not have an EEPROM)\n' +
                                                  'M501 ; resets parameters from EEPROM (preferably)\n' +

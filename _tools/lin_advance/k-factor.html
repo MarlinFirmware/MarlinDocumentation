@@ -2,7 +2,7 @@
 title:        'K-Factor Calibration Pattern'
 description:  'Create Gcode to calibrate LIN_ADVANCE setting'
 category:     [ tools ]
---- 
+---
 <script type="text/javascript" src="./k-factor.js"></script>
 <div class="container" role="main">
   <div class="row">
@@ -13,7 +13,7 @@ category:     [ tools ]
       <ul>
         <li>Fast and slow speed should be significantly different or the K-Factor effect will barely be visible</li>
         <li>Use bed levelling requires a probe</li>
-        <li>The printer's bed is assumed to be rectangular. For round beds use the diameter as approximation but  extra care should be taken that the pattern size matches the bed. The overall width (X-direction) of the print is always 100 mm. The length (Y-direction) depends on the K-Factor Settings. The sanity check will only work for rectangular beds.</li>
+        <li>The printer's bed is assumed to be rectangular. For round beds use the diameter as approximation but  extra care should be taken that the pattern size matches the bed. The overall width (X-direction) of the print is always 100 mm (80 mm for the pattern + 20 mm nozzle prime). The length (Y-direction) depends on the K-Factor Settings. The sanity check will only work for rectangular beds.</li>
         <li>Start and End value for the K-Factor determines the range that the test pattern will cover. For example a start value of 50 and an end value of 150 will test a range of 100.</li>
         <li>The K-Factor stepping determines how many test lines are printed for the above range. For example, a Stepping of 10 and a range of 100 results in 10 test lines. A stepping of 3 would not work in this example as 100 cannot be exactly divided by 3. The script will throw an error message if an exact division is not possible. In this case either the range or the  stepping needs to be adjusted.</li>
         <li>The proper K-Factor depends on the filament, nozzle size, nozzle geometry and printing temperature. If any of these values change, the calibration might need to be repeated.</li>
@@ -57,7 +57,7 @@ category:     [ tools ]
                       <td valign="middle">Retraction distance in mm</td>
                     </tr>
                     <tr>
-                      <td align="left" valign="middle"><label for="BEDSIZE_X">Bed size X:</label></td>
+                      <td align="left" valign="middle"><label for="BEDSIZE_X">Bed Size X:</label></td>
                       <td valign="middle"><input type="number" name="BEDSIZE_X" id="BEDSIZE_X" value="200"></td>
                       <td valign="middle">Size in mm of the bed in X</td>
                     </tr>
@@ -75,17 +75,17 @@ category:     [ tools ]
                       <td colspan="3" align="left" valign="middle"><h4>Speed Settings:</h4></td>
                     </tr>
                     <tr>
-                      <td align="left" valign="middle"><label for="MM_S">Use mm/s for speeds: </label></td>
+                      <td align="left" valign="middle"><label for="MM_S">Use mm/s for Speeds: </label></td>
                       <td valign="middle"><input type="checkbox" name="MM_S" id="MM_S" checked></td>
                       <td valign="middle">Use mm/s instead of mm/min</td>
                     </tr>
                     <tr>
-                      <td align="left" valign="middle"><label for="SLOW_SPEED">Slow printing speed:</label></td>
+                      <td align="left" valign="middle"><label for="SLOW_SPEED">Slow Printing Speed:</label></td>
                       <td valign="middle"><input type="number" name="SLOW_SPEED" id="SLOW_SPEED" value="20"></td>
                       <td valign="middle">Slow printing speed</td>
                     </tr>
                     <tr>
-                      <td align="left" valign="middle"><label for="FAST_SPEED">Fast printing speed:</label></td>
+                      <td align="left" valign="middle"><label for="FAST_SPEED">Fast Printing Speed:</label></td>
                       <td valign="middle"><input type="number" name="FAST_SPEED" id="FAST_SPEED" value="70"></td>
                       <td valign="middle">Fast printing speed. </td>
                     </tr>
@@ -98,12 +98,12 @@ category:     [ tools ]
                       <td colspan="3" align="left" valign="middle"><h4>K-Factor Settings:</h4></td>
                     </tr>
                     <tr>
-                      <td align="left" valign="middle"><label for="K_START">Start value for K:</label></td>
+                      <td align="left" valign="middle"><label for="K_START">Start Value for K:</label></td>
                       <td valign="middle"><input type="number" name="K_START" id="K_START" value="0"></td>
                       <td valign="middle">Start value for the K-Factor. Usually 0 but for bowden setups you might want to start higher, e.g. 30</td>
                     </tr>
                     <tr>
-                      <td align="left" valign="middle"><label for="K_END">End value for K:</label></td>
+                      <td align="left" valign="middle"><label for="K_END">End Value for K:</label></td>
                       <td valign="middle"><input type="number" name="K_END" id="K_END" value="100"></td>
                       <td valign="middle">End value of the K-Factor. Bowden setups may be higher than 100</td>
                     </tr>
@@ -129,6 +129,14 @@ category:     [ tools ]
                       <td align="left" valign="middle"><label for="EXTRUSION_MULT">Extrusion Multiplier:</label></td>
                       <td valign="middle"><input type="number" name="EXTRUSION_MULT" id="EXTRUSION_MULT" value="1.0"></td>
                       <td valign="middle">Usually 1.0</td>
+                    </tr>
+                    <tr>
+                      <td align="left" valign="middle"><label for="PAT_DIR">Pattern Print Direction:</label></td>
+                      <td valign="middle"><select name="PAT_DIR" id="PAT_DIR">
+                        <option value="X" selected>Letf to right (X)</option>
+                        <option value="Y">Front to Back (Y)</option>
+                      </select></td>
+                      <td valign="middle">Determines the print direction of the test pattern.</td>
                     </tr>
                   </tbody>
                 </table></td>
