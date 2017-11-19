@@ -189,7 +189,6 @@ function gengcode(form1) {
                                                  'M140 S0 ; turn off bed\n' +
                                                  'G90 ; use absolute coordinates\n' +
                                                  'G1 Z30 F' + SPEED_MOVE + ' ; move away from the print\n' +
-                                                 'G28 X0 Y0 ; move X/Y to min endstops\n' +
                                                  'M84 ; disable motors\n' +
                                                  'M502 ; resets parameters from ROM (for those who do not have an EEPROM)\n' +
                                                  'M501 ; resets parameters from EEPROM (preferably)\n' +
