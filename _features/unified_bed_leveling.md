@@ -8,11 +8,11 @@ category: feature
 ---
 
 {% alert info %}
-This page is a work in progress, based on Marlin 1.1.2. Corrections/improvements are welcome.
+This page is a work in progress, based on Marlin 1.1.2 and updated for 1.1.6. Corrections/improvements are welcome.
 {% endalert %}
 
  - A comprehensive LCD menu system for UBL is coming soon.
- - Also see [GCode G26](http://marlinfw.org/docs/gcode/G026.html) and [G29 for UBL](http://marlinfw.org/docs/gcode/G029-ubl.html) (coming soon).
+ - Also see [GCode G26](http://marlinfw.org/docs/gcode/G026.html) and [G29 for UBL](http://marlinfw.org/docs/gcode/G029-ubl.html).
 
 ## UBL Startup Guide
 
@@ -20,11 +20,12 @@ The **Unified Bed Leveling (UBL)** system is a superset of the previous leveling
 
 The main improvements over the previous systems are:
  - Optimized line-splitting algorithm. For all mesh-based leveling methods, on Cartesians each linear move is split on grid line boundaries, respecting the best-known measured heights on the bed. UBL highly optimizes this boundary-splitting with pre-calculation, optimized handling of special cases, and avoiding recursion.
+ - It is possible to probe and store a high-resolution rectangular mesh in nonvolatile storage, load this mesh, and use simple 3-point probing to 'tilt' the mesh and compensate for slight changes in bed orientation.
  - The user is able to fill in the portions of the mesh that can’t be reached by automated probing. This allows the entire bed to be compensated.
  - It allows the user to fine tune the system. The user is able to modify the mesh based on print results. Really good first layer adhesion and height can be achieved over the entire bed.
 
 ### Synopsis
-UBL currently requires both a host and an LCD display with a rotary encoder. Work is in progress to adapt GCode and controller-based procedures to work with UBL.
+UBL currently requires a connected host, and an LCD display with a rotary encoder is recommended. Note that the MKS TFT 2.8 and 3.2 *do not* actually fulfill the LCD requirements. The documentation below generally assumes a conforming LCD is present; see [this addendum](#ubl-without-an-lcd) for information on using UBL without one. There is also [an addendum](#ubl-without-a-z-probe) that describes how to use UBL without a z-probe installed. Note that operation without an LCD is still work-in-progress, and subject to change.
 
 The printer must be already fully functional and tested, with a well-constrained movement system. The more physically level and straight the bed is, the better your results will be. See `Configuration.h` and `Configuration_adv.h` for all of UBL's settings.
 
@@ -53,12 +54,18 @@ M500          ; Save current setup. WARNING: UBL will be active at power up, bef
 ;--- Fine Tuning of the mesh happens below ---
 ;---------------------------------------------
 G26 C P T3.0  ; Produce mesh validation pattern with primed nozzle  PLA temperatures
-              ; are assumed unless you specify B 105 H 225   for ABS Plastic
+              ; are assumed unless you specify, e.g., B 105 H 225 for ABS Plastic
 G29 P4 T      ; Move nozzle to 'bad' areas and fine tune the values if needed
               ; Repeat G26 and G29 P4 T  commands as needed.
 
 G29 S1        ; Save UBL mesh values to EEPROM.
 M500          ; Resave UBL's state information.
+;----------------------------------------------------
+;--- Use 3-point probe to transform a stored mesh ---
+;----------------------------------------------------
+G29 L1        ; Load the mesh stored in slot 1 (from G29 S1)
+G29 J         ; No size specified on the J option tells G29 to probe the specified 3 points
+              ; and tilt the mesh according to what it finds.
 ```
 
 ### Scope
@@ -67,7 +74,7 @@ The UBL system contains a suite of tools with multiple options intended to cover
 
 The intent is to provide a new user with enough knowledge of the UBL system that they can go to the detailed documentation and start working with the other tools and options as needed.
 
-The 3-point leveling option is not covered in this guide.
+The 3-point leveling option is only covered to the extent of using it to transform an already-measured mesh.
 
 ### Theory
 
@@ -246,6 +253,11 @@ Issue a `G29 S` command periodically to save your mesh.
 As you print parts you may notice that further fine-tuning is needed. The `G29 P4 T` command can be used anytime to make adjustments.
 
 ### Addenda
+
+#### UBL without an LCD
+
+
+#### UBL without a z-probe
 
 #### Bilinear computation
 
