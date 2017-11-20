@@ -139,7 +139,7 @@ All printers require these settings, which specify the physical movement limits 
 #define Z_MAX_POS xxx
 ```
 
-**Mesh size and density** – These define the default boundaries of the UBL mesh - the region of the bed the probe can reach - and the mesh density. These settings can be found in `Configuration.h`.
+**Mesh size and density** – These define the default boundaries of the UBL mesh - the region of the bed the nozzle(s) can reach, and therefore needs to be compensated - and the mesh density. These settings can be found in `Configuration.h`.
 
 Ideally the mesh bounds will match your printable area perfectly. In practice it’s a good idea to pull these in a bit with `MESH_INSET` if the printable area goes right up to the edge of the bed. This helps keep the probe from missing the bed.
 
@@ -151,13 +151,13 @@ Ideally the mesh bounds will match your printable area perfectly. In practice it
 #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
 ```
 
-The automated mesh boundary settings assume that the printable area is centered in the physical area (as specified below), and just applies an inset to all sides. If your configuration is different then you will need to modify the min/max settings, found in `Configuration_adv.h`, to fit your situation:
+The automated mesh boundary settings assume that the printable area is centered in the physical bed area (as specified below), and just applies an inset to all sides. If your configuration is different then you may need to modify the min/max settings, found in `Configuration_adv.h`, to fit your situation. Note though that (unlike bilinear leveling) the MESH_MIN and MESH_MAX positions refer to where the *nozzle* can reach, not the *probe*.:
 
 ```cpp
-#define UBL_MESH_MIN_X (X_MIN_POS + UBL_MESH_INSET)
-#define UBL_MESH_MAX_X (X_MAX_POS - (UBL_MESH_INSET))
-#define UBL_MESH_MIN_Y (Y_MIN_POS + UBL_MESH_INSET)
-#define UBL_MESH_MAX_Y (Y_MAX_POS - (UBL_MESH_INSET))
+#define UBL_MESH_MIN_X UBL_MESH_INSET
+#define UBL_MESH_MAX_X (X_BED_SIZE - (UBL_MESH_INSET))
+#define UBL_MESH_MIN_Y UBL_MESH_INSET
+#define UBL_MESH_MAX_Y (Y_BED_SIZE - (UBL_MESH_INSET))
 ```
 
 For delta printers define... (???)
