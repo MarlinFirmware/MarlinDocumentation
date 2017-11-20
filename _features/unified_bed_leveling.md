@@ -20,7 +20,7 @@ The **Unified Bed Leveling (UBL)** system is a superset of the previous leveling
 
 The main improvements over the previous systems are:
  - Optimized line-splitting algorithm. For all mesh-based leveling methods, on Cartesians each linear move is split on grid line boundaries, respecting the best-known measured heights on the bed. UBL highly optimizes this boundary-splitting with pre-calculation, optimized handling of special cases, and avoiding recursion.
- - It is possible to probe and store a high-resolution rectangular mesh in nonvolatile storage, load this mesh, and use simple 3-point probing to 'tilt' the mesh and compensate for slight changes in bed orientation.
+ - It is possible to probe and store a high-resolution rectangular mesh in nonvolatile storage, load this mesh, and use either 3-point or grid based probing to 'tilt' the mesh and compensate for slight changes in bed orientation.
  - The user is able to fill in the portions of the mesh that can’t be reached by automated probing. This allows the entire bed to be compensated.
  - It allows the user to fine tune the system. The user is able to modify the mesh based on print results. Really good first layer adhesion and height can be achieved over the entire bed.
 
