@@ -81,7 +81,7 @@ parameters:
     optional: true
     description: |
                  - With a value (v), do _Square Grid_ probing of v x v points.
-                 - With no value, do _Three Point_ probing.
+                 - With no value, do _Three Point_ probing - e.g. to adjust a loaded mesh to match slight bed misalignment.
     values:
       -
         type: int
@@ -89,7 +89,7 @@ parameters:
     tag: K
     optional: true
     description: |
-                 **Kompare**: Subtract the stored mesh with the given index from the current mesh.
+                 **Kompare**: Subtract the stored mesh with the given index from the current mesh. This operates on the mesh in-memory, so it will probably invalidate the active mesh for purposes of printing.
     values:
       -
         unit: index
@@ -122,7 +122,7 @@ parameters:
       -
         tag: 3
         description: |
-                     **Fill Unpopulated** regions of the Mesh with a fixed value (`C` or ).
+                     **Fill Unpopulated** regions of the Mesh with a fixed value (`C`) or use 'smart fill' to extrapolate from already probed points (`no argument`).
       -
         tag: 4
         description: |
