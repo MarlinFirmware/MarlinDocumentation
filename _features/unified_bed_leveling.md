@@ -254,7 +254,7 @@ UBL includes a third phase, `G29 P3`, which fills in points on the mesh that wer
 
 Issue `G29 P3` (no other parameters) to do a 'smart fill' of missing mesh points. This uses an extrapolation algorithm - which varies between delta and Cartesian systems - to give the unfilled mesh points reasonable initial values. You may need to run this more than once -- each instance of `G29 P3` will fill in one missing line of the grid. This allows fine tuning between `P3` steps when filling the remainder of larger grids. From this point, `G26` and `G29 P4` [[L][noLcd]] can be used to iteratively refine the mesh.
 
-`G29 P3 Cx.xx` can be used to manually fill a value into a mesh point, like `M421`, if for some reason that is necessary.
+`G29 P3 Cx.xx` can be used to manually fill a value into a mesh point(s), like `M421`, if for some reason that is necessary. `G29 P3 Cx.xx Rn` will fill the nearest n points with the value x.xx; 'nearest' is referenced to the nozzle position, unless X and Y arguments are provided to override the search start point.
 
 Again, `G29 S[n]` will save the mesh to EEPROM.
 
