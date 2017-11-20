@@ -37,6 +37,9 @@ The printer should be able to successfully print a small object at the center of
 The following command sequence can then be used as a quick-start guide to home, level, and then fine-tune the results.:
 
 ```gcode
+;------------------------------------------
+;--- Setup and initial probing commands ---
+;------------------------------------------
 M502          ; Reset settings to configuration defaults...
 M500          ; ...and Save to EEPROM. Use this on a new install.
 M501          ; Read back in the saved EEPROM.  
@@ -322,7 +325,7 @@ As in the case of no LCD, it is important to have good physical leveling of the 
 
 In this case instead of starting with `G29 P1` to automatically probe the bed, you want to start with `G29 P0` to zero the mesh. From here you can go straight to the cycle of `G26...` to print a test pattern and `G29 P4 R...` to fine-tune mesh points - probably working your way 'down' from the worst area(s) of the validation pattern, and using `G29 S` to save results between iterations. You can also use `G29 P2` to manually probe first, which is recommended.
 
-If you use `G29 P2` to probe manually first, you probably want to *at least* probe the center and four corners of the bed -- possibly some points in between as well. Then you want to use `G29 P3` commands to fill in reasonable initial values for the rest of the mesh before moving on to the `G26` / `G29 P4` cycle. `G29 P3 Rn Cx.xx` will fill in the nearest n grid points (to the nozzle) with the value specified by `Cx.xx`
+If you use `G29 P2` to probe manually first, you probably want to *at least* probe the center and four corners of the bed -- possibly some points in between as well. Then you want to use `G29 P3` commands to fill in reasonable initial values for the rest of the mesh before moving on to the `G26` / `G29 P4` cycle. `G29 P3 Rn Cx.xx` will fill in the nearest n grid points (to the nozzle) with the value specified by `Cx.xx`. You will probably have to use the `G29 P3 C...` form initially, rather than trying to let the smart fill algorithm handle lots of undefined points.
 
 So in summary, initial set-up of a mesh might look like this:
 
