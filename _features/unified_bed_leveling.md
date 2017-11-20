@@ -182,7 +182,7 @@ Command|Description
 -------|-----------
 `G29 P1`|Phase 1 – Automatically probe the bed [[Z][noZ]].
 `G29 P2`|Phase 2 – Manually probe points that automated probing couldn’t reach [[L][noLcd]].
-`G29 P3`|Phase 3 – Assign values to points that still need values – mostly used with delta printers.
+`G29 P3`|Phase 3 – Assign values to points that still need values.
 `G29 P4`|Phase 4 – Fine tune the mesh.
 `G29 Snn`|Store the mesh in EEPROM slot `nn`.
 `G29 Lnn` or `M420 Lnn`|Load a mesh from EEPROM slot `nn`. (Other leveling systems use `M501`.)
