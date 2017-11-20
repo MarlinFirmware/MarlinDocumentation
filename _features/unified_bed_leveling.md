@@ -25,6 +25,7 @@ The main improvements over the previous systems are:
  - It allows the user to fine tune the system. The user is able to modify the mesh based on print results. Really good first layer adhesion and height can be achieved over the entire bed.
 
 ### Synopsis
+
 Currently an LCD display with a rotary encoder is recommended. Note that the MKS TFT 2.8 and 3.2 *do not* actually fulfill the LCD requirements. The documentation below generally assumes a conforming LCD is present; see [this addendum](#ubl-without-an-lcd) for information on using UBL without one. There is also [an addendum](#ubl-without-a-z-probe) that describes how to use UBL without a z-probe installed. As much as possible, areas of the main documentation that differ when working without a display or without a z-probe are marked with [[L][noLcd]] and [[Z][noZ]], respectively. Note that operation without an LCD is still work-in-progress, and subject to change.
 
 UBL is a superset of previous automatic leveling systems, but it does not necessarily supersede them in all cases. Its goal is to allow the best features of the previous leveling schemes to be used together and combined, as well as providing a richer set of commands and feedback for the user. However, this functionality comes at a cost of program space. Compared to bilinear leveling, for example, the difference might be 50 kB for UBL vs. 5 kB for bilinear -- and for an equally precise mesh the printed results could be quite similar. With that said, the cost in program space is likely only a concern for more resource constrained parts like the 128k ATMegas.  
@@ -34,6 +35,7 @@ The printer must be already fully functional and tested, with a well-constrained
 The printer should be able to successfully print a small object at the center of the bed with no bed leveling system active.   Most problems bringing up the UBL Bed Leveling system occur when this step has been ignored.  It is very important to verify the configuration.h settings can make this happen.
 
 The following command sequence can then be used as a quick-start guide to home, level, and then fine-tune the results.:
+
 ```gcode
 M502          ; Reset settings to configuration defaults...
 M500          ; ...and Save to EEPROM. Use this on a new install.
@@ -125,6 +127,7 @@ Enable these options:
 **Travel limits & bed size** tell the system where the nozzle can reach. This is used during automated probing to determine what points the PROBE can reach.
 
 All printers require these settings, which specify the physical movement limits for the nozzle:
+
 ```cpp
 // The size of the print bed
 #define X_BED_SIZE xxx
@@ -174,6 +177,7 @@ So however bed size and printable radius are defined, make sure that your mesh g
 #define UBL_PROBE_PT_3_X 180
 #define UBL_PROBE_PT_3_Y 20
 ```
+
 #### Commands
 
 UBL has a series of “phase” commands that roughly follow the mesh building process. Some are heavily used, some aren’t.
@@ -242,9 +246,10 @@ You can look at the host interface screen to see where in the grid you are curre
 When done, you can issue a `G29 S` command to save the mesh to EEPROM.
 
 #### Filling in the mesh
+
 UBL includes a third phase, `G29 P3`, which fills in points on the mesh that were not probed automatically or manually. Note that unlike in bilinear leveling, UBL does not automatically extrapolate correction beyond the bounds of the mesh. If a mesh point is not defined no correction will be applied, and a missing point can affect up to 4 mesh cells. 
 
-Issue `G29 P3` (no other parameters) to do a 'smart fill' of missing mesh points. This uses an extrapolation algorithm - which varies between delta and Cartesian systems - to give the unfilled mesh points reasonable initial values. From this point, `G26` and `G29 P4` [[L][noLcd]] can be used to iteratively refine the mesh.
+Issue `G29 P3` (no other parameters) to do a 'smart fill' of missing mesh points. This uses an extrapolation algorithm - which varies between delta and Cartesian systems - to give the unfilled mesh points reasonable initial values. You may need to run this more than once -- each instance of `G29 P3` will fill in one missing line of the grid. This allows fine tuning between `P3` steps when filling the remainder of larger grids. From this point, `G26` and `G29 P4` [[L][noLcd]] can be used to iteratively refine the mesh.
 
 `G29 P3 Cx.xx` can be used to manually fill a value into a mesh point, like `M421`, if for some reason that is necessary.
 
@@ -302,22 +307,22 @@ The same cautions apply to using the `G26` test print command; if something goes
 In summary, initial set-up without an LCD might look like this:
 
 ```gcode
-G29 P1      ; Automatically probe accessible area
-G29 P3      ; Fill un-probed areas with reasonable values
-G26         ; Start test print / validation process
-M421 ... Q  ; Direct edit mesh point, using offset
-G29 S1      ; Save to slot 1, return to G26 for further refinement.
+G29 P1          ; Automatically probe accessible area
+G29 P3          ; Fill un-probed areas with reasonable values - may need to be repeated
+G26             ; Start test print / validation process
+M421 ... Qx.xx  ; Direct edit mesh point, using offset
+G29 S1          ; Save to slot 1, return to G26 for further refinement.
 ```
 
 #### UBL without a z-probe
 
 UBL also includes the features previously provided by `MESH_BED_LEVELING` and `PROBE_MANUALLY`, allowing the user to take advantage of the system without having a z-probe at all. Again, the initialization and start-up process needs to be varied a bit.
 
-As in the case of no LCD, it is important to have good physical leveling of the bed before you start here - **especially** if you skip the manual probing step.
+As in the case of no LCD, it is important to have good physical leveling of the bed before you start here - **especially** if you try to skip the manual probing step.
 
-In this case instead of starting with `G29 P1` to automatically probe the bed, you want to start with `G29 P0` to zero the mesh. From here you can [CHECK] go straight to the cycle of `G26...` to print a test pattern and `G29 P4 R...` to fine-tune mesh points - probably working your way 'down' from the worst area(s) of the validation pattern, and using `G29 S` to save results between iterations. You can also use `G29 P2` to manually probe first.
+In this case instead of starting with `G29 P1` to automatically probe the bed, you want to start with `G29 P0` to zero the mesh. From here you can go straight to the cycle of `G26...` to print a test pattern and `G29 P4 R...` to fine-tune mesh points - probably working your way 'down' from the worst area(s) of the validation pattern, and using `G29 S` to save results between iterations. You can also use `G29 P2` to manually probe first, which is recommended.
 
-If you use `G29 P2` to probe manually first, you probably want to *at least* probe the center and four corners of the bed -- possibly some points in between as well. Then you want to use [CHECK] `G29 P3` or `G29 P3 C...` to fill in reasonable initial values for the rest of the mesh before moving on to the `G26` / `G29 P4` cycle.
+If you use `G29 P2` to probe manually first, you probably want to *at least* probe the center and four corners of the bed -- possibly some points in between as well. Then you want to use `G29 P3` commands to fill in reasonable initial values for the rest of the mesh before moving on to the `G26` / `G29 P4` cycle. `G29 P3 Rn Cx.xx` will fill in the nearest n grid points (to the nozzle) with the value specified by `Cx.xx`
 
 So in summary, initial set-up of a mesh might look like this:
 
@@ -325,7 +330,7 @@ So in summary, initial set-up of a mesh might look like this:
 G29 P0      ; Zero the mesh
 ; Optional
 G29 P2...   ; Probe manually at appropriate locations
-G29 P3      ; Fill in missing points [CHECK - C?]
+G29 P3...   ; Fill in missing points
 ; /Optional
 G26         ; Jump into validation print / edit process
 G29 P4 R... ; Refine mesh points
