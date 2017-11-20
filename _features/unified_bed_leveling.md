@@ -160,7 +160,9 @@ The automated mesh boundary settings assume that the printable area is centered 
 #define UBL_MESH_MAX_Y (Y_BED_SIZE - (UBL_MESH_INSET))
 ```
 
-For delta printers define... (???)
+For delta printers the situation is similar. It is necessary to have grid points defined that can be filled covering the entirety of `DELTA_PRINTABLE_RADIUS`, but there should also be a 'border' of valid mesh points that lie just outside the printable radius. This ensures that every grid cell within the printable radius will have all four of its corners defined. 
+
+So however bed size and printable radius are defined, make sure that your mesh grid is defined so that a full circle of 'extra' mesh points lie outside of the printable radius.
 
 **3-point probe positions** - If you plan to use 3-point probing to 'touch up' the orientation of a saved mesh then you will also need to make sure that the 3-point leveling probe points are all accessible by your probe (or nozzle [[Z][noZ]]).
 
