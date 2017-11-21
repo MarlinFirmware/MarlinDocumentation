@@ -60,7 +60,7 @@ zh_CN|Simplified Chinese||zh_TW|Traditional Chinese
 
 ## The Problem
 
-All these languages (except English) normally use extended symbols not contained in US-ASCII. Even the English translation uses some Symbols not in US-ASCII (e.g., '`\002`' for Thermometer, `STR_h3` for '³'). Worse, in the code itself symbols are used, not taking into account the display they're written on. [(This may still be true only for Displays with Japanese charset)](https://github.com/MarlinFirmware/Marlin/blob/Development/Marlin/ultralcd_implementation_hitachi_HD44780.h)
+All these languages (except English) normally use extended symbols not contained in US-ASCII. Even the English translation uses some Symbols not in US-ASCII (e.g., '`\002`' for Thermometer, `STR_h3` for '³'). Worse, in the code itself symbols are used, not taking into account the display they're written on. [(This may still be true only for Displays with Japanese charset)](https://github.com/MarlinFirmware/Marlin/blob/Development/Marlin/ultralcd_impl_hitachi_HD44780.h)
 
 The upshot of all this is that on Western displays you'll see a '`~`' while on Cyrillic an "arrow coming from top - pointing to left," which is quite the opposite of what the programmer wanted.) The Germans want to use "`ÄäÖöÜüß`", the Finnish at least "`äö`". Other European languages want to see their accents on their letters too. For other scripts like Cyrillic, Japanese, Greek, Hebrew, ... you have to find totally different symbol sets.
 
