@@ -3,7 +3,7 @@ title:        'Unified Bed Leveling'
 description:  'The Unified Auto Bed Leveling system (UBL) provides automated procedures to probe the bed and compensate for an irregular or tilted bed'
 tag:
 
-author: Bob-the-Kuhn, thinkyhead, Roxy-3D
+author: Bob-the-Kuhn, thinkyhead, Roxy-3D, bjarchi
 category: feature
 ---
 
@@ -26,15 +26,15 @@ The main improvements over the previous systems are:
 
 ### Synopsis
 
-Currently an LCD display with a rotary encoder is recommended. Note that the MKS TFT 2.8 and 3.2 *do not* actually fulfill the LCD requirements. The documentation below generally assumes a conforming LCD is present; see [this addendum](#ubl-without-an-lcd) for information on using UBL without one. There is also [an addendum](#ubl-without-a-z-probe) that describes how to use UBL without a z-probe installed. As much as possible, areas of the main documentation that differ when working without a display or without a z-probe are marked with [[L][noLcd]] and [[Z][noZ]], respectively. Note that operation without an LCD is still work-in-progress, and subject to change.
+Currently an LCD display with a rotary encoder is recommended. Note that the MKS TFT 2.8 and 3.2 *do not* actually fulfill the LCD requirements. The main documentation below assumes that a conforming LCD and a z-probe are present. See [the no-lcd addendum](#ubl-without-an-lcd) for information on using UBL without a display, and [the no-z-probe addendum](#ubl-without-a-z-probe) to get UBL working without a z-probe installed. Note that operation without an LCD is still work-in-progress, and subject to change.
 
 UBL is a superset of previous automatic leveling systems, but it does not necessarily supersede them in all cases. Its goal is to allow the best features of the previous leveling schemes to be used together and combined, as well as providing a richer set of commands and feedback for the user. However, this functionality comes at a cost of program space. Compared to bilinear leveling, for example, the difference might be 50 kB for UBL vs. 5 kB for bilinear -- and for an equally precise mesh the printed results could be quite similar. With that said, the cost in program space is likely only a concern for more resource constrained parts like the 128k ATMegas.  
 
 The printer must be already fully functional and tested, with a well-constrained movement system. The more physically level and straight the bed is, the better your results will be. See `Configuration.h` and `Configuration_adv.h` for all of UBL's settings.
 
-The printer should be able to successfully print a small object at the center of the bed with no bed leveling system active.   Most problems bringing up the UBL Bed Leveling system occur when this step has been ignored.  It is very important to verify the configuration.h settings can make this happen.
+The printer should be able to successfully print a small object at the center of the bed with no bed leveling system active. Most problems bringing up the UBL Bed Leveling system occur when this step has been ignored. It is very important to verify that your configuration.h settings permit this before trying to bring up UBL.
 
-The following command sequence can then be used as a quick-start guide to home, level, and then fine-tune the results.:
+The following command sequence can then be used as a quick-start guide to home, level, and then fine-tune the results. These commands are for a 'normal' setup; see the relevant [addenda](#addenda) for concerns and gcode sequences related to setups without an lcd or z-probe.:
 
 ```gcode
 ;------------------------------------------
@@ -48,9 +48,9 @@ M190 S65      ; Not required, but having the printer at temperature helps accura
 M104 S210     ; Not required, but having the printer at temperature helps accuracy
 
 G28           ; Home XYZ.
-G29 P1        ; Do automated probing of the bed. [Z]
-G29 P2 B T    ; Manual probing of locations USUALLY NOT NEEDED!!!! [L Z]
-G29 P3 T      ; Repeat until all mesh points are filled in. [L Z]
+G29 P1        ; Do automated probing of the bed.
+G29 P2 B T    ; Manual probing of locations USUALLY NOT NEEDED!!!!
+G29 P3 T      ; Repeat until all mesh points are filled in.
 
 G29 T         ; View the Z compensation values.
 G29 S1        ; Save UBL mesh points to EEPROM.
@@ -63,7 +63,7 @@ M500          ; Save current setup. WARNING: UBL will be active at power up, bef
 G26 C P T3.0  ; Produce mesh validation pattern with primed nozzle  PLA temperatures
               ; are assumed unless you specify, e.g., B 105 H 225 for ABS Plastic
 G29 P4 T      ; Move nozzle to 'bad' areas and fine tune the values if needed
-              ; Repeat G26 and G29 P4 T  commands as needed. [L]
+              ; Repeat G26 and G29 P4 T  commands as needed.
 
 G29 S1        ; Save UBL mesh values to EEPROM.
 M500          ; Resave UBL's state information.
@@ -104,11 +104,11 @@ The initial auto bed leveling procedure rarely produces great results across the
 To create a mesh that produces good first-layer results over the entire bed, follow this procedure:
 
 1. Setup the UBL parameters in `Configuration.h` and `Configuration_adv.h`.
-2. Perform automated probing. [[Z][noZ]]
-3. Perform additional manual probing, if needed. [[L][noLcd]]
+2. Perform automated probing.
+3. Perform additional manual probing, if needed.
 4. Fill in un-probed points in the mesh
 4. Run the test print utility.
-5. Fine tune the matrix. [[L][noLcd]]
+5. Fine tune the matrix.
 6. Repeat steps 5 and 6 until satisfied.
 
 An LCD controller with rotary encoder, while not required, substantially simplifies the process.
@@ -170,7 +170,7 @@ For delta printers the situation is similar. It is necessary to have grid points
 
 So however bed size and printable radius are defined, make sure that your mesh grid is defined so that a full circle of 'extra' mesh points lie outside of the printable radius.
 
-**3-point probe positions** - If you plan to use 3-point probing to 'touch up' the orientation of a saved mesh then you will also need to make sure that the 3-point leveling probe points are all accessible by your probe (or nozzle [[Z][noZ]]).
+**3-point probe positions** - If you plan to use 3-point probing to 'touch up' the orientation of a saved mesh then you will also need to make sure that the 3-point leveling probe points are all accessible by your probe.
 
 ```cpp
 #define UBL_PROBE_PT_1_X 39       // Probing points for 3-Point leveling of the mesh
@@ -189,8 +189,8 @@ There are several options that can be applied to each of the phase commands. The
 
 Command|Description
 -------|-----------
-`G29 P1`|Phase 1 – Automatically probe the bed [[Z][noZ]].
-`G29 P2`|Phase 2 – Manually probe points that automated probing couldn’t reach [[L][noLcd]].
+`G29 P1`|Phase 1 – Automatically probe the bed.
+`G29 P2`|Phase 2 – Manually probe points that automated probing couldn’t reach.
 `G29 P3`|Phase 3 – Assign values to points that still need values.
 `G29 P4`|Phase 4 – Fine tune the mesh.
 `G29 Snn`|Store the mesh in EEPROM slot `nn`.
@@ -199,12 +199,12 @@ Command|Description
 `G29 D` or `M420 S0`|Disable the Z compensation bed leveling.
 `G29 T` or `M420 V`|Print a map of the mesh.
 `G26`|Print a pattern to test mesh accuracy.
-`M421`|Touch up mesh points by specifying a value (`Z`) or offset (`Q`) [[L][noLcd]].
+`M421`|Touch up mesh points by specifying a value (`Z`) or offset (`Q`).
 `M502`, `M500`|Reset settings to defaults, save to EEPROM.
 
 #### Automated probing
 
-The first step in the process is to use the Z probe to populate as much of the mesh as possible [[Z][noZ]].
+The first step in the process is to use the Z probe to populate as much of the mesh as possible.
 
 To start the process issue `G29 P1` or, if you want to see the values as they are measured, `G29 P1 T`
 
@@ -218,7 +218,7 @@ If you do a `G29 T` or `M420 V` command you’ll most likely see areas that do n
 
 #### Manual probing
 
-This optional step uses the encoder wheel to move the nozzle up and down in 0.01mm steps [[L][noLcd]]. BE VERY CAREFUL when doing this. Nasty things can happen if too much force is applied to the bed by the nozzle.
+This optional step uses the encoder wheel to move the nozzle up and down in 0.01mm steps. BE VERY CAREFUL when doing this. Nasty things can happen if too much force is applied to the bed by the nozzle.
 
 Most systems will have areas that the Z probe can’t reach. These points can be manually probed using `G29 P2`, but the 'smart' mesh filling of `G29 P3` is often good enough to make manual probing unnecessary.
 
@@ -252,7 +252,7 @@ When done, you can issue a `G29 S` command to save the mesh to EEPROM.
 
 UBL includes a third phase, `G29 P3`, which fills in points on the mesh that were not probed automatically or manually. Note that unlike in bilinear leveling, UBL does not automatically extrapolate correction beyond the bounds of the mesh. If a mesh point is not defined no correction will be applied, and a missing point can affect up to 4 mesh cells. 
 
-Issue `G29 P3` (no other parameters) to do a 'smart fill' of missing mesh points. This uses an extrapolation algorithm - which varies between delta and Cartesian systems - to give the unfilled mesh points reasonable initial values. You may need to run this more than once -- each instance of `G29 P3` will fill in one missing line of the grid. This allows fine tuning between `P3` steps when filling the remainder of larger grids. From this point, `G26` and `G29 P4` [[L][noLcd]] can be used to iteratively refine the mesh.
+Issue `G29 P3` (no other parameters) to do a 'smart fill' of missing mesh points. This uses an extrapolation algorithm - which varies between delta and Cartesian systems - to give the unfilled mesh points reasonable initial values. You may need to run this more than once -- each instance of `G29 P3` will fill in one missing line of the grid. This allows fine tuning between `P3` steps when filling the remainder of larger grids. From this point, `G26` and `G29 P4` can be used to iteratively refine the mesh.
 
 `G29 P3 Cx.xx` can be used to manually fill a value into a mesh point(s), like `M421`, if for some reason that is necessary. `G29 P3 Cx.xx Rn` will fill the nearest n points with the value x.xx; 'nearest' is referenced to the nozzle position, unless X and Y arguments are provided to override the search start point.
 
@@ -277,7 +277,7 @@ There are several options for the `G26` command. See [GCode G26](http://marlinfw
 
 Look over the results of the `G26` print and note where adjustments are needed.
 
-To edit a single point move the nozzle close to the point that needs adjustment. Issue a `G29 P4 T` [[L][noLcd]]. The head will move to nearest point. Use the encoder wheel to change the value. **The nozzle will not change height during this process.**
+To edit a single point move the nozzle close to the point that needs adjustment. Issue a `G29 P4 T`. The head will move to nearest point. Use the encoder wheel to change the value. **The nozzle will not change height during this process.**
 
 To edit multiple points move the nozzle close to the first point and issue `G29 P4 T Rxx` where `xx` is the number of points you want to edit. You can look at the host interface screen to see where in the grid you are currently editing.
 
