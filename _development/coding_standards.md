@@ -269,7 +269,7 @@ Macro|Description
 `SERIAL_PROTOCOLLNPGM("hello")`| Wrap the given ASCII string in `PSTR` and print it to serial out, appending a newline.
 `SERIAL_PROTOCOLPAIR("Hello:",val)`| Wrap an ASCII string in `PSTR`; print it and a value to serial out.
 `SERIAL_PROTOCOLLNPAIR("Hello:",val)`| Wrap an ASCII string in `PSTR`; print it, a value, and a newline to serial out.
-`SERIAL_ECHO(S)`<br/>`SERIAL_ECHOLN(S)`<br/>`SERIAL_ECHOPGM(S)`|just like the `PROTOCOL_*` macros above.
+`SERIAL_ECHO(S)`<br/>`SERIAL_ECHOLN(S)`<br/>`SERIAL_ECHOPGM(S)`<br/>`SERIAL_ECHOLNPGM(S)`<br/>`SERIAL_ECHOPAIR(S,V)`<br/>`SERIAL_ECHOLNPAIR(S,V)`|just like the `PROTOCOL_*` macros above.
 `SERIAL_ERROR(S)`<br/>`SERIAL_ERRORLN(S)`<br/>`SERIAL_ERRORPGM(S)`|
 
 ### Maths macros
