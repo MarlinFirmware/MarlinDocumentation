@@ -38,37 +38,36 @@ Graphical displays provide complete freedom to display whatever we want, so long
 
 ## The Languages
 
-Marlin currently supports 29 different language variants:
+Marlin currently supports 33 different language variants:
 
 Code|Language| |Code|Language
 ----|--------|-|----|--------
 en|English||an|Aragonese
 bg|Bulgarian||ca|Catalan
-cn|Chinese (deprecated)||cz|Czech
-de|German||el|Greek
-el-gr|Greek (Greece)||es|Spanish
-eu|Basque-Euskera||fi|Finnish
-fr|French||gl|Galician
+cn|Chinese||cz|Czech
+cz_utf8|Czech (UTF8)||de|German
+el|Greek||el-gr|Greek (Greece)
+es|Spanish||eu|Basque-Euskera
+fi|Finnish||fr|French
+fr_utf8|French (UTF8)||gl|Galician
 hr|Croatian||it|Italian
 kana|Japanese||kana_utf8|Japanese (UTF8)
 nl|Dutch||pl|Polish
 pt|Portuguese||pt-br|Portuguese (Brazilian)
-pt-br_utf8|Portuguese (Brazilian UTF8)||pt_utf8|Portuguese (UTF8)
-ru|Russian||sk_utf8|Slovak (UTF8)
+pt-br_utf8|Portuguese (Brazilian) (UTF8)||pt_utf8|Portuguese (UTF8)
+ru|Russian||sk|Slovak (UTF8)
 tr|Turkish||uk|Ukrainian
-zh_CN|Simplified Chinese||zh_TW|Traditional Chinese
+zh_CN|Chinese (Simplified)||zh_TW|Chinese (Taiwan)
 
 ## The Problem
 
-All these languages (except English) normally use extended symbols not contained in US-ASCII. Even the English translation uses some Symbols not in US-ASCII (e.g., '`\002`' for Thermometer, `STR_h3` for '³'). Worse, in the code itself symbols are used, not taking into account the display they're written on. [(This may still be true only for Displays with Japanese charset)](https://github.com/MarlinFirmware/Marlin/blob/Development/Marlin/ultralcd_implementation_hitachi_HD44780.h)
+All these languages (except English) normally use extended symbols not contained in US-ASCII. Even the English translation uses some Symbols not in US-ASCII (e.g., '`\002`' for Thermometer, `STR_h3` for '³'). In the code itself symbols may be used without taking into account the display they're written on.
 
-The upshot of all this is that on Western displays you'll see a '`~`' while on Cyrillic an "arrow coming from top - pointing to left," which is quite the opposite of what the programmer wanted.) The Germans want to use "`ÄäÖöÜüß`", the Finnish at least "`äö`". Other European languages want to see their accents on their letters too. For other scripts like Cyrillic, Japanese, Greek, Hebrew, ... you have to find totally different symbol sets.
+The upshot of all this is that on Western displays you'll see a '`~`' while on Cyrillic an "arrow coming from top - pointing to left" (which is quite the opposite of what the programmer wanted). The Germans want to use "`ÄäÖöÜüß`", the Finnish at least "`äö`". Other European languages want to see their accents too. For other scripts like Cyrillic, Japanese, Greek, Hebrew, ... you have to find totally different symbol sets.
 
-Before this system was created these problems were widely ignored. The German translation used UTF-8 'ä' and 'ö' and didn't care about showing garbage on ALL displays. Russian translators knew their system only worked on Cyrillic displays and relied on special LCD routines (`LiquidCrystalRus.cpp`) to handle UTF-8 - but forgot to implement a proper `strlen()`.
+The Japanese translator dealt with two scripts, introducing a special font for Graphical Displays and making use of the Japanese extended character displays. Thus he ended up with two pretty unreadable `language.h` files full of '`\xxx`' definitions. Other languages either tried to avoid words that included special symbols or just used the basic symbols without the accents, dots... whatever.
 
-The Japanese translator dealt with two scripts. He introduced a special font for the Full Graphic Displays and made use of the Japanese version of the character displays. Thus he ended up with two pretty unreadable `language.h` files full of '`\xxx`' definitions.
-
-Other languages either tried to avoid words that included special symbols or just used the basic symbols without the accents, dots... whatever.
+This system was created to address these problems.
 
 ## The (Partial) Solution
 
@@ -110,7 +109,6 @@ On a full-featured desktop system like Windows or Linux we could install `unifon
 - If you don't make use of the extended character set your file will look like `language_en.h` and your language file will work on all the displays.
 - If you make extensive use, your file will look like `language_kana.h` and your language file will only work on one of the displays (in this case `DISPLAY_CHARSET_HD44780` == `JAPANESE`).
 - Be careful with the characters `0x5C = '\'`, and `0x7B - 0x7F` "`{|}`". These are not the same on all variants.
-
 
 #### Mappers
 - `MAPPER_NON` is the fastest and least memory-hungry variant. Language files without accents use this.
@@ -165,7 +163,7 @@ All translatable strings are first declared in `language_en.h` and then language
 
 Strings in `language.h` are for serial output, so don't require any translation. Core error strings must always be in English to satisfy host protocols.
 
-For information about fonts see [`buildroot/share/fonts/README.md` file](/MarlinFirmware/Marlin/tree/1.1.x/buildroot/share/fonts#readme).
+For information about fonts see [`buildroot/share/fonts/README.md` file](https://github.com/MarlinFirmware/Marlin/tree/1.1.x/buildroot/share/fonts#readme).
 
 ## User Instructions
 

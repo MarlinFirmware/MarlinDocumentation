@@ -47,7 +47,7 @@ For each new line the K-Factor will be increased by the `K-Factor Stepping` valu
 	 - Extruder characteristics: Bowden vs.  direct extruder , bowden length, free filament length in the extruder, etc.
 	 - Nozzle size and geometry.
  - The extruder's steps/mm value has to be [calibrated precisely](http://reprap.org/wiki/Triffid_Hunter%27s_Calibration_Guide#E_steps). Calibration is recommended at low speeds to avoid additional influences.
- - Minimize Backlash caused by gears [geared extruder](http://reprap.org/wiki/Wade%27s_Geared_Extruder%29) or by push fittings. As it will not influence the K-Factor, it can lead to strange noises from the extruder due to the pressure control.
+ - Minimize Backlash caused by gears [geared extruder](http://reprap.org/wiki/Wade%27s_Geared_Extruder) or by push fittings. As it will not influence the K-Factor, it can lead to strange noises from the extruder due to the pressure control.
 
 > Repeat the calibration, if any of the above parameters change.
 
@@ -102,7 +102,7 @@ If only one filament material is used, the best way is to set the K-Factor insid
     #define LIN_ADVANCE_K 75
 
 ### Adding the K-Factor to the G-code Start Script
-[G-code Start Scripts](http://reprap.org/wiki/Start_G-code_routines) are supported by various slicers. The big advantage of setting the K-Factor via this methods is that it can easily be modified, e.g. when switching to a different material.
+[G-code Start Scripts](http://reprap.org/wiki/Start_GCode_routines) are supported by various slicers. The big advantage of setting the K-Factor via this methods is that it can easily be modified, e.g. when switching to a different material.
 The K-Factor is defined by adding the command `M900 Kxx` to the end of the start script, where *xx* is the value determined with the above test pattern.
 
 The following chapter briefly describes where to find the relevant setting in popular slicers.

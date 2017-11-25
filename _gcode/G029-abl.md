@@ -165,7 +165,7 @@ parameters:
     description: Dry-Run mode. Just probe the grid but don't update the bed leveling data
     values:
       -
-        tag: flag
+        type: bool
   -
     tag: V
     optional: true
@@ -188,7 +188,7 @@ parameters:
     description: Generate a Bed Topology Report (`AUTO_BED_LEVELING_LINEAR`)
     values:
       -
-        tag: flag
+        type: bool
   -
     tag: F
     optional: true
