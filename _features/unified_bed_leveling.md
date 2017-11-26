@@ -121,7 +121,7 @@ UBL configuration options are located in `Configuration.h` and `Configuration_ad
 
 Enable these options:
 - `AUTO_BED_LEVELING_UBL`. Leave the others commented out.
-- `UBL_G26_MESH_VALIDATION` to enable the `G26` test print utility.
+- `G26_MESH_VALIDATION` to enable the `G26` test print utility.
 - `EEPROM_SETTINGS`. **EEPROM support is required.**
 - One of the LCD options. ***An LCD with a rotary encoder is strongly recommended.***
 

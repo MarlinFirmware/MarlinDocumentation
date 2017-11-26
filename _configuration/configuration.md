@@ -975,17 +975,28 @@ Bed Compensation or "--- Bed Leveling" allows the machine —with a bed probe or
 
 For more details on these features, see [`G29` for MBL](/docs/gcode/G029-mbl.html) and [`G29` for ABL](/docs/gcode/G029-abl.html).
 
-
 ### Debug Leveling
-
 ```cpp
 //#define DEBUG_LEVELING_FEATURE
 ```
 Use this option to enable extra debugging of homing and leveling. You can then use `M111 S32` before issuing `G28` and `G29 V4` to get a detailed log of the process for diagnosis. This option is useful to figure out the cause of unexpected behaviors, or when reporting issues to the project.
 
+#### G26 Mesh Validation Pattern
+```cpp
+/**
+ * Enable the G26 Mesh Validation Pattern tool.
+ */
+#define G26_MESH_VALIDATION   // Enable G26 mesh validation
+#if ENABLED(G26_MESH_VALIDATION)
+  #define MESH_TEST_NOZZLE_SIZE     0.4   // (mm) Diameter of primary nozzle.
+  #define MESH_TEST_LAYER_HEIGHT    0.2   // (mm) Default layer height for the G26 Mesh Validation Tool.
+  #define MESH_TEST_HOTEND_TEMP   205.0   // (°C) Default nozzle temperature for the G26 Mesh Validation Tool.
+  #define MESH_TEST_BED_TEMP       60.0   // (°C) Default bed temperature for the G26 Mesh Validation Tool.
+#endif
+```
+When using any of the mesh-based leveling systems (1.1.7) you can activate `G26_MESH_VALIDATION` to print test patterns and fine-tune the mesh. See [`G26` Mesh Validation](http://marlinfw.org/docs/gcode/G026.html) for full details. The `G26` command accepts parameters for nozzle size, layer height, etc. The sub-options above specify the default values that will be applied for omitted parameters.
 
 ### Leveling Fade Height
-
 ```cpp
 #define ENABLE_LEVELING_FADE_HEIGHT
 ```
@@ -1095,12 +1106,6 @@ These options specify the three points that will be probed during `G29`.
 ```
 These options specify the inset, grid, and 3-point triangle to use for UBL. Note that probe XY offsets and movement limits may constrain the probeable area of the bed.
 
-#### G26 Mesh Editing &amp; Debugging
-```cpp
-//#define UBL_G26_MESH_EDITING
-```
-Enable this option for `G26` Mesh Editing. (Documentation coming soon!)
-
 ### Mesh Bed Leveling Options
 ```cpp
 #define MESH_INSET 10          // Mesh inset margin on print area
@@ -1110,7 +1115,6 @@ Enable this option for `G26` Mesh Editing. (Documentation coming soon!)
 //#define MESH_G28_REST_ORIGIN // After homing all axes ('G28' or 'G28 XYZ') rest Z at Z_MIN_POS
 ```
 These options specify the number of points that will always be probed in each dimension during `G29`. The mesh inset is used to automatically calculate the probe boundaries. These can be set explicitly in `Configuration_adv.h`. `MESH_G28_REST_ORIGIN` moves the nozzle to rest at `Z_MIN_POS` when mesh probing is done. If Z is offset (e.g., due to `home_offset` or some other cause) this is intended to move Z to a good starting point, usually Z=0.
-
 
 ### LCD Bed Leveling
 
@@ -1809,30 +1813,20 @@ This feature allows you to digitally multiplex the fan output. The multiplexer i
 ```
 Enable this option for a firmware-controlled digital or PWM case light.
 
-## More settings…
-
+## Endstops Always On
 ```cpp
-// If you want endstops to stay on (by default) even when not homing
-// enable this option. Override at any time with M120, M121.
 //#define ENDSTOPS_ALWAYS_ON_DEFAULT
+```
+Enable this option to keep the endstops on (by default) even when not homing. Override at any time with [`M120`](/docs/gcode/M120.html), [`M121`](/docs/gcode/M121.html).
 
-//#define Z_LATE_ENABLE // Enable Z the last moment. Needed if your Z driver overheats.
+## Z Late Enable
+```cpp
+//#define Z_LATE_ENABLE
+```
+With this option is active, the Z steppers will only turn on at the last moment before they move. This option may be needed if your Z driver tends to overheat. Not compatible with Core kinematics.
 
-/**
- * Dual Steppers / Dual Endstops
- *
- * This section will allow you to use extra E drivers to drive a second motor for X, Y, or Z axes.
- *
- * For example, set X_DUAL_STEPPER_DRIVERS setting to use a second motor. If the motors need to
- * spin in opposite directions set INVERT_X2_VS_X_DIR. If the second motor needs its own endstop
- * set X_DUAL_ENDSTOPS. This can adjust for "racking." Use X2_USE_ENDSTOP to set the endstop plug
- * that should be used for the second endstop. Extra endstops will appear in the output of 'M119'.
- *
- * Use X_DUAL_ENDSTOP_ADJUSTMENT to adjust for mechanical imperfection. After homing both motors
- * this offset is applied to the X2 motor. To find the offset home the X axis, and measure the error
- * in X2. Dual endstop offsets can be set at runtime with 'M666 X<offset> Y<offset> Z<offset>'.
- */
-
+## Dual Steppers / Dual Endstops
+```cpp
 //#define X_DUAL_STEPPER_DRIVERS
 #if ENABLED(X_DUAL_STEPPER_DRIVERS)
   #define INVERT_X2_VS_X_DIR true   // Set 'true' if X motors should rotate in opposite directions
@@ -1861,46 +1855,48 @@ Enable this option for a firmware-controlled digital or PWM case light.
     #define Z_DUAL_ENDSTOPS_ADJUSTMENT  0
   #endif
 #endif
+```
+These options allow you to use extra E drivers to drive a second motor for X, Y, and/or Z axes.
 
-// Enable this for dual x-carriage printers.
-// A dual x-carriage design has the advantage that the inactive extruder can be parked which
-// prevents hot-end ooze contaminating the print. It also reduces the weight of each x-carriage
-// allowing faster printing speeds. Connect your X2 stepper to the first unused E plug.
+Set `X_DUAL_STEPPER_DRIVERS` to use a second X motor. If the X motors need to spin in opposite directions set `INVERT_X2_VS_X_DIR` to `true`. If the second motor has its own endstop set `X_DUAL_ENDSTOPS`. (This can adjust for "racking.") Use `X2_USE_ENDSTOP` to set the endstop plug that should be used for the second endstop. Extra endstops will appear in the output of 'M119'.
+
+If the two X axes aren't perfectly aligned, use `X_DUAL_ENDSTOP_ADJUSTMENT` to adjust for the difference. This offset is applied to the X2 motor after homing with `G28`. The dual endstop offsets can be set at runtime with `M666 X[offset] Y[offset] Z[offset]`.
+
+## Dual X Carriage
+```cpp
 //#define DUAL_X_CARRIAGE
 #if ENABLED(DUAL_X_CARRIAGE)
-  // Configuration for second X-carriage
-  // Note: the first x-carriage is defined as the x-carriage which homes to the minimum endstop;
-  // the second x-carriage always homes to the maximum endstop.
-  #define X2_MIN_POS 80     // set minimum to ensure second x-carriage doesn't hit the parked first X-carriage
-  #define X2_MAX_POS 353    // set maximum to the distance between toolheads when both heads are homed
-  #define X2_HOME_DIR 1     // the second X-carriage always homes to the maximum endstop position
-  #define X2_HOME_POS X2_MAX_POS // default home position is the maximum carriage position
-      // However: In this mode the HOTEND_OFFSET_X value for the second extruder provides a software
-      // override for X2_HOME_POS. This also allow recalibration of the distance between the two endstops
-      // without modifying the firmware (through the "M218 T1 X???" command).
-      // Remember: you should set the second extruder x-offset to 0 in your slicer.
+  #define X2_MIN_POS 80           // Minimum to ensure second x-carriage doesn't hit the parked first X-carriage
+  #define X2_MAX_POS 353          // Maximum to the distance between toolheads when both heads are homed
+  #define X2_HOME_DIR 1           // The second X-carriage always homes to the max endstop position
+  #define X2_HOME_POS X2_MAX_POS  // Default home position is the maximum carriage position
 
-  // There are a few selectable movement modes for dual x-carriages using M605 S<mode>
-  //    Mode 0 (DXC_FULL_CONTROL_MODE): Full control. The slicer has full control over both x-carriages and can achieve optimal travel results
-  //                                    as long as it supports dual x-carriages. (M605 S0)
-  //    Mode 1 (DXC_AUTO_PARK_MODE)   : Auto-park mode. The firmware will automatically park and unpark the x-carriages on tool changes so
-  //                                    that additional slicer support is not required. (M605 S1)
-  //    Mode 2 (DXC_DUPLICATION_MODE) : Duplication mode. The firmware will transparently make the second x-carriage and extruder copy all
-  //                                    actions of the first x-carriage. This allows the printer to print 2 arbitrary items at
-  //                                    once. (2nd extruder x offset and temp offset are set using: M605 S2 [Xnnn] [Rmmm])
-
-  // This is the default power-up mode which can be later using M605.
+  // Default power-up mode. Set at runtime with `M605 S[mode]`.
   #define DEFAULT_DUAL_X_CARRIAGE_MODE DXC_FULL_CONTROL_MODE
 
-  // Default settings in "Auto-park Mode"
-  #define TOOLCHANGE_PARK_ZLIFT   0.2      // the distance to raise Z axis when parking an extruder
-  #define TOOLCHANGE_UNPARK_ZLIFT 1        // the distance to raise Z axis when unparking an extruder
+  // Default settings in Auto-park Mode
+  #define TOOLCHANGE_PARK_ZLIFT   0.2      // (mm) Amount to raise Z axis when parking
+  #define TOOLCHANGE_UNPARK_ZLIFT 1        // (mm) Amount to raise Z axis when unparking
 
-  // Default x offset in duplication mode (typically set to half print bed width)
+  // Default X offset in Duplication Mode (typically set to half print bed width)
   #define DEFAULT_DUPLICATION_X_OFFSET 100
+#endif
+```
+Enable this option if you have Dual X-Carriages that move independently. The Dual X-Carriage design allows the inactive extruder to be parked, which keeps ooze from contaminating the print, reduces the weight of each carriage, and enables faster printing speeds. With this option simply connect the X2 stepper to the first unused E plug.
 
-#endif // DUAL_X_CARRIAGE
+In a Dual X-Carriage setup the first x-carriage (`T0`) homes to the minimum endstop, while the second x-carriage (`T1`) homes to the maximum endstop.
 
+In Dual X mode the `HOTEND_OFFSET_X` setting for `T1` overrides `X2_HOME_POS`. Use `M218 T1 X[homepos]` to set a custom X2 home position, and `M218 T1 X0` to use `X2_HOME_POS`. This offset can be saved to EEPROM with `M500`.
+
+**In your slicer, be sure to set the second extruder X-offset to 0.**
+
+Dual X-Carriage has three different movement modes, set with `M605 S[mode]`:
+ 
+- Mode 0: Full Control Mode. (`M605 S1`) Slicers that fully support dual x-carriages can use this mode for optimal travel results.
+- Mode 1: Auto-park Mode. (`M605 S1`) The firmware automatically parks/unparks the carriages on tool-change. No slicer support is required. (`M605 S1`)
+- Mode 2: Duplication Mode. (`M605 S2 X[offs] R[temp]`) The firmware will transparently make the second x-carriage and extruder copy all actions of the first x-carriage. This allows the printer to print 2 arbitrary items at once. (The 2nd extruder's X and temp offsets are set using: `M605 S2 X[offs] R[offs]`.)
+
+```cpp
 // Activate a solenoid on the active extruder with M380. Disable all with M381.
 // Define SOL0_PIN, SOL1_PIN, etc., for each extruder that has a solenoid.
 //#define EXT_SOLENOID
