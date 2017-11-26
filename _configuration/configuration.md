@@ -1733,14 +1733,14 @@ High Temperature Thermistors tend to give poor readings at ambient and lower tem
 
 To solve this issue, this option sets the number of milliseconds a hotend will preheat before Marlin starts to check the temperature. Set a delay sufficient to reach a temperature your sensor can reliably read. Lower values are better and safer. If you require a value over 30000, this could indicate a problem.
 
-## AD595 
+### AD595 
 ```cpp
 #define TEMP_SENSOR_AD595_OFFSET 0.0
 #define TEMP_SENSOR_AD595_GAIN   1.0
 ```
 These defines help to calibrate the AD595 sensor in case you get wrong temperature measurements. The final reading is derived from `measuredTemp * TEMP_SENSOR_AD595_GAIN + TEMP_SENSOR_AD595_OFFSET`.
 
-## Extruder Runout Prevention
+### Extruder Runout Prevention
 ```cpp
 //#define EXTRUDER_RUNOUT_PREVENT
 #if ENABLED(EXTRUDER_RUNOUT_PREVENT)
@@ -1866,9 +1866,9 @@ If the two X axes aren't perfectly aligned, use `X_DUAL_ENDSTOP_ADJUSTMENT` to a
 ```cpp
 //#define DUAL_X_CARRIAGE
 #if ENABLED(DUAL_X_CARRIAGE)
-  #define X2_MIN_POS 80           // Minimum to ensure second x-carriage doesn't hit the parked first X-carriage
+  #define X2_MIN_POS  80          // Minimum X to ensure that X-carriage T1 doesn't hit parked X-carriage T0
   #define X2_MAX_POS 353          // Maximum to the distance between toolheads when both heads are homed
-  #define X2_HOME_DIR 1           // The second X-carriage always homes to the max endstop position
+  #define X2_HOME_DIR  1          // The second X-carriage always homes to the max endstop position
   #define X2_HOME_POS X2_MAX_POS  // Default home position is the maximum carriage position
 
   // Default power-up mode. Set at runtime with `M605 S[mode]`.
@@ -1886,7 +1886,7 @@ Enable this option if you have Dual X-Carriages that move independently. The Dua
 
 In a Dual X-Carriage setup the first x-carriage (`T0`) homes to the minimum endstop, while the second x-carriage (`T1`) homes to the maximum endstop.
 
-In Dual X mode the `HOTEND_OFFSET_X` setting for `T1` overrides `X2_HOME_POS`. Use `M218 T1 X[homepos]` to set a custom X2 home position, and `M218 T1 X0` to use `X2_HOME_POS`. This offset can be saved to EEPROM with `M500`.
+With Dual X-Carriage the `HOTEND_OFFSET_X` setting for `T1` overrides `X2_HOME_POS`. Use `M218 T1 X[homepos]` to set a custom X2 home position, and `M218 T1 X0` to use `X2_HOME_POS`. This offset can be saved to EEPROM with `M500`.
 
 **In your slicer, be sure to set the second extruder X-offset to 0.**
 
@@ -1896,6 +1896,7 @@ Dual X-Carriage has three different movement modes, set with `M605 S[mode]`:
 - Mode 1: Auto-park Mode. (`M605 S1`) The firmware automatically parks/unparks the carriages on tool-change. No slicer support is required. (`M605 S1`)
 - Mode 2: Duplication Mode. (`M605 S2 X[offs] R[temp]`) The firmware will transparently make the second x-carriage and extruder copy all actions of the first x-carriage. This allows the printer to print 2 arbitrary items at once. (The 2nd extruder's X and temp offsets are set using: `M605 S2 X[offs] R[offs]`.)
 
+## TODO Options…
 ```cpp
 // Activate a solenoid on the active extruder with M380. Disable all with M381.
 // Define SOL0_PIN, SOL1_PIN, etc., for each extruder that has a solenoid.
@@ -2024,156 +2025,145 @@ Dual X-Carriage has three different movement modes, set with `M605 S[mode]`:
 
 // The timeout (in ms) to return to the status screen from sub-menus
 //#define LCD_TIMEOUT_TO_STATUS 15000
+```
 
-#if ENABLED(SDSUPPORT)
+## SD Card Extras
+The options listed below help to fix, improve, and optimize SD Card performance.
 
-  // Some RAMPS and other boards don't detect when an SD card is inserted. You can work
-  // around this by connecting a push button or single throw switch to the pin defined
-  // as SD_DETECT_PIN in your board's pins definitions.
-  // This setting should be disabled unless you are using a push button, pulling the pin to ground.
-  // Note: This is always disabled for ULTIPANEL (except ELB_FULL_GRAPHIC_CONTROLLER).
+### SD Detect Inverted
+```
   #define SD_DETECT_INVERTED
+```
+Some RAMPS and other boards don't detect when an SD card is inserted. You can work around this by connecting a push button or single throw switch to the pin defined as `SD_DETECT_PIN` in your board's pins definitions. This setting should be disabled unless you are using a push button, pulling the pin to ground. Note: This option is forced off for most LCD controllers (all `ULTIPANEL` except `ELB_FULL_GRAPHIC_CONTROLLER`).
 
-  #define SD_FINISHED_STEPPERRELEASE true          // Disable steppers when SD Print is finished
-  #define SD_FINISHED_RELEASECOMMAND "M84 X Y Z E" // You might want to keep the z enabled so your bed stays in place.
+### SD Finished Stepper Release
+```cpp
+#define SD_FINISHED_STEPPERRELEASE true          // Disable steppers when SD Print is finished
+#define SD_FINISHED_RELEASECOMMAND "M84 X Y Z E" // You might want to keep the z enabled so your bed stays in place.
+```
 
-  // Reverse SD sort to show "more recent" files first, according to the card's FAT.
-  // Since the FAT gets out of order with usage, SDCARD_SORT_ALPHA is recommended.
-  #define SDCARD_RATHERRECENTFIRST
+### SD Menu Autostart
+```cpp
+//#define MENU_ADDAUTOSTART  // Add an option in the menu to run all auto#.g files
+```
 
-  // Add an option in the menu to run all auto#.g files
-  //#define MENU_ADDAUTOSTART
+### SD Card Sorting
+#### Recent First
+```cpp
+#define SDCARD_RATHERRECENTFIRST
+```
+Reverse SD sort to show "more recent" files first, according to the card's FAT. Since the FAT gets out of order with usage, `SDCARD_SORT_ALPHA` is recommended.
 
-  /**
-   * Sort SD file listings in alphabetical order.
-   *
-   * With this option enabled, items on SD cards will be sorted
-   * by name for easier navigation.
-   *
-   * By default...
-   *
-   *  - Use the slowest -but safest- method for sorting.
-   *  - Folders are sorted to the top.
-   *  - The sort key is statically allocated.
-   *  - No added G-code (M34) support.
-   *  - 40 item sorting limit. (Items after the first 40 are unsorted.)
-   *
-   * SD sorting uses static allocation (as set by SDSORT_LIMIT), allowing the
-   * compiler to calculate the worst-case usage and throw an error if the SRAM
-   * limit is exceeded.
-   *
-   *  - SDSORT_USES_RAM provides faster sorting via a static directory buffer.
-   *  - SDSORT_USES_STACK does the same, but uses a local stack-based buffer.
-   *  - SDSORT_CACHE_NAMES will retain the sorted file listing in RAM. (Expensive!)
-   *  - SDSORT_DYNAMIC_RAM only uses RAM when the SD menu is visible. (Use with caution!)
-   */
-  //#define SDCARD_SORT_ALPHA
+#### Alpha Sort
+```cpp
+//#define SDCARD_SORT_ALPHA
 
-  // SD Card Sorting options
-  #if ENABLED(SDCARD_SORT_ALPHA)
-    #define SDSORT_LIMIT       40     // Maximum number of sorted items (10-256). Costs 27 bytes each.
-    #define FOLDER_SORTING     -1     // -1=above  0=none  1=below
-    #define SDSORT_GCODE       false  // Allow turning sorting on/off with LCD and M34 g-code.
-    #define SDSORT_USES_RAM    false  // Pre-allocate a static array for faster pre-sorting.
-    #define SDSORT_USES_STACK  false  // Prefer the stack for pre-sorting to give back some SRAM. (Negated by next 2 options.)
-    #define SDSORT_CACHE_NAMES false  // Keep sorted items in RAM longer for speedy performance. Most expensive option.
-    #define SDSORT_DYNAMIC_RAM false  // Use dynamic allocation (within SD menus). Least expensive option. Set SDSORT_LIMIT before use!
-    #define SDSORT_CACHE_VFATS 2      // Maximum number of 13-byte VFAT entries to use for sorting.
-                                      // Note: Only affects SCROLL_LONG_FILENAMES with SDSORT_CACHE_NAMES but not SDSORT_DYNAMIC_RAM.
-  #endif
+// SD Card Sorting options
+#if ENABLED(SDCARD_SORT_ALPHA)
+  #define SDSORT_LIMIT       40     // Maximum number of sorted items (10-256). Costs 27 bytes each.
+  #define FOLDER_SORTING     -1     // -1=above  0=none  1=below
+  #define SDSORT_GCODE       false  // Allow turning sorting on/off with LCD and M34 g-code.
+  #define SDSORT_USES_RAM    false  // Pre-allocate a static array for faster pre-sorting.
+  #define SDSORT_USES_STACK  false  // Prefer the stack for pre-sorting to give back some SRAM. (Negated by next 2 options.)
+  #define SDSORT_CACHE_NAMES false  // Keep sorted items in RAM longer for speedy performance. Most expensive option.
+  #define SDSORT_DYNAMIC_RAM false  // Use dynamic allocation (within SD menus). Least expensive option. Set SDSORT_LIMIT before use!
+  #define SDSORT_CACHE_VFATS 2      // Maximum number of 13-byte VFAT entries to use for sorting.
+                                    // Note: Only affects SCROLL_LONG_FILENAMES with SDSORT_CACHE_NAMES but not SDSORT_DYNAMIC_RAM.
+#endif
+```
+With this option enabled, items on SD cards will be sorted by name for easier navigation.
 
-  // Show a progress bar on HD44780 LCDs for SD printing
-  //#define LCD_PROGRESS_BAR
+By default...
 
-  #if ENABLED(LCD_PROGRESS_BAR)
-    // Amount of time (ms) to show the bar
-    #define PROGRESS_BAR_BAR_TIME 2000
-    // Amount of time (ms) to show the status message
-    #define PROGRESS_BAR_MSG_TIME 3000
-    // Amount of time (ms) to retain the status message (0=forever)
-    #define PROGRESS_MSG_EXPIRE   0
-    // Enable this to show messages for MSG_TIME then hide them
-    //#define PROGRESS_MSG_ONCE
-    // Add a menu item to test the progress bar:
-    //#define LCD_PROGRESS_BAR_TEST
-  #endif
+- Use the slowest -but safest- method for sorting.
+- Folders are sorted to the top.
+- The sort key is statically allocated.
+- No added G-code (`M34`) support.
+- 40 item sorting limit. (Items after the first 40 are unsorted.)
 
-  // Add an 'M73' G-code to set the current percentage
-  //#define LCD_SET_PROGRESS_MANUALLY
+SD sorting uses static allocation (as set by `SDSORT_LIMIT`), allowing the compiler to calculate the worst-case usage and throw an error if the SRAM limit is exceeded.
 
-  // This allows hosts to request long names for files and folders with M33
-  //#define LONG_FILENAME_HOST_SUPPORT
+- `SDSORT_USES_RAM` provides faster sorting via a static directory buffer.
+- `SDSORT_USES_STACK` does the same, but uses a local stack-based buffer.
+- `SDSORT_CACHE_NAMES` will retain the sorted file listing in RAM. (Expensive!)
+- `SDSORT_DYNAMIC_RAM` only uses RAM when the SD menu is visible. (Use with caution!)
 
-  // Enable this option to scroll long filenames in the SD card menu
-  //#define SCROLL_LONG_FILENAMES
+### Progress Bar (character LCD)
+```cpp
+//#define LCD_PROGRESS_BAR
+#if ENABLED(LCD_PROGRESS_BAR)
+  #define PROGRESS_BAR_BAR_TIME 2000  // Amount of time (ms) to show the progress bar
+  #define PROGRESS_BAR_MSG_TIME 3000  // Amount of time (ms) to show the status message
+  #define PROGRESS_MSG_EXPIRE      0  // Amount of time (ms) to retain the status message (0=forever)
+  //#define PROGRESS_MSG_ONCE         // Show messages for MSG_TIME then hide them
+  //#define LCD_PROGRESS_BAR_TEST     // Add a menu item to test the progress bar.
+#endif
+```
+Show a progress bar on HD44780 LCDs for SD printing. Sub-options determine how long to show the progress bar and status message, how long to retain the status message, and whether to include a progress bar test in the Debug menu.
 
-  /**
-   * This option allows you to abort SD printing when any endstop is triggered.
-   * This feature must be enabled with "M540 S1" or from the LCD menu.
-   * To have any effect, endstops must be enabled during SD printing.
-   */
-  //#define ABORT_ON_ENDSTOP_HIT_FEATURE_ENABLED
+### Set Print Progress
+```cpp
+//#define LCD_SET_PROGRESS_MANUALLY
+```
+Add an `M73` G-code to set the current percentage.
 
-  /**
-   * This option makes it easier to print the same SD Card file again.
-   * On print completion the LCD Menu will open with the file selected.
-   * You can just click to start the print, or navigate elsewhere.
-   */
-  //#define SD_REPRINT_LAST_SELECTED_FILE
+### Long Filename Host Support
+```cpp
+//#define LONG_FILENAME_HOST_SUPPORT
+```
+Allow hosts to request long names for files and folders with `M33 [path]`.
 
-#endif // SDSUPPORT
+### Scroll Long Filenames
+```cpp
+//#define SCROLL_LONG_FILENAMES
+```
+Enable this option to scroll long filenames in the SD card menu.
 
-/**
- * Additional options for Graphical Displays
- *
- * Use the optimizations here to improve printing performance,
- * which can be adversely affected by graphical display drawing,
- * especially when doing several short moves, and when printing
- * on DELTA and SCARA machines.
- *
- * Some of these options may result in the display lagging behind
- * controller events, as there is a trade-off between reliable
- * printing performance versus fast display updates.
- */
+### Abort on Endstop Hit
+```cpp
+//#define ABORT_ON_ENDSTOP_HIT_FEATURE_ENABLED
+```
+Add an option for the firmware to abort SD printing if any endstop is triggered. Turn on with `M540 S1` (or from the LCD menu) and make sure endstops are enabled (`M120`) during SD printing.
+
+### Reprint Last File
+```cpp
+//#define SD_REPRINT_LAST_SELECTED_FILE
+```
+This option makes it easier to print the same SD Card file again. Whenever an SD print completes the LCD Menu will open with the same file selected. From there you can click to start a new print, or you can navigate elsewhere.
+
+## Graphical Display Extras
+```cpp
 #if ENABLED(DOGLCD)
-  // Enable to save many cycles by drawing a hollow frame on the Info Screen
-  #define XYZ_HOLLOW_FRAME
+  #define XYZ_HOLLOW_FRAME      // Enable to save many cycles by drawing a hollow frame on the Info Screen
+  #define MENU_HOLLOW_FRAME     // Enable to save many cycles by drawing a hollow frame on Menu Screens
+  //#define USE_BIG_EDIT_FONT   // A bigger font is available for edit items. Costs 3120 bytes of PROGMEM.
+                                // Western only. Not available for Cyrillic, Kana, Turkish, Greek, or Chinese.
+  //#define USE_SMALL_INFOFONT  // A smaller font may be used on the Info Screen. Costs 2300 bytes of PROGMEM.
+                                // Western only. Not available for Cyrillic, Kana, Turkish, Greek, or Chinese.
+  //#define DOGM_SPI_DELAY_US 5 // Enable this option and reduce the value to optimize screen updates.
+                                // The normal delay is 10µs. Use the lowest value that still gives a reliable display.
+#endif
+```
+Use the optimizations here to improve printing performance, which can be adversely affected by graphical display drawing, especially when doing several short moves, and when printing on DELTA and SCARA machines.
 
-  // Enable to save many cycles by drawing a hollow frame on Menu Screens
-  #define MENU_HOLLOW_FRAME
+Some of these options may result in the display lagging behind controller events, as there is a trade-off between reliable printing performance versus fast display updates.
 
-  // A bigger font is available for edit items. Costs 3120 bytes of PROGMEM.
-  // Western only. Not available for Cyrillic, Kana, Turkish, Greek, or Chinese.
-  //#define USE_BIG_EDIT_FONT
-
-  // A smaller font may be used on the Info Screen. Costs 2300 bytes of PROGMEM.
-  // Western only. Not available for Cyrillic, Kana, Turkish, Greek, or Chinese.
-  //#define USE_SMALL_INFOFONT
-
-  // Enable this option and reduce the value to optimize screen updates.
-  // The normal delay is 10µs. Use the lowest value that still gives a reliable display.
-  //#define DOGM_SPI_DELAY_US 5
-
-#endif // DOGLCD
-
-// The hardware watchdog should reset the microcontroller disabling all outputs,
-// in case the firmware gets stuck and doesn't do temperature regulation.
+## Watchdog
+```cpp
 #define USE_WATCHDOG
+```
+The hardware watchdog should reset the microcontroller, disabling all outputs, in case the firmware gets stuck and doesn't do temperature regulation.
 
+### Watchdog Manual Reset
+```cpp
 #if ENABLED(USE_WATCHDOG)
-  // If you have a watchdog reboot in an ArduinoMega2560 then the device will hang forever, as a watchdog reset will leave the watchdog on.
-  // The "WATCHDOG_RESET_MANUAL" goes around this by not using the hardware reset.
-  //  However, THIS FEATURE IS UNSAFE!, as it will only work if interrupts are disabled. And the code could hang in an interrupt routine with interrupts disabled.
   //#define WATCHDOG_RESET_MANUAL
 #endif
+```
+If you have a watchdog reboot in an ATmega2560 the device can hang forever, as a watchdog reset will leave the watchdog on. The `WATCHDOG_RESET_MANUAL` option works around this by eschewing the hardware reset. However, **this feature is unsafe** because it only works if interrupts are disabled, and the code could hang in an interrupt routine with interrupts disabled.
 
-/**
- * Babystepping enables movement of the axes by tiny increments without changing
- * the current position values. This feature is used primarily to adjust the Z
- * axis in the first layer of a print in real-time.
- *
- * Warning: Does not respect endstops!
- */
+## Babystepping
+```cpp
 //#define BABYSTEPPING
 #if ENABLED(BABYSTEPPING)
   //#define BABYSTEP_XY              // Also enable X/Y Babystepping. Not supported on DELTA!
@@ -2186,53 +2176,32 @@ Dual X-Carriage has three different movement modes, set with `M605 S[mode]`:
   //#define BABYSTEP_ZPROBE_GFX_OVERLAY // Enable graphical overlay on Z-offset editor
   //#define BABYSTEP_ZPROBE_GFX_REVERSE // Reverses the direction of the CW/CCW indicators
 #endif
+```
+Babystepping enables `M290` and LCD menu items to move the axes by tiny increments without changing the current position values. This feature is used primarily to adjust the Z axis in the first layer of a print in real-time. *Warning: Does not respect endstops!*
 
-/**
- * Implementation of linear pressure control
- *
- * Assumption: advance = k * (delta velocity)
- * K=0 means advance disabled.
- * See Marlin documentation for calibration instructions.
- */
+## Linear Advance
+```cpp
 //#define LIN_ADVANCE
 
 #if ENABLED(LIN_ADVANCE)
   #define LIN_ADVANCE_K 75
-
-  /**
-   * Some Slicers produce Gcode with randomly jumping extrusion widths occasionally.
-   * For example within a 0.4mm perimeter it may produce a single segment of 0.05mm width.
-   * While this is harmless for normal printing (the fluid nature of the filament will
-   * close this very, very tiny gap), it throws off the LIN_ADVANCE pressure adaption.
-   *
-   * For this case LIN_ADVANCE_E_D_RATIO can be used to set the extrusion:distance ratio
-   * to a fixed value. Note that using a fixed ratio will lead to wrong nozzle pressures
-   * if the slicer is using variable widths or layer heights within one print!
-   *
-   * This option sets the default E:D ratio at startup. Use `M900` to override this value.
-   *
-   * Example: `M900 W0.4 H0.2 D1.75`, where:
-   *   - W is the extrusion width in mm
-   *   - H is the layer height in mm
-   *   - D is the filament diameter in mm
-   *
-   * Example: `M900 R0.0458` to set the ratio directly.
-   *
-   * Set to 0 to auto-detect the ratio based on given Gcode G1 print moves.
-   *
-   * Slic3r (including Průša Control) produces Gcode compatible with the automatic mode.
-   * Cura (as of this writing) may produce Gcode incompatible with the automatic mode.
-   */
   #define LIN_ADVANCE_E_D_RATIO 0 // The calculated ratio (or 0) according to the formula W * H / ((D / 2) ^ 2 * PI)
                                   // Example: 0.4 * 0.2 / ((1.75 / 2) ^ 2 * PI) = 0.033260135
 #endif
+```
+This feature allows Marlin to use linear pressure control for print extrusion, to eliminate ooze, improve corners, etc. See `Configuration_adv.h` and the [Linear Advance page](/docs/features/lin_advance.html) for more complete documentation.
 
+## Delta / Scara Limits
+```cpp
 #if ENABLED(DELTA) && !defined(DELTA_PROBEABLE_RADIUS)
   #define DELTA_PROBEABLE_RADIUS DELTA_PRINTABLE_RADIUS
 #elif IS_SCARA && !defined(SCARA_PRINTABLE_RADIUS)
   #define SCARA_PRINTABLE_RADIUS (SCARA_LINKAGE_1 + SCARA_LINKAGE_2)
 #endif
+```
 
+## Custom Mesh Bounds
+```cpp
 #if ENABLED(MESH_BED_LEVELING) || ENABLED(AUTO_BED_LEVELING_UBL)
   // Override the mesh area if the automatic (max) area is too large
   //#define MESH_MIN_X MESH_INSET
@@ -2240,7 +2209,11 @@ Dual X-Carriage has three different movement modes, set with `M605 S[mode]`:
   //#define MESH_MAX_X X_BED_SIZE - (MESH_INSET)
   //#define MESH_MAX_Y Y_BED_SIZE - (MESH_INSET)
 #endif
+```
 
+## Enhanced G-code
+### G2/G3 Arc
+```cpp
 //
 // G2/G3 Arc Support
 //
@@ -2251,100 +2224,106 @@ Dual X-Carriage has three different movement modes, set with `M605 S[mode]`:
   //#define ARC_P_CIRCLES         // Enable the 'P' parameter to specify complete circles
   //#define CNC_WORKSPACE_PLANES  // Allow G2/G3 to operate in XY, ZX, or YZ planes
 #endif
-
-// Support for G5 with XYZE destination and IJPQ offsets. Requires ~2666 bytes.
+```
+### G5 Bezier Curve
+```cpp
 //#define BEZIER_CURVE_SUPPORT
+```
+Support for `G5` with XYZE destination and IJPQ offsets. Requires ~2666 bytes.
 
-// G38.2 and G38.3 Probe Target
-// Enable PROBE_DOUBLE_TOUCH if you want G38 to double touch
+### G38.2/G38.3 Probe Target
+```cpp
 //#define G38_PROBE_TARGET
 #if ENABLED(G38_PROBE_TARGET)
-  #define G38_MINIMUM_MOVE 0.0275 // minimum distance in mm that will produce a move (determined using the print statement in check_move)
+  #define G38_MINIMUM_MOVE 0.0275 // (mm) Minimum distance that will produce a move
 #endif
+```
+Add commands `G38.2` and `G38.3` to probe towards target. Enable `PROBE_DOUBLE_TOUCH` if you want `G38` to double touch.
 
-// Moves (or segments) with fewer steps than this will be joined with the next move
+## Minimum Steps Per Segment
+```cpp
 #define MIN_STEPS_PER_SEGMENT 6
+```
+Moves (or segments) with fewer steps than this will be joined with the next move.
 
-// The minimum pulse width (in µs) for stepping a stepper.
-// Set this if you find stepping unreliable, or if using a very fast CPU.
+## Minimum Stepper Pulse
+```cpp
 #define MINIMUM_STEPPER_PULSE 0 // (µs) The smallest stepper pulse allowed
+```
+The minimum pulse width (in µs) for stepping a stepper. Set this if you find stepping unreliable, or if using a very fast CPU.
 
-// Control heater 0 and heater 1 in parallel.
+## Parallel Heaters
+```cpp
 //#define HEATERS_PARALLEL
+```
+Control heater 0 and heater 1 in parallel.
 
-// The number of linear motions that can be in the plan at any give time.
-// THE BLOCK_BUFFER_SIZE NEEDS TO BE A POWER OF 2, i.g. 8,16,32 because shifts and ors are used to do the ring-buffering.
+## Buffer / Hosts
+### Block Buffer
+```cpp
 #if ENABLED(SDSUPPORT)
   #define BLOCK_BUFFER_SIZE 16 // SD,LCD,Buttons take more memory, block buffer needs to be smaller
 #else
   #define BLOCK_BUFFER_SIZE 16 // maximize block buffer
 #endif
+```
+The number of linear motions that can be in the plan at any give time. The `BLOCK_BUFFER_SIZE` must be a power of 2, (8, 16, 32, etc.) because shifts and ors are used to do the ring-buffering.
 
-// The ASCII buffer for serial input
+### Serial Command Buffer
+```cpp
 #define MAX_CMD_SIZE 96
 #define BUFSIZE 4
+```
+The ASCII buffer for serial input. Individual command line length is set by `MAX_CMD_SIZE`, and should be long enough to hold a complete G-code line. Set the number of lines with `BUFSIZE`.
 
-// Transmission to Host Buffer Size
-// To save 386 bytes of PROGMEM (and TX_BUFFER_SIZE+3 bytes of RAM) set to 0.
-// To buffer a simple "ok" you need 4 bytes.
-// For ADVANCED_OK (M105) you need 32 bytes.
-// For debug-echo: 128 bytes for the optimal speed.
-// Other output doesn't need to be that speedy.
-// :[0, 2, 4, 8, 16, 32, 64, 128, 256]
+### Transmit to Host Buffer
+```cpp
 #define TX_BUFFER_SIZE 0
+```
+Transmission to Host buffer size. To save 386 bytes of PROGMEM (and `TX_BUFFER_SIZE`+3 bytes of SRAM) set to 0. To buffer a simple "ok" you need 4 bytes. An `ADVANCED_OK` (`M105`) needs 32 bytes. For debug-echo: 128 bytes for the optimal speed. Other output doesn't need to be that speedy.
 
-// Host Receive Buffer Size
-// Without XON/XOFF flow control (see SERIAL_XON_XOFF below) 32 bytes should be enough.
-// To use flow control, set this buffer size to at least 1024 bytes.
-// :[0, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048]
+### Host Receive Buffer
+```cpp
 //#define RX_BUFFER_SIZE 1024
-
 #if RX_BUFFER_SIZE >= 1024
   // Enable to have the controller send XON/XOFF control characters to
   // the host to signal the RX buffer is becoming full.
   //#define SERIAL_XON_XOFF
 #endif
+```
+Host Receive buffer size. Without XON/XOFF flow control (see `SERIAL_XON_XOFF` below) 32 bytes should be enough. To use flow control, set this buffer size to at least 1024 bytes.
 
+### SD Transfer Stats
+```cpp
 #if ENABLED(SDSUPPORT)
-  // Enable this option to collect and display the maximum
-  // RX queue usage after transferring a file to SD.
+  // Collect and display the maximum RX queue usage after an SD file transfer.
   //#define SERIAL_STATS_MAX_RX_QUEUED
 
-  // Enable this option to collect and display the number
-  // of dropped bytes after a file transfer to SD.
+  // Collect and display the number of dropped bytes after an SD file transfer.
   //#define SERIAL_STATS_DROPPED_RX
 #endif
+```
 
-// Enable an emergency-command parser to intercept certain commands as they
-// enter the serial receive buffer, so they cannot be blocked.
-// Currently handles M108, M112, M410
-// Does not work on boards using AT90USB (USBCON) processors!
+### Emergency Parser
+```cpp
 //#define EMERGENCY_PARSER
+```
+Enable an emergency-command parser to intercept certain commands as they enter the serial receive buffer, so they cannot be blocked. Currently handles `M108`, `M112`, and `M410`. Does not work on boards using AT90USB (USBCON) processors!
 
-// Bad Serial-connections can miss a received command by sending an 'ok'
-// Therefore some clients abort after 30 seconds in a timeout.
-// Some other clients start sending commands while receiving a 'wait'.
-// This "wait" is only sent when the buffer is empty. 1 second is a good value here.
-//#define NO_TIMEOUTS 1000 // Milliseconds
+### No Timeouts
+```cpp
+//#define NO_TIMEOUTS 1000 // (ms)
+```
+Bad serial connections can miss a received command by sending an "ok", and some hosts will abort after 30 seconds. Some hosts start sending commands while receiving a 'wait'. This "wait" is only sent when the buffer is empty. 1 second is a good value here. The `HOST_KEEPALIVE` feature provides another way to keep the host alive.
 
-// Some clients will have this feature soon. This could make the NO_TIMEOUTS unnecessary.
+### Advanced OK
+```cpp
 //#define ADVANCED_OK
+```
+Include extra information about the buffer in "ok" messages. Some hosts will have this feature soon. This could make the `NO_TIMEOUTS` unnecessary.
 
-/**
- * Firmware-based and LCD-controlled retract
- *
- * Add G10 / G11 commands for automatic firmware-based retract / recover.
- * Use M207 and M208 to define parameters for retract / recover.
- *
- * Use M209 to enable or disable auto-retract.
- * With auto-retract enabled, all G1 E moves within the set range
- * will be converted to firmware-based retract/recover moves.
- *
- * Be sure to turn off auto-retract during filament change.
- *
- * Note that M207 / M208 / M209 settings are saved to EEPROM.
- *
- */
+## Firmware Retraction
+```cpp
 //#define FWRETRACT  // ONLY PARTIALLY TESTED
 #if ENABLED(FWRETRACT)
   #define MIN_AUTORETRACT 0.1             // When auto-retract is on, convert E moves of this length and over
@@ -2358,25 +2337,22 @@ Dual X-Carriage has three different movement modes, set with `M605 S[mode]`:
   #define RETRACT_RECOVER_FEEDRATE 8      // Default feedrate for recovering from retraction (mm/s)
   #define RETRACT_RECOVER_FEEDRATE_SWAP 8 // Default feedrate for recovering from swap retraction (mm/s)
 #endif
+```
+This option adds `G10`/`G11` commands for automatic firmware-based retract/recover. Use `M207` and `M208` to set the parameters, and `M209` to enable/disable. With auto-retract enabled, all `G1 E` moves within the set range will be converted to firmware-based retract/recover moves.
 
-/**
- * Extra Fan Speed
- * Adds a secondary fan speed for each print-cooling fan.
- *   'M106 P<fan> T3-255' : Set a secondary speed for <fan>
- *   'M106 P<fan> T2'     : Use the set secondary speed
- *   'M106 P<fan> T1'     : Restore the previous fan speed
- */
+**Be sure to turn off auto-retract during filament change!** All `M207`/`M208`/`M209` settings are saved to EEPROM.
+
+## Extra Fan Speed
+```cpp
 //#define EXTRA_FAN_SPEED
+```
+Add a secondary fan speed for each print-cooling fan.
+- `M106 P[fan] T3-255` sets a secondary speed for [fan].
+- `M106 P[fan] T2` uses the set secondary speed.
+- `M106 P[fan] T1` restores the previous fan speed
 
-/**
- * Advanced Pause
- * Experimental feature for filament change support and for parking the nozzle when paused.
- * Adds the GCode M600 for initiating filament change.
- * If PARK_HEAD_ON_PAUSE enabled, adds the GCode M125 to pause printing and park the nozzle.
- *
- * Requires an LCD display.
- * This feature is required for the default FILAMENT_RUNOUT_SCRIPT.
- */
+## Advanced Pause
+```cpp
 //#define ADVANCED_PAUSE_FEATURE
 #if ENABLED(ADVANCED_PAUSE_FEATURE)
   #define PAUSE_PARK_X_POS 3                  // X position of hotend
@@ -2408,336 +2384,60 @@ Dual X-Carriage has three different movement modes, set with `M605 S[mode]`:
   //#define PARK_HEAD_ON_PAUSE                // Go to filament change position on pause, return to print position on resume
   //#define HOME_BEFORE_FILAMENT_CHANGE       // Ensure homing has been completed prior to parking for filament change
 #endif
+```
+Experimental feature for filament change support and parking the nozzle when paused. Adds the `M600` command to perform a filament change. With `PARK_HEAD_ON_PAUSE` enabled also adds the `M125` command to pause printing and park the nozzle. Requires an LCD display. Note that `M600` is required for the default `FILAMENT_RUNOUT_SCRIPT`.
 
-/**
- * Enable this section if you have TMC26X motor drivers.
- * You will need to import the TMC26XStepper library into the Arduino IDE for this
- * (https://github.com/trinamic/TMC26XStepper.git)
- */
+## Stepper Drivers
+### Trinamic TMC26X
+```cpp
 //#define HAVE_TMCDRIVER
+```
+Enable this section if you have TMC26X motor drivers. You'll need to import the [TMC26XStepper](https://github.com/trinamic/TMC26XStepper.git) library into the Arduino IDE. See the `Configuration_adv.h` file for the full set of sub-options.
 
-#if ENABLED(HAVE_TMCDRIVER)
-
-  //#define X_IS_TMC
-  //#define X2_IS_TMC
-  //#define Y_IS_TMC
-  //#define Y2_IS_TMC
-  //#define Z_IS_TMC
-  //#define Z2_IS_TMC
-  //#define E0_IS_TMC
-  //#define E1_IS_TMC
-  //#define E2_IS_TMC
-  //#define E3_IS_TMC
-  //#define E4_IS_TMC
-
-  #define X_MAX_CURRENT     1000 // in mA
-  #define X_SENSE_RESISTOR    91 // in mOhms
-  #define X_MICROSTEPS        16 // number of microsteps
-
-  #define X2_MAX_CURRENT    1000
-  #define X2_SENSE_RESISTOR   91
-  #define X2_MICROSTEPS       16
-
-  #define Y_MAX_CURRENT     1000
-  #define Y_SENSE_RESISTOR    91
-  #define Y_MICROSTEPS        16
-
-  #define Y2_MAX_CURRENT    1000
-  #define Y2_SENSE_RESISTOR   91
-  #define Y2_MICROSTEPS       16
-
-  #define Z_MAX_CURRENT     1000
-  #define Z_SENSE_RESISTOR    91
-  #define Z_MICROSTEPS        16
-
-  #define Z2_MAX_CURRENT    1000
-  #define Z2_SENSE_RESISTOR   91
-  #define Z2_MICROSTEPS       16
-
-  #define E0_MAX_CURRENT    1000
-  #define E0_SENSE_RESISTOR   91
-  #define E0_MICROSTEPS       16
-
-  #define E1_MAX_CURRENT    1000
-  #define E1_SENSE_RESISTOR   91
-  #define E1_MICROSTEPS       16
-
-  #define E2_MAX_CURRENT    1000
-  #define E2_SENSE_RESISTOR   91
-  #define E2_MICROSTEPS       16
-
-  #define E3_MAX_CURRENT    1000
-  #define E3_SENSE_RESISTOR   91
-  #define E3_MICROSTEPS       16
-
-  #define E4_MAX_CURRENT    1000
-  #define E4_SENSE_RESISTOR   91
-  #define E4_MICROSTEPS       16
-
-#endif
-
-/**
- * Enable this for SilentStepStick Trinamic TMC2130 SPI-configurable stepper drivers.
- *
- * You'll also need the TMC2130Stepper Arduino library
- * (https://github.com/teemuatlut/TMC2130Stepper).
- *
- * To use TMC2130 stepper drivers in SPI mode connect your SPI2130 pins to
- * the hardware SPI interface on your board and define the required CS pins
- * in your `pins_MYBOARD.h` file. (e.g., RAMPS 1.4 uses AUX3 pins `X_CS_PIN 53`, `Y_CS_PIN 49`, etc.).
- */
+### Trinamic TMC2130
+```cpp
 //#define HAVE_TMC2130
+```
+Enable this option for SilentStepStick Trinamic TMC2130 SPI-configurable stepper drivers. You'll also need the [TMC2130Stepper](https://github.com/teemuatlut/TMC2130Stepper) Arduino library. See the `Configuration_adv.h` file for the full set of sub-options.
 
-#if ENABLED(HAVE_TMC2130)
+To use TMC2130 stepper drivers in SPI mode connect your SPI2130 pins to the hardware SPI interface on your board and define the required CS pins in your `pins_MYBOARD.h` file. (e.g., RAMPS 1.4 uses AUX3 pins `X_CS_PIN 53`, `Y_CS_PIN 49`, etc.).
 
-  // CHOOSE YOUR MOTORS HERE, THIS IS MANDATORY
-  //#define X_IS_TMC2130
-  //#define X2_IS_TMC2130
-  //#define Y_IS_TMC2130
-  //#define Y2_IS_TMC2130
-  //#define Z_IS_TMC2130
-  //#define Z2_IS_TMC2130
-  //#define E0_IS_TMC2130
-  //#define E1_IS_TMC2130
-  //#define E2_IS_TMC2130
-  //#define E3_IS_TMC2130
-  //#define E4_IS_TMC2130
-
-  /**
-   * Stepper driver settings
-   */
-
-  #define R_SENSE           0.11  // R_sense resistor for SilentStepStick2130
-  #define HOLD_MULTIPLIER    0.5  // Scales down the holding current from run current
-  #define INTERPOLATE          1  // Interpolate X/Y/Z_MICROSTEPS to 256
-
-  #define X_CURRENT         1000  // rms current in mA. Multiply by 1.41 for peak current.
-  #define X_MICROSTEPS        16  // 0..256
-
-  #define Y_CURRENT         1000
-  #define Y_MICROSTEPS        16
-
-  #define Z_CURRENT         1000
-  #define Z_MICROSTEPS        16
-
-  //#define X2_CURRENT      1000
-  //#define X2_MICROSTEPS     16
-
-  //#define Y2_CURRENT      1000
-  //#define Y2_MICROSTEPS     16
-
-  //#define Z2_CURRENT      1000
-  //#define Z2_MICROSTEPS     16
-
-  //#define E0_CURRENT      1000
-  //#define E0_MICROSTEPS     16
-
-  //#define E1_CURRENT      1000
-  //#define E1_MICROSTEPS     16
-
-  //#define E2_CURRENT      1000
-  //#define E2_MICROSTEPS     16
-
-  //#define E3_CURRENT      1000
-  //#define E3_MICROSTEPS     16
-
-  //#define E4_CURRENT      1000
-  //#define E4_MICROSTEPS     16
-
-  /**
-   * Use Trinamic's ultra quiet stepping mode.
-   * When disabled, Marlin will use spreadCycle stepping mode.
-   */
-  #define STEALTHCHOP
-
-  /**
-   * Let Marlin automatically control stepper current.
-   * This is still an experimental feature.
-   * Increase current every 5s by CURRENT_STEP until stepper temperature prewarn gets triggered,
-   * then decrease current by CURRENT_STEP until temperature prewarn is cleared.
-   * Adjusting starts from X/Y/Z/E_CURRENT but will not increase over AUTO_ADJUST_MAX
-   * Relevant g-codes:
-   * M906 - Set or get motor current in milliamps using axis codes X, Y, Z, E. Report values if no axis codes given.
-   * M906 S1 - Start adjusting current
-   * M906 S0 - Stop adjusting current
-   * M911 - Report stepper driver overtemperature pre-warn condition.
-   * M912 - Clear stepper driver overtemperature pre-warn condition flag.
-   */
-  //#define AUTOMATIC_CURRENT_CONTROL
-
-  #if ENABLED(AUTOMATIC_CURRENT_CONTROL)
-    #define CURRENT_STEP          50  // [mA]
-    #define AUTO_ADJUST_MAX     1300  // [mA], 1300mA_rms = 1840mA_peak
-    #define REPORT_CURRENT_CHANGE
-  #endif
-
-  /**
-   * The driver will switch to spreadCycle when stepper speed is over HYBRID_THRESHOLD.
-   * This mode allows for faster movements at the expense of higher noise levels.
-   * STEALTHCHOP needs to be enabled.
-   * M913 X/Y/Z/E to live tune the setting
-   */
-  //#define HYBRID_THRESHOLD
-
-  #define X_HYBRID_THRESHOLD     100  // [mm/s]
-  #define X2_HYBRID_THRESHOLD    100
-  #define Y_HYBRID_THRESHOLD     100
-  #define Y2_HYBRID_THRESHOLD    100
-  #define Z_HYBRID_THRESHOLD       4
-  #define Z2_HYBRID_THRESHOLD      4
-  #define E0_HYBRID_THRESHOLD     30
-  #define E1_HYBRID_THRESHOLD     30
-  #define E2_HYBRID_THRESHOLD     30
-  #define E3_HYBRID_THRESHOLD     30
-  #define E4_HYBRID_THRESHOLD     30
-
-  /**
-   * Use stallGuard2 to sense an obstacle and trigger an endstop.
-   * You need to place a wire from the driver's DIAG1 pin to the X/Y endstop pin.
-   * If used along with STEALTHCHOP, the movement will be louder when homing. This is normal.
-   *
-   * X/Y_HOMING_SENSITIVITY is used for tuning the trigger sensitivity.
-   * Higher values make the system LESS sensitive.
-   * Lower value make the system MORE sensitive.
-   * Too low values can lead to false positives, while too high values will collide the axis without triggering.
-   * It is advised to set X/Y_HOME_BUMP_MM to 0.
-   * M914 X/Y to live tune the setting
-   */
-  //#define SENSORLESS_HOMING
-
-  #if ENABLED(SENSORLESS_HOMING)
-    #define X_HOMING_SENSITIVITY  19
-    #define Y_HOMING_SENSITIVITY  19
-  #endif
-
-  /**
-   * You can set your own advanced settings by filling in predefined functions.
-   * A list of available functions can be found on the library github page
-   * https://github.com/teemuatlut/TMC2130Stepper
-   *
-   * Example:
-   * #define TMC2130_ADV() { \
-   *   stepperX.diag0_temp_prewarn(1); \
-   *   stepperX.interpolate(0); \
-   * }
-   */
-  #define  TMC2130_ADV() {  }
-
-#endif // HAVE_TMC2130
-
-/**
- * Enable this section if you have L6470 motor drivers.
- * You need to import the L6470 library into the Arduino IDE for this.
- * (https://github.com/ameyer/Arduino-L6470)
- */
-
+### L6470 Drivers
+```cpp
 //#define HAVE_L6470DRIVER
-#if ENABLED(HAVE_L6470DRIVER)
+```
+Enable this section if you have L6470 motor drivers. You need to import the [L6470 library](https://github.com/ameyer/Arduino-L6470) into the Arduino IDE for this. See the `Configuration_adv.h` file for the full set of sub-options.
 
-  //#define X_IS_L6470
-  //#define X2_IS_L6470
-  //#define Y_IS_L6470
-  //#define Y2_IS_L6470
-  //#define Z_IS_L6470
-  //#define Z2_IS_L6470
-  //#define E0_IS_L6470
-  //#define E1_IS_L6470
-  //#define E2_IS_L6470
-  //#define E3_IS_L6470
-  //#define E4_IS_L6470
-
-  #define X_MICROSTEPS      16 // number of microsteps
-  #define X_OVERCURRENT   2000 // maxc current in mA. If the current goes over this value, the driver will switch off
-  #define X_STALLCURRENT  1500 // current in mA where the driver will detect a stall
-
-  #define X2_MICROSTEPS     16
-  #define X2_OVERCURRENT  2000
-  #define X2_STALLCURRENT 1500
-
-  #define Y_MICROSTEPS      16
-  #define Y_OVERCURRENT   2000
-  #define Y_STALLCURRENT  1500
-
-  #define Y2_MICROSTEPS     16
-  #define Y2_OVERCURRENT  2000
-  #define Y2_STALLCURRENT 1500
-
-  #define Z_MICROSTEPS      16
-  #define Z_OVERCURRENT   2000
-  #define Z_STALLCURRENT  1500
-
-  #define Z2_MICROSTEPS     16
-  #define Z2_OVERCURRENT  2000
-  #define Z2_STALLCURRENT 1500
-
-  #define E0_MICROSTEPS     16
-  #define E0_OVERCURRENT  2000
-  #define E0_STALLCURRENT 1500
-
-  #define E1_MICROSTEPS     16
-  #define E1_OVERCURRENT  2000
-  #define E1_STALLCURRENT 1500
-
-  #define E2_MICROSTEPS     16
-  #define E2_OVERCURRENT  2000
-  #define E2_STALLCURRENT 1500
-
-  #define E3_MICROSTEPS     16
-  #define E3_OVERCURRENT  2000
-  #define E3_STALLCURRENT 1500
-
-  #define E4_MICROSTEPS     16
-  #define E4_OVERCURRENT  2000
-  #define E4_STALLCURRENT 1500
-
-#endif
-
-/**
- * TWI/I2C BUS
- *
- * This feature is an EXPERIMENTAL feature so it shall not be used on production
- * machines. Enabling this will allow you to send and receive I2C data from slave
- * devices on the bus.
- *
- * ; Example #1
- * ; This macro send the string "Marlin" to the slave device with address 0x63 (99)
- * ; It uses multiple M260 commands with one B<base 10> arg
- * M260 A99  ; Target slave address
- * M260 B77  ; M
- * M260 B97  ; a
- * M260 B114 ; r
- * M260 B108 ; l
- * M260 B105 ; i
- * M260 B110 ; n
- * M260 S1   ; Send the current buffer
- *
- * ; Example #2
- * ; Request 6 bytes from slave device with address 0x63 (99)
- * M261 A99 B5
- *
- * ; Example #3
- * ; Example serial output of a M261 request
- * echo:i2c-reply: from:99 bytes:5 data:hello
- */
-
+## Experimental i2c Bus
+```cpp
 //#define EXPERIMENTAL_I2CBUS
 #define I2C_SLAVE_ADDRESS  0 // Set a value from 8 to 127 to act as a slave
+```
+This feature can be used to talk to slave devices on the i2c bus, passing data back to the host. With additional work the `TWIBus` class can be used to build a full protocol and add remote control features to Marlin, distributing load over two or more boards.
+```gcode
+; Example #1
+; This macro send the string "Marlin" to the slave device with address 0x63 (99)
+; It uses multiple M260 commands with one B[base 10] arg
+M260 A99  ; Target slave address
+M260 B77  ; M
+M260 B97  ; a
+M260 B114 ; r
+M260 B108 ; l
+M260 B105 ; i
+M260 B110 ; n
+M260 S1   ; Send the current buffer
 
-/**
- * Spindle & Laser control
- *
- * Add the M3, M4, and M5 commands to turn the spindle/laser on and off, and
- * to set spindle speed, spindle direction, and laser power.
- *
- * SuperPid is a router/spindle speed controller used in the CNC milling community.
- * Marlin can be used to turn the spindle on and off. It can also be used to set
- * the spindle speed from 5,000 to 30,000 RPM.
- *
- * You'll need to select a pin for the ON/OFF function and optionally choose a 0-5V
- * hardware PWM pin for the speed control and a pin for the rotation direction.
- *
- * See http://marlinfw.org/docs/configuration/laser_spindle.html for more config details.
- */
+; Example #2
+; Request 6 bytes from slave device with address 0x63 (99)
+M261 A99 B5
+
+; Example #3
+; Example serial output of a M261 request
+echo:i2c-reply: from:99 bytes:5 data:hello
+```
+
+## Spindle / Laser
+```cpp
 //#define SPINDLE_LASER_ENABLE
 #if ENABLED(SPINDLE_LASER_ENABLE)
 
@@ -2756,7 +2456,7 @@ Dual X-Carriage has three different movement modes, set with `M605 S[mode]`:
    *  SPEED/POWER = PWM duty cycle * SPEED_POWER_SLOPE + SPEED_POWER_INTERCEPT
    *    where PWM duty cycle varies from 0 to 255
    *
-   *  set the following for your controller (ALL MUST BE SET)
+   *  Set the following for your controller (ALL MUST BE SET)
    */
 
   #define SPEED_POWER_SLOPE    118.4
@@ -2770,6 +2470,13 @@ Dual X-Carriage has three different movement modes, set with `M605 S[mode]`:
   //#define SPEED_POWER_MAX      100      // 0-100%
 #endif
 ```
+Enable for Spindle and Laser control. Adds the `M3`, `M4`, and `M5` commands to turn the spindle/laser on and off, and to set spindle speed, spindle direction, and laser power.
+
+SuperPid is a router/spindle speed controller used in the CNC milling community. Marlin can be used to turn the spindle on and off. It can also be used to set the spindle speed from 5,000 to 30,000 RPM.
+
+You'll need to select a pin for the ON/OFF function and optionally choose a 0-5V hardware PWM pin for the speed control and a pin for the rotation direction.
+
+See the [Laser and Spindle page](/docs/configuration/laser_spindle.html) for more details.
 
 ## Filament Width Sensor
 
