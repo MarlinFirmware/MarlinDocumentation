@@ -95,8 +95,8 @@ function gengcode(form1) {
     document.forms['form1']['textarea'].value += 'M109 S' + NOZZLE_TEMP + ' ; block waiting for nozzle temp\n' +
                                                  'G21 ; set units to millimetres\n' +
                                                  'M204 S500 ; lower acceleration to 500mm/s2 during the test\n' +
-                                                 'M83 ; use relative distances for extrusion\n' + 
                                                  'G90 ; use absolute coordinates\n' +
+                                                 'M83 ; use relative distances for extrusion\n' + 
                                                  ';\n' +
                                                  '; go to layer height and prime nozzle on a line to the left\n' +
                                                  ';\n' +
