@@ -80,7 +80,7 @@ exclude:
   - 'script'
   - 'vendor'
 
-plugins:
+gems:
   - jekyll-mentions
   - jekyll-seo-tag
   - jekyll-avatar
