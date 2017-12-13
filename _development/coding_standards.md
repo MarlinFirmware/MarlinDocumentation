@@ -78,7 +78,7 @@ Git can warn you about patches that introduce trailing whitespace, and optionall
 
 Comments are good, but avoid over-commenting. _Never_ try to explain _how_ your code works in a comment: it's much better to write the code so that the working is obvious, and it's a waste of time to explain badly written code.
 
-Generally, you want your comments to explain _what_ your code does, not _how_. Keep comments inside a function body short. If a function is so complex that you need to separately comment parts of it, consider splitting it up into simpler units. Make small comments to note or warn about something particularly clever (or ugly), but avoid excess. Reserve detailed comments for the head of the function, telling people what it does, and possibly _why_ it does it.
+Generally, you want your comments to explain _what_ your code does, not _how_. Keep comments inside a function body short. If a function is so complex that you need to separately comment parts of it, consider splitting it up into simpler units. Make small comments to note or warn about something particularly clever (or ugly), but avoid excess. Reserve detailed comments for the head of the function, explaining what it does, and possibly _why_ it does it.
 
  - Use Doxygen-style comments for functions, classes, and other defined entities, and concentrate documentation in the `.h` files.
 
@@ -117,7 +117,7 @@ Filenames for Marlin code should favor `lowercase_with_underscores.ext` format. 
 
 ### Capitalization
 
-For Marlin variables, data members, functions, and methods use `lowercase_with_underscores`. Use `camelCase` names only when class names and methods already uses that format. Marlin classes should use `my_class_name` format.
+For Marlin variables, data members, functions, and methods use `lowercase_with_underscores`. Use `camelCase` names only when class names and methods already uses that format. Marlin classes may use `MyClassName` format or `my_class_name`. Core classes tend to use camel-case, with general-purpose classes using underscore format.
 
  - `my_function_name(int in_integer, float in_float=0.0)`
  - `MyClass`, `classMethod`, `classData`
@@ -184,11 +184,22 @@ const char blue =
  - Use multiplication (of the reciprocal) instead of division, when possible.
  - Most code doesn't need to be optimized for speed, so favor smaller code.
 
+### Best-Practices for #include
+
+- Follow best practices for `#include`.
+  - Only include the headers needed to provide the definitions required by the current source file. This helps provide an accurate view of dependencies.
+  - Include `Marlin.h` only when you need its externs. Don't include `Marlin.h` when just `MarlinConfig.h` (or `MarlinConfigPre.h`) will do.
+  - Included headers should be arranged in the following order:
+    - `MarlinConfig.h` (or `MarlinConfigPre.h`), if configuration values are needed for `#if` or other uses.
+    - After the main `#if` condition, include the file's own corresponding header.
+    - Next, arrange project headers to prevent hiding broken dependencies. For example, if `grape.h` depends on `orange.h`, try to include `grape.h` before `orange.h` so that if `grape.h` fails to include `orange.h` an error will be thrown.
+    - Last come system and library headers, such as `<Arduino.h>`, `<inttypes.h>`, and `<u8glib.h>`.
+
 ## Marlin-specific Conventions
 
 ### Preprocessor directives
 
- - Use `#define` instead of `const` for configurable values (for now)
+ - Use `#define` instead of `const` for configurable values
  - Don't use `#if` / `#endif` for commenting-out unused, old or broken code. We have a git repository! If it's obsolete, delete it.
  - Use `#if ENABLED(FEATURE_NAME)` / `#endif` to compile enabled features. (Using these macros allows features to be set externally.)
  - Use `#if DISABLED(FEATURE_NAME)` / `#endif` to compile disabled features. (Using these macros allows features to be set externally.)
@@ -343,14 +354,3 @@ Since Marlin needs to runs on the most modest hardware, much care has been taken
   #endif // !HISFEATURE
 #endif // MYFEATURE
 ```
-
-### Other Considerations
-
-- Follow best practices for `#include`.
-  - Only include the headers needed to provide the definitions required by the current source file. This helps provide an accurate view of dependencies.
-  - Don't include `Marlin.h` when just `MarlinConfig.h` will do, or just to get its includes. Try to only include `Marlin.h` when you actually need its functions.
-  - Included headers should be arranged in the following order:
-    - `MarlinConfig.h`, if configuration values are needed for `#if` or other uses.
-    - The file's corresponding header.
-    - Next, arrange project headers to prevent hiding broken dependencies. For example, if `grape.h` depends on `orange.h`, try to include `grape.h` before `orange.h` so that if `grape.h` fails to include `orange.h` an error will be thrown.
-    - Lastly, include any system headers, such as `#include <inttypes.h>`.
