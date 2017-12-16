@@ -8,7 +8,7 @@ category: feature
 ---
 
 {% alert info %}
-This page is a work in progress, based on Marlin 1.1.2 and updated for 1.1.6. Corrections/improvements are welcome.
+This page is a work in progress, based on Marlin 1.1.2 and updated for 1.1.7. Corrections/improvements are welcome.
 {% endalert %}
 
  - A comprehensive LCD menu system for UBL is coming soon.
