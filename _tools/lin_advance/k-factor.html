@@ -137,7 +137,7 @@ category:     [ tools ]
 
       <h3>Notes on the settings:</h3>
       <ul>
-        <li>The print-bed is assumed to be rectangular because `LIN_ADVANCE` is only compatible with Cartesian machines. The overall width (X-direction) of the test pattern is always 100mm. The depth (Y-direction) of the test pattern depends on the K-factor Settings.</li>
+        <li>The print-bed is assumed to be rectangular because `LIN_ADVANCE` is only compatible with Cartesian machines. The overall width (X-direction) of the test pattern is always 80mm. The depth (Y-direction) of the test pattern depends on the K-factor Settings.</li>
         <li>Low K-factor and High K-factor determine the range of the test pattern. A low value of 50 and a high value of 150 covers a range of 100.</li>
         <li>"K-factor Stepping" determines how many test lines are printed for the given range. For example, a Stepping of 10 and a range of 100 results in 10 test lines. A stepping of 3 would not work in this example since 100 cannot be exactly divided by 3. The script will throw an error message if an exact division is not possible. In this case either the range or the stepping can be adjusted.</li>
         <li>The best K-factor for your setup will depend on filament quality, nozzle size, nozzle geometry and printing temperature. If any one of these factors changes, the K factor may need to be re-calibrated.</li>

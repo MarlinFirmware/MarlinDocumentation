@@ -115,9 +115,9 @@ function gengcode(form1) {
     for (i = START_K; i <= END_K; i = i + STEP_K)
         document.forms['form1']['textarea'].value += 'M900 K' + i + ' ; set K-factor\n' +
                                                      'G1 E' + RETRACT_DIST + '\n' +
-                                                     'G1 X20 Y0 E' + EXT_20 + ' F' + SPEED_SLOW + '\n' +
-                                                     'G1 X40 Y0 E' + EXT_40 + ' F' + SPEED_FAST + '\n' +
-                                                     'G1 X20 Y0 E' + EXT_20 + ' F' + SPEED_SLOW + '\n' +
+                                                     'G1 X20 E' + EXT_20 + ' F' + SPEED_SLOW + '\n' +
+                                                     'G1 X40 E' + EXT_40 + ' F' + SPEED_FAST + '\n' +
+                                                     'G1 X20 E' + EXT_20 + ' F' + SPEED_SLOW + '\n' +
                                                      'G1 E-' + RETRACT_DIST + '\n' +
                                                      'G1 X-80 Y5 F' + SPEED_MOVE + '\n';
     
