@@ -17,22 +17,22 @@
  */
 function gengcode(form1) {
     
-    var FILAMENT_DIAMETER = parseFloat(document.forms['form1']['FIL_DIA'].value);
-    var NOZZLE_DIAMETER = parseFloat(document.forms['form1']['NOZ_DIA'].value);
-    var NOZZLE_TEMP = parseInt(document.forms['form1']['NOZZLE_TEMP'].value);
-    var NOZZLE_LINE_RATIO = parseFloat(document.forms['form1']['NOZ_LIN_R'].value);  
-    var BED_TEMP = parseInt(document.forms['form1']['BED_TEMP'].value);
-    var SPEED_SLOW = parseInt(document.forms['form1']['SLOW_SPEED'].value);
-    var SPEED_FAST = parseInt(document.forms['form1']['FAST_SPEED'].value);
-    var SPEED_MOVE = parseInt(document.forms['form1']['MOVE_SPEED'].value); 
-    var RETRACT_DIST = parseFloat(document.forms['form1']['RETRACTION'].value);
-    var BED_X = parseInt(document.forms['form1']['BEDSIZE_X'].value);
-    var BED_Y = parseInt(document.forms['form1']['BEDSIZE_Y'].value);
-    var HEIGHT_LAYER = parseFloat(document.forms['form1']['LAYER_HEIGHT'].value);   
-    var EXT_MULT = parseFloat(document.forms['form1']['EXTRUSION_MULT'].value);
-    var START_K = parseInt(document.forms['form1']['K_START'].value);
-    var END_K = parseInt(document.forms['form1']['K_END'].value);
-    var STEP_K = parseFloat(document.forms['form1']['K_STEP'].value);
+    var FILAMENT_DIAMETER = parseFloat(document.forms['form1']['FIL_DIA'].value),
+        NOZZLE_DIAMETER = parseFloat(document.forms['form1']['NOZ_DIA'].value),
+        NOZZLE_TEMP = parseInt(document.forms['form1']['NOZZLE_TEMP'].value),
+        NOZZLE_LINE_RATIO = parseFloat(document.forms['form1']['NOZ_LIN_R'].value),
+        BED_TEMP = parseInt(document.forms['form1']['BED_TEMP'].value),
+        SPEED_SLOW = parseInt(document.forms['form1']['SLOW_SPEED'].value),
+        SPEED_FAST = parseInt(document.forms['form1']['FAST_SPEED'].value),
+        SPEED_MOVE = parseInt(document.forms['form1']['MOVE_SPEED'].value),
+        RETRACT_DIST = parseFloat(document.forms['form1']['RETRACTION'].value),
+        BED_X = parseInt(document.forms['form1']['BEDSIZE_X'].value),
+        BED_Y = parseInt(document.forms['form1']['BEDSIZE_Y'].value),
+        HEIGHT_LAYER = parseFloat(document.forms['form1']['LAYER_HEIGHT'].value),
+        EXT_MULT = parseFloat(document.forms['form1']['EXTRUSION_MULT'].value),
+        START_K = parseInt(document.forms['form1']['K_START'].value),
+        END_K = parseInt(document.forms['form1']['K_END'].value),
+        STEP_K = parseFloat(document.forms['form1']['K_STEP'].value);
 
     // Check if K-Factor Stepping is a multiple of the K-Factor Range
     var RANGE_K =  END_K - START_K;
@@ -51,16 +51,17 @@ function gengcode(form1) {
     var START_Y = (BED_Y - PRINT_SIZE_Y) / 2;   
 
     // Convert speeds from mm/s to mm/min if needed
-    if (document.getElementById('MM_S').checked) {
-      SPEED_SLOW = SPEED_SLOW * 60;
-      SPEED_FAST = SPEED_FAST * 60;
-      SPEED_MOVE = SPEED_MOVE * 60;
+    var MM_S = document.getElementById('MM_S');
+    if (MM_S === null || !MM_S.checked) {
+      SPEED_SLOW *= 60;
+      SPEED_FAST *= 60;
+      SPEED_MOVE *= 60;
     }
 
     //Set the extrusion parameters
-    var EXTRUSION_RATIO = NOZZLE_DIAMETER * NOZZLE_LINE_RATIO * HEIGHT_LAYER / (Math.pow(FILAMENT_DIAMETER / 2,2) * Math.PI);
-    var EXT_20 = roundNumber(EXTRUSION_RATIO * EXT_MULT * 20, 5);
-    var EXT_40 = roundNumber(EXTRUSION_RATIO * EXT_MULT * 40, 5);
+    var EXTRUSION_RATIO = NOZZLE_DIAMETER * NOZZLE_LINE_RATIO * HEIGHT_LAYER / (Math.pow(FILAMENT_DIAMETER / 2,2) * Math.PI),
+        EXT_20 = roundNumber(EXTRUSION_RATIO * EXT_MULT * 20, 5),
+        EXT_40 = roundNumber(EXTRUSION_RATIO * EXT_MULT * 40, 5);
     
     document.forms['form1']['textarea'].value = '';
     document.forms['form1']['textarea'].value = '; K-Factor Test\n' +
@@ -75,7 +76,7 @@ function gengcode(form1) {
                                                 '; Slow Printing Speed = ' + SPEED_SLOW + '\n' +
                                                 '; Fast Printing Speed = ' + SPEED_FAST + '\n' +
                                                 '; Movement Speed = ' + SPEED_MOVE + '\n' +
-                                                '; Use UBL = ' + (document.getElementById('USE_UBL').checked ? "true" : "false") + '\n' +
+                                                '; Use UBL = ' + (document.getElementById('USE_BL').checked ? "true" : "false") + '\n' +
                                                 '; Retraction Distance = ' + RETRACT_DIST + '\n' +
                                                 '; Bed Size X = ' + BED_X + '\n' +
                                                 '; Bed Size Y = ' + BED_Y + '\n' +
@@ -89,8 +90,8 @@ function gengcode(form1) {
                                                 'M190 S' + BED_TEMP + ' ; set and wait for bed temp\n' +
                                                 'M104 S' + NOZZLE_TEMP + ' ; set nozzle temp and continue\n';
 
-    if (document.getElementById('USE_UBL').checked)
-      document.forms['form1']['textarea'].value += 'G29 ; execute bed automatic levelling compensation\n';
+    if (document.getElementById('USE_BL').checked)
+      document.forms['form1']['textarea'].value += 'G29 ; Do Auto Bed Leveling compensation\n';
     
     document.forms['form1']['textarea'].value += 'M109 S' + NOZZLE_TEMP + ' ; block waiting for nozzle temp\n' +
                                                  'G21 ; set units to millimetres\n' +
@@ -147,9 +148,9 @@ function gengcode(form1) {
 
 // https://stackoverflow.com/questions/21479107/saving-html5-textarea-contents-to-file
 function saveTextAsFile(form) {
-    var textToWrite = document.getElementById('textarea').value;
-    var textFileAsBlob = new Blob([ textToWrite ], { type: 'text/plain' });
-    var fileNameToSaveAs = "kfactor.gcode";
+    var textToWrite = document.getElementById('textarea').value,
+        textFileAsBlob = new Blob([ textToWrite ], { type: 'text/plain' }),
+        fileNameToSaveAs = "kfactor.gcode";
 
     var downloadLink = document.createElement("a");
     downloadLink.download = fileNameToSaveAs;
