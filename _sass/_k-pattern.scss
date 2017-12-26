@@ -1,0 +1,53 @@
+/* Needs height 100% as parent otherwise */
+/* textarea will not scale to cell size */
+.calibpat table {
+  height: 100%;
+}
+
+/* Needs height 100% as parent otherwise */
+/* textarea will not scale to cell size */
+.calibpat td {
+  height: 100%;
+  padding: 4px;
+  vertical-align: middle;
+}
+
+/* Scale textarea to cell size */
+.calibpat textarea {
+  border: none;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  display: block;
+  resize: none;
+}
+
+/* Input and label styles */
+.calibpat input[type=number]{
+  width: 140px;
+}
+
+.calibpat select{
+  width: 140px;
+}
+
+.calibpat2 td {
+  height: 70px;
+}
+
+.calibpat label {
+  color: #c7254e;
+  font-weight: bold;
+  display: block;
+  width: 150px;
+  float: left;
+}
+
+.calibpat_disabled {
+  color: #c7254e;
+  font-weight: bold;
+  display: block;
+  width: 150px;
+  float: left;
+  opacity: 0.5;
+}

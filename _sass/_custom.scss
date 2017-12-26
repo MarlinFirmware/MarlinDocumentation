@@ -210,22 +210,3 @@ table.pretty-list {
   td:first-child { text-align: right; }
   }
 table.pretty-list.headless thead { display: none; }
-
-#form1 {
-  table, td, th { border: 0; }
-  th { text-align: right; white-space: nowrap; padding: 2px 4px; vertical-align: middle; }
-
-  th+td+td {
-    padding: 2px 1em;
-    font-size: 80%;
-    font-weight: bold;
-    }
-
-  h4 { color: #481; }
-
-  textarea {
-    font-family: monospace;
-    font-size: 90%;
-    }
-
-  }
