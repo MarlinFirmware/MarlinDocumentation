@@ -85,3 +85,7 @@
 - version: 1.1.7
   hash: 20f6a4582d43455d136edacc86a756c57fc18793
   date: 15/12/2017
+
+- version: 1.1.8
+  hash: ac3fab7a9680a880fd1b113be7e758c6dabb2a57
+  date: 25/12/2017
