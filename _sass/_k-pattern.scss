@@ -12,8 +12,18 @@
   vertical-align: middle;
 }
 
+.calibpat td:nth-child(2) {
+  text-align: center;
+}
+
+.calibpat td:nth-child(3) {
+  font-size: 80%;
+}
+
 /* Scale textarea to cell size */
 .calibpat textarea {
+  font-family: monospace;
+  font-size: 90%;
   border: none;
   width: 100%;
   height: 100%;

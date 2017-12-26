@@ -20,51 +20,50 @@
 function genGcode() {
 
   // get the values from the HTML elements
-  var FILAMENT_DIAMETER = parseFloat(document.getElementById('FIL_DIA').value);
-  var NOZZLE_DIAMETER = parseFloat(document.getElementById('NOZ_DIA').value);
-  var NOZZLE_TEMP = parseInt(document.getElementById('NOZZLE_TEMP').value);
-  var NOZZLE_LINE_RATIO = parseFloat(document.getElementById('NOZ_LIN_R').value);
-  var BED_TEMP = parseInt(document.getElementById('BED_TEMP').value);
-  var SPEED_SLOW = parseInt(document.getElementById('SLOW_SPEED').value);
-  var SPEED_FAST = parseInt(document.getElementById('FAST_SPEED').value);
-  var SPEED_MOVE = parseInt(document.getElementById('MOVE_SPEED').value);
-  var RETRACT_DIST = parseFloat(document.getElementById('RETRACTION').value);
-  var BED_X = parseInt(document.getElementById('BEDSIZE_X').value);
-  var BED_Y = parseInt(document.getElementById('BEDSIZE_Y').value);
-  var BED_DIAMETER = parseInt(document.getElementById('BEDSIZE_DIAMETER').value);
-  var HEIGHT_LAYER = parseFloat(document.getElementById('LAYER_HEIGHT').value);
-  var EXT_MULT = parseFloat(document.getElementById('EXTRUSION_MULT').value);
-  var START_K = parseInt(document.getElementById('K_START').value);
-  var END_K = parseInt(document.getElementById('K_END').value);
-  var STEP_K = parseFloat(document.getElementById('K_STEP').value);
-  var SELECT_DIR = document.getElementById('DIR_PRINT');
-  var PRINT_DIR = SELECT_DIR.options[SELECT_DIR.selectedIndex].value;
-  var LINE_SPACING = parseFloat(document.getElementById('SPACE_LINE').value);
-  var ALT_PATTERN = document.getElementById("PAT_ALT").checked;
-  var USE_FRAME = document.getElementById('FRAME').checked;
-  var USE_PRIME = document.getElementById('PRIME').checked;
-  var EXT_MULT_PRIME = parseFloat(document.getElementById('PRIME_EXT').value);
-  var PRIME_DWELL = parseFloat(document.getElementById('DWELL_PRIME').value);
-  var LENGTH_SLOW = parseFloat(document.getElementById('SLOW_LENGTH').value);
-  var LENGTH_FAST = parseFloat(document.getElementById('FAST_LENGTH').value);
+  var FILAMENT_DIAMETER = parseFloat(document.getElementById('FIL_DIA').value),
+      NOZZLE_DIAMETER = parseFloat(document.getElementById('NOZ_DIA').value),
+      NOZZLE_TEMP = parseInt(document.getElementById('NOZZLE_TEMP').value),
+      NOZZLE_LINE_RATIO = parseFloat(document.getElementById('NOZ_LIN_R').value),
+      BED_TEMP = parseInt(document.getElementById('BED_TEMP').value),
+      SPEED_SLOW = parseInt(document.getElementById('SLOW_SPEED').value),
+      SPEED_FAST = parseInt(document.getElementById('FAST_SPEED').value),
+      SPEED_MOVE = parseInt(document.getElementById('MOVE_SPEED').value),
+      RETRACT_DIST = parseFloat(document.getElementById('RETRACTION').value),
+      BED_X = parseInt(document.getElementById('BEDSIZE_X').value),
+      BED_Y = parseInt(document.getElementById('BEDSIZE_Y').value),
+      HEIGHT_LAYER = parseFloat(document.getElementById('LAYER_HEIGHT').value),
+      EXT_MULT = parseFloat(document.getElementById('EXTRUSION_MULT').value),
+      START_K = parseInt(document.getElementById('K_START').value),
+      END_K = parseInt(document.getElementById('K_END').value),
+      STEP_K = parseFloat(document.getElementById('K_STEP').value),
+      SELECT_DIR = document.getElementById('DIR_PRINT'),
+      PRINT_DIR = SELECT_DIR.options[SELECT_DIR.selectedIndex].value,
+      LINE_SPACING = parseFloat(document.getElementById('SPACE_LINE').value),
+      ALT_PATTERN = document.getElementById("PAT_ALT").checked,
+      USE_FRAME = document.getElementById('FRAME').checked,
+      USE_PRIME = document.getElementById('PRIME').checked,
+      EXT_MULT_PRIME = parseFloat(document.getElementById('PRIME_EXT').value),
+      PRIME_DWELL = parseFloat(document.getElementById('DWELL_PRIME').value),
+      LENGTH_SLOW = parseFloat(document.getElementById('SLOW_LENGTH').value),
+      LENGTH_FAST = parseFloat(document.getElementById('FAST_LENGTH').value);
 
   // calculate some values for later use
-  var RANGE_K = END_K - START_K;
-  var LINE_WIDTH = NOZZLE_DIAMETER * NOZZLE_LINE_RATIO;
-  var PRINT_SIZE_Y = (RANGE_K / STEP_K * LINE_SPACING) + 25;
-  var PRINT_SIZE_X = (2 * LENGTH_SLOW) + LENGTH_FAST + 10;
-  var CENTER_X = (document.getElementById('ROUND_BED').checked ? BED_DIAMETER / 2 : BED_X / 2);
-  var CENTER_Y = (document.getElementById('ROUND_BED').checked ? BED_DIAMETER / 2 : BED_Y / 2);
-  var PRIME_START_X = CENTER_X - LENGTH_SLOW - (0.5 * LENGTH_FAST) - 5;
-  var PRIME_START_Y = CENTER_Y - (PRINT_SIZE_Y / 2);
-  var PRIME_END_X = PRIME_START_X;
-  var PRIME_END_Y = CENTER_Y + (PRINT_SIZE_Y / 2);
-  var REF1_START_X = CENTER_X - (0.5 * LENGTH_FAST) + 5;
-  var REF2_START_X = CENTER_X + (0.5 * LENGTH_FAST) + 5;
-  var REF_START_Y = (PRINT_SIZE_Y / 2) + CENTER_Y - 20;
-  var REF_END_Y = (PRINT_SIZE_Y / 2) + CENTER_Y;
-  var PAT_START_X = CENTER_X - (0.5 * LENGTH_FAST) - LENGTH_SLOW + 5;
-  var PAT_START_Y = CENTER_Y - (PRINT_SIZE_Y / 2);
+  var RANGE_K = END_K - START_K,
+      LINE_WIDTH = NOZZLE_DIAMETER * NOZZLE_LINE_RATIO,
+      PRINT_SIZE_Y = (RANGE_K / STEP_K * LINE_SPACING) + 25,
+      PRINT_SIZE_X = (2 * LENGTH_SLOW) + LENGTH_FAST + 10,
+      CENTER_X = BED_X / 2,
+      CENTER_Y = BED_Y / 2,
+      PRIME_START_X = CENTER_X - LENGTH_SLOW - (0.5 * LENGTH_FAST) - 5,
+      PRIME_START_Y = CENTER_Y - (PRINT_SIZE_Y / 2),
+      PRIME_END_X = PRIME_START_X,
+      PRIME_END_Y = CENTER_Y + (PRINT_SIZE_Y / 2),
+      REF1_START_X = CENTER_X - (0.5 * LENGTH_FAST) + 5,
+      REF2_START_X = CENTER_X + (0.5 * LENGTH_FAST) + 5,
+      REF_START_Y = (PRINT_SIZE_Y / 2) + CENTER_Y - 20,
+      REF_END_Y = (PRINT_SIZE_Y / 2) + CENTER_Y,
+      PAT_START_X = CENTER_X - (0.5 * LENGTH_FAST) - LENGTH_SLOW + 5,
+      PAT_START_Y = CENTER_Y - (PRINT_SIZE_Y / 2);
 
 
   // Check if K-Factor Stepping is a multiple of the K-Factor Range
@@ -75,24 +74,18 @@ function genGcode() {
   }
 
   // Calculate a straight (non rotated) least fit rectangle around the entire test pattern
-  var PRINT_DIR_RAD = PRINT_DIR * Math.PI / 180;
-  var FIT_WIDTH = Math.abs(PRINT_SIZE_X * Math.cos(PRINT_DIR_RAD)) + Math.abs(PRINT_SIZE_Y * Math.sin(PRINT_DIR_RAD));
-  var FIT_HEIGHT = Math.abs(PRINT_SIZE_X * Math.sin(PRINT_DIR_RAD)) + Math.abs(PRINT_SIZE_Y * Math.cos(PRINT_DIR_RAD));
-  var FIT_DIAGONAL = Math.sqrt(Math.pow(PRINT_SIZE_Y, 2) + Math.pow(PRINT_SIZE_X, 2));
+  var PRINT_DIR_RAD = PRINT_DIR * Math.PI / 180,
+      FIT_WIDTH = Math.abs(PRINT_SIZE_X * Math.cos(PRINT_DIR_RAD)) + Math.abs(PRINT_SIZE_Y * Math.sin(PRINT_DIR_RAD)),
+      FIT_HEIGHT = Math.abs(PRINT_SIZE_X * Math.sin(PRINT_DIR_RAD)) + Math.abs(PRINT_SIZE_Y * Math.cos(PRINT_DIR_RAD));
 
   // Compare the fit rectangle with the bed size. Safety margin 5 mm
-  if (FIT_WIDTH > BED_X - 5 && !document.getElementById('ROUND_BED').checked) {
+  if (FIT_WIDTH > BED_X - 5) {
     if (!confirm('Your K-Factor settings exceed your X bed size. Check Start / End / Steps for the K-Factor. \n OK to continue, Cancel to return')) {
       document.getElementById('textarea').value = '';
       return;
     }
-  } else if (FIT_HEIGHT > BED_Y - 5 && !document.getElementById('ROUND_BED').checked) {
+  } else if (FIT_HEIGHT > BED_Y - 5) {
     if (!confirm('Your K-Factor settings exceed your Y bed size. Check Start / End / Steps for the K-Factor. \n OK to continue, Cancel to return')) {
-      document.getElementById('textarea').value = '';
-      return;
-    }
-  } else if (FIT_DIAGONAL > BED_DIAMETER - 5 && document.getElementById('ROUND_BED').checked) {
-    if (!confirm('Your K-Factor settings exceed your bed\'s diameter. Check Start / End / Steps for the K-Factor. \n OK to continue, Cancel to return')) {
       document.getElementById('textarea').value = '';
       return;
     }
@@ -106,14 +99,14 @@ function genGcode() {
   }
 
   // Set the extrusion parameters
-  var EXTRUSION_RATIO = LINE_WIDTH * HEIGHT_LAYER / (Math.pow(FILAMENT_DIAMETER / 2, 2) * Math.PI);
-  var EXT_PRIME1 = Math.round10(EXTRUSION_RATIO * EXT_MULT_PRIME * (PRIME_END_Y - PRIME_START_Y), -4);
-  var EXT_PRIME2 = Math.round10(EXTRUSION_RATIO * EXT_MULT_PRIME * LINE_WIDTH * 1.5, -4);
-  var EXT_SLOW = Math.round10(EXTRUSION_RATIO * EXT_MULT * LENGTH_SLOW, -4);
-  var EXT_FAST = Math.round10(EXTRUSION_RATIO * EXT_MULT * LENGTH_FAST, -4);
-  var EXT_ALT = Math.round10(EXTRUSION_RATIO * EXT_MULT * LINE_SPACING, -4);
-  var EXT_FRAME1 = Math.round10(EXTRUSION_RATIO * EXT_MULT * (PRINT_SIZE_Y - 19), -4);
-  var EXT_FRAME2 = Math.round10(EXTRUSION_RATIO * EXT_MULT * LINE_WIDTH, -4);
+  var EXTRUSION_RATIO = LINE_WIDTH * HEIGHT_LAYER / (Math.pow(FILAMENT_DIAMETER / 2, 2) * Math.PI),
+      EXT_PRIME1 = Math.round10(EXTRUSION_RATIO * EXT_MULT_PRIME * (PRIME_END_Y - PRIME_START_Y), -4),
+      EXT_PRIME2 = Math.round10(EXTRUSION_RATIO * EXT_MULT_PRIME * LINE_WIDTH * 1.5, -4),
+      EXT_SLOW = Math.round10(EXTRUSION_RATIO * EXT_MULT * LENGTH_SLOW, -4),
+      EXT_FAST = Math.round10(EXTRUSION_RATIO * EXT_MULT * LENGTH_FAST, -4),
+      EXT_ALT = Math.round10(EXTRUSION_RATIO * EXT_MULT * LINE_SPACING, -4),
+      EXT_FRAME1 = Math.round10(EXTRUSION_RATIO * EXT_MULT * (PRINT_SIZE_Y - 19), -4),
+      EXT_FRAME2 = Math.round10(EXTRUSION_RATIO * EXT_MULT * LINE_WIDTH, -4);
 
   // Start G-code for test pattern
   document.getElementById('textarea').value = '';
@@ -138,11 +131,10 @@ function genGcode() {
                                               '; Slow Printing Speed = ' + SPEED_SLOW + ' mm/min\n' +
                                               '; Fast Printing Speed = ' + SPEED_FAST + ' mm/min\n' +
                                               '; Movement Speed = ' + SPEED_MOVE + ' mm/min\n' +
-                                              '; Use UBL = ' + (document.getElementById('USE_UBL').checked ? "true" : "false") + '\n' +
+                                              '; Use BL = ' + (document.getElementById('USE_BL').checked ? "true" : "false") + '\n' +
                                               '; Retraction Distance = ' + RETRACT_DIST + ' mm\n' +
-                                              (!document.getElementById('ROUND_BED').checked ? '; Bed Size X = ' + BED_X + ' mm\n' : '') +
-                                              (!document.getElementById('ROUND_BED').checked ? '; Bed Size Y = ' + BED_Y + ' mm\n' : '') +
-                                              (document.getElementById('ROUND_BED').checked ? '; Bed Diameter = ' + BED_DIAMETER + ' mm\n' : '') +
+                                              '; Bed Size X = ' + BED_X + ' mm\n' +
+                                              '; Bed Size Y = ' + BED_Y + ' mm\n' +
                                               '; Layer Height = ' + HEIGHT_LAYER + ' mm\n' +
                                               '; Extrusion Multiplier = ' + EXT_MULT + '\n' +
                                               '; Starting Value K-Factor = ' + START_K + '\n' +
@@ -159,7 +151,7 @@ function genGcode() {
                                               'M104 S' + NOZZLE_TEMP + ' ; set nozzle temp and continue\n';
 
   // Use bed leveling if activated
-  if (document.getElementById('USE_UBL').checked) {
+  if (document.getElementById('USE_BL').checked) {
     document.getElementById('textarea').value += 'G29 ; execute bed automatic leveling compensation\n';
   }
 
@@ -239,8 +231,8 @@ function genGcode() {
                                                'G1 X' + Math.round10(rotateX(PAT_START_X, CENTER_X, PAT_START_Y, CENTER_Y, PRINT_DIR), -4) +
                                                  ' Y' + Math.round10(rotateY(PAT_START_X, CENTER_X, PAT_START_Y, CENTER_Y, PRINT_DIR), -4) +
                                                  ' F' + SPEED_MOVE + ' ; move to pattern start\n';
-  var j = 0;
-  var k = 0;
+  var j = 0,
+      k = 0;
   for (var i = START_K; i <= END_K; i += STEP_K) {
     if (ALT_PATTERN && (k % 2 == 0)) {
       document.getElementById('textarea').value += 'M900 K' + i + ' ; set K-factor\n' +
@@ -330,11 +322,11 @@ function genGcode() {
 
 // https://stackoverflow.com/questions/21479107/saving-html5-textarea-contents-to-file
 function saveTextAsFile() {
-  var textToWrite = document.getElementById('textarea').value;
-  var textFileAsBlob = new Blob([textToWrite], {type: 'text/plain'});
-  var fileNameToSaveAs = "kfactor.gcode";
+  var textToWrite = document.getElementById('textarea').value,
+      textFileAsBlob = new Blob([textToWrite], {type: 'text/plain'}),
+      fileNameToSaveAs = "kfactor.gcode",
+      downloadLink = document.createElement("a");
 
-  var downloadLink = document.createElement("a");
   downloadLink.download = fileNameToSaveAs;
   downloadLink.innerHTML = "Download File";
   if (window.webkitURL != null) {
@@ -414,8 +406,8 @@ function destroyClickedElement(event) {
 // rotate x around a defined center xm, ym
 function rotateX(x, xm, y, ym, a) {
   a = a * Math.PI / 180; // Convert to radians
-  var cos = Math.cos(a);
-  var sin = Math.sin(a);
+  var cos = Math.cos(a),
+      sin = Math.sin(a);
 
   // Subtract midpoints, so that midpoint is translated to origin
   // and add it in the end again
@@ -427,8 +419,8 @@ function rotateX(x, xm, y, ym, a) {
 // rotate y around a defined center xm, ym
 function rotateY(x, xm, y, ym, a) {
   a = a * Math.PI / 180; // Convert to radians
-  var cos = Math.cos(a);
-  var sin = Math.sin(a);
+  var cos = Math.cos(a),
+      sin = Math.sin(a);
 
   // Subtract midpoints, so that midpoint is translated to origin
   // and add it in the end again
@@ -441,62 +433,54 @@ function rotateY(x, xm, y, ym, a) {
 $(document).ready(function() {
   // toggle between mm/s and mm/min speeds
   $('#MM_S').change(function() {
-    var SPEED_SLOW = $('#SLOW_SPEED').val();
-    var SPEED_FAST = $('#FAST_SPEED').val();
-    var SPEED_MOVE = $('#MOVE_SPEED').val();
-    if(!$(this).is(":checked")) {
-      SPEED_SLOW = $('#SLOW_SPEED').val();
-      SPEED_FAST = $('#FAST_SPEED').val();
-      SPEED_MOVE = $('#MOVE_SPEED').val();
-      $('#SLOW_SPEED').val(SPEED_SLOW * 60);
-      $('#FAST_SPEED').val(SPEED_FAST * 60);
-      $('#MOVE_SPEED').val(SPEED_MOVE * 60);
-    } else {
+    var SPEED_SLOW = $('#SLOW_SPEED').val(),
+        SPEED_FAST = $('#FAST_SPEED').val(),
+        SPEED_MOVE = $('#MOVE_SPEED').val();
+    if($(this).is(":checked")) {
       SPEED_SLOW = $('#SLOW_SPEED').val();
       SPEED_FAST = $('#FAST_SPEED').val();
       SPEED_MOVE = $('#MOVE_SPEED').val();
       $('#SLOW_SPEED').val(SPEED_SLOW / 60);
       $('#FAST_SPEED').val(SPEED_FAST / 60);
       $('#MOVE_SPEED').val(SPEED_MOVE / 60);
+    } else {
+      SPEED_SLOW = $('#SLOW_SPEED').val();
+      SPEED_FAST = $('#FAST_SPEED').val();
+      SPEED_MOVE = $('#MOVE_SPEED').val();
+      $('#SLOW_SPEED').val(SPEED_SLOW * 60);
+      $('#FAST_SPEED').val(SPEED_FAST * 60);
+      $('#MOVE_SPEED').val(SPEED_MOVE * 60);
     }
   });
   // toggle prime relevant html elements
   $('#PRIME').change(function() {
-    if(!$(this).is(":checked")) {
-      $("#PRIME_EXT").prop('disabled', true);
-      $('label[for=PRIME_EXT]').css({opacity: 0.5});
-    } else {
+    if($(this).is(":checked")) {
       $("#PRIME_EXT").prop('disabled', false);
       $('label[for=PRIME_EXT]').css({opacity: 1});
-    }
-  });
-  // toggle between round and rectangular bed
-  $('#ROUND_BED').change(function() {
-    if(!$(this).is(":checked")) {
-      $("#BEDSIZE_X").prop('disabled', false);
-      $('label[for=BEDSIZE_X]').css({opacity: 1});
-      $("#BEDSIZE_Y").prop('disabled', false);
-      $('label[for=BEDSIZE_Y]').css({opacity: 1});
-      $("#BEDSIZE_DIAMETER").prop('disabled', true);
-      $('label[for=BEDSIZE_DIAMETER]').css({opacity: 0.5});
     } else {
-      $("#BEDSIZE_X").prop('disabled', true);
-      $('label[for=BEDSIZE_X]').css({opacity: 0.5});
-      $("#BEDSIZE_Y").prop('disabled', true);
-      $('label[for=BEDSIZE_Y]').css({opacity: 0.5});
-      $("#BEDSIZE_DIAMETER").prop('disabled', false);
-      $('label[for=BEDSIZE_DIAMETER]').css({opacity: 1});
+      $("#PRIME_EXT").prop('disabled', true);
+      $('label[for=PRIME_EXT]').css({opacity: 0.5});
     }
   });
   // frame and alternate pattern are mutually exclusive
   $('#PAT_ALT').change(function() {
-    if(!$(this).is(":checked")) {
-      $("#FRAME").prop('disabled', false);
-      $('label[for=FRAME]').css({opacity: 1});
-    } else {
+    if($(this).is(":checked")) {
       $("#FRAME").prop('checked', false);
       $("#FRAME").prop('disabled', true);
       $('label[for=FRAME]').css({opacity: 0.5});
+    } else {
+      $("#FRAME").prop('disabled', false);
+      $('label[for=FRAME]').css({opacity: 1});
+    }
+  });
+  $('#FRAME').change(function() {
+    if($(this).is(":checked")) {
+      $("#PAT_ALT").prop('checked', false);
+      $("#PAT_ALT").prop('disabled', true);
+      $('label[for=PAT_ALT]').css({opacity: 0.5});
+    } else {
+      $("#PAT_ALT").prop('disabled', false);
+      $('label[for=PAT_ALT]').css({opacity: 1});
     }
   });
 });
