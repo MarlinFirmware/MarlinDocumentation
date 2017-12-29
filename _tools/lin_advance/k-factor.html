@@ -5,6 +5,7 @@ category:     [ tools ]
 ---
 <script language="JavaScript" type="text/javascript" src="/assets/javascript/jquery-2.2.1.min.js"></script>
 <script language="JavaScript" type="text/javascript" src="/assets/javascript/jquery-ui.min.js"></script>
+<script language="JavaScript" type="text/javascript" src="./FileSaver.min.js"></script>
 <script language="JavaScript" type="text/javascript" src="./k-factor.js"></script>
 <div class="container" role="main">
   <div class="row">
@@ -12,20 +13,20 @@ category:     [ tools ]
       <h1>K-factor Calibration Pattern</h1>
       <p>The below Javascript will generate G-Code that will support the user in calibrating the K-factor for Marlin's Linear Advance Feature. The default values should work for a standard PLA material with a 0.4 mm nozzle.      </p>
       <p>Press the <code class="highlighter-rouge">Generate G-code</code> button then  <code class="highlighter-rouge">Download as file</code> to save the result.</p>
-      <table width="100%" border="1">
+      <table>
         <tbody>
           <tr>
-            <td colspan="3" bgcolor="#EDEDED"><h3>Settings</h3></td>
-            <td bgcolor="#EDEDED"><h3>G-code</h3></td>
+            <td colspan="3" class="tdHead"><h3>Settings</h3></td>
+            <td class="tdHead"><h3>G-code</h3></td>
           </tr>
           <tr>
-            <td colspan="3" bgcolor="#F5F5F5"><h4>Printer:</h4></td>
-            <td width="38%" rowspan="32"><textarea name="textarea" id="textarea"></textarea></td>
+            <td colspan="3" class="tdSection"><h4>Printer:</h4></td>
+            <td rowspan="32" class="txtareatd"><textarea name="textarea" id="textarea"></textarea></td>
           </tr>
           <tr>
-            <td width="14%"><label for="FIL_DIA">Filament Diameter:</label></td>
+            <td><label for="FIL_DIA">Filament Diameter:</label></td>
             <td><input name="FIL_DIA" type="number" id="FIL_DIA" step="any" tabindex="1" value="1.75"></td>
-            <td width="41%">Diameter of the used filament (mm)</td>
+            <td>Diameter of the used filament (mm)</td>
           </tr>
           <tr>
             <td><label for="NOZ_DIA">Nozzle Diameter:</label></td>
@@ -34,7 +35,7 @@ category:     [ tools ]
           </tr>
           <tr>
             <td><label for="NOZZLE_TEMP">Nozzle Temperature:</label></td>
-            <td width="7%"><input name="NOZZLE_TEMP" type="number" id="NOZZLE_TEMP" step="any" tabindex="3" value="205"></td>
+            <td><input name="NOZZLE_TEMP" type="number" id="NOZZLE_TEMP" step="any" tabindex="3" value="205"></td>
             <td>Nozzle Temperature (°C)</td>
           </tr>
           <tr>
@@ -53,7 +54,7 @@ category:     [ tools ]
             <td>Layer Height (mm)</td>
           </tr>
           <tr>
-            <td colspan="3" bgcolor="#F5F5F5"><h4>Print Bed:</h4></td>
+            <td colspan="3" class="tdSection"><h4>Print Bed:</h4></td>
           </tr>
           <tr>
             <td><label for="BEDSIZE_X">Bed Size X:</label></td>
@@ -66,7 +67,7 @@ category:     [ tools ]
             <td>Size (mm) of the bed in Y</td>
           </tr>
           <tr>
-            <td colspan="3" bgcolor="#F5F5F5"><h4>Speed:</h4></td>
+            <td colspan="3" class="tdSection"><h4>Speed:</h4></td>
           </tr>
           <tr>
             <td><label for="MM_S">Use mm/s: </label></td>
@@ -89,7 +90,7 @@ category:     [ tools ]
             <td>Movement speed</td>
           </tr>
           <tr>
-            <td colspan="3" bgcolor="#F5F5F5"><h4>K-factor:</h4></td>
+            <td colspan="3" class="tdSection"><h4>K-factor:</h4></td>
           </tr>
           <tr>
             <td><label for="K_START">Starting Value for K:</label></td>
@@ -122,7 +123,7 @@ category:     [ tools ]
             <td>Switches to an alternate calibration pattern. Anchor frame is not compatible with this type</td>
           </tr>
           <tr>
-            <td colspan="3" bgcolor="#F5F5F5"><h4>Advanced:</h4></td>
+            <td colspan="3" class="tdSection"><h4>Advanced:</h4></td>
           </tr>
           <tr>
             <td><label for="NOZ_LIN_R">Nozzle Line Ratio:</label></td>
@@ -159,7 +160,7 @@ category:     [ tools ]
             <td>Adds a frame around the start and end points of the test lines. May improve adhesion</td>
           </tr>
           <tr>
-            <td><label for="SPACE_LINE2">Test Line Spacing:</label></td>
+            <td><label for="SPACE_LINE">Test Line Spacing:</label></td>
             <td><input name="SPACE_LINE" type="number" id="SPACE_LINE" step="0.1" tabindex="26" value="5"></td>
             <td>Distance between the test lines. This will impact print size</td>
           </tr>

@@ -65,6 +65,10 @@ function genGcode() {
       PAT_START_X = CENTER_X - (0.5 * LENGTH_FAST) - LENGTH_SLOW + 5,
       PAT_START_Y = CENTER_Y - (PRINT_SIZE_Y / 2);
 
+  // force height of textarea to td cell Height
+  // for whatever reason IE will require a reload otherwise
+  var TXTAREAHEIGHT = $('.txtareatd').height();
+  $('.calibpat textarea').css({'height': (TXTAREAHEIGHT) + 'px'});
 
   // Check if K-Factor Stepping is a multiple of the K-Factor Range
   if (RANGE_K % STEP_K != 0) {
@@ -320,32 +324,18 @@ function genGcode() {
                                                ';';
 }
 
-// https://stackoverflow.com/questions/21479107/saving-html5-textarea-contents-to-file
+// Save content of textarea to file using
+// https://github.com/eligrey/FileSaver.js
 function saveTextAsFile() {
   var textToWrite = document.getElementById('textarea').value,
       textFileAsBlob = new Blob([textToWrite], {type: 'text/plain'}),
-      fileNameToSaveAs = "kfactor.gcode",
-      downloadLink = document.createElement("a");
-
-  downloadLink.download = fileNameToSaveAs;
-  downloadLink.innerHTML = "Download File";
-  if (window.webkitURL != null) {
-    // Chrome allows the link to be clicked without actually adding it to the DOM.
-    downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
+      fileNameToSaveAs = "kfactor.gcode";
+  if (textToWrite) {
+    saveAs(textFileAsBlob, fileNameToSaveAs);
   } else {
-    // Firefox requires the link to be added to the DOM before it can be clicked.
-    downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
-    downloadLink.onclick = destroyClickedElement;
-    downloadLink.style.display = "none";
-    document.body.appendChild(downloadLink);
+    alert("Generate G-code first");
+    return;
   }
-
-  downloadLink.click();
-}
-
-function destroyClickedElement(event) {
-  // remove the link from the DOM
-  document.body.removeChild(event.target);
 }
 
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/round
@@ -431,12 +421,16 @@ function rotateY(x, xm, y, ym, a) {
 
 // toggle html elements
 $(document).ready(function() {
+  // Adapt textarea to cell size
+  var TXTAREAHEIGHT = $('.txtareatd').height();
+  $('.calibpat textarea').css({'height': (TXTAREAHEIGHT) + 'px'});
+
   // toggle between mm/s and mm/min speeds
   $('#MM_S').change(function() {
     var SPEED_SLOW = $('#SLOW_SPEED').val(),
         SPEED_FAST = $('#FAST_SPEED').val(),
         SPEED_MOVE = $('#MOVE_SPEED').val();
-    if($(this).is(":checked")) {
+    if($(this).is(':checked')) {
       SPEED_SLOW = $('#SLOW_SPEED').val();
       SPEED_FAST = $('#FAST_SPEED').val();
       SPEED_MOVE = $('#MOVE_SPEED').val();
@@ -452,34 +446,36 @@ $(document).ready(function() {
       $('#MOVE_SPEED').val(SPEED_MOVE * 60);
     }
   });
+
   // toggle prime relevant html elements
   $('#PRIME').change(function() {
-    if($(this).is(":checked")) {
-      $("#PRIME_EXT").prop('disabled', false);
+    if($(this).is(':checked')) {
+      $('#PRIME_EXT').prop('disabled', false);
       $('label[for=PRIME_EXT]').css({opacity: 1});
     } else {
-      $("#PRIME_EXT").prop('disabled', true);
+      $('#PRIME_EXT').prop('disabled', true);
       $('label[for=PRIME_EXT]').css({opacity: 0.5});
     }
   });
+
   // frame and alternate pattern are mutually exclusive
   $('#PAT_ALT').change(function() {
-    if($(this).is(":checked")) {
-      $("#FRAME").prop('checked', false);
-      $("#FRAME").prop('disabled', true);
+    if($(this).is(':checked')) {
+      $('#FRAME').prop('checked', false);
+      $('#FRAME').prop('disabled', true);
       $('label[for=FRAME]').css({opacity: 0.5});
     } else {
-      $("#FRAME").prop('disabled', false);
+      $('#FRAME').prop('disabled', false);
       $('label[for=FRAME]').css({opacity: 1});
     }
   });
   $('#FRAME').change(function() {
-    if($(this).is(":checked")) {
-      $("#PAT_ALT").prop('checked', false);
-      $("#PAT_ALT").prop('disabled', true);
+    if($(this).is(':checked')) {
+      $('#PAT_ALT').prop('checked', false);
+      $('#PAT_ALT').prop('disabled', true);
       $('label[for=PAT_ALT]').css({opacity: 0.5});
     } else {
-      $("#PAT_ALT").prop('disabled', false);
+      $('#PAT_ALT').prop('disabled', false);
       $('label[for=PAT_ALT]').css({opacity: 1});
     }
   });
