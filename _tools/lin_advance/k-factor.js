@@ -168,11 +168,12 @@ function genGcode() {
                                                '; reset extruder and go to layer height\n' +
                                                ';\n' +
                                                'G92 E0 ; reset extruder distance\n' +
-                                               'G1 Z' + HEIGHT_LAYER + ' F' + SPEED_SLOW + '\n' +
-                                               ';\n';
+                                               'G1 Z' + HEIGHT_LAYER + ' F' + SPEED_SLOW + '\n';
+
   // Prime nozzle if activated
   if (USE_PRIME) {
-    document.getElementById('textarea').value += '; prime nozzle\n' +
+    document.getElementById('textarea').value += ';\n' +
+                                                 '; prime nozzle\n' +
                                                  ';\n' +
                                                  'G1 X' + Math.round10(rotateX(PRIME_START_X, CENTER_X, PRIME_START_Y, CENTER_Y, PRINT_DIR), -4) +
                                                    ' Y' + Math.round10(rotateY(PRIME_START_X, CENTER_X, PRIME_START_Y, CENTER_Y, PRINT_DIR), -4) +
@@ -234,13 +235,13 @@ function genGcode() {
                                                (PRIME_DWELL ? 'G4 P' + (PRIME_DWELL * 1000) + ' ; Pause (dwell) for 2 seconds\n' : '') +
                                                'G1 X' + Math.round10(rotateX(PAT_START_X, CENTER_X, PAT_START_Y, CENTER_Y, PRINT_DIR), -4) +
                                                  ' Y' + Math.round10(rotateY(PAT_START_X, CENTER_X, PAT_START_Y, CENTER_Y, PRINT_DIR), -4) +
-                                                 ' F' + SPEED_MOVE + ' ; move to pattern start\n';
+                                                 ' F' + SPEED_MOVE + ' ; move to pattern start\n' +
+                                                (ALT_PATTERN ? 'G1 E' + RETRACT_DIST + '\n' : '');
   var j = 0,
       k = 0;
   for (var i = START_K; i <= END_K; i += STEP_K) {
     if (ALT_PATTERN && (k % 2 == 0)) {
       document.getElementById('textarea').value += 'M900 K' + i + ' ; set K-factor\n' +
-                                                   'G1 E' + RETRACT_DIST + '\n' +
                                                    'G1 X' + Math.round10(rotateX(PAT_START_X + LENGTH_SLOW, CENTER_X, PAT_START_Y + j, CENTER_Y, PRINT_DIR), -4) +
                                                      ' Y' + Math.round10(rotateY(PAT_START_X + LENGTH_SLOW, CENTER_X, PAT_START_Y + j, CENTER_Y, PRINT_DIR), -4) +
                                                      ' E' + EXT_SLOW + ' F' + SPEED_SLOW + '\n' +
@@ -257,7 +258,6 @@ function genGcode() {
       k += 1;
     } else if (ALT_PATTERN && (k % 2 != 0)) {
       document.getElementById('textarea').value += 'M900 K' + i + ' ; set K-factor\n' +
-                                                   'G1 E' + RETRACT_DIST + '\n' +
                                                    'G1 X' + Math.round10(rotateX(PAT_START_X + LENGTH_SLOW + LENGTH_FAST, CENTER_X, PAT_START_Y + j, CENTER_Y, PRINT_DIR), -4) +
                                                      ' Y' + Math.round10(rotateY(PAT_START_X + LENGTH_SLOW + LENGTH_FAST, CENTER_X, PAT_START_Y + j, CENTER_Y, PRINT_DIR), -4) +
                                                      ' E' + EXT_SLOW + ' F' + SPEED_SLOW + '\n' +
