@@ -5,6 +5,7 @@ category:     [ tools ]
 ---
 <script language="JavaScript" type="text/javascript" src="/assets/javascript/jquery-2.2.1.min.js"></script>
 <script language="JavaScript" type="text/javascript" src="/assets/javascript/jquery-ui.min.js"></script>
+<script language="JavaScript" type="text/javascript" src="./FileSaver.min.js"></script>
 <script language="JavaScript" type="text/javascript" src="./k-factor.js"></script>
 <div class="container" role="main">
   <div class="row">
@@ -12,20 +13,20 @@ category:     [ tools ]
       <h1>K-factor Calibration Pattern</h1>
       <p>The below Javascript will generate G-Code that will support the user in calibrating the K-factor for Marlin's Linear Advance Feature. The default values should work for a standard PLA material with a 0.4 mm nozzle.      </p>
       <p>Press the <code class="highlighter-rouge">Generate G-code</code> button then  <code class="highlighter-rouge">Download as file</code> to save the result.</p>
-      <table width="100%" border="1">
+      <table>
         <tbody>
           <tr>
-            <td colspan="3" bgcolor="#EDEDED"><h3>Settings</h3></td>
-            <td bgcolor="#EDEDED"><h3>G-code</h3></td>
+            <td colspan="3" class="tdHead"><h3>Settings</h3></td>
+            <td class="tdHead"><h3>G-code</h3></td>
           </tr>
           <tr>
-            <td colspan="3" bgcolor="#F5F5F5"><h4>Printer:</h4></td>
-            <td width="38%" rowspan="32"><textarea name="textarea" id="textarea"></textarea></td>
+            <td colspan="3" class="tdSection"><h4>Printer:</h4></td>
+            <td rowspan="34" class="txtareatd"><textarea name="textarea" id="textarea"></textarea></td>
           </tr>
           <tr>
-            <td width="14%"><label for="FIL_DIA">Filament Diameter:</label></td>
+            <td><label for="FIL_DIA">Filament Diameter:</label></td>
             <td><input name="FIL_DIA" type="number" id="FIL_DIA" step="any" tabindex="1" value="1.75"></td>
-            <td width="41%">Diameter of the used filament (mm)</td>
+            <td>Diameter of the used filament (mm)</td>
           </tr>
           <tr>
             <td><label for="NOZ_DIA">Nozzle Diameter:</label></td>
@@ -34,7 +35,7 @@ category:     [ tools ]
           </tr>
           <tr>
             <td><label for="NOZZLE_TEMP">Nozzle Temperature:</label></td>
-            <td width="7%"><input name="NOZZLE_TEMP" type="number" id="NOZZLE_TEMP" step="any" tabindex="3" value="205"></td>
+            <td><input name="NOZZLE_TEMP" type="number" id="NOZZLE_TEMP" step="any" tabindex="3" value="205"></td>
             <td>Nozzle Temperature (°C)</td>
           </tr>
           <tr>
@@ -53,7 +54,7 @@ category:     [ tools ]
             <td>Layer Height (mm)</td>
           </tr>
           <tr>
-            <td colspan="3" bgcolor="#F5F5F5"><h4>Print Bed:</h4></td>
+            <td colspan="3" class="tdSection"><h4>Print Bed:</h4></td>
           </tr>
           <tr>
             <td><label for="BEDSIZE_X">Bed Size X:</label></td>
@@ -66,7 +67,12 @@ category:     [ tools ]
             <td>Size (mm) of the bed in Y</td>
           </tr>
           <tr>
-            <td colspan="3" bgcolor="#F5F5F5"><h4>Speed:</h4></td>
+            <td><label for="CENTER_NULL">Origin Bed Center:</label></td>
+            <td><input name="CENTER_NULL" type="checkbox" id="CENTER_NULL" tabindex="10"></td>
+            <td>Use to move the origin position (x 0, y 0) to bed center instead of front left corner</td>
+          </tr>
+          <tr>
+            <td colspan="3" class="tdSection"><h4>Speed:</h4></td>
           </tr>
           <tr>
             <td><label for="MM_S">Use mm/s: </label></td>
@@ -89,59 +95,64 @@ category:     [ tools ]
             <td>Movement speed</td>
           </tr>
           <tr>
-            <td colspan="3" bgcolor="#F5F5F5"><h4>K-factor:</h4></td>
+            <td><label for="PRINT_ACCL">Acceleration:</label></td>
+            <td><input name="PRINT_ACCL" type="number" id="PRINT_ACCL" step="any" tabindex="15" value="500"></td>
+            <td>Set printing acceleration (mm/s^2)</td>
+          </tr>
+          <tr>
+            <td colspan="3" class="tdSection"><h4>K-factor:</h4></td>
           </tr>
           <tr>
             <td><label for="K_START">Starting Value for K:</label></td>
-            <td><input name="K_START" type="number" id="K_START" step="1" tabindex="15" value="0"></td>
+            <td><input name="K_START" type="number" id="K_START" step="1" tabindex="16" value="0"></td>
             <td>Starting value for the K-factor. Usually 0 but for bowden setups you might want to start higher, e.g. 30</td>
           </tr>
           <tr>
             <td><label for="K_END">Ending Value for K:</label></td>
-            <td><input name="K_END" type="number" id="K_END" step="1" tabindex="16" value="100"></td>
+            <td><input name="K_END" type="number" id="K_END" step="1" tabindex="17" value="100"></td>
             <td>Ending value of the K-factor. Bowden setups may be higher than 100</td>
           </tr>
           <tr>
             <td><label for="K_STEP">K-factor Stepping:</label></td>
-            <td><input name="K_STEP" type="number" id="K_STEP" step="1" tabindex="17" value="5"></td>
+            <td><input name="K_STEP" type="number" id="K_STEP" step="1" tabindex="18" value="5"></td>
             <td>Stepping of the K-factor in the test pattern. Needs to be an exact divisor of the K-factor Range (End - Start)</td>
           </tr>
           <tr>
             <td><label for="SLOW_LENGTH">Slow Speed Length:</label></td>
-            <td><input name="SLOW_LENGTH" type="number" id="SLOW_LENGTH" step="1" tabindex="18" value="20"></td>
+            <td><input name="SLOW_LENGTH" type="number" id="SLOW_LENGTH" step="1" tabindex="19" value="20"></td>
             <td>Length of the Slow Speed test-line (mm)</td>
           </tr>
           <tr>
             <td><label for="FAST_LENGTH">Fast Speed Length:</label></td>
-            <td><input name="FAST_LENGTH" type="number" id="FAST_LENGTH" step="1" tabindex="19" value="40"></td>
+            <td><input name="FAST_LENGTH" type="number" id="FAST_LENGTH" step="1" tabindex="20" value="40"></td>
             <td>Length of the Fast Speed test-line (mm)</td>
           </tr>
           <tr>
             <td><label for="PAT_ALT">Alternate Pattern:</label></td>
-            <td><input name="PAT_ALT" type="checkbox" id="PAT_ALT" tabindex="20"></td>
+            <td><input name="PAT_ALT" type="checkbox" id="PAT_ALT" tabindex="21"></td>
             <td>Switches to an alternate calibration pattern. Anchor frame is not compatible with this type</td>
           </tr>
           <tr>
-            <td colspan="3" bgcolor="#F5F5F5"><h4>Advanced:</h4></td>
+            <td colspan="3" class="tdSection"><h4>Advanced:</h4></td>
           </tr>
           <tr>
             <td><label for="NOZ_LIN_R">Nozzle Line Ratio:</label></td>
-            <td><input name="NOZ_LIN_R" type="number" id="NOZ_LIN_R" step="0.1" tabindex="21" value="1.2"></td>
+            <td><input name="NOZ_LIN_R" type="number" id="NOZ_LIN_R" step="0.1" tabindex="22" value="1.2"></td>
             <td>Ratio between nozzle diameter and extruded line width. Should be between 1.05 and 1.2</td>
           </tr>
           <tr>
             <td><label for="USE_BL">Use Bed Leveling:</label></td>
-            <td><input name="USE_BL" type="checkbox" id="USE_BL" tabindex="22"></td>
+            <td><input name="USE_BL" type="checkbox" id="USE_BL" tabindex="23"></td>
             <td>Level bed before printing. Bed leveling has to be activated</td>
           </tr>
           <tr>
             <td><label for="EXTRUSION_MULT">Extrusion Multiplier:</label></td>
-            <td><input name="EXTRUSION_MULT" type="number" id="EXTRUSION_MULT" step="0.1" tabindex="23" value="1.0"></td>
+            <td><input name="EXTRUSION_MULT" type="number" id="EXTRUSION_MULT" step="0.1" tabindex="24" value="1.0"></td>
             <td>Usually 1.0</td>
           </tr>
           <tr>
             <td><label for="DIR_PRINT">Printing Direction:</label></td>
-            <td><select name="DIR_PRINT" id="DIR_PRINT" tabindex="24">
+            <td><select name="DIR_PRINT" id="DIR_PRINT" tabindex="25">
                 <option value="0" selected>Left to Right (0°)</option>
                 <option value="45">45°</option>
                 <option value="90">Front to Back (90°)</option>
@@ -155,35 +166,35 @@ category:     [ tools ]
           </tr>
           <tr>
             <td><label for="FRAME">Print Anchor Frame:</label></td>
-            <td><input name="FRAME" type="checkbox" id="FRAME" tabindex="25"></td>
+            <td><input name="FRAME" type="checkbox" id="FRAME" tabindex="26"></td>
             <td>Adds a frame around the start and end points of the test lines. May improve adhesion</td>
           </tr>
           <tr>
-            <td><label for="SPACE_LINE2">Test Line Spacing:</label></td>
-            <td><input name="SPACE_LINE" type="number" id="SPACE_LINE" step="0.1" tabindex="26" value="5"></td>
+            <td><label for="SPACE_LINE">Test Line Spacing:</label></td>
+            <td><input name="SPACE_LINE" type="number" id="SPACE_LINE" step="0.1" tabindex="27" value="5"></td>
             <td>Distance between the test lines. This will impact print size</td>
           </tr>
           <tr>
             <td><label for="PRIME">Prime Nozzle:</label></td>
-            <td><input name="PRIME" type="checkbox" id="PRIME" tabindex="27" checked></td>
+            <td><input name="PRIME" type="checkbox" id="PRIME" tabindex="28" checked></td>
             <td>Prime the nozzle before starting the test pattern</td>
           </tr>
           <tr>
             <td><label for="PRIME_EXT">Prime Extrusion Multiplier:</label></td>
-            <td><input name="PRIME_EXT" type="number" id="PRIME_EXT" step="0.1" tabindex="28" value="2.5"></td>
+            <td><input name="PRIME_EXT" type="number" id="PRIME_EXT" step="0.1" tabindex="29" value="2.5"></td>
             <td>The default of 2.5 results in roughly 1mm of filament for 10mm line length</td>
           </tr>
           <tr>
             <td><label for="DWELL_PRIME">Prime Dwell:</label></td>
-            <td><input name="DWELL_PRIME" type="number" id="DWELL_PRIME" step="0.1" tabindex="29" value="2"></td>
+            <td><input name="DWELL_PRIME" type="number" id="DWELL_PRIME" step="0.1" tabindex="30" value="2"></td>
             <td>Inserts a pause of x seconds before starting the test pattern to bleed off any residual nozzle pressure</td>
           </tr>
           <tr class="calibpat2">
             <td colspan="3"><p>
-                <input name="button" type="button" id="button" tabindex="30" onclick="genGcode()" value="Generate G-code">
+                <input name="button" type="button" id="button" tabindex="31" onclick="genGcode()" value="Generate G-code">
               </p></td>
             <td><p>
-                <input name="button2" type="button" id="button2" tabindex="31" onclick="saveTextAsFile()" value="Download as file">
+                <input name="button2" type="button" id="button2" tabindex="32" onclick="saveTextAsFile()" value="Download as file">
               </p></td>
           </tr>
         </tbody>
