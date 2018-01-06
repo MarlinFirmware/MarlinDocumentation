@@ -28,9 +28,11 @@ function genGcode() {
       SPEED_SLOW = parseInt(document.getElementById('SLOW_SPEED').value),
       SPEED_FAST = parseInt(document.getElementById('FAST_SPEED').value),
       SPEED_MOVE = parseInt(document.getElementById('MOVE_SPEED').value),
+      ACCELERATION = parseInt(document.getElementById('PRINT_ACCL').value),
       RETRACT_DIST = parseFloat(document.getElementById('RETRACTION').value),
       BED_X = parseInt(document.getElementById('BEDSIZE_X').value),
       BED_Y = parseInt(document.getElementById('BEDSIZE_Y').value),
+      NULL_CENTER = document.getElementById('CENTER_NULL').checked,
       HEIGHT_LAYER = parseFloat(document.getElementById('LAYER_HEIGHT').value),
       EXT_MULT = parseFloat(document.getElementById('EXTRUSION_MULT').value),
       START_K = parseInt(document.getElementById('K_START').value),
@@ -50,21 +52,25 @@ function genGcode() {
   // calculate some values for later use
   var RANGE_K = END_K - START_K,
       LINE_WIDTH = NOZZLE_DIAMETER * NOZZLE_LINE_RATIO,
-      PRINT_SIZE_Y = (RANGE_K / STEP_K * LINE_SPACING) + 25,
-      PRINT_SIZE_X = (2 * LENGTH_SLOW) + LENGTH_FAST + 10,
-      CENTER_X = BED_X / 2,
-      CENTER_Y = BED_Y / 2,
-      PRIME_START_X = CENTER_X - LENGTH_SLOW - (0.5 * LENGTH_FAST) - 5,
+      PRINT_SIZE_Y = (RANGE_K / STEP_K * LINE_SPACING) + 25, // +25 with ref marking
+      PRINT_SIZE_X = (2 * LENGTH_SLOW) + LENGTH_FAST + (USE_PRIME ? 10 : 0),
+      CENTER_X = (NULL_CENTER ? 0 : BED_X / 2),
+      CENTER_Y = (NULL_CENTER ? 0 : BED_Y / 2),
+      PRIME_START_X = CENTER_X - LENGTH_SLOW - (0.5 * LENGTH_FAST) - (USE_PRIME ? 5 : 0),
       PRIME_START_Y = CENTER_Y - (PRINT_SIZE_Y / 2),
       PRIME_END_X = PRIME_START_X,
       PRIME_END_Y = CENTER_Y + (PRINT_SIZE_Y / 2),
-      REF1_START_X = CENTER_X - (0.5 * LENGTH_FAST) + 5,
-      REF2_START_X = CENTER_X + (0.5 * LENGTH_FAST) + 5,
-      REF_START_Y = (PRINT_SIZE_Y / 2) + CENTER_Y - 20,
-      REF_END_Y = (PRINT_SIZE_Y / 2) + CENTER_Y,
-      PAT_START_X = CENTER_X - (0.5 * LENGTH_FAST) - LENGTH_SLOW + 5,
+      REF1_START_X = CENTER_X - (0.5 * LENGTH_FAST) + (USE_PRIME ? 5 : 0),
+      REF2_START_X = CENTER_X + (0.5 * LENGTH_FAST) + (USE_PRIME ? 5 : 0),
+      REF_START_Y = CENTER_Y + (PRINT_SIZE_Y / 2) - 20,
+      REF_END_Y = CENTER_Y + (PRINT_SIZE_Y / 2),
+      PAT_START_X = CENTER_X - (0.5 * LENGTH_FAST) - LENGTH_SLOW + (USE_PRIME ? 5 : 0),
       PAT_START_Y = CENTER_Y - (PRINT_SIZE_Y / 2);
 
+  // force height of textarea to td cell Height
+  // for whatever reason IE will require a reload otherwise
+  var TXTAREAHEIGHT = $('.txtareatd').height();
+  $('.calibpat textarea').css({'height': (TXTAREAHEIGHT) + 'px'});
 
   // Check if K-Factor Stepping is a multiple of the K-Factor Range
   if (RANGE_K % STEP_K != 0) {
@@ -115,8 +121,8 @@ function genGcode() {
                                               ';\n' +
                                               '; Created: ' + new Date() + '\n' +
                                               '; Settings:\n' +
-                                              '; Print Size X = ' + PRINT_SIZE_X + ' mm\n' +
-                                              '; Print Size Y = ' + PRINT_SIZE_Y + ' mm\n' +
+                                              '; Print Size X = ' + FIT_WIDTH + ' mm\n' +
+                                              '; Print Size Y = ' + FIT_HEIGHT + ' mm\n' +
                                               '; Print Rotation = ' + PRINT_DIR + ' degree\n' +
                                               '; Print Pattern = ' + (ALT_PATTERN ? "Alternate" : "Standard") + '\n' +
                                               '; Print Frame = ' + (USE_FRAME ? "true" : "false") + '\n' +
@@ -127,14 +133,16 @@ function genGcode() {
                                               '; Nozzle Diameter = ' + NOZZLE_DIAMETER + ' mm\n' +
                                               '; Nozzle Temperature = ' + NOZZLE_TEMP + ' °C\n' +
                                               '; Nozzle / Line Ratio = ' + NOZZLE_LINE_RATIO + '\n' +
-                                              '; Bed Temperature = ' +BED_TEMP + ' °C\n' +
+                                              '; Bed Temperature = ' + BED_TEMP + ' °C\n' +
                                               '; Slow Printing Speed = ' + SPEED_SLOW + ' mm/min\n' +
                                               '; Fast Printing Speed = ' + SPEED_FAST + ' mm/min\n' +
+                                              '; Printing Acceleration = ' + ACCELERATION + ' mm/s^2\n' +
                                               '; Movement Speed = ' + SPEED_MOVE + ' mm/min\n' +
                                               '; Use BL = ' + (document.getElementById('USE_BL').checked ? "true" : "false") + '\n' +
                                               '; Retraction Distance = ' + RETRACT_DIST + ' mm\n' +
                                               '; Bed Size X = ' + BED_X + ' mm\n' +
                                               '; Bed Size Y = ' + BED_Y + ' mm\n' +
+                                              '; Origin Bed Center = ' + (NULL_CENTER ? "true" : "false") + '\n' +
                                               '; Layer Height = ' + HEIGHT_LAYER + ' mm\n' +
                                               '; Extrusion Multiplier = ' + EXT_MULT + '\n' +
                                               '; Starting Value K-Factor = ' + START_K + '\n' +
@@ -157,22 +165,20 @@ function genGcode() {
 
   document.getElementById('textarea').value += 'M109 S' + NOZZLE_TEMP + ' ; block waiting for nozzle temp\n' +
                                                'G21 ; set units to millimeters\n' +
-                                               'M204 P500 ; lower acceleration to 500mm/s2\n' +
+                                               'M204 P' + ACCELERATION + ' ; set acceleration\n' +
                                                'G90 ; use absolute coordinates\n' +
                                                'M83 ; use relative distances for extrusion\n' +
-                                               ';\n' +
-                                               '; reset extruder and go to layer height\n' +
-                                               ';\n' +
-                                               'G92 E0 ; reset extruder distance\n' +
-                                               'G1 Z' + HEIGHT_LAYER + ' F' + SPEED_SLOW + '\n' +
-                                               ';\n';
+                                               'G92 E0 ; reset extruder distance\n';
+
   // Prime nozzle if activated
   if (USE_PRIME) {
-    document.getElementById('textarea').value += '; prime nozzle\n' +
+    document.getElementById('textarea').value += ';\n' +
+                                                 '; prime nozzle\n' +
                                                  ';\n' +
                                                  'G1 X' + Math.round10(rotateX(PRIME_START_X, CENTER_X, PRIME_START_Y, CENTER_Y, PRINT_DIR), -4) +
                                                    ' Y' + Math.round10(rotateY(PRIME_START_X, CENTER_X, PRIME_START_Y, CENTER_Y, PRINT_DIR), -4) +
-                                                   ' F' + SPEED_MOVE + '\n' +
+                                                   ' F' + SPEED_MOVE + ' ; move to prime start\n' +
+                                                 'G1 Z' + HEIGHT_LAYER + ' F' + SPEED_SLOW + ' ; move to layer height\n' +
                                                  'G1 X' + Math.round10(rotateX(PRIME_END_X, CENTER_X, PRIME_END_Y, CENTER_Y, PRINT_DIR), -4) +
                                                    ' Y' + Math.round10(rotateY(PRIME_END_X, CENTER_X, PRIME_END_Y, CENTER_Y, PRINT_DIR), -4) +
                                                    ' E' + EXT_PRIME1 + ' F' + SPEED_SLOW + ' ; prime nozzle\n' +
@@ -193,6 +199,7 @@ function genGcode() {
                                                  'G1 X' + Math.round10(rotateX(PAT_START_X - LINE_WIDTH, CENTER_X, PAT_START_Y - 3, CENTER_Y, PRINT_DIR), -4) +
                                                    ' Y' + Math.round10(rotateY(PAT_START_X - LINE_WIDTH, CENTER_X, PAT_START_Y - 3, CENTER_Y, PRINT_DIR), -4) +
                                                    ' F' + SPEED_MOVE + ' ; move to frame start\n' +
+                                                 (USE_PRIME ? '' : 'G1 Z' + HEIGHT_LAYER + ' F' + SPEED_SLOW + ' ; move to layer height\n') +
                                                  (USE_PRIME ? 'G1 E' + RETRACT_DIST + '\n' : '') +
                                                  'G1 X' + Math.round10(rotateX(PAT_START_X - LINE_WIDTH, CENTER_X, PAT_START_Y + PRINT_SIZE_Y - 22, CENTER_Y, PRINT_DIR), -4) +
                                                    ' Y' + Math.round10(rotateY(PAT_START_X - LINE_WIDTH, CENTER_X, PAT_START_Y + PRINT_SIZE_Y - 22, CENTER_Y, PRINT_DIR), -4) +
@@ -221,7 +228,9 @@ function genGcode() {
   }
 
   // insert a retract if no prime and no frame
-  (!USE_PRIME && !USE_FRAME ? document.getElementById('textarea').value += 'G1 E-' + RETRACT_DIST + '\n' : '');
+  if (!USE_PRIME && !USE_FRAME) {
+    document.getElementById('textarea').value += 'G1 E-' + RETRACT_DIST + '\n';
+  }
 
   // generate the k-factor test pattern
   document.getElementById('textarea').value += ';\n' +
@@ -230,13 +239,14 @@ function genGcode() {
                                                (PRIME_DWELL ? 'G4 P' + (PRIME_DWELL * 1000) + ' ; Pause (dwell) for 2 seconds\n' : '') +
                                                'G1 X' + Math.round10(rotateX(PAT_START_X, CENTER_X, PAT_START_Y, CENTER_Y, PRINT_DIR), -4) +
                                                  ' Y' + Math.round10(rotateY(PAT_START_X, CENTER_X, PAT_START_Y, CENTER_Y, PRINT_DIR), -4) +
-                                                 ' F' + SPEED_MOVE + ' ; move to pattern start\n';
+                                                 ' F' + SPEED_MOVE + ' ; move to pattern start\n' +
+                                                (USE_PRIME || USE_FRAME ? '' : 'G1 Z' + HEIGHT_LAYER + ' F' + SPEED_SLOW + ' ; move to layer height\n') +
+                                                (ALT_PATTERN ? 'G1 E' + RETRACT_DIST + '\n' : '');
   var j = 0,
       k = 0;
   for (var i = START_K; i <= END_K; i += STEP_K) {
     if (ALT_PATTERN && (k % 2 == 0)) {
       document.getElementById('textarea').value += 'M900 K' + i + ' ; set K-factor\n' +
-                                                   'G1 E' + RETRACT_DIST + '\n' +
                                                    'G1 X' + Math.round10(rotateX(PAT_START_X + LENGTH_SLOW, CENTER_X, PAT_START_Y + j, CENTER_Y, PRINT_DIR), -4) +
                                                      ' Y' + Math.round10(rotateY(PAT_START_X + LENGTH_SLOW, CENTER_X, PAT_START_Y + j, CENTER_Y, PRINT_DIR), -4) +
                                                      ' E' + EXT_SLOW + ' F' + SPEED_SLOW + '\n' +
@@ -253,7 +263,6 @@ function genGcode() {
       k += 1;
     } else if (ALT_PATTERN && (k % 2 != 0)) {
       document.getElementById('textarea').value += 'M900 K' + i + ' ; set K-factor\n' +
-                                                   'G1 E' + RETRACT_DIST + '\n' +
                                                    'G1 X' + Math.round10(rotateX(PAT_START_X + LENGTH_SLOW + LENGTH_FAST, CENTER_X, PAT_START_Y + j, CENTER_Y, PRINT_DIR), -4) +
                                                      ' Y' + Math.round10(rotateY(PAT_START_X + LENGTH_SLOW + LENGTH_FAST, CENTER_X, PAT_START_Y + j, CENTER_Y, PRINT_DIR), -4) +
                                                      ' E' + EXT_SLOW + ' F' + SPEED_SLOW + '\n' +
@@ -313,39 +322,25 @@ function genGcode() {
                                                ';\n' +
                                                'M104 S0 ; turn off hotend\n' +
                                                'M140 S0 ; turn off bed\n' +
-                                               'G1 Z30 Y200 F' + SPEED_MOVE + ' ; move away from the print\n' +
+                                               'G1 Z30 X' + (NULL_CENTER ? BED_X / 2 : BED_X) + ' Y' + (NULL_CENTER ? BED_Y / 2 : BED_Y) + ' F' + SPEED_MOVE + ' ; move away from the print\n' +
                                                'M84 ; disable motors\n' +
                                                'M502 ; resets parameters from ROM (for those who do not have an EEPROM)\n' +
                                                'M501 ; resets parameters from EEPROM (preferably)\n' +
                                                ';';
 }
 
-// https://stackoverflow.com/questions/21479107/saving-html5-textarea-contents-to-file
+// Save content of textarea to file using
+// https://github.com/eligrey/FileSaver.js
 function saveTextAsFile() {
   var textToWrite = document.getElementById('textarea').value,
       textFileAsBlob = new Blob([textToWrite], {type: 'text/plain'}),
-      fileNameToSaveAs = "kfactor.gcode",
-      downloadLink = document.createElement("a");
-
-  downloadLink.download = fileNameToSaveAs;
-  downloadLink.innerHTML = "Download File";
-  if (window.webkitURL != null) {
-    // Chrome allows the link to be clicked without actually adding it to the DOM.
-    downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
+      fileNameToSaveAs = "kfactor.gcode";
+  if (textToWrite) {
+    saveAs(textFileAsBlob, fileNameToSaveAs);
   } else {
-    // Firefox requires the link to be added to the DOM before it can be clicked.
-    downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
-    downloadLink.onclick = destroyClickedElement;
-    downloadLink.style.display = "none";
-    document.body.appendChild(downloadLink);
+    alert("Generate G-code first");
+    return;
   }
-
-  downloadLink.click();
-}
-
-function destroyClickedElement(event) {
-  // remove the link from the DOM
-  document.body.removeChild(event.target);
 }
 
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/round
@@ -431,12 +426,16 @@ function rotateY(x, xm, y, ym, a) {
 
 // toggle html elements
 $(document).ready(function() {
+  // Adapt textarea to cell size
+  var TXTAREAHEIGHT = $('.txtareatd').height();
+  $('.calibpat textarea').css({'height': (TXTAREAHEIGHT) + 'px'});
+
   // toggle between mm/s and mm/min speeds
   $('#MM_S').change(function() {
     var SPEED_SLOW = $('#SLOW_SPEED').val(),
         SPEED_FAST = $('#FAST_SPEED').val(),
         SPEED_MOVE = $('#MOVE_SPEED').val();
-    if($(this).is(":checked")) {
+    if($(this).is(':checked')) {
       SPEED_SLOW = $('#SLOW_SPEED').val();
       SPEED_FAST = $('#FAST_SPEED').val();
       SPEED_MOVE = $('#MOVE_SPEED').val();
@@ -452,34 +451,36 @@ $(document).ready(function() {
       $('#MOVE_SPEED').val(SPEED_MOVE * 60);
     }
   });
+
   // toggle prime relevant html elements
   $('#PRIME').change(function() {
-    if($(this).is(":checked")) {
-      $("#PRIME_EXT").prop('disabled', false);
+    if($(this).is(':checked')) {
+      $('#PRIME_EXT').prop('disabled', false);
       $('label[for=PRIME_EXT]').css({opacity: 1});
     } else {
-      $("#PRIME_EXT").prop('disabled', true);
+      $('#PRIME_EXT').prop('disabled', true);
       $('label[for=PRIME_EXT]').css({opacity: 0.5});
     }
   });
+
   // frame and alternate pattern are mutually exclusive
   $('#PAT_ALT').change(function() {
-    if($(this).is(":checked")) {
-      $("#FRAME").prop('checked', false);
-      $("#FRAME").prop('disabled', true);
+    if($(this).is(':checked')) {
+      $('#FRAME').prop('checked', false);
+      $('#FRAME').prop('disabled', true);
       $('label[for=FRAME]').css({opacity: 0.5});
     } else {
-      $("#FRAME").prop('disabled', false);
+      $('#FRAME').prop('disabled', false);
       $('label[for=FRAME]').css({opacity: 1});
     }
   });
   $('#FRAME').change(function() {
-    if($(this).is(":checked")) {
-      $("#PAT_ALT").prop('checked', false);
-      $("#PAT_ALT").prop('disabled', true);
+    if($(this).is(':checked')) {
+      $('#PAT_ALT').prop('checked', false);
+      $('#PAT_ALT').prop('disabled', true);
       $('label[for=PAT_ALT]').css({opacity: 0.5});
     } else {
-      $("#PAT_ALT").prop('disabled', false);
+      $('#PAT_ALT').prop('disabled', false);
       $('label[for=PAT_ALT]').css({opacity: 1});
     }
   });
