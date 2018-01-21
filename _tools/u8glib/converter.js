@@ -25,7 +25,7 @@ head.ready(function() {
       ctx     = canvas.getContext('2d'),
       input   = document.getElementById('file-input'),
       output  = document.getElementById('output'),
-      tohex   = function(b) { return '0x' + ('0' + (b & 0xFF).toString(16)).slice(-2); },
+      tohex   = function(b) { return '0x' + ('0' + (b & 0xFF).toString(16)).toUpperCase().slice(-2); },
       dosel = function() { this.select(); };
 
     output.addEventListener('focus', dosel, true);
@@ -51,9 +51,16 @@ head.ready(function() {
             return;
           }
 
-          ctx.canvas.width  = img.width;
-          ctx.canvas.height = img.height;
-          ctx.drawImage(img, 0, 0);
+          var scal = 4, bw = img.width * scal, bh = img.height * scal;
+          ctx.canvas.width  = bw;
+          ctx.canvas.height = bh;
+
+          ctx.mozImageSmoothingEnabled = false;
+          ctx.imageSmoothingQuality = "Medium";
+          ctx.webkitImageSmoothingEnabled = false;
+          ctx.msImageSmoothingEnabled = false;
+          ctx.imageSmoothingEnabled = false;
+          ctx.drawImage(img, 0, 0, bw, bh);
 
           var buffer = ctx.getImageData(0, 0, canvas.width, canvas.height).data,
               out = [],
@@ -63,10 +70,13 @@ head.ready(function() {
               name = Math.random().toString(36).substring(7),
               j = 0;
 
-          for (var i = 0; i < buffer.length; i += 4) {
-            var lum = buffer[i] * 0.3 + buffer[i+1] * 0.59 + buffer[i+2] * 0.11,
-                bit = (lum < 127) ? 1 : 0;
-            out.push(bit);
+          for (var y = 0; y < bh; y += scal) {
+            for (var x = 0; x < bw; x += scal) {
+              var i = (x + y * bw) * 4,
+                  lum = buffer[i] * 0.3 + buffer[i+1] * 0.59 + buffer[i+2] * 0.11,
+                  bit = (lum < 127) ? 1 : 0;
+              out.push(bit);
+            }
           }
 
           output.value =  '// Width: ' + ctx.canvas.width + ', Height: ' + ctx.canvas.height + '\n' +
