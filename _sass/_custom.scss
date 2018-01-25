@@ -179,17 +179,69 @@ img.floater.framed { border: 4px solid black; }
 
 #bitmap-converter {
   p { font-size: 120%; }
-  canvas#preview {
+  label:hover { color: #090; }
+  canvas {
     display: block;
-    border: 1px solid gray;
-    margin: 0.5em;
+    padding: 2px;
+    margin-top: 5px;
     }
-  textarea#output {
+  #preview-lg {
+    border: 1px solid gray;
+    margin: 5px;
+    }
+  #preview-sm {
+    border: 2px solid white;
+    float: right;
+    }
+  input#pasted {
+    margin: 0.5em 0.5em 0.5em 0;
+    color: #BBF;
     font-family: monospace;
+  }
+  textarea#output {
+    width: 100%;
+    border: 2px solid #077;
+    border-radius: 8px;
+    background: #F8FFFF;
+    color: #300;
+    font-family: monospace;
+    font-size: 90%;
+    line-height: 1.1;
+    resize: none;
+    cursor: default;
     }
   div.file-selector {
+    padding: 1em;
     margin: 1em 0;
+    background: #EEE;
+
+    // noselect
+    -webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none; /* Safari */
+       -khtml-user-select: none; /* Konqueror HTML */
+         -moz-user-select: none; /* Firefox */
+          -ms-user-select: none; /* Internet Explorer/Edge */
+           -o-user-select: none; /* Opera */
+              user-select: none; /* Non-prefixed version, currently
+                                    supported by Chrome and Opera */
+    .options {
+      clear: both;
+      background-color: white;
+      border-radius: 1em;
+      padding: 4px 0.5em 0;
+      }
+    label.tbd, label.tbd:hover { color: #FDD !important; }
     }
+  #file-input { display: inline-block; }
+  div#err-box {
+    display: none;
+    padding: 1em;
+    font-size: 150%;
+    font-weight: bold;
+    color: red;
+    }
+  div#cpp-container,
+  #stat-sub { display: none; }
   }
 
 //** Secondary label background color
