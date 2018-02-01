@@ -130,7 +130,7 @@ parameters:
   -
     tag: W
     optional: true
-    description: Write a mesh Z offset (`AUTO_BED_LEVELING_BILINEAR`). `W` requires `X`, `Y`, and `Z`.
+    description: Write a mesh Z offset (`AUTO_BED_LEVELING_BILINEAR`). Requires `X`,`Y` or `I`,`J` to specify the point, and `Z` to specify the value.
     values:
       -
         type: bool
