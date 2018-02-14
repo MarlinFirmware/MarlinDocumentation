@@ -146,7 +146,10 @@ parameters:
   -
     tag: R
     optional: true
-    description: Repeat count. (Default `GRID_MAX_POINTS_X * GRID_MAX_POINTS_Y`)
+    description: |
+      Repeat count. (Default `GRID_MAX_POINTS_X * GRID_MAX_POINTS_Y`). For example, in Phase 3, `G29 P3 R4 C0`- this will tell the firmware to fill the 4 closest points to the nozzle with a value of `0`. Or, in Phase 4, `G29 P4 R3 X80 Y80` - this will tell the firmware to allow you to tweak 3 points around [80,80].
+
+      _Note that the 'R' parameter does not work in Phase 1; the number of points probed automatically is always `GRID_MAX_POINTS_X * GRID_MAX_POINTS_Y`._
     values:
       -
         type: int
