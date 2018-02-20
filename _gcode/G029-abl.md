@@ -238,7 +238,7 @@ examples:
     post: 'Probe a 5x5 matrix. (`AUTO_BED_LEVELING_LINEAR`)'
     code: G29 P5 ; 5x5 matrix
   -
-    post: 'Probe a 4x8 matrix from `X50` `Y50` to `X150` `Y150`, printing a full report. (`AUTO_BED_LEVELING_LINEAR`, `AUTO_BED_LEVELING_BILINEAR`)'
+    post: 'Probe a 4x8 matrix from `X50` `Y50` to `X150` `Y150`, printing a full report. (`AUTO_BED_LEVELING_LINEAR`)'
     code: G29 X4 Y8 L50 R150 F50 B150 T V4
   -
     pre: 'Manual Probing example'
