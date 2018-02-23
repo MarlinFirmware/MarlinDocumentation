@@ -42,6 +42,7 @@ module.exports = {
     ],
     "dot-notation": "off",
     "eol-last": "error",
+    "eqeqeq": ["error", "smart"],
     "func-names": [
       "error",
       "never"
@@ -168,18 +169,18 @@ module.exports = {
     "no-with": "error",
     "object-curly-newline": [
       "error",
-      "never"
+      { "multiline": true,
+        "consistent": true}
     ],
     "object-curly-spacing": [
       "error",
       "never"
     ],
     "object-property-newline": [
-      "error", {
-        "allowMultiplePropertiesPerLine": true
-      }
+      "error",
+      { "allowMultiplePropertiesPerLine": true }
     ],
-    "object-shorthand": "error",
+    "object-shorthand": "off",
     "one-var": "off",
     "one-var-declaration-per-line": "error",
     "operator-assignment": [
@@ -195,7 +196,11 @@ module.exports = {
     "prefer-spread": "error",
     "prefer-template": "off",
     "quote-props": "off",
-    "quotes": "off",
+    "quotes": [
+      "error",
+      "single",
+      { "allowTemplateLiterals": true }
+    ],
     "radix": [
       "error",
       "as-needed"
