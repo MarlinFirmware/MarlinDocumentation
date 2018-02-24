@@ -165,10 +165,10 @@ function genGcode() {
                   '; Fast Printing Speed = ' + SPEED_FAST + ' mm/min\n' +
                   '; Movement Speed = ' + SPEED_MOVE + ' mm/min\n' +
                   '; Printing Acceleration = ' + ACCELERATION + ' mm/s^2\n' +
-                  '; Jerk X-axis = ' + (JERK_X !== '-1' ? JERK_X + '\n': ' firmware default\n') +
-                  '; Jerk Y-axis = ' + (JERK_Y !== '-1' ? JERK_Y + '\n': ' firmware default\n') +
-                  '; Jerk Z-axis = ' + (JERK_Z !== '-1' ? JERK_Z + '\n': ' firmware default\n') +
-                  '; Jerk Extruder = ' + (JERK_E !== '-1' ? JERK_E + '\n': ' firmware default\n') +
+                  '; Jerk X-axis = ' + (JERK_X !== -1 ? JERK_X + '\n': ' firmware default\n') +
+                  '; Jerk Y-axis = ' + (JERK_Y !== -1 ? JERK_Y + '\n': ' firmware default\n') +
+                  '; Jerk Z-axis = ' + (JERK_Z !== -1 ? JERK_Z + '\n': ' firmware default\n') +
+                  '; Jerk Extruder = ' + (JERK_E !== -1 ? JERK_E + '\n': ' firmware default\n') +
                   ';\n' +
                   '; Settings Pattern:\n' +
                   '; Linear Advance Version = ' + VERSION_LIN + '\n' +
@@ -202,10 +202,10 @@ function genGcode() {
                   'M109 S' + NOZZLE_TEMP + ' ; block waiting for nozzle temp\n' +
                   'G21 ; set units to millimeters\n' +
                   'M204 P' + ACCELERATION + ' ; set acceleration\n' +
-                  (JERK_X !== '-1' ? 'M205 X' + JERK_X + ' ; set X jerk\n' : '') +
-                  (JERK_Y !== '-1' ? 'M205 Y' + JERK_Y + ' ; set Y jerk\n' : '') +
-                  (JERK_Z !== '-1' ? 'M205 Z' + JERK_Z + ' ; set Z jerk\n' : '') +
-                  (JERK_E !== '-1' ? 'M205 E' + JERK_E + ' ; set E jerk\n' : '') +
+                  (JERK_X !== -1 ? 'M205 X' + JERK_X + ' ; set X jerk\n' : '') +
+                  (JERK_Y !== -1 ? 'M205 Y' + JERK_Y + ' ; set Y jerk\n' : '') +
+                  (JERK_Z !== -1 ? 'M205 Z' + JERK_Z + ' ; set Z jerk\n' : '') +
+                  (JERK_E !== -1 ? 'M205 E' + JERK_E + ' ; set E jerk\n' : '') +
                   'G90 ; use absolute coordinates\n' +
                   'M83 ; use relative distances for extrusion\n' +
                   'G92 E0 ; reset extruder distance\n';
@@ -833,7 +833,7 @@ function togglePrime() {
   }
 }
 
-function toggleVersion () {
+function toggleVersion() {
   if ($('#LIN_VERSION').val() === '1.5') {
     $('#K_START').attr('step', 'any');
     $('#K_END').attr('step', 'any');
