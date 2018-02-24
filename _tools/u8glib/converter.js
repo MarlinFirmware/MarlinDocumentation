@@ -246,12 +246,23 @@ var bitmap_converter = function() {
           tdat = tref.data;
         }
 
+        //
         // Convert the image to B/W by threshold.
         // If rendering also update the ImageData.data.
+        //
+
+        var lo_thr = 127, hi_thr = 127;
+        for (var i = 0; i < data.length; i += 4) {
+          var gray = grayscale(data.slice(i, i+3));
+          if (gray < lo_thr) lo_thr = gray;
+          if (gray > hi_thr) hi_thr = gray;
+        }
+        var mid_thr = (lo_thr + hi_thr) / 2;
+
         var out = [];
         for (var i = 0; i < data.length; i += 4) {
           var gray = grayscale(data.slice(i, i+3)),
-              pixon = data[i+3] > 63 && is_lit == (gray > 127),
+              pixon = data[i+3] > 63 && is_lit == (gray > mid_thr),
               pixel = is_inv != pixon,
               c = pixel ? lcd_on : lcd_off;
           out.push(pixel);
