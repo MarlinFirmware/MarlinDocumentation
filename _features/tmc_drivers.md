@@ -6,7 +6,7 @@ author: teemuatlut
 category: [ features ]
 ---
 
-Trinamic stepper drivers allow you to have better control of your stepper motors and achieve extremely quiet motion. You can influence how the driver manages motor current as well as the manner of current delivery. The drivers can act as endstops allowing you siplify wiring. Marlin also supports setting the driver current by using software commands, negating the need for adjusting trimpots.
+Trinamic stepper drivers allow you to have better control of your stepper motors and achieve extremely quiet motion. You can influence how the driver manages motor current as well as the manner of current delivery. The drivers can act as endstops allowing you simplify wiring. Marlin also supports setting the driver current by using software commands, negating the need for adjusting trimpots.
 
 ## Installing the library
 The TMC stepper drivers require an external library that allows Marlin to communicate with each driver.
@@ -49,22 +49,29 @@ TMC_SW_SCK
 
 A 1 kilo-ohm resistor is required between TX and PD_UART
 
-Motherboard | Driver
----:|:---
-RX | PD_UART
-TX (1kohm) | PD_UART
+Motherboard | | Driver
+---:|---|:---
+RX | | PD_UART
+TX | (1kohm) | PD_UART
 
 The serial port on master is selected in your `pins` file. Alternatively you can use the slower software serial by not selecting any of the hardware serial ports.
 Typically one port per one driver is needed.
 
 #### Software UART
 
-You can use any free pins as UART by disabling all of the hardware serial options in your `pins` file and by defining the `_SERIAL_TX_PIN` and `_SERIAL_RX_PIN` pins.
+You can use free pins as UART by disabling all of the hardware serial options in your `pins` file and by defining the `_SERIAL_TX_PIN` and `_SERIAL_RX_PIN` pins.
+
+**Note:** The receive (RX) pins are limited to only interrupt capable pins. Transmit (TX) pins do not have the same limitation.
 
 ## FYSETC drivers
-FYSETC drivers come pre-configured in standalone mode. This means that the drivers should work for moving the axis but you will not be able to configure them nor take advantage of the additional features of the drivers. To get the drivers working as intended you will need to modify three solder bridges on the driver PCB.
+We recommend getting the original Watterott drivers or the revised FYSETC v1.1 drivers to avoid additional headaches.
+
+The FYSETC v1.0 drivers come pre-configured in standalone mode. This means that the drivers should work for moving the axis but you will not be able to configure them nor take advantage of the additional features of the drivers. To get the drivers working as intended you will need to modify three solder bridges on the driver PCB.
 
 ![FYSETC_TMC2130](/assets/images/features/FYSETC_tmc2130._SPI.jpg)
+
+Some versions of the FYSETC v1.0 drivers come with a solder bridge left of the chip, some come with a bridging resistor. This connection needs to be opened for SPI connection to work.
+The two smaller bridges need to be configured as shown.
 
 ## Features and configuration options
 There are several technologies specific to Trinamic drivers that are supported by Marlin.
@@ -96,7 +103,7 @@ TMC_ADV                   | You can use this to add your own configuration setti
 
 ## GCodes
 
-Command | Option<br>required | Description
+Command | Configuration<br>required | Description
 -------:|:------------------:|:-----------
 [M122]  | `TMC_DEBUG` | Get debugging information of your drivers.
 [M906]  | none | Set the driver current using axis letters X/Y/Z/E.
@@ -116,13 +123,29 @@ Command | Option<br>required | Description
 
 ## Troubleshooting
 
+- Use the latest **bugfix** firmware from github
+- Check wiring and your wire grimps
+- Check that configured pins match with your firmware configuration
+- Enable `TMC_DEBUG` and send `M122` to see the debugging output
+  - Reported register values of either `0x00000000` or `0xFFFFFFFF` are bad responses
+- Try the examples provided by the respective library. Please detach any belts beforehand however, as the examples will not respect any endstop signals or physical limits. You may need to change the pin definitions.
+
 ## External resources
 
 [Arduino library for TMC2130](https://github.com/teemuatlut/TMC2130Stepper)
+
 [Arduino library for TMC2208](https://github.com/teemuatlut/TMC2208Stepper)
-[Trinamic.com](https://www.trinamic.com>)
+
+[Trinamic.com](https://www.trinamic.com)
+
+[Watterott documentation](http://learn.watterott.com/silentstepstick/)
+
 [stallGuard](https://www.trinamic.com/technology/adv-technologies/stallguard/)
+
 [stealthChop](https://www.trinamic.com/technology/adv-technologies/stealthchop/)
+
 [spreadCycle](https://www.trinamic.com/technology/adv-technologies/spreadcycle/)
+
 [Hackaday article by Moritz Walter](https://hackaday.com/2016/09/30/3d-printering-trinamic-tmc2130-stepper-motor-drivers-shifting-the-gears/)
+
 [Video guide by Thomas Sanladerer](https://www.youtube.com/watch?v=sPvTB3irCxQ)
