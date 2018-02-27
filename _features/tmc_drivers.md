@@ -62,7 +62,9 @@ Typically one port per one driver is needed.
 You can use any free pins as UART by disabling all of the hardware serial options in your `pins` file and by defining the `_SERIAL_TX_PIN` and `_SERIAL_RX_PIN` pins.
 
 ## FYSETC drivers
-FYSETC drivers come pre-configured in standalone mode. This means that the drivers should work for moving the axis but you will not be able to configure them nor take advantage of the additional features of the drivers. To get the drivers working as intended you will need to solder three bridges on the driver PCB. Insert image!
+FYSETC drivers come pre-configured in standalone mode. This means that the drivers should work for moving the axis but you will not be able to configure them nor take advantage of the additional features of the drivers. To get the drivers working as intended you will need to modify three solder bridges on the driver PCB.
+
+![FYSETC_TMC2130](/assets/images/features/FYSETC_tmc2130._SPI.jpg)
 
 ## Features and configuration options
 There are several technologies specific to Trinamic drivers that are supported by Marlin.
