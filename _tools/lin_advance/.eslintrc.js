@@ -106,7 +106,7 @@ module.exports = {
     "no-implicit-globals": "error",
     "no-implied-eval": "error",
     "no-inline-comments": "off",
-    "no-invalid-this": "error",
+    "no-invalid-this": "off",
     "no-iterator": "error",
     "no-label-var": "error",
     "no-labels": "error",
@@ -212,7 +212,10 @@ module.exports = {
     "sort-imports": "error",
     "sort-vars": "off",
     "space-before-blocks": "off",
-    "space-before-function-paren": "off",
+    "space-before-function-paren": [
+      "error",
+      "never"
+    ],
     "space-in-parens": [
       "error",
       "never"
