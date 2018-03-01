@@ -74,53 +74,24 @@ function genGcode() {
 
   var RANGE_K = END_K - START_K,
       PRINT_SIZE_Y = (RANGE_K / STEP_K * LINE_SPACING) + 25, // +25 with ref marking
-      PRINT_SIZE_X = (2 * LENGTH_SLOW) + LENGTH_FAST + (USE_PRIME ? 10 : 0),
+      PRINT_SIZE_X = (2 * LENGTH_SLOW) + LENGTH_FAST + (USE_PRIME ? 10 : 0) + (USE_LINENO ? 8 : 0),
       CENTER_X = (NULL_CENTER ? 0 : BED_X / 2),
       CENTER_Y = (NULL_CENTER ? 0 : BED_Y / 2),
-      PAT_START_X = CENTER_X - (0.5 * LENGTH_FAST) - LENGTH_SLOW + (USE_PRIME ? 5 : 0),
+      PAT_START_X = CENTER_X - (0.5 * LENGTH_FAST) - LENGTH_SLOW + (USE_PRIME ? 5 : 0) - (USE_LINENO ? 4 : 0),
       PAT_START_Y = CENTER_Y - (PRINT_SIZE_Y / 2),
       LINE_WIDTH = NOZZLE_DIAMETER * NOZZLE_LINE_RATIO,
       EXTRUSION_RATIO = LINE_WIDTH * HEIGHT_LAYER / (Math.pow(FILAMENT_DIAMETER / 2, 2) * Math.PI),
-      DECIMALS = getDecimals(STEP_K);
-
-  var txtArea = document.getElementById('textarea');
-
-  // Check if K-Factor Stepping is a multiple of the K-Factor Range
-  if ((RANGE_K * Math.pow(10, DECIMALS)) % (STEP_K * Math.pow(10, DECIMALS)) !== 0) {
-    alert('Your K-Factor range cannot be cleanly divided. Check Start / End / Steps for the Pattern');
-    txtArea.value = '';
-    return;
-  }
-
-  // Calculate a straight (non rotated) least fit rectangle around the entire glyphSeg pattern
-  var printDirRad = PRINT_DIR * Math.PI / 180,
+      printDirRad = PRINT_DIR * Math.PI / 180,
       FIT_WIDTH = Math.abs(PRINT_SIZE_X * Math.cos(printDirRad)) + Math.abs(PRINT_SIZE_Y * Math.sin(printDirRad)),
-      FIT_HEIGHT = Math.abs(PRINT_SIZE_X * Math.sin(printDirRad)) + Math.abs(PRINT_SIZE_Y * Math.cos(printDirRad));
-
-  // Compare the fit rectangle with the bed size. Safety margin 5 mm
-  if (BED_SHAPE === 'Round' && (Math.sqrt(Math.pow(FIT_WIDTH, 2) + Math.pow(FIT_HEIGHT, 2)) > BED_X - 5)) {
-    if (!confirm('Your Pattern settings exceed your bed\'s diameter. Check Start / End / Steps for the Pattern. \n OK to continue, Cancel to return')) {
-      txtArea.value = '';
-      return;
-    }
-  } else if (FIT_WIDTH > BED_X - 5) {
-    if (!confirm('Your Pattern settings exceed your X bed size. Check Start / End / Steps for the Pattern. \n OK to continue, Cancel to return')) {
-      txtArea.value = '';
-      return;
-    }
-  } else if (FIT_HEIGHT > BED_Y - 5) {
-    if (!confirm('Your Pattern settings exceed your Y bed size. Check Start / End / Steps for the Pattern. \n OK to continue, Cancel to return')) {
-      txtArea.value = '';
-      return;
-    }
-  }
+      FIT_HEIGHT = Math.abs(PRINT_SIZE_X * Math.sin(printDirRad)) + Math.abs(PRINT_SIZE_Y * Math.cos(printDirRad)),
+      txtArea = document.getElementById('textarea');
 
   var basicSettings = {
     'slow': SPEED_SLOW,
     'fast': SPEED_FAST,
     'move': SPEED_MOVE,
-    'centerX': (NULL_CENTER ? 0 : BED_X / 2),
-    'centerY': (NULL_CENTER ? 0 : BED_Y / 2),
+    'centerX': CENTER_X,
+    'centerY': CENTER_Y,
     'printDir': PRINT_DIR,
     'lineWidth': LINE_WIDTH,
     'extRatio': EXTRUSION_RATIO,
@@ -216,7 +187,7 @@ function genGcode() {
 
   // Prime nozzle if activated
   if (USE_PRIME) {
-    var primeStartX = CENTER_X - LENGTH_SLOW - (0.5 * LENGTH_FAST) - 5,
+    var primeStartX = CENTER_X - LENGTH_SLOW - (0.5 * LENGTH_FAST) - (USE_LINENO ? 4 : 0) - 5,
         primeStartY = CENTER_Y - (PRINT_SIZE_Y / 2);
 
     txtArea.value += ';\n' +
@@ -271,13 +242,13 @@ function genGcode() {
     txtArea.value += createAltPattern(PAT_START_X, PAT_START_Y, basicSettings, patSettings);
   }
 
-  // mark area of speed changes and close G-code
-  var refStartX1 = CENTER_X - (0.5 * LENGTH_FAST) + (USE_PRIME ? 5 : 0),
-      refStartX2 = CENTER_X + (0.5 * LENGTH_FAST) + (USE_PRIME ? 5 : 0),
+  // mark area of speed changes
+  var refStartX1 = CENTER_X - (0.5 * LENGTH_FAST) + (USE_PRIME ? 5 : 0) - (USE_LINENO ? 4 : 0),
+      refStartX2 = CENTER_X + (0.5 * LENGTH_FAST) + (USE_PRIME ? 5 : 0) - (USE_LINENO ? 4 : 0),
       refStartY = CENTER_Y + (PRINT_SIZE_Y / 2) - 20;
 
   txtArea.value += ';\n' +
-                   '; mark the Test area for reference\n' +
+                   '; mark the test area for reference\n' +
                    ';\n' +
                    'M900 K0 ; set K-factor 0\n' +
                    moveTo(refStartX1, refStartY, basicSettings) +
@@ -287,11 +258,12 @@ function genGcode() {
                    moveTo(refStartX2, refStartY, basicSettings) +
                    doEfeed('+', basicSettings) +
                    createLine(refStartX2, refStartY + 20, 20, basicSettings) +
-                   doEfeed('-', basicSettings);
+                   doEfeed('-', basicSettings) +
+                   zHop((HEIGHT_LAYER + Z_OFFSET) + 0.1, basicSettings);
 
   // print K values beside the test lines
   if (USE_LINENO) {
-    var numStartX = CENTER_X + (0.5 * LENGTH_FAST) + LENGTH_SLOW + (USE_PRIME ? 5 : 0) + 2,
+    var numStartX = CENTER_X + (0.5 * LENGTH_FAST) + LENGTH_SLOW + (USE_PRIME ? 5 : 0) - 2,
         numStartY = PAT_START_Y - 2,
         stepping = 0;
 
@@ -301,7 +273,7 @@ function genGcode() {
                          '; print K-values\n' +
                          ';\n' +
                          moveTo(numStartX, numStartY + (stepping * LINE_SPACING), basicSettings) +
-                         (i > START_K ? zHop((HEIGHT_LAYER + Z_OFFSET), basicSettings) : '') +
+                         zHop((HEIGHT_LAYER + Z_OFFSET), basicSettings) +
                          doEfeed('+', basicSettings) +
                          createGlyphs(numStartX, numStartY + (stepping * LINE_SPACING), basicSettings, Math.round10(i, -3)) +
                          doEfeed('-', basicSettings) +
@@ -402,11 +374,12 @@ function getDecimals(num) {
   return decimalPlaces;
 }
 
+// print a line between current position and target
 function createLine(coordX, coordY, length, basicSettings, optional) {
   var ext = 0,
       gcode ='';
 
-  //handle optional function arguements
+  //handle optional function arguements passed as object
   var defaults = {
     speed: 'slow',
     prime: 'false',
@@ -427,6 +400,7 @@ function createLine(coordX, coordY, length, basicSettings, optional) {
   return gcode;
 }
 
+// move print head to coordinates
 function moveTo(coordX, coordY, basicSettings) {
   var gcode = '';
 
@@ -436,6 +410,7 @@ function moveTo(coordX, coordY, basicSettings) {
   return gcode;
 }
 
+// create react / un-react gcode
 function doEfeed(dir, basicSettings) {
   var gcode = '';
   if (dir === '+') {
@@ -446,6 +421,7 @@ function doEfeed(dir, basicSettings) {
   return gcode;
 }
 
+// create alternat test pattern
 function createAltPattern(startX, startY, basicSettings, patSettings) {
   var j = 0,
       k = 0,
@@ -476,6 +452,7 @@ function createAltPattern(startX, startY, basicSettings, patSettings) {
   return gcode;
 }
 
+// create standard test pattern
 function createStdPattern(startX, startY, basicSettings, patSettings) {
   var j = 0,
       gcode = '';
@@ -493,6 +470,7 @@ function createStdPattern(startX, startY, basicSettings, patSettings) {
   return gcode;
 }
 
+// create digits for K line numbering
 function createGlyphs(startX, startY, basicSettings, value) {
   var glyphSegHeight = 2,
       glyphSegHeight2 = 0.4,
@@ -554,7 +532,6 @@ function createGlyphs(startX, startY, basicSettings, value) {
                      moveTo(startX, startY, basicSettings) +
                      doEfeed('+', basicSettings);
     }
-
     yCount = 0;
     xCount = 0;
   }
@@ -683,16 +660,17 @@ function setLocalStorage() {
 }
 
 // toggle html elements
-$(window).load(function () {
+$(window).load(function() {
   // Adapt textarea to cell size
   var TXTAREAHEIGHT = $('.txtareatd').height();
   $('.calibpat textarea').css({'height': (TXTAREAHEIGHT) + 'px'});
 
-  $(':input:not(:hidden)').each(function (i) {
+  // create tab index dynamically
+  $(':input:not(:hidden)').each(function(i) {
     $(this).attr('tabindex', i + 1);
   });
 
-  //Get cookie data
+  //Get localStorage data
   var lsSettings,
       settings;
   if (localStorage.getItem('LIN_SETTINGS')) {
@@ -736,12 +714,11 @@ $(window).load(function () {
     $('#MM_S').prop('checked', settings['USE_MMS']);
     $('#LINE_NO').prop('checked', settings['USE_LINENO']);
 
-    bedShape();
+    toggleBedShape();
     patternType();
     togglePrime();
     toggleVersion();
   }
-
 
   // toggle between mm/s and mm/min speeds
   $('#MM_S').change(function() {
@@ -750,7 +727,8 @@ $(window).load(function () {
 
   // Toggle Bed Shape
   $('#SHAPE_BED').change(function() {
-    bedShape();
+    toggleBedShape();
+    validateInput();
   });
 
   // toggle prime relevant html elements
@@ -766,6 +744,7 @@ $(window).load(function () {
   // Change factor type
   $('#LIN_VERSION').change(function() {
     toggleVersion();
+    validateInput();
   });
 });
 
@@ -790,7 +769,7 @@ function speedToggle() {
   }
 }
 
-function bedShape() {
+function toggleBedShape() {
   if ($('#SHAPE_BED').val() === 'Round') {
     $('label[for=\'BEDSIZE_X\']').text('Bed Diameter:');
     $('#shape').text('Diameter (mm) of the bed');
@@ -855,5 +834,101 @@ function toggleVersion() {
     $('#start_factor').text('Starting value for the K-factor. Usually 0 but for bowden setups you might want to start higher, e.g. 30');
     $('#end_factor').text('Ending value of the K-factor. Bowden setups may be higher than 100');
     $('#step_factor').text('Stepping of the K-factor in the test pattern. Needs to be an exact divisor of the K-factor Range (End - Start)');
+  }
+}
+
+function validateInput() {
+  var selectShape = document.getElementById('SHAPE_BED'),
+      bedShape = selectShape.options[selectShape.selectedIndex].value,
+      bedX = parseInt(document.getElementById('BEDSIZE_X').value),
+      bedY = parseInt(document.getElementById('BEDSIZE_Y').value),
+      kStart = parseFloat(document.getElementById('K_START').value),
+      kEnd = parseFloat(document.getElementById('K_END').value),
+      kStep = parseFloat(document.getElementById('K_STEP').value),
+      selectDir = document.getElementById('DIR_PRINT'),
+      printDir = selectDir.options[selectDir.selectedIndex].value,
+      lineSpacing = parseFloat(document.getElementById('SPACE_LINE').value),
+      usePrime = document.getElementById('PRIME').checked,
+      lengthSlow = parseFloat(document.getElementById('SLOW_LENGTH').value),
+      lengthFast = parseFloat(document.getElementById('FAST_LENGTH').value),
+      useLineNo = document.getElementById('LINE_NO').checked,
+      sizeY = ((kEnd - kStart) / kStep * lineSpacing) + 25, // +25 with ref marking
+      sizeX = (2 * lengthSlow) + lengthFast + (usePrime ? 10 : 0) + (useLineNo ? 8 : 0),
+      printDirRad = printDir * Math.PI / 180,
+      fitWidth = Math.round10(Math.abs(sizeX * Math.cos(printDirRad)) + Math.abs(sizeY * Math.sin(printDirRad)), 0),
+      fitHeight = Math.round10(Math.abs(sizeX * Math.sin(printDirRad)) + Math.abs(sizeY * Math.cos(printDirRad)), 0),
+      decimals = getDecimals(kStep),
+      invalidDiv = 0;
+
+  //Start clean
+  $('#K_START, #K_END, #K_STEP, #SPACE_LINE, #SLOW_LENGTH, #FAST_LENGTH').each(function() {
+    $(this)[0].setCustomValidity('');
+    $('label[for=' + $(this).attr('id') + ']').removeClass('calibpat_invalidSize');
+    $('label[for=' + $(this).attr('id') + ']').removeClass('calibpat_invalidDiv');
+  });
+  $('#warning1').hide();
+  $('#warning2').hide();
+
+  // Check if K-Factor Stepping is a multiple of the K-Factor Range
+  if (((kEnd - kStart) * Math.pow(10, decimals)) % (kStep * Math.pow(10, decimals)) !== 0) {
+    $('label[for=K_START]').addClass('calibpat_invalidDiv');
+    $('#K_START')[0].setCustomValidity('Your K-Factor range cannot be cleanly divided.');
+    $('label[for=K_END]').addClass('calibpat_invalidDiv');
+    $('#K_END')[0].setCustomValidity('Your K-Factor range cannot be cleanly divided.');
+    $('label[for=K_STEP]').addClass('calibpat_invalidDiv');
+    $('#K_STEP')[0].setCustomValidity('Your K-Factor range cannot be cleanly divided.');
+    $('#warning1').text('Your K-Factor range cannot be cleanly divided. Check highlighted Pattern Settings.');
+    $('#warning1').addClass('calibpat_invalidDiv');
+    $('#warning1').show();
+    invalidDiv = 1;
+  }
+
+  // Check if pattern settings exceed bed size
+  if (bedShape === 'Round' && (Math.sqrt(Math.pow(fitWidth, 2) + Math.pow(fitHeight, 2)) > bedX - 5) && fitHeight > fitWidth) {
+    $('label[for=K_START]').addClass('calibpat_invalidSize');
+    $('#K_START')[0].setCustomValidity('Your Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your bed\'s diameter.');
+    $('label[for=K_END]').addClass('calibpat_invalidSize');
+    $('#K_END')[0].setCustomValidity('Your Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your bed\'s diameter.');
+    $('label[for=K_STEP]').addClass('calibpat_invalidSize');
+    $('#K_STEP')[0].setCustomValidity('Your Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your bed\'s diameter.');
+    $('label[for=SPACE_LINE]').addClass('calibpat_invalidSize');
+    $('#SPACE_LINE')[0].setCustomValidity('Your Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your bed\'s diameter.');
+    $((invalidDiv ? '#warning2' : '#warning1')).text('Your Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your bed\'s diameter. Check highlighted Pattern Settings.');
+    $((invalidDiv ? '#warning2' : '#warning1')).addClass('calibpat_invalidSize');
+    $((invalidDiv ? '#warning2' : '#warning1')).show();
+  }
+
+  if (bedShape === 'Round' && (Math.sqrt(Math.pow(fitWidth, 2) + Math.pow(fitHeight, 2)) > bedX - 5) && fitWidth > fitHeight) {
+    $('label[for=SLOW_LENGTH]').addClass('calibpat_invalidSize');
+    $('#SLOW_LENGTH')[0].setCustomValidity('Your Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your bed\'s diameter.');
+    $('label[for=FAST_LENGTH]').addClass('calibpat_invalidSize');
+    $('#FAST_LENGTH')[0].setCustomValidity('Your Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your bed\'s diameter.');
+    $((invalidDiv ? '#warning2' : '#warning1')).text('Your Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your bed\'s diameter. Check highlighted Pattern Settings.');
+    $((invalidDiv ? '#warning2' : '#warning1')).addClass('calibpat_invalidSize');
+    $((invalidDiv ? '#warning2' : '#warning1')).show();
+  }
+
+  if (bedShape === 'Rect' && fitWidth > bedX - 5) {
+    $('label[for=SLOW_LENGTH]').addClass('calibpat_invalidSize');
+    $('#SLOW_LENGTH')[0].setCustomValidity('Your Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your X bed size.');
+    $('label[for=FAST_LENGTH]').addClass('calibpat_invalidSize');
+    $('#FAST_LENGTH')[0].setCustomValidity('Your Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your X bed size.');
+    $((invalidDiv ? '#warning2' : '#warning1')).text('Your Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your X bed size. Check highlighted Pattern Settings.');
+    $((invalidDiv ? '#warning2' : '#warning1')).addClass('calibpat_invalidSize');
+    $((invalidDiv ? '#warning2' : '#warning1')).show();
+  }
+
+  if (bedShape === 'Rect' && fitHeight > bedY - 5) {
+    $('label[for=K_START]').addClass('calibpat_invalidSize');
+    $('#K_START')[0].setCustomValidity('Your Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your Y bed size.');
+    $('label[for=K_END]').addClass('calibpat_invalidSize');
+    $('#K_END')[0].setCustomValidity('Your Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your Y bed size.');
+    $('label[for=K_STEP]').addClass('calibpat_invalidSize');
+    $('#K_STEP')[0].setCustomValidity('Your Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your Y bed size.');
+    $('label[for=SPACE_LINE]').addClass('calibpat_invalidSize');
+    $('#SPACE_LINE')[0].setCustomValidity('Your Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your Y bed size.');
+    $((invalidDiv ? '#warning2' : '#warning1')).text('Your Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your Y bed size. Check highlighted Pattern Settings.');
+    $((invalidDiv ? '#warning2' : '#warning1')).addClass('calibpat_invalidSize');
+    $((invalidDiv ? '#warning2' : '#warning1')).show();
   }
 }
