@@ -119,7 +119,7 @@ A too high K-Factor essentially reverses the above picture. The extruded amount 
  - Also disable options like *wipe while retract* or *combing*. There should be almost no ooze, once the proper K-Factor is found.
  - Recheck retraction distance, once Linear Advance is calibrated and working well. It may even be as low as 0, since pressure control reduces the material pressure at the end of a line to nearly zero.
  
-### The following considerations are not longer a problem with LIN_ADVANCE version 1.5
+### The following considerations are no longer a problem with LIN_ADVANCE version 1.5
  - This feature adds extra load to the CPU (and possibly more wear on the extruder). Using a communication speed of 115200 baud or lower to prevent communication errors and "weird" movements is recommended.
  - The print host software should be using line numbers and checksums. (This is disabled by default e.g. in Simplify3D)
  - Theoretically there should be no "extra" movements produced by `LIN_ADVANCE`. If extra movements were produced, this would tend to increase wear on more fragile parts such as the printed gears of a Wade extruder.
