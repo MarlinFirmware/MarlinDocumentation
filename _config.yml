@@ -1,5 +1,5 @@
 baseurl: ''
-url: 'http://marlinfw.org'
+url: 'http://marlinfw.org/'
 
 version: '0.0.8-beta'
 environment: development
@@ -8,9 +8,17 @@ name: 'Marlin Firmware'
 logo: '/assets/images/logo/marlin/small.png'
 description: 'Printing the planet, one layer at a time.'
 
+twitter:
+  username: MarlinFirmware
+
+social:
+  name: Marlin Firmware
+  links:
+    - https://www.facebook.com/groups/1049718498464482/
+    - http://forums.reprap.org/list.php?415
+
 repository:
   main: 'https://github.com/MarlinFirmware/Marlin'
-  dev: 'https://github.com/MarlinFirmware/MarlinDev'
   doc: 'https://github.com/MarlinFirmware/MarlinDocumentation'
 
 analytics:
