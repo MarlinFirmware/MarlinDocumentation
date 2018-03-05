@@ -1,0 +1,25 @@
+<!DOCTYPE html> 
+<html lang="en">
+  <head><script src="../../assets/javascript/head.min.js"></script></head>
+  <body role="document">
+    <script type="text/javascript" src="./converter.js"></script> 
+    <div class="container" role="main">
+      <div class="row">
+        <div class="col-lg-12">
+          <h1>U8Glib bitmap converter</h1>
+          <p>This tool converts a JPEG or PNG image file to a C/C++ array.<br> This array can then be used by the OSS Arduino library <a href="https://github.com/olikraus/u8glib">U8Glib</a> to draw custom images on screen.</p>
+          <p>Use this tool to create your own custom `_Bootscreen.h` file for display on Graphical Displays.</p>
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-1">
+                <canvas id="preview" width="128" height="64"></canvas>
+              </div>
+              <div class="col-lg-11 custom-pt5"> <input type="file" id="file-input" accept="image/*"> </div>
+            </div>
+          </div>
+          <p>Copy the following array into your program:<br/><textarea id="output" cols="100" rows="40" readonly="readonly">You must load an image first.</textarea></p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
