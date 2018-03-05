@@ -4,7 +4,7 @@ url: 'http://marlinfw.org'
 version: '0.0.8-beta'
 environment: development
 
-name: 'Marlin 3D Printer Firmware'
+name: 'Marlin Firmware'
 logo: '/assets/images/logo/marlin/small.png'
 description: 'Printing the planet, one layer at a time.'
 
