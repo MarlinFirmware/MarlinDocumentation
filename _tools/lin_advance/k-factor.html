@@ -27,7 +27,7 @@ category:     [ tools ]
           </tr>
           <tr>
             <td colspan="3" class="tdSection"><h4>Printer:</h4></td>
-            <td rowspan="42" class="txtareatd"><textarea name="textarea" id="textarea"></textarea></td>
+            <td rowspan="45" class="txtareatd"><textarea name="textarea" id="textarea"></textarea></td>
           </tr>
           <tr>
             <td><label for="FIL_DIA">Filament Diameter:</label></td>
@@ -107,6 +107,11 @@ category:     [ tools ]
             <td><label for="MOVE_SPEED">Movement Speed:</label></td>
             <td><input name="MOVE_SPEED" type="number" id="MOVE_SPEED" step="any" value="120"></td>
             <td>Movement speed</td>
+          </tr>
+          <tr>
+            <td><label for="RETRACT_SPEED">Retract Speed:</label></td>
+            <td><input name="RETRACT_SPEED" type="number" id="RETRACT_SPEED" step="any" value="30"></td>
+            <td>Retract Speed of the extruder</td>
           </tr>
           <tr>
             <td><label for="PRINT_ACCL">Acceleration:</label></td>
@@ -225,6 +230,11 @@ category:     [ tools ]
             <td>Level bed before printing. Bed leveling has to be activated</td>
           </tr>
           <tr>
+            <td><label for="USE_FWR">Use FW Retract </label></td>
+            <td><input type="checkbox" name="USE_FWR" id="USE_FWR"></td>
+            <td>Use Firmware Retract. Needs to be activated in Marlin</td>
+          </tr>
+          <tr>
             <td><label for="EXTRUSION_MULT">Extrusion Multiplier:</label></td>
             <td><input name="EXTRUSION_MULT" type="number" id="EXTRUSION_MULT" step="0.1" value="1.0"></td>
             <td>Usually 1.0</td>
@@ -238,6 +248,11 @@ category:     [ tools ]
             <td><label for="PRIME_EXT">Prime Extrusion Multiplier:</label></td>
             <td><input name="PRIME_EXT" type="number" id="PRIME_EXT" step="0.1" value="2.5"></td>
             <td>The default of 2.5 results in roughly 1mm of filament for 10mm line length</td>
+          </tr>
+          <tr>
+            <td height="24"><label for="PRIME_SPEED">Prime Printing Speed:</label></td>
+            <td><input name="PRIME_SPEED" type="number" id="PRIME_SPEED" step="any" value="30"></td>
+            <td>Speed of the prime move</td>
           </tr>
           <tr>
             <td><label for="DWELL_PRIME">Dwell Time:</label></td>
