@@ -17,6 +17,10 @@
  */
 'use strict';
 
+// Settings version of localStorage
+// Increase if default settings are changed / amended
+const SETTINGS_VERSION = '1.0';
+
 function genGcode() {
 
   // get the values from the HTML elements
@@ -28,6 +32,7 @@ function genGcode() {
       SPEED_SLOW = parseInt(document.getElementById('SLOW_SPEED').value),
       SPEED_FAST = parseInt(document.getElementById('FAST_SPEED').value),
       SPEED_MOVE = parseInt(document.getElementById('MOVE_SPEED').value),
+      SPEED_RETRACT = parseInt(document.getElementById('RETRACT_SPEED').value),
       ACCELERATION = parseInt(document.getElementById('PRINT_ACCL').value),
       RETRACT_DIST = parseFloat(document.getElementById('RETRACTION').value),
       SELECT_SHAPE = document.getElementById('SHAPE_BED'),
@@ -55,7 +60,9 @@ function genGcode() {
       USE_PRIME = document.getElementById('PRIME').checked,
       USE_BL = document.getElementById('USE_BL').checked,
       USE_MMS = document.getElementById('MM_S').checked,
+      USE_FWR = document.getElementById('USE_FWR').checked,
       EXT_MULT_PRIME = parseFloat(document.getElementById('PRIME_EXT').value),
+      SPEED_PRIME = parseFloat(document.getElementById('PRIME_SPEED').value),
       PRIME_DWELL = parseFloat(document.getElementById('DWELL_PRIME').value),
       LENGTH_SLOW = parseFloat(document.getElementById('SLOW_LENGTH').value),
       LENGTH_FAST = parseFloat(document.getElementById('FAST_LENGTH').value),
@@ -70,6 +77,8 @@ function genGcode() {
     SPEED_SLOW *= 60;
     SPEED_FAST *= 60;
     SPEED_MOVE *= 60;
+    SPEED_PRIME *= 60;
+    SPEED_RETRACT *= 60;
   }
 
   var RANGE_K = END_K - START_K,
@@ -97,7 +106,9 @@ function genGcode() {
     'extRatio': EXTRUSION_RATIO,
     'extMult': EXT_MULT,
     'extMultPrime': EXT_MULT_PRIME,
-    'retractDist': RETRACT_DIST
+    'retractDist': RETRACT_DIST,
+    'retractSpeed' : SPEED_RETRACT,
+    'fwRetract' : USE_FWR
   };
 
   var patSettings = {
@@ -135,6 +146,7 @@ function genGcode() {
                   '; Slow Printing Speed = ' + SPEED_SLOW + ' mm/min\n' +
                   '; Fast Printing Speed = ' + SPEED_FAST + ' mm/min\n' +
                   '; Movement Speed = ' + SPEED_MOVE + ' mm/min\n' +
+                  '; Retract Speed = ' + SPEED_RETRACT + ' mm/min\n' +
                   '; Printing Acceleration = ' + ACCELERATION + ' mm/s^2\n' +
                   '; Jerk X-axis = ' + (JERK_X !== -1 ? JERK_X + '\n': ' firmware default\n') +
                   '; Jerk Y-axis = ' + (JERK_Y !== -1 ? JERK_Y + '\n': ' firmware default\n') +
@@ -159,9 +171,11 @@ function genGcode() {
                   '; Settings Advance:\n' +
                   '; Nozzle / Line Ratio = ' + NOZZLE_LINE_RATIO + '\n' +
                   '; Use BL = ' + (USE_BL ? 'true' : 'false') + '\n' +
+                  '; Use FWRETRACT = ' + (USE_FWR ? 'true' : 'false') + '\n' +
                   '; Extrusion Multiplier = ' + EXT_MULT + '\n' +
                   '; Prime Nozzle = ' + (USE_PRIME ? 'true' : 'false') + '\n' +
                   '; Prime Extrusion Multiplier = ' + EXT_MULT_PRIME + '\n' +
+                  '; Prime Speed = ' + SPEED_PRIME + '\n' +
                   '; Dwell Time = ' + PRIME_DWELL + ' s\n' +
                   ';\n' +
                   '; prepare printing\n' +
@@ -194,10 +208,10 @@ function genGcode() {
                      '; prime nozzle\n' +
                      ';\n' +
                      moveTo(primeStartX, primeStartY, basicSettings) +
-                     createLine(primeStartX, primeStartY + PRINT_SIZE_Y, PRINT_SIZE_Y, basicSettings, {prime: true}) +
+                     createLine(primeStartX, primeStartY + PRINT_SIZE_Y, PRINT_SIZE_Y, basicSettings, {'extMult': EXT_MULT_PRIME, 'speed': SPEED_PRIME}) +
                      moveTo(primeStartX + (LINE_WIDTH * 1.5), primeStartY + PRINT_SIZE_Y, basicSettings) +
-                     createLine(primeStartX + (LINE_WIDTH * 1.5), primeStartY, -PRINT_SIZE_Y, basicSettings, {prime: true}) +
-                     doEfeed('-', basicSettings);
+                     createLine(primeStartX + (LINE_WIDTH * 1.5), primeStartY, -PRINT_SIZE_Y, basicSettings, {'extMult': EXT_MULT_PRIME, 'speed': SPEED_PRIME}) +
+                     doEfeed('-', basicSettings, (USE_FWR ? 'FWR' : 'STD'));
   }
 
   // if selected, print an anchor frame around test line start and end points
@@ -210,23 +224,23 @@ function genGcode() {
     txtArea.value += ';\n' +
                      '; print anchor frame\n' +
                      ';\n' +
-                     moveTo(frameStartX1 - LINE_WIDTH, frameStartY, basicSettings) +
-                     (USE_PRIME ? doEfeed('+', basicSettings) : '') +
-                     createLine(frameStartX1 - LINE_WIDTH, frameStartY + frameLength, frameLength, basicSettings) +
-                     moveTo(frameStartX1, frameStartY + frameLength, basicSettings) +
-                     createLine(frameStartX1, frameStartY, -frameLength, basicSettings) +
-                     doEfeed('-', basicSettings) +
+                     moveTo(frameStartX1, frameStartY, basicSettings) +
+                     (USE_PRIME ? doEfeed('+', basicSettings, (USE_FWR ? 'FWR' : 'STD')) : '') +
+                     createLine(frameStartX1, frameStartY + frameLength, frameLength, basicSettings, {'extMult': EXT_MULT * 1.1}) +
+                     moveTo(frameStartX1 + LINE_WIDTH, frameStartY + frameLength, basicSettings) +
+                     createLine(frameStartX1 + LINE_WIDTH, frameStartY, -frameLength, basicSettings, {'extMult': EXT_MULT * 1.1}) +
+                     doEfeed('-', basicSettings, (USE_FWR ? 'FWR' : 'STD')) +
                      moveTo(frameStartX2, frameStartY, basicSettings) +
-                     doEfeed('+', basicSettings) +
-                     createLine(frameStartX2, frameStartY + frameLength, frameLength, basicSettings) +
-                     moveTo(frameStartX2 + LINE_WIDTH, frameStartY + frameLength, basicSettings) +
-                     createLine(frameStartX2 + LINE_WIDTH, frameStartY, -frameLength, basicSettings) +
-                     doEfeed('-', basicSettings);
+                     doEfeed('+', basicSettings, (USE_FWR ? 'FWR' : 'STD')) +
+                     createLine(frameStartX2, frameStartY + frameLength, frameLength, basicSettings, {'extMult': EXT_MULT * 1.1}) +
+                     moveTo(frameStartX2 - LINE_WIDTH, frameStartY + frameLength, basicSettings) +
+                     createLine(frameStartX2 - LINE_WIDTH, frameStartY, -frameLength, basicSettings, {'extMult': EXT_MULT * 1.1}) +
+                     doEfeed('-', basicSettings, (USE_FWR ? 'FWR' : 'STD'));
   }
 
   // insert a retract if no prime and no frame
   if (!USE_PRIME && !USE_FRAME) {
-    txtArea.value += doEfeed('-', basicSettings);
+    txtArea.value += doEfeed('-', basicSettings, (USE_FWR ? 'FWR' : 'STD'));
   }
 
   // generate the k-factor Test pattern
@@ -252,13 +266,13 @@ function genGcode() {
                    ';\n' +
                    'M900 K0 ; set K-factor 0\n' +
                    moveTo(refStartX1, refStartY, basicSettings) +
-                   doEfeed('+', basicSettings) +
+                   doEfeed('+', basicSettings, (USE_FWR ? 'FWR' : 'STD')) +
                    createLine(refStartX1, refStartY + 20, 20, basicSettings) +
-                   doEfeed('-', basicSettings) +
+                   doEfeed('-', basicSettings, (USE_FWR ? 'FWR' : 'STD')) +
                    moveTo(refStartX2, refStartY, basicSettings) +
-                   doEfeed('+', basicSettings) +
+                   doEfeed('+', basicSettings, (USE_FWR ? 'FWR' : 'STD')) +
                    createLine(refStartX2, refStartY + 20, 20, basicSettings) +
-                   doEfeed('-', basicSettings) +
+                   doEfeed('-', basicSettings, (USE_FWR ? 'FWR' : 'STD')) +
                    zHop((HEIGHT_LAYER + Z_OFFSET) + 0.1, basicSettings);
 
   // print K values beside the test lines
@@ -267,16 +281,17 @@ function genGcode() {
         numStartY = PAT_START_Y - 2,
         stepping = 0;
 
+    txtArea.value += ';\n' +
+                     '; print K-values\n' +
+                     ';\n';
+
     for (var i = START_K; i <= END_K; i += STEP_K) {
       if (stepping % 2 === 0) {
-        txtArea.value += ';\n' +
-                         '; print K-values\n' +
-                         ';\n' +
-                         moveTo(numStartX, numStartY + (stepping * LINE_SPACING), basicSettings) +
+        txtArea.value += moveTo(numStartX, numStartY + (stepping * LINE_SPACING), basicSettings) +
                          zHop((HEIGHT_LAYER + Z_OFFSET), basicSettings) +
-                         doEfeed('+', basicSettings) +
+                         doEfeed('+', basicSettings, (USE_FWR ? 'FWR' : 'STD')) +
                          createGlyphs(numStartX, numStartY + (stepping * LINE_SPACING), basicSettings, Math.round10(i, -3)) +
-                         doEfeed('-', basicSettings) +
+                         doEfeed('-', basicSettings, (USE_FWR ? 'FWR' : 'STD')) +
                          zHop((HEIGHT_LAYER + Z_OFFSET) + 0.1, basicSettings);
       }
       stepping += 1;
@@ -381,21 +396,17 @@ function createLine(coordX, coordY, length, basicSettings, optional) {
 
   //handle optional function arguements passed as object
   var defaults = {
-    speed: 'slow',
-    prime: 'false',
+    speed: basicSettings['slow'],
+    extMult: basicSettings['extMult'],
     comment: ' ; print line\n'
   };
   var optArgs = $.extend({}, defaults, optional);
 
-  if (optArgs['prime'] === true) {
-    ext = Math.round10(basicSettings['extRatio'] * basicSettings['extMultPrime'] * Math.abs(length), -4);
-  } else {
-    ext = Math.round10(basicSettings['extRatio'] * basicSettings['extMult'] * Math.abs(length), -4);
-  }
+  ext = Math.round10(basicSettings['extRatio'] * optArgs['extMult'] * Math.abs(length), -4);
 
   gcode += 'G1 X' + Math.round10(rotateX(coordX, basicSettings['centerX'], coordY, basicSettings['centerY'], basicSettings['printDir']), -4) +
              ' Y' + Math.round10(rotateY(coordX, basicSettings['centerX'], coordY, basicSettings['centerY'], basicSettings['printDir']), -4) +
-             ' E' + ext + ' F' + basicSettings[optArgs['speed']] + optArgs['comment'];
+             ' E' + ext + ' F' + optArgs['speed'] + optArgs['comment'];
 
   return gcode;
 }
@@ -410,14 +421,25 @@ function moveTo(coordX, coordY, basicSettings) {
   return gcode;
 }
 
-// create react / un-react gcode
-function doEfeed(dir, basicSettings) {
+// create retract / un-retract gcode
+function doEfeed(dir, basicSettings, type) {
   var gcode = '';
-  if (dir === '+') {
-    gcode += 'G1 E' + basicSettings['retractDist'] + ' ; un-retract\n';
-  } else if (dir === '-') {
-    gcode += 'G1 E-' + basicSettings['retractDist'] + ' ; retract\n';
+
+  switch (true) {
+  case (type === 'STD' && dir === '+'):
+    gcode += 'G1 E' + basicSettings['retractDist'] + ' F' + basicSettings['retractSpeed'] + ' ; un-retract\n';
+    break;
+  case (type === 'STD' && dir === '-'):
+    gcode += 'G1 E-' + basicSettings['retractDist'] + ' F' + basicSettings['retractSpeed'] + ' ; retract\n';
+    break;
+  case (type === 'FWR' && dir === '+'):
+    gcode += 'G11 ; un-retract\n';
+    break;
+  case (type === 'FWR' && dir === '-'):
+    gcode += 'G10 ; retract\n';
+    break;
   }
+
   return gcode;
 }
 
@@ -427,28 +449,28 @@ function createAltPattern(startX, startY, basicSettings, patSettings) {
       k = 0,
       gcode = '';
 
-  gcode += doEfeed('+', basicSettings);
+  gcode += doEfeed('+', basicSettings, (basicSettings['fwRetract'] ? 'FWR' : 'STD'));
 
   for (var i = patSettings['kStart']; i <= patSettings['kEnd']; i += patSettings['kStep']) {
     if (k % 2 === 0) {
       gcode += 'M900 K' + Math.round10(i, -2) + ' ; set K-factor\n' +
-               createLine(startX + patSettings['lengthSlow'], startY + j, patSettings['lengthSlow'], basicSettings, {speed: 'slow'}) +
-               createLine(startX + patSettings['lengthSlow'] + patSettings['lengthFast'], startY + j, patSettings['lengthFast'], basicSettings, {speed: 'fast'}) +
-               createLine(startX + (2 * patSettings['lengthSlow']) + patSettings['lengthFast'], startY + j, patSettings['lengthSlow'], basicSettings, {speed: 'slow'}) +
-               createLine(startX + (2 * patSettings['lengthSlow']) + patSettings['lengthFast'], startY + j + patSettings['lineSpacing'], patSettings['lineSpacing'], basicSettings, {speed: 'fast'});
+               createLine(startX + patSettings['lengthSlow'], startY + j, patSettings['lengthSlow'], basicSettings, {'speed': basicSettings['slow']}) +
+               createLine(startX + patSettings['lengthSlow'] + patSettings['lengthFast'], startY + j, patSettings['lengthFast'], basicSettings, {'speed': basicSettings['fast']}) +
+               createLine(startX + (2 * patSettings['lengthSlow']) + patSettings['lengthFast'], startY + j, patSettings['lengthSlow'], basicSettings, {'speed': basicSettings['slow']}) +
+               createLine(startX + (2 * patSettings['lengthSlow']) + patSettings['lengthFast'], startY + j + patSettings['lineSpacing'], patSettings['lineSpacing'], basicSettings, {'speed': basicSettings['fast']});
       j += patSettings['lineSpacing'];
       k += 1;
     } else if (k % 2 !== 0) {
       gcode += 'M900 K' + Math.round10(i, -2) + ' ; set K-factor\n' +
-               createLine(startX + patSettings['lengthSlow'] + patSettings['lengthFast'], startY + j, patSettings['lengthSlow'], basicSettings, {speed: 'slow'}) +
-               createLine(startX + patSettings['lengthSlow'], startY + j, patSettings['lengthFast'], basicSettings, {speed: 'fast'}) +
-               createLine(startX, startY + j, patSettings['lengthSlow'], basicSettings, {speed: 'slow'}) +
-               createLine(startX, startY + j + patSettings['lineSpacing'], patSettings['lineSpacing'], basicSettings, {speed: 'fast'});
+               createLine(startX + patSettings['lengthSlow'] + patSettings['lengthFast'], startY + j, patSettings['lengthSlow'], basicSettings, {'speed': basicSettings['slow']}) +
+               createLine(startX + patSettings['lengthSlow'], startY + j, patSettings['lengthFast'], basicSettings, {'speed': basicSettings['fast']}) +
+               createLine(startX, startY + j, patSettings['lengthSlow'], basicSettings, {'speed': basicSettings['slow']}) +
+               createLine(startX, startY + j + patSettings['lineSpacing'], patSettings['lineSpacing'], basicSettings, {'speed': basicSettings['fast']});
       j += patSettings['lineSpacing'];
       k += 1;
     }
   }
-  gcode += doEfeed('-', basicSettings);
+  gcode += doEfeed('-', basicSettings, (basicSettings['fwRetract'] ? 'FWR' : 'STD'));
   return gcode;
 }
 
@@ -459,11 +481,11 @@ function createStdPattern(startX, startY, basicSettings, patSettings) {
 
   for (var i = patSettings['kStart']; i <= patSettings['kEnd']; i += patSettings['kStep']) {
     gcode += 'M900 K' + Math.round10(i, -2) + ' ; set K-factor\n' +
-             doEfeed('+', basicSettings) +
-             createLine(startX + patSettings['lengthSlow'], startY + j, patSettings['lengthSlow'], basicSettings, {speed: 'slow'}) +
-             createLine(startX + patSettings['lengthSlow'] + patSettings['lengthFast'], startY + j, patSettings['lengthFast'], basicSettings, {speed: 'fast'}) +
-             createLine(startX + (2 * patSettings['lengthSlow']) + patSettings['lengthFast'], startY + j, patSettings['lengthSlow'], basicSettings, {speed: 'slow'}) +
-             doEfeed('-', basicSettings) +
+             doEfeed('+', basicSettings, (basicSettings['fwRetract'] ? 'FWR' : 'STD')) +
+             createLine(startX + patSettings['lengthSlow'], startY + j, patSettings['lengthSlow'], basicSettings, {'speed': basicSettings['slow']}) +
+             createLine(startX + patSettings['lengthSlow'] + patSettings['lengthFast'], startY + j, patSettings['lengthFast'], basicSettings, {'speed': basicSettings['fast']}) +
+             createLine(startX + (2 * patSettings['lengthSlow']) + patSettings['lengthFast'], startY + j, patSettings['lengthSlow'], basicSettings, {'speed': basicSettings['slow']}) +
+             doEfeed('-', basicSettings, (basicSettings['fwRetract'] ? 'FWR' : 'STD')) +
              (i !== patSettings['kEnd'] ? moveTo(startX, startY + j + patSettings['lineSpacing'], basicSettings) : '');
     j += patSettings['lineSpacing'];
   }
@@ -496,12 +518,12 @@ function createGlyphs(startX, startY, basicSettings, value) {
   for (var i = 0, len = sNumber.length; i < len; i += 1) {
     for (var key in glyphSeg[sNumber.charAt(i)]) {
       if(glyphSeg[sNumber.charAt(i)].hasOwnProperty(key)) {
-        var up = createLine(startX + (xCount * glyphSegHeight), startY + (yCount * glyphSegHeight) + glyphSegHeight, glyphSegHeight, basicSettings, {speed: 'slow', comment: ' ; ' + sNumber.charAt(i) + '\n'}),
-            down = createLine(startX + (xCount * glyphSegHeight), startY + (yCount * glyphSegHeight) - glyphSegHeight, glyphSegHeight, basicSettings, {speed: 'slow', comment: ' ; ' + sNumber.charAt(i) + '\n'}),
-            right = createLine(startX + (xCount * glyphSegHeight) + glyphSegHeight, startY + (yCount * glyphSegHeight), glyphSegHeight, basicSettings, {speed: 'slow', comment: ' ; ' + sNumber.charAt(i) + '\n'}),
-            left = createLine(startX + (xCount * glyphSegHeight) - glyphSegHeight, startY + (yCount * glyphSegHeight), glyphSegHeight, basicSettings, {speed: 'slow', comment: ' ; ' + sNumber.charAt(i) + '\n'}),
+        var up = createLine(startX + (xCount * glyphSegHeight), startY + (yCount * glyphSegHeight) + glyphSegHeight, glyphSegHeight, basicSettings, {'speed': basicSettings['slow'], 'comment': ' ; ' + sNumber.charAt(i) + '\n'}),
+            down = createLine(startX + (xCount * glyphSegHeight), startY + (yCount * glyphSegHeight) - glyphSegHeight, glyphSegHeight, basicSettings, {'speed': basicSettings['slow'], 'comment': ' ; ' + sNumber.charAt(i) + '\n'}),
+            right = createLine(startX + (xCount * glyphSegHeight) + glyphSegHeight, startY + (yCount * glyphSegHeight), glyphSegHeight, basicSettings, {'speed': basicSettings['slow'], 'comment': ' ; ' + sNumber.charAt(i) + '\n'}),
+            left = createLine(startX + (xCount * glyphSegHeight) - glyphSegHeight, startY + (yCount * glyphSegHeight), glyphSegHeight, basicSettings, {'speed': basicSettings['slow'], 'comment': ' ; ' + sNumber.charAt(i) + '\n'}),
             mup = moveTo(startX + (xCount * glyphSegHeight), startY + (yCount * glyphSegHeight) + glyphSegHeight, basicSettings),
-            dot = createLine(startX, startY + glyphSegHeight2, glyphSegHeight2, basicSettings, {speed: 'slow', comment: ' ; dot\n'});
+            dot = createLine(startX, startY + glyphSegHeight2, glyphSegHeight2, basicSettings, {speed: basicSettings['slow'], comment: ' ; dot\n'});
         if (glyphSeg[sNumber.charAt(i)][key] === 'up') {
           glyphString += up;
           yCount += 1;
@@ -528,9 +550,9 @@ function createGlyphs(startX, startY, basicSettings, value) {
       startX += glyphSpacing;
     }
     if (i !== sNumber.length - 1) {
-      glyphString += doEfeed('-', basicSettings) +
+      glyphString += doEfeed('-', basicSettings, (basicSettings['fwRetract'] ? 'FWR' : 'STD')) +
                      moveTo(startX, startY, basicSettings) +
-                     doEfeed('+', basicSettings);
+                     doEfeed('+', basicSettings, (basicSettings['fwRetract'] ? 'FWR' : 'STD'));
     }
     yCount = 0;
     xCount = 0;
@@ -538,6 +560,7 @@ function createGlyphs(startX, startY, basicSettings, value) {
   return glyphString;
 }
 
+// gcode for small z hop
 function zHop(hop, basicSettings) {
   var gcode = '';
 
@@ -572,6 +595,7 @@ function rotateY(x, xm, y, ym, a) {
   return yr;
 }
 
+// save current settings as localStorage object
 function setLocalStorage() {
   var FILAMENT_DIAMETER = parseFloat(document.getElementById('FIL_DIA').value),
       NOZZLE_DIAMETER = parseFloat(document.getElementById('NOZ_DIA').value),
@@ -581,6 +605,7 @@ function setLocalStorage() {
       SPEED_SLOW = parseInt(document.getElementById('SLOW_SPEED').value),
       SPEED_FAST = parseInt(document.getElementById('FAST_SPEED').value),
       SPEED_MOVE = parseInt(document.getElementById('MOVE_SPEED').value),
+      SPEED_RETRACT = parseInt(document.getElementById('RETRACT_SPEED').value),
       ACCELERATION = parseInt(document.getElementById('PRINT_ACCL').value),
       RETRACT_DIST = parseFloat(document.getElementById('RETRACTION').value),
       SELECT_SHAPE = document.getElementById('SHAPE_BED'),
@@ -607,15 +632,18 @@ function setLocalStorage() {
       USE_FRAME = document.getElementById('FRAME').checked,
       USE_PRIME = document.getElementById('PRIME').checked,
       EXT_MULT_PRIME = parseFloat(document.getElementById('PRIME_EXT').value),
+      SPEED_PRIME = parseFloat(document.getElementById('PRIME_SPEED').value),
       PRIME_DWELL = parseFloat(document.getElementById('DWELL_PRIME').value),
       LENGTH_SLOW = parseFloat(document.getElementById('SLOW_LENGTH').value),
       LENGTH_FAST = parseFloat(document.getElementById('FAST_LENGTH').value),
       Z_OFFSET = parseFloat(document.getElementById('OFFSET_Z').value),
       USE_BL = document.getElementById('USE_BL').checked,
+      USE_FWR = document.getElementById('USE_FWR').checked,
       USE_MMS = document.getElementById('MM_S').checked,
       USE_LINENO = document.getElementById('LINE_NO').checked;
 
   var settings = {
+    'Version' : SETTINGS_VERSION,
     'FILAMENT_DIAMETER': FILAMENT_DIAMETER,
     'NOZZLE_DIAMETER': NOZZLE_DIAMETER,
     'NOZZLE_TEMP': NOZZLE_TEMP,
@@ -624,6 +652,7 @@ function setLocalStorage() {
     'SPEED_SLOW': SPEED_SLOW,
     'SPEED_FAST': SPEED_FAST,
     'SPEED_MOVE': SPEED_MOVE,
+    'SPEED_RETRACT': SPEED_RETRACT,
     'ACCELERATION': ACCELERATION,
     'RETRACT_DIST': RETRACT_DIST,
     'BED_SHAPE': BED_SHAPE,
@@ -646,17 +675,19 @@ function setLocalStorage() {
     'USE_FRAME': USE_FRAME,
     'USE_PRIME': USE_PRIME,
     'EXT_MULT_PRIME': EXT_MULT_PRIME,
+    'SPEED_PRIME' : SPEED_PRIME,
     'PRIME_DWELL': PRIME_DWELL,
     'LENGTH_SLOW': LENGTH_SLOW,
     'LENGTH_FAST': LENGTH_FAST,
     'Z_OFFSET': Z_OFFSET,
     'USE_BL': USE_BL,
+    'USE_FWR': USE_FWR,
     'USE_MMS': USE_MMS,
     'USE_LINENO': USE_LINENO
   };
 
   var lsSettings = JSON.stringify(settings);
-  localStorage.setItem('LIN_SETTINGS', lsSettings);
+  window.localStorage.setItem('LIN_SETTINGS', lsSettings);
 }
 
 // toggle html elements
@@ -673,51 +704,61 @@ $(window).load(function() {
   //Get localStorage data
   var lsSettings,
       settings;
-  if (localStorage.getItem('LIN_SETTINGS')) {
-    lsSettings = unescape(localStorage.getItem('LIN_SETTINGS'));
-    settings = jQuery.parseJSON(lsSettings);
-    $('#FIL_DIA').val(settings['FILAMENT_DIAMETER']);
-    $('#NOZ_DIA').val(settings['NOZZLE_DIAMETER']);
-    $('#NOZZLE_TEMP').val(settings['NOZZLE_TEMP']);
-    $('#NOZ_LIN_R').val(settings['NOZZLE_LINE_RATIO']);
-    $('#BED_TEMP').val(settings['BED_TEMP']);
-    $('#SLOW_SPEED').val(settings['SPEED_SLOW']);
-    $('#FAST_SPEED').val(settings['SPEED_FAST']);
-    $('#MOVE_SPEED').val(settings['SPEED_MOVE']);
-    $('#PRINT_ACCL').val(settings['ACCELERATION']);
-    $('#RETRACTION').val(settings['RETRACT_DIST']);
-    $('#SHAPE_BED').val(settings['BED_SHAPE']);
-    $('#BEDSIZE_X').val(settings['BED_X']);
-    $('#BEDSIZE_Y').val(settings['BED_Y']);
-    $('#CENTER_NULL').prop('checked', settings['NULL_CENTER']);
-    $('#LAYER_HEIGHT').val(settings['HEIGHT_LAYER']);
-    $('#EXTRUSION_MULT').val(settings['EXT_MULT']);
-    $('#LIN_VERSION').val(settings['VERSION_LIN']);
-    $('#TYPE_PATTERN').val(settings['PATTERN_TYPE']);
-    $('#K_START').val(settings['START_K']);
-    $('#K_END').val(settings['END_K']);
-    $('#K_STEP').val(settings['STEP_K']);
-    $('#X_JERK').val(settings['JERK_X']);
-    $('#Y_JERK').val(settings['JERK_Y']);
-    $('#Z_JERK').val(settings['JERK_Z']);
-    $('#E_JERK').val(settings['JERK_E']);
-    $('#DIR_PRINT').val(settings['PRINT_DIR']);
-    $('#SPACE_LINE').val(settings['LINE_SPACING']);
-    $('#FRAME').prop('checked', settings['USE_FRAME']);
-    $('#PRIME').prop('checked', settings['USE_PRIME']);
-    $('#PRIME_EXT').val(settings['EXT_MULT_PRIME']);
-    $('#DWELL_PRIME').val(settings['PRIME_DWELL']);
-    $('#SLOW_LENGTH').val(settings['LENGTH_SLOW']);
-    $('#FAST_LENGTH').val(settings['LENGTH_FAST']);
-    $('#OFFSET_Z').val(settings['Z_OFFSET']);
-    $('#USE_BL').prop('checked', settings['USE_BL']);
-    $('#MM_S').prop('checked', settings['USE_MMS']);
-    $('#LINE_NO').prop('checked', settings['USE_LINENO']);
 
-    toggleBedShape();
-    patternType();
-    togglePrime();
-    toggleVersion();
+  if (window.localStorage.getItem('LIN_SETTINGS')) {
+    lsSettings = unescape(window.localStorage.getItem('LIN_SETTINGS'));
+    settings = jQuery.parseJSON(lsSettings);
+    if (!settings['Version'] || Number(settings['Version']) < Number(SETTINGS_VERSION)) {
+      window.localStorage.removeItem('LIN_SETTINGS');
+      alert('Script settings have been updated. Saved settings are reset to default values');
+    } else {
+      $('#FIL_DIA').val(settings['FILAMENT_DIAMETER']);
+      $('#NOZ_DIA').val(settings['NOZZLE_DIAMETER']);
+      $('#NOZZLE_TEMP').val(settings['NOZZLE_TEMP']);
+      $('#NOZ_LIN_R').val(settings['NOZZLE_LINE_RATIO']);
+      $('#BED_TEMP').val(settings['BED_TEMP']);
+      $('#SLOW_SPEED').val(settings['SPEED_SLOW']);
+      $('#FAST_SPEED').val(settings['SPEED_FAST']);
+      $('#MOVE_SPEED').val(settings['SPEED_MOVE']);
+      $('#RETRACT_SPEED').val(settings['SPEED_RETRACT']);
+      $('#PRINT_ACCL').val(settings['ACCELERATION']);
+      $('#RETRACTION').val(settings['RETRACT_DIST']);
+      $('#SHAPE_BED').val(settings['BED_SHAPE']);
+      $('#BEDSIZE_X').val(settings['BED_X']);
+      $('#BEDSIZE_Y').val(settings['BED_Y']);
+      $('#CENTER_NULL').prop('checked', settings['NULL_CENTER']);
+      $('#LAYER_HEIGHT').val(settings['HEIGHT_LAYER']);
+      $('#EXTRUSION_MULT').val(settings['EXT_MULT']);
+      $('#LIN_VERSION').val(settings['VERSION_LIN']);
+      $('#TYPE_PATTERN').val(settings['PATTERN_TYPE']);
+      $('#K_START').val(settings['START_K']);
+      $('#K_END').val(settings['END_K']);
+      $('#K_STEP').val(settings['STEP_K']);
+      $('#X_JERK').val(settings['JERK_X']);
+      $('#Y_JERK').val(settings['JERK_Y']);
+      $('#Z_JERK').val(settings['JERK_Z']);
+      $('#E_JERK').val(settings['JERK_E']);
+      $('#DIR_PRINT').val(settings['PRINT_DIR']);
+      $('#SPACE_LINE').val(settings['LINE_SPACING']);
+      $('#FRAME').prop('checked', settings['USE_FRAME']);
+      $('#PRIME').prop('checked', settings['USE_PRIME']);
+      $('#PRIME_EXT').val(settings['EXT_MULT_PRIME']);
+      $('#PRIME_SPEED').val(settings['SPEED_PRIME']);
+      $('#DWELL_PRIME').val(settings['PRIME_DWELL']);
+      $('#SLOW_LENGTH').val(settings['LENGTH_SLOW']);
+      $('#FAST_LENGTH').val(settings['LENGTH_FAST']);
+      $('#OFFSET_Z').val(settings['Z_OFFSET']);
+      $('#USE_BL').prop('checked', settings['USE_BL']);
+      $('#USE_FWR').prop('checked', settings['USE_FWR']);
+      $('#MM_S').prop('checked', settings['USE_MMS']);
+      $('#LINE_NO').prop('checked', settings['USE_LINENO']);
+
+      toggleBedShape();
+      patternType();
+      togglePrime();
+      toggleVersion();
+      toggleRetract();
+    }
   }
 
   // toggle between mm/s and mm/min speeds
@@ -746,29 +787,46 @@ $(window).load(function() {
     toggleVersion();
     validateInput();
   });
+
+  // Change retract type
+  $('#USE_FWR').change(function() {
+    toggleRetract();
+  });
 });
 
+// toggle between mm/s and mm/min speed settings
 function speedToggle() {
   var SPEED_SLOW = $('#SLOW_SPEED').val(),
       SPEED_FAST = $('#FAST_SPEED').val(),
-      SPEED_MOVE = $('#MOVE_SPEED').val();
+      SPEED_MOVE = $('#MOVE_SPEED').val(),
+      SPEED_RETRACT = $('#RETRACT_SPEED').val(),
+      SPEED_PRIME = $('#PRIME_SPEED').val();
   if ($('#MM_S').is(':checked')) {
     SPEED_SLOW = $('#SLOW_SPEED').val();
     SPEED_FAST = $('#FAST_SPEED').val();
     SPEED_MOVE = $('#MOVE_SPEED').val();
+    SPEED_RETRACT = $('#RETRACT_SPEED').val();
+    SPEED_PRIME = $('#PRIME_SPEED').val();
     $('#SLOW_SPEED').val(SPEED_SLOW / 60);
     $('#FAST_SPEED').val(SPEED_FAST / 60);
     $('#MOVE_SPEED').val(SPEED_MOVE / 60);
+    $('#RETRACT_SPEED').val(SPEED_RETRACT / 60);
+    $('#PRIME_SPEED').val(SPEED_PRIME / 60);
   } else {
     SPEED_SLOW = $('#SLOW_SPEED').val();
     SPEED_FAST = $('#FAST_SPEED').val();
     SPEED_MOVE = $('#MOVE_SPEED').val();
+    SPEED_RETRACT = $('#RETRACT_SPEED').val();
+    SPEED_PRIME = $('#PRIME_SPEED').val();
     $('#SLOW_SPEED').val(SPEED_SLOW * 60);
     $('#FAST_SPEED').val(SPEED_FAST * 60);
     $('#MOVE_SPEED').val(SPEED_MOVE * 60);
+    $('#RETRACT_SPEED').val(SPEED_RETRACT * 60);
+    $('#PRIME_SPEED').val(SPEED_PRIME * 60);
   }
 }
 
+// toggle between round and rectangular bed shape
 function toggleBedShape() {
   if ($('#SHAPE_BED').val() === 'Round') {
     $('label[for=\'BEDSIZE_X\']').text('Bed Diameter:');
@@ -786,6 +844,7 @@ function toggleBedShape() {
   }
 }
 
+// toggle between standard and alternate pattern type
 function patternType() {
   if ($('#TYPE_PATTERN').val() === 'alt') {
     if ($('#FRAME').is(':checked')) {
@@ -802,6 +861,7 @@ function patternType() {
   }
 }
 
+// toggle prime relevant options
 function togglePrime() {
   if ($('#PRIME').is(':checked')) {
     $('#PRIME_EXT').prop('disabled', false);
@@ -812,6 +872,7 @@ function togglePrime() {
   }
 }
 
+// toggle options for LIN_ADVANCE v1.0 and v1.5
 function toggleVersion() {
   if ($('#LIN_VERSION').val() === '1.5') {
     $('#K_START').attr('step', 'any');
@@ -837,6 +898,18 @@ function toggleVersion() {
   }
 }
 
+// toggle between standard and firmware retract
+function toggleRetract() {
+  if ($('#USE_FWR').is(':checked')) {
+    $('#RETRACT_SPEED').prop('disabled', true);
+    $('label[for=RETRACT_SPEED]').css({opacity: 0.5});
+  } else {
+    $('#RETRACT_SPEED').prop('disabled', false);
+    $('label[for=RETRACT_SPEED]').css({opacity: 1.0});
+  }
+}
+
+// sanity checks for pattern / bed size
 function validateInput() {
   var selectShape = document.getElementById('SHAPE_BED'),
       bedShape = selectShape.options[selectShape.selectedIndex].value,
