@@ -123,13 +123,13 @@ Command | Configuration<br>required | Description
 
 ## Troubleshooting
 
-- Use the latest **bugfix** firmware from github
-- Use the latest library versions
-- Check wiring and your wire grimps
-- Check **12V** (**24V**) power in the **Vm** pin and **5V** (**3.3V**) in the **Vio** pin
-- Check that configured pins match with your firmware configuration
-- Enable `TMC_DEBUG` and send `M122` to see the debugging output
-  - Reported register values of either `0x00000000` or `0xFFFFFFFF` are bad responses
+- Test the current **bugfix** branch of Marlin posted on GitHub (in case your issue is already fixed).
+- Use the latest TMC Stepper libraries.
+- Check all wiring and wire crimps.
+- Check **12V** (**24V**) power in the **Vm** pin and **5V** (**3.3V**) in the **Vio** pin.
+- Check that configured pins match your firmware configuration.
+- Enable `TMC_DEBUG` and send `M122` to see the debugging output.
+  - Reported register values of either `0x00000000` or `0xFFFFFFFF` are bad responses.
 - Try the examples provided by the respective library. Please detach any belts beforehand however, as the examples will not respect any endstop signals or physical limits. You may need to change the pin definitions.
 
 ## External resources
