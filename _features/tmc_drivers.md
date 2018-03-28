@@ -99,7 +99,7 @@ HYBRID_THRESHOLD          | Configure the axis speed when the driver should swit
 SENSORLESS_HOMING         | Use the TMC drivers that support this feature to act as endstops by using stallGuard to detect a physical limit.
 HOMING_SENSITIVITY        | The Sensorless Homing sensitivity can be tuned to suit the specific machine.<br>A **higher** value will make homing **less** sensitive.<br>A **lower** value will make homing **more** sensitive.
 TMC_DEBUG                 | Enable M122 debugging command. This will give you _a lot_ of additional information about the status of your TMC drivers.
-TMC_ADV                   | You can use this to add your own configuration settings. The requirement is that the command used must be part of the respective TMC stepper library. Remember to add a backslash after every command!
+TMC_ADV                   | You can use this to add your own configuration settings. The requirement is that the command used must be part of the respective TMC stepper library. Remember to add a backslash after each command!
 
 ## GCodes
 
@@ -123,11 +123,13 @@ Command | Configuration<br>required | Description
 
 ## Troubleshooting
 
-- Use the latest **bugfix** firmware from github
-- Check wiring and your wire grimps
-- Check that configured pins match with your firmware configuration
-- Enable `TMC_DEBUG` and send `M122` to see the debugging output
-  - Reported register values of either `0x00000000` or `0xFFFFFFFF` are bad responses
+- Test the current **bugfix** branch of Marlin posted on GitHub (in case your issue is already fixed).
+- Use the latest TMC Stepper libraries.
+- Check all wiring and wire crimps.
+- Check **12V** (**24V**) power in the **Vm** pin and **5V** (**3.3V**) in the **Vio** pin.
+- Check that configured pins match your firmware configuration.
+- Enable `TMC_DEBUG` and send `M122` to see the debugging output.
+  - Reported register values of either `0x00000000` or `0xFFFFFFFF` are bad responses.
 - Try the examples provided by the respective library. Please detach any belts beforehand however, as the examples will not respect any endstop signals or physical limits. You may need to change the pin definitions.
 
 ## External resources
@@ -135,6 +137,10 @@ Command | Configuration<br>required | Description
 [Arduino library for TMC2130](https://github.com/teemuatlut/TMC2130Stepper)
 
 [Arduino library for TMC2208](https://github.com/teemuatlut/TMC2208Stepper)
+
+[SilentStepStick TMC2130 schematic and pinout](https://github.com/watterott/SilentStepStick/blob/master/hardware/SilentStepStick-TMC2130_v11.pdf)
+
+[SilentStepStick TMC2208 schematic and pinout](https://github.com/watterott/SilentStepStick/blob/master/hardware/SilentStepStick-TMC2208_v12.pdf)
 
 [Trinamic.com](https://www.trinamic.com)
 
@@ -146,6 +152,12 @@ Command | Configuration<br>required | Description
 
 [spreadCycle](https://www.trinamic.com/technology/adv-technologies/spreadcycle/)
 
-[Hackaday article by Moritz Walter](https://hackaday.com/2016/09/30/3d-printering-trinamic-tmc2130-stepper-motor-drivers-shifting-the-gears/)
+[TMC2130 datasheet](https://www.trinamic.com/fileadmin/assets/Products/ICs_Documents/TMC2130_datasheet.pdf)
+
+[TMC2208 datasheet](https://www.trinamic.com/fileadmin/assets/Products/ICs_Documents/TMC220x_TMC222x_Datasheet.pdf)
+
+[TMC2130 Hackaday article by Moritz Walter](https://hackaday.com/2016/09/30/3d-printering-trinamic-tmc2130-stepper-motor-drivers-shifting-the-gears/)
 
 [Video guide by Thomas Sanladerer](https://www.youtube.com/watch?v=sPvTB3irCxQ)
+
+[TMC2208 Torque testing by Alex Kenis](https://www.youtube.com/watch?v=GVs2d-TOims)
