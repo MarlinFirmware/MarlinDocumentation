@@ -14,11 +14,11 @@ category:     [ tools ]
       <div class="row alert alert-info custom-alert">
         <div class="col-lg-1 col-md-2 visible-lg-block visible-md-block custom-alert-icon"> <i class="fa fa-info-circle fa-4x" aria-hidden="true"></i> </div>
         <div class="col-lg-11 col-md-10 custom-alert-text">
-          <p>There are two versions of Linear Advance available. Version 1 is applicable to Marlin 1.1.8 and older. Version 1.5 is applicable to Marlin 1.1.9 and 2.0.0 onwards.</p>
+          <p>There are two versions of Linear Advance. Linear Advance 1.0 is in Marlin 1.1.8 and earlier. Marlin 1.1.9 and up have Linear Advance 1.5.</p>
         </div>
       </div>
-      <p>The below Javascript will generate G-Code that will support the user in calibrating the K-factor for Marlin's Linear Advance Feature. The default values should work for a standard PLA material with a 0.4 mm nozzle.</p>
-      <p>Press the <code class="highlighter-rouge">Generate G-code</code> button then  <code class="highlighter-rouge">Download as file</code> to save the result.</p>
+      <p>The Javascript below generates G-code to calibrate the Linear Advance K-factor. The default values apply to typical PLA with a 0.4mm nozzle.</p>
+      <p>Press the <code class="highlighter-rouge">Generate G-code</code> button then use <code class="highlighter-rouge">Download as file</code> to save the result.</p>
       <table>
         <tbody>
           <tr>
@@ -83,7 +83,7 @@ category:     [ tools ]
           <tr>
             <td><label for="CENTER_NULL">Origin Bed Center:</label></td>
             <td><input name="CENTER_NULL" type="checkbox" id="CENTER_NULL" ></td>
-            <td>Use to move the origin position (x 0, y 0) to bed center instead of front left corner</td>
+            <td>Set the origin position (X0 Y0) to bed center instead of front-left corner</td>
           </tr>
           <tr>
             <td colspan="3" class="tdSection"><h4>Speed:</h4></td>
@@ -147,7 +147,7 @@ category:     [ tools ]
               <option value="1.0">1.0</option>
               <option value="1.5" selected>1.5</option>
             </select></td>
-            <td>Select version 1.0 for firmware 1.1.8 or lower and 1.5 for 1.1.9+ and 2.0+</td>
+            <td>Select version 1.0 for Marlin 1.1.8 and earlier. Select 1.5 for Marlin 1.1.9 / 2.0 and up</td>
           </tr>
           <tr>
             <td><label for="TYPE_PATTERN">Pattern Type:</label></td>
@@ -277,8 +277,8 @@ category:     [ tools ]
         <li><code class="highlighter-rouge">Fast Printing Speed</code> and <code class="highlighter-rouge">Slow Printing Speed</code> should be significantly different or the K-factor effect will barely be visible.</li>
         <li><code class="highlighter-rouge">Use Bed Leveling</code> requires a probe.</li>
         <li>For round beds the option <code class="highlighter-rouge">Origin Bed Center</code> is automatically activated.</li>
-        <li>The overall width (X-direction) of the print depends on the <code class="highlighter-rouge">Fast Speed Length</code> and <code class="highlighter-rouge">Slow Speed Length</code> settings plus 5 mm for the priming line. The length (Y-direction) depends on the K-factor Settings and <code class="highlighter-rouge">Line Spacing</code>.</li>
-        <li>The script performs sanity checks if the print fits on the bed. Verify it using a host software like <a href="http://www.pronterface.com/" target="new">Printrun</a> or <a href="https://www.repetier.com/" target="new">Repetier Host</a>.</li>
+        <li>The overall width (X-direction) of the print depends on the <code class="highlighter-rouge">Fast Speed Length</code> and <code class="highlighter-rouge">Slow Speed Length</code> settings plus 5mm for the priming line. The length (Y-direction) depends on the K-factor Settings and <code class="highlighter-rouge">Line Spacing</code>.</li>
+        <li>The script checks to make sure the print fits on the bed. Verify it using a host software like <a href="http://www.pronterface.com/" target="new">Printrun</a> or <a href="https://www.repetier.com/" target="new">Repetier Host</a>.</li>
         <li><code class="highlighter-rouge">Start</code> and <code class="highlighter-rouge">End Value</code> for the K-factor determines the range that the test pattern will cover. For example a <code class="highlighter-rouge">Start Value</code> of 50 and an <code class="highlighter-rouge">End Value</code> of 150 will test a range of 100.</li>
         <li>The <code class="highlighter-rouge">K-factor Stepping</code> determines how many test lines are printed for the above range. For example, a Stepping of 10 and a range of 100 results in 10 test lines. A stepping of 3 would not work in this example as 100 cannot be exactly divided by 3. The script will throw an error message if an exact division is not possible. In this case either the range or the  stepping needs to be adjusted.</li>
         <li>The <code class="highlighter-rouge">Alternate Pattern</code> has a second line of <code class="highlighter-rouge">Fast Printing Speed</code> to test 0 to <code class="highlighter-rouge">Fast Printing Speed</code> and back to 0 conditions. Best used with an increased <code class="highlighter-rouge">Test Line Spacing</code> and reduced K-factor range.</li>
