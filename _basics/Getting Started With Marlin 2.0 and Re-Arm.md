@@ -1,4 +1,4 @@
-#Marlin 2.0 ReArm Tutorial for Newbs
+# Marlin 2.0 ReArm Tutorial for Newbs
 
 **By ModMike**
 
