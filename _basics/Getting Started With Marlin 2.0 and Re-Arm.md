@@ -172,11 +172,12 @@ Tip:  When doing consecutive builds, it is always good practice to check the dat
 
 ## Configuring your printer:
 
-The build you just created used the default configuration.h and configuration_adv.h.  I strongly suggest you rebuild your configs using an example file for your printer.  
+The build you just created used the default configuration.h and configuration_adv.h.  I strongly suggest you rebuild your configs from scratch or use one of the official example configs included in the project file.
 
 These can be found in **Marlin-bugfix-2.0.x/Marlin/src/config/examples** and will need to be copied to the **Marlin-bugfix-2.0.x/Marlin/ directory.
 **
-If you absolutely must port your config from 1.18 you will need to make a few changes.  This is what I did, yours will probably be different.
+
+If you absolutely must port your config from 1.18 you will need to make a few changes.  This is what I did, your changes will probably be different.
 
 1)  From Atom, file explorer, or Finder, Navigate to Marlin-bugfix-2.0.x/Marlin directory and rename the  config files to configuration.bak and configuration_adv.bak.
 
