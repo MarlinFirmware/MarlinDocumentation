@@ -1,6 +1,8 @@
-# **Marlin 2.0 ReArm Tutorial for Newbs **
+#Marlin 2.0 ReArm Tutorial for Newbs
 
-**By ModMike - 2018-04-06**
+**By ModMike**
+
+*2018-04-06*
 
 Although this tutorial is specifically written for the Re-Arm board, it can work for any Marlin HAL compatible controller.  **Alternate Boards** notes will be included throughout the tutorial for non Re-Arm users.  This tutorial is also system agnostic.  I use the term File Browser to cover OS X's Finder and Windows' file Explorer.
  
