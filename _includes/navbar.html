@@ -2,8 +2,8 @@
 <nav class="navbar navbar-default navbar-fixed-top custom-no-margin">
   <div class="container">
     <div class="navbar-header">
-      <a href="{{ '/' | prepend: site.baseurl }}" class="navbar-brand">
-        <img src="{{ '/assets/images/logo/marlin/text-25.png' | prepend: site.baseurl }}" alt="Marlin" />
+      <a href="{{ '/' }}" class="navbar-brand">
+        <img src="{{ '/assets/images/logo/marlin/text-25.png' }}" alt="Marlin" />
       </a>
       <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
         <span class="icon-bar"></span>
@@ -20,33 +20,37 @@
           </a>
 
           <ul class="dropdown-menu">
-            <li><a href="{{ '/docs/basics/introduction.html' | prepend: site.baseurl }}">
+            <li><a href="{{ '/docs/basics/introduction.html' }}">
               Introduction
             </a></li>
 
             <li class="divider"></li>
 
-            <li><a href="{{ '/meta/download/' | prepend: site.baseurl }}">
+            <li><a href="{{ '/meta/download/' }}">
               Download Marlin
             </a></li>
 
-            <li><a href="{{ '/docs/basics/install.html' | prepend: site.baseurl }}">
-              Installing Marlin
+            <li><a href="{{ '/docs/basics/install.html' }}">
+              Installing Marlin (AVR)
             </a></li>
 
-            <li><a href="{{ '/docs/configuration/configuration.html' | prepend: site.baseurl }}">
+            <li><a href="{{ '/docs/basics/install_arm.html' }}">
+              Installing Marlin (ARM)
+            </a></li>
+
+            <li><a href="{{ '/docs/configuration/configuration.html' }}">
               Configuring Marlin
             </a></li>
 
             <li class="divider"></li>
 
-            <li><a href="{{ '/docs/basics/reporting_bugs.html' | prepend: site.baseurl }}">
+            <li><a href="{{ '/docs/basics/reporting_bugs.html' }}">
               Reporting bugs
             </a></li>
           </ul>
         </li>
 
-        <li><a href="{{ '/meta/download/' | prepend: site.baseurl }}">
+        <li><a href="{{ '/meta/download/' }}">
           Download
         </a></li>
 
@@ -69,7 +73,7 @@
                     <li class="dropdown-submenu {{ col.label }}">
                       <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ col.title }}</a>
                       <ul class="dropdown-menu">
-                        <li><a href="{{ '/meta/' | append: col.label | append: '/' | prepend: site.baseurl }}">
+                        <li><a href="{{ '/meta/' | append: col.label | append: '/' }}">
                           All documents
                         </a></li>
                         {% if col.label == 'gcode' %}
@@ -77,7 +81,7 @@
                           {% assign docs = (col.docs | sort: 'tag') %}
                           {% for doc in docs %}
                             {% if doc.title %}
-                              <li><a href="{{ doc.url | prepend: site.baseurl }}">
+                              <li><a href="{{ doc.url }}">
                                 {% if col.label == 'gcode' %}
                                   {{ doc.codes[0] }}{% if doc.codes[1] %}-{{ doc.codes[1] }}{% endif %}: {{ doc.title }}
                                 {% else %}
@@ -92,7 +96,7 @@
                             <li class="divider"></li>
                             {% for doc in tag.items %}
                               {% if doc.title %}
-                                <li><a href="{{ doc.url | prepend: site.baseurl }}">
+                                <li><a href="{{ doc.url }}">
                                   {% if col.label == 'gcode' %}
                                     {{ doc.codes[0] }}{% if doc.codes[1] %}-{{ doc.codes[1] }}{% endif %}: {{ doc.title }}
                                   {% else %}
@@ -111,7 +115,7 @@
 
             <li class="divider"></li>
 
-            <li><a href="{{ '/meta/needs-review/' | prepend: site.baseurl }}">
+            <li><a href="{{ '/meta/needs-review/' }}">
               Documentation Needing Review
             </a></li>
           </ul>
@@ -122,11 +126,11 @@
           Tools <span class="caret"></span></a>
 
           <ul class="dropdown-menu">
-            <li><a href="{{ '/tools/u8glib/converter.html' | prepend: site.baseurl }}">
+            <li><a href="{{ '/tools/u8glib/converter.html' }}">
               Bitmap Converter
             </a></li>
 			
-            <li><a href="{{ '/tools/lin_advance/k-factor.html' | prepend: site.baseurl }}">
+            <li><a href="{{ '/tools/lin_advance/k-factor.html' }}">
               K-Factor Calibration Pattern
             </a></li>
 
@@ -136,7 +140,7 @@
               Bugtracker
             </a></li>
 
-            <li><a href="{{ '/docs/basics/reporting_bugs.html' | prepend: site.baseurl }}">
+            <li><a href="{{ '/docs/basics/reporting_bugs.html' }}">
               Reporting bugs
             </a></li>
 
