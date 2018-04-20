@@ -393,7 +393,7 @@ examples:
       G29 S1        ; Save UBL mesh points to EEPROM.
       G29 F 10.0    ; Set Fade Height for correction at 10.0 mm.
       G29 A         ; Activate the UBL System.
-      M500          ; Save current setup. WARNING - UBL will be active at power up, before any `G28`.
+      M500          ; Save current setup. WARNING - UBL will be active at power up, before any G28.
   -
     pre: Use `G26` and `G29` commands to fine-tune a measured mesh
     code: |
