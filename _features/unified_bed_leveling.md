@@ -8,7 +8,7 @@ category: feature
 ---
 
 {% alert info %}
-This page is a work in progress, based on Marlin 1.1.2 and updated for 1.1.7. Corrections/improvements are welcome.
+This page is a work in progress, based on Marlin 1.1.x. Corrections/improvements are welcome.
 {% endalert %}
 
  - A comprehensive LCD menu system for UBL is coming soon.
@@ -32,7 +32,7 @@ UBL is a superset of previous automatic leveling systems, but it does not necess
 
 The printer must be already fully functional and tested, with a well-constrained movement system. The more physically level and straight the bed is, the better your results will be. See `Configuration.h` and `Configuration_adv.h` for all of UBL's settings.
 
-The printer should be able to successfully print a small object at the center of the bed with no bed leveling system active. Most problems bringing up the UBL Bed Leveling system occur when this step has been ignored. It is very important to verify that your configuration.h settings permit this before trying to bring up UBL.
+You should be able to successfully print a small object at the center of the bed with bed leveling turned off. It's very important to verify that your `Configuration.h` settings make this possible before trying to bring up UBL. Most problems bringing up the UBL Bed Leveling system occur when this step has been ignored. Please pay particular attention to your `Z_PROBE_OFFSET_FROM_EXTRUDER` value. Usually it's best to home the Z-Axis in the center of the bed. But wherever you decide to home, the Z value reported on the LCD (or with `M114`) should be _very_ close to 0.0 mm when the nozzle is just touching the bed. Failure to calibrate `Z_PROBE_OFFSET_FROM_EXTRUDER` properly will result in dimensional errors in your printed parts. 
 
 The following command sequence can then be used as a quick-start guide to home, level, and then fine-tune the results. These commands are for a 'normal' setup; see the relevant [addenda](#addenda) for concerns and gcode sequences related to setups without an lcd or z-probe.:
 
@@ -224,29 +224,29 @@ Most systems will have areas that the Z probe can’t reach. These points can be
 
 Manual probing consists of lowering the nozzle until the nozzle comes in contact with a feeler gauge. Usually the feeler gauge is a piece of paper or a business card. It’s better if the gauge is a piece of plastic that’s hard but still has some flex. Even better is a mechanic’s metal feeler gauge but those are usually too short to be convenient.
 
-The idea is to stop lowering when there is the first sign of resistance to moving the gauge. It is VERY IMPORTANT that you be consistent in the amount of force/resistance from point to point.
+The idea is to stop lowering when there is the first sign of resistance to moving the gauge. It is _very important_ to be consistent in the amount of force/resistance from point to point.
 
-The first step is to measure the thickness of the feeler gauge.
+The first step is to measure the thickness of the feeler gauge:
 
-Issue `G29 P2 B T` to start.
+- Issue `G29 P2 B T` to start.
 
-The nozzle will move to the center of the bed.
+- The nozzle will move to the center of the bed.
 
-Use the encoder wheel to move the nozzle until you feel a small amount of resistance. This is the resistance level you’ll want to aim for when manually probing.
+- Use the encoder wheel to move the nozzle until you feel a small amount of resistance. This is the resistance level you’ll want to aim for when manually probing.
 
-Click the encoder button.
+- Click the encoder button.
 
-Remove the feeler gauge.
+- Remove the feeler gauge.
 
-Lower the nozzle **VERY SLOWLY** until the nozzle just touches the bed.
+- Lower the nozzle **VERY SLOWLY** until the nozzle just touches the bed.
 
-Click the encoder button.
+- Click the encoder button.
 
-The nozzle will move to the first unmeasured location. Use the encoder to lower the nozzle until the desired resistance is felt with the feeler gauge. Click the encoder. The nozzle then moves to the next unmeasured location. Repeat until all locations are measured.
+- The nozzle will move to the first unmeasured location. Use the encoder to lower the nozzle until the desired resistance is felt with the feeler gauge. Click the encoder. The nozzle then moves to the next unmeasured location. Repeat until all locations are measured.
 
-You can look at the host interface screen to see where in the grid you are currently probing.
+- See the host interface screen for the grid position you're currently probing.
 
-When done, you can issue a `G29 S` command to save the mesh to EEPROM.
+When done, you can use `G29 S` to save the mesh to EEPROM.
 
 #### Filling in the mesh
 
@@ -299,7 +299,7 @@ As you print parts you may notice that further fine-tuning is needed. The `G29 P
 
 If you don't have an LCD with encoder, or you have something like a MKS TFT that doesn't behave like a proper display, then you will need to modify this process slightly.
 
-First, it is **especially important** that you physically level the bed as well as possible prior to initially probing the bed with `G29 P1`. This is always a prerequisite, but it is especially important here because without an LCD there is no easy way to abort the probe process if the nozzle starts getting too close to the bed.
+First, it is **especially important** that you physically level the bed as well as possible prior to initially probing the bed with `G29 P1`. This is always a prerequisite, but it is especially important here because without an LCD there's no easy way to abort the probe process if the nozzle starts getting too close to the bed.
 
 Possible workarounds are to keep your finger on the reset button/power switch so you can quickly stop the probe process, or being ready to quickly issue `M112` (emergency stop) if **and only if** you have `EMERGENCY_PARSER` enabled in `Configuration_adv.h`.
 
