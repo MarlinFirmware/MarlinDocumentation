@@ -1,5 +1,5 @@
 ---
-title:        Installing Marlin using PlatformIO
+title:        Installing Marlin (PlatformIO)
 description:  Marlin Installation Quick Start Guide
 
 author: ModMike
