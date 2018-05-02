@@ -1,5 +1,5 @@
 ---
-title:        Bringing up Re-ARM
+title:        Installing Marlin on Re-ARM
 description:  Re-ARM specific hardware and software setup
 
 author: ModMike
@@ -45,7 +45,6 @@ See [Installing Marlin (PlatformIO)](/docs/basics/install_Atom_PlatformIO.html)
 
 This method is recommended because it is relatively easy and closely parallels this document.
 
-
 ## Download Marlin 2.0
 
 1. Download the [Marlin 2.0 "bugfix" version](https://github.com/MarlinFirmware/Marlin/archive/bugfix-2.0.x.zip) which includes support for ARM-based boards.
@@ -65,7 +64,6 @@ _Pro Tip: If you're using **GitHub Desktop** to manage your own Marlin fork, sim
 3. Click the "**Open Project**" button under "**Quick Access**."
 
 4. In the file dialog, navigate to the `MarlinFirmware` folder you created earlier, highlight it, and click the "**Open**" button. The project folder and its contents should appear in the Project navigator on the left side.
-
 
 # Prepare `Configuration.h`
 
@@ -168,7 +166,6 @@ _Tip:  When doing consecutive builds, it's always good practice to check the dat
 For the first test build you should have used the default `Configuration.h` and `Configuration_adv.h` files. Now it's time to test your own configurations.
 
 We strongly suggest rebuilding your configs using one of the included example configs located in the **Marlin/src/config/examples** folder as a starting-point by first copying the appropriate files into the `MarlinFirmware/Marlin` folder. For much of this process, you can use the File Compare feature of ***Atom*** or ***VSCode***. Note that this won't help with any renamed or moved items.
-
 
 # The main event!
 
