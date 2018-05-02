@@ -123,11 +123,11 @@ Methods 1 and 2, after a successful run, will result in the `firmware.bin` file 
 
 If `firmware.bin` isn't on the SD card then either rerun the Method or use Method 3 to manually move the file onto the SD card.
 
-## Auto-Upload (Recommended)
+### 1. Auto-Upload (Recommended)
 
 See [Installing Marlin (PlatformIO)](install_platformio.html)
 
-## Manual Upload
+### 2. Manual Upload
 
 1. Click on **PIO Build** in the bottom left to bring up the dialog.
 
@@ -135,7 +135,7 @@ See [Installing Marlin (PlatformIO)](install_platformio.html)
 
 1. Wait while Marlin is compiled and uploaded. (This may take a few minutes.)
 
-## Copy firmware.bin
+### 3. Copy firmware.bin
 
 If there is a properly formatted SD card in your Re-Arm board and the board is powered on, you should see it on the desktop and in the file browser. You don't need to remove the card from the Re-Arm and insert it into your computer, although that works too.
 
