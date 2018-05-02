@@ -289,7 +289,7 @@ To edit multiple points move the nozzle close to the first point and issue `G29 
 
 Press and hold the encoder button/wheel when you are finished.
 
-There are options (`G29 P4 X... Y...`) to make it easier to move to the desired probe locations. For example `G29 P4 X110 Y110` will move to the grid point closest to the center of the bed.
+There are options (`G29 P4 X... Y...`) to make it easier to move to the desired probe locations. For example `G29 P4 X110 Y110` will move to the grid point closest to the center of a 220x220mm bed.
 
 It’s probably a good idea to issue a `G29 S` command to save the mesh to EEPROM at this stage.
 
