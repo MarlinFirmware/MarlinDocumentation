@@ -1,6 +1,6 @@
 ---
-title:        Installing Marlin 2.0 with PlatformIO
-description:  Marlin 2 Installation Quick Start Guide
+title:        Bringing up Re-ARM
+description:  Re-ARM specific hardware and software setup
 
 author: ModMike
 contrib: thinkyhead
@@ -27,7 +27,7 @@ On 32-bit boards the onboard SD card is used to store to the board's operating s
 
 **Important:**  If your SD card is larger than 32GB, _it must be partitioned_ so that the first partion is no larger than 32GB. The other partitions don't matter. Please refer to your system's tools or do a web search for "partition SD card."
 
-1. Format a 32GB SD card as FAT32 and name it "`rearm`".
+1. Format a 32GB SD card as FAT32 and name it "`REARM`".
 
 2. Insert the card into the Re-Arm's onboard SD card slot.
 
@@ -35,16 +35,16 @@ On 32-bit boards the onboard SD card is used to store to the board's operating s
 
 4. Connect the board to the computer using a USB cable.
 
-If all is well an SD card volume named "`rearm`" will appear on your Desktop (and/or the file browser).
+If all is well an SD card volume named "`REARM`" will appear on your Desktop (and/or the file browser).
 
 *If you've given the card a different name or if it uses a different system, you will need to know the exact logical path to the drive. Don't worry about this for now. It will be described in the **[Build Marlin](#build-marlin)** section below.*
 
 ## Install PlatformIO
 
-The PlatformIO IDE is distributed as a plugin for Google's ***Atom*** and Microsoft's **Visual Studio Code** (aka ***VSCode***). Both editors have a robust plugin architecture that allows them to become full-featured integrated development environments (IDEs) for PlatformIO. Instructions for installation are at the following links:
+See [Installing Marlin (PlatformIO)](/docs/basics/install_Atom_PlatformIO.html)
 
-- [Installing PlatformIO IDE in ***Atom***](http://docs.platformio.org/en/latest/ide/atom.html#installation)
-- [Installing PlatformIO IDE in ***VSCode***](http://docs.platformio.org/en/latest/ide/vscode.html#installation).
+This method is recommended because it is relatively easy and closely parallels this document.
+
 
 ## Download Marlin 2.0
 
@@ -58,64 +58,14 @@ _Pro Tip: If you're using **GitHub Desktop** to manage your own Marlin fork, sim
 
 ## Open Marlin in PlatformIO IDE
 
-1. At this point you may already have the project editor running. If not, go ahead and launch ***Atom*** or ***VSCode***.
+1. At this point you may already have the project editor running. If not, go ahead and launch ***Atom***.
 
-2. The "**PlatformIO Home**" page should appear. If not, click on the **Home** icon located in the top-left corner (***Atom***) or the bottom status bar (***VSCode***).
+2. The "**PlatformIO Home**" page should appear. If not, click on the **Home** icon located in the top-left corner.
 
 3. Click the "**Open Project**" button under "**Quick Access**."
 
 4. In the file dialog, navigate to the `MarlinFirmware` folder you created earlier, highlight it, and click the "**Open**" button. The project folder and its contents should appear in the Project navigator on the left side.
 
-## Get the SD card device path
-
-It is critical to have the correct path to your device. This procedure covers both logical devices and/or upload ports. The easiest way to do that is from the **PlatformIO Home** (**PIO Home**) page.
-
-Be sure that your board is connected and its volume is visible in the file browser sidebar and/or desktop. If it's a device port only, make sure that the system detected it.
-
-1. Click on the **Devices** icon on the left side of the PlatformIO Home page.
-
-2. A new pane will open with three tabs labeled **Serial**, **Logical**, and **Multicast DNS**.
-
-3. If the serial device is properly connected, it will appear in the **Port** list under the **Serial** tab.
-
-For a "Logical" drive (e.g., Re-Arm and most 32-bit boards) click on the **Logical** tab to list all devices. You should see the `rearm` SD card and possibly some other mounted volumes.
-
-4. Once you've identified the correct Serial port or Logical drive, click on the little blue page icon next to the item you want to use. This will copy its path to the clipboard. We recommend pasting the path into a new text file (`Ctrl-N` or `Cmd-N`) for later use.
-
-## Set Default Environment (optional)
-
-This part is optional, but it makes it easier to build for Re-Arm going forward. If you prefer to skip this section, scroll down to the next step, [Prepare Configuration](#prepare-configurationh).
-
-1. Under project on the left, find the `platform.ini` file and click on it to open it in the editor. Find the line starting with `env_default` and change the line to:
-
-    ```ini
-    env_default = LPC1768
-    ```
-
-2. In `platform.ini` locate the section that starts with `[env:LPC1768]`. Anywhere within this block of lines, insert the following line:
-
-    ```ini
-    upload_port = /Volumes/REARM
-    ```
-  (Assuming you've named the SD card "`rearm`".)
-
-3. Save the file.
-
-### For other boards…
-
-1. Under project on the left, find the `platform.ini` file and click on it to open it in the editor. Find the line starting with `env_default` and change the line to:
-
-    ```ini
-    env_default = name-of-your-env
-    ```
-
-2. Same as Step 2 above, but use the name of the SD card you set for your alternate board.
-
-    ```ini
-    upload_port = path-or-port-copied-from-devices
-    ```
-
-3. Save the file.
 
 # Prepare `Configuration.h`
 
@@ -149,27 +99,41 @@ The "EFB" acronym in the board name refers to _Extruder_, _Fan_, and _Bed_. This
 
 # Build Marlin
 
-1. Click on **PIO Build** in the bottom left (***Atom***) or choose **Run Build Task…** from the **Tasks** menu (***VSCode***) to bring up the dialog.
+## Method 1 - Preferred
 
-2. If you set the [default environment](#set-default-environment-optional) earlier, simply select "**PIO Build**" from the list. If you skipped that step, you'll need to scroll down and select "**PIO Build (LPC1768)**". (You can also type out "LPC17...", use the arrow keys, and press return.)
+See [Installing Marlin (PlatformIO)](/docs/basics/install_Atom_PlatformIO.html)
+
+## Method 2
+
+1. Click on **PIO Build** in the bottom left to bring up the dialog.
+
+2. Scroll down and select "**PIO Build (LPC1768)**". (You can also type out "LPC17...", use the arrow keys, and press return.)
 
 3. The build window will open and Marlin will be compiled. (This may take a minute or two.) If the build is successful, the window will close and the `firmware.bin` file will be saved in the `.pioenvs/LPC1768` folder.
 
 ### For other boards…
 
-You probably guessed that you would have to scroll to and pick "PIO Build your env_name". BUT if you did the optional step, you get to pick "PIO Build"!
+You probably guessed that you would have to scroll to and pick "PIO Build your env_name".
 
 # Upload Marlin
 
+Methods 1 and 2, after a successful run, will result in the `firmware.bin` file being in the `.pioenvs/LPC1768` folder ***and*** on the SD card on the Re-Arm board..
+
+If `firmware.bin` isn't on the SD card then either rerun the Method or use Method 3 to manually move the file onto the SD card.
+
 ## Method 1 - Preferred
 
-1. Click on **PIO Build** in the bottom left (***Atom***) or choose **Run Task** from the Tasks menu (***VSCode***) to bring up the dialog.
+See [Installing Marlin (PlatformIO)](/docs/basics/install_Atom_PlatformIO.html)
 
-2. If you set the [default environment](#set-default-environment-optional) earlier, simply select "**PIO Upload**" from the list. If you skipped that step, you'll need to scroll down and select "**PIO Upload (LPC1768)**". (You can also type out "LPC17...", use the arrow keys, and press return.)
+## Method 2
+
+1. Click on **PIO Build** in the bottom left to bring up the dialog.
+
+2. Scroll down and select "**PIO Upload (LPC1768)**". (You can also type out "LPC17...", use the arrow keys, and press return.)
 
 3. Wait while Marlin is compiled and uploaded. (This may take a few minutes.)
 
-## Method 2
+## Method 3
 
 If there is a properly formatted SD card in your Re-Arm board and the board is powered on, you should see it on the desktop and in the file browser. You don't need to remove the card from the Re-Arm and insert it into your computer, although that works too.
 
@@ -187,11 +151,11 @@ Note that this method requires accessing a hidden directory containing the `firm
 
 1. Push the reset button on the Re-Arm board to register your new build.
 
-2. Wait until the SD card named "`rearm`" reappears on your desktop and use the file browser to open the card and verify that the `FIRMWARE.CUR` and `eprom.dat` files were created.
+2. Wait until the SD card named "`REARM`" reappears on your desktop and use the file browser to open the card and verify that the `FIRMWARE.CUR` file was created.
 
-If you don't see these files, you'll need to do a hard reset by unplugging the USB cable, counting to 10, and plugging the USB cable back in.
+If you don't see this file, you'll need to do a hard reset by unplugging the USB cable, counting to 10, and plugging the USB cable back in.
 
-If you you see the files but still have issues, simply delete the files, empty the Recycle Bin (or Trash) and power-cycle the controller.
+If you see the file but still have issues, simply delete the file, empty the Recycle Bin (or Trash) and power-cycle the controller.
 
 ## Test the install
 
@@ -205,68 +169,6 @@ For the first test build you should have used the default `Configuration.h` and 
 
 We strongly suggest rebuilding your configs using one of the included example configs located in the **Marlin/src/config/examples** folder as a starting-point by first copying the appropriate files into the `MarlinFirmware/Marlin` folder. For much of this process, you can use the File Compare feature of ***Atom*** or ***VSCode***. Note that this won't help with any renamed or moved items.
 
-If you absolutely must port your existing configuration options from Marlin 1.1.x, you'll need to make a few changes. Some of the more common changes are detailed below.
-
-1. Start by copying your old `Configuration.h` and `Configuration_adv.h` files to the `MarlinFirmware/Marlin` folder, replacing the existing files. (Don't worry. Copies of these files are also located in `config/default`.)
-
-2. From ***Atom*** or ***VSCode***, open the `Configuration.h` file and change the configuration version number line to:
-
-    ```
-    #define CONFIGURATION_H_VERSION 020000
-    ```
-
-3. Find the `SERIAL_PORT` options and define them as shown here. You can copy and paste the text below if needed.
-
-    ```
-    #define SERIAL_PORT 0
-
-    /**
-     * Select a secondary serial port on the board to use for communication with the host.
-     * This allows the connection of wireless adapters (for instance) to non-default port pins.
-     * Serial port -1 is the USB emulated serial port, if available.
-     *
-     * :[-1, 0, 1, 2, 3, 4, 5, 6, 7]
-     */
-    #define SERIAL_PORT_2 -1
-
-    /**
-     * This setting determines the communication speed of the printer.
-     *
-     * 250000 works in most cases, but you might try a lower speed if
-     * you commonly experience drop-outs during host printing.
-     * You may try up to 1000000 to speed up SD file transfer.
-     *
-     * :[2400, 9600, 19200, 38400, 57600, 115200, 250000, 500000, 1000000]
-     */
-    #define BAUDRATE 250000
-    ```
-
-4. As before, set `MOTHERBOARD` to the appropriate item from `boards.h`.
-
-    ```
-    #define MOTHERBOARD BOARD_RAMPS_14_RE_ARM_EFB
-    ```
-
-5. Find `ENDSTOP_INTERRUPTS_FEATURE` and disable it by commenting it out.
-
-    ```
-    //#define ENDSTOP_INTERRUPTS_FEATURE
-    ```
-***Note: As of this writing, endstop interrupts are not fully implemented. They are used to save CPU cycles but ARM processors have plenty of overhead so this isn't a concern.***
-
-6. You may or may not need to disable the piezo speaker.
-
-    ```
-    //#define SPEAKER
-    ```
-
-# Troubleshooting
-
-If you have issues building, pay close attention to the error messages. Marlin offers guidance on options whose names or values need to be changed to comply with Marlin 2.0. If you get unusual errors, be sure to [report them](https://github.com/MarlinFirmware/Marlin/issues/new) to the Marlin project on GitHub.
-
-If you get a lot of confusing build errors (and not very helpful ones) you may want to build a configuration by hand starting with the example files.
-
-_You can use any file comparison ("diff") tool (**Atom**, **VSCode**, **Notepad++**, or even **GitHub Desktop**) to compare your custom configurations to the original configurations from Marlin 1.1.x to see only the options you changed._
 
 # The main event!
 

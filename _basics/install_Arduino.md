@@ -1,6 +1,6 @@
 ---
-title:        Installing Marlin
-description:  Marlin Installation Quick Start Guide
+title:        Installing Marlin (Arduino)
+description:  Marlin Install Quick Start Guide
 
 author: jbrazio
 contrib: thinkyhead
@@ -25,12 +25,17 @@ Link|Description
 ----|-----------
 [Download 1.1.x](https://github.com/MarlinFirmware/Marlin/archive/1.1.x.zip)|The current release version
 [Download 1.0.x](https://github.com/MarlinFirmware/Marlin/archive/1.0.x.zip)|The previous release version
-[Download bugfix-1.1.x](https://github.com/MarlinFirmware/Marlin/archive/bugfix-1.1.x.zip)|The "nightly" build version
+[Download bugfix-1.1.x](https://github.com/MarlinFirmware/Marlin/archive/bugfix-1.1.x.zip)|The "nightly" build version — Cutting-edge code! Beware!
+[Download bugfix-2.0.x](https://github.com/MarlinFirmware/Marlin/archive/bugfix-2.0.x.zip)|The "nightly" build version - Bleeding-edge code! Caution!
 
-If the latest Marlin requires too much Program Memory or SRAM to run on your legacy board, first try disabling some features to reclaim space. Then, if necessary, try an older version such as [1.0.2-2](https://github.com/MarlinFirmware/Marlin/archive/1.0.2-2.zip) or [1.0.1](https://github.com/MarlinFirmware/Marlin/archive/1.0.1.zip). (Older versions of Marlin have fewer global variables and therefore use less SRAM.)
+If the latest Marlin requires too much Program Memory or SRAM to run on your legacy board, first try disabling some features to reclaim space. Next, try the 2.0 codebase. Then, if necessary, try an older version such as [1.0.2-2](https://github.com/MarlinFirmware/Marlin/archive/1.0.2-2.zip) or [1.0.1](https://github.com/MarlinFirmware/Marlin/archive/1.0.1.zip). (Older versions of Marlin have fewer global variables and therefore use less SRAM.)
 
 {% alert warning %}
 Your printer may require a non-standard Arduino core (e.g., *Sanguino*, *Teensy++*) or additional libraries. See [Configuring Marlin](/docs/configuration/configuration.html) and commentary in `Configuration.h`/`Configuration_adv.h` pertaining to your hardware and add-ons. Each feature provides links to the relevant resources.
+{% endalert %}
+
+{% alert warning %}
+Arduino does NOT support the ARM based boards in the Marlin 2.0 codebase.
 {% endalert %}
 
 ## Configure Marlin
@@ -46,7 +51,7 @@ To configure Marlin you'll use the Arduino IDE (or your [favorite text editor](h
   (Marlin checks for several common errors)
 - Once all errors are fixed, proceed with the upload by clicking on the `Upload` button.
 
-## Flash your board
+## Upload to the board
 
 - Make sure `Marlin.ino` is open in the Arduino IDE. Continuing in the IDE...
 - Select your board/micro-controller from the `Tools` > `Boards` menu.
