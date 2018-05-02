@@ -1,6 +1,6 @@
 ---
-title:        Installing Marlin using Arduino
-description:  Marlin Installation Quick Start Guide
+title:        Installing Marlin (Arduino)
+description:  Marlin Install Quick Start Guide
 
 author: jbrazio
 contrib: thinkyhead
@@ -51,7 +51,7 @@ To configure Marlin you'll use the Arduino IDE (or your [favorite text editor](h
   (Marlin checks for several common errors)
 - Once all errors are fixed, proceed with the upload by clicking on the `Upload` button.
 
-## Flash (Upload) your board
+## Upload to the board
 
 - Make sure `Marlin.ino` is open in the Arduino IDE. Continuing in the IDE...
 - Select your board/micro-controller from the `Tools` > `Boards` menu.
