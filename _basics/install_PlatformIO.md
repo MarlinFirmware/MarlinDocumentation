@@ -30,7 +30,6 @@ Link|Description
 
 If the latest Marlin 1.1 requires too much Program Memory or SRAM to run on your legacy board, first try disabling some features to reclaim space. Next, try the 2.0 codebase.
 
-
 {% alert warning %}
 The Marlin 1.0.x codebase does NOT support PlatformIO.
 
@@ -100,7 +99,6 @@ Doing this minimal Marlin build can be skipped. We recommend doing the minimal b
     - [Marlin 2.0 "bugfix"](https://github.com/MarlinFirmware/Marlin/archive/bugfix-2.0.x.zip) - includes support for ARM-based boards and expanded DUE functionality - Bleeding-edge code! Caution!
     - [Marlin 1.0]() - "**doesn't support PlatformIO**"
 
-
 2. Move the **ZIP** file to your "**Documents**" folder (or wherever you prefer) and expand the ZIP archive as you usually do.
 
 3. Rename the folder to "**MarlinFirmware**" so we're all on the same page here.
@@ -146,7 +144,6 @@ _Pro Tip: If you`re using **GitHub Desktop** to manage your own Marlin fork, sim
 
 Do NOT proceed to the next step unless **SUCCESS** is seen near the bottom of the build window. If **ERROR** is seen then trouble shooting is required.
 
-
 # Upload Marlin
 
 Repeat the steps in **Build Marlin** but, in step 2, click on "**PIO Upload**" instead of "**PIO Build**"
@@ -169,7 +166,6 @@ You can use your favorite editor to modify the files.
 
 ## Auto Build submenu options
 
-
 The Auto Build submenu items exactly implement their PlatformIO counterparts. See the PlatformIO documentation if further information is needed.
 
 **PIO Upload (traceback)** is the only item that does not have a direct counterpart in PlatformIO. See below for details.
@@ -180,7 +176,7 @@ Compiles and builds the project. An upload image will be created if there are no
 
 #### PIO Clean
 
- Removes all files created by previous compilations and re-initializes the project state.
+Removes all files created by previous compilations and re-initializes the project state.
 
 #### PIO Upload
 
