@@ -12,7 +12,7 @@ category: [ development ]
 
 Marlin has _a lot_ of features, and there are several more in development, but we're always open to more ideas and contributions! We keep track of feature requests in the Marlin Issue Queue. Open tagged feature requests appear on this page:
 
-#### &nbsp;&nbsp;&nbsp;&nbsp; [Open Marlin Feature Requests](https://github.com/MarlinFirmware/Marlin/labels/Feature%20Request)
+#### &nbsp;&nbsp;&nbsp;&nbsp; [Open Marlin Feature Requests](https://github.com/MarlinFirmware/Marlin/labels/T%3A%20Feature%20Request)
 
 ## Before Submitting
 
