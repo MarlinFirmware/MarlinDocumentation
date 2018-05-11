@@ -943,7 +943,7 @@ function validateInput() {
   $('#warning2').hide();
 
   // Check if K-Factor Stepping is a multiple of the K-Factor Range
-  if (((kEnd - kStart) * Math.pow(10, decimals)) % (kStep * Math.pow(10, decimals)) !== 0) {
+  if ((Math.round10(kEnd - kStart, -3) * Math.pow(10, decimals)) % (kStep * Math.pow(10, decimals)) !== 0) {
     $('label[for=K_START]').addClass('calibpat_invalidDiv');
     $('#K_START')[0].setCustomValidity('Your K-Factor range cannot be cleanly divided.');
     $('label[for=K_END]').addClass('calibpat_invalidDiv');
