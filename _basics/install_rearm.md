@@ -80,7 +80,13 @@ _Pro Tip: If you're using **GitHub Desktop** to manage your own Marlin fork, sim
     #define MOTHERBOARD BOARD_RAMPS_14_RE_ARM_EFB
     ```
 
-4. Save the file.
+4. Find the `SERIAL_PORT` setting and change it to the following for Re-ARM
+
+    ```
+    #define SERIAL_PORT -1
+    ```
+
+5. Save the file.
 
 The "EFB" acronym in the board name refers to _Extruder_, _Fan_, and _Bed_. This defines the order that these components should be connected to the `D10`, `D9`, and `D8` power outputs on the board. (EFB is the most common layout.)
 
