@@ -68,7 +68,7 @@ We recommend getting the original Watterott drivers or the revised FYSETC v1.1 d
 
 The FYSETC v1.0 drivers come pre-configured in standalone mode. This means that the drivers should work for moving the axis but you will not be able to configure them nor take advantage of the additional features of the drivers. To get the drivers working as intended you will need to modify three solder bridges on the driver PCB.
 
-![FYSETC_TMC2130](/assets/images/features/FYSETC_tmc2130._SPI.jpg)
+![FYSETC_TMC2130](/assets/images/docs/hardware/tmc_drivers/FYSETC_tmc2130._SPI.jpg)
 
 Some versions of the FYSETC v1.0 drivers come with a solder bridge left of the chip, some come with a bridging resistor. This connection needs to be opened for SPI connection to work.
 The two smaller bridges need to be configured as shown.
