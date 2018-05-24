@@ -303,7 +303,7 @@ function genGcode() {
                    ';\n' +
                    'M104 S0 ; turn off hotend\n' +
                    'M140 S0 ; turn off bed\n' +
-                   'G1 Z30 X' + (NULL_CENTER ? BED_X / 2 : BED_X) + ' Y' + (NULL_CENTER ? BED_Y / 2 : BED_Y) + ' F' + SPEED_MOVE + ' ; move away from the print\n' +
+                   'G1 Z30 X' + (NULL_CENTER ? 0 : BED_X) + ' Y' + (NULL_CENTER ? 0 : BED_Y) + ' F' + SPEED_MOVE + ' ; move away from the print\n' +
                    'M84 ; disable motors\n' +
                    'M502 ; resets parameters from ROM\n' +
                    'M501 ; resets parameters from EEPROM\n' +
