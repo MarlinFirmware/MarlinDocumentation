@@ -4,7 +4,7 @@ description:  'The Unified Auto Bed Leveling system (UBL) provides automated pro
 tag:
 
 author: Bob-the-Kuhn, thinkyhead, Roxy-3D, bjarchi
-category: feature
+category: [ features, leveling ]
 ---
 
 {% alert info %}

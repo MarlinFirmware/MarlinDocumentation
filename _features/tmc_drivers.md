@@ -3,7 +3,7 @@ title:        Trinamic drivers
 description:  Using Trinamic TMC based stepper drivers.
 
 author: teemuatlut
-category: [ features ]
+category: [ features, hardware ]
 ---
 
 Trinamic stepper drivers allow you to have better control of your stepper motors and achieve extremely quiet motion. You can influence how the driver manages motor current as well as the manner of current delivery. The drivers can act as endstops allowing you simplify wiring. Marlin also supports setting the driver current by using software commands, negating the need for adjusting trimpots.

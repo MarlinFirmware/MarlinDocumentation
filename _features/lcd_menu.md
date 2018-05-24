@@ -4,7 +4,7 @@ title:       LCD Menu Tree
 description: A synopsis of the LCD menu tree
 
 author: thinkyhead
-category: feature
+category: [ features, lcd ]
 ---
 
 {% alert info %}
