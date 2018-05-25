@@ -66,6 +66,11 @@ collections:
     title: G-code
     permalink: /docs/:collection/:path:output_ext
 
+  hardware:
+    output: true
+    title: Hardware
+    permalink: /docs/:collection/:path:output_ext
+
   meta:
     output: true
     permalink: /:collection/:path/
@@ -142,6 +147,13 @@ defaults:
     values:
       layout: 'gcode'
       category: [ 'gcode' ]
+
+  - # Hardware collection settings
+    scope:
+      type: 'hardware'
+    values:
+      layout: 'docs'
+      category: [ 'hardware' ]
 
   - # Meta collection settings
     scope:
