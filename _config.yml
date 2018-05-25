@@ -46,11 +46,6 @@ collections:
     output: true
     permalink: /docs/:collection/:path:output_ext
 
-  features:
-    output: true
-    title: Marlin Features
-    permalink: /docs/:collection/:path:output_ext
-
   configuration:
     output: true
     title: Configuration
@@ -59,6 +54,16 @@ collections:
   development:
     output: true
     title: Development
+    permalink: /docs/:collection/:path:output_ext
+
+  features:
+    output: true
+    title: Features
+    permalink: /docs/:collection/:path:output_ext
+
+  hardware:
+    output: true
+    title: Hardware
     permalink: /docs/:collection/:path:output_ext
 
   gcode:
