@@ -8,7 +8,7 @@
   img: boards.jpg
   alt: Controller Board
   title: A sea of boards
-  link: docs/development/boards.html
+  link: docs/hardware/boards.html
 
 - name: inductiveprobe
   img: probe.jpg
