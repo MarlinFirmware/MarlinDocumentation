@@ -1,7 +1,7 @@
 ---
 title:        'Unified Bed Leveling'
 description:  'The Unified Auto Bed Leveling system (UBL) provides automated procedures to probe the bed and compensate for an irregular or tilted bed'
-tag:
+tag: leveling
 
 author: Bob-the-Kuhn, thinkyhead, Roxy-3D, bjarchi
 category: [ features, leveling ]

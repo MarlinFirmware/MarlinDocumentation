@@ -61,11 +61,6 @@ collections:
     title: Features
     permalink: /docs/:collection/:path:output_ext
 
-  hardware:
-    output: true
-    title: Hardware
-    permalink: /docs/:collection/:path:output_ext
-
   gcode:
     output: true
     title: G-code
@@ -153,10 +148,3 @@ defaults:
       type: 'meta'
     values:
       category: [ 'meta' ]
-
-  - # Tools collection settings
-    scope:
-      type: 'gcode'
-    values:
-      layout: 'gcode'
-      category: [ 'gcode' ]
