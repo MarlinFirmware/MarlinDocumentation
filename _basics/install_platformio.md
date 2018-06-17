@@ -116,6 +116,7 @@ A sample customization process is described below to demonstrate how this method
 
 ## Preflight Test
 
+
 This section explains how to upload a minimally-configured Marlin to your board.
 
 This will verify that the Build and Upload process works after you've completed the **Setup** described above.
