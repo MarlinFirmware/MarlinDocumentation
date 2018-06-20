@@ -53,7 +53,7 @@ While Marlin only prints G-code, most slicers only slice STL files.
 
 Whatever you use for your [CAD](https://en.wikipedia.org/wiki/Computer-aided_design) toolchain, as long you can export a solid model, a slicer can "slice" it into G-code, and Marlin firmware will do its best to print the final result.
 
-Before Marlin can dream of printing, first you'll need a [3D model](http://www.thingiverse.com/thing:7900). You can either [download](http://www.thingiverse.com/thing:7900/zip) models or make your own with one of many free CAD programs, such as [FreeCAD](http://www.freecadweb.org/), [OpenSCAD](http://www.openscad.org/), [Tinkercad](https://www.tinkercad.com/), [Autodesk Fusion 360](https://www.autodesk.com/products/fusion-360/overview), [SketchUp](http://www.sketchup.com/), etc.
+Before Marlin can dream of printing, first you'll need a [3D model](http://www.thingiverse.com/thing:7900). You can either [download](http://www.thingiverse.com/thing:7900/zip) models or make your own with one of many free CAD programs, such as [FreeCAD](http://www.freecadweb.org/), [OpenSCAD](http://www.openscad.org/), [Tinkercad](https://www.tinkercad.com/), [Autodesk 123D](http://www.123dapp.com/), [SketchUp](http://www.sketchup.com/), etc.
 
 A high degree of knowledge is needed to model complex objects like a [T-Rex Skull](http://www.thingiverse.com/thing:308335), but other objects can be quite [simple to model](http://www.thingiverse.com/thing:172175). To get ideas and test things out, explore sites like [Thingiverse](http://www.thingiverse.com/explore/popular) and [YouMagine](http://www.youmagine.com/) and print things for fun.
 

@@ -23,15 +23,15 @@ Before doing anything else, download the Arduino IDE from the [Arduino website](
 
 1. Double-click the `Marlin.ino` file to open it in Arduino IDE.
 
-1. In Arduino IDE, select your board from the **Tools > Boards** menu.
+1. In Arduino IDE, select your board from the `Tools` > `Boards` menu.
 
-1. Select the serial (USB) port that your board is connected to in the **Tools > Serial Port** menu.
+1. Select the serial (USB) port that your board is connected to in the `Tools` > `Serial Port` menu.
 
 ## Verify / Compile
 
-- Click the **Verify/Compile** button at the top of the window to test for configuration errors.
+- Click the `Verify/Compile` button at the top of the window to test for configuration errors.
   (Marlin includes several tests for common errors and outdated settings.)
-- Once all errors are fixed, proceed with the upload by clicking on the **Upload** button.
+- Once all errors are fixed, proceed with the upload by clicking on the `Upload` button.
 
 {% alert warning %}
 If Marlin requires too much Program Memory or SRAM to fit on your board, try disabling features to reclaim space. Next, try the 2.0 codebase. Then, if necessary, try an older version such as [1.0.2-2](https://github.com/MarlinFirmware/Marlin/archive/1.0.2-2.zip) or [1.0.1](https://github.com/MarlinFirmware/Marlin/archive/1.0.1.zip). (Older versions of Marlin use less SRAM.)
@@ -41,6 +41,6 @@ If Marlin requires too much Program Memory or SRAM to fit on your board, try dis
 
 - Follow the _Preparation_ steps 1-3 described above.
 - Set "program mode" if your board requires it. _(Most don't.)_
-- Click **Upload** to flash your board. A colored LED on the board will blink rapidly during the upload.
+- Click `Upload` to flash your board. A colored LED on the board will blink rapidly during the upload.
 
 That’s it! With Marlin installed you can now enjoy silky smooth printing!

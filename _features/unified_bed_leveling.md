@@ -1,10 +1,10 @@
 ---
 title:        'Unified Bed Leveling'
 description:  'The Unified Auto Bed Leveling system (UBL) provides automated procedures to probe the bed and compensate for an irregular or tilted bed'
-tag: leveling
+tag:
 
 author: Bob-the-Kuhn, thinkyhead, Roxy-3D, bjarchi
-category: [ features, leveling ]
+category: feature
 ---
 
 {% alert info %}
@@ -277,19 +277,13 @@ There are several options for the `G26` command. See [GCode G26](http://marlinfw
 
 Look over the results of the `G26` print and note where adjustments are needed.
 
-To edit a single point move the nozzle close to the point that needs adjustment. Issue a `G29 P4 T`. The head will move to nearest point. Use the encoder wheel to change the value. If `UBL_MESH_EDIT_MOVES_Z` is enabled in `Configuration.h` (the default setting) the nozzle will change height during this process. If it is disabled the nozzle will not move.
-
-The values in the mesh indicate how far the nozzle needs to move along the Z axis to compensate for imperfections in the bed. Positive values mean that the nozzle needs to move **away from** the bed ("up") and negative values mean that the nozzle needs to move **towards** the bed ("down"). Thus, if the `G26` print shows that for a specific mesh point the nozzle is too close to the bed (the lines are "squished" or the nozzle hit the bed when printing the test pattern) the value of the mesh point should be **increased**. If the nozzle is too far away from the bed (lines are too thin or not even sticking to the bed) the value of the mesh point should be **decreased**. This may cause the mesh point value to change from positive to negative or vice versa.
-
-For example, suppose that a mesh point has a probed value of -0.022 and the test pattern shows that the nozzle is too close at that point. If an adjustment of +0.050 is desired (moving the nozzle 0.050mm **away from** the bed) the new value for the mesh point would be +0.028.
-
-If `UBL_MESH_EDIT_MOVES_Z` is enabled it is also possible to use a piece of paper or a feeler gauge to adjust the position. Use a command of the form `G29 P4 Hxxx` where xxx is the thickness of the feeler gauge (or piece of paper) being used to adjust the nozzle height. For example `G29 P4 H0.1` is a good option to use with a piece of paper.
+To edit a single point move the nozzle close to the point that needs adjustment. Issue a `G29 P4 T`. The head will move to nearest point. Use the encoder wheel to change the value. **The nozzle will not change height during this process.**
 
 To edit multiple points move the nozzle close to the first point and issue `G29 P4 T Rxx` where `xx` is the number of points you want to edit. You can look at the host interface screen to see where in the grid you are currently editing.
 
 Press and hold the encoder button/wheel when you are finished.
 
-There are options (`G29 P4 X... Y...`) to make it easier to move to the desired probe locations. For example `G29 P4 X110 Y110` will move to the grid point closest to the center of a 220x220mm bed.
+There are options to make it easier to move to the desired probe locations.
 
 It’s probably a good idea to issue a `G29 S` command to save the mesh to EEPROM at this stage.
 

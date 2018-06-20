@@ -3,7 +3,7 @@ title:        Firmware Retract
 description:  Configuration and usage of firmware-based retract and recover.
 
 author: thinkyhead
-category: features
+category: [ features ]
 ---
 
 ## Background

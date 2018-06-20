@@ -6,6 +6,7 @@ author: thinkyhead
 
 experimental: false
 requires: MESH_BED_LEVELING
+since: 1.0.0-beta
 group: calibration
 
 codes:

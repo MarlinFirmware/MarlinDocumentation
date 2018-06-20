@@ -46,6 +46,11 @@ collections:
     output: true
     permalink: /docs/:collection/:path:output_ext
 
+  features:
+    output: true
+    title: Marlin Features
+    permalink: /docs/:collection/:path:output_ext
+
   configuration:
     output: true
     title: Configuration
@@ -56,19 +61,9 @@ collections:
     title: Development
     permalink: /docs/:collection/:path:output_ext
 
-  features:
-    output: true
-    title: Features
-    permalink: /docs/:collection/:path:output_ext
-
   gcode:
     output: true
     title: G-code
-    permalink: /docs/:collection/:path:output_ext
-
-  hardware:
-    output: true
-    title: Hardware
     permalink: /docs/:collection/:path:output_ext
 
   meta:
@@ -148,15 +143,15 @@ defaults:
       layout: 'gcode'
       category: [ 'gcode' ]
 
-  - # Hardware collection settings
-    scope:
-      type: 'hardware'
-    values:
-      layout: 'docs'
-      category: [ 'hardware' ]
-
   - # Meta collection settings
     scope:
       type: 'meta'
     values:
       category: [ 'meta' ]
+
+  - # Tools collection settings
+    scope:
+      type: 'gcode'
+    values:
+      layout: 'gcode'
+      category: [ 'gcode' ]
