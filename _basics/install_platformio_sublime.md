@@ -2,8 +2,8 @@
 title:        Sublime
 description:  Marlin Installation Quick Start Guide, PlatformIO with Sublime
 
-author: ModMike
-contrib: thinkyhead, Bob-the-Kuhn
+author: Bob-the-Kuhn
+contrib: 
 category: [ articles, getting-started ]
 ---
 
