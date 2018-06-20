@@ -5,7 +5,6 @@ brief: Probe the bed and enable leveling compensation.
 author: thinkyhead
 
 experimental: false
-since: 1.0.0-beta
 requires: AUTO_BED_LEVELING_(3POINT|LINEAR|BILINEAR)
 group: calibration
 
@@ -95,6 +94,11 @@ parameters:
     values:
       -
         type: bool
+  -
+    tag: O
+    type: boolean
+    optional: true
+    description: Optional. If leveling is already enabled then exit without leveling. (1.1.9)
   -
     tag: Q
     optional: true

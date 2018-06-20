@@ -1,10 +1,10 @@
 ---
-tag: lcd-menu
 title:       LCD Menu Tree
 description: A synopsis of the LCD menu tree
+tag: lcd-menu
 
 author: thinkyhead
-category: feature
+category: [ features, lcd ]
 ---
 
 {% alert info %}

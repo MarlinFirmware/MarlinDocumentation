@@ -1,7 +1,6 @@
 ---
 title:        'Boards'
 description:  'Complete list of hardware supported by Marlin'
-tag: info
 
 author: jbrazio
 contrib: thinkyhead
@@ -48,7 +47,7 @@ Analog inputs are always assigned using an index from 0-15. Marlin doesn't need 
 
 ## Adding a new board
 
-The easiest way to add a new board to Marlin is to start with one of the existing pins files that has pin mappings similar to the new board, make a copy, and modify the pins that differ. Once your pins file is ready, simply add a new define to the `boards.h` file and a conditional include to `pins.h`. And you're done! [Submit a PR](getting_started_pull_requests.html) to share it with the world.
+The easiest way to add a new board to Marlin is to start with one of the existing pins files that has pin mappings similar to the new board, make a copy, and modify the pins that differ. Once your pins file is ready, simply add a new define to the `boards.h` file and a conditional include to `pins.h`. And you're done! [Submit a PR](/docs/development/getting_started_pull_requests.html) to share it with the world.
 
 {% alert warning %}
 If you're developing a custom Arduino-based board, try to use standard RAMPS 1.4 pinouts as much as possible, or choose a pin-mapping similar to another board Marlin supports. The more a new board resembles an existing board, the easier it will be to integrate.

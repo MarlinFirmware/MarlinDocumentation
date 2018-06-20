@@ -303,7 +303,7 @@ function genGcode() {
                    ';\n' +
                    'M104 S0 ; turn off hotend\n' +
                    'M140 S0 ; turn off bed\n' +
-                   'G1 Z30 X' + (NULL_CENTER ? BED_X / 2 : BED_X) + ' Y' + (NULL_CENTER ? BED_Y / 2 : BED_Y) + ' F' + SPEED_MOVE + ' ; move away from the print\n' +
+                   'G1 Z30 X' + (NULL_CENTER ? 0 : BED_X) + ' Y' + (NULL_CENTER ? 0 : BED_Y) + ' F' + SPEED_MOVE + ' ; move away from the print\n' +
                    'M84 ; disable motors\n' +
                    'M502 ; resets parameters from ROM\n' +
                    'M501 ; resets parameters from EEPROM\n' +
@@ -943,7 +943,7 @@ function validateInput() {
   $('#warning2').hide();
 
   // Check if K-Factor Stepping is a multiple of the K-Factor Range
-  if (((kEnd - kStart) * Math.pow(10, decimals)) % (kStep * Math.pow(10, decimals)) !== 0) {
+  if ((Math.round10(kEnd - kStart, -3) * Math.pow(10, decimals)) % (kStep * Math.pow(10, decimals)) !== 0) {
     $('label[for=K_START]').addClass('calibpat_invalidDiv');
     $('#K_START')[0].setCustomValidity('Your K-Factor range cannot be cleanly divided.');
     $('label[for=K_END]').addClass('calibpat_invalidDiv');

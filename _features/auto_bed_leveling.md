@@ -1,6 +1,7 @@
 ---
 title:        'Automatic Bed Leveling'
 description:  'Automated procedures to probe the bed and compensate for an irregular or tilted bed'
+tag: leveling
 
 author: thinkyhead
 category: [ features, leveling ]

@@ -2,8 +2,8 @@
 title:        Installing Marlin
 description:  Marlin Install Quick Start Guide
 
-author: jbrazio
-contrib: thinkyhead
+author: thinkyhead
+contrib: bob-the-kuhn
 category: [ articles, getting-started ]
 ---
 
@@ -20,8 +20,8 @@ Start by downloading the Marlin source code. There are a few [codebases](https:/
 ----|-----------
 [Download 1.1.x](https://github.com/MarlinFirmware/Marlin/archive/1.1.x.zip)|Current release
 [Download 1.0.x](https://github.com/MarlinFirmware/Marlin/archive/1.0.x.zip)|Previous release
-[Download bugfix-1.1.x](https://github.com/MarlinFirmware/Marlin/archive/bugfix-1.1.x.zip)|"Nightly" build. _Cutting-edge code! Beware!_
-[Download bugfix-2.0.x](https://github.com/MarlinFirmware/Marlin/archive/bugfix-2.0.x.zip)|"Nightly" build. _Bleeding-edge code! Caution!_
+[Download bugfix-1.1.x](https://github.com/MarlinFirmware/Marlin/archive/bugfix-1.1.x.zip)|"Nightly" build. _Proceed with Caution!_
+[Download bugfix-2.0.x](https://github.com/MarlinFirmware/Marlin/archive/bugfix-2.0.x.zip)|"Nightly" build. _Proceed with Caution!_
 
 {% alert warning %}
 - Marlin 1.0 **does not support PlatformIO**. For older versions of Marlin use Arduino IDE.
@@ -37,6 +37,6 @@ To configure Marlin you can use the Arduino IDE or your [favorite text editor](h
 
 Follow one of these links to install Marlin:
 
-- [Installing Marlin with Arduino IDE](install_arduino.html) : To install Marlin 1.1.x or Marlin 2.0.x on AVR boards
-- [Installing Marlin with PlatformIO](install_platformio.html) : To install Marlin 2.0.x on any platform, including AVR
-- [Installing Marlin on Re-ARM](install_rearm.html) : To install Marlin 2.0.x on the Re-Arm board
+- [Install Marlin with Arduino IDE](install_arduino.html) : To install Marlin 1.1 or Marlin 2.0 on AVR boards.
+- [Install Marlin with PlatformIO](install_platformio.html) : To auto-install Marlin 1.1 or Marlin 2.0 on _any_ board, including AVR.
+- [Install Marlin on Re-ARM](install_rearm.html) : To manually install Marlin 2.0 using Re-Arm as the example.
