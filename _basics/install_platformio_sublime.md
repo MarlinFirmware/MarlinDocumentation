@@ -88,8 +88,8 @@ This will download the Sublime installer.  Install per your operating system.
       - Windows -          C:/Users/YOUR_USER_NAME/.Sublime/extensions/
           or
       C:/Users/YOUR_USER_NAME/AppData/Roaming/Sublime Text 3/Packages
-      - Mac - tbd
-      - Linux - tbd
+      - Mac - /Users/YOUR_USER_NAME/Library/Application Support/Sublime Text 3/Packages/User
+      - Linux - /home/YOUR_USER_NAME/.config/sublime-text-3/Packages/User/
 
 ## Restart Sublime
 

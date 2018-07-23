@@ -9,10 +9,6 @@ category: [ articles, getting-started ]
 
 Before reading this article, you should have already read [Installing Marlin with PlatformIO](install_arduino.html).
 
-This article documents:
-  * VS code specific steps
-  * Differences from [Installing Marlin with PlatformIO](install_arduino.html)
-
 # Auto Build support for VS code
 
 The Marlin `VS code` extension provides access to the `Auto Build` script for the `VS code IDE`.
@@ -26,12 +22,12 @@ Pointers to setup instructions for the supported platforms are near the top of [
 
 ### 2. Install this extension
 
-Copy the directory `buildroot/share/VS_code/AutoBuildVScode` to the `VS code` extension directory and then (re)start `VS code`.
+Copy the directory `buildroot/share/VS_code/AutoBuildMarlin` to the `VS code` extension directory and then (re)start `VS code`.
 
 The `VS code` extension directory is usually located at:
 - Windows - C:/Users/YOUR_USER_NAME/.vscode/extensions
-- Mac - tbd
-- Linux - tbd
+- Mac - /Users/YOUR_USER_NAME/.vscode/extensions
+- Linux - /home/YOUR_USER_NAME/.vscode/extensions
 
 ### 3. Install the PlatformIO extension
 
