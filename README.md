@@ -100,11 +100,11 @@ You'll only need to execute the `bundle install` command once to install all the
 
 With the `serve` option, Jekyll watches the local files and on every save triggers an automatic build of the site. It also runs a mini-webserver at [http://localhost:4000/](http://localhost:4000/) so the documentation can be previewed in the browser right on [your own computer](http://localhost:4000/).
 
-### Publishing changes
+## Publishing changes
 
 If you're a developer with enough access rights to publish changes to the `gh-pages` branch, the following bash script will ease your life by applying a consistent process for website publication. Run this from inside your local working copy of the repo. The main Marlin repo also includes scripts (`mfdoc` and `mfpub`) to do all this heavy lifting for you.
 
-#### pub-marlindoc.sh
+### pub-marlindoc.sh
 
 ```bash
 #!/bin/bash
