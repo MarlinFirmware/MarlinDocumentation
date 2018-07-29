@@ -18,7 +18,7 @@ The Marlin Documentation Project is built using the following technologies:
 
 ## How to contribute
 
-To work with the documentation, first you need to make a Fork of this repository in your own Github account, then locally clone **your MarlinDocumentation fork**. You should do all work within your own fork before submitting it to us. You can use Github's "Open in Desktop" option, or from your own desktop open a terminal/cmd window and do:
+To work with the documentation, first you need to make a Fork of this repository in your own Github account, then locally clone **your MarlinDocumentation fork**. You should do all work within your own fork before submitting it to us. You can download the [GitHub Desktop app](https://desktop.github.com/) and use Github's "Open in Desktop" option, or from your own desktop open a terminal/cmd window and do:
   - `cd C:\` (for example)
   - `git clone https://github.com/MarlinFirmware/MarlinDocumentation.git`
 
