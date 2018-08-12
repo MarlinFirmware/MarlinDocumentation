@@ -1,24 +1,24 @@
 ---
-tag: m666a
-title: Set Delta endstop adjustments
-brief: Set Delta endstop adjustments
+tag: m666b
+title: Set dual endstop offsets
+brief: Set dual endstop offsets
 author: ManuelMcLure
 
 experimental: false
 group: calibration
-requires: DELTA
+requires: (X|Y|Z)_DUAL_ENDSTOPS
 
 codes:
   - M666
 
 long: |
-    The `M666` command allows adjusting the endstops on a Delta printer.
+    The `M666` command allows adjusting the offsets for dual endstops
 
 parameters:
   -
     tag: X
     optional: true
-    description: Adjustment for the X actuator endstop
+    description: Offset for the X axis endstops
     values:
       -
         tag: adj
@@ -26,7 +26,7 @@ parameters:
   -
     tag: Y
     optional: true
-    description: Adjustment for the Y actuator endstop
+    description: Offset for the Y axis endstops
     values:
       -
         tag: adj
@@ -34,7 +34,7 @@ parameters:
   -
     tag: Z
     optional: true
-    description: Adjustment for the Z actuator endstop
+    description: Offset for the Z axis endstops
     values:
       -
         tag: adj
