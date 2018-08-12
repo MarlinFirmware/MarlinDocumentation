@@ -193,6 +193,6 @@ All of Re-Arm's logic pins are 3.3V, but all pins (except analog!) are 5V tolera
 
 6. Connect a power source (12V up to 24V).
 
-*The Re-Arm board is meant to be 24V-capable, so if your RAMPS is up to it, you can boost the voltage for more torque and faster heating. There's no need to cut the diode or use a separate power supply (or so they say). We'll have more to report as we do more testing with this board!*
+*The Re-Arm can be powered by 10 to 30V source.  When preparing your Ramps for 24V there's no need to cut the diode or use a separate power supply.  I ran one at 24V for 2 months and it worked perfectly.
 
 # Happy Printing!
