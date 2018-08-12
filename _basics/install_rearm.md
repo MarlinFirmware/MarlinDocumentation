@@ -191,8 +191,7 @@ All of Re-Arm's logic pins are 3.3V, but all pins (except analog!) are 5V tolera
 
 5. Plug in USB.
 
-6. Connect a power source (12V up to 24V).
-
-*The Re-Arm can be powered by 10 to 30V source.  When preparing your Ramps for 24V there's no need to cut the diode or use a separate power supply.  I ran one at 24V for 2 months and it worked perfectly.
+6. Connect a power source (12V to 24V).
+  (The Re-Arm can be powered from 10V to 30V without any need to cut the diode or use a separate power supply. In our testing a RAMPS has been running at 24V for 2 months without issue.)
 
 # Happy Printing!
