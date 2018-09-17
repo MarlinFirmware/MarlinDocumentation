@@ -703,7 +703,7 @@ Both acceleration and jerk affect your print quality. If jerk is too low, the ex
 ```cpp
 //#define Z_MIN_PROBE_ENDSTOP
 ```
-Use this option if you've connected the probe to a pin other than the Z MIN endstop pin. With this option enabled, by default Marlin will assume the probe is connected to the Z MAX endstop pin (since this is the most likely to be unused). If you need to use a different pin, you can set a custom pin number for `Z_MIN_PROBE_PIN` in `Configuration.h`.
+Use this option if you've connected the probe to a pin other than the Z MIN endstop pin. With this option enabled, by default Marlin will use the `Z_MIN_PROBE_PIN` specified in your board's pins file (usually the X or Z MAX endstop pin since these are the most likely to be unused). If you need to use a different pin, define your custom pin number for `Z_MIN_PROBE_PIN` in `Configuration.h`.
 
 ```cpp
 #define Z_MIN_PROBE_USES_Z_MIN_ENDSTOP_PIN
