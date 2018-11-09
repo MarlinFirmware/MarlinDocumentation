@@ -8,24 +8,22 @@ category: [ configuration ]
 
 {% alert info %}
 This document is based on Marlin 1.1.2
+{% endalert %}
 
-Note: If you are planning to modulate your laser output power during operation (e.g. for grayscale engraving), have a look at https://github.com/MarlinFirmware/Marlin/issues/11576 first.
+---
+Note: Because of the way Marlin currently (1.1.9) implements `M3`-`M5`, for best results we recommend ([#11576](https://github.com/MarlinFirmware/Marlin/issues/11576)) using a fan PWM pin and the [`M106`](http://marlinfw.org/docs/gcode/M106.html) command instead of `M3`-`M5`. The simplest way to do this is to define `FAN1_PIN` as one of the available PWM pins on your board.
 
-For the current version of Marlin (1.1.9) it's recommended to use a fan PWM pin in combination with [http://marlinfw.org/docs/gcode/M106.html](M106 commands) instead of `M3`-`M5`. Select one of the PWM pins described below and modify your `pins_MYBOARD.h` file accordingly.
-
-Example: 
-If you want to define pin 6 as the second fan on your RAMPS 1.4 board, open pins_RAMPS.h and add
+For example, to define pin 6 as the second fan just add this line to `Configuration.h`:
 ```cpp
 #define FAN1_PIN 6 // 2nd fan output attached to laser TTL input
 ```
-Your G-code files can control the laser like this:
-```
-M106 P1 S0 ; Laser off (P1 = 2nd fan output)
+You can then control the laser from your G-code using `M106 P1`, like so...
+```gcode
+M106 P1 S0   ; Laser off (P1 = 2nd fan output)
 M106 P1 S128 ; Laser at 50%
 M106 P1 S255 ; Laser at 100%
 ```
-
-{% endalert %}
+---
 
 ### Pins
 
