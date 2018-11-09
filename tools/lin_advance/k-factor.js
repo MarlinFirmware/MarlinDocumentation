@@ -58,7 +58,7 @@ function genGcode() {
       LINE_SPACING = parseFloat(document.getElementById('SPACE_LINE').value),
       USE_FRAME = document.getElementById('FRAME').checked,
       USE_PRIME = document.getElementById('PRIME').checked,
-      USE_BL = document.getElementById('USE_BL').checked,
+      BED_LEVELING = SELECT_BED_LEVELING.options[SELECT_BED_LEVELING.selectedIndex].value,
       USE_MMS = document.getElementById('MM_S').checked,
       USE_FWR = document.getElementById('USE_FWR').checked,
       EXT_MULT_PRIME = parseFloat(document.getElementById('PRIME_EXT').value),
@@ -170,7 +170,7 @@ function genGcode() {
                   ';\n' +
                   '; Settings Advance:\n' +
                   '; Nozzle / Line Ratio = ' + NOZZLE_LINE_RATIO + '\n' +
-                  '; Use BL = ' + (USE_BL ? 'true' : 'false') + '\n' +
+                  '; Bed leveling = ' + BED_LEVELING + '\n' +
                   '; Use FWRETRACT = ' + (USE_FWR ? 'true' : 'false') + '\n' +
                   '; Extrusion Multiplier = ' + EXT_MULT + '\n' +
                   '; Prime Nozzle = ' + (USE_PRIME ? 'true' : 'false') + '\n' +
@@ -180,11 +180,11 @@ function genGcode() {
                   ';\n' +
                   '; prepare printing\n' +
                   ';\n' +
-                  'G28 ; home all axes\n' +
-                  'M190 S' + BED_TEMP + ' ; set and wait for bed temp\n' +
-                  'M104 S' + NOZZLE_TEMP + ' ; set nozzle temp and continue\n' +
-                  (USE_BL ? 'G29 ; execute bed automatic leveling compensation\n': '') +
+                  'M104 S' + NOZZLE_TEMP + ' ; set nozzle temperature but do not wait\n' +
+                  'M190 S' + BED_TEMP + ' ; set bed temperature and wait\n' +
                   'M109 S' + NOZZLE_TEMP + ' ; block waiting for nozzle temp\n' +
+                  'G28 ; home all axes with heated bed\n' +
+                  (BED_LEVELING != "0" ? BED_LEVELING + '; Activate bed leveling compensation\n' : '') +
                   'G21 ; set units to millimeters\n' +
                   'M204 P' + ACCELERATION + ' ; set acceleration\n' +
                   (JERK_X !== -1 ? 'M205 X' + JERK_X + ' ; set X jerk\n' : '') +
@@ -637,7 +637,6 @@ function setLocalStorage() {
       LENGTH_SLOW = parseFloat(document.getElementById('SLOW_LENGTH').value),
       LENGTH_FAST = parseFloat(document.getElementById('FAST_LENGTH').value),
       Z_OFFSET = parseFloat(document.getElementById('OFFSET_Z').value),
-      USE_BL = document.getElementById('USE_BL').checked,
       USE_FWR = document.getElementById('USE_FWR').checked,
       USE_MMS = document.getElementById('MM_S').checked,
       USE_LINENO = document.getElementById('LINE_NO').checked;
@@ -680,7 +679,6 @@ function setLocalStorage() {
     'LENGTH_SLOW': LENGTH_SLOW,
     'LENGTH_FAST': LENGTH_FAST,
     'Z_OFFSET': Z_OFFSET,
-    'USE_BL': USE_BL,
     'USE_FWR': USE_FWR,
     'USE_MMS': USE_MMS,
     'USE_LINENO': USE_LINENO
@@ -748,7 +746,6 @@ $(window).load(function() {
       $('#SLOW_LENGTH').val(settings['LENGTH_SLOW']);
       $('#FAST_LENGTH').val(settings['LENGTH_FAST']);
       $('#OFFSET_Z').val(settings['Z_OFFSET']);
-      $('#USE_BL').prop('checked', settings['USE_BL']);
       $('#USE_FWR').prop('checked', settings['USE_FWR']);
       $('#MM_S').prop('checked', settings['USE_MMS']);
       $('#LINE_NO').prop('checked', settings['USE_LINENO']);
