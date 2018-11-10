@@ -10,6 +10,21 @@ category: [ configuration ]
 This document is based on Marlin 1.1.2
 {% endalert %}
 
+---
+Note: Because of the way Marlin currently (1.1.9) implements `M3`-`M5`, for best results we recommend ([#11576](https://github.com/MarlinFirmware/Marlin/issues/11576)) using a fan PWM pin and the [`M106`](http://marlinfw.org/docs/gcode/M106.html) command instead of `M3`-`M5`. The simplest way to do this is to define `FAN1_PIN` as one of the available PWM pins on your board.
+
+For example, to define pin 6 as the second fan just add this line to `Configuration.h`:
+```cpp
+#define FAN1_PIN 6 // 2nd fan output attached to laser TTL input
+```
+You can then control the laser from your G-code using `M106 P1`, like so...
+```gcode
+M106 P1 S0   ; Laser off (P1 = 2nd fan output)
+M106 P1 S128 ; Laser at 50%
+M106 P1 S255 ; Laser at 100%
+```
+---
+
 ### Pins
 
 In the `pins_MYBOARD.h` file for your board make sure the following pins are defined:
