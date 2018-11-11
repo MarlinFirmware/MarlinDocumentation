@@ -27,4 +27,4 @@ Release versions of Marlin periodically exhibit bugs. While you can report a bug
 - [Marlin Issue Queue](https://github.com/MarlinFirmware/Marlin/issues)
 - [Bug Reporting Guidelines](reporting_bugs.html)
 - [tell us about your machine!](https://github.com/MarlinFirmware/Marlin/issues/1209)
-- [bugfix-1.1.x](https://github.com/MarlinFirmware/Marlin/tree/bugfix-1.1.x)
+- [bugfix-2.0.x](https://github.com/MarlinFirmware/Marlin/tree/bugfix-2.0.x)
