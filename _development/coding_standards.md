@@ -274,14 +274,12 @@ Macro|Description
 ----|-----------
 `SERIAL_ECHO_START()`| Send "`echo:`" to the serial output.
 `SERIAL_ERROR_START()`| Print "`error:`" to the serial output.
-`SERIAL_PROTOCOL("hello")`| Print an ASCII string stored in SRAM to serial out.
-`SERIAL_PROTOCOLLN("hello")`| Print an ASCII string stored in SRAM to serial out, appending a newline.
-`SERIAL_PROTOCOLPGM("hello")`| Wrap the given ASCII string in `PSTR` and print it to serial out.
-`SERIAL_PROTOCOLLNPGM("hello")`| Wrap the given ASCII string in `PSTR` and print it to serial out, appending a newline.
-`SERIAL_PROTOCOLPAIR("Hello:",val)`| Wrap an ASCII string in `PSTR`; print it and a value to serial out.
-`SERIAL_PROTOCOLLNPAIR("Hello:",val)`| Wrap an ASCII string in `PSTR`; print it, a value, and a newline to serial out.
-`SERIAL_ECHO(S)`<br/>`SERIAL_ECHOLN(S)`<br/>`SERIAL_ECHOPGM(S)`<br/>`SERIAL_ECHOLNPGM(S)`<br/>`SERIAL_ECHOPAIR(S,V)`<br/>`SERIAL_ECHOLNPAIR(S,V)`|just like the `PROTOCOL_*` macros above.
-`SERIAL_ERROR(S)`<br/>`SERIAL_ERRORLN(S)`<br/>`SERIAL_ERRORPGM(S)`|
+`SERIAL_ECHO("hello")`| Print an ASCII string stored in SRAM to serial out.
+`SERIAL_ECHOLN("hello")`| Print an ASCII string stored in SRAM to serial out, appending a newline.
+`SERIAL_ECHOPGM("hello")`| Wrap the given ASCII string in `PSTR` and print it to serial out.
+`SERIAL_ECHOLNPGM("hello")`| Wrap the given ASCII string in `PSTR` and print it to serial out, appending a newline.
+`SERIAL_ECHOPAIR("Hello:",val)`| Wrap an ASCII string in `PSTR`; print it and a value to serial out.
+`SERIAL_ECHOLNPAIR("Hello:",val)`| Wrap an ASCII string in `PSTR`; print it, a value, and a newline to serial out.
 
 ### Maths macros
 
