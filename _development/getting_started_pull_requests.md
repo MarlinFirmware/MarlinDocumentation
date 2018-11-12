@@ -11,7 +11,6 @@ category: [ development ]
 The current version of this document is targeted at Windows users.
 {% endalert %}
 
-
 ## Introduction
 
 GitHub is a great tool for collaboration, but it can take some time and effort to learn how to use it. The power of GitHub centers around the [Git version control system](https://en.wikipedia.org/wiki/Git). If you've used other version control systems such as [CVS](https://en.wikipedia.org/wiki/Concurrent_Versions_System), [Apache Subversion](https://en.wikipedia.org/wiki/Apache_Subversion), or [Mercurial](https://en.wikipedia.org/wiki/Mercurial), then Git should be familiar. GitHub adds issue management, bug tracking, and other features, making it an ideal platform for maintaining the Marlin project.
