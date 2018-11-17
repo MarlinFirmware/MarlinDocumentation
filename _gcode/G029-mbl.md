@@ -106,7 +106,7 @@ examples:
     pre: 'Modify some mesh points and view the new mesh:'
     code:
       - |
-        > S3 X3 3 Z0.042
+        > S3 X3 Y3 Z0.042
         > S3 X2 Y2 Z-0.666
         > S0
         Num X,Y: 3,3
