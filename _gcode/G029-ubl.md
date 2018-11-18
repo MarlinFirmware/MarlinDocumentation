@@ -1,6 +1,6 @@
 ---
 tag: g29c
-title: Unified Bed Leveling
+title: Bed Leveling (Unified)
 brief: Probe the bed and enable leveling compensation.
 
 experimental: true

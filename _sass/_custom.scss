@@ -262,3 +262,19 @@ table.pretty-list {
   td:first-child { text-align: right; }
   }
 table.pretty-list.headless thead { display: none; }
+
+.container.gcode div.tocify.gcode {
+  position: fixed;
+  height: 100vh;
+  overflow: scroll;
+  border-bottom: 2px solid #EEE;
+  margin-top: -60px;
+}
+
+.tocify.gcode>ul { padding: 65px 0 1em; }
+.nav-list > li > a strong { color: #900; }
+
+// Keep footer from overlapping g-codes nav
+@media (min-width: $screen-md-min) {
+  .container.gcode+footer { margin-left: 25%; }
+}

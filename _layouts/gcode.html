@@ -3,7 +3,7 @@ layout: default
 ---
 
 <!-- content -->
-<div class="container" role="main">
+<div class="container gcode" role="main">
   <div class="row">
     <div class="col-lg-3 col-md-4 visible-lg-block visible-md-block custom-no-padding">
       <div class="">
@@ -20,7 +20,7 @@ layout: default
               {% assign list = list | sort: 'tag' %}
               {% for gcode in list %}
                   <li class="tocify-item{% if page.codes[0] == gcode.codes[0] and page.title == gcode.title %} active{% endif %}">
-                    <a href="{{ gcode.url | prepend: site.baseurl }}">{{ gcode.codes[0] }}{% if gcode.codes[1] %}-{{ gcode.codes[1] }}{% endif %}: {{ gcode.title }}</a></li>
+                    <a href="{{ gcode.url | prepend: site.baseurl }}"><strong>{{ gcode.codes[0] }}{% if gcode.codes[1] %}-{{ gcode.codes[1] }}{% endif %}</strong>: {{ gcode.title }}</a></li>
               {% endfor %}
             </ul>
           </div>

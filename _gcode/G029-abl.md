@@ -1,6 +1,6 @@
 ---
 tag: g29b
-title: Automatic Bed Leveling
+title: Bed Leveling (Automatic)
 brief: Probe the bed and enable leveling compensation.
 author: thinkyhead
 

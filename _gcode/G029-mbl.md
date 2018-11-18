@@ -1,6 +1,6 @@
 ---
 tag: g29a
-title: Mesh Bed Leveling
+title: Bed Leveling (Manual)
 brief: Measure Z heights in a grid, enable leveling compensation
 author: thinkyhead
 

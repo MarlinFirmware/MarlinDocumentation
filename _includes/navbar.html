@@ -59,11 +59,7 @@
                         {% for doc in docs %}
                           {% if doc.title %}
                             <li><a href="{{ doc.url }}">
-                              {% if col.label == 'gcode' %}
-                                {{ doc.codes[0] }}{% if doc.codes[1] %}-{{ doc.codes[1] }}{% endif %}: {{ doc.title }}
-                              {% else %}
-                                {{ doc.title }}
-                              {% endif %}
+                              <strong>{{ doc.codes[0] }}{% if doc.codes[1] %}-{{ doc.codes[1] }}{% endif %}</strong>: {{ doc.title }}
                             </a></li>
                           {% endif %}
                         {% endfor %}
@@ -72,15 +68,7 @@
                         {% for tag in docs %}
                           <li class="divider"></li>
                           {% for doc in tag.items %}
-                            {% if doc.title %}
-                              <li><a href="{{ doc.url }}">
-                                {% if col.label == 'gcode' %}
-                                  {{ doc.codes[0] }}{% if doc.codes[1] %}-{{ doc.codes[1] }}{% endif %}: {{ doc.title }}
-                                {% else %}
-                                  {{ doc.title }}
-                                {% endif %}
-                              </a></li>
-                            {% endif %}
+                            {% if doc.title %}<li><a href="{{ doc.url }}">{{ doc.title }}</a></li>{% endif %}
                           {% endfor %}
                         {% endfor %}
                       {% endif %}
