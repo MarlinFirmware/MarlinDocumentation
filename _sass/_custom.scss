@@ -276,5 +276,9 @@ table.pretty-list.headless thead { display: none; }
 
 // Keep footer from overlapping g-codes nav
 @media (min-width: $screen-md-min) {
-  .container.gcode+footer { margin-left: 25%; }
+  .container.gcode+footer { float: right; width: 66%; }
 }
+@media (min-width: $screen-lg-min) {
+  .container.gcode+footer .container { margin-left: 35%; width: 75%; }
+}
+
