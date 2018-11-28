@@ -8,26 +8,26 @@ category: [ features ]
 
 Trinamic stepper drivers allow you to have better control of your stepper motors and achieve extremely quiet motion. You can influence how the driver manages motor current as well as the manner of current delivery. The drivers can act as endstops allowing you simplify wiring. Marlin also supports setting the driver current by using software commands, negating the need for adjusting trimpots.
 
-## Installing the library
+# Installing the library
 The TMC stepper drivers require an external library that allows Marlin to communicate with each driver.
 
-### Installing from Arduino IDE library manager
+## Installing from Arduino IDE library manager
 * Open up the Arduino IDE
 * Go to Sketch -> Include Library -> Manage Libraries...
 * Search for **TMC2130Stepper** or **TMC2208Stepper**
 * Click `Install`
 
-### Installing from a zip file
+## Installing from a zip file
 * TMC2130: Go to the library homepage at <https://github.com/teemuatlut/TMC2130Stepper>
 * TMC2208: Go to the library homepage at <https://github.com/teemuatlut/TMC2208Stepper>
 * Click `Clone or download` and `Download ZIP`
 * In Arduino IDE and go to Sketch -> Include Library -> Add .ZIP Library...
 * Point to the downloaded file and click `Open`
 
-## Wiring
+# Wiring
 Because the TMC drivers require a way for communication and configuring the drivers (outside of standalone mode) they also require additional setup. TMC2130 uses SPI for communication and TMC2208 uses UART (Serial).
 
-### TMC2130
+## TMC2130
 
 Motherboard | Driver
 ---:|:---
@@ -36,7 +36,7 @@ MOSI | SDI
 MISO | SDO
 CS | CS
 
-#### Software SPI
+### Software SPI
 
 You can use other than the HW SPI pins by enabling `TMC_USE_SW_SPI` and defining the required pins:
 ```cpp
@@ -45,7 +45,7 @@ TMC_SW_MISO
 TMC_SW_SCK
 ```
 
-### TMC2208
+## TMC2208
 
 A 1 kilo-ohm resistor is required between TX and PD_UART
 
@@ -57,13 +57,13 @@ TX | (1kohm) | PD_UART
 The serial port on master is selected in your `pins` file. Alternatively you can use the slower software serial by not selecting any of the hardware serial ports.
 Typically one port per one driver is needed.
 
-#### Software UART
+### Software UART
 
 You can use free pins as UART by disabling all of the hardware serial options in your `pins` file and by defining the `_SERIAL_TX_PIN` and `_SERIAL_RX_PIN` pins.
 
 **Note:** The receive (RX) pins are limited to only interrupt capable pins. Transmit (TX) pins do not have the same limitation.
 
-## FYSETC drivers
+# FYSETC drivers
 We recommend getting the original Watterott drivers or the revised FYSETC v1.1 drivers to avoid additional headaches.
 
 The FYSETC v1.0 drivers come pre-configured in standalone mode. This means that the drivers should work for moving the axis but you will not be able to configure them nor take advantage of the additional features of the drivers. To get the drivers working as intended you will need to modify three solder bridges on the driver PCB.
@@ -73,7 +73,7 @@ The FYSETC v1.0 drivers come pre-configured in standalone mode. This means that 
 Some versions of the FYSETC v1.0 drivers come with a solder bridge left of the chip, some come with a bridging resistor. This connection needs to be opened for SPI connection to work.
 The two smaller bridges need to be configured as shown.
 
-## Features and configuration options
+# Features and configuration options
 There are several technologies specific to Trinamic drivers that are supported by Marlin.
 * [stealthChop] is a technology that drives the motors using PWM voltage instead of current. The result is nearly inaudible stepping at low velocities. StealthChop has a lower stepping speed limit and if you need to move faster, for example travel moves, you may want to use spreadCycle or configure Hybrid Mode.
 * [spreadCycle] is an alternative stepping mode. The driver will use four stages to drive the desired current into the stepper motor. SpreadCycle provides greater torque which might be useful if you're experiencing skipped steps. The downside is slightly higher noise levels.
@@ -101,7 +101,7 @@ HOMING_SENSITIVITY        | The Sensorless Homing sensitivity can be tuned to su
 TMC_DEBUG                 | Enable M122 debugging command. This will give you _a lot_ of additional information about the status of your TMC drivers.
 TMC_ADV                   | You can use this to add your own configuration settings. The requirement is that the command used must be part of the respective TMC stepper library. Remember to add a backslash after each command!
 
-## GCodes
+# GCodes
 
 Command | Configuration<br>required | Description
 -------:|:------------------:|:-----------
@@ -121,7 +121,7 @@ Command | Configuration<br>required | Description
 [M914]: /docs/gcode/M914.html
 [M915]: /docs/gcode/M915.html
 
-## Troubleshooting
+# Troubleshooting
 
 - Test the current **bugfix** branch of Marlin posted on GitHub (in case your issue is already fixed).
 - Use the latest TMC Stepper libraries.
@@ -132,7 +132,7 @@ Command | Configuration<br>required | Description
   - Reported register values of either `0x00000000` or `0xFFFFFFFF` are bad responses.
 - Try the examples provided by the respective library. Please detach any belts beforehand however, as the examples will not respect any endstop signals or physical limits. You may need to change the pin definitions.
 
-## External resources
+# External resources
 
 [Arduino library for TMC2130](https://github.com/teemuatlut/TMC2130Stepper)
 

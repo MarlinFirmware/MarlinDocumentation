@@ -36,14 +36,14 @@ Pause/Resume Print     || `SDSUPPORT` (while SD printing)
 Init SD                |[`M21`](/docs/gcode/M021.html) detect SD Card| `!SD_DETECT && SDSUPPORT`
 **Info >>**            || `LCD_INFO_MENU`
 
-## Debug
+# Debug
 
 Item|Description|Requirements
 ----|-----------|------------
 **[<< Main](#main-menu)** ||
 Progress Bar Test      |Test the encoder using a progress bar| `LCD_PROGRESS_BAR_TEST`
 
-## Tune
+# Tune
 The Tune menu is only available during active printing. Most items in this menu are editable values.
 
 Item|Description|Requirements
@@ -61,7 +61,7 @@ Babystep Z             || `BABYSTEPPING && !BABYSTEP_ZPROBE_OFFSET`
 Z Probe Offset         |[`M851 Z`](/docs/gcode/M851.html)| `BABYSTEP_ZPROBE_OFFSET`
 **Change Filament >>** |[`M600`](/docs/gcode/M600.html)| `FILAMENT_CHANGE_FEATURE` and not too cold
 
-## Prepare
+# Prepare
 The Prepare menu is only available when the machine is not printing.
 
 Item|Description|Requirements
@@ -85,7 +85,7 @@ BLTouch Reset          || `BLTOUCH` (if triggered while disabled)
 Power ON/OFF           || `HAS_POWER_SWITCH`
 Autostart              || `SDSUPPORT && MENU_ADDAUTOSTART`
 
-### Move Axis
+## Move Axis
 
 The move axis sub-menu was reorganized for Marlin 1.1. To use the move commands, first select the axis to move, then select the move distance. Use the controller wheel (or arrow buttons) to adjust the axis position. For larger move sizes, Marlin waits until you stop moving the controller for 1/2 second before it starts the move, giving you an opportunity to catch overshoot.
 
@@ -105,7 +105,7 @@ Select E1/E2           |Sends "`T0`" / "`T1`"| `SWITCHING_EXTRUDER`
 **Move E4 >>**         |Select E4 move size, do moves| `EXTRUDERS >= 4` (if not too cold)
 **Move E5 >>**         |Select E5 move size, do moves| `EXTRUDERS == 5` (if not too cold)
 
-### Bed Leveling
+## Bed Leveling
 
 The Bed Leveling menu groups together commands for calibrating the nozzle-to-bed distance. Different options will appear depending on your setup and the type of leveling you've enabled. **Level Bed** runs the default `G29` procedure. For auto bed leveling this will deploy the probe, measure all points, and stop. For manual leveling (`PROBE_MANUALLY` or `MESH_BED_LEVELING`) you'll be taken through a step-by-step process.
 
@@ -122,11 +122,11 @@ Z Probe Offset: -–-    |`M851 Z`                      | `HAS_BED_PROBE` (`BABY
 Load Settings          |`M501`                        | `EEPROM_SETTINGS`
 Save Settings          |`M500`                        | `EEPROM_SETTINGS`
 
-### Unified Bed Leveling
+## Unified Bed Leveling
 
 The Unified Bed Leveling menu groups together commands for leveling and mesh editing. Since this menu is very large and complex, it will be described in a separate document - coming soon.
 
-### Preheat PLA
+## Preheat PLA
 
 Set the fan speed plus bed and/or nozzle temperature to the preset "PLA" settings. Use `M145 S0 ...` to change the temperatures and fan speed used for this menu.
 
@@ -146,7 +146,7 @@ Preheat PLA End E4     |Preheat E4 only          | `HOTENDS >= 4 && TEMP_SENSOR_
 Preheat PLA 5          |Preheat E5 (and bed)     | `HOTENDS == 5`
 Preheat PLA End E5     |Preheat E5 only          | `HOTENDS == 5 && TEMP_SENSOR_BED`
 
-### Preheat ABS
+## Preheat ABS
 
 Set the fan speed plus bed and/or nozzle temperature to the preset "ABS" settings. Use `M145 S1 ...` to change the temperatures and fan speed used for this menu.
 
@@ -166,7 +166,7 @@ Preheat ABS End E4     |Preheat E4 only          | `HOTENDS >= 4 && TEMP_SENSOR_
 Preheat ABS 5          |Preheat E5 (and bed)     | `HOTENDS == 5`
 Preheat ABS End E5     |Preheat E5 only          | `HOTENDS == 5 && TEMP_SENSOR_BED`
 
-## Control
+# Control
 
 The Control sub-menu includes the Temperature, Motion, and Filament sub-menus and Settings/EEPROM commands, plus a few other miscellanous hardware control commands.
 
@@ -185,7 +185,7 @@ Load settings          || `EEPROM_SETTINGS`
 Restore failsafe       |`M502` Settings to defaults|
 Init EEPROM            |`M502`+`M500` Default settings and store to EEPROM|
 
-### Temperature
+## Temperature
 
 Use this sub-menu to set the target temperature for nozzles and the bed, fan speed, `AUTOTEMP`, PID factors, and material preheat settings.
 
@@ -239,7 +239,7 @@ Pid C E5: -–-          || `PIDTEMP && PID_PARAMS_PER_HOTEND && HOTENDS >= 5 &&
 **[Preheat PLA conf >>](#preheat-pla-conf)**||
 **[Preheat ABS conf >>](#preheat-abs-conf)**||
 
-#### Preheat PLA conf
+### Preheat PLA conf
 
 The temperatures and fan speed set here will be used for the "Preheat PLA" menu item.
 
@@ -251,7 +251,7 @@ Nozzle: -–-||
 Bed: -–-||`TEMP_SENSOR_BED`
 Store settings|`M500`|
 
-#### Preheat ABS conf
+### Preheat ABS conf
 
 The temperatures and fan speed set here will be used for the "Preheat ABS" menu item.
 
@@ -263,7 +263,7 @@ Nozzle: -–-||
 Bed: -–-||`TEMP_SENSOR_BED`
 Store settings|`M500`|
 
-### Motion
+## Motion
 
 The motion settings provide control over tunable movement parameters which can be stored to EEPROM.
 
@@ -278,7 +278,7 @@ Bed Z: -–-                      |MBL Z Offset| `MESH_BED_LEVELING && LCD_BED_L
 [Steps/mm >>](#stepsmm)         |Steps/mm for XYZ axes and extruders|
 Endstop abort ON/OFF            || `ABORT_ON_ENDSTOP_HIT_FEATURE_ENABLED`
 
-#### Feedrate
+### Feedrate
 
 Item|Description|Requirements
 ----|-----------|------------
@@ -295,7 +295,7 @@ Vmax E5: -–-  |Max E5 Velocity (mm/s)| `DISTINCT_E_FACTORS && E_STEPPERS == 5`
 Vmin: -–-     |Min Feedrate (mm/s)|
 VTrav min: -–-|Min Travel Velocity (mm/s)|
 
-#### Acceleration
+### Acceleration
 
 Item|Description|Requirements
 ----|-----------|------------
@@ -313,7 +313,7 @@ Amax E5: -–-  |Max E5 Acceleration (mm/s<sup>2</sup>)| `DISTINCT_E_FACTORS && 
 A-retract: -–-|Retract Acceleration (mm/s<sup>2</sup>)|
 A-travel: -–- |Travel Acceleration (mm/s<sup>2</sup>)|
 
-#### Jerk
+### Jerk
 
 Item|Description|Requirements
 ----|-----------|------------
@@ -323,7 +323,7 @@ Vy-Jerk: -–-|Max Y Jerk|
 Vz-Jerk: -–-|Max Z Jerk|
 Ve-Jerk: -–-|Max E Jerk|
 
-#### Steps/mm
+### Steps/mm
 
 Item|Description|Requirements
 ----|-----------|------------
@@ -338,7 +338,7 @@ E3steps/mm: -–-|E3 steps-per-mm| `DISTINCT_E_FACTORS && E_STEPPERS >= 3`
 E4steps/mm: -–-|E4 steps-per-mm| `DISTINCT_E_FACTORS && E_STEPPERS >= 4`
 E5steps/mm: -–-|E5 steps-per-mm| `DISTINCT_E_FACTORS && E_STEPPERS == 5`
 
-### Filament
+## Filament
 
 Volumetric extrusion, Linear Advance K factor, and filament diameter per-extruder.
 
@@ -354,7 +354,7 @@ Fil. Dia. E3: -–-|| `EXTRUDERS >= 3` and volumetirc enabled
 Fil. Dia. E4: -–-|| `EXTRUDERS >= 4` and volumetirc enabled
 Fil. Dia. E5: -–-|| `EXTRUDERS == 5` and volumetirc enabled
 
-### BLTouch
+## BLTouch
 
 When the ANTCLABS BLTouch probe acts up you can use the items in this sub-menu to reset and test the probe.
 
@@ -368,7 +368,7 @@ Stow BLTouch           ||
 
 ----
 
-## UBL Submenus
+# UBL Submenus
 
 Unified Bed Leveling aims to be a comprehensive all-in-one system to calibrate the bed based on every available datapoint.
 

@@ -7,10 +7,10 @@ author: jbrazio
 contrib: thinkyhead, AnHardt
 category: [ development ]
 ---
-## Editing
+# Editing
 All the fonts were created using [Fony](http://hukka.ncn.fi/?fony) but any other font editor such as [Fontforge](https://fontforge.github.io/en-US/) should be able to edit them.
 
-## Exporting
+# Exporting
 Marlin can't use directly the **fon** font format, it must be exported to a C/C++ byte array. The workflow is very simple, just open a font file using [Fony](http://hukka.ncn.fi/?fony) and export it to the **bdf** format. Next we must use the [bdf2u8g.exe](https://github.com/olikraus/u8glib/tree/master/tools/font/bdf2u8g) converter in order to obtain a C/C++ header file.
 
 On the [Fony](http://hukka.ncn.fi/?fony) window select the first "symbol" from your font file (**1**) and see it's index (**3**), in the following example the index of our first symbol is 32. Next you must repeat the operation for the last symbol (**2**), in our example the value is 255.
@@ -65,7 +65,7 @@ The last step is to add your font to the list of permitted fonts in `language_en
 We distribute with Marlin the `make_fonts.bat` which is a helper script which automates *most* of the previous steps for our core font files, manual editing of the header files is still necessary.
 {% endalert %}
 
-## Implementation and limits
+# Implementation and limits
 The current limit symbol limit per font is 256.
 
 Marlin uses a menu system with 5 lines, on a display with 64 pixel height. That means each line can have at maximum 12 pixels height. but as a small gap between the lines is a requirement, the final symbol height can't be no more than 10 pixel height. In some cases it may be desirable to make the gap between lines smaller so more information can fit the screen [even if it causes a small loss of readability], if `TALL_FONT_CORRECTION ` is set to `1` when loading the font then each symbol may have up to 11 pixels height.

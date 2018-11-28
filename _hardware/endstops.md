@@ -11,11 +11,11 @@ Endstops or limit switches are used on every moving axes of a 3D printer. The fo
 * Types of endstops
 * Electromagnetic Interference / Electric Noise impact on endstops
 
-## Endstops purpose
+# Endstops purpose
 Endstops fulfill two important functions in a 3D printer: Reference system for the axes system and safety.
 <br>
 
-### Reference for the axes system
+## Reference for the axes system
 After powering up a 3D printer the printer's controller board does not know at which position its axes are. Marlin indicates this by blinking question-marks in place of X, Y and Z on the LCD screen (v1.1.8 and older) or blinking '?' in place of the coordinates besides X,Y and Z (Marlin v1.1.9 / v2.0.0 and newer).
 
 This means the system needs first to establish its starting point of the physical (machine) coordinate system, a process called *Homing*. Homing can be initiated either via the [G28 G-code](http://marlinfw.org/docs/gcode/G028.html) or via the LCD controller. 
@@ -26,17 +26,17 @@ This means the system needs first to establish its starting point of the physica
 Illustration 1: LCD indication not homed axes (Marlin <= v1.1.8)
 {: style="color:gray; font-size: 80%; text-align: center;"}
 
-### Safety
+## Safety
 The other important aspect of an endstop is protecting the hardware from damage. Should any movement try to exceed the physical limits of the machine, the endstop will cut the movement.
 
 <br>
 
-## Types of endstops
+# Types of endstops
 There are two main types of endstops. Hardware endstops and software endstops.
 
 <br>
 
-### Hardware endstops
+## Hardware endstops
 Hardware endstops are electrically connected to the endstop ports of the printer control board and will provide a signal when the endstop condition is met.
 
 ![endstop_types](/assets/images/docs/hardware/endstops/endstop_types.png)
@@ -54,7 +54,7 @@ Regardless of the type the basic way of working is the same:
 Since endstops are a safety feature NC switches are recommended as they will halt the machine should the switch be damaged, e.g. by a broken cable etc.
 {% endpanel %}
 
-#### Probe as Z-Endstop
+### Probe as Z-Endstop
 Probes can act like an endstop for the minimum Z-axis. While the typical endstop has a fixed position, the probe is mounted on the print-head and can freely move around the bed. 
 
 ![probes](/assets/images/docs/hardware/endstops/probes.png)
@@ -65,20 +65,20 @@ Illustration 3: Common probe types: Inductive (left), solenoid touch probe (righ
 
 Probes and their configuration are beyond this endstop introduction. Further reading is provided in the Chapter [Probes Configuration](http://marlinfw.org/docs/configuration/probes.html), [Auto Bed Leveling](http://marlinfw.org/docs/features/auto_bed_leveling.html) and [Unified Bed Leveling](http://marlinfw.org/docs/features/unified_bed_leveling.html).
 
-### Software Endstops
+## Software Endstops
 Typically 3D printers are only equipped with hardware endstops on one side of each axis (Minimum or Maximum of the respective axis). As discussed above this is used to determine the starting point (origin) of the machine coordinate system. 
 
 In order to also protect the other side of the axes software endstops should be defined in the firmware via the `#define MAX_SOFTWARE_ENDSTOPS` /  `#define MIN_SOFTWARE_ENDSTOPS` directive. This then uses the value from `#define [XYZ]_MAX_POS` / `#define [XYZ]_MIN_POS` to determine the maximum distance between the physical endstop and the software commanded stop of the axis. Software endstops can be (de-)activated via the [M211 G-code](http://marlinfw.org/docs/gcode/M211.html).
  
 <br>
 
-## Endstops and Electromagnetic Interference (EMI)
+# Endstops and Electromagnetic Interference (EMI)
 
 Electromagnetic Interference (EMI) or electric noise, is an effect which can ruin the clean signal needed to properly and precisely measure electronically, be it temperature, endstop hits or any other value.
 
 <br>
 
-### Sources and effect of EMI
+## Sources and effect of EMI
 In today's life an abundance of sources for Electric Noise exists: Mobile phones, microwaves, WIFI, power supplies etc.
 In a 3D printer itself, there are also some prominent and strong sources of such noise:
 
@@ -92,12 +92,12 @@ The useful signal needed by the other components will be disturbed or even alter
 
 <br>
 
-### Effect on endstops / limit switches
+## Effect on endstops / limit switches
 In the following *High = Logic 1 = 5 Volt* will be used for a pressed switch and *Low = Logic 0 = 0 Volt* for a not triggered switch.
 
 <br>
 
-#### Ideal endstop characteristic
+### Ideal endstop characteristic
 
 ![ideal](/assets/images/docs/hardware/endstops/switch_ideal.png)
 {: style="text-align: center;"}
@@ -109,7 +109,7 @@ The above Illustration 4 shows an ideal endstop characteristic: Once pressed it 
 
 <br>
 
-#### Real endstop characteristic with low noise
+### Real endstop characteristic with low noise
 
 ![real](/assets/images/docs/hardware/endstops/switch_real.png)
 {: style="text-align: center;"}
@@ -125,7 +125,7 @@ Illustration 5 shows:
 
 <br>
 
-#### Real endstop characteristic with peak noise
+### Real endstop characteristic with peak noise
 
 ![noise](/assets/images/docs/hardware/endstops/switch_noise.png)
 {: style="text-align: center;"}
@@ -140,7 +140,7 @@ This Illustration 6 shows:
 
 <br>
 
-### Countermeasures
+## Countermeasures
 There are numerous counter measures preventing noise:
 
  1. Shielded cables / twisted cable pairs
@@ -152,7 +152,7 @@ In the following the options 3 and 4 will be discussed further.
 
 <br>
 
-#### Software filtering
+### Software filtering
 Beginning with Marlin v1.1.9 and v2.0 the software measures against endstop noise are improved and exposed as a setting. Prior versions already implemented filtering that is permanently active. 
 For the sake of precision, this now has been exposed as a user setting in `Configuration.h` and deactivated by default.
 
@@ -191,12 +191,12 @@ This will lead to delays and finally to a precision loss in the detection of the
 Depending on the printer's geometry and affected endstop, this precision loss may result in issues especially concerning the bed leveling. Using this feature is not recommended. Implementing some type of hardware filtering is strongly preferred.
 {% endpanel %}
 
-#### Hardware Filtering
+### Hardware Filtering
 Hardware filtering can range from a simple capacitor in parallel to the switch over a resistor / capacitor combination (RC-unit) up to opto-couplers and flip-flops.
 
 <br>
 
-##### Board
+#### Board
 Some printer controller boards already contain such filters located at the endstop connectors. Unfortunately the popular RAMPS v1.4 design does not. A deficit that has been corrected with the RAMPS v1.4.2 design:
 
 
@@ -208,7 +208,7 @@ Illustration 8: RAMPS v1.4 vs v1.4.2
 
 <br>
 
-##### Endstop PCB 
+#### Endstop PCB 
 For 3D printing ready made filtered endstops are available, e.g. according to the Makerbot design:
 
 ![ramps](/assets/images/docs/hardware/endstops/makerbot_endstop.png)
@@ -219,7 +219,7 @@ Illustration 9: Endstop PCB with RC unit
 
 <br>
 
-##### Endstop with capacitor
+#### Endstop with capacitor
 A more simple variant, that can easily be fitted to existing endstops is a 100nF capacitor, soldered over the two endstop connector pins (in parallel):
 
 ![filter](/assets/images/docs/hardware/endstops/switch_cap.png)
@@ -230,7 +230,7 @@ Illustration 10: Endstop with 100nF capacitor
 
 <br>
 
-##### Effect of the hardware filtering
+#### Effect of the hardware filtering
 Illustration 8 below shows the effect of such hardware filtering: The noise level is smoothed and peaks will be reduced so much that they no longer will cause false readings. Additionally the fast bouncing at the beginning of the triggering will also be damped. 
 
 ![filter](/assets/images/docs/hardware/endstops/switch_filter.png)
@@ -239,5 +239,5 @@ Illustration 8 below shows the effect of such hardware filtering: The noise leve
 Illustration 11: Endstop characteristic with hardware filter
 {: style="color:gray; font-size: 80%; text-align: center"}
 
-### Conclusion
+## Conclusion
 Electrical Noise should not be underestimated. It is invisible but it may lead to strange effects that are very hard to diagnose due to its spurious nature. Simple measures like adding a capacitor will already improve the situation considerably, overall improving reliability of the machine. 

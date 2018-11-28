@@ -8,13 +8,13 @@ contrib: thinkyhead
 category: [ development ]
 ---
 
-## About
+<!-- ## About -->
 
 Marlin has _a lot_ of features, and there are several more in development, but we're always open to more ideas and contributions! We keep track of feature requests in the Marlin Issue Queue. Open tagged feature requests appear on this page:
 
 #### &nbsp;&nbsp;&nbsp;&nbsp; [Open Marlin Feature Requests](https://github.com/MarlinFirmware/Marlin/labels/T%3A%20Feature%20Request)
 
-## Before Submitting
+# Before Submitting
 
 **Scan the [Feature Requests](https://github.com/MarlinFirmware/Marlin/labels/Feature%20Request) list** to see if a similar request is already in the queue. If there is, you can add comments to the existing request.
 
@@ -22,7 +22,7 @@ Marlin has _a lot_ of features, and there are several more in development, but w
 
 **[Sign up for a free Github account](https://github.com/join)**. A Github account is required to submit a Feature Request. The process only takes a few minutes, and then you will be notified on Github as your feature progresses and be able to contribute to the feature.
 
-## Submitting a Feature Request
+# Submitting a Feature Request
 
 Go to the Marlin project page to [Open a New Issue](https://github.com/MarlinFirmware/Marlin/issues/new) and follow these guidelines:
 

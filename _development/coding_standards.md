@@ -9,8 +9,8 @@ category: [ development ]
 
 Please follow the formatting guidelines and coding standards below when contributing code to Marlin. Pull requests that don't follow the existing coding style closely may be postponed for cleanup. Your code reviewer should point out where changes are needed.
 
-## Coding Style
-### Indentation
+# Coding Style
+## Indentation
 Indentation is important for readability and maintainability of code, and provides guidance for naïve code editors (e.g., TextMate, Sublime, et. al.) to properly fold code blocks by level.
 
  - Entab lines with 2 spaces and don't use tabs. _Set your editor to use 2 Spaces! Tabs will bite you in the end._
@@ -28,7 +28,7 @@ void myFunction() {
 }
 ```
 
-### Brace-style
+## Brace-style
 
 Marlin uses a brace style intended to
  - show the folded code block at the end of its opening line: `{``(...)`,
@@ -59,7 +59,7 @@ void my_function(void) {
 }
 ```
 
-### Spacing
+## Spacing
 
  - One space after control keywords:<br />`if (…)`, `while (…)`, `do {…} while(…)`, `switch (…)` etc.
  - No space is needed for `sizeof()` and other "function-like" language features.
@@ -68,13 +68,13 @@ void my_function(void) {
  - No space between a cast and its target: `old_state = (int)state;`
  - Use one space around (on each side of) most binary and ternary operators:<br />`myVar = aVar + bVar * cVar;`<br />`myVal = (a * b + b * c);`
 
-### Trailing Whitespace
+## Trailing Whitespace
 
 Don't leave trailing whitespace at the ends of lines. Some editors will auto-indent new lines, leaving extra whitespace behind on blank lines. As a result, you end up with lines containing trailing whitespace.
 
 Git can warn you about patches that introduce trailing whitespace, and optionally strip the trailing whitespace for you; however, if applying a series of patches, this may make later patches in the series fail by changing their context lines.
 
-### Commenting
+## Commenting
 
 Comments are good, but avoid over-commenting. _Never_ try to explain _how_ your code works in a comment: it's much better to write the code so that the working is obvious, and it's a waste of time to explain badly written code.
 
@@ -100,9 +100,9 @@ Generally, you want your comments to explain _what_ your code does, not _how_. K
 // should just use end-of-line comment style.
 ```
 
-## Names and Symbols
+# Names and Symbols
 
-### Filenames
+## Filenames
 
 Filenames for Marlin code should favor `lowercase_with_underscores.ext` format. Contributed code will follow its own standard.
 
@@ -110,12 +110,12 @@ Filenames for Marlin code should favor `lowercase_with_underscores.ext` format. 
  - use `.c` for C only sources
  - use `.h` for headers of all types
 
-### Directories
+## Directories
  - Lowercase names.
  - Marlin 1.0.x and 1.1.x retain a flat file layout
  - Marlin 1.2.x and up adopts a hierarchical file layout
 
-### Capitalization
+## Capitalization
 
 For Marlin variables, data members, functions, and methods use `lowercase_with_underscores`. Use `camelCase` names only when class names and methods already uses that format. Marlin classes may use `MyClassName` format or `my_class_name`. Core classes tend to use camel-case, with general-purpose classes using underscore format.
 
@@ -125,11 +125,11 @@ For Marlin variables, data members, functions, and methods use `lowercase_with_u
  - `MACRO_NAME` – anything created with `#define`
  - `EnumeratedType`
 
-### Libraries
+## Libraries
 
 Whenever possible, use the functions supplied by avr-libc or Arduino bundled libraries. Any libraries required to compile Marlin should be included in the package so that they are guaranteed to be compatible versions.
 
-## Language Features
+# Language Features
 
 Marlin is written in C/C++ and needs be able to compile with the supplied `Makefile` or an up-to-date version of Arduino. With Marlin 1.1 we now support building with Arduino IDE, Teensyduino, PlatformIO, `make`, and `cmake`.
 
@@ -144,19 +144,19 @@ Going forward, Marlin does not need to be backward-compatible with older (pre-20
     - `constexpr` values and functions.
     - `static_assert(test,"error")` to sanity-check `float` and `constexpr` values.
 
-### Primitive Types
+## Primitive Types
 
 - Favor bit-size types like `uint8_t` and `int32_t` over `short`, `int`, and `long`. This helps to keep behavior consistent across architectures.
 - AVR recasts `double` as `float`, so both are 32 bits long. Favor `float` and avoid `double` unless the extra precision is needed on a 32-bit architecture.
 
-### Memory Usage
+## Memory Usage
 
  - Dynamic allocation (`malloc()`, `free()`, `new`, `delete`) is ***verboten***!
  - Avoid unconstrained recursion so the stack won't explode.
  - Avoid using globals and `static` locals because SRAM is a precious resource.
  - Use `PSTR` and `PROGMEM` macros to keep strings in Program Memory.
 
-### Minimize Repetition
+## Minimize Repetition
 
 When possible, use macros, small functions, and other clever techniques to avoid redundancy. For example, instead of this...
 ```cpp
@@ -177,14 +177,14 @@ const char blue =
 ;
 ```
 
-### Avoid Expensive Code
+## Avoid Expensive Code
 
  - `millis()` can be expensive so put it in a `const millis_t var` if you need to use the value more than once. (And always use the `ELAPSED`/`PENDING` macros - see below.)
  - Pre-calculate instead of calculating on the fly, when possible.
  - Use multiplication (of the reciprocal) instead of division, when possible.
  - Most code doesn't need to be optimized for speed, so favor smaller code.
 
-### Best-Practices for #include
+## Best-Practices for #include
 
 - Follow best practices for `#include`.
   - Only include the headers needed to provide the definitions required by the current source file. This helps provide an accurate view of dependencies.
@@ -195,9 +195,9 @@ const char blue =
     - Next, arrange project headers to prevent hiding broken dependencies. For example, if `grape.h` depends on `orange.h`, try to include `grape.h` before `orange.h` so that if `grape.h` fails to include `orange.h` an error will be thrown.
     - Last come system and library headers, such as `<Arduino.h>`, `<inttypes.h>`, and `<u8glib.h>`.
 
-## Marlin-specific Conventions
+# Marlin-specific Conventions
 
-### Preprocessor directives
+## Preprocessor directives
 
  - Use `#define` instead of `const` for configurable values
  - Don't use `#if` / `#endif` for commenting-out unused, old or broken code. We have a git repository! If it's obsolete, delete it.
@@ -206,7 +206,7 @@ const char blue =
  - Use `#define` macros to avoid repeating boilerplate code.<br />Consider both readability and maintainability.
  - Label `#endif` with the opening `#if` condition(s) if the block is over ~15 lines. Make the label compact. For example, `#endif // SDSUPPORT || ULTRALCD`.
 
-### FastIO
+## FastIO
 
 Marlin uses FastIO macros to read and write pins.
 
@@ -216,7 +216,7 @@ Macro|Description
 `READ(PIN)`|Read the state of a digital pin. Returns either `HIGH` or `LOW`.
 `WRITE(PIN, STATE)`|Set a digital pin's state to either `HIGH` or `LOW`.
 
-### Macros
+## Macros
 
 Marlin provides several shorthand macros in the `macros.h` file. Get to know them and use them. Here are some of the most common:
 
@@ -241,7 +241,7 @@ Macro|Description
 `FIXFLOAT(N)`| Add a tiny value to a float to compensate for rounding errors.
 `NOOP`| A do-nothing macro to use for empty macro functions.
 
-### Time Comparison
+## Time Comparison
 
 Use the following macros when comparing two millis count values:
 
@@ -265,7 +265,7 @@ if (ELAPSED(ms, last_event_ms + TIME_INTERVAL)) {
 }
 ```
 
-### Serial Macros
+## Serial Macros
 
 The `serial.h` file also includes several macros to make it easier to create PROGMEM strings and print them to the serial output. Below are a few of them. See the `serial.h` file for others.
 
@@ -281,7 +281,7 @@ Macro|Description
 `SERIAL_ECHOPAIR("Hello:",val)`| Wrap an ASCII string in `PSTR`; print it and a value to serial out.
 `SERIAL_ECHOLNPAIR("Hello:",val)`| Wrap an ASCII string in `PSTR`; print it, a value, and a newline to serial out.
 
-### Maths macros
+## Maths macros
 
 Use the following macros in place of their normal lower-case versions. These ensure the smaller 32-bit `float` on all architectures. The initial 32-bit targets for Marlin, while significantly faster, do not have a floating-point unit either, so `float` maths is more compatible while not sacrificing performance.
 
@@ -295,7 +295,7 @@ Use the following macros in place of their normal lower-case versions. These ens
 - `FMOD(x, y)`
 - `HYPOT(x,y)`
 
-### Adding a New Feature
+## Adding a New Feature
 
 Since Marlin needs to runs on the most modest hardware, much care has been taken to keep code size small and avoid overtaxing the CPU. AVR and some 32-bit CPUs have no FPU, so it's best to avoid floating point operations whenever possible, and add-on features should also conserve SRAM. Right out of the gate, the default configuration of Marlin 1.1 uses over 2.6K of SRAM, and won't fit on an UNO.
 
@@ -306,7 +306,7 @@ Since Marlin needs to runs on the most modest hardware, much care has been taken
  - Indent `#if…`/`#endif` blocks and their contents with the rest of the cascade. This allows editors that only have naive code-folding to fold blocks properly.
  - Add a comment: `#endif // MYFEATURE` — but only if the `#endif` is far away (lets say, over 10 lines) from the starting `#if`.
 
-#### New Feature Example
+### New Feature Example
 **In Configuration.h:**
 ```cpp
 // Enable this to make something new happen
