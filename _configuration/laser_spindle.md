@@ -25,7 +25,7 @@ M106 P1 S255 ; Laser at 100%
 ```
 ---
 
-### Pins
+# Pins
 
 In the `pins_MYBOARD.h` file for your board make sure the following pins are defined:
 ```cpp
@@ -43,7 +43,7 @@ For all CPUs the hardware PWMs on `TIMER1` are not available. Marlin uses `TIMER
 
 Servos also make hardware PWM(s) unavailable. In this case it's only the "A" PWM that's unavailable. The other hardware PWM(s) on that timer are available for general use.
 
-### ATmega2560 PWM Assignments and Clients
+## ATmega2560 PWM Assignments and Clients
 
 Below is a table that can be used to when selecting the speed pin on a 2560. (Other CPUs include a subset of the 2560 pins.)
 
@@ -76,12 +76,12 @@ In addition to the above, fans can be assigned to PWM pins. If you pick a pin th
 
 **NOTE**: Most pins hardwired to a heater or fan are usually driven by a MOSFET with a pullup on its output through an LED to +12V/+24V. This will probably damage your spindle controller unless you add a protection circuit. If there isn't a +12V/+24V pullup you'll need an external 1k-10k pullup resistor to the pin.
 
-### AT90USB646, 647, 1286 & 1287 PWM assignments
+# AT90USB646, 647, 1286 & 1287 PWM assignments
 
  - As with the atmega2560, the PWMs on Timer1 are not available.
  - These chips have 10 PWMs assigned to 9 pins. `TIMER0A` and `TIMER1C` are tied to the same pin. Most Arduino IDE extensions only make `TIMER1C` available (Teensyduino included).
 
-### ATmega644 & 1284 PWM assignments
+# ATmega644 & 1284 PWM assignments
 
  - As with the 2560, the PWMs on Timer1 are not available.
  - All PWMs have their own pins.

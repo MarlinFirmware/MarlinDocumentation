@@ -6,7 +6,7 @@ author: Sebastianv650, Sineos
 category: [ features, developer ]
 ---
 
-## Background
+<!-- ## Background -->
 
 Under default conditions, extruder axis movement is treated in the same way as the XYZ linear axes. The extruder motor moves in linear proportion to all the other motors, maintaining exactly the same acceleration profile and start/stop points. But an extruder is not a linear system, so this approach leads, most obviously, to extra material being extruded at the end of each linear movement.
 
@@ -16,7 +16,7 @@ Tuning the flow can help, but this may lead to under-extrusion when starting new
 
 Since the root cause is pressure, `LIN_ADVANCE` de-couples extrusion from the other axes to produce the correct pressure inside the nozzle, adapting to the printing speed. Once Linear Advance is properly tuned, bleeding edges and rough solid infill should be nearly eliminated.
 <br>
-## Advantages
+# Advantages
 
 - Better dimensional precision due to reduced bleeding edges.
 - Higher printing speeds are possible without any loss of print quality - as long as your extruder can handle the needed speed changes.
@@ -25,9 +25,9 @@ Since the root cause is pressure, `LIN_ADVANCE` de-couples extrusion from the ot
 
 <br>
 
-## Special notes for v1.5
+# Special notes for v1.5
 
-### Changelog
+## Changelog
 
 - K is now a meaningful value with the unit [mm of filament compression needed per 1mm/s extrusion speed] or [mm/mm/s].
 - Load inside stepper ISR reduced as no calculations are needed there any more. Instead, the extruder runs at a fixed speed offset during pressure adjustment. Therefore this version runs faster.
@@ -35,11 +35,11 @@ Since the root cause is pressure, `LIN_ADVANCE` de-couples extrusion from the ot
 - The pressure adjustment moves don't lead to a rattling extruder as it was in v1.0: as the extruder is now running at a smooth speed instead of jerking between multiples of extruder print speed.
 - This smooth extruder operation and respecting of jerk limits ensures no extruder steps are skipped.
 
-### New K value required
+## New K value required
 
 As the unit of K has changed, you have to redo the K calibration procedure. See next chapter for details. While old v1 K values for PLA might be between 30-130, you can now expect K to be around 0.1-2.0.
 
-### LIN_ADVANCE can reduce your print acceleration
+## LIN_ADVANCE can reduce your print acceleration
 
 In v1, if K was set to a high value which couldn't be handled by your printer, then the printer was losing steps and/or using all of it's processing power to execute extruder steps. In v1.5, this is handled much smarter. `LIN_ADVANCE` will now check if it can execute the advance steps as needed. If the needed extruder speed exceeds the extruder jerk limit, it will reduce the print acceleration for the line printed to a value which keeps the extruder speed within the limit.
 
@@ -48,7 +48,7 @@ While you will most likely not run into this on direct drive printers with filam
 - Keep the extruder acceleration low. This can be achieved by lowering the layer height or line width for example
 - Keep K as low as possible. Maybe you can shorten the bowden tube?
 
-### A note on bowden printers vs. LIN_ADVANCE
+## A note on bowden printers vs. LIN_ADVANCE
 
 A quite common note during development of `LIN_ADVANCE` was that bowden systems (and especially delta printers) are meant to be faster due to the lower moving mass. So lowering the print acceleration as described above would be an inadequate solution. On the other hand, bowden systems need a pressure advance feature the most as they usually have the most problems with speed changes.
 
@@ -56,8 +56,8 @@ Well, `LIN_ADVANCE` was developed because I (Sebastianv650) wasn't satisfied by 
 It's like painting a picture: try to paint with a 1m long brush, grabing the rear end of the handle which is made from rubber. Even if you try to compensate for the wobbly brush tip (which is basically what `LIN_ADVANCE` does), it will never be as good as using a usual brush.
 On the other hand, if you only need to have a part printed fast without special needs in terms of quality, there is no reason to enable `LIN_ADVANCE` at all. For those prints, you can just set K to 0.
 
-## Calibration
-### Generate Test Pattern
+# Calibration
+## Generate Test Pattern
 Marlin documentation provides a [K-Factor Calibration Pattern generator](/tools/lin_advance/k-factor.html). This script will generate a G-code file that supports determining a proper K-Factor value.
 The generated G-code will print a test pattern as shown in the following illustration:
 
@@ -71,7 +71,7 @@ For each new line the K-Factor will be increased by the `K-Factor Stepping` valu
 
 <br>
 
-#### General considerations for the Test Pattern Settings
+### General considerations for the Test Pattern Settings
 
  - [Bowden](http://reprap.org/wiki/Erik%27s_Bowden_Extruder) extruders need a higher K-Factor than direct extruders. Consider a `Start value for K` of around 0.1 up to an `End Value for K` of around 2.0 for LIN_ADVANCE v1.5 or around 30 up to an `End Value for K` of around 130 for v1.0.
  - The best matching K-Factor to be used in production depends on.
@@ -86,7 +86,7 @@ For each new line the K-Factor will be increased by the `K-Factor Stepping` valu
 
 <br>
 
-### Evaluating the Calibration Pattern
+## Evaluating the Calibration Pattern
 
 The transition between `Slow Printing Speed` phases and `Fast Printing Speed` phases are the points of interest to determine the best matching K-Factor. Following illustration shows a magnified view of a line where the K-Factor is too low:
 
@@ -111,21 +111,21 @@ A too high K-Factor essentially reverses the above picture. The extruded amount 
 
 <br>
 
-## Setting the K-Factor for production
+# Setting the K-Factor for production
 
-### Considerations before using Linear Advance
+## Considerations before using Linear Advance
 
  - Some slicers have options to control the nozzle pressure. Common names are: *Pressure advance*, *Coast at end*, *extra restart length after retract*. Disable these options as they will interfere with Linear Advance.
  - Also disable options like *wipe while retract* or *combing*. There should be almost no ooze, once the proper K-Factor is found.
  - Recheck retraction distance, once Linear Advance is calibrated and working well. It may even be as low as 0, since pressure control reduces the material pressure at the end of a line to nearly zero.
  
-### The following considerations are no longer a problem with LIN_ADVANCE version 1.5
+## The following considerations are no longer a problem with LIN_ADVANCE version 1.5
  - This feature adds extra load to the CPU (and possibly more wear on the extruder). Using a communication speed of 115200 baud or lower to prevent communication errors and "weird" movements is recommended.
  - The print host software should be using line numbers and checksums. (This is disabled by default e.g. in Simplify3D)
  - Theoretically there should be no "extra" movements produced by `LIN_ADVANCE`. If extra movements were produced, this would tend to increase wear on more fragile parts such as the printed gears of a Wade extruder.
 
 
-### Saving the K-Factor in the Firmware
+## Saving the K-Factor in the Firmware
 If only one filament material is used, the best way is to set the K-Factor inside `Configuration_adv.h` and reflash the firmware:
 
     /**
@@ -140,7 +140,7 @@ If only one filament material is used, the best way is to set the K-Factor insid
     #if ENABLED(LIN_ADVANCE)
     #define LIN_ADVANCE_K <your_value_here>
 
-### Adding the K-Factor to the G-code Start Script
+## Adding the K-Factor to the G-code Start Script
 [G-code Start Scripts](http://reprap.org/wiki/Start_GCode_routines) are supported by various slicers. The big advantage of setting the K-Factor via this methods is that it can easily be modified, e.g. when switching to a different material.
 The K-Factor is defined by adding the command `M900 Kxx` to the end of the start script, where *xx* is the value determined with the above test pattern.
 
@@ -155,24 +155,24 @@ With the G-code Start Script method, the feature still needs to be activated in 
 The shown G-code Start Scripts are individual to each printer and personal taste. This is only intended to demonstrate where the K-Factor setting can be applied.
 
 <br>
-#### Cura
+### Cura
 *Settings* ---> *Printer* ---> *Manage Printer* ---> *Machine Settings*
 
 ![cura](/assets/images/features/lin_advance/cura.png)
 <br><br><br>
-#### Slic3r
+### Slic3r
 *Settings* ---> *Printer Settings* ---> *Custom G-code*
 
 ![slic3r](/assets/images/features/lin_advance/slic3r.png)
 <br><br><br>
-#### Simplify 3D
+### Simplify 3D
 *Edit Process Settings* ---> *Show Advanced* --> *Scripts* ---> *Custom G-code*
 
 ![s3d](/assets/images/features/lin_advance/s3d.png)
 <br><br>
-## Developer Information
+# Developer Information
 
-### General Informations
+## General Informations
 
 The force required to push the filament through the nozzle aperture depends, in part, on the speed at which the material is being pushed into the nozzle. If the material is pushed faster (=printing fast), the filament needs to be compressed more before the pressure inside the nozzle is high enough to start extruding the material.
 
@@ -180,7 +180,7 @@ For a single, fast printed line, this results in under-extrusion at the line's s
 
 For a complete print, this leads to bleeding edges at corners (corners are stop/end points of lines) and in extreme cases even gaps between perimeters due to under-extrusion at their starting points.
 
-### Version 1.5
+## Version 1.5
 Version 1.5 handles the pressure correction in a slightly different way to reach the following goals:
 - respect extruder jerk
 - ensure a smooth extruder movement without rattling
@@ -196,7 +196,7 @@ The next update might include improved handling of variable width moves. On vari
 Another case to be considered is the gap fill to the tip of a triangle: in this case Marlin will move on with a constant speed, but the extruder speed and therefore needed pressure gets smaller and smaller when we approach the tip of the triangle. We should adapt nozzle pressure with max. possible speed (extruder jerk speed) then.
 As gap fill is done at quite low speeds by most slicers, we have to decide if that extra load is worth the effect. On 32bit boards where calculation performance is most likely not a problem, it makes sense in any case.
 
-### Version 1.0
+## Version 1.0
 The `LIN_ADVANCE` pressure control handles this free filament length as a spring, where `K` is a spring constant. When the nozzle starts to print a line, it takes the extrusion speed as a reference. Additional to the needed extrusion length for a line segment, which is defined by the slicer, it calculates the needed extra compression of the filament to reach the needed nozzle pressure so that the extrusion length defined by the slicer is really extruded. This is done in every loop of the stepper ISR.
 
 During deceleration, the filament compression is released again by the same formula: `advance_steps = delta_extrusion_speed * K`. During deceleration, `delta_extrusion_speed` is negative, thus the `advance_steps` values is negative which leads to a **retract** (or slowed) movement, relaxing the filament again.

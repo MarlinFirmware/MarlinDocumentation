@@ -14,7 +14,7 @@ This page is a work in progress, based on Marlin 1.1.x. Corrections/improvements
  - A comprehensive LCD menu system for UBL is coming soon.
  - See also [G26 Mesh Validation](http://marlinfw.org/docs/gcode/G026.html) and [G29 for UBL](http://marlinfw.org/docs/gcode/G029-ubl.html).
 
-## UBL Startup Guide
+# UBL Startup Guide
 
 The **Unified Bed Leveling (UBL)** system is a superset of the previous leveling systems.
 
@@ -24,7 +24,7 @@ The main improvements over the previous systems are:
  - The user is able to fill in the portions of the mesh that can’t be reached by automated probing. This allows the entire bed to be compensated.
  - It allows the user to fine tune the system. The user is able to modify the mesh based on print results. Really good first layer adhesion and height can be achieved over the entire bed.
 
-### Synopsis
+## Synopsis
 
 Currently an LCD display with a rotary encoder is recommended. Note that the MKS TFT 2.8 and 3.2 *do not* actually fulfill the LCD requirements. The main documentation below assumes that a conforming LCD and a z-probe are present. See [the no-lcd addendum](#ubl-without-an-lcd) for information on using UBL without a display, and [the no-z-probe addendum](#ubl-without-a-z-probe) to get UBL working without a z-probe installed. Note that operation without an LCD is still work-in-progress, and subject to change.
 
@@ -75,7 +75,7 @@ G29 J           ; No size specified on the J option tells G29 to probe the speci
                 ; and tilt the mesh according to what it finds.
 ```
 
-### Scope
+## Scope
 
 The UBL system contains a suite of tools with multiple options intended to cover almost any situation. This document is aimed at getting a new user acquainted with the most used tools and options needed to produce a high quality print.
 
@@ -83,7 +83,7 @@ The intent is to provide a new user with enough knowledge of the UBL system that
 
 The 3-point leveling option is only covered to the extent of using it to transform an already-measured mesh.
 
-### Theory
+## Theory
 
 UBL projects a rectangular grid over the print bed. A Z height is measured at each point (confluence) in the grid.
 
@@ -99,7 +99,7 @@ Tools are provided that can populate the Z compensation values at the mesh point
 
 The initial auto bed leveling procedure rarely produces great results across the whole bed. Fine editing tools are used to tune the mesh more finely. UBL includes a test print utility to aid in the tuning process.
 
-### Process overview
+## Process overview
 
 To create a mesh that produces good first-layer results over the entire bed, follow this procedure:
 
@@ -115,7 +115,7 @@ An LCD controller with rotary encoder, while not required, substantially simplif
 
 The printer (and LCD) must be fully functional before starting this process.
 
-#### UBL Configuration
+### UBL Configuration
 
 UBL configuration options are located in `Configuration.h` and `Configuration_adv.h`.
 
@@ -181,7 +181,7 @@ So however bed size and printable radius are defined, make sure that your mesh g
 #define UBL_PROBE_PT_3_Y 20
 ```
 
-#### Commands
+### Commands
 
 UBL has a series of “phase” commands that roughly follow the mesh building process. Some are heavily used, some aren’t.
 
@@ -202,7 +202,7 @@ Command|Description
 `M421`|Touch up mesh points by specifying a value (`Z`) or offset (`Q`).
 `M502`, `M500`|Reset settings to defaults, save to EEPROM.
 
-#### Automated probing
+### Automated probing
 
 The first step in the process is to use the Z probe to populate as much of the mesh as possible.
 
@@ -216,7 +216,7 @@ No further action is required of the user for this phase.
 
 If you do a `G29 T` or `M420 V` command you’ll most likely see areas that do not have Z compensation values. See the addendum [Mesh area](#mesh-areas) for details.
 
-#### Manual probing
+### Manual probing
 
 This optional step uses the encoder wheel to move the nozzle up and down in 0.01mm steps. BE VERY CAREFUL when doing this. Nasty things can happen if too much force is applied to the bed by the nozzle.
 
@@ -248,7 +248,7 @@ The first step is to measure the thickness of the feeler gauge:
 
 When done, you can use `G29 S` to save the mesh to EEPROM.
 
-#### Filling in the mesh
+### Filling in the mesh
 
 UBL includes a third phase, `G29 P3`, which fills in points on the mesh that were not probed automatically or manually. Note that unlike in bilinear leveling, UBL does not automatically extrapolate correction beyond the bounds of the mesh. If a mesh point is not defined no correction will be applied, and a missing point can affect up to 4 mesh cells. 
 
@@ -258,7 +258,7 @@ Issue `G29 P3` (no other parameters) to do a 'smart fill' of missing mesh points
 
 Again, `G29 S[n]` will save the mesh to EEPROM.
 
-#### Test print
+### Test print
 
 Once you have a reasonable looking mesh then it’s time to do a test print.
 
@@ -273,7 +273,7 @@ There are several options for the `G26` command. See [GCode G26](http://marlinfw
 - `L0.2` – layer height of 0.2mm (default)
 - `S0.4` – nozzle diameter of 0.4mm (default)
 
-#### Fine-tuning of the matrix
+### Fine-tuning of the matrix
 
 Look over the results of the `G26` print and note where adjustments are needed.
 
@@ -299,9 +299,9 @@ Issue a `G29 S` command periodically to save your mesh.
 
 As you print parts you may notice that further fine-tuning is needed. The `G29 P4 T` command can be used anytime to make adjustments.
 
-### Addenda
+## Addenda
 
-#### UBL without an LCD
+### UBL without an LCD
 
 If you don't have an LCD with encoder, or you have something like a MKS TFT that doesn't behave like a proper display, then you will need to modify this process slightly.
 
@@ -323,7 +323,7 @@ M421 ... Qx.xx  ; Direct edit mesh point, using offset
 G29 S1          ; Save to slot 1, return to G26 for further refinement.
 ```
 
-#### UBL without a z-probe
+### UBL without a z-probe
 
 UBL also includes the features previously provided by `MESH_BED_LEVELING` and `PROBE_MANUALLY`, allowing the user to take advantage of the system without having a z-probe at all. Again, the initialization and start-up process needs to be varied a bit.
 
@@ -346,7 +346,7 @@ G29 P4 R... ; Refine mesh points
 G29 S1      ; Save to slot 1, return to G26 for further refinement
 ``` 
 
-#### Bilinear computation
+### Bilinear computation
 
 1. Uses the Z heights at the 4 corners of the current XY position's grid box.
 2. Performs a bilinear interpolation of the Z heights:
@@ -354,7 +354,7 @@ G29 S1      ; Save to slot 1, return to G26 for further refinement
   - Calculates Z height (z2) at the right edge of the box for the current Y by linear interpolation.
   - Calculates Z height at the current X by linear interpolation between z1 and z2. This is the Z offset used for the move.
 
-#### MESH areas
+### MESH areas
 
 After `G29 P1` your matrix will probably have areas that do not have Z compensation values.  This is because the probe can’t be positioned in these areas.  The only ways to avoid this are:
 - Use the nozzle as the probe (no offsets).
@@ -367,7 +367,7 @@ If your probe is in front and to the right of your nozzle then the matrix will l
 - GREEN: Probing is possible
 - BLUE: Probe can’t reach
 
-#### Further Optimization
+### Further Optimization
 
 Going forward, we've been thinking anew about boundary-splitting and delta-style line-splitting. On kinematic systems, moves are split into small segments, so the nozzle already closely follows the (bilinear approx.) curve of the bed on those machines. Thus, on kinematic systems we can theoretically skip the boundary-splitting step.
 

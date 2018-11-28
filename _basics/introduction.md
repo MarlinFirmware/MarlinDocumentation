@@ -6,7 +6,7 @@ author: jbrazio
 category: [ articles, getting-started ]
 ---
 
-## What is Marlin
+<!-- ## What is Marlin -->
 
 Marlin is an open source [firmware](https://en.wikipedia.org/wiki/Firmware) for the [RepRap](https://en.wikipedia.org/wiki/RepRap_project) family of replicating rapid prototypers — popularly known as "3D printers." It was derived from [Sprinter](http://reprap.org/wiki/List_of_Firmware#Sprinter) and [grbl](http://reprap.org/wiki/Grbl#Grbl), and became a standalone [open source](https://en.wikipedia.org/wiki/Open-source_software) project on August 12, 2011 with its [Github release](https://github.com/MarlinFirmware/Marlin/commit/f850af5c1ca343ed65b94c4b9da5dd1ab4c4a53c). Marlin is licensed under the GPLv3 and is free for all applications.
 
@@ -16,7 +16,7 @@ One key to Marlin's popularity is that it runs on inexpensive 8-bit [Atmel AVR](
 
 As a community product, Marlin aims to be adaptable to as many boards and configurations as possible. We want it to be configurable, customizable, extensible, and economical for hobbyists and vendors alike. A Marlin build can be very small, for use on a headless printer with only modest hardware. Features are enabled as-needed to adapt Marlin to added components.
 
-## Main features
+# Main features
 
  - Full-featured [G-code](/meta/gcode/) with over 150 commands
  - Complete G-code movement suite, including lines, arcs, and Bézier curves
@@ -33,7 +33,7 @@ As a community product, Marlin aims to be adaptable to as many boards and config
  - Support for Filament Runout/Width Sensors
  - Print Job Timer and Print Counter
 
-## How Marlin Works
+# How Marlin Works
 
 Marlin Firmware runs on the 3D printer's main board, managing all the real-time activities of the machine. It coordinates the heaters, steppers, sensors, lights, LCD display, buttons, and everything else involved in the 3D printing process.
 
@@ -45,9 +45,9 @@ As Marlin receives movement commands it adds them to a movement queue to be exec
 
 Heaters and sensors are managed in a second interrupt that executes at much slower speed, while the main loop handles command processing, updating the display, and controller events. For safety reasons, Marlin will actually reboot if the CPU gets too overloaded to read the sensors.
 
-## Printing Things
+# Printing Things
 
-### Modeling
+## Modeling
 
 While Marlin only prints G-code, most slicers only slice STL files.
 
@@ -57,7 +57,7 @@ Before Marlin can dream of printing, first you'll need a [3D model](http://www.t
 
 A high degree of knowledge is needed to model complex objects like a [T-Rex Skull](http://www.thingiverse.com/thing:308335), but other objects can be quite [simple to model](http://www.thingiverse.com/thing:172175). To get ideas and test things out, explore sites like [Thingiverse](http://www.thingiverse.com/explore/popular) and [YouMagine](http://www.youmagine.com/) and print things for fun.
 
-### Slicing
+## Slicing
 
 Slicers prepare a solid 3D model by dividing it up into thin slices (layers). In the process it generates the [G-code](https://en.wikipedia.org/wiki/G-code) that tells the printer in minute detail how to reproduce the model. There are many slicers to choose from, including:
 
@@ -66,7 +66,7 @@ Slicers prepare a solid 3D model by dividing it up into thin slices (layers). In
 - [Simplify3D](https://www.simplify3d.com/) is a solid commercial offering.
 - [Skeinforge](http://reprap.org/wiki/Skeinforge) is highly tunable, but complex.
 
-### Printing
+## Printing
 
 Marlin can be controlled entirely from a host or in standalone mode from an SD Card. Even without an LCD controller, a standalone SD print can still be initiated from a host, so your computer can be untethered from the printer.
 

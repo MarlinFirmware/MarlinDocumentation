@@ -11,7 +11,7 @@ category: [ development ]
 The current version of this document is targeted at Windows users.
 {% endalert %}
 
-## Introduction
+<!-- ## Introduction -->
 
 GitHub is a great tool for collaboration, but it can take some time and effort to learn how to use it. The power of GitHub centers around the [Git version control system](https://en.wikipedia.org/wiki/Git). If you've used other version control systems such as [CVS](https://en.wikipedia.org/wiki/Concurrent_Versions_System), [Apache Subversion](https://en.wikipedia.org/wiki/Apache_Subversion), or [Mercurial](https://en.wikipedia.org/wiki/Mercurial), then Git should be familiar. GitHub adds issue management, bug tracking, and other features, making it an ideal platform for maintaining the Marlin project.
 
@@ -19,7 +19,7 @@ Before submitting code and other content, please review [Contributing to Marlin]
 
 ----
 
-## Set up GitHub, Fork, and Clone
+# Set up GitHub, Fork, and Clone
 
 Before you can contribute to Marlin, you need to get a [free GitHub.com account](https://github.com/join). This is a pretty quick process. Please upload a unique icon or image so it will be easier to identify you on the project pages! You'll also need to download and install the [GitHub Desktop](https://desktop.github.com) application.
 
@@ -31,7 +31,7 @@ When GitHub is done copying files, a page will appear displaying your shiny new 
 
 ----
 
-## Rename your Fork (not recommended)
+# Rename your Fork (not recommended)
 
 It's always best to leave the repository name as "Marlin" unless you plan to make your own custom version of Marlin for publication. Here are the instructions if you want to rename it.
 
@@ -57,7 +57,7 @@ Type in the new title and click `Save`.
 
 ----
 
-## Change the Default Branch
+# Change the Default Branch
 
 At this time `bugfix-2.0.x` is the work branch for our next release. For convenience you should change the "Default Branch" to `bugfix-2.0.x` in your fork to make it easier to do Pull Requests later.
 
@@ -79,7 +79,7 @@ A warning pops up. Just click the button.
 
 ----
 
-## Clone Marlin to GitHub Desktop
+# Clone Marlin to GitHub Desktop
 
 Click on **<> Code**
 
@@ -105,7 +105,7 @@ A progress bar appears.
 
 ![image17]({{ '/assets/images/docs/development/pull_images/pull_17.jpg' | prepend: site.baseurl }})
 
-## Using GitHub Desktop...
+# Using GitHub Desktop...
 
 You now have a "working copy" of Marlin. Note that only the branch you selected on your GitHub page may have been downloaded. Check that the desired branch was downloaded by clicking on **Changes**.
 
@@ -127,7 +127,7 @@ If you downloaded the wrong branch, go back to the GitHub website, select the co
 
 ----
 
-## Make a feature branch
+# Make a feature branch
 
 It's a good idea to keep an unaltered copy of the `bugfix-2.0.x` branch so you can keep it in sync with the main repository. Before you edit any code, make a copy of `bugfix-2.0.x` and give it a descriptive name.
 
@@ -147,13 +147,13 @@ The new branch is automatically selected. Click the **Publish** button to upload
 
 ----
 
-## Make Changes and Test
+# Make Changes and Test
 
 You can freely edit code files, configurations, etc., in your working copy. You can make new branches in your working copy to experiment, then throw them away. Nothing counts until you publish and sync your changes. And thanks to the magic of `git` you can always go back to earlier points in time.
 
 In the main view, GitHub Desktop shows all your uncommitted changes in a list. You can click on each item to see the specific changes in the right pane. Previous commits are shown under the "History" tab.
 
-## Commit to your Working Copy
+# Commit to your Working Copy
 
 Use GitHub Desktop to "commit" the changes you want to keep (to your working copy). A commit stores your changes and provides a "bookmark" (Commit ID) for the point in time when the changes were committed. The "commit message" summarizes why the changes were made.
 
@@ -171,18 +171,18 @@ Once everything is committed, publish to your GitHub account by clicking the `Sy
 
 ----
 
-## Submit code with a Pull Request
+# Submit code with a Pull Request
 
 Before submitting the Pull Request:
 
 - Please review the [Marlin project guidelines](https://github.com/MarlinFirmware/Marlin/wiki/DNE-Contributing).
 - Make sure you've compiled and done some sanity tests on the code.
 
-### Submit from GitHub Desktop
+## Submit from GitHub Desktop
 
 You can use GitHub Desktop to submit a Pull Request by using the **Pull Request** button, but you must be careful to _**specifically target the `MarlinFirmware/bugfix-2.0.x` branch!**_
 
-### Submit from the GitHub website
+## Submit from the GitHub website
 
 Return to your fork's page on GitHub, select your updated branch, and click the **New Pull Request** button.
 
@@ -218,7 +218,7 @@ Here's the Pull Request that was just created.
 
 If you have an open issue associated with your Pull Request, include that issue's number in your Pull Request description (e.g., "`#1536`"), and a link to the Pull Request will automatically appear on the issue's page. The same goes for individual commit descriptions.
 
-## Updating the PR
+# Updating the PR
 
 Typically you'll get requests to correct, improve and add features to your code.
 The top level steps of doing this are:
@@ -229,7 +229,7 @@ The top level steps of doing this are:
 5.	Resolve "All checks have failed" issues
 6.	Make the PR pretty & sync to main repository ( may need to be done multiple times)
 
-### Open your branch in Windows Explorer
+## Open your branch in Windows Explorer
 
 You've done most of this before when you created your branch.
 
@@ -240,11 +240,11 @@ A Windows Explorer window will popup. Copy the `Marlin` directory to your work a
 
 ![image38]({{ '/assets/images/docs/development/pull_images/pull_38.jpg' | prepend: site.baseurl }})
 
-### Edit and Test
+## Edit and Test
 
 As before, do all your work & testing in your local copy.
 
-### Move the code to the PR (commit & sync your code)
+## Move the code to the PR (commit & sync your code)
 
 Open Desktop and the Windows Explorer window as before
 
@@ -258,9 +258,9 @@ Most of the time you've made changes to the Configuration.h and Configuration_ad
 *	Don't copy them into the GitHub directory
 *	Don't include them in the commit
 
-### Repeat the above as necessary
+## Repeat the above as necessary
 
-### Resolve "All checks have failed" issues
+## Resolve "All checks have failed" issues
 
 When you create a PR (and every time you commit new code) GitHub uses the "Travis CI" service to run several tests on the code by enabling various combinations of options and compiling for various target platforms. Any failed tests need to be resolved before the PR can be merged into the main Marlin repository.
 
@@ -288,7 +288,7 @@ The errors you're looking at come from the compiler. Resolve just like you do wh
 
 Unfortunately the Travis log does not include the options that were enabled when the errors were found. That makes it harder to reproduce the problem locally.
 
-### Organize and Sync the PR
+## Organize and Sync the PR
 
 If you've made a lot of small fix-up commits it can be hard to see the combined result. So before a PR is merged it's helpful to reduce your commits down to a manageable number and get them organized. They can even be combined into a single commit.
 

@@ -7,7 +7,7 @@ contrib: paulusjacobus, jbrazio, landodragon141, thinkyhead
 category: [ configuration ]
 ---
 
-# Introduction
+<!-- # Introduction -->
 
 Marlin is a huge C++ program composed of many files, but here we'll only be talking about the two files that contain all of Marlin's compile-time configuration options:
 

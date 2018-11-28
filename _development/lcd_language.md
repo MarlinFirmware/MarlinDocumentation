@@ -12,10 +12,10 @@ This document describes changes made to the font system for Marlin 1.1.
 
 Marlin deals with a variety of different displays and needs to display a lot of different languages in different scripts on them, within their capabilities. The system described here solves some of the related problems that need to be overcome with in a limited environment.
 
-## The Displays
+# The Displays
 Currently Marlin includes support for two display technologies:
 
-### Character based displays:
+## Character based displays:
 - Have a fixed set of symbols (charset - font) in their ROM.
 - All of them have a similar (not identical) first 127 symbols, similar to US-ASCII.
 
@@ -28,7 +28,7 @@ Marlin 1.0 and 1.1 currently support:
 
 On all these displays you can define 8 custom symbols to display at once. In Marlin these characters are used on the Boot Screen, and on the Info Screen for the Bed Temp, Degree symbol, Thermometer, "FR" (feed-rate), Clock, and Progress Bar. On the SD Card listing screens some of these characters are re-used again for Up-level, Folder, and Refresh.
 
-### Full Graphical Displays
+## Full Graphical Displays
 
 Graphical displays provide complete freedom to display whatever we want, so long as we provide a program for it. Currently we deal with 128x64 Pixel Displays and divide this area into ~5 Lines with ~22 columns. So we need monospace fonts with a bounding box of about 6x10.
 
@@ -36,7 +36,7 @@ Graphical displays provide complete freedom to display whatever we want, so long
 - Because these letters were too big for some positions on the Info Screen, we use a full ISO10646-1 font at 6x9 (3200 bytes).
 - When we define `USE_BIG_EDIT_FONT` we use an additional ISO10646-1 9x18 font, eating up another 3120 bytes of PROGMEM - but readable without glasses!
 
-## The Languages
+# The Languages
 
 Marlin currently supports 33 different language variants:
 
@@ -59,7 +59,7 @@ ru|Russian||sk|Slovak (UTF8)
 tr|Turkish||uk|Ukrainian
 zh_CN|Chinese (Simplified)||zh_TW|Chinese (Taiwan)
 
-## The Problem
+# The Problem
 
 All these languages (except English) normally use extended symbols not contained in US-ASCII. Even the English translation uses some Symbols not in US-ASCII (e.g., '`\002`' for Thermometer, `STR_h3` for '³'). In the code itself symbols may be used without taking into account the display they're written on.
 
@@ -69,11 +69,11 @@ The Japanese translator dealt with two scripts, introducing a special font for G
 
 This system was created to address these problems.
 
-## The (Partial) Solution
+# The (Partial) Solution
 
 On a full-featured desktop system like Windows or Linux we could install `unifont.ttf` and some library code and we'd be done. But embedded systems have very limited resources! So we must find ways to limit the space used (`unifont.ttf` alone is ~12MB!), requiring some compromise.
 
-### Aims
+## Aims
 
 - Make the input for translators as convenient as possible. (Unicode UTF8)
 - Make the displays show the scripts as best as they can. (fonts, mapping tables)
@@ -81,7 +81,7 @@ On a full-featured desktop system like Windows or Linux we could install `unifon
 - Don't use more CPU resources.
 - Don't use too much memory.
 
-### Actions
+## Actions
 
 - Declare the display hardware we use. (`Configuration.h`)
 - Declare the language or script we use. (`Configuration.h`)
@@ -98,11 +98,11 @@ On a full-featured desktop system like Windows or Linux we could install `unifon
 - Split '`dogm_font_data_Marlin.h`' into separate fonts and delete. (+`dogm_font_data_6x9_marlin.h`, +`dogm_font_data_Marlin_symbols.h`, -`dogm_font_data_Marlin.h`)
 - Do a bit of preprocessor magic to match displays - fonts and mappers in `utf_mapper.h`.
 
-## Translators' handbook
+# Translators' handbook
 - Check first whether a `language_xx.h` file for your language already exists (-> b.) or not (-> e.).
 - Either there's a `MAPPER_NON` declared (-> c.) or some other mapper (-> d.)
 
-#### Direct HD44780 Translation
+### Direct HD44780 Translation
 - Symbols outside the normal ASCII-range (32-128) are written as "`\xxx`" and point directly into the font of the hardware declared in `Configuration.h`.
 - HD44780 displays have one of three fonts (`JAPANESE`, `WESTERN`, `CYRILLIC`) set by `DISPLAY_CHARSET_HD44780`.
 - Even on the full graphic displays one of these character sets can be used by defining `SIMULATE_ROMFONT`.
@@ -110,7 +110,7 @@ On a full-featured desktop system like Windows or Linux we could install `unifon
 - If you make extensive use, your file will look like `language_kana.h` and your language file will only work on one of the displays (in this case `DISPLAY_CHARSET_HD44780` == `JAPANESE`).
 - Be careful with the characters `0x5C = '\'`, and `0x7B - 0x7F` "`{|}`". These are not the same on all variants.
 
-#### Mappers
+### Mappers
 - `MAPPER_NON` is the fastest and least memory-hungry variant. Language files without accents use this.
 - If you want to make use of more than a few symbols outside standard ASCII or want to improve the portability to more types of displays, use UTF-8 input. Which means defining another mapper.
 - UTF-8 input is used for mappers other than `MAPPER_NON`. With a mapper, instead of "`\xe1`" (JAPANESE) or `STR_ae` you can simply type "`ä`". The "`ä`" expands to "`\xc3\xa4`". "Я" expands to "`\xd0\xaf`" … "ホ" expands to "`\xe3\x83\x9b`" … etc.
@@ -130,7 +130,7 @@ In short: Choose a mapper that works with the symbols you want to use. Use only 
 
 If you get a lot of question marks on the Hitachi-based displays with your new translation, maybe creating an additional language file with the format `language_xx_utf8.h` is the way to go.
 
-### Mapper Notes
+## Mapper Notes
 
 - As mentioned, `MAPPER_NON` is the fastest and least memory-hungry variant. While `MAPPER_NON` language files are ugly and tedious to maintain for non-Roman languages, for Roman languages it is trivial to make a `MAPPER_NON` file without any accents.
 - Mappers together with an `ISO10646_*` font are the second-best choice in terms of speed and memory consumption. Only a few more decisions are made per-character.
@@ -165,7 +165,7 @@ Strings in `language.h` are for serial output, so don't require any translation.
 
 For information about fonts see [`buildroot/share/fonts/README.md` file](https://github.com/MarlinFirmware/Marlin/tree/1.1.x/buildroot/share/fonts#readme).
 
-## User Instructions
+# User Instructions
 
 Define your hardware and the desired language in `Configuration.h`.
 
@@ -179,7 +179,7 @@ If you get an error message about "missing mappers" during compilation - lie abo
 
 English works on all hardware.
 
-## Definitions
+# Definitions
 
 `LCD_LANGUAGE`: The LCD language and encoding to compile in. For example, `pt-br_utf8` specifies Portuguese (Brazil) in UTF-8 format with a mapper. For a faster, lighter, but non-accented translation you might choose `pt-br` instead.
 

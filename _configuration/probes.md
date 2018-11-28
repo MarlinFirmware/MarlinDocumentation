@@ -10,7 +10,7 @@ category: [ configuration ]
 This document is based on Marlin 1.1.0
 {% endalert %}
 
-## Bed Probe Configuration
+# Bed Probe Configuration
 
 No matter how well you constrain, tighten up, and align the components of your 3D printer, there are bound to be imperfections in alignment that can negatively affect print quality. Among these imperfections, irregularities in bed-nozzle distance is one of the most problematic. After all, if the first layer doesn't adhere to the bed then the rest of the print job is moot.
 
@@ -18,7 +18,7 @@ Marlin includes a "Bed Leveling" feature that compensates for these imperfection
 
 Marlin allows you to take these bed measurements using nothing but a piece of paper, but for an improved experience the best option is to install a bed probe (also called a "Z probe").
 
-### Bed Probes
+## Bed Probes
 
 Marlin 1.1 supports a wide variety of probe types:
 
@@ -31,7 +31,7 @@ Marlin 1.1 supports a wide variety of probe types:
 - Allen-key delta probe (`Z_PROBE_ALLEN_KEY`)
 - No probe (`PROBE_MANUALLY`)
 
-### Bed Leveling Methods
+## Bed Leveling Methods
 
 Marlin includes various methods of probing and leveling:
 
@@ -41,9 +41,9 @@ Marlin includes various methods of probing and leveling:
 - "Mesh Bed Leveling" works in the same manner as "Bilinear Grid" but takes different `G29` parameters. (This feature is superseded by combining the manual probe option with bilinear leveling,  and will not be included in future versions of Marlin.)
 - "Unified Bed Leveling" combines elements of bilinear and planar leveling and includes extra utilities to help improve measurement accuracy, especially for deltas. See (link) for an article specifically about this feature.
 
-### Configuration
+## Configuration
 
-#### 1. Z Probe Pin
+### 1. Z Probe Pin
 
 Before configuring any bed probe be sure to read its documentation and the documentation for your electronics. Make sure you know to which pins the probe will be connected. Marlin provides reasonable defaults, but they will not apply to every situation.
 
@@ -53,7 +53,7 @@ In general, on deltabots the probe should be connected to the unused Z-Min endst
 - If the probe is connected to any other pin, enable `Z_MIN_PROBE_ENDSTOP`.
 - If the probe is connected to any other pin, set `Z_MIN_PROBE_PIN` to its digital (DIO) pin number.
 
-#### 2. Probe Type
+### 2. Probe Type
 
 What kind of probe do you have?
 
@@ -72,7 +72,7 @@ What kind of probe do you have?
 - `PROBE_MANUALLY`
   The bed-nozzle distance can be measured without a probe by following a [`manual procedure`](/docs/gcode/G029-mbl.html). The nozzle moves to each point and pauses. You adjust the Z height so that the nozzle is touching the bed. Once the Z height is adjusted, you tell the machine to go to the next point. Continue until all points are probed. This option can be used with all Auto Bed Leveling options except UBL, which is freestanding.
 
-#### 3. Other Probe Options
+### 3. Other Probe Options
 
 - `LCD_BED_LEVELING` provides a guided process to assist with `PROBE_MANUALLY` (or Mesh Bed Leveling). Without this option you must send `G29` to move to the next point and `G1` (or buttons in your host software) to adjust the Z axis.
 - `Z_MIN_PROBE_ENDSTOP_INVERTING` should be set to `true` if your probe uses normally-open (NO) switches. Normally-closed switches are recommended because they have the appropriate failsafe state and are less prone to false positives.
