@@ -24,15 +24,12 @@ $( document ).ready(function() {
     // Hack tables, Jekyll's default table formating is awful
     //$( 'table' ).addClass( 'table table-bordered table-hover' );
 
-    /** add active to current page */
+    /* add 'here' class to current page tree */
     var url = window.location.pathname
 
-    // now grab every link from the navigation
+    // Grab every link from the navigation
     $('.nav.navbar-nav li a').each(function(){
-        if(this.href.endsWith(url) && url.length >2){
-        $(this).addClass('here');
-        $(this).parents('li').addClass('here');
-        console.log(this.href);
-    }
+      if (this.href.endsWith(url) && url.length > 2)
+        $(this).addClass('here').parents('li').addClass('here');
     });
 });
