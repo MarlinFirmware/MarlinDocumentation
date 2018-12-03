@@ -15,8 +15,8 @@ long:
   - See the full [Unified Bed Leveling](/docs/features/unified_bed_leveling.html) documentation for more details. (Examples below.)
 
 notes: |
-  Requires `AUTO_BED_LEVELING_UBL`.
-
+  - Requires `AUTO_BED_LEVELING_UBL`.
+  - `G28` deactivates any active bed leveling features. Write scripts accordingly or override the behavior with `RESTORE_LEVELING_AFTER_G28`.
   ### Release Notes:
 
   - It's highly recommended to enable EEPROM. With EEPROM storage enabled, UBL is limited to
