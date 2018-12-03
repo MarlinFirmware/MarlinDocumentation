@@ -78,6 +78,7 @@ long:
 
 notes:
   - Any arguments left out of `G29` will use the default values set in `Configuration.h`.
+  - `G28` deactivates any active bed leveling features. Write scripts accordingly or override the behavior with RESTORE_LEVELING_AFTER_G28.
 
 parameters:
   -
