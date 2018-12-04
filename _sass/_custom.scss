@@ -282,3 +282,14 @@ table.pretty-list.headless thead { display: none; }
   .container.gcode+footer .container { margin-left: 35%; width: 75%; }
 }
 
+.jumbotron {
+  h1, p { text-align: center; }
+  ul li { display: block; margin: 0.5em auto; width: 20em; }
+  table { margin: 2em auto; }
+  th, td { border-bottom: 1px solid black; padding: 1em; }
+  th { background: #CCC; font-size: 110%; }
+  th+th { border-left: 4px solid #EEE; }
+  td+td { border-left: 4px solid #FFF; }
+  em { display: block; font-size: x-small; text-align: right; }
+  strong em { font-size: small; color: red; font-weight: bold; text-align: left; }
+}
