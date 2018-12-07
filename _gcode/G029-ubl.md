@@ -16,7 +16,8 @@ long:
 
 notes: |
   - Requires `AUTO_BED_LEVELING_UBL`.
-  - `G28` deactivates any active bed leveling features. Write scripts accordingly or override the behavior with `RESTORE_LEVELING_AFTER_G28`.
+  - `G28` disables bed leveling. Follow with `M420 S` to turn leveling on, or use `RESTORE_LEVELING_AFTER_G28` to automatically keep leveling on after `G28`.
+
   ### Release Notes:
 
   - It's highly recommended to enable EEPROM. With EEPROM storage enabled, UBL is limited to
