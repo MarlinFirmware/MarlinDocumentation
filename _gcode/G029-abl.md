@@ -78,6 +78,7 @@ long:
 
 notes:
   - Any arguments left out of `G29` will use the default values set in `Configuration.h`.
+  - "`G28` disables bed leveling. Follow with `M420 S` to turn leveling on, or use `RESTORE_LEVELING_AFTER_G28` to automatically keep leveling on after `G28`."
 
 parameters:
   -

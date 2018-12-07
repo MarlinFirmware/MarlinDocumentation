@@ -14,8 +14,9 @@ long:
   - The Unified Bed Leveling System (UBL) provides a comprehensive set of resources to produce the best bed leveling results possible.
   - See the full [Unified Bed Leveling](/docs/features/unified_bed_leveling.html) documentation for more details. (Examples below.)
 
-notes: |
-  Requires `AUTO_BED_LEVELING_UBL`.
+notes:
+  - Requires `AUTO_BED_LEVELING_UBL`.
+  - "`G28` disables bed leveling. Follow with `M420 S` to turn leveling on, or use `RESTORE_LEVELING_AFTER_G28` to automatically keep leveling on after `G28`."
 
   ### Release Notes:
 

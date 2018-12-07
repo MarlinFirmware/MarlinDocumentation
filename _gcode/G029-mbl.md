@@ -38,6 +38,7 @@ notes:
   - Requires the `MESH_BED_LEVELING` option in `Configuration.h`.
   - Similar to `AUTO_BED_LEVELING_BILINEAR` with `PROBE_MANUALLY` but uses less SRAM.
   - For automatic probe-based leveling enable one of the [`AUTO_BED_LEVELING_*`](/docs/gcode/G029-abl.html) options instead.
+  - "`G28` disables bed leveling. Follow with `M420 S` to turn leveling on, or use `RESTORE_LEVELING_AFTER_G28` to automatically keep leveling on after `G28`."
 
 parameters:
   -
