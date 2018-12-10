@@ -161,7 +161,7 @@ A unique ID for your 3D printer. A suitable unique ID can be generated randomly 
 
 ## Extruder Info
 
-[![Extruders](/assets/images/config/extruders.png){: .floater.framed}](https://www.youtube.com/watch?v=ocgPAAJouPs){:target="_blank"}
+![Extruders](/assets/images/config/extruders.png){: .floater.framed}
 
 ### Extruders
 
