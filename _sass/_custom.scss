@@ -293,3 +293,9 @@ table.pretty-list.headless thead { display: none; }
   em { display: block; font-size: x-small; text-align: right; }
   strong em { font-size: small; color: red; font-weight: bold; text-align: left; }
 }
+
+li#gcse {
+  width: 250px;
+  height: 50px;
+  overflow: hidden;
+}

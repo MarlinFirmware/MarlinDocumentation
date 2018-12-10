@@ -85,20 +85,20 @@
         </li>
 
       </ul>
-{% if page.collection %}
+
       <ul class="nav navbar-nav navbar-right visible-lg-block">
-        <li><a href="{{ site.repository.doc }}/edit/master/{{ page.path }}" data-proofer-ignore>
-          <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-          <span>Improve this page</span>
-        </a></li>
-      </ul>
-{% else %}
-      <ul class="nav navbar-nav navbar-right visible-lg-block">
+        <li id="gcse"></li>
         <li>
-          <a href="https://twitter.com/MarlinFirmware" class="twitter-follow-button" data-show-count="false">Follow @MarlinFirmware</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+          {% if page.collection %}
+            <a href="{{ site.repository.doc }}/edit/master/{{ page.path }}" data-proofer-ignore>
+            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+            <span>Improve this page</span>
+            </a>
+          {% else %}
+            <a href="https://twitter.com/MarlinFirmware" class="twitter-follow-button" data-show-count="false">Follow @MarlinFirmware</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+          {% endif %}
         </li>
       </ul>
-{% endif %}
     </div>
   </div>
 </nav>
