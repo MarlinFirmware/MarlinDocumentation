@@ -156,12 +156,20 @@ This step is optional, but we recommend doing the minimal build because configur
        The project folder and its contents should appear in the Project Navigator on the left side.
 
        ![Explorer](/assets/images/basics/install_platformio/explorer.png)
+       
+### Prepare **platformio.ini**
+
+1. Open the **platformio.ini** file by clicking on it.
+
+2. Use the **Find** command or scroll down to locate the entry for **env_default** and make sure its set correctly for your board. (e.g., **megaatmeg2560** or **LPC1768**).
+
+For the list of all build environments scroll down in the file.  Each environment name is listed in variable **board =**.
 
 ### Prepare minimal **Configuration.h**
 
 1. Open the **boards.h** file by clicking on it. In 2.0 you'll need to navigate to a sub directory. From the project pane on the left, open the folders **Marlin** > **src** > **core**.
 
-1. Use the **Find** command or scroll down to locate the entry for your board. (e.g., **BOARD_AZTEEG_X5_GT**)
+2. Use the **Find** command or scroll down to locate the entry for your board. (e.g., **BOARD_AZTEEG_X5_GT**)
 
 3. Open the **Configuration.h** file by clicking on it.
 
