@@ -160,10 +160,10 @@ Ideally the mesh bounds will match your printable area perfectly. In practice it
 The automated mesh boundary settings assume that the printable area is centered in the physical bed area (as specified below), and just applies an inset to all sides. If your configuration is different then you may need to modify the min/max settings, found in `Configuration_adv.h`, to fit your situation. Note though that (unlike bilinear leveling) the MESH_MIN and MESH_MAX positions refer to where the *nozzle* can reach, not the *probe*.:
 
 ```cpp
-#define UBL_MESH_MIN_X UBL_MESH_INSET
-#define UBL_MESH_MAX_X (X_BED_SIZE - (UBL_MESH_INSET))
-#define UBL_MESH_MIN_Y UBL_MESH_INSET
-#define UBL_MESH_MAX_Y (Y_BED_SIZE - (UBL_MESH_INSET))
+#define MESH_MIN_X UBL_MESH_INSET
+#define MESH_MAX_X (X_BED_SIZE - (UBL_MESH_INSET))
+#define MESH_MIN_Y UBL_MESH_INSET
+#define MESH_MAX_Y (Y_BED_SIZE - (UBL_MESH_INSET))
 ```
 
 For delta printers the situation is similar. It is necessary to have grid points defined that can be filled covering the entirety of `DELTA_PRINTABLE_RADIUS`, but there should also be a 'border' of valid mesh points that lie just outside the printable radius. This ensures that every grid cell within the printable radius will have all four of its corners defined. 
