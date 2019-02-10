@@ -230,6 +230,27 @@ A Switching Nozzle is a carriage with 2 nozzles. A servo is used to move one of 
 ```
 A Mixing Extruder uses two or more stepper motors to drive multiple filaments into a mixing chamber, with the mixed filaments extruded from a single nozzle. This option adds the ability to set a mixture, to save mixtures, and to recall mixtures using the `T` command. The extruder still uses a single E axis, while the current mixture is used to determine the proportion of each filament to use. An "experimental" `G1` direct mixing option is included.
 
+### Prusa MMU2 (since Marlin 2.0)
+
+```cpp
+/**
+ * Prusa Multi-Material Unit v2
+ *
+ * Requires NOZZLE_PARK_FEATURE to park print head in case MMU unit fails.
+ * Requires EXTRUDERS = 5
+ *
+ * For additional configuration see Configuration_adv.h
+ */
+#define PRUSA_MMU2
+```
+Enable support for the Prusa Multi-material unit 2. This requires a free serial port on your printer board. To use the MMU2 you also have to 
+
+ - enable [NOZZLE_PARK_FEATURE](#nozzle-park)
+ - set [EXTRUDERS](#extruders) = 5
+
+
+ All details are configured in [Configuration_adv.h](#prusa-mmu2-advanced-settings-since-marlin-20).
+
 ### Hotend Offsets
 
 ```cpp
@@ -2706,3 +2727,124 @@ This option uses a 28 byte SRAM buffer and an alternative method to get paramete
 #endif
 
 ```
+
+
+## Prusa MMU2 advanced settings (since Marlin 2.0)
+
+### Serial connection
+
+A serial connection is required for communication between the printer board and the MMU2. The configuration differs between 8- and 32-bit boards.
+
+#### 8-bit AVR boards
+
+On a board with a ATmega2560/1280 microcontroller you have three potential serial ports to use for the MMU2: serial 1 (pins 18/19), serial 2 (pins 16/17), serial 3 (pins 14/15). Define the port your MMU2 is connected to
+
+```cpp
+  #define INTERNAL_SERIAL_PORT 2
+```
+
+This activates an additional serial connection in Marlin named internalSerial. So the second define in the example configuration can just remain as it is.
+
+```cpp
+  #define MMU2_SERIAL internalSerial
+```
+
+#### 32-bit boards
+
+When using a 32-bit board you just have to define the name of the serial port which will be used for communication with the MMU2.
+
+```cpp
+  #define MMU2_SERIAL Serial1
+```
+
+### MMU2 Reset
+
+The MMU2 provides two options how the printer board can trigger a reset: software and hardware reset. By default software reset is enabled. Hardware reset requires a digital output pin wired to the reset pin on the MMU2. To activate hardware reset you define the pin to use on the printer board
+
+
+```cpp
+  #define MMU2_RST_PIN 23
+```
+
+### 12V mode
+
+If your MMU2 is powered from 12 V you can activate a special mode on the MMU2.
+
+```cpp
+  // Enable if the MMU2 has 12V stepper motors (MMU2 Firmware 1.0.2 and up)
+  #define MMU2_MODE_12V
+```
+
+This should reduce the noise of the MMU2 but has no effect on the general operation.
+
+### Filament runout handling
+
+Her you define the gcode script which will be executed when the so-called FINDA sensor on the MMU2 detects a filament runout.
+
+```cpp
+  // G-code to execute when MMU2 F.I.N.D.A. probe detects filament runout
+  #define MMU2_FILAMENT_RUNOUT_SCRIPT "M600"
+```
+The default is M600 which requires [ADVANCED_PAUSE_FEATURE](#advance_pause).
+
+### LCD Menu
+
+```cpp
+  // G-code to execute when MMU2 F.I.N.D.A. probe detects filament runout
+  #define MMU2_MENUS
+```
+
+Enable this option to activate an additional menu to operate the MMU2 from the LCD.
+
+### Filament load/unload settings
+
+#### Load to nozzle
+
+The MMU2 LCD menu allows you to load filament to the nozzle. The MMU2 will transport the filament all the way to the extruder gears. The required extruder steps to load it into the hotend have to be defined in Marlin.
+
+```cpp
+    // This is for Prusa MK3-style extruders. Customize for your hardware.
+    #define MMU2_LOAD_TO_NOZZLE_SEQUENCE \
+      {  7.2,  562 }, \
+      { 14.4,  871 }, \
+      { 36.0, 1393 }, \
+      { 14.4,  871 }, \
+      { 50.0,  198 }
+
+```
+The values are relative E distances and feed rates in mm/m. The defaults are based on the nozzle to extruder gear distance of a Prusa MK3 extruder, so if required you have to modifiy those to your extruder/hotend setup accordingly.
+
+#### Unload filament
+
+To unload filament using the LCD menu a generic ramming sequence will be exectued before the MMU2 will retract the filament. The steps to do so are defined using
+
+```cpp
+    #define MMU2_RAMMING_SEQUENCE \
+      {   1.0, 1000 }, \
+      {   1.0, 1500 }, \
+      {   2.0, 2000 }, \
+      {   1.5, 3000 }, \
+      {   2.5, 4000 }, \
+      { -15.0, 5000 }, \
+      { -14.0, 1200 }, \
+      {  -6.0,  600 }, \
+      {  10.0,  700 }, \
+      { -10.0,  400 }, \
+      { -50.0, 2000 }
+```
+
+The values are relative E distances and feed rates in mm/m. The default values are based on a E3D V6 hotend and the nozzle to extruder gear distance of a Prusa MK3 extruder, so if required you have to modifiy those to your extruder/hotend setup accordingly.
+
+#### Eject filament
+
+Eject filament will do a simple retraction of the filament out of the hotend without ramming. The feedrate to do so is defined using
+```cpp
+    #define MMU2_FILAMENTCHANGE_EJECT_FEED 80.0
+```
+
+### Debug
+
+```cpp
+  #define MMU2_DEBUG  // Write debug info to serial output
+```
+Enable this option to get debug output related to the printer to MMU2 communication. This will consume some PROGMEM.
