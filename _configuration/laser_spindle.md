@@ -24,7 +24,7 @@ M106 P1 S128 ; Laser at 50%
 M106 P1 S255 ; Laser at 100%
 ```
 
-In case you are willing to drive both existing fans and operate laser/spindle, please be advised that by default Marlin can manage only up to 3 fans. Using 4 or more pins will require some modifications to the Marlin source files as described in [#12961](https://github.com/MarlinFirmware/Marlin/issues/12961)
+**NOTE**: As of this edit, Marlin can control up to 3 fans via `M106`/`M107`. To use more pins you may need to modify Marlin as described in [Issue #12961](https://github.com/MarlinFirmware/Marlin/issues/12961).
 
 ---
 
