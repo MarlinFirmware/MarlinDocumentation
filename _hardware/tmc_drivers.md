@@ -6,7 +6,18 @@ author: teemuatlut
 category: [ features, hardware ]
 ---
 
-Trinamic stepper drivers allow you to have better control of your stepper motors and achieve extremely quiet motion. You can influence how the driver manages motor current as well as the manner of current delivery. The drivers can act as endstops allowing you simplify wiring. Marlin also supports setting the driver current by using software commands, negating the need for adjusting trimpots.
+Trinamic stepper drivers allow you to have better control of your stepper motors and achieve extremely quiet motion. You can influence how the driver manages motor current as well as the manner of current delivery. The drivers can act as endstops allowing you to simplify wiring. Marlin also supports setting the driver current by using software commands, negating the need for adjusting trimpots.
+
+# Supported TMC drivers and features
+
+Driver  | Control | StealthChop | Sensorless<br>homing/probing | Driver monitoring | Hybrid threshold | Notes
+:------:|:-------:|:-----------:|:----------------------------:|:-----------------:|:----------------:|:---------
+TMC2100 | none    | yes         | no                           | no                | no               | Standalone mode only
+TMC2130 | SPI     | yes         | yes                          | yes               | yes              |
+TMC2208 | UART    | yes         | no                           | yes               | yes              | UART RX line requires an interrupt capable pin.<br>Software UART not support on all platforms, such as DUE based boards.
+TMC2660 | SPI     | no          | not implemented              | yes               | no               |
+
+All configurable drivers can also be operated in standalone mode if so configured in hardware.
 
 # Installing the library
 The TMC stepper drivers require an external library that allows Marlin to communicate with each driver.
@@ -14,27 +25,33 @@ The TMC stepper drivers require an external library that allows Marlin to commun
 ## Installing from Arduino IDE library manager
 * Open up the Arduino IDE
 * Go to Sketch -> Include Library -> Manage Libraries...
-* Search for **TMC2130Stepper** or **TMC2208Stepper**
+* 1.1.9 =>
+  * Search for **TMCStepper**
+* Older versions of Marlin
+  * Search for **TMC2130Stepper** or **TMC2208Stepper**
 * Click `Install`
 
 ## Installing from a zip file
-* TMC2130: Go to the library homepage at <https://github.com/teemuatlut/TMC2130Stepper>
-* TMC2208: Go to the library homepage at <https://github.com/teemuatlut/TMC2208Stepper>
+* 1.1.9 =>
+  * Go to TMC library homepage at <https://github.com/teemuatlut/TMCStepper>
+* Older versions of Marlin
+  * TMC2130: Go to the library homepage at <https://github.com/teemuatlut/TMC2130Stepper>
+  * TMC2208: Go to the library homepage at <https://github.com/teemuatlut/TMC2208Stepper>
 * Click `Clone or download` and `Download ZIP`
 * In Arduino IDE and go to Sketch -> Include Library -> Add .ZIP Library...
 * Point to the downloaded file and click `Open`
 
 # Wiring
-Because the TMC drivers require a way for communication and configuring the drivers (outside of standalone mode) they also require additional setup. TMC2130 uses SPI for communication and TMC2208 uses UART (Serial).
+Because the TMC drivers require a way for communication and configuring the drivers (outside of standalone mode) they also require additional setup. TMC2130 and TMC2660 use SPI for communication and TMC2208 uses UART (Serial).
 
 ## TMC2130
 
 Motherboard | Driver
----:|:---
-SCK | SCK
-MOSI | SDI
-MISO | SDO
-CS | CS
+-----------:|:-------
+SCK         | SCK
+MOSI        | SDI
+MISO        | SDO
+CS          | CS
 
 ### Software SPI
 
@@ -49,10 +66,10 @@ TMC_SW_SCK
 
 A 1 kilo-ohm resistor is required between TX and PD_UART
 
-Motherboard | | Driver
----:|---|:---
-RX | | PD_UART
-TX | (1kohm) | PD_UART
+Motherboard |         | Driver
+-----------:|---------|:--------
+RX          |         | PD_UART
+TX          | (1kohm) | PD_UART
 
 The serial port on master is selected in your `pins` file. Alternatively you can use the slower software serial by not selecting any of the hardware serial ports.
 Typically one port per one driver is needed.
@@ -68,7 +85,7 @@ We recommend getting the original Watterott drivers or the revised FYSETC v1.1 d
 
 The FYSETC v1.0 drivers come pre-configured in standalone mode. This means that the drivers should work for moving the axis but you will not be able to configure them nor take advantage of the additional features of the drivers. To get the drivers working as intended you will need to modify three solder bridges on the driver PCB.
 
-![FYSETC_TMC2130](/assets/images/docs/hardware/tmc_drivers/FYSETC_tmc2130._SPI.jpg)
+![FYSETC_TMC2130](/assets/images/features/FYSETC_tmc2130._SPI.jpg)
 
 Some versions of the FYSETC v1.0 drivers come with a solder bridge left of the chip, some come with a bridging resistor. This connection needs to be opened for SPI connection to work.
 The two smaller bridges need to be configured as shown.
@@ -91,29 +108,36 @@ HOLD_MULTIPLIER           | After the stepper hasn't been moving for a short whi
 INTERPOLATE               | TMC drivers can take lower microstepping inputs, like the typical 16 and interpolate that to 256 microsteps which provides smoother movement.
 CURRENT                   | Driver current expressed in milliamps. Higher current values will need active cooling and a heatsink. Low current values may warrant lower acceleration values to prevent skipping steps.
 MICROSTEPS                | Configures the driver to divide a full step into smaller microsteps which provide smoother movement.
-STEALTHCHOP               | Enable PWM driven stepping mode.
-AUTOMATIC_CURRENT_CONTROL | Marlin will poll the driver twice a second to see if the driver is in an error state. Such an error can be overtemperature pre-warn condition (OTPW) or short to ground or open load. Marlin can react to the temperature warning and automatically reduce the driver current. Short to ground error will disable the driver and Marlin can terminate the print to save time and material.
+SOFTWARE_DRIVER_ENABLE    | Some drivers do not have a dedicated enable (EN) line and require the same function to be handled through software commands.
+STEALTHCHOP               | Default state for stepping mode on supporting TMC drivers.
+CHOPPER_TIMING            | Fine tune the *spreadCycle* chopper timings to optimize noise performance.<br>A set of presets has been provided according to used driver voltage level, but a customized set can be used by specifying<br>`{ <off_time[1..15]>, <hysteresis_end[-3..12]>, hysteresis_start[1..8] }`
+MONITOR_DRIVER_STATUS     | Periodically poll the drivers to determine their status. Marlin can automatically reduce the driver current if the driver report overtemperature prewarn condition. The firmware can also react to error states like short to ground or open load conditions.
 CURRENT_STEP              | Reduce current value when Marlin sees OTPW error.
 REPORT_CURRENT_CHANGE     | Report to the user when automatically changing current setting.
+STOP_ON_ERROR             | If Marlin detects an error where the driver has shut down to protect itself, it can stop the print to save both time and material.
 HYBRID_THRESHOLD          | Configure the axis speed when the driver should switch between stealthChop and spreadCycle modes.
 SENSORLESS_HOMING         | Use the TMC drivers that support this feature to act as endstops by using stallGuard to detect a physical limit.
+SENSORLESS_PROBING        | Use stallGuard on supporting TMC drivers to replace a bed probe.<br>Recommended to be used on delta printers only.
 HOMING_SENSITIVITY        | The Sensorless Homing sensitivity can be tuned to suit the specific machine.<br>A **higher** value will make homing **less** sensitive.<br>A **lower** value will make homing **more** sensitive.
-TMC_DEBUG                 | Enable M122 debugging command. This will give you _a lot_ of additional information about the status of your TMC drivers.
+TMC_DEBUG                 | Extend the information `M122` reports. This will give you _a lot_ of additional information about the status of your TMC drivers.
 TMC_ADV                   | You can use this to add your own configuration settings. The requirement is that the command used must be part of the respective TMC stepper library. Remember to add a backslash after each command!
+AUTOMATIC_CURRENT_CONTROL | Replaced by `MONITOR_DRIVER_STATUS`.<br>Marlin will poll the driver twice a second to see if the driver is in an error state. Such an error can be overtemperature pre-warn condition (OTPW) or short to ground or open load. Marlin can react to the temperature warning and automatically reduce the driver current. Short to ground error will disable the driver and Marlin can terminate the print to save time and material.
 
 # GCodes
 
 Command | Configuration<br>required | Description
--------:|:------------------:|:-----------
-[M122]  | `TMC_DEBUG` | Get debugging information of your drivers.
-[M906]  | none | Set the driver current using axis letters X/Y/Z/E.
-[M911]  | none | Report TMC prewarn triggered flags held by the library.
-[M912]  | none | Clear TMC prewarn triggered flags.
-[M913]  | `HYBRID_THRESHOLD` | Set HYBRID_THRESHOLD speed.
-[M914]  | `SENSORLESS_HOMING` | Set SENSORLESS_HOMING sensitivity.
-[M915]  | `TMC_Z_CALIBRATION` | Level your X axis by trying to move the Z axis past its physical limit. The movement is done at a reduced motor current to prevent breaking parts and promote skipped steps. Marlin will then rehome Z axis and restore normal current setting.
+-------:|:-------------------------:|:-----------
+[M122]  | none                      | Test driver communication line and get debugging information of your drivers. `TMC_DEBUG` adds more reported information.
+[M569]  | `TMC2130` or `TMC2208`    | Toggle between stealthChop and spreadCycle on supporting drivers.
+[M906]  | none                      | Set the driver current using axis letters X/Y/Z/E.
+[M911]  | `MONITOR_DRIVER_STATUS`   | Report TMC prewarn triggered flags held by the library.
+[M912]  | `MONITOR_DRIVER_STATUS`   | Clear TMC prewarn triggered flags.
+[M913]  | `HYBRID_THRESHOLD`        | Set HYBRID_THRESHOLD speed.
+[M914]  | `SENSORLESS_HOMING`       | Set SENSORLESS_HOMING sensitivity.
+[M915]  | `TMC_Z_CALIBRATION`       | Deprecated on bugfix-2.0.x since 2019-01-12.<br>Level your X axis by trying to move the Z axis past its physical limit. The movement is done at a reduced motor current to prevent breaking parts and promote skipped steps. Marlin will then rehome Z axis and restore normal current setting.
 
 [M122]: /docs/gcode/M122.html
+[M569]: /docs/gcode/M569.html
 [M906]: /docs/gcode/M906.html
 [M911]: /docs/gcode/M911.html
 [M912]: /docs/gcode/M912.html
@@ -123,16 +147,31 @@ Command | Configuration<br>required | Description
 
 # Troubleshooting
 
+- Test driver communication status with `M122`.
 - Test the current **bugfix** branch of Marlin posted on GitHub (in case your issue is already fixed).
 - Use the latest TMC Stepper libraries.
 - Check all wiring and wire crimps.
+  - **SPI**: Use a multimeter to check connectivity all the way down the chain on all the communication lines
+  - **UART**:
+    - Make sure your receive (RX) pin is interrupt capable
+    - Check the resistance value between receive (RX) and transmit (TX) lines. You should see 1kOhm.
+    - Check connectivity from RX to the TMC chip
 - Check **12V** (**24V**) power in the **Vm** pin and **5V** (**3.3V**) in the **Vio** pin.
 - Check that configured pins match your firmware configuration.
-- Enable `TMC_DEBUG` and send `M122` to see the debugging output.
+- Enable `TMC_DEBUG` and send `M122` to see further debugging output.
   - Reported register values of either `0x00000000` or `0xFFFFFFFF` are bad responses.
 - Try the examples provided by the respective library. Please detach any belts beforehand however, as the examples will not respect any endstop signals or physical limits. You may need to change the pin definitions.
+- If you're experiencing skipped steps there are a few things you can try
+  - First check for mechanical obstructions and that the parts move freely and do not bind
+  - Check that your nozzle doesn't bump into your print if it starts curling upwards (cooling issue)
+  - Lower acceleration and jerk values
+  - Increase driver cooling
+  - Increase motor current
+  - Disable `INTERPOLATE`
 
 # External resources
+
+[Arduino library for TMC drivers](https://github.com/teemuatlut/TMCStepper) (Replaces the following two)
 
 [Arduino library for TMC2130](https://github.com/teemuatlut/TMC2130Stepper)
 
