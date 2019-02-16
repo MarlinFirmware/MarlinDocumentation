@@ -23,6 +23,9 @@ M106 P1 S0   ; Laser off (P1 = 2nd fan output)
 M106 P1 S128 ; Laser at 50%
 M106 P1 S255 ; Laser at 100%
 ```
+
+**NOTE**: As of this edit, Marlin can control up to 3 fans via `M106`/`M107`. To use more pins you may need to modify Marlin as described in [Issue #12961](https://github.com/MarlinFirmware/Marlin/issues/12961).
+
 ---
 
 # Pins
