@@ -230,7 +230,7 @@ A Switching Nozzle is a carriage with 2 nozzles. A servo is used to move one of 
 ```
 A Mixing Extruder uses two or more stepper motors to drive multiple filaments into a mixing chamber, with the mixed filaments extruded from a single nozzle. This option adds the ability to set a mixture, to save mixtures, and to recall mixtures using the `T` command. The extruder still uses a single E axis, while the current mixture is used to determine the proportion of each filament to use. An "experimental" `G1` direct mixing option is included.
 
-### Prusa MMU2 (since Marlin 2.0)
+### Prusa MMU2 (Marlin 2.0)
 
 ```cpp
 /**
