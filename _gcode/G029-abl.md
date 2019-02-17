@@ -97,7 +97,7 @@ parameters:
         type: bool
   -
     tag: O
-    type: boolean
+    type: bool
     optional: true
     description: Optional. If leveling is already enabled then exit without leveling. (1.1.9)
   -
