@@ -39,7 +39,7 @@ git push
 
 ## Coding style
 
-The preferred format for new document contribution is Markdown language. With this format you must be careful, because small typos can cause Jekyll to reject the page. If you've installed Jekyll as described below, your local auto-building Jekyll server will tell you where your errors are.
+This Jekyll-based site is based on the Markdown language in delicious YAML wrapper. Be careful with this format because small typos can cause Jekyll to reject the page. If you've installed Jekyll as described below, your local auto-building Jekyll server will tell you where your errors are.
 
 ## Editorial style
 
@@ -86,6 +86,15 @@ It sounds ugly, but hopefully the instructions on the [rbenv](https://github.com
 
 With your Ruby environment set up and ready to go, you can now install the `bundler` Ruby gem with:
 - `gem install bundler`
+
+## Jekyll Primer
+
+Under Jekyll we use YAML, Markdown, Liquid, and HTML to fill out the site content and layout. A `_config.yml` file defines the site structure using "collections" that correspond to site sub-folders. The site is "compiled" to produce a static HTML and Javascript file structure. The most important folders are:
+
+- `_layouts` contains the general layouts (aka page templates).
+- `_includes` has partial layouts included by others.
+- `_meta` is where we keep top-level page descriptions.
+- Site sub-pages: `_basics`, `_configuration`, `_development`, `_features`, `_gcode`, `_hardware`
 
 ### Previewing content
 
