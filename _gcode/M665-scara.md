@@ -1,5 +1,5 @@
 ---
-tag: m665b
+tag: m0665b
 title: SCARA Configuration
 brief: Set SCARA geometry values
 author: ManuelMcLure
