@@ -10,7 +10,7 @@ This document has been marked `needs-review`. The following information may be o
   {% endif %}
 {% endfor %}
 
-<div class="row meta">
+<div id="gcode-header" class="row meta">
   <div class="col-lg-12">
     <p class="text-right pull-right visible-lg-block hidden-print small custom-pt25">
       {% assign authors = gcode.author | append: ',' | append: gcode.contrib | replace: ' ', '' | split: ',' %}
@@ -21,7 +21,7 @@ This document has been marked `needs-review`. The following information may be o
       {% endif %}
     </p>
 
-    <h1 class="custom-no-margin-bottom">
+    <h1>
       {% for code in gcode.codes %}
         {{ code }}{% if forloop.last != true %}, {% endif %}
       {% endfor %} - {{ gcode.title }}
@@ -56,6 +56,7 @@ This document has been marked `needs-review`. The following information may be o
 
 <div class="row long">
   <div class="col-lg-12">
+    <h3>Description</h3>
     {% if gcode.long %}
       {% for line in gcode.long %}
         {{ line | markdownify }}
@@ -65,9 +66,16 @@ This document has been marked `needs-review`. The following information may be o
   </div>
 </div>
 
+{% if gcode.videos %}
+  {% for videoid in gcode.videos %}
+    <iframe class="youtube" width="300" height="225" src="https://www.youtube.com/embed/{{ videoid }}"></iframe>
+  {% endfor %}
+  </details>
+{% endif %}
+
 <div class="row usage" id="usage-{{ gcode.tag }}">
   <div class="col-lg-12">
-    <h2>Usage</h2>
+    <h3>Usage</h3>
     <code>{{ gcode.codes[0] }}
       {% if gcode.parameters %}
         {% assign list = ('' | split: '|') %}
@@ -131,15 +139,10 @@ This document has been marked `needs-review`. The following information may be o
   {% if list.size > 0 %}
     <div class="row params">
       <div class="col-lg-12">
+        <h3>Parameters</h3>
         <div class="table-responsive">
           <p>
             <table class="table">
-              <thead>
-                <tr>
-                  <th>Argument</th>
-                  <th>Description</th>
-                </tr>
-              </thead>
               <tbody>
                 {% assign list = (list | sort: 'tag') %}
                 {% for parm in list %}
@@ -205,7 +208,7 @@ This document has been marked `needs-review`. The following information may be o
 {% if gcode.notes %}
   <div class="row notes">
     <div class="col-lg-12">
-      <h2>Notes</h2>
+      <h3>Notes</h3>
         {% for line in gcode.notes %}
           {{ line | markdownify }}
         {% endfor %}
@@ -228,15 +231,14 @@ This document has been marked `needs-review`. The following information may be o
 {% if ex %}
   <div class="row examples">
     <div class="col-lg-12">
-      <h2>Example{{ plural }}</h2>
+      <h3>Example{{ plural }}</h3>
       {% for example in ex %}
         {% if example.pre %}
           {% for line in example.pre %}
             {{ line | markdownify }}
           {% endfor %}
         {% endif %}
-        {% highlight gcode %}{% for line in example.code %}{{ line }}
-{% endfor %}{% endhighlight %}
+        {% highlight gcode %}{% for line in example.code %}{{ line }}{% endfor %}{% endhighlight %}
         {% if example.post %}
           <div class="post">
             {% for line in example.post %}

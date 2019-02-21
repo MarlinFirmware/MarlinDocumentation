@@ -3,16 +3,34 @@ title:       Download
 description: Download the latest Marlin source code
 category:    [ default ]
 
-stuff: |
+releases:
+  -
+    version: 1.1.9
+    description: Latest release
+    tools: Supports AVR<br/>Arduino and PlatformIO
+    file: 1.1.x.zip
+  -
+    version: 1.0.2-2
+    description: Previous release
+    tools: Supports Arduino 1.6.8 and up
+    file: 1.0.x.zip
+  -
+    version: bugfix-1.1.x
+    description: 1.1.x "bugfix" snapshot
+    extra: Patches after 1.1.9
+    tools: Supports Arduino 1.6.8 and up
+    file: bugfix-1.1.x.zip
+  -
+    version: bugfix-2.0.x
+    description: Marlin 2.0.x alpha snapshot
+    extra: Proceed with Caution!
+    tools: Supports AVR and ARM<br/>Arduino and PlatformIO
+    file: bugfix-2.0.x.zip
+ 
+header: |
         Marlin releases can be downloaded directly from the [Marlin Github page](https://github.com/MarlinFirmware/Marlin) or using the links below:
 
-        Description|Version|Download
-        -|-|-
-        **Latest release**<br/>*Supports AVR<br/>Arduino and PlatformIO*|`1.1.9`|[1.1.x.zip](https://github.com/MarlinFirmware/Marlin/archive/1.1.x.zip)
-        **Previous release**<br/>*Supports AVR<br/>Arduino 1.6.8 and up*|`1.0.2-2`|[1.0.x.zip](https://github.com/MarlinFirmware/Marlin/archive/1.0.x.zip)
-        **1.1.x "bugfix" snapshot**<br/>***Patches after 1.1.9***<br/>*Supports AVR<br/>Arduino and PlatformIO*|`bugfix-1.1.x`|[bugfix-1.1.x.zip](https://github.com/MarlinFirmware/Marlin/archive/bugfix-1.1.x.zip)
-        **Marlin 2.0.x alpha snapshot**<br/>***Proceed with Caution!***<br/>*Supports AVR and ARM<br/>Arduino and PlatformIO*|`bugfix-2.0.x`|[bugfix-2.0.x.zip](https://github.com/MarlinFirmware/Marlin/archive/bugfix-2.0.x.zip)
-
+footer: |
         Also find on the project page...
 
         - Detailed [release notes](https://github.com/MarlinFirmware/Marlin/releases),
@@ -22,9 +40,22 @@ stuff: |
 ---
 
 <!-- Jumbotron  -->
-<div class="jumbotron custom-no-margin">
-  <div class="container">
-    <h1><i class="fa fa-download" aria-hidden="true"></i> Download</h1>
-    {{ page.stuff | markdownify }}
-  </div>
-</div>
+<div class="jumbotron custom-no-margin"><div class="container">
+  <h1><i class="fa fa-download" aria-hidden="true"></i> Download</h1>
+  {{ page.header | markdownify }}
+  <table>
+    <tr><th>Description</th><th>Version</th><th>Download</th>
+    {% for release in page.releases %}
+      <tr>
+        <td>
+          <strong>{{ release.description }}</strong><br/>
+          {% if release.extra %}<strong><em>{{ release.extra }}</em></strong><br/>{% endif %}
+          <em>{{ release.tools }}<em>
+        </td>
+        <td><code>{{ release.version }}</code></td>
+        <td><a href="https://github.com/MarlinFirmware/Marlin/archive/{{ release.file }}">{{ release.file }}</a></td>
+      </tr>
+    {% endfor %}
+  </table>
+  {{ page.footer | markdownify }}
+</div></div>

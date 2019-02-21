@@ -1,15 +1,14 @@
-.custom-border-warning { border-left-color: #f0ad4e; }
+h1, h2, h3, h4, h5, h6 {
+  font-family: $font-family-heading;
+  margin-top: 0.2em;
+  }
+h1+h2 { margin-top: -0.4em; color: #BBC; }
+
+.custom-border-warning { border-left-color: #F0AD4E; }
 
 .custom-no-margin { margin: 0 !important; }
-.custom-no-margin-bottom { margin-bottom: 0 !important; }
 
 .custom-no-padding { padding: 0 !important; }
-
-.custom-article {
-  padding-top: 0;
-  margin-top: 0;
-  .row { margin-bottom: 1em; }
-  }
 
 .custom-pl10  { padding-left: 10px; }
 .custom-pt5   { padding-top: 5px; }
@@ -18,7 +17,7 @@
 
 .custom-bg-white { background-color: white; }
 .custom-bg-red   { background-color: red; }
-.custom-bg-grey  { background-color: #f5f5f5; }
+.custom-bg-grey  { background-color: #F5F5F5; }
 
 .custom-alert { display: table; }
 
@@ -31,8 +30,8 @@
   display: table-cell;
   vertical-align: middle;
   float: none;
+  > p { margin: 0; }
   }
-.custom-alert-text > p { margin: 0; }
 
 .param-desc-list p { display: inline; }
 td.arg code { white-space: nowrap; }
@@ -42,8 +41,9 @@ td.arg code { white-space: nowrap; }
  */
 .custom-tagline {
   text-align: left;
-  padding: 48px 0px 48px 0px;
+  padding-top: 1em;
   background-color: white;
+  h1 { color: #00F; }
   }
 .custom-tagline-btn { margin-top: 15px; }
 
@@ -52,9 +52,9 @@ td.arg code { white-space: nowrap; }
  * Tiles
  */
 .custom-tile {
-  color: #94b6df;
-  padding: 48px 0px 48px 0px;
-  background-color: #f8f8f9;
+  color: #94B6DF;
+  padding-top: 1em;
+  background-color: #F8F8F9;
   }
 
 .custom-tile-image-wrapper {
@@ -72,11 +72,12 @@ td.arg code { white-space: nowrap; }
 
 .custom-tile-image-legend {
   position: absolute;
-  bottom: 0px;
+  top: 0px;
   width: 100%;
   left: 0px;
 
-  font-size: 26px;
+  font-family: $font-family-heading;
+  font-size: 1.7em;
 
   color: white;
   background-color: rgba(3,3,3,0.5);
@@ -115,21 +116,25 @@ img.floater {
 img.floater.framed { border: 4px solid black; }
 
 .custom-article {
+  padding-top: 0;
+  margin-top: 0;
+
   table {
     margin-bottom: 1.1em;
     border-top: 1px solid #888;
-    }
+  }
 
   th, td {
     padding: 2px 0.5em;
     border: 1px solid #888;
-    }
+  }
 
   .table>thead>tr>th {
     background-color: #DDD;
     border-bottom: 1px solid #888;
-    }
   }
+  .row { margin-bottom: 0.5em; }
+}
 
 .post {
   margin: -1em 0 1em;
@@ -138,18 +143,27 @@ img.floater.framed { border: 4px solid black; }
   p { font-size: 85%; }
   }
 
-.row.usage h2 { margin-top: -0.5em; }
+#gcode-header h1 { margin-bottom: 4px; }
+
+.row.long>div, .row.usage>div, .row.params>div, .row.notes>div, .row.examples>div {
+  margin-left: 1em;
+  h3 { margin-left: -1em; }
+}
+
+.usage { table, td, tr { border: 0; } }
+
+.gcode { h2, h3, h4, h5, h6 { background: #EEE; padding: 4px; margin-top: 1em; } }
 
 .gcode-row { border-bottom: 2px solid #888; }
 .gcode-row.odd {
   background: #F8F8FF;
   code, pre, .table>thead>tr>th {
     background-color: #E0E0F0;
-    }
+  }
   .post {
     background-color: #EAEAFC;
-    }
   }
+}
 
 #lcd_menu-page .col-lg-9 {
   th { background-color: #DDD; }
@@ -158,15 +172,15 @@ img.floater.framed { border: 4px solid black; }
     border-color: #000;
     color: #72D5FB;
     white-space: nowrap;
-    font-family: monospace;
+    font-family: $font-family-monospace;
     a { color: #C2F5FF; }
     code { background-color: #3669FF; color: #E2D5FB; }
     strong {
       display: inline-block;
       float: right;
       color: #72D5FB;
-      }
     }
+  }
   td+td {
     background-color: inherit;
     border-color: inherit;
@@ -174,8 +188,8 @@ img.floater.framed { border: 4px solid black; }
     white-space: inherit;
     font-family: inherit;
     code { background-color: #F9F2F4; color: #C7254E; }
-    }
   }
+}
 
 #bitmap-converter {
   p { font-size: 120%; }
@@ -184,19 +198,19 @@ img.floater.framed { border: 4px solid black; }
     display: block;
     padding: 2px;
     margin-top: 5px;
-    }
+  }
   #preview-lg {
     border: 1px solid gray;
     margin: 5px;
-    }
+  }
   #preview-sm {
     border: 2px solid white;
     float: right;
-    }
+  }
   input#pasted {
     margin: 0.5em 0.5em 0.5em 0;
     color: #BBF;
-    font-family: monospace;
+    font-family: $font-family-monospace;
   }
   textarea#output {
     width: 100%;
@@ -204,12 +218,12 @@ img.floater.framed { border: 4px solid black; }
     border-radius: 8px;
     background: #F8FFFF;
     color: #300;
-    font-family: monospace;
+    font-family: $font-family-monospace;
     font-size: 90%;
     line-height: 1.1;
     resize: none;
     cursor: default;
-    }
+  }
   div.file-selector {
     padding: 1em;
     margin: 1em 0;
@@ -231,7 +245,7 @@ img.floater.framed { border: 4px solid black; }
       padding: 4px 0.5em 0;
       }
     label.tbd, label.tbd:hover { color: #FDD !important; }
-    }
+  }
   #file-input { display: inline-block; }
   div#err-box {
     display: none;
@@ -239,21 +253,19 @@ img.floater.framed { border: 4px solid black; }
     font-size: 150%;
     font-weight: bold;
     color: red;
-    }
+  }
   div#cpp-container,
   #stat-sub { display: none; }
-  }
+}
 
 //** Secondary label background color
 $brand-requires: #380 !default;
 $label-requires-bg: $brand-requires !default;
-.label-requires {
-  @include label-variant($label-requires-bg);
-  }
+.label-requires { @include label-variant($label-requires-bg); }
 .label-requires code {
   background: none !important;
   color: yellow;
-  }
+}
 
 //** A table to emulate a list
 table.pretty-list {
@@ -285,7 +297,7 @@ table.pretty-list.headless thead { display: none; }
 .jumbotron {
   h1, p { text-align: center; }
   ul li { display: block; margin: 0.5em auto; width: 20em; }
-  table { margin: 2em auto; }
+  table { margin: 1em auto; }
   th, td { border-bottom: 1px solid black; padding: 1em; }
   th { background: #CCC; font-size: 110%; }
   th+th { border-left: 4px solid #EEE; }
@@ -299,3 +311,17 @@ li#gcse {
   height: 50px;
   overflow: hidden;
 }
+
+iframe.youtube {
+  border: 2px solid #444;
+  margin: 0.5em auto;
+}
+
+@media (min-width: $screen-md-min) {
+  .col-md-7 { width: 70%; }
+  .col-md-5 { width: 30%; }
+}
+
+hr { margin-top: 0; margin-bottom: 0; }
+
+summary h3 { display: inline; }

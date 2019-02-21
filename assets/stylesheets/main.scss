@@ -7,6 +7,7 @@ $icon-font-path: '/assets/fonts/';
 $headings-font-weight: 600 !default;
 $font-family-sans-serif: 'Open Sans', sans-serif !default;
 $font-family-monospace: 'Roboto Mono', monospace !default;
+$font-family-heading: 'Montserrat', sans-serif !default;
 
 $btn-font-weight: 500 !default;
 
@@ -26,4 +27,4 @@ $link-hover-color: #e22620 !default;
 @import 'syntax-highlighting';
 @import 'toc';
 @import 'k-pattern';
-@import 'https://fonts.googleapis.com/css?family=Open+Sans:400,600|Roboto+Mono';
+@import 'https://fonts.googleapis.com/css?family=Open+Sans:400,600|Roboto+Mono|Montserrat';
