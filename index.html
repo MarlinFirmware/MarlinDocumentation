@@ -30,9 +30,10 @@ category:     [ default ]
   <div class="container">
     <div class="row">
       <div class="col-sm-12 col-md-7">
-        <h1><strong>Open Source 3D Printer Firmware</strong></h1>
-        <p class="text-justify">First created in 2011 for RepRap and Ultimaker, today Marlin drives most of the world's 3D printers. Reliable and precise, it delivers outstanding print quality while keeping you in full control of the process. As an open source project hosted on <a href="https://github.com/">Github</a>, Marlin is owned and maintained by the maker community.</p>
-        <p><a href="/docs/development/contributing.html">Learn how you can contribute!</a></p>
+        <h1>Marlin Firmware</h1>
+        <h2 id="tagline">Open Source 3D Printer Driver</h2>
+        <p class="text-justify">First created in 2011 for RepRap and Ultimaker by <a href="https://github.com/ErikZalm">Erik van der Zalm</a>, today Marlin drives most of the world's 3D printers. Reliable and precise, Marlin delivers outstanding print quality while keeping you in full control of the process.</p>
+        <p>As an <a href="https://opensource.org/">Open Source</a> project hosted on <a href="https://github.com/">Github</a>, Marlin is owned and maintained by the maker community. <a href="/docs/development/contributing.html">Learn how you can contribute!</a></p>
       </div>
       <div class="col-sm-12 col-md-5 custom-tagline-btn">
         <p><a class="btn btn-success btn-block btn-lg" href="{{ '/docs/basics/introduction.html' | prepend: site.baseurl }}" role="button">
@@ -64,3 +65,23 @@ category:     [ default ]
     </div>
   </div>
 </div>
+
+<script language="javascript"><!--
+  // <![CDATA[
+  var taglines = [
+    "The code that makes the things",
+    "Printing things since 2011",
+    "The firmware we all trust",
+    "Heating, moving, making, grooving",
+    "Responsive, Reliable, Accurate",
+    "For Fused Filament Fabrication",
+    "Build It Your Way",
+    "For Fused Deposition Modeling",
+    "Open Source RepRap Driver",
+    "Heating, moving, making, grooving",
+    "Deterministic deposition engine"
+  ],
+  tagline = taglines[Math.floor(Math.random()*taglines.length)];
+  document.getElementById('tagline').innerText = tagline;
+  // ]]>
+</script>
