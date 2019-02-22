@@ -134,6 +134,7 @@ img.floater.framed { border: 4px solid black; }
     border-bottom: 1px solid #888;
   }
   .row { margin-bottom: 0.5em; }
+  >p { margin-left: 1em; }
 }
 
 .post {
@@ -150,7 +151,7 @@ img.floater.framed { border: 4px solid black; }
   h3 { margin-left: -1em; }
 }
 
-.usage { table, td, tr { border: 0; } }
+.params .table>tbody>tr:first-child>td { border-top: 0; }
 
 .gcode { h2, h3, h4, h5, h6 { background: #EEE; padding: 4px; margin-top: 1em; } }
 
@@ -285,6 +286,8 @@ table.pretty-list.headless thead { display: none; }
 
 .tocify.gcode>ul { padding: 65px 0 1em; }
 .nav-list > li > a strong { color: #900; }
+
+footer { clear: both; margin-top: 1em; }
 
 // Keep footer from overlapping g-codes nav
 @media (min-width: $screen-md-min) {

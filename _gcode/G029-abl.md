@@ -26,12 +26,12 @@ long:
     * For `MESH_BED_LEVELING` see the [G29 MBL](/docs/gcode/G029-mbl.html) page.
     
   - |
-    ### Automatic Probing
+    #### Automatic Probing
 
     With an electronic probe Marlin can probe the entire bed in a matter of seconds —even before every print— with a single `G29` command. Available parameters depend on the style of leveling. See parameter descriptions and examples below for details.
 
   - |
-    ### Manual Probing
+    #### Manual Probing
 
     Auto Bed Leveling now includes a `PROBE_MANUALLY` option for systems lacking a probe.
 
@@ -65,7 +65,7 @@ long:
     7. Use `Control` > `Store memory` to save the mesh to EEPROM, if desired.
 
   - |
-    ### Mesh Editing
+    #### Mesh Editing
 
     `AUTO_BED_LEVELING_BILINEAR` adds these parameters to `G29` for editing mesh points:
     - `W`  Write a mesh point. (Ignored during leveling.)

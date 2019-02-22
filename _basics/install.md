@@ -13,7 +13,7 @@ To install Marlin on your printer you'll need to Download, Configure, [Compile](
 Marlin only needs to be re-flashed when options are changed in the configuration files. Several settings can be changed and saved to EEPROM while the printer is running.
 {% endalert %}
 
-# Download
+### Download
 
 Start by downloading the Marlin source code. There are a few [codebases](https://en.wikipedia.org/wiki/Codebase) to choose from.
 
@@ -29,11 +29,11 @@ Start by downloading the Marlin source code. There are a few [codebases](https:/
 - Marlin 2.0 and up include 32-bit ARM support. **PlatformIO is not required for AVR boards.**
 {% endalert %}
 
-# Configure
+### Configure
 
 To configure Marlin you can use the Arduino IDE or your [favorite text editor](https://www.sublimetext.com/) to edit the `Configuration.h` and `Configuration_adv.h` files. See [Configuring Marlin](/docs/configuration/configuration.html) for full details.
 
-# Build and Install
+### Build and Install
 
 Follow one of these links to install Marlin:
 
