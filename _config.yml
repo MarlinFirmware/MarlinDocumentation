@@ -51,6 +51,11 @@ collections:
     title: Configuration
     permalink: /docs/:collection/:path:output_ext
 
+  setting:
+    output: true
+    title: Settings
+    permalink: /docs/:collection/:path:output_ext
+
   development:
     output: true
     title: Development
@@ -126,6 +131,13 @@ defaults:
     values:
       layout: 'docs'
       category: [ 'configuration' ]
+
+  - # Settings collection settings
+    scope:
+      type: 'setting'
+    values:
+      layout: 'setting'
+      category: [ 'setting' ]
 
   - # Development collection settings
     scope:
