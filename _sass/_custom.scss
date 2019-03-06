@@ -153,7 +153,13 @@ img.floater.framed { border: 4px solid black; }
 
 .params .table>tbody>tr:first-child>td { border-top: 0; }
 
-.gcode, .setting { h2, h3, h4, h5, h6 { background: #EEE; padding: 4px; margin-top: 1em; } }
+body[role=document] {
+  h2, h3, h4, h5, h6 {
+    background: #EEE;
+    background: linear-gradient(90deg, #E4E4E4FF, #E4E4E4FF, #EEEEEE00);
+    padding: 4px; margin-top: 1em;
+  }
+}
 
 .gcode-row { border-bottom: 2px solid #888; }
 .gcode-row.odd {
@@ -286,6 +292,8 @@ table.pretty-list.headless thead { display: none; }
 
 .tocify.gcode>ul { padding: 65px 0 1em; }
 .nav-list > li > a strong { color: #900; }
+
+div[role=main] { padding-bottom: 50vh; }
 
 footer { clear: both; margin-top: 1em; }
 

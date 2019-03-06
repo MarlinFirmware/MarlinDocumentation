@@ -73,7 +73,7 @@ This document has been marked `needs-review`. The following information may be o
     <div class="col-lg-12">
       <h3>Config Source</h3>
       {% for line in setting.preview %}
-        <pre>{{ line }}</pre>
+        {{ line | markdownify }}
       {% endfor %}
     </div>
   </div>
