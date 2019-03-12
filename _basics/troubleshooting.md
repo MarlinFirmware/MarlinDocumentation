@@ -39,3 +39,7 @@ The `SanityCheck.h` file tries to make sure that old settings are updated, that 
 ### Build Too Large
 
 A Marlin build can range in size from under 60K to over 200K with a generous complement of features enabled. All features try to use as little SRAM as possible, but some settings may use a lot of SRAM. As a guide and starting-point, be sure to use the example configuration included with Marlin that best matches your specific machine model.
+
+### Trinamic Stepper Drivers
+
+- See [Trinamic troubleshooting](/docs/hardware/tmc_drivers.html#troubleshooting) for guidance.
