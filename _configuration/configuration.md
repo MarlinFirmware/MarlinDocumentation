@@ -1,5 +1,5 @@
 ---
-title:        'Configuring Marlin 1.1'
+title:        'Configuring Marlin'
 description:  'Complete guide to Marlin configuration options.'
 
 author: Sarf2k4
@@ -18,6 +18,7 @@ These two files contain all of Marlin's build-time configuration options. Simply
 
 To use configurations from an earlier version of Marlin, try dropping them into the newer Marlin and building. As part of the build process, the `SanityCheck.h` will print helpful error messages explaining what needs to be changed.
 
+Also a tool like [Winmerge](http://winmerge.org/) is usefull to compare the old file to the new one and you can copy over the settings.
 
 ## Compiler Directives
 
@@ -36,7 +37,7 @@ Settings can be enabled, disabled, and assigned values using C preprocessor synt
 
 The most authoritative source on configuration details will always be **the configuration files themselves**. They provide good descriptions of each option, and are themselves the source for most of the information presented here.
 
-If you've never configured and calibrated a RepRap machine before, here are some good resources:
+If you've never configured and calibrated a 3D Printer before, here are some good resources:
 
 - [Calibration](http://reprap.org/wiki/Calibration)
 - [Calibrating Steps-per-unit](http://youtu.be/wAL9d7FgInk)
@@ -70,6 +71,9 @@ The core and default settings of Marlin live in the `Configuration.h` file. Most
 
 {% alert info %}
 Settings that can be changed and saved to EEPROM are marked with <em class="fa fa-sticky-note-o" aria-hidden="true"></em>. Options marked with <em class="fa fa-desktop" aria-hidden="true"></em> can be changed from the LCD controller.
+{% endalert %}
+{% alert info %}
+Remember if EEPROM is enabled settings stored in EEPROM will remain in effect even if you change firmware settings. So if you change firmware settings always send M502 followed by M500 (assuming you are connected with software like pronterface).
 {% endalert %}
 
 This section follows the order of settings as they appear. The order isn't always logical, so "Search In Page" may be helpful. We've tried to keep descriptions brief and to the point. For more detailed information on various topics, please read the main articles and follow the links provided in the option descriptions.
@@ -357,6 +361,9 @@ Maximum temperature for each temperature sensor. If Marlin reads a temperature a
 {% alert error MAXTEMP %}
 `Err: MAXTEMP`: This error usually means that the temperature sensor wires are shorted together. It may also indicate an issue with the heater MOSFET or relay that is causing it to stay on.
 {% endalert %}
+{% alert warning %}
+Remeber that where cold and heat meet dew forms, and dew in electronics will give you a VERY bad day. [Dew Point Calculator](http://www.dpcalc.org/) is a good tool to tell if you are likely to run in to dew.
+{% endalert %}
 ***
 
 ### PID
@@ -485,7 +492,7 @@ Marlin offers two levels of thermal protection:
 More thermal protection options are located in `Configuration_adv.h`. In most setups these can be left unchanged, but should be tuned as needed to prevent false positives.
 
 {% panel info %}
-For false thermal runaways _not_ caused by a loose temperature sensor, try increasing `WATCH_TEMP_PERIOD` or decreasing `WATCH_TEMP_INCREASE`. Heating may be slowed in a cold environment, if a fan is blowing on the thermistor, or if the heater has high resistance.
+For false thermal runaways _not_ caused by a loose temperature sensor, try increasing `WATCH_TEMP_PERIOD` or decreasing `WATCH_TEMP_INCREASE`. Heating may be slowed in a cold environment, if a fan is blowing on the heat block, or if the heater has high resistance.
 {% endpanel %}
 
 
