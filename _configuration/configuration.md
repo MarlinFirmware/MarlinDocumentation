@@ -729,16 +729,16 @@ Both acceleration and jerk affect your print quality. If jerk is too low, the ex
 ### Probe Pins
 
 ```cpp
-//#define Z_MIN_PROBE_ENDSTOP
-```
-Use this option if you've connected the probe to a pin other than the Z MIN endstop pin. With this option enabled, by default Marlin will use the `Z_MIN_PROBE_PIN` specified in your board's pins file (usually the X or Z MAX endstop pin since these are the most likely to be unused). If you need to use a different pin, define your custom pin number for `Z_MIN_PROBE_PIN` in `Configuration.h`.
-
-```cpp
 #define Z_MIN_PROBE_USES_Z_MIN_ENDSTOP_PIN
 ```
 Use this option in all cases when the probe is connected to the Z MIN endstop plug. This option is used for `DELTA` robots, which always home to MAX, and may be used in other setups.
 
 You can use this option to configure a machine with no Z endstops. In that case the probe will be used to home Z and you will need to enable `Z_SAFE_HOMING` to ensure that the probe is positioned over the bed when homing the Z axis - done after X and Y.
+
+```cpp
+//#define Z_MIN_PROBE_PIN 32 // Pin 32 is the RAMPS default
+```
+Use this option if you've connected the probe to a pin other than the Z MIN endstop pin. With this option enabled, by default Marlin will use the `Z_MIN_PROBE_PIN` specified in your board's pins file (usually the X or Z MAX endstop pin since these are the most likely to be unused). If you need to use a different pin, define your custom pin number for `Z_MIN_PROBE_PIN` in `Configuration.h`.
 
 ### Probe Type
 
@@ -820,14 +820,6 @@ These offsets specify the distance from the tip of the nozzle to the probe — o
 ```
 Probing should be done quickly, but the Z speed should be tuned for best repeatability. Depending on the probe, a slower Z probing speed may be needed for repeatable results.
 
-### Probe Double Touch
-
-```cpp
-// Use double touch for probing
-//#define PROBE_DOUBLE_TOUCH
-```
-Some probes may be more accurate with this option, which causes all probes to be done twice — first fast, then slow. The second result is used as the measured Z position.
-
 ### Probe Clearance
 
 ```cpp
@@ -888,7 +880,7 @@ Disabling the steppers between moves gives the motors and drivers a chance to co
 
 Most 3D printers use an "open loop" control system, meaning the software can't ascertain the actual carriage position at a given time. It simply sends commands and assumes they have been obeyed. In practice with a well-calibrated machine this is not an issue and using open loop is a major cost saving with excellent quality.
 
-We don't recommend this hack. There are much better ways to address the problem of stepper/driver overheating. Some examples: stepper/driver heatsink, active cooling, dual motors on the axis, reduce microstepping, check belt for over tension, check components for smooth motion, etc.
+**We don't recommend this hack.** There are much better ways to address the problem of stepper/driver overheating. Some examples: stepper/driver heatsink, active cooling, dual motors on the axis, reduce microstepping, check belt for over tension, check components for smooth motion, etc.
 
 ```cpp
 //#define DISABLE_REDUCED_ACCURACY_WARNING
@@ -915,15 +907,6 @@ The E disable option works like `DISABLE_[XYZ]` but pertains to one or more extr
 #define INVERT_E4_DIR false
 ```
 These settings reverse the motor direction for each axis. Be careful when first setting these. Axes moving the wrong direction can cause damage. Get these right without belts attached first, if possible. Before testing, move the carriage and bed to the middle. Test each axis for proper movemnt using the host or LCD "Move Axis" menu. If an axis is inverted, either flip the plug around or change its invert setting.
-
-### Toshiba Drivers
-
-```cpp
-// Enable this option for Toshiba stepper drivers
-//#define CONFIG_STEPPERS_TOSHIBA
-```
-Leave this option disabled for typical stepper drivers such as A4988 or DVR8825.
-
 
 ## Homing and Bounds
 
@@ -961,7 +944,7 @@ Set to `true` to enable the option to constrain movement to the physical boundar
 #define X_BED_SIZE 200
 #define Y_BED_SIZE 200
 ```
-With Marlin 1.1.5 and up you can directly specify the bed size. This allows Marlin to do extra logic related to the bed size when it differs from the movement limits below. If the XY carriage is able to move outside of the bed, you can specify a wider range below.
+With Marlin you can directly specify the bed size. This allows Marlin to do extra logic related to the bed size when it differs from the movement limits below. If the XY carriage is able to move outside of the bed, you can specify a wider range below.
 
 ```cpp
 #define X_MIN_POS 0
@@ -1002,6 +985,8 @@ There are many cases where it's useful to measure variances in bed height. Even 
 Bed Compensation or "--- Bed Leveling" allows the machine —with a bed probe or user assistance— to take accurate measurements of the "bed height" at various points in the XY plane. With this data the machine can then adjust movement to align better to the tilt or "height" variances in the bed. (I'm scare-quoting "height" here because variances may come from other than the bed.)
 
 For more details on these features, see [`G29` for MBL](/docs/gcode/G029-mbl.html) and [`G29` for ABL](/docs/gcode/G029-abl.html).
+
+**We recommend** that you try and get your printer the best it can be before using bedlevel, after all bedlevel only compensates for "bad" hardware, it does not correct it.
 
 ### Debug Leveling
 ```cpp
