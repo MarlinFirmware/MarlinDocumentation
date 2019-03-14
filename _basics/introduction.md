@@ -12,7 +12,7 @@ Marlin is an open source [firmware](https://en.wikipedia.org/wiki/Firmware) for 
 
 From the start Marlin was built by and for [RepRap](http://reprap.org/wiki/) enthusiasts to be a straightforward, reliable, and adaptable printer driver that "just works." As a testament to its quality, Marlin is used by several respected commercial 3D printers. Ultimaker, Printrbot, AlephObjects (Lulzbot), and Prusa Research are just a few of the vendors who ship a variant of Marlin.
 
-One key to Marlin's popularity is that it runs on inexpensive 8-bit [Atmel AVR](http://www.atmel.com/products/microcontrollers/avr/) [micro-controllers](http://en.wikipedia.org/wiki/Microcontroller). These chips are at the center of the popular [open source](https://en.wikipedia.org/wiki/Open-source_hardware) [Arduino/Genuino](http://arduino.cc) platform. The reference platform for Marlin is an Arduino Mega2560 with RAMPS 1.4.
+One key to Marlin's popularity is that it runs on inexpensive 8-bit [Atmel AVR](http://www.atmel.com/products/microcontrollers/avr/) [micro-controllers](http://en.wikipedia.org/wiki/Microcontroller). These chips are at the center of the popular [open source](https://en.wikipedia.org/wiki/Open-source_hardware) [Arduino/Genuino](http://arduino.cc) platform. The reference platforms for Marlin is an Arduino Mega2560 with RAMPS 1.4 and Re-Arm with Ramps 1.4.
 
 As a community product, Marlin aims to be adaptable to as many boards and configurations as possible. We want it to be configurable, customizable, extensible, and economical for hobbyists and vendors alike. A Marlin build can be very small, for use on a headless printer with only modest hardware. Features are enabled as-needed to adapt Marlin to added components.
 
@@ -61,10 +61,10 @@ A high degree of knowledge is needed to model complex objects like a [T-Rex Skul
 
 Slicers prepare a solid 3D model by dividing it up into thin slices (layers). In the process it generates the [G-code](https://en.wikipedia.org/wiki/G-code) that tells the printer in minute detail how to reproduce the model. There are many slicers to choose from, including:
 
-- [Cura](https://ultimaker.com/en/products/cura-software) produces nice results.
-- [Slic3r](http://slic3r.org/) continues to advance.
-- [Simplify3D](https://www.simplify3d.com/) is a solid commercial offering.
-- [Skeinforge](http://reprap.org/wiki/Skeinforge) is highly tunable, but complex.
+- [Cura](https://ultimaker.com/en/products/cura-software).
+- [Slic3r](https://slic3r.org/).
+- [Slic3r Prusa Edition](https://www.prusa3d.com/slic3r-prusa-edition/) The new Kid on the block based on Slic3r.
+- [Simplify3D](https://www.simplify3d.com/) is a commercial offering.
 
 ### Printing
 
@@ -72,10 +72,10 @@ Marlin can be controlled entirely from a host or in standalone mode from an SD C
 
 Host software is available for several platforms, including desktop systems, Raspberry Pi, and Android tablets. Any device with a USB port and serial terminal can technically act as a host, but you'll have a better printing experience using host software specifically designed for 3D printers. Current selections include:
 
-- [Pronterface](http://www.pronterface.com/) is an open source host by Kliment.
+- [Pronterface](https://www.pronterface.com/) is an open source host by Kliment.
 - [Repetier Host](https://www.repetier.com/) is a closed-source host by Repetier Software.
-- [OctoPrint](http://octoprint.org/) is an open source host for Raspberry Pi by [Gina Häußge](https://www.patreon.com/foosel).
-- [Cura](https://ultimaker.com/en/products/cura-software) is an open source host by Ultimaker.
+- [OctoPrint](https://octoprint.org/) is an open source host for Raspberry Pi by [Gina Häußge](https://www.patreon.com/foosel).
+- [Cura](https://ultimaker.com/en/products/cura-software) is an open source host by Ultimaker. (WARNING: You can no longer manual select com port and speed, your printer needs to be auto detected by Cura)
 - [Simplify3D](https://www.simplify3d.com/) includes both a host and slicer.
 
 Many 3D printers ship with a customized version of Repetier or Cura. While this helps to associate the printer brand with a companion piece of software, these versions are usually obsolete and receive few upgrades. We recommend you download the latest generic version of your preferred host software instead.
