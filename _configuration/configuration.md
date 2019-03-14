@@ -1124,39 +1124,6 @@ For more details on these features, see [`G29` for MBL](/docs/gcode/G029-mbl.htm
 
 **We recommend** that you try and get your printer the best it can be before using bedlevel, after all bedlevel only compensates for "bad" hardware, it does not correct it.
 
-### Debug Leveling
-```cpp
-//#define DEBUG_LEVELING_FEATURE
-```
-Use this option to enable extra debugging of homing and leveling. You can then use `M111 S32` before issuing `G28` and `G29 V4` to get a detailed log of the process for diagnosis. This option is useful to figure out the cause of unexpected behaviors, or when reporting issues to the project.
-
-#### G26 Mesh Validation Pattern
-```cpp
-/**
- * Enable the G26 Mesh Validation Pattern tool.
- */
-#define G26_MESH_VALIDATION   // Enable G26 mesh validation
-#if ENABLED(G26_MESH_VALIDATION)
-  #define MESH_TEST_NOZZLE_SIZE     0.4   // (mm) Diameter of primary nozzle.
-  #define MESH_TEST_LAYER_HEIGHT    0.2   // (mm) Default layer height for the G26 Mesh Validation Tool.
-  #define MESH_TEST_HOTEND_TEMP   205.0   // (°C) Default nozzle temperature for the G26 Mesh Validation Tool.
-  #define MESH_TEST_BED_TEMP       60.0   // (°C) Default bed temperature for the G26 Mesh Validation Tool.
-#endif
-```
-When using any of the mesh-based leveling systems (1.1.7) you can activate `G26_MESH_VALIDATION` to print test patterns and fine-tune the mesh. See [`G26` Mesh Validation](http://marlinfw.org/docs/gcode/G026.html) for full details. The `G26` command accepts parameters for nozzle size, layer height, etc. The sub-options above specify the default values that will be applied for omitted parameters.
-
-### Leveling Fade Height
-```cpp
-#define ENABLE_LEVELING_FADE_HEIGHT
-```
-Available with `MESH_BED_LEVELING`, `AUTO_BED_LEVELING_BILINEAR`, and `AUTO_BED_LEVELING_UBL`.
-
-This option adds the `Z` parameter to `M420` which sets a fade distance over which leveling will be gradually reduced. Above the given Z height, leveling compensation will no longer be applied.
-
-This feature exists to prevent irregularities in the bed from propagating through the model's entire height. Fading out leveling also reduces computational requirements and resonance from the Z axis above the fade height. For a well-aligned machine, this feature can improve print results.
-
-Example: To have leveling fade out over the first 10mm of layer printing use `M420 Z10`. If each layer is 0.2mm high, leveling compensation will be reduced by 1/50th (2%) after each layer. Above 10mm the machine will move without compensation.
-
 ### Bed Leveling Style
 
 Bed Leveling is a standard feature on many 3D printers. It takes the guess-work out of getting a good first layer and good bed adhesion.  All forms of bed leveling add `G29` Bed Probing, `M420` enable/disable, and can save their results to EEPROM with `M500`. Bravo!
@@ -1190,8 +1157,52 @@ Only `AUTO_BED_LEVELING_BILINEAR` currently supports `SCARA`.<br/>
 `MESH_BED_LEVELING` is incompatible with Delta and SCARA.
 {% endalert %}
 
+### Restore after G28
+```cpp
+//#define RESTORE_LEVELING_AFTER_G28
+```
+Normally G28 leaves leveling disabled on completion. Enable this option to have G28 restore the prior leveling state.
+
+### Debug Leveling
+```cpp
+//#define DEBUG_LEVELING_FEATURE
+```
+Use this option to enable extra debugging of homing and leveling. You can then use `M111 S32` before issuing `G28` and `G29 V4` to get a detailed log of the process for diagnosis. This option is useful to figure out the cause of unexpected behaviors, or when reporting issues to the project.
+
+### Leveling Fade Height
+```cpp
+#define ENABLE_LEVELING_FADE_HEIGHT
+```
+Available with `MESH_BED_LEVELING`, `AUTO_BED_LEVELING_BILINEAR`, and `AUTO_BED_LEVELING_UBL`.
+
+This option adds the `Z` parameter to `M420` which sets a fade distance over which leveling will be gradually reduced. Above the given Z height, leveling compensation will no longer be applied.
+
+This feature exists to prevent irregularities in the bed from propagating through the model's entire height. Fading out leveling also reduces computational requirements and resonance from the Z axis above the fade height. For a well-aligned machine, this feature can improve print results.
+
+Example: To have leveling fade out over the first 10mm of layer printing use `M420 Z10`. If each layer is 0.2mm high, leveling compensation will be reduced by 1/50th (2%) after each layer. Above 10mm the machine will move without compensation.
+
+#### G26 Mesh Validation Pattern
+```cpp
+/**
+ * Enable the G26 Mesh Validation Pattern tool.
+ */
+#define G26_MESH_VALIDATION   // Enable G26 mesh validation
+#if ENABLED(G26_MESH_VALIDATION)
+  #define MESH_TEST_NOZZLE_SIZE     0.4   // (mm) Diameter of primary nozzle.
+  #define MESH_TEST_LAYER_HEIGHT    0.2   // (mm) Default layer height for the G26 Mesh Validation Tool.
+  #define MESH_TEST_HOTEND_TEMP   205.0   // (°C) Default nozzle temperature for the G26 Mesh Validation Tool.
+  #define MESH_TEST_BED_TEMP       60.0   // (°C) Default bed temperature for the G26 Mesh Validation Tool.
+#endif
+```
+When using any of the mesh-based leveling systems (1.1.7) you can activate `G26_MESH_VALIDATION` to print test patterns and fine-tune the mesh. See [`G26` Mesh Validation](http://marlinfw.org/docs/gcode/G026.html) for full details. The `G26` command accepts parameters for nozzle size, layer height, etc. The sub-options above specify the default values that will be applied for omitted parameters.
 
 ### Linear / Bilinear Options
+```cpp
+#define GRID_MAX_POINTS_X 3
+#define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
+```
+These options specify the default number of points to probe in each dimension during `G29`.
+
 ```cpp
 #define LEFT_PROBE_BED_POSITION 15
 #define RIGHT_PROBE_BED_POSITION 145
@@ -1199,12 +1210,6 @@ Only `AUTO_BED_LEVELING_BILINEAR` currently supports `SCARA`.<br/>
 #define BACK_PROBE_BED_POSITION 150
 ```
 These settings specify the boundaries for probing with `G29`. This will most likely be a sub-section of the bed because probes are not usually able to reach every point that the nozzle can. Take account of the probe's XY offsets when setting these boundaries.
-
-```cpp
-#define GRID_MAX_POINTS_X 3
-#define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
-```
-These options specify the default number of points to probe in each dimension during `G29`.
 
 ```cpp
 //#define PROBE_Y_FIRST
@@ -1226,18 +1231,6 @@ Usually the probed grid doesn't extend all the way to the edges of the bed. So, 
 #endif
 ```
 If you have SRAM to spare, this option will multiply the resolution of the bilinear grid using the Catmull-Rom subdivision method. This option only applies to bilinear leveling. If the default value of 3 is too expensive, try 2 or 1. (In Marlin 1.1.1, the default grid will be stored in PROGMEM, as UBL now does.)
-
-### 3-Point Options
-
-```cpp
-#define ABL_PROBE_PT_1_X 15
-#define ABL_PROBE_PT_1_Y 180
-#define ABL_PROBE_PT_2_X 15
-#define ABL_PROBE_PT_2_Y 20
-#define ABL_PROBE_PT_3_X 170
-#define ABL_PROBE_PT_3_Y 20
-```
-These options specify the three points that will be probed during `G29`.
 
 ### Unified Bed Leveling Options
 
@@ -1265,6 +1258,18 @@ These options specify the inset, grid, and 3-point triangle to use for UBL. Note
 ```
 These options specify the number of points that will always be probed in each dimension during `G29`. The mesh inset is used to automatically calculate the probe boundaries. These can be set explicitly in `Configuration_adv.h`. `MESH_G28_REST_ORIGIN` moves the nozzle to rest at `Z_MIN_POS` when mesh probing is done. If Z is offset (e.g., due to `home_offset` or some other cause) this is intended to move Z to a good starting point, usually Z=0.
 
+### 3-Point Options
+
+```cpp
+#define ABL_PROBE_PT_1_X 15
+#define ABL_PROBE_PT_1_Y 180
+#define ABL_PROBE_PT_2_X 15
+#define ABL_PROBE_PT_2_Y 20
+#define ABL_PROBE_PT_3_X 170
+#define ABL_PROBE_PT_3_Y 20
+```
+These options specify the three points that will be probed during `G29`.
+
 ### LCD Bed Leveling
 
 ```cpp
@@ -1273,6 +1278,13 @@ These options specify the number of points that will always be probed in each di
 `LCD_BED_LEVELING` adds a "Level Bed" menu to the LCD that starts a step-by-step guided leveling procedure that requires no probe. For Mesh Bed Leveling see [`G29` for MBL](/docs/gcode/G029-mbl.html), and for `PROBE_MANUALLY` see [`G29` for ABL](http://marlinfw.org/docs/gcode/G029-abl.html).
 
 Available with `MESH_BED_LEVELING` and `PROBE_MANUALLY` (all forms of Auto Bed Leveling). See the `Configuration.h` file for sub-options.
+
+### Corner Leveling
+
+```cpp
+//#define LEVEL_BED_CORNERS
+```
+Add a menu item to move between bed corners for manual bed adjustment
 
 ### Z Probe End Script
 
