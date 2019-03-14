@@ -172,7 +172,7 @@ A unique ID for your 3D printer. A suitable unique ID can be generated randomly 
 ```cpp
 #define EXTRUDERS 1
 ```
-This value, from 1 to 4, defines how many extruders (or E steppers) the printer has. By default Marlin will assume separate nozzles all moving together on a single carriage. If you have a single nozzle, a switching extruder, a mixing extruder, or dual X carriages, specify that below.
+This value, from 1 to 6, defines how many extruders (or E steppers) the printer has. By default Marlin will assume separate nozzles all moving together on a single carriage. If you have a single nozzle, a switching extruder, a mixing extruder, or dual X carriages, specify that below.
 
 This value should be set to the total number of E stepper motors on the machine, even if there's only a single nozzle.
 
@@ -191,6 +191,33 @@ You can override this value with `M404 W`.
 #define SINGLENOZZLE
 ```
 Enable `SINGLENOZZLE` if you have an E3D Cyclops or any other "multi-extruder" system that shares a single nozzle. In a single-nozzle setup, only one filament drive is engaged at a time, and each needs to retract before the next filament can be loaded and begin purging and extruding.
+
+###Průša MK2 Single Nozzle Multi-Material Multiplexer
+```cpp
+//#define MK2_MULTIPLEXER
+```
+Enabling `MK2_MULTIPLEXER` allows one stepper driver on a control board to drive two to eight stepper motors, one at a time.
+
+### Prusa MMU2
+
+```cpp
+/**
+ * Prusa Multi-Material Unit v2
+ *
+ * Requires NOZZLE_PARK_FEATURE to park print head in case MMU unit fails.
+ * Requires EXTRUDERS = 5
+ *
+ * For additional configuration see Configuration_adv.h
+ */
+#define PRUSA_MMU2
+```
+Enable support for the Prusa Multi-material unit 2. This requires a free serial port on your printer board. To use the MMU2 you also have to 
+
+ - enable [NOZZLE_PARK_FEATURE](#nozzle-park)
+ - set [EXTRUDERS](#extruders) = 5
+
+
+ All details are configured in [Configuration_adv.h]
 
 ### Switching Extruder
 ```cpp
@@ -214,6 +241,27 @@ A Switching Extruder is a dual extruder that uses a single stepper motor to driv
 ```
 A Switching Nozzle is a carriage with 2 nozzles. A servo is used to move one of the nozzles up and down. The servo either lowers the active nozzle or raises the inactive one. Set the servo sub-settings above according to your particular extruder's setup instructions.
 
+### Parking extruder (with solenoid)
+
+```cpp
+//#define PARKING_EXTRUDER
+```
+Two separate X-carriages with extruders that connect to a moving part via a solenoid docking mechanism. Requires SOL1_PIN and SOL2_PIN.
+
+### Parking extruder (with magnets)
+
+```cpp
+//#define MAGNETIC_PARKING_EXTRUDER
+```
+Two separate X-carriages with extruders that connect to a moving part via a magnetic docking mechanism using movements and no solenoid
+
+### Switching Toolhead
+
+```cpp
+//#define SWITCHING_TOOLHEAD
+```
+Support for swappable and dockable toolheads, such as the E3D Tool Changer. Toolheads are locked with a servo.
+
 ### Mixing Extruder
 
 ```cpp
@@ -233,27 +281,6 @@ A Switching Nozzle is a carriage with 2 nozzles. A servo is used to move one of 
 #endif
 ```
 A Mixing Extruder uses two or more stepper motors to drive multiple filaments into a mixing chamber, with the mixed filaments extruded from a single nozzle. This option adds the ability to set a mixture, to save mixtures, and to recall mixtures using the `T` command. The extruder still uses a single E axis, while the current mixture is used to determine the proportion of each filament to use. An "experimental" `G1` direct mixing option is included.
-
-### Prusa MMU2 (Marlin 2.0)
-
-```cpp
-/**
- * Prusa Multi-Material Unit v2
- *
- * Requires NOZZLE_PARK_FEATURE to park print head in case MMU unit fails.
- * Requires EXTRUDERS = 5
- *
- * For additional configuration see Configuration_adv.h
- */
-#define PRUSA_MMU2
-```
-Enable support for the Prusa Multi-material unit 2. This requires a free serial port on your printer board. To use the MMU2 you also have to 
-
- - enable [NOZZLE_PARK_FEATURE](#nozzle-park)
- - set [EXTRUDERS](#extruders) = 5
-
-
- All details are configured in [Configuration_adv.h](#prusa-mmu2-advanced-settings-since-marlin-20).
 
 ### Hotend Offsets
 
@@ -286,12 +313,15 @@ Enable this if you don't want the power supply to switch on when you turn on the
 ### Temperature Sensors
 
 ```cpp
-#define TEMP_SENSOR_0 5
+#define TEMP_SENSOR_0 1
 #define TEMP_SENSOR_1 0
 #define TEMP_SENSOR_2 0
 #define TEMP_SENSOR_3 0
 #define TEMP_SENSOR_4 0
-#define TEMP_SENSOR_BED 3
+#define TEMP_SENSOR_5 0
+#define TEMP_SENSOR_BED 0
+#define TEMP_SENSOR_CHAMBER 0
+#define CHAMBER_HEATER_PIN -1
 ```
 Temperature sensors are vital components in a 3D printer. Fast and accurate sensors ensure that the temperature will be well controlled, to keep plastic flowing smoothly and to prevent mishaps. Use these settings to specify the hotend and bed temperature sensors. Every 3D printer will have a hotend thermistor, and most will have a bed thermistor.
 
@@ -329,6 +359,11 @@ Extruders must maintain a stable temperature for `TEMP_RESIDENCY_TIME` before `M
 #define TEMP_BED_WINDOW 1           // (degC) Window around target to start the residency timer x degC early.
 ```
 The bed must maintain a stable temperature for `TEMP_BED_RESIDENCY_TIME` before `M109` will return success and start the print. Tune what "stable" means using `TEMP_BED_HYSTERESIS` and `TEMP_BED_WINDOW`.
+
+```cpp
+#define TEMP_CHAMBER_HYSTERESIS  3  // (°C) Temperature proximity considered "close enough" to the target
+```
+Set how far from target the chamber can be and still be considered ok.
 
 ### Temperature Ranges
 
@@ -382,18 +417,20 @@ See the [PID Tuning](http://reprap.org/wiki/PID_Tuning) topic on the RepRap wiki
 #define PIDTEMP
 #define BANG_MAX 255     // limits current to nozzle while in bang-bang mode; 255=full current
 #define PID_MAX BANG_MAX // limits current to nozzle while PID is active (see PID_FUNCTIONAL_RANGE below); 255=full current
+#define K1 0.95
 ```
 Disable `PIDTEMP` to run extruders in bang-bang mode. Bang-bang is a pure binary mode - the heater is either fully-on or fully-off for a long period. PID control uses higher frequency PWM and (in most cases) is superior for maintaining a stable temperature.
 
 ```cpp
 #if ENABLED(PIDTEMP)
+  //#define PID_EDIT_MENU
   //#define PID_AUTOTUNE_MENU
   //#define PID_DEBUG
   //#define PID_OPENLOOP 1
   //#define SLOW_PWM_HEATERS
   //#define PID_PARAMS_PER_HOTEND
   #define PID_FUNCTIONAL_RANGE 10
-  #define K1 0.95
+  
 ```
 Enable `PID_AUTOTUNE_MENU` to add an option on the LCD to run an Autotune cycle and automatically apply the result. Enable `PID_PARAMS_PER_HOTEND` if you have more than one extruder and they are different models.
 
@@ -428,6 +465,11 @@ Sample PID values are included for reference, but they won't apply to most setup
 //#define PIDTEMPBED
 ```
 Enable `PIDTEMPBED` to use PID for the bed heater (at the same PWM frequency as the extruders). With the default PID_dT the PWM frequency is 7.689Hz, fine for driving a square wave into a resistive load without significant impact on FET heating. This also works fine on a Fotek SSR-10DA Solid State Relay into a 250W heater. If your configuration is significantly different than this and you don't understand the issues involved, you probably shouldn't use bed PID until it's verified that your hardware works. Use `M303 E-1` to tune the bed PID for this option.
+
+```cpp
+//#define BED_LIMIT_SWITCHING
+```
+Enable `BED_LIMIT_SWITCHING`
 
 ```cpp
 #define MAX_BED_POWER 255
@@ -514,21 +556,6 @@ Marlin supports four kinematic motion systems: Cartesian, Core (H-Bot), Delta, a
 ```
 Enable the option that applies to the specific Core setup. Both normal and reversed options are included for completeness.
 
-### Delta
-
-```cpp
-//#define DELTA
-```
-For Delta use one of the sample configurations in the `example_configurations/delta` folder as a starting point.
-
-### SCARA
-
-```cpp
-//#define SCARA
-```
-For SCARA use the sample configuration in the `example_configurations/SCARA` folder as a starting point.
-
-
 ![Endstop switch](/assets/images/config/endstop.jpg){: .floater}
 
 ## Endstops
@@ -553,7 +580,7 @@ Specify all the endstop connectors that are connected to any endstop or probe. M
 #define ENDSTOPPULLUPS
 
 #if DISABLED(ENDSTOPPULLUPS)
-  // fine endstop settings: Individual pullups. will be ignored if ENDSTOPPULLUPS is defined
+  // Disable ENDSTOPPULLUPS to set pullups individually
   //#define ENDSTOPPULLUP_XMAX
   //#define ENDSTOPPULLUP_YMAX
   //#define ENDSTOPPULLUP_ZMAX
@@ -564,6 +591,24 @@ Specify all the endstop connectors that are connected to any endstop or probe. M
 #endif
 ```
 By default all endstops have pullup resistors enabled. This is best for NC switches, preventing the values from "floating." If only some endstops should have pullup resistors, you can disable `ENDSTOPPULLUPS` and enable pullups individually.
+
+### Endstop Pulldowns
+
+```cpp
+//#define ENDSTOPPULLDOWNS
+
+#if DISABLED(ENDSTOPPULLDOWNS)
+  // Disable ENDSTOPPULLDOWNS to set pulldowns individually
+  //#define ENDSTOPPULLDOWN_XMAX
+  //#define ENDSTOPPULLDOWN_YMAX
+  //#define ENDSTOPPULLDOWN_ZMAX
+  //#define ENDSTOPPULLDOWN_XMIN
+  //#define ENDSTOPPULLDOWN_YMIN
+  //#define ENDSTOPPULLDOWN_ZMIN
+  //#define ENDSTOPPULLDOWN_ZMIN_PROBE
+#endif
+```
+By default all endstops have pulldown resistors disabled. 
 
 ### Endstop Inverting
 
@@ -579,6 +624,25 @@ By default all endstops have pullup resistors enabled. This is best for NC switc
 ```
 Use `M119` to test if these are set correctly. If an endstop shows up as "TRIGGERED" when not pressed, and "open" when pressed, then it should be inverted here.
 
+### Stepper Drivers
+
+```cpp
+//#define X_DRIVER_TYPE  A4988
+//#define Y_DRIVER_TYPE  A4988
+//#define Z_DRIVER_TYPE  A4988
+//#define X2_DRIVER_TYPE A4988
+//#define Y2_DRIVER_TYPE A4988
+//#define Z2_DRIVER_TYPE A4988
+//#define Z3_DRIVER_TYPE A4988
+//#define E0_DRIVER_TYPE A4988
+//#define E1_DRIVER_TYPE A4988
+//#define E2_DRIVER_TYPE A4988
+//#define E3_DRIVER_TYPE A4988
+//#define E4_DRIVER_TYPE A4988
+//#define E5_DRIVER_TYPE A4988
+```
+These settings allow Marlin to tune stepper driver timing and enable advanced options for stepper drivers that support them. You may also override timing options in Configuration_adv.h.
+
 ### Endstop Interrupts
 
 ```cpp
@@ -586,6 +650,13 @@ Use `M119` to test if these are set correctly. If an endstop shows up as "TRIGGE
 ```
 Enable this feature if all enabled endstop pins are interrupt-capable.
 This will remove the need to poll the interrupt pins, saving many CPU cycles.
+
+### Endstop Noise Threshold
+
+```cpp
+//#define ENDSTOP_INTERRUPTS_FEATURE
+```
+Enable if your probe or endstops falsely trigger due to noise.
 
 ![Movement](/assets/images/config/movement.png){: .floater}
 
@@ -701,6 +772,15 @@ Don't set these too high. Larger acceleration values can lead to excessive vibra
 
 ***
 
+#### Junction Deviation <em class="fa fa-sticky-note-o" aria-hidden="true"></em> <em class="fa fa-desktop" aria-hidden="true"></em>
+```cpp
+//#define JUNCTION_DEVIATION
+#if ENABLED(JUNCTION_DEVIATION)
+  #define JUNCTION_DEVIATION_MM 0.02  // (mm) Distance from real junction edge
+#endif
+```
+Use Junction Deviation instead of traditional Jerk Limiting
+
 #### Jerk <em class="fa fa-sticky-note-o" aria-hidden="true"></em> <em class="fa fa-desktop" aria-hidden="true"></em>
 
 ```cpp
@@ -721,6 +801,11 @@ Jerk works in conjunction with acceleration (see above). Jerk is the maximum cha
 
 Both acceleration and jerk affect your print quality. If jerk is too low, the extruder will linger too long on small segments and corners, possibly leaving blobs. If the jerk is set too high, direction changes will apply too much torque and you may see "ringing" artifacts or dropped steps.
 
+#### S-Curve Acceleration <em class="fa fa-sticky-note-o" aria-hidden="true"></em> <em class="fa fa-desktop" aria-hidden="true"></em>
+```cpp
+//#define S_CURVE_ACCELERATION
+```
+This option eliminates vibration during printing by fitting a Bézier curve to move acceleration, producing much smoother direction changes.
 
 ## Z Probe Options
 
@@ -788,7 +873,16 @@ A probe that is deployed and stowed with a solenoid pin (Defined as `SOL1_PIN`.)
 ```
 This type of probe is mounted on a detachable "sled" that sits at the far end of the X axis. Before probing, the X carriage moves to the far end and picks up the sled. When probing is completed, it drops the sled off. The `SLED_DOCKING_OFFSET` specifies the extra distance the X axis must travel to pickup the sled. 0 should be fine but it may be pushed further if needed.
 
-See the [Prusa i3 Z-probe Sled Mount](http://www.thingiverse.com/thing:396692) for an example of this kind of probe.
+#### Rack-and-pinion probe
+
+```cpp
+//#define RACK_AND_PINION_PROBE
+#if ENABLED(RACK_AND_PINION_PROBE)
+  #define Z_PROBE_DEPLOY_X  X_MIN_POS
+  #define Z_PROBE_RETRACT_X X_MAX_POS
+#endif
+```
+A probe deployed by moving the x-axis, such as the Wilson II's rack-and-pinion probe designed by Marty Rice.
 
 #### Allen Key
 
@@ -808,6 +902,13 @@ More information will be included in an upcoming Delta configuration page.
 ```
 These offsets specify the distance from the tip of the nozzle to the probe — or more precisely, to the point at which the probe triggers. The X and Y offsets are specified as integers. The Z offset should be specified as exactly as possible using a decimal value. The Z offset can be overridden with `M851 Z` or the LCD controller. The `M851` offset is saved to EEPROM with `M500`.
 
+### Distance from edge
+
+```cpp
+#define MIN_PROBE_EDGE 10
+```
+Some probes needs to stay away from the edge
+
 ### Probing Speed
 
 ```cpp
@@ -820,11 +921,21 @@ These offsets specify the distance from the tip of the nozzle to the probe — o
 ```
 Probing should be done quickly, but the Z speed should be tuned for best repeatability. Depending on the probe, a slower Z probing speed may be needed for repeatable results.
 
+### Multiple Probes
+```cpp
+//#define MULTIPLE_PROBING 2
+```
+Set to 2 for a fast/slow probe, using the second probe result. Set to 3 or more for slow probes, averaging the results.
+
 ### Probe Clearance
 
 ```cpp
 #define Z_CLEARANCE_DEPLOY_PROBE   10 // Z Clearance for Deploy/Stow
 #define Z_CLEARANCE_BETWEEN_PROBES  5 // Z Clearance between probe points
+#define Z_CLEARANCE_MULTI_PROBE     5 // Z Clearance between multiple probes
+//#define Z_AFTER_PROBING           5 // Z position after probing is done
+
+#define Z_PROBE_LOW_POINT          -2 // Farthest distance below the trigger-point to go before stopping
 ```
 Z probes require clearance when deploying, stowing, and moving between probe points to avoid hitting the bed and other hardware. Servo-mounted probes require extra space for the arm to rotate. Inductive probes need space to keep from triggering early.
 
@@ -852,6 +963,29 @@ This enables you to test the reliability of your probe.
 Issue a M48 command to start testing. It will give you a standard deviation for the probe.
 Tip: 0.02 mm is normally acceptable for bed leveling to work.
 
+```cpp
+// Before deploy/stow pause for user confirmation
+//#define PAUSE_BEFORE_DEPLOY_STOW
+```
+Before deploy/stow pause for user confirmation
+
+### Probe with heaters off
+```cpp
+/**
+ * Enable one or more of the following if probing seems unreliable.
+ * Heaters and/or fans can be disabled during probing to minimize electrical
+ * noise. A delay can also be added to allow noise and vibration to settle.
+ * These options are most useful for the BLTouch probe, but may also improve
+ * readings with inductive probes and piezo sensors.
+ */
+//#define PROBING_HEATERS_OFF       // Turn heaters off when probing
+#if ENABLED(PROBING_HEATERS_OFF)
+  //#define WAIT_FOR_BED_HEATER     // Wait for bed to heat back up between probes (to improve accuracy)
+#endif
+//#define PROBING_FANS_OFF          // Turn fans off when probing
+//#define PROBING_STEPPERS_OFF      // Turn steppers off (unless needed to hold position) when probing
+//#define DELAY_BEFORE_PROBING 200  // (ms) To prevent vibrations from triggering piezo sensors
+```
 
 ![Stepper Spin](/assets/images/config/motor-dir.jpg){: .floater}
 
@@ -928,16 +1062,6 @@ This value raises Z to the specified height above the bed before homing X or Y. 
 ```
 Homing direction for each axis: -1 = min, 1 = max. Most cartesian and core machines have three min endstops. Deltas have three max endstops. For other configurations set these values appropriately.
 
-
-### Software Endstops
-
-```cpp
-#define MIN_SOFTWARE_ENDSTOPS
-#define MAX_SOFTWARE_ENDSTOPS
-```
-Set to `true` to enable the option to constrain movement to the physical boundaries of the machine (as set by `[XYZ]_(MIN|MAX)_POS`). For example, `G1 Z-100` can be min constrained to `G1 Z0`. It is recommended to enable these options as a safety feature. If software endstops need to be disabled, use `M211 S0`.
-
-
 ### Movement Bounds
 
 ```cpp
@@ -960,6 +1084,18 @@ These values specify the physical limits of the machine. Usually the `[XYZ]_MIN_
 Although home positions are fixed, `M206` can be used to apply offsets to the home position if needed.
 {% endpanel %}
 
+### Software Endstops
+
+```cpp
+#define MIN_SOFTWARE_ENDSTOPS
+#define MAX_SOFTWARE_ENDSTOPS
+```
+Set to `true` to enable the option to constrain movement to the physical boundaries of the machine (as set by `[XYZ]_(MIN|MAX)_POS`). For example, `G1 Z-100` can be min constrained to `G1 Z0`. It is recommended to enable these options as a safety feature. If software endstops need to be disabled, use `M211 S0`.
+
+```cpp
+//#define SOFT_ENDSTOPS_MENU_ITEM
+```
+Enable/Disable software endstops from the LCD
 
 ## Filament Runout Sensor
 
