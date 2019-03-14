@@ -150,6 +150,7 @@ img.floater.framed { border: 4px solid black; }
 .row.long>div, .row.usage>div, .row.params>div, .row.notes>div, .row.examples>div {
   margin-left: 1em;
   h3 { margin-left: -1em; }
+  p { font-size: 120% }
 }
 
 .params .table>tbody>tr:first-child>td { border-top: 0; }

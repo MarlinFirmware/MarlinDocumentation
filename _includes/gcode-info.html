@@ -242,7 +242,8 @@ This document has been marked `needs-review`. The following information may be o
             {{ line | markdownify }}
           {% endfor %}
         {% endif %}
-        {% highlight gcode %}{% for line in example.code %}{{ line }}{% endfor %}{% endhighlight %}
+        {% highlight gcode %}{% for line in example.code %}{{ line }} 
+{% endfor %}{% endhighlight %}
         {% if example.post %}
           <div class="post">
             {% for line in example.post %}
