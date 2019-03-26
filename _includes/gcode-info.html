@@ -76,6 +76,17 @@ This document has been marked `needs-review`. The following information may be o
   </div>
 {% endif %}
 
+{% if gcode.devnotes %}
+  <div class="row devnotes">
+    <div class="col-lg-12">
+      <h3>Developer Notes</h3>
+        {% for line in gcode.devnotes %}
+          {{ line | markdownify }}
+        {% endfor %}
+    </div>
+  </div>
+{% endif %}
+
 <div class="row usage" id="usage-{{ gcode.tag }}">
   <div class="col-lg-12">
     <h3>Usage</h3>
