@@ -163,27 +163,28 @@ This step is optional, but we recommend doing the minimal build because configur
 
 2. Use the **Find** command or scroll down to locate the entry for **env_default** and make sure its set correctly for your board. (e.g., **megaatmeg2560** or **LPC1768**).
 
-For the list of all build environments scroll down in the file.  Each environment name is listed in variable **board =**.
+The available build environments are listed at the top of **platformio.ini**.
 
 ### Prepare minimal **Configuration.h**
 
-1. Open the **boards.h** file by clicking on it. In 2.0 you'll need to navigate to a sub directory. From the project pane on the left, open the folders **Marlin** > **src** > **core**.
+For a minimal build you just need to set the `MOTHERBOARD` value appropriate to your printer's control board. Marlin defines all available board names in **boards.h**.
 
-2. Use the **Find** command or scroll down to locate the entry for your board. (e.g., **BOARD_AZTEEG_X5_GT**)
+1. Open the **boards.h** file (located in the **Marlin/src/core** folder).
 
-3. Open the **Configuration.h** file by clicking on it.
+2. Scroll down or use the **Find** command to locate the entry for your board. (e.g., **BOARD_AZTEEG_X5_GT**)
 
-4. As above, set **MOTHERBOARD** to the name of your board.
+3. Open your **Configuration.h** file (located in the **Marlin** folder).
 
-    ```
-    #define MOTHERBOARD BOARD_AZTEEG_X5_GT
-    ```
+4. Change the **MOTHERBOARD** value to the name of your board from **boards.h**.
+   ```
+   #define MOTHERBOARD BOARD_AZTEEG_X5_GT
+   ```
 
-4. Save the file.
+4. Save **Configuration.h** and you're ready to do a test build.
 
 ### Build
 
-1. Click on the "**Auto Build**" menu at the right end of the menus in the main menu bar to bring up the dialog.
+1. Click on the "**Auto Build**" menu at the right end of the Atom menu bar to bring up the dialog.
 
     ![Auto Build (Top)](/assets/images/basics/install_platformio/auto_build_top.png)
 
