@@ -159,11 +159,15 @@ This step is optional, but we recommend doing the minimal build because configur
        
 ### Prepare **platformio.ini**
 
-1. Open the **platformio.ini** file by clicking on it.
+The **Auto Build** option and PlatformIO tasks/build menu will allow you to select your build environment, and it will make the selected environment the default for building until the next program restart. But you can set your environment in **platformio.ini** for a faster build or to make command-line pio build easier.
 
-2. Use the **Find** command or scroll down to locate the entry for **env_default** and make sure its set correctly for your board. (e.g., **megaatmeg2560** or **LPC1768**).
+1. Open the **platformio.ini** file.
 
-The available build environments are listed at the top of **platformio.ini**.
+2. Scroll down or use the **Find** command to locate the **env_default** setting.
+
+3. Change the value to the apprpropriate **env** value for your board. (e.g., **megaatmeg2560** or **LPC1768**).
+
+All available build environment names are listed at the top of **platformio.ini**.
 
 ### Prepare minimal **Configuration.h**
 
