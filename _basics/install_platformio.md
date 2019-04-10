@@ -165,7 +165,7 @@ The **Auto Build** option and PlatformIO tasks/build menu will allow you to sele
 
 2. Scroll down or use the **Find** command to locate the **env_default** setting.
 
-3. Change the value to the apprpropriate **env** value for your board. (e.g., **megaatmeg2560** or **LPC1768**).
+3. Change the value to the appropriate **env** value for your board. (e.g., **megaatmeg2560** or **LPC1768**).
 
 All available build environment names are listed at the top of **platformio.ini**.
 
