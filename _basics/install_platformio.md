@@ -156,26 +156,39 @@ This step is optional, but we recommend doing the minimal build because configur
        The project folder and its contents should appear in the Project Navigator on the left side.
 
        ![Explorer](/assets/images/basics/install_platformio/explorer.png)
+       
+### Prepare **platformio.ini**
+
+The **Auto Build** option and PlatformIO tasks/build menu will allow you to select your build environment, and it will make the selected environment the default for building until the next program restart. But you can set your environment in **platformio.ini** for a faster build or to make command-line pio build easier.
+
+1. Open the **platformio.ini** file.
+
+2. Scroll down or use the **Find** command to locate the **env_default** setting.
+
+3. Change the value to the appropriate **env** value for your board. (e.g., **megaatmeg2560** or **LPC1768**).
+
+All available build environment names are listed at the top of **platformio.ini**.
 
 ### Prepare minimal **Configuration.h**
 
-1. Open the **boards.h** file by clicking on it. In 2.0 you'll need to navigate to a sub directory. From the project pane on the left, open the folders **Marlin** > **src** > **core**.
+For a minimal build you just need to set the `MOTHERBOARD` value appropriate to your printer's control board. Marlin defines all available board names in **boards.h**.
 
-1. Use the **Find** command or scroll down to locate the entry for your board. (e.g., **BOARD_AZTEEG_X5_GT**)
+1. Open the **boards.h** file (located in the **Marlin/src/core** folder).
 
-3. Open the **Configuration.h** file by clicking on it.
+2. Scroll down or use the **Find** command to locate the entry for your board. (e.g., **BOARD_AZTEEG_X5_GT**)
 
-4. As above, set **MOTHERBOARD** to the name of your board.
+3. Open your **Configuration.h** file (located in the **Marlin** folder).
 
-    ```
-    #define MOTHERBOARD BOARD_AZTEEG_X5_GT
-    ```
+4. Change the **MOTHERBOARD** value to the name of your board from **boards.h**.
+   ```
+   #define MOTHERBOARD BOARD_AZTEEG_X5_GT
+   ```
 
-4. Save the file.
+4. Save **Configuration.h** and you're ready to do a test build.
 
 ### Build
 
-1. Click on the "**Auto Build**" menu at the right end of the menus in the main menu bar to bring up the dialog.
+1. Click on the "**Auto Build**" menu at the right end of the Atom menu bar to bring up the dialog.
 
     ![Auto Build (Top)](/assets/images/basics/install_platformio/auto_build_top.png)
 
