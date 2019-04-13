@@ -16,7 +16,7 @@ Marlin has _a lot_ of features, and there are several more in development, but w
 
 # Before Submitting
 
-**Scan the [Feature Requests](https://github.com/MarlinFirmware/Marlin/labels/Feature%20Request) list** to see if a similar request is already in the queue. If there is, you can add comments to the existing request.
+**Scan the [Feature Requests](https://github.com/MarlinFirmware/Marlin/labels/T%3A%20Feature%20Request) list** to see if a similar request is already in the queue. If there is, you can add comments to the existing request.
 
 **Read the [Coding Standards](coding_standards.html)** (especially "[Adding a New Feature](coding_standards.html#adding-a-new-feature)") and review them when preparing your code for submission.
 
