@@ -694,7 +694,7 @@ Don't set these too high. Larger acceleration values can lead to excessive vibra
 
 ***
 
-#### Jerk <em class="fa fa-sticky-note-o" aria-hidden="true"></em> <em class="fa fa-desktop" aria-hidden="true"></em>
+### Jerk <em class="fa fa-sticky-note-o" aria-hidden="true"></em> <em class="fa fa-desktop" aria-hidden="true"></em>
 
 ```cpp
 /**
