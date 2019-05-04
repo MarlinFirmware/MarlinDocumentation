@@ -1,5 +1,5 @@
 ---
-tag: g29b
+tag: g029b
 title: Bed Leveling (Automatic)
 brief: Probe the bed and enable leveling compensation.
 author: thinkyhead
@@ -24,7 +24,7 @@ long:
 
     * For `AUTO_BED_LEVELING_UBL` see [G29 UBL](/docs/gcode/G029-ubl.html) and [G26 Mesh Editing](/docs/gcode/G026.html).
     * For `MESH_BED_LEVELING` see the [G29 MBL](/docs/gcode/G029-mbl.html) page.
-    
+
   - |
     #### Automatic Probing
 
@@ -158,8 +158,8 @@ parameters:
     tag: E
     optional: true
     description: |
-                 - By default G29 will engage the Z probe, test the bed, then disengage. 
-                 - Include "E" to engage/disengage the Z probe for each sample. 
+                 - By default G29 will engage the Z probe, test the bed, then disengage.
+                 - Include "E" to engage/disengage the Z probe for each sample.
                  - There's no extra effect if you have a fixed Z probe. (without `PROBE_MANUALLY`)
     values:
       -

@@ -1,5 +1,5 @@
 ---
-tag: g29c
+tag: g029c
 title: Bed Leveling (Unified)
 brief: Probe the bed and enable leveling compensation.
 
@@ -380,7 +380,7 @@ examples:
     code: |
       M502          ; Reset settings to configuration defaults...
       M500          ; ...and Save to EEPROM. Use this on a new install.
-      M501          ; Read back in the saved EEPROM.  
+      M501          ; Read back in the saved EEPROM.
 
       M190 S65      ; Not required, but having the printer at temperature helps accuracy
       M104 S210     ; Not required, but having the printer at temperature helps accuracy
