@@ -222,12 +222,12 @@ If you have an open issue associated with your Pull Request, include that issue'
 
 Typically you'll get requests to correct, improve and add features to your code.
 The top level steps of doing this are:
-1.	Open your branch in Windows Explorer
-2.	Edit & test your code
-3.	Apply the code to the PR (commit & sync)
-4.	Repeat 1-3 as necessary
-5.	Resolve "All checks have failed" issues
-6.	Make the PR pretty & sync to main repository ( may need to be done multiple times)
+1. Open your branch in Windows Explorer
+2. Edit & test your code
+3. Apply the code to the PR (commit & sync)
+4. Repeat 1-3 as necessary
+5. Resolve "All checks have failed" issues
+6. Make the PR pretty & sync to main repository ( may need to be done multiple times)
 
 ## Open your branch in Windows Explorer
 
@@ -255,8 +255,8 @@ Finish the commit and Sync as you did previously in **Commit changes to your wor
 _**When a branch is associated with a PR, the PR is updated on every Sync.**_
 
 Most of the time you've made changes to the Configuration.h and Configuration_adv.h files that are specific to your printer. Do NOT upload those to the PR. This can be done multiple ways:
-*	Don't copy them into the GitHub directory
-*	Don't include them in the commit
+* Don't copy them into the GitHub directory
+* Don't include them in the commit
 
 ## Repeat the above as necessary
 

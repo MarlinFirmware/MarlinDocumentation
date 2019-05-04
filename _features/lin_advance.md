@@ -75,10 +75,10 @@ For each new line the K-Factor will be increased by the `K-Factor Stepping` valu
 
  - [Bowden](http://reprap.org/wiki/Erik%27s_Bowden_Extruder) extruders need a higher K-Factor than direct extruders. Consider a `Start value for K` of around 0.1 up to an `End Value for K` of around 2.0 for LIN_ADVANCE v1.5 or around 30 up to an `End Value for K` of around 130 for v1.0.
  - The best matching K-Factor to be used in production depends on.
-	 - Type of filament. Extremely flexible filaments like Ninjaflex may not work at all.
-	 - Printing temperature.
-	 - Extruder characteristics: Bowden vs.  direct extruder , bowden length, free filament length in the extruder, etc.
-	 - Nozzle size and geometry.
+   - Type of filament. Extremely flexible filaments like Ninjaflex may not work at all.
+   - Printing temperature.
+   - Extruder characteristics: Bowden vs.  direct extruder , bowden length, free filament length in the extruder, etc.
+   - Nozzle size and geometry.
  - The extruder's steps/mm value has to be [calibrated precisely](http://reprap.org/wiki/Triffid_Hunter%27s_Calibration_Guide#E_steps). Calibration is recommended at low speeds to avoid additional influences.
  - Minimize Backlash caused by gears [geared extruder](http://reprap.org/wiki/Wade%27s_Geared_Extruder) or by push fittings. As it will not influence the K-Factor, it can lead to strange noises from the extruder due to the pressure control.
 
