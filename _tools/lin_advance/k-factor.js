@@ -1,6 +1,6 @@
 /**
  * K-Factor Calibration Pattern
- * Copright (C) 2018 Sineos [https://github.com/Sineos]
+ * Copyright (C) 2019 Sineos [https://github.com/Sineos]
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -184,7 +184,7 @@ function genGcode() {
                   'M190 S' + BED_TEMP + ' ; set bed temperature and wait\n' +
                   'M109 S' + NOZZLE_TEMP + ' ; block waiting for nozzle temp\n' +
                   'G28 ; home all axes with heated bed\n' +
-                  (BED_LEVELING != "0" ? BED_LEVELING + '; Activate bed leveling compensation\n' : '') +
+                  (BED_LEVELING !== '0' ? BED_LEVELING + '; Activate bed leveling compensation\n' : '') +
                   'G21 ; set units to millimeters\n' +
                   'M204 P' + ACCELERATION + ' ; set acceleration\n' +
                   (JERK_X !== -1 ? 'M205 X' + JERK_X + ' ; set X jerk\n' : '') +
@@ -908,39 +908,81 @@ function toggleRetract() {
 
 // sanity checks for pattern / bed size
 function validateInput() {
-  var selectShape = document.getElementById('SHAPE_BED'),
+  var testNaN = {
+        // do not use parseInt or parseFloat for validating, since both
+        // functions will have special parsing characteristics leading to
+        // false numeric validation
+        BEDSIZE_X: document.getElementById('BEDSIZE_X').value,
+        BEDSIZE_Y: document.getElementById('BEDSIZE_Y').value,
+        K_START: document.getElementById('K_START').value,
+        K_END: document.getElementById('K_END').value,
+        K_STEP: document.getElementById('K_STEP').value,
+        SPACE_LINE: document.getElementById('SPACE_LINE').value,
+        SLOW_SPEED: document.getElementById('SLOW_SPEED').value,
+        FAST_SPEED: document.getElementById('FAST_SPEED').value,
+        SLOW_LENGTH: document.getElementById('SLOW_LENGTH').value,
+        FAST_LENGTH: document.getElementById('FAST_LENGTH').value,
+        FIL_DIA: document.getElementById('FIL_DIA').value,
+        NOZ_DIA: document.getElementById('NOZ_DIA').value,
+        NOZ_LIN_R: document.getElementById('NOZ_LIN_R').value,
+        LAYER_HEIGHT: document.getElementById('LAYER_HEIGHT').value,
+        EXTRUSION_MULT: document.getElementById('EXTRUSION_MULT').value,
+        PRIME_EXT: document.getElementById('PRIME_EXT').value,
+        OFFSET_Z: document.getElementById('OFFSET_Z').value,
+        X_JERK: document.getElementById('X_JERK').value,
+        Y_JERK: document.getElementById('Y_JERK').value,
+        Z_JERK: document.getElementById('Z_JERK').value,
+        E_JERK: document.getElementById('E_JERK').value,
+        NOZZLE_TEMP: document.getElementById('NOZZLE_TEMP').value,
+        BED_TEMP: document.getElementById('BED_TEMP').value,
+        MOVE_SPEED: document.getElementById('MOVE_SPEED').value,
+        RETRACT_SPEED: document.getElementById('RETRACT_SPEED').value,
+        PRINT_ACCL: document.getElementById('PRINT_ACCL').value,
+        RETRACTION: document.getElementById('RETRACTION').value,
+        PRIME_SPEED: document.getElementById('PRIME_SPEED').value,
+        DWELL_PRIME: document.getElementById('DWELL_PRIME').value
+      },
+      selectShape = document.getElementById('SHAPE_BED'),
       bedShape = selectShape.options[selectShape.selectedIndex].value,
-      bedX = parseInt(document.getElementById('BEDSIZE_X').value),
-      bedY = parseInt(document.getElementById('BEDSIZE_Y').value),
-      kStart = parseFloat(document.getElementById('K_START').value),
-      kEnd = parseFloat(document.getElementById('K_END').value),
-      kStep = parseFloat(document.getElementById('K_STEP').value),
       selectDir = document.getElementById('DIR_PRINT'),
       printDir = selectDir.options[selectDir.selectedIndex].value,
-      lineSpacing = parseFloat(document.getElementById('SPACE_LINE').value),
       usePrime = document.getElementById('PRIME').checked,
-      lengthSlow = parseFloat(document.getElementById('SLOW_LENGTH').value),
-      lengthFast = parseFloat(document.getElementById('FAST_LENGTH').value),
       useLineNo = document.getElementById('LINE_NO').checked,
-      sizeY = ((kEnd - kStart) / kStep * lineSpacing) + 25, // +25 with ref marking
-      sizeX = (2 * lengthSlow) + lengthFast + (usePrime ? 10 : 0) + (useLineNo ? 8 : 0),
+      sizeY = ((parseFloat(testNaN['K_END']) - parseFloat(testNaN['K_START'])) / parseFloat(testNaN['K_STEP']) * parseFloat(testNaN['SPACE_LINE'])) + 25, // +25 with ref marking
+      sizeX = (2 * parseFloat(testNaN['SLOW_LENGTH'])) + parseFloat(testNaN['FAST_LENGTH']) + (usePrime ? 10 : 0) + (useLineNo ? 8 : 0),
       printDirRad = printDir * Math.PI / 180,
       fitWidth = Math.round10(Math.abs(sizeX * Math.cos(printDirRad)) + Math.abs(sizeY * Math.sin(printDirRad)), 0),
       fitHeight = Math.round10(Math.abs(sizeX * Math.sin(printDirRad)) + Math.abs(sizeY * Math.cos(printDirRad)), 0),
-      decimals = getDecimals(kStep),
+      decimals = getDecimals(parseFloat(testNaN['K_STEP'])),
       invalidDiv = 0;
 
   //Start clean
-  $('#K_START, #K_END, #K_STEP, #SPACE_LINE, #SLOW_LENGTH, #FAST_LENGTH').each(function() {
+  $('#K_START, #K_END, #K_STEP, #SPACE_LINE, #SLOW_LENGTH, #FAST_LENGTH, #FIL_DIA, #NOZ_DIA, #LAYER_HEIGHT, #EXTRUSION_MULT, #PRIME_EXT, #OFFSET_Z, #NOZ_LIN_R, \
+     #NOZZLE_TEMP, #BED_TEMP, #MOVE_SPEED, #RETRACT_SPEED, #PRINT_ACCL, #RETRACTION, #PRIME_SPEED, #DWELL_PRIME, #FAST_SPEED, #SLOW_SPEED, #X_JERK, #Y_JERK, #Z_JERK, #E_JERK').each(function() {
     $(this)[0].setCustomValidity('');
     $('label[for=' + $(this).attr('id') + ']').removeClass('calibpat_invalidSize');
     $('label[for=' + $(this).attr('id') + ']').removeClass('calibpat_invalidDiv');
+    $('label[for=' + $(this).attr('id') + ']').removeClass('calibpat_invalidNumber');
   });
   $('#warning1').hide();
   $('#warning2').hide();
+  $('#warning3').hide();
+  $('#button').prop('disabled', false);
+
+  // Check for proper numerical values
+  Object.keys(testNaN).forEach(function(k) {
+    if ((isNaN(testNaN[k]) && !isFinite(testNaN[k])) || testNaN[k].trim().length === 0) {
+      $('label[for=' + k + ']').addClass('calibpat_invalidNumber');
+      $('#' + k)[0].setCustomValidity('The value is not a proper number.');
+      $('#warning3').text('Some values are not proper numbers. Check highlighted Settings.');
+      $('#warning3').addClass('calibpat_invalidNumber');
+      $('#warning3').show();
+      $('#button').prop('disabled', true);
+    }
+  });
 
   // Check if K-Factor Stepping is a multiple of the K-Factor Range
-  if ((Math.round10(kEnd - kStart, -3) * Math.pow(10, decimals)) % (kStep * Math.pow(10, decimals)) !== 0) {
+  if ((Math.round10(parseFloat(testNaN['K_END']) - parseFloat(testNaN['K_START']), -3) * Math.pow(10, decimals)) % (parseFloat(testNaN['K_STEP']) * Math.pow(10, decimals)) !== 0) {
     $('label[for=K_START]').addClass('calibpat_invalidDiv');
     $('#K_START')[0].setCustomValidity('Your K-Factor range cannot be cleanly divided.');
     $('label[for=K_END]').addClass('calibpat_invalidDiv');
@@ -950,11 +992,12 @@ function validateInput() {
     $('#warning1').text('Your K-Factor range cannot be cleanly divided. Check highlighted Pattern Settings.');
     $('#warning1').addClass('calibpat_invalidDiv');
     $('#warning1').show();
+    $('#button').prop('disabled', true);
     invalidDiv = 1;
   }
 
   // Check if pattern settings exceed bed size
-  if (bedShape === 'Round' && (Math.sqrt(Math.pow(fitWidth, 2) + Math.pow(fitHeight, 2)) > bedX - 5) && fitHeight > fitWidth) {
+  if (bedShape === 'Round' && (Math.sqrt(Math.pow(fitWidth, 2) + Math.pow(fitHeight, 2)) > (parseInt(testNaN['BEDSIZE_X']) - 5)) && fitHeight > fitWidth) {
     $('label[for=K_START]').addClass('calibpat_invalidSize');
     $('#K_START')[0].setCustomValidity('Your Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your bed\'s diameter.');
     $('label[for=K_END]').addClass('calibpat_invalidSize');
@@ -968,7 +1011,7 @@ function validateInput() {
     $((invalidDiv ? '#warning2' : '#warning1')).show();
   }
 
-  if (bedShape === 'Round' && (Math.sqrt(Math.pow(fitWidth, 2) + Math.pow(fitHeight, 2)) > bedX - 5) && fitWidth > fitHeight) {
+  if (bedShape === 'Round' && (Math.sqrt(Math.pow(fitWidth, 2) + Math.pow(fitHeight, 2)) > (parseInt(testNaN['BEDSIZE_X']) - 5)) && fitWidth > fitHeight) {
     $('label[for=SLOW_LENGTH]').addClass('calibpat_invalidSize');
     $('#SLOW_LENGTH')[0].setCustomValidity('Your Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your bed\'s diameter.');
     $('label[for=FAST_LENGTH]').addClass('calibpat_invalidSize');
@@ -978,7 +1021,7 @@ function validateInput() {
     $((invalidDiv ? '#warning2' : '#warning1')).show();
   }
 
-  if (bedShape === 'Rect' && fitWidth > bedX - 5) {
+  if (bedShape === 'Rect' && fitWidth > (parseInt(testNaN['BEDSIZE_X']) - 5)) {
     $('label[for=SLOW_LENGTH]').addClass('calibpat_invalidSize');
     $('#SLOW_LENGTH')[0].setCustomValidity('Your Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your X bed size.');
     $('label[for=FAST_LENGTH]').addClass('calibpat_invalidSize');
@@ -988,7 +1031,7 @@ function validateInput() {
     $((invalidDiv ? '#warning2' : '#warning1')).show();
   }
 
-  if (bedShape === 'Rect' && fitHeight > bedY - 5) {
+  if (bedShape === 'Rect' && fitHeight > (parseInt(testNaN['BEDSIZE_Y']) - 5)) {
     $('label[for=K_START]').addClass('calibpat_invalidSize');
     $('#K_START')[0].setCustomValidity('Your Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your Y bed size.');
     $('label[for=K_END]').addClass('calibpat_invalidSize');
