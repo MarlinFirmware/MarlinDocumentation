@@ -2142,7 +2142,7 @@ Enable this option to scroll long filenames in the SD card menu.
 
 ### Abort on Endstop Hit
 ```cpp
-//#define ABORT_ON_ENDSTOP_HIT_FEATURE_ENABLED
+//#define SD_ABORT_ON_ENDSTOP_HIT
 ```
 Add an option for the firmware to abort SD printing if any endstop is triggered. Turn on with `M540 S1` (or from the LCD menu) and make sure endstops are enabled (`M120`) during SD printing.
 

@@ -276,7 +276,7 @@ Bed Z: -–-                      |MBL Z Offset| `MESH_BED_LEVELING && LCD_BED_L
 [Acceleration >>](#acceleration)|Acceleration settings|
 [Jerk >>](#jerk)                |Jerk settings|
 [Steps/mm >>](#stepsmm)         |Steps/mm for XYZ axes and extruders|
-Endstop abort ON/OFF            || `ABORT_ON_ENDSTOP_HIT_FEATURE_ENABLED`
+Endstop abort ON/OFF            || `SD_ABORT_ON_ENDSTOP_HIT`
 
 ### Feedrate
 
