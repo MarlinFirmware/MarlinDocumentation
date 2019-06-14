@@ -31,32 +31,32 @@ category:     [ tools ]
           </tr>
           <tr>
             <td><label for="FIL_DIA">Filament Diameter:</label></td>
-            <td><input name="FIL_DIA" type="number" id="FIL_DIA" step="any" value="1.75" /></td>
+            <td><input name="FIL_DIA" id="FIL_DIA" step="any" value="1.75" onblur="validateInput()" /></td>
             <td>Diameter of the used filament (mm)</td>
           </tr>
           <tr>
             <td><label for="NOZ_DIA">Nozzle Diameter:</label></td>
-            <td><input name="NOZ_DIA" type="number" id="NOZ_DIA" step="any" value="0.4" /></td>
+            <td><input name="NOZ_DIA" id="NOZ_DIA" step="any" value="0.4" onblur="validateInput()" /></td>
             <td>Diameter of the nozzle (mm)</td>
           </tr>
           <tr>
             <td><label for="NOZZLE_TEMP">Nozzle Temperature:</label></td>
-            <td><input name="NOZZLE_TEMP" type="number" id="NOZZLE_TEMP" step="any" value="205" /></td>
+            <td><input name="NOZZLE_TEMP" id="NOZZLE_TEMP" step="any" value="205" onblur="validateInput()" /></td>
             <td>Nozzle Temperature (°C)</td>
           </tr>
           <tr>
             <td><label for="BED_TEMP">Bed Temperature:</label></td>
-            <td><input name="BED_TEMP" type="number" id="BED_TEMP" step="any" value="60" /></td>
+            <td><input name="BED_TEMP" id="BED_TEMP" step="any" value="60" onblur="validateInput()" /></td>
             <td>Bed Temperature (°C)</td>
           </tr>
           <tr>
             <td><label for="RETRACTION">Retraction Distance:</label></td>
-            <td><input name="RETRACTION" type="number" id="RETRACTION" step="any" value="1" /></td>
+            <td><input name="RETRACTION" id="RETRACTION" step="any" value="1" onblur="validateInput()" /></td>
             <td>Retraction distance (mm)</td>
           </tr>
           <tr>
             <td><label for="LAYER_HEIGHT">Layer Height:</label></td>
-            <td><input name="LAYER_HEIGHT" type="number" id="LAYER_HEIGHT" step="0.1" value="0.2" /></td>
+            <td><input name="LAYER_HEIGHT" id="LAYER_HEIGHT" step="0.1" value="0.2" onblur="validateInput()" /></td>
             <td>Layer Height (mm)</td>
           </tr>
           <tr>
@@ -72,12 +72,12 @@ category:     [ tools ]
           </tr>
           <tr>
             <td><label for="BEDSIZE_X">Bed Size X:</label></td>
-            <td><input name="BEDSIZE_X" type="number" id="BEDSIZE_X" step="any" value="200" /></td>
+            <td><input name="BEDSIZE_X" id="BEDSIZE_X" step="any" value="200" onblur="validateInput()" /></td>
             <td id="shape">Size (mm) of the bed in X</td>
           </tr>
           <tr>
             <td><label for="BEDSIZE_Y">Bed Size Y:</label></td>
-            <td><input name="BEDSIZE_Y" type="number" id="BEDSIZE_Y" step="any" value="200" /></td>
+            <td><input name="BEDSIZE_Y" id="BEDSIZE_Y" step="any" value="200" onblur="validateInput()" /></td>
             <td>Size (mm) of the bed in Y</td>
           </tr>
           <tr>
@@ -95,47 +95,47 @@ category:     [ tools ]
           </tr>
           <tr>
             <td><label for="SLOW_SPEED">Slow Printing Speed:</label></td>
-            <td><input name="SLOW_SPEED" type="number" id="SLOW_SPEED" step="any" value="20" /></td>
+            <td><input name="SLOW_SPEED" id="SLOW_SPEED" step="any" value="20" onblur="validateInput()" /></td>
             <td>Slow printing speed</td>
           </tr>
           <tr>
             <td><label for="FAST_SPEED">Fast Printing Speed:</label></td>
-            <td><input name="FAST_SPEED" type="number" id="FAST_SPEED" step="any" value="70" /></td>
+            <td><input name="FAST_SPEED" id="FAST_SPEED" step="any" value="70" onblur="validateInput()" /></td>
             <td>Fast printing speed. This should differ noticeably from Slow Speed</td>
           </tr>
           <tr>
             <td><label for="MOVE_SPEED">Movement Speed:</label></td>
-            <td><input name="MOVE_SPEED" type="number" id="MOVE_SPEED" step="any" value="120" /></td>
+            <td><input name="MOVE_SPEED" id="MOVE_SPEED" step="any" value="120" onblur="validateInput()" /></td>
             <td>Movement speed</td>
           </tr>
           <tr>
             <td><label for="RETRACT_SPEED">Retract Speed:</label></td>
-            <td><input name="RETRACT_SPEED" type="number" id="RETRACT_SPEED" step="any" value="30" /></td>
+            <td><input name="RETRACT_SPEED" id="RETRACT_SPEED" step="any" value="30" onblur="validateInput()" /></td>
             <td>Retract Speed of the extruder</td>
           </tr>
           <tr>
             <td><label for="PRINT_ACCL">Acceleration:</label></td>
-            <td><input name="PRINT_ACCL" type="number" id="PRINT_ACCL" step="any" value="500" /></td>
+            <td><input name="PRINT_ACCL" id="PRINT_ACCL" step="any" value="500" onblur="validateInput()" /></td>
             <td>Set printing acceleration (mm/s^2)</td>
           </tr>
           <tr>
             <td><label for="X_JERK">Jerk X:</label></td>
-            <td><input name="X_JERK" type="number" id="X_JERK" step="1" value="-1" /></td>
+            <td><input name="X_JERK" id="X_JERK" step="1" value="-1" onblur="validateInput()" /></td>
             <td>Set the Jerk for the X-axis. -1 to use firmware default</td>
           </tr>
           <tr>
             <td><label for="Y_JERK">Jerk Y:</label></td>
-            <td><input name="Y_JERK" type="number" id="Y_JERK" step="1" value="-1" /></td>
+            <td><input name="Y_JERK" id="Y_JERK" step="1" value="-1" onblur="validateInput()" /></td>
             <td>Set the Jerk for the Y-axis. -1 to use firmware default</td>
           </tr>
           <tr>
             <td><label for="Z_JERK">Jerk Z:</label></td>
-            <td><input name="Z_JERK" type="number" id="Z_JERK" step="1" value="-1" /></td>
+            <td><input name="Z_JERK" id="Z_JERK" step="1" value="-1" onblur="validateInput()" /></td>
             <td>Set the Jerk for the Z-axis. -1 to use firmware default</td>
           </tr>
           <tr>
             <td><label for="E_JERK">Jerk E:</label></td>
-            <td><input name="E_JERK" type="number" id="E_JERK" step="1" value="-1" /></td>
+            <td><input name="E_JERK" id="E_JERK" step="1" value="-1" onblur="validateInput()" /></td>
             <td>Set the Jerk for the Extruder. -1 to use firmware default</td>
           </tr>
           <tr>
@@ -159,32 +159,32 @@ category:     [ tools ]
           </tr>
           <tr>
             <td><label for="K_START">Starting Value for K:</label></td>
-            <td><input name="K_START" type="number" id="K_START" step="any" value="0" onblur="validateInput()" /></td>
+            <td><input name="K_START" id="K_START" step="any" value="0" onblur="validateInput()" /></td>
             <td id="start_factor">Starting value for the K-factor. Usually 0 but for bowden setups you might want to start higher, e.g. 30</td>
           </tr>
           <tr>
             <td><label for="K_END">Ending Value for K:</label></td>
-            <td><input name="K_END" type="number" id="K_END" step="any" value="2" onblur="validateInput()" /></td>
+            <td><input name="K_END" id="K_END" step="any" value="2" onblur="validateInput()" /></td>
             <td id="end_factor">Ending value of the K-factor. Bowden setups may be higher than 100</td>
           </tr>
           <tr>
             <td><label for="K_STEP">K-factor Stepping:</label></td>
-            <td><input name="K_STEP" type="number" id="K_STEP" step="any" value="0.2" onblur="validateInput()" /></td>
+            <td><input name="K_STEP" id="K_STEP" step="any" value="0.2" onblur="validateInput()" /></td>
             <td id="step_factor">Stepping of the K-factor in the test pattern. Needs to be an exact divisor of the K-factor Range (End - Start)</td>
           </tr>
           <tr>
             <td><label for="SLOW_LENGTH">Slow Speed Length:</label></td>
-            <td><input name="SLOW_LENGTH" type="number" id="SLOW_LENGTH" step="1" value="20" onblur="validateInput()" /></td>
+            <td><input name="SLOW_LENGTH" id="SLOW_LENGTH" step="1" value="20" onblur="validateInput()" /></td>
             <td>Length of the Slow Speed test-line (mm)</td>
           </tr>
           <tr>
             <td><label for="FAST_LENGTH">Fast Speed Length:</label></td>
-            <td><input name="FAST_LENGTH" type="number" id="FAST_LENGTH" step="1" value="40" onblur="validateInput()" /></td>
+            <td><input name="FAST_LENGTH" id="FAST_LENGTH" step="1" value="40" onblur="validateInput()" /></td>
             <td>Length of the Fast Speed test-line (mm)</td>
           </tr>
           <tr>
             <td><label for="SPACE_LINE">Test Line Spacing:</label></td>
-            <td><input name="SPACE_LINE" type="number" id="SPACE_LINE" step="0.1" value="5" onblur="validateInput()" /></td>
+            <td><input name="SPACE_LINE" id="SPACE_LINE" step="0.1" value="5" onblur="validateInput()" /></td>
             <td>Distance between the test lines. This will impact print size</td>
           </tr>
           <tr>
@@ -216,12 +216,12 @@ category:     [ tools ]
           </tr>
           <tr>
             <td><label for="NOZ_LIN_R">Nozzle Line Ratio:</label></td>
-            <td><input name="NOZ_LIN_R" type="number" id="NOZ_LIN_R" step="0.1" value="1.2" /></td>
+            <td><input name="NOZ_LIN_R" id="NOZ_LIN_R" step="0.1" value="1.2" onblur="validateInput()" /></td>
             <td>Ratio between extruded line width and nozzle diameter. Should be between 1.05 and 1.2</td>
           </tr>
           <tr>
             <td><label for="OFFSET_Z">Z-Offset:</label></td>
-            <td><input name="OFFSET_Z" type="number" id="OFFSET_Z" step="any" value="0" /></td>
+            <td><input name="OFFSET_Z" id="OFFSET_Z" step="any" value="0" onblur="validateInput()" /></td>
             <td>Offset the Z-axis for manual Layer adjustment</td>
           </tr>
           <tr>
@@ -243,7 +243,7 @@ category:     [ tools ]
           </tr>
           <tr>
             <td><label for="EXTRUSION_MULT">Extrusion Multiplier:</label></td>
-            <td><input name="EXTRUSION_MULT" type="number" id="EXTRUSION_MULT" step="0.1" value="1.0" /></td>
+            <td><input name="EXTRUSION_MULT" id="EXTRUSION_MULT" step="0.1" value="1.0" onblur="validateInput()" /></td>
             <td>Usually 1.0</td>
           </tr>
           <tr>
@@ -253,17 +253,17 @@ category:     [ tools ]
           </tr>
           <tr>
             <td><label for="PRIME_EXT">Prime Extrusion Multiplier:</label></td>
-            <td><input name="PRIME_EXT" type="number" id="PRIME_EXT" step="0.1" value="2.5" /></td>
+            <td><input name="PRIME_EXT" id="PRIME_EXT" step="0.1" value="2.5" onblur="validateInput()" /></td>
             <td>The default of 2.5 results in roughly 1mm of filament for 10mm line length</td>
           </tr>
           <tr>
             <td height="24"><label for="PRIME_SPEED">Prime Printing Speed:</label></td>
-            <td><input name="PRIME_SPEED" type="number" id="PRIME_SPEED" step="any" value="30" /></td>
+            <td><input name="PRIME_SPEED" id="PRIME_SPEED" step="any" value="30" onblur="validateInput()" /></td>
             <td>Speed of the prime move</td>
           </tr>
           <tr>
             <td><label for="DWELL_PRIME">Dwell Time:</label></td>
-            <td><input name="DWELL_PRIME" type="number" id="DWELL_PRIME" step="0.1" value="2" /></td>
+            <td><input name="DWELL_PRIME" id="DWELL_PRIME" step="0.1" value="2" onblur="validateInput()" /></td>
             <td>Inserts a pause of x seconds before starting the test pattern to bleed off any residual nozzle pressure</td>
           </tr>
           <tr class="calibpat2">
@@ -272,7 +272,8 @@ category:     [ tools ]
                 <input name="button3" type="button" id="button3" onclick="setLocalStorage()" value="Save as default" />
             </p>
             <p id="warning1" style="display: none;">warning</p>
-            <p id="warning2" style="display: none;">warning</p></td>
+            <p id="warning2" style="display: none;">warning</p>
+            <p id="warning3" style="display: none;">warning</p></td>
             <td><p>
                 <input name="button2" type="button" id="button2" onclick="saveTextAsFile()" value="Download as file" />
               </p></td>

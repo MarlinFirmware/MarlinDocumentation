@@ -108,6 +108,13 @@
   float: left;
   }
 
+.calibpat_invalidNumber {
+  background-color: #FFFF00;
+  font-weight: bold;
+  display: block;
+  float: left;
+  }
+
 :invalid {
   box-shadow: 0 0 3px red;
   outline: 0;
