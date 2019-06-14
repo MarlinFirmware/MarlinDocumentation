@@ -2779,7 +2779,7 @@ This should reduce the noise of the MMU2 but has no effect on the general operat
 
 ### Filament runout handling
 
-Her you define the gcode script which will be executed when the so-called FINDA sensor on the MMU2 detects a filament runout.
+Here you define the gcode script which will be executed when the so-called FINDA sensor on the MMU2 detects a filament runout.
 
 ```cpp
   // G-code to execute when MMU2 F.I.N.D.A. probe detects filament runout
