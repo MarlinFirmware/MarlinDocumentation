@@ -2790,7 +2790,7 @@ The default is M600 which requires [ADVANCED_PAUSE_FEATURE](#advance_pause).
 ### LCD Menu
 
 ```cpp
-  // G-code to execute when MMU2 F.I.N.D.A. probe detects filament runout
+  // Add MMU2 controls to the LCD menu
   #define MMU2_MENUS
 ```
 
