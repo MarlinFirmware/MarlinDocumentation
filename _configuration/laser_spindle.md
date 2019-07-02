@@ -24,11 +24,13 @@ M106 P1 S128 ; Laser at 50%
 M106 P1 S255 ; Laser at 100%
 ```
 
-**NOTE**: As of this edit, Marlin can control up to 3 fans via `M106`/`M107`. To use more pins you may need to modify Marlin as described in [Issue #12961](https://github.com/MarlinFirmware/Marlin/issues/12961).
+**NOTE**: You could use Fan0 if it is available, in which case you will not need to define the above. As of this edit, Marlin can control up to 3 fans via `M106`/`M107`. To use more pins you may need to modify Marlin as described in [Issue #12961](https://github.com/MarlinFirmware/Marlin/issues/12961).
 
 ---
 
+
 # Pins
+Alternatively, you could configure the following to use M3, M4 and M5.
 
 In the `pins_MYBOARD.h` file for your board make sure the following pins are defined:
 ```cpp
@@ -48,7 +50,7 @@ Servos also make hardware PWM(s) unavailable. In this case it's only the "A" PWM
 
 ## ATmega2560 PWM Assignments and Clients
 
-Below is a table that can be used to when selecting the speed pin on a 2560. (Other CPUs include a subset of the 2560 pins.)
+Below is a table that can be used when selecting the speed pin on a 2560. (Other CPUs include a subset of the 2560 pins.)
 
 There are 16 PWM ports assigned to 15 physical pins.
 
