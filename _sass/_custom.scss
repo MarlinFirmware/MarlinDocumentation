@@ -143,13 +143,14 @@ img.floater.framed { border: 4px solid black; }
   background-color: #EEE;
   padding: 0.5em 0.5em 0.25em;
   p { font-size: 85%; }
-}
+  }
 
 #gcode-header h1 { margin-bottom: 4px; }
 
 .row.long>div, .row.usage>div, .row.params>div, .row.notes>div, .row.examples>div {
   margin-left: 1em;
   h3 { margin-left: -1em; }
+  p { font-size: 120% }
 }
 .row.long>div, .row.notes>div { font-size: 110%; }
 .row.examples pre { background: #E9F5FF; }
@@ -249,7 +250,7 @@ body[role=document] {
       background-color: white;
       border-radius: 1em;
       padding: 4px 0.5em 0;
-    }
+      }
     label.tbd, label.tbd:hover { color: #FDD !important; }
   }
   #file-input { display: inline-block; }
@@ -278,7 +279,7 @@ table.pretty-list {
   border: 0;
   th, td { border: 0; vertical-align: top; }
   td:first-child { text-align: right; }
-}
+  }
 table.pretty-list.headless thead { display: none; }
 
 .container.gcode div.tocify.gcode {
