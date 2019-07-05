@@ -85,19 +85,13 @@
             <li><a href="{{ '/meta/needs-review/' }}">Documentation Needing Review</a></li>
           </ul>
         </li>
-
+        <li class="search-box pull-left">
+          <div id="charles-search"></div>
+        </li>
       </ul>
 
       <ul class="nav navbar-nav navbar-right visible-lg-block">
-        <li class="search-box">
-          <script
-            type="text/javascript"
-            id="charlesscript"
-            placeholder="Enter keywords"
-            repo="MarlinFirmware/MarlinDocumentation"
-            src="/assets/javascript/charles.min.js">
-          </script>
-        </li>
+        
         <li>
           {% if page.collection %}
             <a href="{{ site.repository.doc }}/edit/master/{{ page.path }}" data-proofer-ignore>
