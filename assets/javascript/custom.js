@@ -1,19 +1,19 @@
-$( document ).ready(function() {
+$(function() {
     /**
      * Dynamically build the table of contents
      */
     $("#toc").tocify({
-        selectors: (typeof toc_selectors != 'undefined') ? toc_selectors : 'h1,h2,h3',
-        scrollTo: 65,
-        extendPage: false,
-        hashGenerator: 'pretty',
+      selectors: (typeof toc_selectors != 'undefined') ? toc_selectors : 'h1,h2,h3',
+      scrollTo: 65,
+      extendPage: false,
+      hashGenerator: 'pretty',
     });
 
     /**
      * SEO optimization: mark all external link as nofollow
      */
     $('a:not(:has(img))').filter(function() {
-        return this.hostname && this.hostname !== location.hostname;
+      return this.hostname && this.hostname !== location.hostname;
     }).attr('target', '_blank').attr('rel', 'nofollow');
 
     /**
@@ -35,27 +35,21 @@ $( document ).ready(function() {
 
     //responsive submenu - shifts to left on smaller window
     //bootstrap's pull-left is right and vice versa
-    var minWindowWidth = 768;
-    var maxWindowWidth = 1100;
+    var minWindowWidth = 768, maxWindowWidth = 1100;
 
     function shiftSubMenu(){
-        if ($(window).width() >= minWindowWidth && $(window).width() <= maxWindowWidth ){
-            $('.dropdown-menu').addClass('pull-right');
-            $('.dropdown-submenu .dropdown-menu').addClass('flip-left');
-        }
-        else {
-            $('.dropdown-menu').removeClass('pull-right');
-            $('.dropdown-submenu .dropdown-menu').removeClass('flip-left');
-        }
+      if ($(window).width() >= minWindowWidth && $(window).width() <= maxWindowWidth ){
+        $('.dropdown-menu').addClass('pull-right');
+        $('.dropdown-submenu .dropdown-menu').addClass('flip-left');
+      }
+      else {
+        $('.dropdown-menu').removeClass('pull-right');
+        $('.dropdown-submenu .dropdown-menu').removeClass('flip-left');
+      }
     };
 
     shiftSubMenu();
 
-    $(window).resize(function(){
-        shiftSubMenu();
-    }); 
+    $(window).resize(shiftSubMenu);
 
 });
-
-
-
