@@ -53,5 +53,4 @@ $(function() {
 
     $(window).resize(shiftSubMenu);
 
-
 });
