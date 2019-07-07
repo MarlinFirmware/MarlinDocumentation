@@ -344,13 +344,13 @@ var bitmap_converter = function() {
          * Print the data as hex or binary,
          * appending ASCII art if selected.
          */
-        var lastx = iw - 8 - (iw % 8);          // last item in each line
+        var lastx = iw - (iw % 8);              // last item in each line
         console.log('iw is ' + iw);
         console.log('last is ' + lastx);
         for (var y = 0; y < ih; y++) {          // loop Y
           var bitline = ' // ';
           cpp += '  ';
-          for (var x = 0; x < iw; x += 8) {     // loop X
+          for (var x = 0; x <= iw; x += 8) {     // loop X
             var byte = 0;
             for (var b = 0; b < 8; b++) {       // loop 8 bits
               var xx = x + b, i = y * iw + xx,
