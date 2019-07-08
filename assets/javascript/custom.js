@@ -53,4 +53,7 @@ $(function() {
 
     $(window).resize(shiftSubMenu);
 
+    // Fire the singleton init on document.ready
+    jekyllSearch.init();
+
 });
