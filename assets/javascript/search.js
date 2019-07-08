@@ -6,14 +6,16 @@
  * @version  0.1
  */
 
+"use strict";
+
 //
 // Declare a jekyllSearch singleton
 //
 var jekyllSearch = (function(){
 
   var q, jsonFeedUrl = '/feeds/feed.json',
-    $searchForm, $searchInput,
-    $resultTemplate, $resultsPlaceholder,
+    $searchForm, $searchInput, $searchButton,
+    $resultTemplate, $resultsPlaceholder, $results,
     $foundContainer, $foundTerm, $foundCount,
     allowEmpty = true, showLoader = true,
     loadingClass = 'is--loading',
@@ -24,7 +26,7 @@ var jekyllSearch = (function(){
 
     /**
      * Get query string parameter - taken from http://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
-     * @param {String} name 
+     * @param {String} name
      * @return {String} parameter value
      */
     getParameterByName: function(name) {
@@ -36,7 +38,7 @@ var jekyllSearch = (function(){
      * Inject content into template using placeholder
      * @param {String} originalContent
      * @param {String} injection
-     * @param {String} placeholder 
+     * @param {String} placeholder
      * @return {String} injected content
      */
     injectContent: function(originalContent, injection, placeholder) {
@@ -48,7 +50,13 @@ var jekyllSearch = (function(){
     init: function() {
       self = this;
 
-      $('#siteq').hide();
+      if (document.location.href.indexOf('meta/search/') == -1) {
+        setTimeout(function(){ $('#searchbox>form').css('visibility','visible'); }, 1200);
+        return;
+      }
+
+      $(".twitter-follow-button").addClass('loaded');
+      //$(".twitter-follow-button")[0].document.ready(function(){ $(".twitter-follow-button").addClass('loaded'); });
 
       $searchForm = $("[data-search-form]");
       $searchInput = $("[data-search-input]");
@@ -61,6 +69,8 @@ var jekyllSearch = (function(){
 
       // hide items found string
       $foundContainer.hide();
+
+      $resultsPlaceholder.css('padding-top', ($("#search .overlay").height() + 16) + 'px');
 
       /**
        * Initiate search functionality.
@@ -117,9 +127,9 @@ var jekyllSearch = (function(){
      */
     execSearch: function(newq) {
       if (newq != '' || allowEmpty) {
-        q = newq;
+        q = newq.toLowerCase();
         if (showLoader) self.toggleLoadingClass();
-        self.getSearchResults(self.processData());
+        self.getSearchResults(self.resultsProcessor());
         var loc = window.location;
         history.replaceState({}, "marlinfw.org Search", loc.origin + '/meta/search/' + "?q=" + newq);
       }
@@ -136,7 +146,7 @@ var jekyllSearch = (function(){
 
     /**
      * Get Search results from JSON
-     * @param {Function} callbackFunction 
+     * @param {Function} callbackFunction
      * @return null
      */
     getSearchResults: function(callbackFunction) {
@@ -147,16 +157,17 @@ var jekyllSearch = (function(){
      * Process search result data
      * @return null
      */
-    processData: function() {
-      $results = [];
-      
+    resultsProcessor: function() {
+      var results = [];
+
       return function(data) {
-        
+
         var resultsCount = 0, results = '';
 
         $.each(data, function(index, item) {
-          // check if search term is in content or title 
-          if (item.search_omit != 'true' && (item.content.toLowerCase().indexOf(q.toLowerCase()) > -1 || item.title.toLowerCase().indexOf(q.toLowerCase()) > -1)) {
+          // check if search term is in content or title
+          var comp = (item.title + ' ' + item.content).toLowerCase();
+          if (comp.indexOf(q.toLowerCase()) > -1) {
             var result = self.populateResultContent($resultTemplate.html(), item);
             resultsCount++;
             results += result;
@@ -182,7 +193,7 @@ var jekyllSearch = (function(){
 
     /**
      * Add results content to item template
-     * @param {String} html 
+     * @param {String} html
      * @param {object} item
      * @return {String} Populated HTML
      */
@@ -190,16 +201,20 @@ var jekyllSearch = (function(){
       html = self.injectContent(html, item.title, '##Title##');
       html = self.injectContent(html, item.link, '##Url##');
       html = self.injectContent(html, item.excerpt, '##Excerpt##');
+      html = self.injectContent(html, item.html, '##CustomHTML##');
+      html = self.injectContent(html, item.class, '##DivClass##');
+
       if (item.date)
         html = self.injectContent(html, item.date, '##Date##');
       else
         html = self.injectContent(html, '', '<h2 class="date"><a href="##Url##">##Date##</a></h2>');
+
       return html;
     },
 
     /**
      * Populates results string
-     * @param {String} count 
+     * @param {String} count
      * @return null
      */
     populateResultsString: function(count) {
