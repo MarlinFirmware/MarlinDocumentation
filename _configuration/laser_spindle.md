@@ -7,7 +7,7 @@ category: [ configuration ]
 ---
 
 {% alert info %}
-This document is based on Marlin 1.1.2
+This document is based on Marlin 1.1.9
 {% endalert %}
 
 ---
