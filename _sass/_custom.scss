@@ -90,7 +90,22 @@ td.arg code { white-space: nowrap; }
 /*
  * Follow Button
  */
-#navbar-main .twitter-follow-button { margin-top: 16px; }
+#navbar-main {
+  .twitter-follow-button {
+    font-size: 80%;
+    font-weight: bold;
+    color: #1B95E060;
+    margin-left: 42px;
+  }
+  .twitter-follow-button-rendered {
+    font-size: inherit;
+    font-weight: inherit;
+    text-align: inherit;
+    color: inherit;
+    margin-left: 0;
+    margin-top: 16px;
+  }
+}
 
 /*
  * Scrolling code blocks
@@ -165,8 +180,14 @@ body[role=document] {
   }
 }
 
-.gcode-row { border-bottom: 2px solid #888; }
-.gcode-row.odd {
+.gcode.row, [data-search-results]>div {
+  padding-bottom: 1em;
+  border-bottom: 2px solid #888;
+  p { margin-top: 1em; }
+  >span { float: right; margin: 1em 0.5em 0 0; }
+}
+
+.row.odd {
   background: #F8F8FF;
   code, pre, .table>thead>tr>th { background-color: #E0E0F0; }
   .post { background-color: #EAEAFC; }
@@ -317,10 +338,22 @@ footer { clear: both; margin-top: 1em; }
   strong em { font-size: small; color: red; font-weight: bold; text-align: left; }
 }
 
-li#gcse {
-  width: 250px;
+li#searchbox {
+  padding-right: 2em;
   height: 50px;
   overflow: hidden;
+  form {
+    visibility: hidden;
+    display: inline-block;
+    padding: 12px 0;
+  }
+  input[type="search"] {
+    border: 1px solid black;
+    border-radius: 0.25em;
+    padding: 2px 0.25em;
+    color: #A00;
+    font-size: 120%;
+  }
 }
 
 iframe.youtube {
@@ -336,3 +369,28 @@ iframe.youtube {
 hr { margin-top: 0; margin-bottom: 0; }
 
 summary h3 { display: inline; }
+
+#search.container {
+  a { color: #000; text-decoration: none; }
+  p.found { margin: 0.5em 0 0.5em 1em; }
+  form { display: block; max-width: 800px; }
+  input[type="search"] {
+    width: 70%;
+    padding: 4px 0.5em;
+    border: 1px solid black;
+    font-size: 150%;
+    }
+  input[type="submit"] {
+    background: #C4E6DB;
+    border: 1px solid black;
+    border-radius: 4px;
+    padding: 3px 0.5em;
+    font-size: 150%;
+    }
+  .overlay {
+    position: fixed;
+    width: 100%;
+    background: linear-gradient(0deg, #DDF1EA, #DDF1EA, #FFFFFF);
+    padding: 0.25em 0 0 1em;
+  }
+}

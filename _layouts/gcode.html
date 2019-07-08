@@ -34,12 +34,17 @@ layout: default
             {% assign gcode = page %}
             {% include gcode-info.html %}
           {% else %}
+            {% for group in site.gcode.group %}
+              {% assign odd = forloop.index | modulo: 2 %}
+              <div class="gcode row{% if odd == 0 %} odd{% endif %}">
+                {{ group | jsonify }}
+              </div>
+            {% endfor %}
             {% for gcode in site.gcode %}
               {% if gcode.codes %}
                 {% assign odd = forloop.index | modulo: 2 %}
-                <div class="gcode-row{% if odd == 0 %} odd{% endif %}">
-                  {% assign gcode = site.gcode %}
-                  {% include gcode-info.html %}
+                <div class="gcode row{% if odd == 0 %} odd{% endif %}">
+                  {% include gcode-summ.html %}
                 </div>
               {% endif %}
             {% endfor %}

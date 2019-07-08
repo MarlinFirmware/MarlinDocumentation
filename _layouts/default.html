@@ -22,7 +22,6 @@
     <![endif]-->
 
     <script src="{{ '/assets/javascript/head.min.js' | prepend: site.baseurl }}"></script>
-    <script src="https://cse.google.com/cse.js?cx=008694880653106568020:x-ypfjispo4" async="true"></script>
     <script type="text/javascript">
       /**
        * As Github pages do not support https for custom domains
@@ -50,6 +49,7 @@
           "{{ '/assets/javascript/jquery-ui.min.js' | prepend: site.baseurl }}",
           "{{ '/assets/javascript/bootstrap.min.js' | prepend: site.baseurl }}",
           "{{ '/assets/javascript/tocify.min.js' | prepend: site.baseurl }}",
+          "{{ '/assets/javascript/search.js' | prepend: site.baseurl }}",
           "{{ '/assets/javascript/custom.js' | prepend: site.baseurl }}",
 
           "{{ '/assets/javascript/sheetrock.min.js' | prepend: site.baseurl }}",
@@ -57,7 +57,6 @@
       );
 
       head.ready(function() {
-        $('#gcse').html("<gcse:search></gcse:search>");
         window.cookieconsent_options = {
           "message":"We use cookies to ensure you get the best experience on our website",
           "dismiss": "Got it!", "learnMore": "More info", "link":"", "theme": "dark-bottom"

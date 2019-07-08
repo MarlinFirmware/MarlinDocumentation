@@ -88,7 +88,9 @@
       </ul>
 
       <ul class="nav navbar-nav navbar-right visible-lg-block">
-        <li id="gcse"></li>
+        <li id="searchbox">
+          <form action="/meta/search/"><input type="search" name="q" placeholder="Search" /></form>
+        </li>
         <li>
           {% if page.collection %}
             <a href="{{ site.repository.doc }}/edit/master/{{ page.path }}" data-proofer-ignore>

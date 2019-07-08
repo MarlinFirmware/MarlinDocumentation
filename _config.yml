@@ -84,9 +84,6 @@ collections:
     output: true
     permalink: /:collection/:path:output_ext
 
-docs:
-  gs: '/docs/getting-started/'
-
 exclude:
   - '.gitignore'
   - '_config.yml'
