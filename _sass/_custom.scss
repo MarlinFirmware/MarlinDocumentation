@@ -149,7 +149,7 @@ img.floater.framed { border: 4px solid black; }
     background-color: #DDD;
     border-bottom: 1px solid #888;
   }
-  .row { margin-bottom: 0.5em; }
+  .row, .item { margin-bottom: 0.5em; }
   >p { margin-left: 1em; }
 }
 
@@ -180,14 +180,15 @@ body[role=document] {
   }
 }
 
-.gcode.row, [data-search-results]>div {
+.gcode.item, [data-search-results]>.item {
   padding-bottom: 1em;
-  border-bottom: 2px solid #888;
-  p { margin-top: 1em; }
+  border-top: 2px solid #888;
+  p { margin-top: 1em; font-size: 120%; padding-left: 1em; }
   >span { float: right; margin: 1em 0.5em 0 0; }
+  h2 { margin-top: 0; }
 }
 
-.row.odd {
+.item.odd {
   background: #F8F8FF;
   code, pre, .table>thead>tr>th { background-color: #E0E0F0; }
   .post { background-color: #EAEAFC; }
@@ -409,4 +410,5 @@ summary h3 { display: inline; }
     background: linear-gradient(0deg, #DDF1EA, #DDF1EA, #FFFFFF);
     padding: 0.25em 0 0 1em;
   }
+  p.excerpt { font-size: 120%; }
 }

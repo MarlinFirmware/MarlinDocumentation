@@ -3,7 +3,8 @@
  * Requires jQuery (v 1.7+)
  *
  * @author  Mat Hayward - Erskine Design
- * @version  0.1
+ *          Scott Lahteine - Thinkyhead
+ * @version  0.1-MF
  */
 
 "use strict";
@@ -17,9 +18,9 @@ var jekyllSearch = (function(){
     $searchForm, $searchInput, $searchButton,
     $resultTemplate, $resultsPlaceholder, $results,
     $foundContainer, $foundTerm, $foundCount,
-    allowEmpty = true, showLoader = true,
+    allowEmpty = false, showLoader = false,
     loadingClass = 'is--loading',
-    self, searchTimer;
+    self, searchTimer, odd = false;
 
   // Return the public interface
   return {
@@ -55,9 +56,6 @@ var jekyllSearch = (function(){
         return;
       }
 
-      $(".twitter-follow-button").addClass('loaded');
-      //$(".twitter-follow-button")[0].document.ready(function(){ $(".twitter-follow-button").addClass('loaded'); });
-
       $searchForm = $("[data-search-form]");
       $searchInput = $("[data-search-input]");
       $searchButton = $("[data-search-button]");
@@ -69,8 +67,6 @@ var jekyllSearch = (function(){
 
       // hide items found string
       $foundContainer.hide();
-
-      $resultsPlaceholder.css('padding-top', ($("#search .overlay").height() + 16) + 'px');
 
       /**
        * Initiate search functionality.
@@ -115,10 +111,14 @@ var jekyllSearch = (function(){
     },
 
     onSearchKeyUp: function() {
-      if (searchTimer !== undefined) clearTimeout(searchTimer);
+      if (searchTimer) { clearTimeout(searchTimer); searchTimer = 0; }
       var newq = $searchInput.val().trim();
       if (newq.length >= 3)
         searchTimer = setTimeout(self.searchFromField, 800);
+    },
+
+    fixResultsPos: function() {
+      $resultsPlaceholder.css('padding-top', ($("#search .overlay").height() + 5) + 'px');
     },
 
     /**
@@ -189,6 +189,7 @@ var jekyllSearch = (function(){
     showSearchResults: function(results) {
       // Add results HTML to placeholder
       $resultsPlaceholder.html(results);
+      self.fixResultsPos();
     },
 
     /**
@@ -202,13 +203,15 @@ var jekyllSearch = (function(){
       html = self.injectContent(html, item.link, '##Url##');
       html = self.injectContent(html, item.excerpt, '##Excerpt##');
       html = self.injectContent(html, item.html, '##CustomHTML##');
-      html = self.injectContent(html, item.class, '##DivClass##');
+      var c = item.class ? item.class : '';
+      html = self.injectContent(html, 'item ' + (odd ? 'odd ' : '') + c, '##DivClass##');
 
       if (item.date)
         html = self.injectContent(html, item.date, '##Date##');
       else
         html = self.injectContent(html, '', '<h2 class="date"><a href="##Url##">##Date##</a></h2>');
 
+      odd = !odd;
       return html;
     },
 
