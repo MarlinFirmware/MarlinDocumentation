@@ -196,10 +196,13 @@ For a minimal build you just need to set the `MOTHERBOARD` value appropriate to 
 
     ![Auto Build Menu](/assets/images/basics/install_platformio/auto_build_menu.png)
 
+    **`You may be asked to grant VS permission to modify terminal.`**
+
 3. If further info is needed a popup will appear listing the available options. Select the correct option and click "**CONFIRM**".
 
     ![Confirm](/assets/images/basics/install_platformio/select_confirm.png)
 
+    **`This window may appear behind the current window.`**
 
 4. The build window will open and Marlin will be compiled. This may take several minutes to complete.
 

@@ -77,20 +77,19 @@
                 {% endif %}
               {% endfor %}
             {% endif %}
-
             <li><a href="{{ '/docs/basics/troubleshooting.html' }}">Troubleshooting</a></li>
-
             <li class="divider"></li>
-
             <li><a href="{{ '/meta/needs-review/' }}">Documentation Needing Review</a></li>
           </ul>
         </li>
+        <li id="searchbox">
+              <form action="/meta/search/">
+                <input type="search" name="q" placeholder="Search" />
+              </form>
+            </li>
       </ul>
 
       <ul class="nav navbar-nav navbar-right visible-lg-block">
-        <li id="searchbox">
-          <form action="/meta/search/"><input type="search" name="q" placeholder="Search" /></form>
-        </li>
         <li>
           {% if page.collection %}
             <a href="{{ site.repository.doc }}/edit/master/{{ page.path }}" data-proofer-ignore>

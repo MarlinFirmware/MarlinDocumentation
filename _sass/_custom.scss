@@ -321,9 +321,23 @@ footer { clear: both; margin-top: 1em; }
 // Keep footer from overlapping g-codes nav
 @media (min-width: $screen-md-min) {
   .container.gcode+footer { float: right; width: 66%; }
+  //keeps search box on same line as nav menu
+
 }
 @media (min-width: $screen-lg-min) {
   .container.gcode+footer .container { margin-left: 35%; width: 75%; }
+  li#searchbox {
+    input[type="search"] {
+      width: 14em !important;
+    }
+  }
+}
+@media (max-width: $screen-sm-min) {
+  li#searchbox {
+    input[type="search"] {
+      width: 14em !important;
+    }
+  }
 }
 
 .jumbotron {
@@ -339,20 +353,22 @@ footer { clear: both; margin-top: 1em; }
 }
 
 li#searchbox {
-  padding-right: 2em;
+  padding-left: 0.5em;
   height: 50px;
   overflow: hidden;
+
   form {
     visibility: hidden;
     display: inline-block;
     padding: 12px 0;
   }
   input[type="search"] {
-    border: 1px solid black;
+    border: 1px solid #666;
     border-radius: 0.25em;
     padding: 2px 0.25em;
     color: #A00;
-    font-size: 120%;
+    font-size: 100%;
+    width: 7em;
   }
 }
 
