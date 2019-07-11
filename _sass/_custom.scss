@@ -301,7 +301,7 @@ table.pretty-list {
   border: 0;
   th, td { border: 0; vertical-align: top; }
   td:first-child { text-align: right; }
-  }
+}
 table.pretty-list.headless thead { display: none; }
 
 .container.gcode div.tocify.gcode {
@@ -322,23 +322,14 @@ footer { clear: both; margin-top: 1em; }
 // Keep footer from overlapping g-codes nav
 @media (min-width: $screen-md-min) {
   .container.gcode+footer { float: right; width: 66%; }
-  //keeps search box on same line as nav menu
-
+  // keep search box on same line as nav menu
 }
 @media (min-width: $screen-lg-min) {
   .container.gcode+footer .container { margin-left: 35%; width: 75%; }
-  li#searchbox {
-    input[type="search"] {
-      width: 14em !important;
-    }
-  }
+  li#searchbox input[type="search"] { width: 14em !important; }
 }
 @media (max-width: $screen-sm-min) {
-  li#searchbox {
-    input[type="search"] {
-      width: 14em !important;
-    }
-  }
+  li#searchbox input[type="search"] { width: 14em !important; }
 }
 
 .jumbotron {
