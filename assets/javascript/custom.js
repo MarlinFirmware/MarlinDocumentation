@@ -9,7 +9,6 @@ $(function() {
       extendPage: false,
       hashGenerator: 'pretty',
     });
-
     /**
      * SEO optimization: mark all external link as nofollow
      */
@@ -34,9 +33,31 @@ $(function() {
         $(this).addClass('here').parents('li').addClass('here');
     });
 
+
+    //expand first item of tocify (table of content) by default
+    $('.tocify-subheader').first().css('display','block');
+
     //responsive submenu - shifts to left on smaller window
     //bootstrap's pull-left is right and vice versa
     var minWindowWidth = 768, maxWindowWidth = 1100;
+
+        //// Resize image to fit panel
+    function resizeImage(){
+        $('img').each(function(){
+          if (this.width >= 600){
+            if ($(window).width() >= maxWindowWidth+100){
+              $(this).css('width','840px');
+            }
+            else if ($(window).width() >= minWindowWidth && $(window).width() < maxWindowWidth+100){
+              $(this).css('width','90%');
+            }
+          }
+          else {
+            
+          }
+
+        });
+    };
 
     function shiftSubMenu(){
       if ($(window).width() >= minWindowWidth && $(window).width() <= maxWindowWidth ){
@@ -50,8 +71,9 @@ $(function() {
     };
 
     shiftSubMenu();
+    resizeImage();
 
-    $(window).resize(shiftSubMenu);
+    $(window).resize(shiftSubMenu, resizeImage);
 
     // Fire the singleton init on document.ready
     jekyllSearch.init();
