@@ -6,9 +6,6 @@ author: Bob-the-Kuhn
 contrib:
 category: [ articles, getting-started ]
 ---
-<style type="text/css">
-  ol ol { list-style-type: upper-alpha; }
-</style>
 
 Before reading this article, you should have already read [Installing Marlin with PlatformIO](install_arduino.html).
 

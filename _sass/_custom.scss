@@ -412,3 +412,8 @@ summary h3 { display: inline; }
   }
   p.excerpt { font-size: 120%; }
 }
+
+#install_platformio-page .custom-article ol ol,
+#install_platformio_sublime-page .custom-article ol ol {
+  list-style-type: upper-alpha;
+}
