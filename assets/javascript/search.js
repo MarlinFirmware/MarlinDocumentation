@@ -52,7 +52,7 @@ var jekyllSearch = (function(){
       self = this;
 
       if (document.location.href.indexOf('meta/search/') == -1) {
-        setTimeout(function(){ $('#searchbox>form').css('visibility','visible'); }, 800);
+        setTimeout(function(){ $('#searchbox>form').css('display','inline-block'); }, 800);
         return;
       }
 

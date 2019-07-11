@@ -319,19 +319,6 @@ div[role=main] { padding-bottom: 50vh; }
 
 footer { clear: both; margin-top: 1em; }
 
-// Keep footer from overlapping g-codes nav
-@media (min-width: $screen-md-min) {
-  .container.gcode+footer { float: right; width: 66%; }
-  // keep search box on same line as nav menu
-}
-@media (min-width: $screen-lg-min) {
-  .container.gcode+footer .container { margin-left: 35%; width: 75%; }
-  li#searchbox input[type="search"] { width: 14em !important; }
-}
-@media (max-width: $screen-sm-min) {
-  li#searchbox input[type="search"] { width: 14em !important; }
-}
-
 .jumbotron {
   h1, p { text-align: center; }
   ul li { display: block; margin: 0.5em auto; width: 20em; }
@@ -350,8 +337,7 @@ li#searchbox {
   overflow: hidden;
 
   form {
-    visibility: hidden;
-    display: inline-block;
+    display: none;
     padding: 12px 0;
   }
   input[type="search"] {
@@ -399,7 +385,7 @@ summary h3 { display: inline; }
     position: fixed;
     width: 100%;
     background: linear-gradient(0deg, #DDF1EA, #DDF1EA, #FFFFFF);
-    padding: 0 0 0 1em;
+    padding: 0 20px 0 20px;
   }
   p.excerpt { font-size: 120%; }
 }
@@ -407,4 +393,28 @@ summary h3 { display: inline; }
 #install_platformio-page .custom-article ol ol,
 #install_platformio_sublime-page .custom-article ol ol {
   list-style-type: upper-alpha;
+}
+
+// Keep footer from overlapping g-codes nav
+@media (min-width: $screen-sm-min) {
+  #search.container .overlay { width: 720px; }
+  .navbar-nav>li>a { padding-left: 8px; padding-right: 8px; }
+  .navbar-brand { padding: 15px 2px; }
+}
+@media (min-width: $screen-md-min) {
+  .container.gcode+footer { float: right; width: 66%; }
+  li#searchbox input[type="search"] { width: 13em !important; }
+  #search.container .overlay { width: 940px; }
+  .navbar-nav>li>a { padding-left: 12px; padding-right: 12px; }
+  .navbar-brand { padding: 15px 8px; }
+}
+@media (min-width: $screen-lg-min) {
+  .container.gcode+footer .container { margin-left: 35%; width: 75%; }
+  li#searchbox input[type="search"] { width: 14em !important; }
+  #search.container .overlay { width: 1140px; }
+  .navbar-nav>li>a { padding-left: 15px; padding-right: 15px; }
+  .navbar-brand { padding: 15px 15px; }
+}
+@media (max-width: $screen-sm-min) {
+  li#searchbox input[type="search"] { width: 12em !important; }
 }
