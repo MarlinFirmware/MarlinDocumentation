@@ -188,6 +188,37 @@ body[role=document] {
   h2 { margin-top: 0; }
 }
 
+[data-search-results]>.item h2 {
+  margin-bottom: 0;
+  padding: 0;
+  a { display: block; padding: 4px; }
+}
+
+#search.container [data-search-results]>.item:hover a {
+  color: #00F;
+}
+
+[data-search-results]>h1 {
+  text-transform: capitalize;
+  color: #FFF;
+  display: block;
+  width: 12em;
+  margin: 0.125em 0 0.25em;
+  background: #BBB;
+  padding: 0.25em 0 0.25em 0.25em;
+  border-top-right-radius: 0.75em;
+  border-bottom-right-radius: 0.75em;
+  border-top-left-radius: 0.125em;
+  border-bottom-left-radius: 0.125em;
+}
+
+h1.gcode { background: #B88; }
+h1.basics { background: #8B8; }
+h1.feat { background: #8BB; }
+h1.hardware { background: #88B; }
+h1.devel { background: #BB8; }
+h1.config { background: #B8B; }
+
 .item.odd {
   background: #F8F8FF;
   code, pre, .table>thead>tr>th { background-color: #E0E0F0; }
@@ -315,7 +346,7 @@ table.pretty-list.headless thead { display: none; }
 .tocify.gcode>ul { padding: 65px 0 1em; }
 .nav-list > li > a strong { color: #900; }
 
-div[role=main] { padding-bottom: 50vh; }
+div[role=main] { padding-bottom: 33vh; }
 
 footer { clear: both; margin-top: 1em; }
 
@@ -387,7 +418,10 @@ summary h3 { display: inline; }
     background: linear-gradient(0deg, #DDF1EA, #DDF1EA, #FFFFFF);
     padding: 0 20px 0 20px;
   }
-  p.excerpt { font-size: 120%; }
+  p.excerpt {
+    font-size: 120%; padding: 0; margin: 0;
+    a { display: block; padding: 20px; }
+  }
 }
 
 #install_platformio-page .custom-article ol ol,

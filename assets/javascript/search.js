@@ -20,7 +20,8 @@ var jekyllSearch = (function(){
     $foundContainer, $foundTerm, $foundCount,
     allowEmpty = false, showLoader = false,
     loadingClass = 'is--loading',
-    self, searchTimer, odd = false;
+    self, searchTimer, odd = false,
+    section_head = { gcode:"G-code", basics:"Getting Started", config:"Configuration", feat:"Features", devel:"Development" };
 
   // Return the public interface
   return {
@@ -105,7 +106,8 @@ var jekyllSearch = (function(){
 
     onSearchChanged: function(e) {
       e.preventDefault();
-      if ($searchInput.val().trim().length >= 3)
+      var newq = $searchInput.val().trim();
+      if (newq.length >= 3 || newq.match(/^[gm]\d+/i))
         self.searchFromField();
       return false;
     },
@@ -113,12 +115,13 @@ var jekyllSearch = (function(){
     onSearchKeyUp: function() {
       if (searchTimer) { clearTimeout(searchTimer); searchTimer = 0; }
       var newq = $searchInput.val().trim();
-      if (newq.length >= 3)
+      if (newq.length >= 3 || newq.match(/^[gm]\d+/i))
         searchTimer = setTimeout(self.searchFromField, 800);
     },
 
     fixResultsPos: function() {
       $resultsPlaceholder.css('padding-top', ($("#search .overlay").height() + 6) + 'px');
+      $(window).scrollTop(0);
     },
 
     /**
@@ -162,12 +165,19 @@ var jekyllSearch = (function(){
 
       return function(data) {
 
-        var resultsCount = 0, results = '';
+        //console.log(data);
+
+        var resultsCount = 0, results = '', lastclass = '';
 
         $.each(data, function(index, item) {
           // check if search term is in content or title
           var comp = (item.title + ' ' + item.content).toLowerCase();
           if (comp.indexOf(q.toLowerCase()) > -1) {
+            if (item.class != lastclass) {
+              lastclass = item.class;
+              var fancy = section_head[item.class];
+              results += '<h1 class="' + item.class + '">' + (fancy ? fancy : item.class) + '</h1>';
+            }
             var result = self.populateResultContent($resultTemplate.html(), item);
             resultsCount++;
             results += result;
@@ -202,7 +212,18 @@ var jekyllSearch = (function(){
       html = self.injectContent(html, item.title, '##Title##');
       html = self.injectContent(html, item.link, '##Url##');
       html = self.injectContent(html, item.excerpt, '##Excerpt##');
-      html = self.injectContent(html, item.html, '##CustomHTML##');
+      var extra_tags = '';
+      if (item.exp !== undefined)
+        extra_tags += '<span class="label label-warning"><span data-toggle="tooltip" data-placement="bottom" title="Experimental feature"><i class="fa fa-flask" aria-hidden="true"></i></span></span>';
+      if (item.since !== undefined)
+        extra_tags += '<span class="label label-success"><span data-toggle="tooltip" data-placement="bottom" title="Available since"><i class="fa fa-code" aria-hidden="true"></i>' + item.since + '</span></span>';
+      if (item.group !== undefined)
+        extra_tags += '<span class="label label-default"><i class="fa fa-tags" aria-hidden="true"></i>' + item.group + '</span>';
+      if (item.requires !== undefined)
+        $.each(item.requires.split(","), function() {
+          extra_tags += '<span class="label label-requires"><code>' + this + '</code></span>';
+        });
+      html = self.injectContent(html, extra_tags, '##CustomHTML##');
       var c = item.class ? item.class : '';
       html = self.injectContent(html, 'item ' + (odd ? 'odd ' : '') + c, '##DivClass##');
 
