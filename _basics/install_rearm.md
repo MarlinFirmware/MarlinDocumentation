@@ -181,7 +181,7 @@ We strongly suggest rebuilding your configs using one of the included example co
 
 All of Re-Arm's logic pins are 3.3V, but all pins (except analog!) are 5V tolerant, so there's no reason to worry about voltage-divided induction sensor signal voltages or other 5V devices you may be using.
 
-1. Connect using your host terminal to check that the board is working. Start by sending an `M119` to get a report of the endstops, and try `M500` to initialize the `eprom.dat` file.
+1. Connect using your host terminal to check that the board is working. Start by sending an `M119` to get a report of the endstops, and try `M502` followed by `M500` to initialize the emulated EEPROM data.
 
 2. Unplug the USB cable from the board.
 
