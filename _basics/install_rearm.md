@@ -25,7 +25,7 @@ To increase your chances of success, start out with the default Marlin configura
 
 **Follow this procedure exactly!** An improperly-formatted card may seem to be working but the board will not be able to write the required `FIRMWARE.CUR` file. This can (and does) cause a lot of frustration.
 
-On 32-bit boards the onboard SD card is used to store to the board's operating system (in this case, Marlin Firmware) and data. It cannot be used to store G-code for printing. For SD card printing you must use a separate SD card reader in a dedicated unit, such as an LCD controller.
+On LPC1768/1769-based boards the onboard SD card is used to store the board's operating system (in this case, Marlin Firmware) and data. It will also be used by default to store gcode files. Some boards also have the option of using an SD card connected to an LCD screen for gcode storage, however the onboard SD card will still be required for firmware storage.
 
 **Important:**  If your SD card is larger than 32GB, _it must be partitioned_ so that the first partion is no larger than 32GB. The other partitions don't matter. Please refer to your system's tools or do a web search for "partition SD card."
 
