@@ -191,6 +191,7 @@ For a minimal build you just need to set the `MOTHERBOARD` value appropriate to 
 1. Click on the "**Auto Build**" menu at the right end of the Atom menu bar to bring up the dialog.
 
     ![Auto Build (Top)](/assets/images/basics/install_platformio/auto_build_top.png)
+    You may be asked to grant VS permission to modify terminal.
 
 2. A submenu will pop up. Click "**PIO Build**".
 
@@ -199,7 +200,7 @@ For a minimal build you just need to set the `MOTHERBOARD` value appropriate to 
 3. If further info is needed a popup will appear listing the available options. Select the correct option and click "**CONFIRM**".
 
     ![Confirm](/assets/images/basics/install_platformio/select_confirm.png)
-
+    This popup may appear behind the current window.
 
 4. The build window will open and Marlin will be compiled. This may take several minutes to complete.
 
