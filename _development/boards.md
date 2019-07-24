@@ -9,6 +9,7 @@ category: [ development, hardware ]
 ---
 
 ### General information
+
 Marlin supports a wide variety of 3D printers, including all RAMPS variants, and is adaptable to virtually any Arduino/Genuino-based electronics through pin-mapping - associating pins with their functions. With the addition of a hardware abstraction layer, Marlin 1.2 will address an even wider variety of boards.
 
 Several files in the Marlin source code provide hardware support, but the files supporting the core electronics are:

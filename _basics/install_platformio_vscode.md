@@ -1,6 +1,6 @@
 ---
-title:        Installing Marlin (VS code)
-description:  Marlin Installation Quick Start Guide, PlatformIO with VS code
+title:        Installing Marlin (VSCode)
+description:  Marlin Installation Quick Start Guide, PlatformIO with VSCode
 
 author: Bob-the-Kuhn
 contrib:
@@ -9,21 +9,23 @@ category: [ articles, getting-started ]
 
 Before reading this article, you should have already read [Installing Marlin with PlatformIO](install_platformio.html).
 
-# Auto Build support for VS code
+![PlatformIO with VSCode](/assets/images/basics/install_platformio_vscode/platformio-vscode-screenshot.png)
 
-The Marlin `VS code` extension provides access to the `Auto Build` script for the `VS code IDE`.
+# Auto Build support for VSCode
+
+The Marlin `VSCode` extension provides access to the `Auto Build` script for the `VSCode IDE`.
 
 ## Installation
 
-### 1. Install VS code
+### 1. Install VSCode
 
 Pointers to setup instructions for the supported platforms are near the top of [Setting up Visual Studio Code](https://code.visualstudio.com/docs/setup/setup-overview).
 
 ### 2. Install this extension
 
-Copy the directory `buildroot/share/VS_code/AutoBuildMarlin` to the `VS code` extension directory and then (re)start `VS code`.
+Copy the directory `buildroot/share/VS_code/AutoBuildMarlin` to the `VSCode` extension directory and then (re)start `VSCode`.
 
-The `VS code` extension directory is usually located at:
+The `VSCode` extension directory is usually located at:
 - Windows - C:/Users/YOUR_USER_NAME/.vscode/extensions
 - Mac - /Users/YOUR_USER_NAME/.vscode/extensions
 - Linux - /home/YOUR_USER_NAME/.vscode/extensions
@@ -77,9 +79,9 @@ This brings up the Auto Build menu icon bar.
 
 # Manual Selection of PlatformIO Build and Upload Tasks
 
-PlatformIO in **VS code** uses a different method to initiate the Build, Clean, and Upload tasks than is shown in [Installing Marlin with PlatformIO](install_arduino.html).
+PlatformIO in **VSCode** uses a different method to initiate the Build, Clean, and Upload tasks than is shown in [Installing Marlin with PlatformIO](install_arduino.html).
 
-With **VS code** the process is:
+With **VSCode** the process is:
 1. Get the correct environment for the selected board. This is the same as [Installing Marlin with PlatformIO](install_arduino.html).
 1. Set the default environment in platformio.ini
 1. Initiate Build, Clean or Upload task

@@ -33,18 +33,16 @@
           </ul>
         </li>
 
+        {% assign list = ('' | split: '|') %}
+        {% for col in site.collections %}
+          {% if col.title %}{% assign list = list | push: col %}{% endif %}
+        {% endfor %}
+        {% if list.size > 0 %}{% assign list = (list | sort: 'title') %}{% endif %}
+
         <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="navbar-documentation">Documentation <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            {% assign list = ('' | split: '|') %}
-            {% for col in site.collections %}
-              {% if col.title %}
-                {% assign list = list | push: col %}
-              {% endif %}
-            {% endfor %}
-
             {% if list.size > 0 %}
-              {% assign list = (list | sort: 'title') %}
               {% for col in list %}
                 {% if col.title %}
                   <li class="dropdown-submenu {{ col.label }}">
@@ -77,20 +75,19 @@
                 {% endif %}
               {% endfor %}
             {% endif %}
-
             <li><a href="{{ '/docs/basics/troubleshooting.html' }}">Troubleshooting</a></li>
-
             <li class="divider"></li>
-
             <li><a href="{{ '/meta/needs-review/' }}">Documentation Needing Review</a></li>
           </ul>
+        </li>
+        <li id="searchbox">
+          <form action="/meta/search/">
+            <input type="search" name="q" placeholder="Search" />
+          </form>
         </li>
       </ul>
 
       <ul class="nav navbar-nav navbar-right visible-lg-block">
-        <li id="searchbox">
-          <form action="/meta/search/"><input type="search" name="q" placeholder="Search" /></form>
-        </li>
         <li>
           {% if page.collection %}
             <a href="{{ site.repository.doc }}/edit/master/{{ page.path }}" data-proofer-ignore>

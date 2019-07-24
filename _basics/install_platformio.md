@@ -6,9 +6,6 @@ author: ModMike
 contrib: thinkyhead, Bob-the-Kuhn
 category: [ articles, getting-started ]
 ---
-<style type="text/css">
-  ol ol { list-style-type: upper-alpha; }
-</style>
 
 Before reading this article, you should have already read [Installing Marlin](install.html) and downloaded the Marlin source code. If you haven't done these steps yet, take [one step back](install.html), then follow the link back to this page to continue the process.
 
@@ -197,10 +194,13 @@ For a minimal build you just need to set the `MOTHERBOARD` value appropriate to 
 
     ![Auto Build Menu](/assets/images/basics/install_platformio/auto_build_menu.png)
 
+    **`You may be asked to grant VSCode permission to modify Terminal.`**
+
 3. If further info is needed a popup will appear listing the available options. Select the correct option and click "**CONFIRM**".
 
     ![Confirm](/assets/images/basics/install_platformio/select_confirm.png)
-    This popup may appear behind the current window.
+
+    **`This window may appear behind the current window.`**
 
 4. The build window will open and Marlin will be compiled. This may take several minutes to complete.
 

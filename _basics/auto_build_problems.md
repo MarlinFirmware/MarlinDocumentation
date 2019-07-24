@@ -1,18 +1,17 @@
 ---
-title:        Auto Build Run Time Problems
-description:  Troubleshooting run time problems with Auto Build
+title:        Auto Build Troubleshooting
+description:  Troubleshooting problems with Auto Build
 
 author: Bob-the-Kuhn
 contrib:
 category: [ articles, getting-started ]
 ---
 
+# Autobuild Error Messages
 
-# Run Time problems
+Autobuild is launched from within a terminal/shell window. When Auto Build encounters a problem it always displays an error message in either the Launch window or the Auto Build window.
 
-Autobuild is launched from within a terminal/shell window.  When Auto Build encounters a run time problem an error message is always displayed in either the launch window or in the Auto Build window.
-
-If Auto Build hasn't yet opened a window then the error message is immediately visible in the launch window.  If Auto Build has opened a window then it must be closed before the error message is shown in the launch window.
+If Auto Build hasn't yet opened a window the error message will be immediately visible in the Launch window. If Auto Build has opened a window then it must be closed before the error message will be shown in the Launch window.
 
 ## Windows: TCL Problem
 

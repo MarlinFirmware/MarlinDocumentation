@@ -149,7 +149,7 @@ img.floater.framed { border: 4px solid black; }
     background-color: #DDD;
     border-bottom: 1px solid #888;
   }
-  .row { margin-bottom: 0.5em; }
+  .row, .item { margin-bottom: 0.5em; }
   >p { margin-left: 1em; }
 }
 
@@ -180,14 +180,46 @@ body[role=document] {
   }
 }
 
-.gcode.row, [data-search-results]>div {
+.gcode.item, [data-search-results]>.item {
   padding-bottom: 1em;
-  border-bottom: 2px solid #888;
-  p { margin-top: 1em; }
+  border-top: 2px solid #888;
+  p { margin-top: 1em; font-size: 120%; padding-left: 1em; }
   >span { float: right; margin: 1em 0.5em 0 0; }
+  h2 { margin-top: 0; }
 }
 
-.row.odd {
+[data-search-results]>.item h2 {
+  margin-bottom: 0;
+  padding: 0;
+  a { display: block; padding: 4px; }
+}
+
+#search.container [data-search-results]>.item:hover a {
+  color: #00F;
+}
+
+[data-search-results]>h1 {
+  text-transform: capitalize;
+  color: #FFF;
+  display: block;
+  width: 12em;
+  margin: 0.125em 0 0.25em;
+  background: #BBB;
+  padding: 0.25em 0 0.25em 0.25em;
+  border-top-right-radius: 0.75em;
+  border-bottom-right-radius: 0.75em;
+  border-top-left-radius: 0.125em;
+  border-bottom-left-radius: 0.125em;
+}
+
+h1.gcode { background: #B88; }
+h1.basics { background: #8B8; }
+h1.feat { background: #8BB; }
+h1.hardware { background: #88B; }
+h1.devel { background: #BB8; }
+h1.config { background: #B8B; }
+
+.item.odd {
   background: #F8F8FF;
   code, pre, .table>thead>tr>th { background-color: #E0E0F0; }
   .post { background-color: #EAEAFC; }
@@ -300,7 +332,7 @@ table.pretty-list {
   border: 0;
   th, td { border: 0; vertical-align: top; }
   td:first-child { text-align: right; }
-  }
+}
 table.pretty-list.headless thead { display: none; }
 
 .container.gcode div.tocify.gcode {
@@ -314,17 +346,9 @@ table.pretty-list.headless thead { display: none; }
 .tocify.gcode>ul { padding: 65px 0 1em; }
 .nav-list > li > a strong { color: #900; }
 
-div[role=main] { padding-bottom: 50vh; }
+div[role=main] { padding-bottom: 33vh; }
 
 footer { clear: both; margin-top: 1em; }
-
-// Keep footer from overlapping g-codes nav
-@media (min-width: $screen-md-min) {
-  .container.gcode+footer { float: right; width: 66%; }
-}
-@media (min-width: $screen-lg-min) {
-  .container.gcode+footer .container { margin-left: 35%; width: 75%; }
-}
 
 .jumbotron {
   h1, p { text-align: center; }
@@ -339,20 +363,21 @@ footer { clear: both; margin-top: 1em; }
 }
 
 li#searchbox {
-  padding-right: 2em;
+  padding-left: 0.5em;
   height: 50px;
   overflow: hidden;
+
   form {
-    visibility: hidden;
-    display: inline-block;
+    display: none;
     padding: 12px 0;
   }
   input[type="search"] {
-    border: 1px solid black;
+    border: 1px solid #666;
     border-radius: 0.25em;
     padding: 2px 0.25em;
     color: #A00;
-    font-size: 120%;
+    font-size: 100%;
+    width: 7em;
   }
 }
 
@@ -391,6 +416,39 @@ summary h3 { display: inline; }
     position: fixed;
     width: 100%;
     background: linear-gradient(0deg, #DDF1EA, #DDF1EA, #FFFFFF);
-    padding: 0.25em 0 0 1em;
+    padding: 0 20px 0 20px;
   }
+  p.excerpt {
+    font-size: 120%; padding: 0; margin: 0;
+    a { display: block; padding: 20px; }
+  }
+}
+
+#install_platformio-page .custom-article ol ol,
+#install_platformio_sublime-page .custom-article ol ol {
+  list-style-type: upper-alpha;
+}
+
+// Keep footer from overlapping g-codes nav
+@media (min-width: $screen-sm-min) {
+  #search.container .overlay { width: 720px; }
+  .navbar-nav>li>a { padding-left: 8px; padding-right: 8px; }
+  .navbar-brand { padding: 15px 2px; }
+}
+@media (min-width: $screen-md-min) {
+  .container.gcode+footer { float: right; width: 66%; }
+  li#searchbox input[type="search"] { width: 13em !important; }
+  #search.container .overlay { width: 940px; }
+  .navbar-nav>li>a { padding-left: 12px; padding-right: 12px; }
+  .navbar-brand { padding: 15px 8px; }
+}
+@media (min-width: $screen-lg-min) {
+  .container.gcode+footer .container { margin-left: 35%; width: 75%; }
+  li#searchbox input[type="search"] { width: 14em !important; }
+  #search.container .overlay { width: 1140px; }
+  .navbar-nav>li>a { padding-left: 15px; padding-right: 15px; }
+  .navbar-brand { padding: 15px 15px; }
+}
+@media (max-width: $screen-sm-min) {
+  li#searchbox input[type="search"] { width: 12em !important; }
 }
