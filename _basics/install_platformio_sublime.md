@@ -7,7 +7,7 @@ contrib:
 category: [ articles, getting-started ]
 ---
 
-Before reading this article, you should have already read [Installing Marlin with PlatformIO](install_arduino.html).
+Before reading this article, you should have already read [Installing Marlin with PlatformIO](install_platformio.html).
 
 # Auto Build support for Sublime
 
