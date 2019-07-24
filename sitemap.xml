@@ -2,14 +2,14 @@
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
         <loc>http://marlinfw.org/feeds/feed.json</loc>
-        <lastmod>2019-07-14T10:07:39+01:00</lastmod>
+        <lastmod>2019-07-24T06:45:44+01:00</lastmod>
     </url>
     <url>
         <loc>http://marlinfw.org/</loc>
-        <lastmod>2019-07-14T02:44:38+01:00</lastmod>
+        <lastmod>2019-07-24T06:45:44+01:00</lastmod>
     </url>
     <url>
         <loc>http://marlinfw.org/assets/stylesheets/main.css</loc>
-        <lastmod>2019-07-11T19:44:46+01:00</lastmod>
+        <lastmod>2019-07-24T06:45:44+01:00</lastmod>
     </url>
 </urlset>
