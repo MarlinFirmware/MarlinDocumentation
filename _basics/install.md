@@ -41,6 +41,11 @@ Follow one of these links to install Marlin:
 - [Install Marlin with PlatformIO](install_platformio.html) : To auto-install Marlin 1.1 or Marlin 2.0 on _any_ board, including AVR.
 - [Install Marlin on Re-ARM](install_rearm.html) : To manually install Marlin 2.0 using Re-Arm as the example.
 
+{% alert info %}
+Example configurations for supported machines can be found in the '/config/examples' folder
+{% endalert %}
+
+
 ### Troubleshooting
 
 Troubleshooting a complex piece of software with a minimal interface can sometimes be challenging, even for the most experienced 3D printing enthusiast. Please use our [Troubleshooting Guide](troubleshooting.html) for workthroughs of the most common problems.

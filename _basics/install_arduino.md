@@ -21,11 +21,20 @@ The first thing you'll need to do is [download Arduino IDE](http://www.arduino.c
 
 ### Preparation
 
-1. Double-click the `Marlin.ino` file to open it in Arduino IDE.
+. Double-click the `Marlin.ino` file to open it in Arduino IDE.
+
+![Launch 'Marlin.ino'](/assets/images/basics/install_arduino/marlin_ino.png)
+
+![Arduino starting](/assets/images/basics/install_arduino/arduino.png)
 
 1. In Arduino IDE, select your board from the **Tools > Board** menu.<br />(Note: You may need to [add support](https://www.arduino.cc/en/Guide/Cores) for your board to Arduino.)
 
+![Select board](/assets/images/basics/install_arduino/select_board.png)
+
+
 1. Select the serial (USB) port your board is connected to in the **Tools > Port** menu.
+
+![Select board](/assets/images/basics/install_arduino/select_usb_port.png)
 
 ### Verify / Compile
 
