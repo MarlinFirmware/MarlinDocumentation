@@ -3,7 +3,7 @@ title:        Installing Marlin (PlatformIO)
 description:  Marlin Installation Quick Start Guide
 
 author: ModMike
-contrib: thinkyhead, Bob-the-Kuhn
+contrib: thinkyhead, Bob-the-Kuhn, shitcreek
 category: [ articles, getting-started ]
 ---
 
@@ -16,8 +16,8 @@ PlatformIO is available as a stand alone CLI tool and as a plugin for 10+ enviro
 - Microsoft's **Visual Studio Code** (aka ***VSCode***)
 - ***Sublime***
 
-Install PlatformIO as a stand alone CLI or with your choice of environment with the links below:
-- [Stand alone CLI tool](install_platformio_cli.html)
-- [PlatformIO with Atom](install_platformio_atom.html)
-- [PlatformIO with VSCode](install_platformio_vscode.html)
-- [PlatformIO with Sublime](install_platformio_sublime.html)
+Install PlatformIO as a stand alone CLI or with your choice of environment using the links below:
+- [PlatformIO in VSCode](install_platformio_vscode.html)
+- [PlatformIO in Atom](install_platformio_atom.html)
+- [PlatformIO in Sublime](install_platformio_sublime.html)
+- [PlatformIO Command-Line](install_platformio_cli.html)
