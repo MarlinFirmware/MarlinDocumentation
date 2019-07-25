@@ -38,7 +38,7 @@ Switch to new PlatformIO View in Activity Bar (left side bar), then Quick Access
 The name of the branch you are working in is indicated in the bottom left corner in the blue bar.
 Click on it to reveal a list of branches you can work in or create your own.
 
-![View Command Palette](/assets/images/basics/install_platformio_vscode/select_git_branches.png)
+![View Command Palette](/assets/images/basics/install_platformio_vscode/select_git_branch.png)
 
 ### 5. Select Environment
 
