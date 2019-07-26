@@ -2925,7 +2925,7 @@ Here you define the gcode script which will be executed when the so-called FINDA
   // G-code to execute when MMU2 F.I.N.D.A. probe detects filament runout
   #define MMU2_FILAMENT_RUNOUT_SCRIPT "M600"
 ```
-The default is M600 which requires [ADVANCED_PAUSE_FEATURE](#advance_pause).
+The default is M600 which requires [ADVANCED_PAUSE_FEATURE](#advanced_pause).
 
 ### LCD Menu
 

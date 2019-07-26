@@ -41,7 +41,7 @@ long:
 
     To do manual probing simply repeat `G29` until the procedure is complete.
 
-    The first `G29` accepts the same parameters , shown in the [Usage](#usage-g29b) section below. The exact parameters available will depend on which style of bed leveling is enabled. (***Note:** UBL parameters are not covered on this page unless they coincide. See the [`G29` for UBL](/docs/gcode/G029-ubl.html) page for a full list of its options.*)
+    The first `G29` accepts the same parameters , shown in the [Usage](#usage-g029b) section below. The exact parameters available will depend on which style of bed leveling is enabled. (***Note:** UBL parameters are not covered on this page unless they coincide. See the [`G29` for UBL](/docs/gcode/G029-ubl.html) page for a full list of its options.*)
 
     **Before probing the bed:**
     1. Use `G29 Q` to get the current status. If `G29` isn't idle, abort with `G29 A`.
