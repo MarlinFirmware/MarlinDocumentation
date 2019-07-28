@@ -3,7 +3,7 @@ title:        'Configuring Marlin'
 description:  'Complete guide to Marlin configuration options.'
 
 author: Sarf2k4
-contrib: paulusjacobus, jbrazio, landodragon141, thinkyhead
+contrib: paulusjacobus, jbrazio, landodragon141, thinkyhead, shitcreek
 category: [ configuration ]
 ---
 
@@ -809,8 +809,6 @@ This option eliminates vibration during printing by fitting a Bézier curve to m
 
 ## Z Probe Options
 
-![Probe](/assets/images/config/probe.jpg){: .floater.framed}
-
 ### Probe Pins
 
 ```cpp
@@ -838,7 +836,7 @@ Even if you have no bed probe you can still use any of the core `AUTO_BED_LEVELI
 
 #### Fix Mounted Probe
 
-![Fixed Probe - EZABL](/assets/images/config/fixed_probe_EZABL.jpg)
+![Fixed Probe - EZABL](/assets/images/config/fixed_probe_EZABL.jpg){: .floater.framed}
 
 ```cpp
 //#define FIX_MOUNTED_PROBE
@@ -847,7 +845,7 @@ This option is for any probe that's fixed in place, with no need to be deployed 
 
 #### BLTouch
 
-![BLTouch](/assets/images/config/BLTouch.jpg)
+![BLTouch](/assets/images/config/BLTouch.jpg){: .floater.framed}
 
 ```cpp
 //#define BLTOUCH
@@ -855,6 +853,8 @@ This option is for any probe that's fixed in place, with no need to be deployed 
 The [ANTCLABS BLTouch](https://plus.google.com/113792662927481823969) probe uses custom circuitry and a magnet to raise and lower a metal pin which acts as a touch probe. The BLTouch uses the servo connector and is controlled using specific servo angles. With this option enabled the other required settings are automatically configured (so there's no need to enter servo angles, for example).
 
 #### Servo Z Probe
+
+![Probe](/assets/images/config/probe.jpg){: .floater.framed}
 
 ```cpp
 //#define Z_ENDSTOP_SERVO_NR 0
@@ -864,7 +864,7 @@ To indicate a Servo Z Probe (e.g., an endstop switch mounted on a rotating arm) 
 
 #### Solenoid Probe
 
-![Solenoid probe](/assets/images/config/solenoid.png)
+![Solenoid probe](/assets/images/config/solenoid.png){: .floater.framed}
 
 ```cpp
 //#define SOLENOID_PROBE
@@ -873,7 +873,7 @@ A probe that is deployed and stowed with a solenoid pin (Defined as `SOL1_PIN`.)
 
 #### Z Probe Sled
 
-![Z-Probe Sled](/assets/images/config/zprobe_sled.png)
+![Z-Probe Sled](/assets/images/config/zprobe_sled.png){: .floater.framed}
 
 ```cpp
 //#define Z_PROBE_SLED
