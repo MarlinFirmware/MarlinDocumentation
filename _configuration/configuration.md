@@ -838,12 +838,16 @@ Even if you have no bed probe you can still use any of the core `AUTO_BED_LEVELI
 
 #### Fix Mounted Probe
 
+![Fixed Probe - EZABL](/assets/images/config/fixed_probe_EZABL.jpg)
+
 ```cpp
 //#define FIX_MOUNTED_PROBE
 ```
 This option is for any probe that's fixed in place, with no need to be deployed or stowed. Specify this type for an inductive probe or when using the nozzle itself as the probe.
 
 #### BLTouch
+
+![BLTouch](/assets/images/config/BLTouch.jpg)
 
 ```cpp
 //#define BLTOUCH
@@ -860,12 +864,16 @@ To indicate a Servo Z Probe (e.g., an endstop switch mounted on a rotating arm) 
 
 #### Solenoid Probe
 
+![Solenoid probe](/assets/images/config/solenoid.png)
+
 ```cpp
 //#define SOLENOID_PROBE
 ```
 A probe that is deployed and stowed with a solenoid pin (Defined as `SOL1_PIN`.)
 
 #### Z Probe Sled
+
+![Z-Probe Sled](/assets/images/config/zprobe_sled.png)
 
 ```cpp
 //#define Z_PROBE_SLED
