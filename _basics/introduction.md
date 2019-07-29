@@ -3,6 +3,7 @@ title:        What is Marlin?
 description:  A brief introduction to Marlin
 
 author: jbrazio
+contrib: shitcreek
 category: [ articles, getting-started ]
 ---
 
@@ -12,9 +13,9 @@ category: [ articles, getting-started ]
 
 Marlin is an open source [firmware](https://en.wikipedia.org/wiki/Firmware) for the [RepRap](https://en.wikipedia.org/wiki/RepRap_project) family of replicating rapid prototypers — popularly known as "3D printers." It was derived from [Sprinter](http://reprap.org/wiki/List_of_Firmware#Sprinter) and [grbl](http://reprap.org/wiki/Grbl#Grbl), and became a standalone [open source](https://en.wikipedia.org/wiki/Open-source_software) project on August 12, 2011 with its [Github release](https://github.com/MarlinFirmware/Marlin/commit/f850af5c1ca343ed65b94c4b9da5dd1ab4c4a53c). Marlin is licensed under the GPLv3 and is free for all applications.
 
-From the start Marlin was built by and for [RepRap](http://reprap.org/wiki/) enthusiasts to be a straightforward, reliable, and adaptable printer driver that "just works." As a testament to its quality, Marlin is used by several respected commercial 3D printers. Ultimaker, Printrbot, AlephObjects (Lulzbot), and Prusa Research are just a few of the vendors who ship a variant of Marlin.
+From the start Marlin was built by and for [RepRap](http://reprap.org/wiki/) enthusiasts to be a straightforward, reliable, and adaptable printer driver that "just works." As a testament to its quality, Marlin is used by several respected commercial 3D printers. Ultimaker, Printrbot, AlephObjects (Lulzbot), and Prusa Research are just a few of the vendors who ship a variant of Marlin. Marlin is also capable of driving CNC's and laser engravers.
 
-One key to Marlin's popularity is that it runs on inexpensive 8-bit [Atmel AVR](http://www.atmel.com/products/microcontrollers/avr/) [micro-controllers](http://en.wikipedia.org/wiki/Microcontroller). These chips are at the center of the popular [open source](https://en.wikipedia.org/wiki/Open-source_hardware) [Arduino/Genuino](http://arduino.cc) platform. The reference platforms for Marlin is an Arduino Mega2560 with RAMPS 1.4 and Re-Arm with Ramps 1.4.
+One key to Marlin's popularity is that it runs on inexpensive 8-bit [Atmel AVR](http://www.atmel.com/products/microcontrollers/avr/) [micro-controllers](http://en.wikipedia.org/wiki/Microcontroller) - Marlin 2.x has added support for 32-bit boards. These chips are at the center of the popular [open source](https://en.wikipedia.org/wiki/Open-source_hardware) [Arduino/Genuino](http://arduino.cc) platform. The reference platforms for Marlin is an Arduino Mega2560 with RAMPS 1.4 and Re-Arm with Ramps 1.4.
 
 As a community product, Marlin aims to be adaptable to as many boards and configurations as possible. We want it to be configurable, customizable, extensible, and economical for hobbyists and vendors alike. A Marlin build can be very small, for use on a headless printer with only modest hardware. Features are enabled as-needed to adapt Marlin to added components.
 
@@ -26,7 +27,7 @@ As a community product, Marlin aims to be adaptable to as many boards and config
  - Support for Cartesian, Delta, SCARA, and Core/H-Bot kinematics
  - Closed-loop PID heater control with auto-tuning, thermal protection, safety cutoff
  - Support for up to 5 extruders plus a heated printbed
- - LCD Controller UI with more than 20 language translations
+ - LCD Controller UI with [more than 30 language translations](/docs/development/lcd_language.html)
  - Host-based and SD Card printing with autostart
  - Bed Leveling Compensation — with or without a bed probe
  - [Linear Advance](/docs/features/lin_advance.html) for pressure-based extrusion

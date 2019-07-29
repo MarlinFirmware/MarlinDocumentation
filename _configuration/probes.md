@@ -3,6 +3,7 @@ title:        'Probe Configuration'
 description:  'Configuring a bed probe in Marlin.'
 
 author: thinkyhead
+contrib: shitcreek
 category: [ configuration ]
 ---
 
@@ -58,14 +59,19 @@ In general, on deltabots the probe should be connected to the unused Z-Min endst
 What kind of probe do you have?
 
 - `FIX_MOUNTED_PROBE`
+![Fixed Probe - EZABL](/assets/images/config/fixed_probe_EZABL.jpg){: .floater.framed}
   Use this option for a fixed switch or inductive probe. This is the option to select if the nozzle itself is used as the probe.
 - `Z_ENDSTOP_SERVO_NR`
+![Probe](/assets/images/config/probe.jpg){: .floater.framed}
   Endstop switches are inexpensive, and some printer kits include one or two replacement parts. So one popular probe type mounts an endstop switch on a servo-driven arm. Set this option to `0` for a servo-probe connected to the first servo plug, `1` for the next servo plug, etc. Set the servo's deployed/stowed angles with the `Z_SERVO_ANGLES` setting.
 - `SOLENOID_PROBE`
+![Solenoid probe](/assets/images/config/solenoid.png){: .floater.framed}
   Select this option for a switch mounted on a solenoid.
 - `BLTOUCH`
+![BLTouch](/assets/images/config/BLTouch.jpg){: .floater.framed}
   The BLTouch by ANTCLABS is a compact probe specifically designed for use on inexpensive 3D printers. It uses a Hall effect sensor to detect the movement of a metal pin that can be magnetically extended and retracted. The BLTouch connects to the servo pins which function to send commands to the probe.
 - `Z_PROBE_SLED`
+![Z-Probe Sled](/assets/images/config/zprobe_sled.png){: .floater.framed}
   This option applies to a switch mounted on a "sled" that can be docked to the end of the X axis. The X carriage can pick up this sled, use it to perform probing, and put it back when done.
 - `Z_PROBE_ALLEN_KEY`
   This is a popular solution on deltas. A spare Allen key is used with an endstop switch to make a probe that's deployed and stowed by turning the key 90 degrees. You can either deploy and stow the key manually or configure movements that bump the key against some fixed point. Options for this type of probe are included in the delta example configurations that come with Marlin.

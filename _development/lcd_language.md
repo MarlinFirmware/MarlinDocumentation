@@ -4,6 +4,7 @@ description:  'How Marlin handles LCD languages'
 tag: language
 
 author: thinkyhead
+contrib: shitcreek
 category: [ development ]
 ---
 {% alert warning %}
@@ -58,6 +59,7 @@ pt-br_utf8|Portuguese (Brazilian) (UTF8)||pt_utf8|Portuguese (UTF8)
 ru|Russian||sk|Slovak (UTF8)
 tr|Turkish||uk|Ukrainian
 zh_CN|Chinese (Simplified)||zh_TW|Chinese (Taiwan)
+vi|Vietnamese
 
 # The Problem
 
