@@ -46,7 +46,6 @@ Select the environment (the chip that your board uses) you're working with in th
 
 ![Multi Environments](/assets/images/basics/install_platformio_vscode/environment_list.png) ![Selecting Environment](/assets/images/basics/install_platformio_vscode/select_environment.png)
 
-
 #### Identifying the correct environment for the selected board
 
 The PlatformIO environment needed for a motherboard is in the comments for the board in the **pins.h** file. In Marlin 2.0 it's located in  a subdirectory **Marlin/src/pins/pins.h**.
@@ -68,14 +67,13 @@ The PlatformIO environment needed for a motherboard is in the comments for the b
 
   In this case **megaatmega2560** is the one used 99.9% of the time.
 
-
 ### 6. Initiate Build, Clean or Upload task
 
 Initiating a task is done by clicking an icon towards the left side of the blue Status Bar at the very bottom of the window.
 
 ![PIO Command Icons](/assets/images/basics/install_platformio_vscode/pio_command_icons_call_outs.png)
 
-This brings up the **build window**. This window contains the same info as the Auto Build build window.
+This brings up the **build window**.
 
 ![Terminal Window](/assets/images/basics/install_platformio_vscode/terminal_window.png)
 
@@ -86,3 +84,11 @@ Working with the build window is a little bit better than shown in [Installing M
   - highlighting it via the mouse
   - moving the mouse insert point over the selected text
   - pressing CTRL C on the keyboard *or right clicking with the mouse*
+
+#### 'firmware.bin' file
+
+For platforms that use a `firmware.bin` file such as the LPC1768 and LPC1769
+
+![Bin file location](/assets/images/basics/install_platformio_vscode/firmware_bin.png)
+
+- Transfer the automatically generated `firmware.bin` over to the SD card to be used

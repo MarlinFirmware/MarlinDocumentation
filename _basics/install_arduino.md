@@ -47,10 +47,21 @@ If you get a warning that Marlin requires too much Program Memory or SRAM to fit
 
 ### Upload
 
+![Compile and upload](/assets/images/basics/install_arduino/compile_upload.png)
+
 - Put your board into *Program Mode* if required. _(Most boards don't require it.)_
 - Click **Upload** to flash your board. A blue or green LED on the board will blink rapidly during the upload.
 
 That’s it! With Marlin installed you can now enjoy silky smooth printing!
+
+#### Generate 'firmware.bin' file
+
+For platforms require a `firmware.bin` file such as the LPC1768  
+
+![Generate bin file](/assets/images/basics/install_arduino/firmware_bin.png)
+
+- After successfully compiling, select **Export compiled Binary** under **Sketch**
+- Then transfer the bin file over to the SD card to be used
 
 ### Troubleshooting
 
