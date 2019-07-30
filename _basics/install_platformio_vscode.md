@@ -73,7 +73,9 @@ Initiating a task is done by clicking an icon towards the left side of the blue 
 
 ![PIO Command Icons](/assets/images/basics/install_platformio_vscode/pio_command_icons_call_outs.png)
 
-This brings up the **build window**.
+![Allow Terminal access](/assets/images/basics/install_platformio_vscode/allow_terminal.png)
+
+  You may be required to allow VSCode access to terminal.
 
 ![Terminal Window](/assets/images/basics/install_platformio_vscode/terminal_window.png)
 
