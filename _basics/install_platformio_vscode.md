@@ -11,9 +11,9 @@ Before reading this article, you should have already read [Installing Marlin wit
 
 ![PlatformIO with VSCode](/assets/images/basics/install_platformio_vscode/platformio_vscode_screenshot.png)
 
-# Auto Build support for VSCode
+# PlatformIO with VSCode
 
-The Marlin `VSCode` extension provides access to the `Auto Build` script for the `VSCode IDE`.
+PlatformIO turns VSCode into a complete IDE for compiling and developing Marlin. 
 
 ## Installation
 
@@ -72,10 +72,6 @@ The PlatformIO environment needed for a motherboard is in the comments for the b
 Initiating a task is done by clicking an icon towards the left side of the blue Status Bar at the very bottom of the window.
 
 ![PIO Command Icons](/assets/images/basics/install_platformio_vscode/pio_command_icons_call_outs.png)
-
-![Allow Terminal access](/assets/images/basics/install_platformio_vscode/allow_terminal.png)
-
-  You may be required to allow VSCode access to terminal.
 
 ![Terminal Window](/assets/images/basics/install_platformio_vscode/terminal_window.png)
 

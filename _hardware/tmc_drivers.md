@@ -3,6 +3,7 @@ title:        Trinamic drivers
 description:  Using Trinamic TMC based stepper drivers.
 
 author: teemuatlut
+contrib: shitcreek
 category: [ features, hardware ]
 ---
 

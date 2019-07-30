@@ -3,7 +3,7 @@ title:        Installing Marlin (Arduino)
 description:  Marlin Install Quick Start Guide
 
 author: jbrazio
-contrib: thinkyhead
+contrib: thinkyhead, shitcreek
 category: [ articles, getting-started ]
 ---
 
@@ -56,7 +56,7 @@ That’s it! With Marlin installed you can now enjoy silky smooth printing!
 
 #### Generate 'firmware.bin' file
 
-For platforms that use a `firmware.bin` file such as the LPC1768 and LPC1769
+For platforms require a `firmware.bin` file such as the LPC1768  
 
 ![Generate bin file](/assets/images/basics/install_arduino/firmware_bin.png)
 
