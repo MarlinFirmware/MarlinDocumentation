@@ -263,7 +263,7 @@ function genGcode() {
 
   txtArea.value += ';\n' +
                    '; mark the test area for reference\n' +
-                   ';\n' +
+                   'M117 K0 ;\n' +
                    'M900 K0 ; set K-factor 0\n' +
                    moveTo(refStartX1, refStartY, basicSettings) +
                    doEfeed('+', basicSettings, (USE_FWR ? 'FWR' : 'STD')) +
@@ -454,6 +454,7 @@ function createAltPattern(startX, startY, basicSettings, patSettings) {
   for (var i = patSettings['kStart']; i <= patSettings['kEnd']; i += patSettings['kStep']) {
     if (k % 2 === 0) {
       gcode += 'M900 K' + Math.round10(i, -2) + ' ; set K-factor\n' +
+               'M117 K' + Math.round10(i, -2) + ' ; \n' +
                createLine(startX + patSettings['lengthSlow'], startY + j, patSettings['lengthSlow'], basicSettings, {'speed': basicSettings['slow']}) +
                createLine(startX + patSettings['lengthSlow'] + patSettings['lengthFast'], startY + j, patSettings['lengthFast'], basicSettings, {'speed': basicSettings['fast']}) +
                createLine(startX + (2 * patSettings['lengthSlow']) + patSettings['lengthFast'], startY + j, patSettings['lengthSlow'], basicSettings, {'speed': basicSettings['slow']}) +
@@ -462,6 +463,7 @@ function createAltPattern(startX, startY, basicSettings, patSettings) {
       k += 1;
     } else if (k % 2 !== 0) {
       gcode += 'M900 K' + Math.round10(i, -2) + ' ; set K-factor\n' +
+               'M117 K' + Math.round10(i, -2) + ' ; \n' +
                createLine(startX + patSettings['lengthSlow'] + patSettings['lengthFast'], startY + j, patSettings['lengthSlow'], basicSettings, {'speed': basicSettings['slow']}) +
                createLine(startX + patSettings['lengthSlow'], startY + j, patSettings['lengthFast'], basicSettings, {'speed': basicSettings['fast']}) +
                createLine(startX, startY + j, patSettings['lengthSlow'], basicSettings, {'speed': basicSettings['slow']}) +
@@ -481,6 +483,7 @@ function createStdPattern(startX, startY, basicSettings, patSettings) {
 
   for (var i = patSettings['kStart']; i <= patSettings['kEnd']; i += patSettings['kStep']) {
     gcode += 'M900 K' + Math.round10(i, -2) + ' ; set K-factor\n' +
+             'M117 K' + Math.round10(i, -2) + ' ; \n' +
              doEfeed('+', basicSettings, (basicSettings['fwRetract'] ? 'FWR' : 'STD')) +
              createLine(startX + patSettings['lengthSlow'], startY + j, patSettings['lengthSlow'], basicSettings, {'speed': basicSettings['slow']}) +
              createLine(startX + patSettings['lengthSlow'] + patSettings['lengthFast'], startY + j, patSettings['lengthFast'], basicSettings, {'speed': basicSettings['fast']}) +
