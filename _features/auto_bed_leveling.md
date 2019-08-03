@@ -4,6 +4,7 @@ description:  'Automated procedures to probe the bed and compensate for an irreg
 tag: leveling
 
 author: thinkyhead
+contrib: shitcreek
 category: [ features, leveling ]
 ---
 
@@ -43,6 +44,11 @@ Unless you know you have a very flat bed, you should always use `AUTO_BED_LEVELI
 4. Upload Marlin to the board and get ready for that first test. As always, do `M502` followed by `M500` to ensure that the configured "default" settings are stored in the EEPROM. Otherwise, older saved settings might be loaded and used.
 
 # First-Time Bed Leveling
+
+{% alert info %}
+For cartesian printers, level the bed corners using the 'paper method' before begining. With `LEVEL_BED_CORNERS` enabled you can do so via the LCD menu.
+{% endalert %}
+
 Begin with `M111 S247` for maximum logging. Before leveling the bed the machine must be homed with `G28`. This establishes the current position and makes sure that the carriage won't try to move outside the physical limits.
 
 Begin Automatic Bed Leveling with a plain `G29` command. This will use the settings as configured. Stay close to the power switch in case the machine tries to move out of bounds. For the intial test we just want to determine whether probing works.
