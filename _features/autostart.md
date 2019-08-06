@@ -19,5 +19,9 @@ category: [ features, autostart ]
 - Use printer in a kiosk mode, e.g. when its powered, start a print.
 - Set the printer to a fresh start state after a failed print.
 
+## LCD menu option
+
+`MENU_ADDAUTOSTART` - add an option in the menu to run all auto#.g files
+
 ## Credits
 The feature was created by `bkubicek` in a pizza powered hacking session at Protospace/Utrecht with `Joris` and the Ultimaker guys. The initial intend was to have a print started, as soon the printer was plugged in - e.g. for coin-operated exhibitions.
