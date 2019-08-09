@@ -24,7 +24,10 @@ const SETTINGS_VERSION = '1.0';
 function genGcode() {
 
   // get the values from the HTML elements
-  var FILAMENT_DIAMETER = parseFloat(document.getElementById('FIL_DIA').value),
+  var PRINTER = parseFloat(document.getElementById('PRINTER').value),
+      FILAMENT = parseFloat(document.getElementById('FILAMENT').value),
+      FILENAME = parseFloat(document.getElementById('FILENAME').value),
+      FILAMENT_DIAMETER = parseFloat(document.getElementById('FIL_DIA').value),
       NOZZLE_DIAMETER = parseFloat(document.getElementById('NOZ_DIA').value),
       NOZZLE_TEMP = parseInt(document.getElementById('NOZZLE_TEMP').value),
       NOZZLE_LINE_RATIO = parseFloat(document.getElementById('NOZ_LIN_R').value),
@@ -125,6 +128,8 @@ function genGcode() {
   txtArea.value = '; ### Marlin K-Factor Calibration Pattern ###\n' +
                   '; -------------------------------------------\n' +
                   ';\n' +
+                  '; Printer: ' + PRINTER + ' mm\n' +
+                  '; Filament: ' + FILAMENT + ' mm\n' +
                   '; Created: ' + new Date() + '\n' +
                   ';\n' +
                   '; Settings Printer:\n' +
@@ -315,7 +320,7 @@ function genGcode() {
 function saveTextAsFile() {
   var textToWrite = document.getElementById('textarea').value,
       textFileAsBlob = new Blob([textToWrite], {type: 'text/plain'}),
-      fileNameToSaveAs = 'kfactor.gcode';
+      fileNameToSaveAs = FILENAME + 'kfactor.gcode';
   if (textToWrite) {
     saveAs(textFileAsBlob, fileNameToSaveAs);
   } else {

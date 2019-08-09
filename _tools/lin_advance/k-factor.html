@@ -30,6 +30,14 @@ category:     [ tools ]
             <td rowspan="45" class="txtareatd"><textarea name="textarea" id="textarea"></textarea></td>
           </tr>
           <tr>
+            <td><label for="PRINTER">Printer:</label></td>
+            <td><input name="PRINTER" id="PRINTER" value="printer name" /></td>
+          </tr>
+          <tr>
+            <td><label for="FILAMENT">Filament:</label></td>
+            <td><input name="FILAMENT" id="FILAMENT" value="filament name" /></td>
+          </tr>
+          <tr>
             <td><label for="FIL_DIA">Filament Diameter:</label></td>
             <td><input name="FIL_DIA" id="FIL_DIA" step="any" value="1.75" onblur="validateInput()" /></td>
             <td>Diameter of the used filament (mm)</td>
@@ -267,6 +275,8 @@ category:     [ tools ]
             <td>Inserts a pause of x seconds before starting the test pattern to bleed off any residual nozzle pressure</td>
           </tr>
           <tr class="calibpat2">
+            <td><label for="FILENAME">Filename:</label></td>
+            <td><input name="FILENAME" id="FILENAME" value="filename" /></td>
             <td colspan="3"><p>
                 <input name="button" type="button" id="button" onclick="genGcode()" value="Generate G-code" />
                 <input name="button3" type="button" id="button3" onclick="setLocalStorage()" value="Save as default" />
