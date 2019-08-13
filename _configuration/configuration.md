@@ -131,7 +131,7 @@ Enable the Bluetooth serial interface. For boards based on the AT90USB.
 ```
 The most important setting is Marlin is the motherboard. The firmware needs to know what board it will be running on so it can assign the right functions to all pins and take advantage of the full capabilities of the board. Setting this incorrectly will lead to unpredictable results.
 
-Using `boards.h` as a reference, replace `BOARD_RAMPS_14_EFB` with your board's ID. The `boards.h` file has the most up-to-date listing of supported boards, so check it first if you don't see yours listed here.
+Using [`boards.h`](/docs/hardware/boards.html) as a reference, replace `BOARD_RAMPS_14_EFB` with your board's ID. The [`boards.h`](/docs/hardware/boards.html) file has the most up-to-date listing of supported boards, so check it first if you don't see yours listed here.
 
 <table id="board_list" class="table table-condensed table-striped"></table>
 <script type="text/javascript">
@@ -153,7 +153,7 @@ The Sanguino board requires adding "Sanguino" support to Arduino IDE. Open `Pref
 ```cpp
 //#define CUSTOM_MACHINE_NAME "3D Printer"
 ```
-This is the name of your printer as displayed on the LCD and by `M115`. For example, if you set this to "My Delta" the LCD will display "My Delta ready" when the printer starts up.
+This is the name of your printer as displayed on the LCD and by [`M115`](/docs/gcode/M115.html). For example, if you set this to "My Delta" the LCD will display "My Delta ready" when the printer starts up.
 
 ### Machine UUID
 
@@ -182,9 +182,9 @@ This value should be set to the total number of E stepper motors on the machine,
 ```
 This is the "nominal" filament diameter as written on the filament spool (1.75, 2.85, 3.0). If you typically use 1.75mm filament, but physically measure the diameter as 1.70mm, you should still use 1.75 if that's what you have set in your slicer.
 
-This value is used by Marlin to compensate for Filament Width when printing in volumetric mode (See `M200`), and by the Unified Bed Leveling command `G26` when printing a test grid.
+This value is used by Marlin to compensate for Filament Width when printing in volumetric mode (See `M200`), and by the Unified Bed Leveling command [`G26`](/docs/gcode/G026.html) when printing a test grid.
 
-You can override this value with `M404 W`.
+You can override this value with [`M404 W`](/docs/gcode/M404.html).
 
 ### Single Nozzle
 ```cpp
@@ -267,7 +267,7 @@ Support for swappable and dockable toolheads, such as the E3D Tool Changer. Tool
 ```cpp
 /**
  * "Mixing Extruder"
- *   - Adds a new code, M165, to set the current mix factors.
+ *   - Adds a new code, [`M165`](/docs/gcode/M165.html), to set the current mix factors.
  *   - Extends the stepping routines to move multiple steppers in proportion to the mix.
  *   - Optional support for Repetier Host M163, M164, and virtual extruder.
  *   - This implementation supports only a single extruder.
@@ -276,11 +276,11 @@ Support for swappable and dockable toolheads, such as the E3D Tool Changer. Tool
 //#define MIXING_EXTRUDER
 #if ENABLED(MIXING_EXTRUDER)
   #define MIXING_STEPPERS 2        // Number of steppers in your mixing extruder
-  #define MIXING_VIRTUAL_TOOLS 16  // Use the Virtual Tool method with M163 and M164
-  //#define DIRECT_MIXING_IN_G1    // Allow ABCDHI mix factors in G1 movement commands
+  #define MIXING_VIRTUAL_TOOLS 16  // Use the Virtual Tool method with [`M163`](/docs/gcode/M163.html) and [`M164`](/docs/gcode/M164.html)
+  //#define DIRECT_MIXING_IN_G1    // Allow ABCDHI mix factors in [`G1`](/docs/gcode/G000-G001.html) movement commands
 #endif
 ```
-A Mixing Extruder uses two or more stepper motors to drive multiple filaments into a mixing chamber, with the mixed filaments extruded from a single nozzle. This option adds the ability to set a mixture, to save mixtures, and to recall mixtures using the `T` command. The extruder still uses a single E axis, while the current mixture is used to determine the proportion of each filament to use. An "experimental" `G1` direct mixing option is included.
+A Mixing Extruder uses two or more stepper motors to drive multiple filaments into a mixing chamber, with the mixed filaments extruded from a single nozzle. This option adds the ability to set a mixture, to save mixtures, and to recall mixtures using the `T` command. The extruder still uses a single E axis, while the current mixture is used to determine the proportion of each filament to use. An "experimental" [`G1`](/docs/gcode/G000-G001.html) direct mixing option is included.
 
 ### Hotend Offsets
 
@@ -351,14 +351,14 @@ Enable this option to use sensor 1 as a redundant sensor for sensor 0. This is a
 #define TEMP_HYSTERESIS 3       // (degC) range of +/- temperatures considered "close" to the target one
 #define TEMP_WINDOW 1           // (degC) Window around target to start the residency timer x degC early.
 ```
-Extruders must maintain a stable temperature for `TEMP_RESIDENCY_TIME` before `M109` will return success and start the print. Tune what "stable" means using `TEMP_HYSTERESIS` and `TEMP_WINDOW`.
+Extruders must maintain a stable temperature for `TEMP_RESIDENCY_TIME` before [`M109`](/docs/gcode/M109.html) will return success and start the print. Tune what "stable" means using `TEMP_HYSTERESIS` and `TEMP_WINDOW`.
 
 ```cpp
 #define TEMP_BED_RESIDENCY_TIME 10  // (seconds)
 #define TEMP_BED_HYSTERESIS 3       // (degC) range of +/- temperatures considered "close" to the target one
 #define TEMP_BED_WINDOW 1           // (degC) Window around target to start the residency timer x degC early.
 ```
-The bed must maintain a stable temperature for `TEMP_BED_RESIDENCY_TIME` before `M109` will return success and start the print. Tune what "stable" means using `TEMP_BED_HYSTERESIS` and `TEMP_BED_WINDOW`.
+The bed must maintain a stable temperature for `TEMP_BED_RESIDENCY_TIME` before [`M109`](/docs/gcode/M109.html) will return success and start the print. Tune what "stable" means using `TEMP_BED_HYSTERESIS` and `TEMP_BED_WINDOW`.
 
 ```cpp
 #define TEMP_CHAMBER_HYSTERESIS  3  // (°C) Temperature proximity considered "close enough" to the target
@@ -407,7 +407,7 @@ Marlin uses PID (Proportional, Integral, Derivative) control ([Wikipedia](https:
 
 Most vitally, correct PID settings will prevent excessive overshoot, which is a safety hazard. During PID calibration, use the highest target temperature you intend to use (where overshoots are more critical).
 
-See the [PID Tuning](http://reprap.org/wiki/PID_Tuning) topic on the RepRap wiki for detailed instructions on `M303` auto-tuning. The PID settings should be tuned whenever changing a hotend, temperature sensor, heating element, board, power supply voltage (12v/24v), or anything else related to the high-voltage circuitry.
+See the [PID Tuning](http://reprap.org/wiki/PID_Tuning) topic on the RepRap wiki for detailed instructions on [`M303`](/docs/gcode/M303.html) auto-tuning. The PID settings should be tuned whenever changing a hotend, temperature sensor, heating element, board, power supply voltage (12v/24v), or anything else related to the high-voltage circuitry.
 
 ***
 
@@ -451,10 +451,10 @@ Enable `PID_AUTOTUNE_MENU` to add an option on the LCD to run an Autotune cycle 
   //#define  DEFAULT_Ki 2.25
   //#define  DEFAULT_Kd 440
 ```
-Sample PID values are included for reference, but they won't apply to most setups. The PID values you get from `M303` may be very different, but will be better for your specific machine.
+Sample PID values are included for reference, but they won't apply to most setups. The PID values you get from [`M303`](/docs/gcode/M303.html) may be very different, but will be better for your specific machine.
 
 {% alert info %}
-`M301` can be used to set Hotend PID and is also accessible through the LCD. `M304` can be used to set bed PID. `M303` should be used to tune PID values before using any new hotend components.
+[`M301`](/docs/gcode/M301.html) can be used to set Hotend PID and is also accessible through the LCD. [`M304`](/docs/gcode/M304.html) can be used to set bed PID. [`M303`](/docs/gcode/M303.html) should be used to tune PID values before using any new hotend components.
 {% endalert %}
 
 ***
@@ -498,7 +498,7 @@ The max power delivered to the bed. All forms of bed control obey this (PID, ban
   // FIND YOUR OWN: "M303 E-1 C8 S90" to run autotune on the bed at 90 degreesC for 8 cycles.
 #endif // PIDTEMPBED
 ```
-Sample Bed PID values are included for reference, but use the result from `M303 E-1` for your specific machine.
+Sample Bed PID values are included for reference, but use the result from [`M303 E-1`](/docs/gcode/M303.html) for your specific machine.
 
 ![Safety](/assets/images/config/safety.gif){: .floater}
 
@@ -509,14 +509,14 @@ Sample Bed PID values are included for reference, but use the result from `M303 
 #define PREVENT_COLD_EXTRUSION
 #define EXTRUDE_MINTEMP 170
 ```
-So-called "cold extrusion" can damage a machine in several ways, but it usually just results in gouged filament and a jammed extruder. With this option, the extruder motor won't move if the hotend is below the specified temperature. Override this setting with `M302` if needed.
+So-called "cold extrusion" can damage a machine in several ways, but it usually just results in gouged filament and a jammed extruder. With this option, the extruder motor won't move if the hotend is below the specified temperature. Override this setting with [`M302`](/docs/gcode/M302.html) if needed.
 
 #### Prevent Lengthy Extrude
 ```cpp
 #define PREVENT_LENGTHY_EXTRUDE
 #define EXTRUDE_MAXLENGTH 200
 ```
-A lengthy extrusion may not damage your machine, but it can be an awful waste of filament. This feature is meant to prevent a typo or glitch in a `G1` command from extruding some enormous amount of filament. For Bowden setups, the max length should be set greater than or equal to the load/eject length.
+A lengthy extrusion may not damage your machine, but it can be an awful waste of filament. This feature is meant to prevent a typo or glitch in a [`G1`](/docs/gcode/G000-G001.html) command from extruding some enormous amount of filament. For Bowden setups, the max length should be set greater than or equal to the load/eject length.
 
 #### Thermal Protection
 
@@ -832,7 +832,7 @@ Marlin supports any kind of probe that can be made to work like a switch. Specif
 ```cpp
 //#define PROBE_MANUALLY
 ```
-Even if you have no bed probe you can still use any of the core `AUTO_BED_LEVELING_*` options below by selecting this option. With `PROBE_MANUALLY` the `G29` command only moves the nozzle to the next probe point where it pauses. You adjust the Z height with a piece of paper or feeler gauge, then send `G29` again to continue to the next point. You can also enable `LCD_BED_LEVELING` to add a "Level Bed" Menu item to the LCD for a fully interactive leveling process.
+Even if you have no bed probe you can still use any of the core `AUTO_BED_LEVELING_*` options below by selecting this option. With `PROBE_MANUALLY` the [`G29`](/docs/gcode/G029-mbl.html) command only moves the nozzle to the next probe point where it pauses. You adjust the Z height with a piece of paper or feeler gauge, then send [`G29`](/docs/gcode/G029-mbl.html)  again to continue to the next point. You can also enable `LCD_BED_LEVELING` to add a "Level Bed" Menu item to the LCD for a fully interactive leveling process.
 
 #### Fix Mounted Probe
 
@@ -1169,7 +1169,7 @@ Only `AUTO_BED_LEVELING_BILINEAR` currently supports `SCARA`.<br/>
 ```cpp
 //#define RESTORE_LEVELING_AFTER_G28
 ```
-Normally G28 leaves leveling disabled on completion. Enable this option to have G28 restore the prior leveling state.
+Normally [`G28`](/docs/gcode/G028.html) leaves leveling disabled on completion. Enable this option to have [`G28`](/docs/gcode/G028.html) restore the prior leveling state.
 
 ### Debug Leveling
 ```cpp
@@ -1183,7 +1183,7 @@ Use this option to enable extra debugging of homing and leveling. You can then u
 ```
 Available with `MESH_BED_LEVELING`, `AUTO_BED_LEVELING_BILINEAR`, and `AUTO_BED_LEVELING_UBL`.
 
-This option adds the `Z` parameter to `M420` which sets a fade distance over which leveling will be gradually reduced. Above the given Z height, leveling compensation will no longer be applied.
+This option adds the `Z` parameter to [`M420`](/docs/gcode/M420.html) which sets a fade distance over which leveling will be gradually reduced. Above the given Z height, leveling compensation will no longer be applied.
 
 This feature exists to prevent irregularities in the bed from propagating through the model's entire height. Fading out leveling also reduces computational requirements and resonance from the Z axis above the fade height. For a well-aligned machine, this feature can improve print results.
 
@@ -1202,7 +1202,7 @@ Example: To have leveling fade out over the first 10mm of layer printing use `M4
   #define MESH_TEST_BED_TEMP       60.0   // (°C) Default bed temperature for the G26 Mesh Validation Tool.
 #endif
 ```
-When using any of the mesh-based leveling systems (1.1.7) you can activate `G26_MESH_VALIDATION` to print test patterns and fine-tune the mesh. See [`G26` Mesh Validation](http://marlinfw.org/docs/gcode/G026.html) for full details. The `G26` command accepts parameters for nozzle size, layer height, etc. The sub-options above specify the default values that will be applied for omitted parameters.
+When using any of the mesh-based leveling systems (1.1.7) you can activate `G26_MESH_VALIDATION` to print test patterns and fine-tune the mesh. See [`G26` Mesh Validation](/docs/gcode/G026.html) for full details. The [`G26`]`](/docs/gcode/G026.html) command accepts parameters for nozzle size, layer height, etc. The sub-options above specify the default values that will be applied for omitted parameters.
 
 ### Linear / Bilinear Options
 ```cpp
@@ -1217,7 +1217,7 @@ These options specify the default number of points to probe in each dimension du
 #define FRONT_PROBE_BED_POSITION 20
 #define BACK_PROBE_BED_POSITION 150
 ```
-These settings specify the boundaries for probing with `G29`. This will most likely be a sub-section of the bed because probes are not usually able to reach every point that the nozzle can. Take account of the probe's XY offsets when setting these boundaries.
+These settings specify the boundaries for probing with [`G29`](/docs/gcode/G029-mbl.html). This will most likely be a sub-section of the bed because probes are not usually able to reach every point that the nozzle can. Take account of the probe's XY offsets when setting these boundaries.
 
 ```cpp
 //#define PROBE_Y_FIRST
@@ -1355,14 +1355,14 @@ Setting these values too high may result in reduced accuracy and/or skipped step
 ```cpp
 //#define EEPROM_SETTINGS
 ```
-Commands like `M92` only change the settings in volatile memory, and these settings are lost when the machine is powered off. With this option enabled, Marlin uses the built-in EEPROM to preserve settings across reboots. Settings saved to EEPROM (with `M500`) are loaded automatically whenever the machine restarts (and in most setups, when connecting to a host), overriding the defaults set in the configuration files. This option is highly recommended, as it makes configurations easier to manage.
+Commands like [`M92`](/docs/gcode/M092.html) only change the settings in volatile memory, and these settings are lost when the machine is powered off. With this option enabled, Marlin uses the built-in EEPROM to preserve settings across reboots. Settings saved to EEPROM (with `M500`) are loaded automatically whenever the machine restarts (and in most setups, when connecting to a host), overriding the defaults set in the configuration files. This option is highly recommended, as it makes configurations easier to manage.
 
 The EEPROM-related commands are:
 
-- `M500`: Save all current settings to EEPROM.
-- `M501`: Load all settings last saved to EEPROM.
-- `M502`: Reset all settings to their default values (as set by `Configuration.h`)
-- `M503`: Print the current settings (in RAM, not EEPROM)
+- [`M500`](/docs/gcode/M500.html): Save all current settings to EEPROM.
+- [`M501`](/docs/gcode/M501.html): Load all settings last saved to EEPROM.
+- [`M502`](/docs/gcode/M502.html): Reset all settings to their default values (as set by `Configuration.h`)
+- [`M503`](/docs/gcode/M503.html): Print the current settings (in RAM, not EEPROM)
 
 #### EEPROM Options
 ```cpp
@@ -1392,19 +1392,19 @@ When Host Keepalive is enabled Marlin will send a busy status message to the hos
 ```cpp
 //#define M100_FREE_MEMORY_WATCHER
 ```
-Uncomment to add the `M100` Free Memory Watcher for debugging purposes.
+Uncomment to add the [`M100`](/docs/gcode/M100.html) Free Memory Watcher for debugging purposes.
 
 ### Inch Units
 ```cpp
 //#define INCH_MODE_SUPPORT
 ```
-This option adds support for the `G20` and `G21` commands, allowing G-code to specify units in inches.
+This option adds support for the [`G20`](/docs/gcode/G020.html) and [`G21`](/docs/gcode/G021.html) commands, allowing G-code to specify units in inches.
 
 ### Temperature Units
 ```cpp
 //#define TEMPERATURE_UNITS_SUPPORT
 ```
-This option adds support for `M149 C`, `M149 K`, and `M149 F` to set temperature units to Celsius, Kelvin, or Fahrenheit. Without this option all temperatures must be specified in Celsius units.
+This option adds support for [`M149`](/docs/gcode/M149.html) `C`, [`M149`](/docs/gcode/M149.html) `K`, and [`M149`](/docs/gcode/M149.html) `F` to set temperature units to Celsius, Kelvin, or Fahrenheit. Without this option all temperatures must be specified in Celsius units.
 
 ### LCD Material Presets <em class="fa fa-sticky-note-o text-info" aria-hidden="true"></em> <em class="fa fa-desktop text-info" aria-hidden="true"></em>
 
@@ -1417,7 +1417,7 @@ This option adds support for `M149 C`, `M149 K`, and `M149 F` to set temperature
 #define PREHEAT_2_TEMP_BED    110
 #define PREHEAT_2_FAN_SPEED     0 // Value from 0 to 255
 ```
-These are the default values for the `Prepare` > `Preheat` LCD menu options. These values can be overridden using the `M145` command or the `Control` > `Temperature` > `Preheat Material X conf` submenus.
+These are the default values for the `Prepare` > `Preheat` LCD menu options. These values can be overridden using the [`M145`](/docs/gcode/M145.html) command or the `Control` > `Temperature` > `Preheat Material X conf` submenus.
 
 ### Nozzle Park
 ```cpp
@@ -1427,7 +1427,7 @@ These are the default values for the `Prepare` > `Preheat` LCD menu options. The
   #define NOZZLE_PARK_POINT { (X_MIN_POS + 10), (Y_MAX_POS - 10), 20 }
 #endif
 ```
-Park the nozzle at the given XYZ position on idle or `G27`.
+Park the nozzle at the given XYZ position on idle or [`G27`](/docs/gcode/G027.html).
 
 The "P" parameter controls the action applied to the Z axis:
 
@@ -1439,16 +1439,16 @@ The "P" parameter controls the action applied to the Z axis:
 ```cpp
 //#define NOZZLE_CLEAN_FEATURE
 ```
-Adds the `G12` command to perform a nozzle cleaning process. See `Configuration.h` for additional configuration options.
+Adds the [`G12`](/docs/gcode/G012.html) command to perform a nozzle cleaning process. See `Configuration.h` for additional configuration options.
 
 ### Print Job Timer
 ```cpp
 #define PRINTJOB_TIMER_AUTOSTART
 ```
-Automatically start and stop the print job timer when `M104`/`M109`/`M190` commands are received. Also adds the following commands to control the timer:
-- `M75` - Start the print job timer.
-- `M76` - Pause the print job timer.
-- `M77` - Stop the print job timer.
+Automatically start and stop the print job timer when [`M104`](/docs/gcode/M104.html)/[`M109`](/docs/gcode/M109.html)/[`M190`](/docs/gcode/M190.html) commands are received. Also adds the following commands to control the timer:
+- [`M75`](/docs/gcode/M075.html) - Start the print job timer.
+- [`M76`](/docs/gcode/M076.html) - Pause the print job timer.
+- [`M77`](/docs/gcode/M077.html) - Stop the print job timer.
 
 ### Print Counter
 ```cpp
@@ -1708,7 +1708,7 @@ Temperature status LEDs that display the hotend and bed temperature. If all hote
 ```cpp
 //#define PHOTOGRAPH_PIN     23
 ```
-`M240` triggers a camera by emulating a Canon RC-1 Remote Data as described on [this site](http://www.doc-diy.net/photo/rc-1_hacked/).
+[`M240`](/docs/gcode/M240.html) triggers a camera by emulating a Canon RC-1 Remote Data as described on [this site](http://www.doc-diy.net/photo/rc-1_hacked/).
 
 
 ### SkeinForge Arc Fix
@@ -1727,14 +1727,14 @@ Files sliced with SkeinForge contain the wrong arc GCodes when using "Arc Point"
 // Support for the BariCUDA Paste Extruder.
 //#define BARICUDA
 ```
-Marlin includes support for the [Baricuda Extruder for 3D Printing Sugar and Chocolate](http://www.thingiverse.com/thing:26343) also [hosted on GitHub](http://www.github.com/jmil/BariCUDA). The feature adds the codes `M126`, `M127`, `M128`, and `M129` for controlling the pump and valve of the Baricuda.
+Marlin includes support for the [Baricuda Extruder for 3D Printing Sugar and Chocolate](http://www.thingiverse.com/thing:26343) also [hosted on GitHub](http://www.github.com/jmil/BariCUDA). The feature adds the codes [`M126`](/docs/gcode/M126.html), [`M127`](/docs/gcode/M127.html), [`M128`](/docs/gcode/M128.html), and [`M129`](/docs/gcode/M129.html) for controlling the pump and valve of the Baricuda.
 
 
 [![LED Lights](/assets/images/config/led-lights.jpg){: .floater.framed}](http://www.instructables.com/id/3D-Printer-RGB-LED-Feedback/){:target="_blank"}
 
 ### RGB Color LEDs
 
-Marlin currently supplies two options for RGB-addressable color indicators. In both cases the color is set using `M150 Rr Ug Bb` to specify RGB components from 0 to 255.
+Marlin currently supplies two options for RGB-addressable color indicators. In both cases the color is set using [`M150`](/docs/gcode/M150.html) `Rr Ug Bb` to specify RGB components from 0 to 255.
 
 ```cpp
 //define BlinkM/CyzRgb Support
@@ -1760,7 +1760,7 @@ The [Philips PCA9632](https://www.digchip.com/datasheets/3286493-pca9632.html) i
 ```
 Enable support for an RGB(W) LED connected to 5V digital pins, or an RGB(W) Strip connected to MOSFETs controlled by digital pins. An inexpensive RGB LED can be used simply by assigning digital pins for each component. If the pins are able to do hardware PWM then a wide range of colors will be available. With simple digital pins only 7 colors are possible.
 
-Adds the `M150` command to set the LED (or LED strip) color. If pins are PWM capable (e.g., 4, 5, 6, 11) then a range of luminance values can be set from 0 to 255.
+Adds the [`M150`](/docs/gcode/M150.html) command to set the LED (or LED strip) color. If pins are PWM capable (e.g., 4, 5, 6, 11) then a range of luminance values can be set from 0 to 255.
 
 {% alert warning %}
 LED Strips require a MOFSET Chip between PWM lines and LEDs, as the Arduino cannot handle the current the LEDs will require. Failure to follow this precaution can destroy your Arduino!
@@ -1849,7 +1849,7 @@ Heated bed thermal protection can be tuned with these sub-options.
 
 The first two options deal with continuous thermal protection during an entire print job.
 
-The second set of options applies to changes in target temperature. Whenever an `M140` or `M190` increases the target temperature the firmware will wait for the `WATCH_BED_TEMP_PERIOD` to expire, and if the temperature hasn't increased by `WATCH_BED_TEMP_INCREASE` degrees, the machine is halted, requiring a hard reset. This test restarts with any `M140`/`M190`, but only if the current temperature is far enough below the target for a reliable test.
+The second set of options applies to changes in target temperature. Whenever an [`M140`](/docs/gcode/M140.html) or [`M190`](/docs/gcode/M190.html) increases the target temperature the firmware will wait for the `WATCH_BED_TEMP_PERIOD` to expire, and if the temperature hasn't increased by `WATCH_BED_TEMP_INCREASE` degrees, the machine is halted, requiring a hard reset. This test restarts with any `M140`/`M190`, but only if the current temperature is far enough below the target for a reliable test.
 
 If you get too many "Heating failed" errors, increase `WATCH_BED_TEMP_PERIOD` and/or decrease `WATCH_BED_TEMP_INCREASE`. (`WATCH_BED_TEMP_INCREASE` should not be set below 2.)
 
@@ -1870,7 +1870,7 @@ This option further improves hotend temperature control by accounting for the ex
 Extrusion scaling keeps a circular buffer of forward E movements done at each temperature measurement which acts to delay the applied factor and allow for heat dissipation. The size of this queue during printing is set by `M301 L`, limited by `LPQ_MAX_LEN`.
 
 {% alert info %}
-Your `M301 C` `M301 L` values are saved to EEPROM when `EEPROM_SETTINGS` is enabled.
+Your [`M301`](/docs/gcode/M301.html) `C` and [`M301`](/docs/gcode/M301.html) `L` values are saved to EEPROM when `EEPROM_SETTINGS` is enabled.
 {% endalert %}
 
 ### Automatic Temperature
@@ -1882,15 +1882,15 @@ Your `M301 C` `M301 L` values are saved to EEPROM when `EEPROM_SETTINGS` is enab
 ```
 With Automatic Temperature the hotend target temperature is calculated by all the buffered lines of gcode. The maximum buffered steps/sec of the extruder motor is called "`se`".
 Start autotemp mode with `M109 F<factor> S<mintemp> B<maxtemp>`, giving a range of temperatures. The target temperature is set to `mintemp + factor * se[steps/sec]` and is limited by
-`mintemp` and `maxtemp`. Turn this off by executing `M109` without `F`. If the temperature is set to a value below `mintemp` (e.g., by `M104`) autotemp will not be applied.
+`mintemp` and `maxtemp`. Turn this off by executing [`M109`](/docs/gcode/M109.html) without `F`. If the temperature is set to a value below `mintemp` (e.g., by [`M104`](/docs/gcode/M104.html)) autotemp will not be applied.
 
-Example: Try `M109 S215 B260 F1` in your `start.gcode` to set a minimum temperature of 215 when idle, which will boost up to 260 as extrusion increases in speed.
+Example: Try [`M109`](/docs/gcode/M109.html) `S215 B260 F1` in your `start.gcode` to set a minimum temperature of 215 when idle, which will boost up to 260 as extrusion increases in speed.
 
 ### Temperature Report ADC
 ```cpp
 //#define SHOW_TEMP_ADC_VALUES
 ```
-Enable this option to have `M105` and automatic temperature reports include raw ADC values from the temperature sensors.
+Enable this option to have [`M105`](/docs/gcode/M105.html) and automatic temperature reports include raw ADC values from the temperature sensors.
 
 ### High Temperature Thermistors
 ```cpp
@@ -2029,9 +2029,9 @@ With this option is active, the Z steppers will only turn on at the last moment 
 ```
 These options allow you to use extra E drivers to drive a second motor for X, Y, and/or Z axes.
 
-Set `X_DUAL_STEPPER_DRIVERS` to use a second X motor. If the X motors need to spin in opposite directions set `INVERT_X2_VS_X_DIR` to `true`. If the second motor has its own endstop set `X_DUAL_ENDSTOPS`. (This can adjust for "racking.") Use `X2_USE_ENDSTOP` to set the endstop plug that should be used for the second endstop. Extra endstops will appear in the output of 'M119'.
+Set `X_DUAL_STEPPER_DRIVERS` to use a second X motor. If the X motors need to spin in opposite directions set `INVERT_X2_VS_X_DIR` to `true`. If the second motor has its own endstop set `X_DUAL_ENDSTOPS`. (This can adjust for "racking.") Use `X2_USE_ENDSTOP` to set the endstop plug that should be used for the second endstop. Extra endstops will appear in the output of ['M119'](/docs/gcode/M119.html).
 
-If the two X axes aren't perfectly aligned, use `X_DUAL_ENDSTOP_ADJUSTMENT` to adjust for the difference. This offset is applied to the X2 motor after homing with `G28`. The dual endstop offsets can be set at runtime with `M666 X[offset] Y[offset] Z[offset]`.
+If the two X axes aren't perfectly aligned, use `X_DUAL_ENDSTOP_ADJUSTMENT` to adjust for the difference. This offset is applied to the X2 motor after homing with [`G28`](/docs/gcode/G028.html). The dual endstop offsets can be set at runtime with `M666 X[offset] Y[offset] Z[offset]`.
 
 ## Dual X Carriage
 ```cpp
@@ -2042,7 +2042,7 @@ If the two X axes aren't perfectly aligned, use `X_DUAL_ENDSTOP_ADJUSTMENT` to a
   #define X2_HOME_DIR  1          // The second X-carriage always homes to the max endstop position
   #define X2_HOME_POS X2_MAX_POS  // Default home position is the maximum carriage position
 
-  // Default power-up mode. Set at runtime with `M605 S[mode]`.
+  // Default power-up mode. Set at runtime with [`M605`](/docs/gcode/M605.html) `S[mode]`.
   #define DEFAULT_DUAL_X_CARRIAGE_MODE DXC_FULL_CONTROL_MODE
 
   // Default settings in Auto-park Mode
@@ -2057,19 +2057,19 @@ Enable this option if you have Dual X-Carriages that move independently. The Dua
 
 In a Dual X-Carriage setup the first x-carriage (`T0`) homes to the minimum endstop, while the second x-carriage (`T1`) homes to the maximum endstop.
 
-With Dual X-Carriage the `HOTEND_OFFSET_X` setting for `T1` overrides `X2_HOME_POS`. Use `M218 T1 X[homepos]` to set a custom X2 home position, and `M218 T1 X0` to use `X2_HOME_POS`. This offset can be saved to EEPROM with `M500`.
+With Dual X-Carriage the `HOTEND_OFFSET_X` setting for `T1` overrides `X2_HOME_POS`. Use `M218 T1 X[homepos]` to set a custom X2 home position, and [`M218`](/docs/gcode/M218.html) `T1 X0` to use `X2_HOME_POS`. This offset can be saved to EEPROM with [`M500`](/docs/gcode/M500.html).
 
 **In your slicer, be sure to set the second extruder X-offset to 0.**
 
-Dual X-Carriage has three different movement modes, set with `M605 S[mode]`:
+Dual X-Carriage has three different movement modes, set with [`M605`](/docs/gcode/M605.html) `S[mode]`:
  
-- Mode 0: Full Control Mode. (`M605 S1`) Slicers that fully support dual x-carriages can use this mode for optimal travel results.
-- Mode 1: Auto-park Mode. (`M605 S1`) The firmware automatically parks/unparks the carriages on tool-change. No slicer support is required. (`M605 S1`)
+- Mode 0: Full Control Mode. ([`M605`](/docs/gcode/M605.html) `S1`) Slicers that fully support dual x-carriages can use this mode for optimal travel results.
+- Mode 1: Auto-park Mode. ([`M605`](/docs/gcode/M605.html) `S1`) The firmware automatically parks/unparks the carriages on tool-change. No slicer support is required. ([`M605`](/docs/gcode/M605.html) `S1`)
 - Mode 2: Duplication Mode. (`M605 S2 X[offs] R[temp]`) The firmware will transparently make the second x-carriage and extruder copy all actions of the first x-carriage. This allows the printer to print 2 arbitrary items at once. (The 2nd extruder's X and temp offsets are set using: `M605 S2 X[offs] R[offs]`.)
 
 ## TODO Options…
 ```cpp
-// Activate a solenoid on the active extruder with M380. Disable all with M381.
+// Activate a solenoid on the active extruder with [`M380`](/docs/gcode/M380.html). Disable all with [`M381`](/docs/gcode/M381.html).
 // Define SOL0_PIN, SOL1_PIN, etc., for each extruder that has a solenoid.
 //#define EXT_SOLENOID
 
@@ -2145,7 +2145,7 @@ Dual X-Carriage has three different movement modes, set with `M605 S[mode]`:
  *    DIGIPOT_I2C_MOTOR_CURRENTS - used by 5DPRINT, AZTEEG_X3_PRO, MIGHTYBOARD_REVE
  *                         known compatible chips: MCP4451, MCP4018
  *
- *  Motor currents can also be set by M907 - M910 and by the LCD.
+ *  Motor currents can also be set by [`M907`](/docs/gcode/M907.html) - [`M910`](/docs/gcode/M910.html) and by the LCD.
  *    M907 - applies to all.
  *    M908 - BQ_ZUM_MEGA_3D, RAMBO, PRINTRBOARD_REVF, RIGIDBOARD_V2 & SCOOVO_X9H
  *    M909, M910 & LCD - only PRINTRBOARD_REVF & RIGIDBOARD_V2
@@ -2210,7 +2210,7 @@ Some RAMPS and other boards don't detect when an SD card is inserted. You can wo
 ### SD Finished Stepper Release
 ```cpp
 #define SD_FINISHED_STEPPERRELEASE true          // Disable steppers when SD Print is finished
-#define SD_FINISHED_RELEASECOMMAND "M84 X Y Z E" // You might want to keep the z enabled so your bed stays in place.
+#define SD_FINISHED_RELEASECOMMAND "[`M84`](/docs/gcode/M018.html) X Y Z E" // You might want to keep the z enabled so your bed stays in place.
 ```
 
 ### SD Menu Autostart
@@ -2276,13 +2276,13 @@ Show a progress bar on HD44780 LCDs for SD printing. Sub-options determine how l
 ```cpp
 //#define LCD_SET_PROGRESS_MANUALLY
 ```
-Add an `M73` G-code to set the current percentage.
+Add an [`M73`](/docs/gcode/M073.html) G-code to set the current percentage.
 
 ### Long Filename Host Support
 ```cpp
 //#define LONG_FILENAME_HOST_SUPPORT
 ```
-Allow hosts to request long names for files and folders with `M33 [path]`.
+Allow hosts to request long names for files and folders with [`M33`](/docs/gcode/M033.html) `[path]`.
 
 ### Scroll Long Filenames
 ```cpp
@@ -2294,7 +2294,7 @@ Enable this option to scroll long filenames in the SD card menu.
 ```cpp
 //#define SD_ABORT_ON_ENDSTOP_HIT
 ```
-Add an option for the firmware to abort SD printing if any endstop is triggered. Turn on with `M540 S1` (or from the LCD menu) and make sure endstops are enabled (`M120`) during SD printing.
+Add an option for the firmware to abort SD printing if any endstop is triggered. Turn on with [`M540`](/docs/gcode/M540.html) `S1` (or from the LCD menu) and make sure endstops are enabled (`M120`) during SD printing.
 
 ### Reprint Last File
 ```cpp
@@ -2386,7 +2386,7 @@ This feature allows Marlin to use linear pressure control for print extrusion, t
 ### G2/G3 Arc
 ```cpp
 //
-// G2/G3 Arc Support
+// [`G2/G3`](/docs/gcode/G002-G003.html) Arc Support
 //
 #define ARC_SUPPORT               // Disable this feature to save ~3226 bytes
 #if ENABLED(ARC_SUPPORT)
@@ -2400,7 +2400,7 @@ This feature allows Marlin to use linear pressure control for print extrusion, t
 ```cpp
 //#define BEZIER_CURVE_SUPPORT
 ```
-Support for `G5` with XYZE destination and IJPQ offsets. Requires ~2666 bytes.
+Support for [`G5`](/docs/gcode/G005.html) with XYZE destination and IJPQ offsets. Requires ~2666 bytes.
 
 ### G38.2/G38.3 Probe Target
 ```cpp
@@ -2409,7 +2409,7 @@ Support for `G5` with XYZE destination and IJPQ offsets. Requires ~2666 bytes.
   #define G38_MINIMUM_MOVE 0.0275 // (mm) Minimum distance that will produce a move
 #endif
 ```
-Add commands `G38.2` and `G38.3` to probe towards target. Enable `PROBE_DOUBLE_TOUCH` if you want `G38` to double touch.
+Add commands [`G38.2`](/docs/gcode/G038.html) and [`G38.3`](/docs/gcode/G038.html) to probe towards target. Enable `PROBE_DOUBLE_TOUCH` if you want `G38` to double touch.
 
 ## Minimum Steps Per Segment
 ```cpp
@@ -2479,7 +2479,7 @@ Host Receive buffer size. Without XON/XOFF flow control (see `SERIAL_XON_XOFF` b
 ```cpp
 //#define EMERGENCY_PARSER
 ```
-Enable an emergency-command parser to intercept certain commands as they enter the serial receive buffer, so they cannot be blocked. Currently handles `M108`, `M112`, and `M410`. Does not work on boards using AT90USB (USBCON) processors!
+Enable an emergency-command parser to intercept certain commands as they enter the serial receive buffer, so they cannot be blocked. Currently handles [`M108`](/docs/gcode/M108.html), [`M112`](/docs/gcode/M112.html), and [`M410`](/docs/gcode/M410.html). Does not work on boards using AT90USB (USBCON) processors!
 
 ### No Timeouts
 ```cpp
@@ -2509,15 +2509,15 @@ Include extra information about the buffer in "ok" messages. Some hosts will hav
   #define RETRACT_RECOVER_FEEDRATE_SWAP 8 // Default feedrate for recovering from swap retraction (mm/s)
 #endif
 ```
-This option adds `G10`/`G11` commands for automatic firmware-based retract/recover. Use `M207` and `M208` to set the parameters, and `M209` to enable/disable. With auto-retract enabled, all `G1 E` moves within the set range will be converted to firmware-based retract/recover moves.
+This option adds [`G10`](/docs/gcode/G010.html)/[`G11`](/docs/gcode/G011.html) commands for automatic firmware-based retract/recover. Use [`M207`](/docs/gcode/M207.html) and [`M208`](/docs/gcode/G038.html) to set the parameters, and `M209` to enable/disable. With auto-retract enabled, all `G1 E` moves within the set range will be converted to firmware-based retract/recover moves.
 
-**Be sure to turn off auto-retract during filament change!** All `M207`/`M208`/`M209` settings are saved to EEPROM.
+**Be sure to turn off auto-retract during filament change!** All [`M207`](/docs/gcode/M207.html)/[`M208`](/docs/gcode/M208.html)/[`M209`](/docs/gcode/M209.html) settings are saved to EEPROM.
 
 ## Extra Fan Speed
 ```cpp
 //#define EXTRA_FAN_SPEED
 ```
-Add a secondary fan speed for each print-cooling fan.
+Add a secondary fan speed for each print-cooling fan. [`M106`](/docs/gcode/M106.html) 
 - `M106 P[fan] T3-255` sets a secondary speed for [fan].
 - `M106 P[fan] T2` uses the set secondary speed.
 - `M106 P[fan] T1` restores the previous fan speed
@@ -2556,7 +2556,7 @@ Add a secondary fan speed for each print-cooling fan.
   //#define HOME_BEFORE_FILAMENT_CHANGE       // Ensure homing has been completed prior to parking for filament change
 #endif
 ```
-Experimental feature for filament change support and parking the nozzle when paused. Adds the `M600` command to perform a filament change. With `PARK_HEAD_ON_PAUSE` enabled also adds the `M125` command to pause printing and park the nozzle. Requires an LCD display. Note that `M600` is required for the default `FILAMENT_RUNOUT_SCRIPT`.
+Experimental feature for filament change support and parking the nozzle when paused. Adds the `M600` command to perform a filament change. With `PARK_HEAD_ON_PAUSE` enabled also adds the [`M115`](/docs/gcode/M115.html) command to pause printing and park the nozzle. Requires an LCD display. Note that `M600` is required for the default `FILAMENT_RUNOUT_SCRIPT`.
 
 ## Stepper Drivers
 ### Trinamic TMC26X
@@ -2588,8 +2588,8 @@ This feature can be used to talk to slave devices on the i2c bus, passing data b
 ```gcode
 ; Example #1
 ; This macro send the string "Marlin" to the slave device with address 0x63 (99)
-; It uses multiple M260 commands with one B[base 10] arg
-M260 A99  ; Target slave address
+; It uses multiple [`M260`](/docs/gcode/M260.html) commands with one B[base 10] arg
+[`M260`](/docs/gcode/M260.html) A99  ; Target slave address
 M260 B77  ; M
 M260 B97  ; a
 M260 B114 ; r
@@ -2600,7 +2600,7 @@ M260 S1   ; Send the current buffer
 
 ; Example #2
 ; Request 6 bytes from slave device with address 0x63 (99)
-M261 A99 B5
+[`M261`](/docs/gcode/M261.html) A99 B5
 
 ; Example #3
 ; Example serial output of a M261 request
@@ -2641,7 +2641,7 @@ echo:i2c-reply: from:99 bytes:5 data:hello
   //#define SPEED_POWER_MAX      100      // 0-100%
 #endif
 ```
-Enable for Spindle and Laser control. Adds the `M3`, `M4`, and `M5` commands to turn the spindle/laser on and off, and to set spindle speed, spindle direction, and laser power.
+Enable for Spindle and Laser control. Adds the [`M3`](/docs/gcode/M003.html), [`M4`](/docs/gcode/M004.html), and [`M5`](/docs/gcode/M005.html) commands to turn the spindle/laser on and off, and to set spindle speed, spindle direction, and laser power.
 
 SuperPid is a router/spindle speed controller used in the CNC milling community. Marlin can be used to turn the spindle on and off. It can also be used to set the spindle speed from 5,000 to 30,000 RPM.
 
@@ -2690,37 +2690,37 @@ Periodically display a message on the LCD showing the measured filament diameter
 ```cpp
 //#define CNC_COORDINATE_SYSTEMS
 ```
-Enables `G53` and `G54`-`G59.3` commands to select coordinate systems, plus `G92.1` to reset the current workspace to native machine space. Workspaces set with this feature are also saved to EEPROM.
+Enables [`G53`](/docs/gcode/G053.html) and [`G54`-`G59.3`](/docs/gcode/G054-G059.html) commands to select coordinate systems, plus [`G92.1`](/docs/gcode/G010.html) to reset the current workspace to native machine space. Workspaces set with this feature are also saved to EEPROM.
 
 ## Pins Debugging
 ```cpp
 //#define PINS_DEBUGGING
 ```
-Enable this option to add the `M43` Debug Pins G-code. This command can be used to list pins, display their status, to watch pins for changes, observe endstops, toggle LEDs, test Z servo probe, toggle pins, etc.
+Enable this option to add the [`M43`](/docs/gcode/M043.html) Debug Pins G-code. This command can be used to list pins, display their status, to watch pins for changes, observe endstops, toggle LEDs, test Z servo probe, toggle pins, etc.
 
 ## Temperature Auto-Report
 ```cpp
 #define AUTO_REPORT_TEMPERATURES
 ```
-It is recommended to enable this feature (along with `EXTENDED_CAPABILITIES_REPORT`) to install the `M155` Auto-Report Temperature command. `M115` tells Marlin to send the current temperature to the host at regular intervals, instead of requiring the host software to send `M105` repeatedly. This saves a space in the command buffer and reduces overhead.
+It is recommended to enable this feature (along with `EXTENDED_CAPABILITIES_REPORT`) to install the [`M155`](/docs/gcode/M115.html) Auto-Report Temperature command. [`M115`](/docs/gcode/M115.html) tells Marlin to send the current temperature to the host at regular intervals, instead of requiring the host software to send `M105` repeatedly. This saves a space in the command buffer and reduces overhead.
 
 ## Extended Capabilities Report
 ```cpp
 #define EXTENDED_CAPABILITIES_REPORT
 ```
-This option adds a list of capabilities to the output of `M115`, allowing savvy host software to take advantage of add-ons like `AUTO_REPORT_TEMPERATURES`.
+This option adds a list of capabilities to the output of [`M115`](/docs/gcode/M115.html), allowing savvy host software to take advantage of add-ons like `AUTO_REPORT_TEMPERATURES`.
 
 ## Volumetric Mode Default
 ```cpp
 //#define VOLUMETRIC_DEFAULT_ON
 ```
-Activate this option to make volumetric extrusion the default method The last values loaded or set by `M404 W` and `M200 D` will be used as the Nominal and Actual filament diameters. With this option, `M200 D0` must be used to disable volumetric mode when running length-based G-code.
+Activate this option to make volumetric extrusion the default method The last values loaded or set by [`M404 W`](/docs/gcode/M400.html) and [`M200 D`](/docs/gcode/M200.html) will be used as the Nominal and Actual filament diameters. With this option, [`M200 D0`](/docs/gcode/M200.html) must be used to disable volumetric mode when running length-based G-code.
 
 ## No Workspace Offsets
 ```cpp
 //#define NO_WORKSPACE_OFFSETS
 ```
-Enable this option for a leaner build of Marlin that removes all workspace offsets. This simplifies all coordinate transformations, leveling, etc., and may allow for slightly faster printing. With this option, `M206` and `M428` are disabled, and `G92` reverts to its old behavior, as it is in Marlin 1.0.
+Enable this option for a leaner build of Marlin that removes all workspace offsets. This simplifies all coordinate transformations, leveling, etc., and may allow for slightly faster printing. With this option, [`M206`](/docs/gcode/M206.html) and [`M428`](/docs/gcode/M428.html) are disabled, and [`G92`](/docs/gcode/G92.html) reverts to its old behavior, as it is in Marlin 1.0.
 
 ## Proportional Font Ratio
 ```cpp
@@ -2935,7 +2935,7 @@ Here you define the gcode script which will be executed when the so-called FINDA
   // G-code to execute when MMU2 F.I.N.D.A. probe detects filament runout
   #define MMU2_FILAMENT_RUNOUT_SCRIPT "M600"
 ```
-The default is M600 which requires [ADVANCED_PAUSE_FEATURE](#advanced_pause).
+The default is [`M600`](/docs/gcode/M600.html) which requires [ADVANCED_PAUSE_FEATURE](#advanced_pause).
 
 ### LCD Menu
 
