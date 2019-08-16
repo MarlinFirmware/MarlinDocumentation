@@ -836,7 +836,7 @@ Even if you have no bed probe you can still use any of the core `AUTO_BED_LEVELI
 
 #### Fix Mounted Probe
 
-![Fixed Probe - EZABL](/assets/images/config/fixed_probe_EZABL.jpg){: .floater.framed}
+![Fixed Probe - EZABL](/assets/images/config/fixed_probe_EZABL.png){: .floater.framed}
 
 ```cpp
 //#define FIX_MOUNTED_PROBE
