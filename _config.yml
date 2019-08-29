@@ -1,5 +1,6 @@
 baseurl: ''
 url: 'http://marlinfw.org'
+js: '/assets/javascript/'
 
 version: '0.0.8-beta'
 environment: development
