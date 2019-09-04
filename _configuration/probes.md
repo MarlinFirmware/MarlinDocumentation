@@ -65,7 +65,7 @@ What kind of probe do you have?
 
 
 - `Z_ENDSTOP_SERVO_NR`
-![Probe](/assets/images/config/probe.jpg){: .floater.framed}
+![Probe](/assets/images/config/probe.png){: .floater.framed}
   Endstop switches are inexpensive, and some printer kits include one or two replacement parts. So one popular probe type mounts an endstop switch on a servo-driven arm. Set this option to `0` for a servo-probe connected to the first servo plug, `1` for the next servo plug, etc. Set the servo's deployed/stowed angles with the `Z_SERVO_ANGLES` setting.
 
 
@@ -77,7 +77,7 @@ What kind of probe do you have?
 
 
 - `BLTOUCH`
-![BLTouch](/assets/images/config/BLTouch.jpg){: .floater.framed}
+![BLTouch](/assets/images/config/BLTouch.png){: .floater.framed}
   The BLTouch by ANTCLABS is a compact probe specifically designed for use on inexpensive 3D printers. It uses a Hall effect sensor to detect the movement of a metal pin that can be magnetically extended and retracted. The BLTouch connects to the servo pins which function to send commands to the probe.
 
  

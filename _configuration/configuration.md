@@ -845,7 +845,7 @@ This option is for any probe that's fixed in place, with no need to be deployed 
 
 #### BLTouch
 
-![BLTouch](/assets/images/config/BLTouch.jpg){: .floater.framed}
+![BLTouch](/assets/images/config/BLTouch.png){: .floater.framed}
 
 ```cpp
 //#define BLTOUCH
@@ -854,7 +854,7 @@ The [ANTCLABS BLTouch](https://plus.google.com/113792662927481823969) probe uses
 
 #### Servo Z Probe
 
-![Probe](/assets/images/config/probe.jpg){: .floater.framed}
+![Probe](/assets/images/config/probe.png){: .floater.framed}
 
 ```cpp
 //#define Z_ENDSTOP_SERVO_NR 0
