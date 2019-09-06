@@ -131,18 +131,7 @@ Enable the Bluetooth serial interface. For boards based on the AT90USB.
 ```
 The most important setting is Marlin is the motherboard. The firmware needs to know what board it will be running on so it can assign the right functions to all pins and take advantage of the full capabilities of the board. Setting this incorrectly will lead to unpredictable results.
 
-Using [`boards.h`](/docs/hardware/boards.html) as a reference, replace `BOARD_RAMPS_14_EFB` with your board's ID. The [`boards.h`](/docs/hardware/boards.html) file has the most up-to-date listing of supported boards, so check it first if you don't see yours listed here.
-
-<table id="board_list" class="table table-condensed table-striped"></table>
-<script type="text/javascript">
-  head.ready("sheetrock.min.js", function() {
-    // Load an entire worksheet.
-    $('#board_list').sheetrock({
-      url: "https://docs.google.com/spreadsheets/d/" +
-        "1K4e1GaA4xuNfUGyIw57vxPGuUzQSv5wktTQBHdCVCKU#gid=525308416",
-    });
-  });
-</script>
+Using [`boards.h`](/docs/hardware/boards.html) as a reference, replace `BOARD_RAMPS_14_EFB` with your board's ID. The [`boards.h`](/docs/hardware/boards.html) file has the most up-to-date listing of supported boards, so check it first if you don't see yours listed there.
 
 {% alert info %}
 The Sanguino board requires adding "Sanguino" support to Arduino IDE. Open `Preferences` and locate the `Additional Boards Manager URLs` field. Copy and paste [this source URL](https://raw.githubusercontent.com/Lauszus/Sanguino/master/package_lauszus_sanguino_index.json). Then use `Tools` > `Boards` > `Boards Manager` to install "Sanguino" from the list. An internet connection is required. (Thanks to [Dust's RepRap Blog](http://dustsreprap.blogspot.my/2015/06/better-way-to-install-sanguino-in.html) for the tip.)
