@@ -91,7 +91,7 @@ parameters:
   -
     tag: C
     optional: true
-    description: Create a fake grid for testing. (`DEBUG_LEVELING_FEATURE`)
+    description: Create a fake grid for testing. (`DEBUG_LEVELING_FEATURE` without `PROBE_MANUALLY`)
     values:
       -
         type: bool
