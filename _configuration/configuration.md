@@ -3,7 +3,7 @@ title:        'Configuring Marlin'
 description:  'Complete guide to Marlin configuration options.'
 
 author: Sarf2k4
-contrib: paulusjacobus, jbrazio, landodragon141, thinkyhead, shitcreek
+contrib: paulusjacobus, jbrazio, landodragon141, thinkyhead, shitcreek, LMF5000
 category: [ configuration ]
 ---
 
@@ -14,7 +14,7 @@ Marlin is a huge C++ program composed of many files, but here we'll only be talk
 - `Configuration.h` contains the core settings for the hardware, language and controller selection, and settings for the most common features and components.
 - `Configuration_adv.h` serves up more detailed customization options, add-ons, experimental features, and other esoterica.
 
-These two files contain all of Marlin's build-time configuration options. Simply edit or replace these files before building and uploading Marlin to the board. A variety of pre-built configurations are included in the `example_configurations` folder to get you started.
+These two files contain all of Marlin's build-time configuration options. Simply edit or replace these files before building and uploading Marlin to the board. A variety of pre-built configurations are included in the `config/examples` folder to get you started.
 
 To use configurations from an earlier version of Marlin, try dropping them into the newer Marlin and building. As part of the build process, the `SanityCheck.h` will print helpful error messages explaining what needs to be changed.
 
@@ -81,7 +81,7 @@ This section follows the order of settings as they appear. The order isn't alway
 ## Configuration versioning
 
 ```cpp
-#define CONFIGURATION_H_VERSION 010100
+#define CONFIGURATION_H_VERSION 020000
 ```
 Marlin now checks for a configuration version and won't compile without this setting. If you want to upgrade from an earlier version of Marlin, add this line to your old configuration file. During compilation, Marlin will throw errors explaining what needs to be changed.
 
@@ -90,14 +90,16 @@ Marlin now checks for a configuration version and won't compile without this set
 
 ```cpp
 #define STRING_CONFIG_H_AUTHOR "(none, default config)"
-#define SHOW_BOOTSCREEN
-#define STRING_SPLASH_LINE1 SHORT_BUILD_VERSION // will be shown during bootup in line 1
-#define STRING_SPLASH_LINE2 WEBSITE_URL         // will be shown during bootup in line 2
-```
-- `STRING_CONFIG_H_AUTHOR` is shown in the Marlin startup message, and is meant to identify the author (and optional variant) of the firmware. Use this setting as a way to uniquely identify all your custom configurations. The startup message is printed when connecting to host software, and whenever the board reboots.
-- `SHOW_BOOTSCREEN` enables the boot screen for LCD controllers.
-- `STRING_SPLASH_LINE1` and `STRING_SPLASH_LINE2` are shown on the boot screen.
 
+#define SHOW_BOOTSCREEN
+#define SHOW_CUSTOM_BOOTSCREEN
+#define CUSTOM_STATUS_SCREEN_IMAGE
+
+```
+- `STRING_CONFIG_H_AUTHOR` is shown in the Marlin startup message, and is meant to identify the author (and optional variant) of the firmware. Use this setting as a way to uniquely identify all your custom configurations. The startup message is printed when connecting to host software, when the board reboots and M115.
+- `SHOW_BOOTSCREEN` enables the boot screen for LCD controllers.
+- `SHOW_CUSTOM_BOOTSCREEN` shows the bitmap in Marlin/_Bootscreen.h on startup.
+- `CUSTOM_STATUS_SCREEN_IMAGE` shows the bitmap in Marlin/_Statusscreen.h on the status screen.
 
 ## Hardware Info
 
@@ -106,7 +108,21 @@ Marlin now checks for a configuration version and won't compile without this set
 ```cpp
 #define SERIAL_PORT 0
 ```
-The index of the on-board serial port that will be used for primary host communication. Change this if, for example, you need to connect a wireless adapter to non-default port pins. Serial port 0 will be used by the Arduino bootloader regardless of this setting.
+The index of the on-board serial port that will be used for primary host communication. Change this if, for example, you need to connect a wireless adapter to non-default port pins.
+
+{% alert info %}
+The first serial port (-1 or 0) will always be used by the Arduino bootloader regardless of this setting.
+{% endalert %} 
+
+ ```cpp
+#define SERIAL_PORT_2 -1
+```
+Enable this if your board has a secondary serial port.
+
+{% alert info %}
+Serial port -1 is the USB emulated serial port, if available.
+{% endalert %} 
+
 
 ### Baud Rate
 
@@ -122,7 +138,7 @@ The serial communication speed of the printer should be as fast as it can manage
 ```
 Enable the Bluetooth serial interface. For boards based on the AT90USB.
 
-![Motherboard](/assets/images/config/motherboard.jpg){: .floater}
+![Motherboard](/assets/images/config/motherboard.jpg){: .floater.framed}
 
 ### Motherboard
 
@@ -161,7 +177,7 @@ A unique ID for your 3D printer. A suitable unique ID can be generated randomly 
 ```cpp
 #define EXTRUDERS 1
 ```
-This value, from 1 to 6, defines how many extruders (or E steppers) the printer has. By default Marlin will assume separate nozzles all moving together on a single carriage. If you have a single nozzle, a switching extruder, a mixing extruder, or dual X carriages, specify that below.
+This value, from 0 to 6, defines how many extruders (or E steppers) the printer has. By default Marlin will assume separate nozzles all moving together on a single carriage. If you have a single nozzle, a switching extruder, a mixing extruder, or dual X carriages, specify that below.
 
 This value should be set to the total number of E stepper motors on the machine, even if there's only a single nozzle.
 
@@ -187,17 +203,17 @@ Enable `SINGLENOZZLE` if you have an E3D Cyclops or any other "multi-extruder" s
 ```
 Enabling `MK2_MULTIPLEXER` allows one stepper driver on a control board to drive two to eight stepper motors, one at a time.
 
+```cpp
+//#define E_MUX0_PIN 40  // Always Required
+//#define E_MUX1_PIN 42  // Needed for 3 to 8 inputs
+//#define E_MUX2_PIN 44  // Needed for 5 to 8 inputs
+```
+
+Override the default DIO selector pins.
+
 ### Prusa MMU2
 
 ```cpp
-/**
- * Prusa Multi-Material Unit v2
- *
- * Requires NOZZLE_PARK_FEATURE to park print head in case MMU unit fails.
- * Requires EXTRUDERS = 5
- *
- * For additional configuration see Configuration_adv.h
- */
 #define PRUSA_MMU2
 ```
 Enable support for the Prusa Multi-material unit 2. This requires a free serial port on your printer board. To use the MMU2 you also have to 
@@ -213,7 +229,10 @@ Enable support for the Prusa Multi-material unit 2. This requires a free serial 
 //#define SWITCHING_EXTRUDER
 #if ENABLED(SWITCHING_EXTRUDER)
   #define SWITCHING_EXTRUDER_SERVO_NR 0
-  #define SWITCHING_EXTRUDER_SERVO_ANGLES { 0, 90 } // Angles for E0, E1
+  #define SWITCHING_EXTRUDER_SERVO_ANGLES { 0, 90 } // Angles for E0, E1[, E2, E3]
+  #if EXTRUDERS > 3
+    #define SWITCHING_EXTRUDER_E23_SERVO_NR 1
+  #endif
 #endif
 ```
 A Switching Extruder is a dual extruder that uses a single stepper motor to drive two filaments, but only one at a time. The servo is used to switch the side of the extruder that will drive the filament. The E motor also reverses direction for the second filament. Set the servo sub-settings above according to your particular extruder's setup instructions.
@@ -224,8 +243,8 @@ A Switching Extruder is a dual extruder that uses a single stepper motor to driv
 //#define SWITCHING_NOZZLE
 #if ENABLED(SWITCHING_NOZZLE)
   #define SWITCHING_NOZZLE_SERVO_NR 0
-  #define SWITCHING_NOZZLE_SERVO_ANGLES { 0, 90 } // Angles for E0, E1
-  //#define HOTEND_OFFSET_Z {0.0, 0.0}
+  //#define SWITCHING_NOZZLE_E1_SERVO_NR 1          // If two servos are used, the index of the second
+  #define SWITCHING_NOZZLE_SERVO_ANGLES { 0, 90 }   // Angles for E0, E1 (single servo) or lowered/raised (dual servo)
 #endif
 ```
 A Switching Nozzle is a carriage with 2 nozzles. A servo is used to move one of the nozzles up and down. The servo either lowers the active nozzle or raises the inactive one. Set the servo sub-settings above according to your particular extruder's setup instructions.
@@ -244,6 +263,33 @@ Two separate X-carriages with extruders that connect to a moving part via a sole
 ```
 Two separate X-carriages with extruders that connect to a moving part via a magnetic docking mechanism using movements and no solenoid
 
+```cpp
+#if EITHER(PARKING_EXTRUDER, MAGNETIC_PARKING_EXTRUDER)
+
+  #define PARKING_EXTRUDER_PARKING_X { -78, 184 }     // X positions for parking the extruders
+  #define PARKING_EXTRUDER_GRAB_DISTANCE 1            // (mm) Distance to move beyond the parking point to grab the extruder
+  //#define MANUAL_SOLENOID_CONTROL                   // Manual control of docking solenoids with M380 S / M381
+
+  #if ENABLED(PARKING_EXTRUDER)
+
+    #define PARKING_EXTRUDER_SOLENOIDS_INVERT           // If enabled, the solenoid is NOT magnetized with applied voltage
+    #define PARKING_EXTRUDER_SOLENOIDS_PINS_ACTIVE LOW  // LOW or HIGH pin signal energizes the coil
+    #define PARKING_EXTRUDER_SOLENOIDS_DELAY 250        // (ms) Delay for magnetic field. No delay if 0 or not defined.
+    //#define MANUAL_SOLENOID_CONTROL                   // Manual control of docking solenoids with M380 S / M381
+
+  #elif ENABLED(MAGNETIC_PARKING_EXTRUDER)
+
+    #define MPE_FAST_SPEED      9000      // (mm/m) Speed for travel before last distance point
+    #define MPE_SLOW_SPEED      4500      // (mm/m) Speed for last distance travel to park and couple
+    #define MPE_TRAVEL_DISTANCE   10      // (mm) Last distance point
+    #define MPE_COMPENSATION       0      // Offset Compensation -1 , 0 , 1 (multiplier) only for coupling
+
+  #endif
+
+#endif
+```
+Adjust the relavant settings to your specifications for use with either `PARKING_EXTRUDER` or `MAGNETIC_PARKING_EXTRUDER`.
+
 ### Switching Toolhead
 
 ```cpp
@@ -251,17 +297,49 @@ Two separate X-carriages with extruders that connect to a moving part via a magn
 ```
 Support for swappable and dockable toolheads, such as the E3D Tool Changer. Toolheads are locked with a servo.
 
+### Magnetic Switching Toolhead
+
+```cpp
+//#define MAGNETIC_SWITCHING_TOOLHEAD
+```
+Support swappable and dockable toolheads with a magnetic docking mechanism using movement and no servo.
+
+### Electromagnetic Switching Toolhead
+
+```cpp
+//#define ELECTROMAGNETIC_SWITCHING_TOOLHEAD
+```
+For CoreXY / HBot kinematics, toolheads are parked at one edge and held with an electromagnet. Supports more than 2 Toolheads. See https://youtu.be/JolbsAKTKf4
+
+```cpp
+#if ANY(SWITCHING_TOOLHEAD, MAGNETIC_SWITCHING_TOOLHEAD, ELECTROMAGNETIC_SWITCHING_TOOLHEAD)
+  #define SWITCHING_TOOLHEAD_Y_POS          235         // (mm) Y position of the toolhead dock
+  #define SWITCHING_TOOLHEAD_Y_SECURITY      10         // (mm) Security distance Y axis
+  #define SWITCHING_TOOLHEAD_Y_CLEAR         60         // (mm) Minimum distance from dock for unobstructed X axis
+  #define SWITCHING_TOOLHEAD_X_POS          { 215, 0 }  // (mm) X positions for parking the extruders
+  #if ENABLED(SWITCHING_TOOLHEAD)
+    #define SWITCHING_TOOLHEAD_SERVO_NR       2         // Index of the servo connector
+    #define SWITCHING_TOOLHEAD_SERVO_ANGLES { 0, 180 }  // (degrees) Angles for Lock, Unlock
+  #elif ENABLED(MAGNETIC_SWITCHING_TOOLHEAD)
+    #define SWITCHING_TOOLHEAD_Y_RELEASE      5         // (mm) Security distance Y axis
+    #define SWITCHING_TOOLHEAD_X_SECURITY   { 90, 150 } // (mm) Security distance X axis (T0,T1)
+    //#define PRIME_BEFORE_REMOVE                       // Prime the nozzle before release from the dock
+    #if ENABLED(PRIME_BEFORE_REMOVE)
+      #define SWITCHING_TOOLHEAD_PRIME_MM           20  // (mm)   Extruder prime length
+      #define SWITCHING_TOOLHEAD_RETRACT_MM         10  // (mm)   Retract after priming length
+      #define SWITCHING_TOOLHEAD_PRIME_FEEDRATE    300  // (mm/m) Extruder prime feedrate
+      #define SWITCHING_TOOLHEAD_RETRACT_FEEDRATE 2400  // (mm/m) Extruder retract feedrate
+    #endif
+  #elif ENABLED(ELECTROMAGNETIC_SWITCHING_TOOLHEAD)
+    #define SWITCHING_TOOLHEAD_Z_HOP          2         // (mm) Z raise for switching
+  #endif
+#endif
+```
+Adjust the relavant settings to your specifications for use with `SWITCHING_TOOLHEAD`, `PARKING_EXTRUDER` or `MAGNETIC_PARKING_EXTRUDER`.
+
 ### Mixing Extruder
 
 ```cpp
-/**
- * "Mixing Extruder"
- *   - Adds a new code, [`M165`](/docs/gcode/M165.html), to set the current mix factors.
- *   - Extends the stepping routines to move multiple steppers in proportion to the mix.
- *   - Optional support for Repetier Host M163, M164, and virtual extruder.
- *   - This implementation supports only a single extruder.
- *   - Enable DIRECT_MIXING_IN_G1 for Pia Taubert's reference implementation
- */
 //#define MIXING_EXTRUDER
 #if ENABLED(MIXING_EXTRUDER)
   #define MIXING_STEPPERS 2        // Number of steppers in your mixing extruder
@@ -271,23 +349,44 @@ Support for swappable and dockable toolheads, such as the E3D Tool Changer. Tool
 ```
 A Mixing Extruder uses two or more stepper motors to drive multiple filaments into a mixing chamber, with the mixed filaments extruded from a single nozzle. This option adds the ability to set a mixture, to save mixtures, and to recall mixtures using the `T` command. The extruder still uses a single E axis, while the current mixture is used to determine the proportion of each filament to use. An "experimental" [`G1`](/docs/gcode/G000-G001.html) direct mixing option is included.
 
+`MIXING_EXTRUDER` enables [`M163`](/docs/gcode/M163.html) - set mix factor, [`M164`](/docs/gcode/M164.html) - save mix, and [`M165`](/docs/gcode/M165.html) - set mix.
+
 ### Hotend Offsets
 
 ```cpp
-//#define HOTEND_OFFSET_X {0.0, 20.00} // (in mm) for each extruder, offset of the hotend on the X axis
-//#define HOTEND_OFFSET_Y {0.0, 5.00}  // (in mm) for each extruder, offset of the hotend on the Y axis
+//#define HOTEND_OFFSET_X { 0.0, 20.00 } // (mm) relative X-offset for each nozzle
+//#define HOTEND_OFFSET_Y { 0.0, 5.00 }  // (mm) relative Y-offset for each nozzle
+//#define HOTEND_OFFSET_Z { 0.0, 0.00 }  // (mm) relative Z-offset for each nozzle
 ```
 Hotend offsets are needed if your extruder has more than one nozzle. These values specify the offset from the first nozzle to each nozzle. So the first element is always set to 0.0. The next element corresponds to the next nozzle, and so on. Add more offsets if you have 3 or more nozzles.
 
 
 ## Power Supply
 
-![ATX](/assets/images/config/atx.jpg){: .floater}
+![ATX](/assets/images/config/atx.jpg){: .floater.framed}
 
 ```cpp
-#define POWER_SUPPLY 1
+//#define PSU_CONTROL
+//#define PSU_NAME "Power Supply"
+
+#if ENABLED(PSU_CONTROL)
+  #define PSU_ACTIVE_HIGH false // Set 'false' for ATX (1), 'true' for X-Box (2)
+
+  //#define PS_DEFAULT_OFF      // Keep power off until enabled directly with M80
+
+  //#define AUTO_POWER_CONTROL  // Enable automatic control of the PS_ON pin
+  #if ENABLED(AUTO_POWER_CONTROL)
+    #define AUTO_POWER_FANS           // Turn on PSU if fans need power
+    #define AUTO_POWER_E_FANS
+    #define AUTO_POWER_CONTROLLERFAN
+    #define AUTO_POWER_CHAMBER_FAN
+    //#define AUTO_POWER_E_TEMP        50 // (°C) Turn on PSU over this temperature
+    //#define AUTO_POWER_CHAMBER_TEMP  30 // (°C) Turn on PSU over this temperature
+    #define POWER_TIMEOUT 30
+  #endif
+#endif
 ```
-Use this option to specify the type of power supply you're using. Marlin uses this setting to decide how to switch the power supply on and off. The options are None (0), ATX (1), or X-Box 360 (2). For a non-switchable power supply use 0. A common example of this is the power "brick" (like a big laptop power supply). For a PC power supply (ATX) or LED Constant-Voltage Power Supply select 1. These are the most commonly-used power supplies.
+This option allows the controller board to switch the power supply 12v on and off - [`M80`](/docs/gcode/M80.html),  [`M80`](/docs/gcode/M80.html). Requires `PS_ON_PIN`.
 
 ```cpp
 //#define PS_DEFAULT_OFF
@@ -310,7 +409,6 @@ Enable this if you don't want the power supply to switch on when you turn on the
 #define TEMP_SENSOR_5 0
 #define TEMP_SENSOR_BED 0
 #define TEMP_SENSOR_CHAMBER 0
-#define CHAMBER_HEATER_PIN -1
 ```
 Temperature sensors are vital components in a 3D printer. Fast and accurate sensors ensure that the temperature will be well controlled, to keep plastic flowing smoothly and to prevent mishaps. Use these settings to specify the hotend and bed temperature sensors. Every 3D printer will have a hotend thermistor, and most will have a bed thermistor.
 
@@ -512,6 +610,7 @@ A lengthy extrusion may not damage your machine, but it can be an awful waste of
 ```cpp
 #define THERMAL_PROTECTION_HOTENDS // Enable thermal protection for all extruders
 #define THERMAL_PROTECTION_BED     // Enable thermal protection for the heated bed
+#define THERMAL_PROTECTION_CHAMBER // Enable thermal protection for the heated chamber
 ```
 Thermal protection is one of the most vital safety features in Marlin, allowing the firmware to catch a bad situation and shut down heaters before it goes too far. Consider what happens when a thermistor comes loose during printing. The firmware sees a low temperature reading so it keeps the heat on. As long as the temperature reading is low, the hotend will continue to heat up indefinitely, leading to smoke, oozing, a ruined print, and possibly even fire.
 
@@ -562,6 +661,9 @@ In open loop systems, endstops are an inexpensive way to establish the actual po
 //#define USE_ZMAX_PLUG
 ```
 Specify all the endstop connectors that are connected to any endstop or probe. Most printers will use all three min plugs. On delta machines, all the max plugs should be used. Probes can share the Z min plug, or can use one or more of the extra connectors. Don't enable plugs used for non-endstop and non-probe purposes here.
+{% alert info %}
+`SENSORLESS_HOMING` will still need endstop connectors delcared.
+{% endalert %}
 
 ### Endstop Pullups
 
@@ -611,7 +713,7 @@ By default all endstops have pulldown resistors disabled.
 #define Z_MAX_ENDSTOP_INVERTING false // set to true to invert the logic of the endstop.
 #define Z_MIN_PROBE_ENDSTOP_INVERTING false // set to true to invert the logic of the endstop.
 ```
-Use `M119` to test if these are set correctly. If an endstop shows up as "TRIGGERED" when not pressed, and "open" when pressed, then it should be inverted here.
+Use [`M119`](/docs/gcode/M119.html) to test if these are set correctly. If an endstop shows up as "TRIGGERED" when not pressed, and "open" when pressed, then it should be inverted here.
 
 ### Stepper Drivers
 
@@ -661,37 +763,11 @@ Enable `DISTINCT_E_FACTORS` if your extruders are not all mechanically identical
 ### Default Steps per mm <em class="fa fa-sticky-note-o" aria-hidden="true"></em> <em class="fa fa-desktop" aria-hidden="true"></em>
 
 ```cpp
-/**
- * Default Axis Steps Per Unit (steps/mm)
- * Override with M92
- *                                      X, Y, Z, E0 [, E1[, E2[, E3[, E4]]]]
- */
 #define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 4000, 500 }
 ```
 These are the most crucial settings for your printer, as they determine how accurately the steppers will position the axes. Here we're telling the firmware how many individual steps produce a single millimeter (or degree on SCARA) of movement. These depend on various factors, including belt pitch, number of teeth on the pulley, thread pitch on leadscrews, micro-stepping settings, and extruder style.
 
-A useful trick is to let the compiler do the calculations for you and just supply the raw values. For example:
-
-```cpp
-#define NEMA17_FULL_STEPS 200.0
-#define NEMA17_MICROSTEPS 16.0
-#define NEMA17_MOTOR_STEPS (NEMA17_FULL_STEPS * NEMA17_MICROSTEPS)
-#define PULLEY_PITCH 2.0
-#define PULLEY_TEETH 20.0
-#define Z_ROD_PITCH 0.8
-
-#define WADE_PULLEY_TEETH 11.0
-#define WADE_GEAR_TEETH 45.0
-#define HOBBED_BOLT_DIAM 6.0
-
-#define XY_STEPS (NEMA17_MOTOR_STEPS / (PULLEY_PITCH * PULLEY_TEETH))
-#define Z_STEPS (NEMA17_MOTOR_STEPS / Z_ROD_PITCH)
-#define WADE_GEAR_RATIO (WADE_GEAR_TEETH / WADE_PULLEY_TEETH)
-#define HOBBED_BOLD_CIRC (M_PI * HOBBED_BOLT_DIAM)
-#define WADE_E_STEPS (NEMA17_MOTOR_STEPS * WADE_GEAR_RATIO / HOBBED_BOLD_CIRC)
-
-#define DEFAULT_AXIS_STEPS_PER_UNIT   { XY_STEPS, XY_STEPS, Z_STEPS, ENG2_E_STEPS }
-```
+Override with [`M92`](/docs/gcode/M092.html).
 
 {% panel info Step Calculator %}
 The [Prusa Calculator](http://prusaprinters.org/calculator/) is a great tool to help find the right values for your specific printer configuration.
@@ -700,14 +776,11 @@ The [Prusa Calculator](http://prusaprinters.org/calculator/) is a great tool to 
 #### Default Max Feed Rate <em class="fa fa-sticky-note-o" aria-hidden="true"></em> <em class="fa fa-desktop" aria-hidden="true"></em>
 
 ```cpp
-/**
- * Default Max Feed Rate (mm/s)
- * Override with M203
- *                                      X, Y, Z, E0 [, E1[, E2[, E3[, E4]]]]
- */
 #define DEFAULT_MAX_FEEDRATE { 500, 500, 2.25, 45 }
 ```
 In any move, the velocities (in mm/sec) in the X, Y, Z, and E directions will be limited to the corresponding `DEFAULT_MAX_FEEDRATE`.
+
+Override with [`M203`](/docs/gcode/M203.html).
 
 {% alert danger %}
 Setting these too high will cause the corresponding stepper motor to lose steps, especially on high speed movements.
@@ -718,12 +791,6 @@ Setting these too high will cause the corresponding stepper motor to lose steps,
 #### Default Max Acceleration <em class="fa fa-sticky-note-o" aria-hidden="true"></em> <em class="fa fa-desktop" aria-hidden="true"></em>
 
 ```cpp
-/**
- * Default Max Acceleration (change/s) change = mm/s
- * (Maximum start speed for accelerated moves)
- * Override with M201
- *                                      X, Y, Z, E0 [, E1[, E2[, E3[, E4]]]]
- */
 #define DEFAULT_MAX_ACCELERATION      { 3000, 3000, 100, 10000 }
 ```
 When the velocity of any axis changes, its acceleration (or deceleration) in mm/s/s is limited by the current max acceleration setting. Also see the *jerk* settings below, which specify the largest instant speed change that can occur between segments.
@@ -732,17 +799,12 @@ A value of 3000 means that an axis may accelerate from 0 to 3000mm/m (50mm/s) wi
 
 Jerk sets the floor for accelerated moves. If the change in top speed for a given axis between segments is less than the jerk value for the axis, an instantaneous change in speed may be allowed. Limits placed on other axes also apply. Basically, lower jerk values result in more accelerated moves, which may be near-instantaneous in some cases, depending on the final acceleration determined by the planner.
 
+Override with [`M201`](/docs/gcode/M201.html).
+
+
 #### Default Acceleration <em class="fa fa-sticky-note-o" aria-hidden="true"></em> <em class="fa fa-desktop" aria-hidden="true"></em>
 
 ```cpp
-/**
- * Default Acceleration (change/s) change = mm/s
- * Override with M204
- *
- *   M204 P    Acceleration
- *   M204 R    Retract Acceleration
- *   M204 T    Travel Acceleration
- */
 #define DEFAULT_ACCELERATION          3000    // X, Y, Z and E acceleration for printing moves
 #define DEFAULT_RETRACT_ACCELERATION  3000    // E acceleration for retracts
 #define DEFAULT_TRAVEL_ACCELERATION   3000    // X, Y, Z acceleration for travel (non printing) moves
@@ -754,6 +816,8 @@ The planner uses the default accelerations set here (or by `M204`) as the starti
 - Travel moves include only the XYZ axes.
 
 In print/travel moves, `DEFAULT_ACCELERATION` and `DEFAULT_TRAVEL_ACCELERATION` apply to the XYZ axes. In retraction moves, `DEFAULT_RETRACT_ACCELERATION` applies only to the *E*-axis. During movement planning, Marlin constrains the default accelerations to the maximum acceleration of all axes involved in the move.
+
+Override with [`M204`](/docs/gcode/M204.html).
 
 {% alert danger %}
 Don't set these too high. Larger acceleration values can lead to excessive vibration, noisy steppers, or even skipped steps. Lower acceleration produces smoother motion, eliminates vibration, and helps reduce wear on mechanical parts.
@@ -768,19 +832,11 @@ Don't set these too high. Larger acceleration values can lead to excessive vibra
   #define JUNCTION_DEVIATION_MM 0.02  // (mm) Distance from real junction edge
 #endif
 ```
-Use Junction Deviation instead of traditional Jerk Limiting
+Use Junction Deviation instead of traditional Jerk Limiting. Jerk settings is overriden with Junction Deviation.
 
 #### Jerk <em class="fa fa-sticky-note-o" aria-hidden="true"></em> <em class="fa fa-desktop" aria-hidden="true"></em>
 
 ```cpp
-/**
- * Default Jerk (mm/s)
- * Override with M205 X Y Z E
- *
- * "Jerk" specifies the minimum speed change that requires acceleration.
- * When changing speed and direction, if the difference is less than the
- * value set here, it may happen instantaneously.
- */
 #define DEFAULT_XJERK                 20.0
 #define DEFAULT_YJERK                 20.0
 #define DEFAULT_ZJERK                  0.4
@@ -789,6 +845,8 @@ Use Junction Deviation instead of traditional Jerk Limiting
 Jerk works in conjunction with acceleration (see above). Jerk is the maximum change in velocity (in mm/sec) that can occur instantaneously. It can also be thought of as the minimum change in velocity that will be done as an accelerated (not instantaneous) move.
 
 Both acceleration and jerk affect your print quality. If jerk is too low, the extruder will linger too long on small segments and corners, possibly leaving blobs. If the jerk is set too high, direction changes will apply too much torque and you may see "ringing" artifacts or dropped steps.
+
+Override with [`M205`](/docs/gcode/M205.html).
 
 #### S-Curve Acceleration <em class="fa fa-sticky-note-o" aria-hidden="true"></em> <em class="fa fa-desktop" aria-hidden="true"></em>
 ```cpp
@@ -808,7 +866,7 @@ Use this option in all cases when the probe is connected to the Z MIN endstop pl
 You can use this option to configure a machine with no Z endstops. In that case the probe will be used to home Z and you will need to enable `Z_SAFE_HOMING` to ensure that the probe is positioned over the bed when homing the Z axis - done after X and Y.
 
 ```cpp
-//#define Z_MIN_PROBE_PIN 32 // Pin 32 is the RAMPS default
+//#define Z_MIN_PROBE_PIN 32
 ```
 Use this option if you've connected the probe to a pin other than the Z MIN endstop pin. With this option enabled, by default Marlin will use the `Z_MIN_PROBE_PIN` specified in your board's pins file (usually the X or Z MAX endstop pin since these are the most likely to be unused). If you need to use a different pin, define your custom pin number for `Z_MIN_PROBE_PIN` in `Configuration.h`.
 
@@ -820,8 +878,10 @@ Marlin supports any kind of probe that can be made to work like a switch. Specif
 
 ```cpp
 //#define PROBE_MANUALLY
+//#define MANUAL_PROBE_START_Z 0.2
 ```
 Even if you have no bed probe you can still use any of the core `AUTO_BED_LEVELING_*` options below by selecting this option. With `PROBE_MANUALLY` the [`G29`](/docs/gcode/G029-mbl.html) command only moves the nozzle to the next probe point where it pauses. You adjust the Z height with a piece of paper or feeler gauge, then send [`G29`](/docs/gcode/G029-mbl.html)  again to continue to the next point. You can also enable `LCD_BED_LEVELING` to add a "Level Bed" Menu item to the LCD for a fully interactive leveling process.
+`MANUAL_PROBE_START_Z` sets the z-height the printer initially moves to at each mesh point during manual probing. With this disabled, printer moves to Z=0 at each manual mesh probe point.
 
 #### Fix Mounted Probe
 
@@ -832,6 +892,16 @@ Even if you have no bed probe you can still use any of the core `AUTO_BED_LEVELI
 ```
 This option is for any probe that's fixed in place, with no need to be deployed or stowed. Specify this type for an inductive probe or when using the nozzle itself as the probe.
 
+#### Servo Z Probe
+
+![Probe](/assets/images/config/probe.png){: .floater.framed}
+
+```cpp
+//#define Z_PROBE_SERVO_NR 0       // Defaults to SERVO 0 connector.
+//#define Z_SERVO_ANGLES { 70, 0 } // Z Servo Deploy and Stow angles
+```
+To indicate a Servo Z Probe (e.g., an endstop switch mounted on a rotating arm) just specify the servo index. Use the [`M280`](/docs/gcode/M280.html) command to find the best `Z_SERVO_ANGLES` values.
+
 #### BLTouch
 
 ![BLTouch](/assets/images/config/BLTouch.png){: .floater.framed}
@@ -841,15 +911,17 @@ This option is for any probe that's fixed in place, with no need to be deployed 
 ```
 The [ANTCLABS BLTouch](https://plus.google.com/113792662927481823969) probe uses custom circuitry and a magnet to raise and lower a metal pin which acts as a touch probe. The BLTouch uses the servo connector and is controlled using specific servo angles. With this option enabled the other required settings are automatically configured (so there's no need to enter servo angles, for example).
 
-#### Servo Z Probe
-
-![Probe](/assets/images/config/probe.png){: .floater.framed}
+#### TOUCH MI PROBE
 
 ```cpp
-//#define Z_ENDSTOP_SERVO_NR 0
-//#define Z_SERVO_ANGLES {70,0} // Z Servo Deploy and Stow angles
+//#define TOUCH_MI_PROBE
+#if ENABLED(TOUCH_MI_PROBE)
+  #define TOUCH_MI_RETRACT_Z 0.5                  // Height at which the probe retracts
+  //#define TOUCH_MI_DEPLOY_XPOS (X_MAX_BED + 2)  // For a magnet on the right side of the bed
+  //#define TOUCH_MI_MANUAL_DEPLOY                // For manual deploy (LCD menu)
+#endif
 ```
-To indicate a Servo Z Probe (e.g., an endstop switch mounted on a rotating arm) just specify the servo index. Use the `M280` command to find the best `Z_SERVO_ANGLES` values.
+Touch-MI Probe by hotends.fr is deployed and activated by moving the X-axis to a magnet at the edge of the bed. By default, the magnet is assumed to be on the left and activated by a home. If the magnet is on the right, enable and set TOUCH_MI_DEPLOY_XPOS to the deploy position. Also option requires: `BABYSTEPPING`, `BABYSTEP_ZPROBE_OFFSET`, `Z_SAFE_HOMING`, and a minimum `Z_HOMING_HEIGHT` of 10.
 
 #### Solenoid Probe
 
@@ -892,28 +964,29 @@ More information will be included in an upcoming Delta configuration page.
 
 ### Probe Offsets <em class="fa fa-sticky-note-o" aria-hidden="true"></em> <em class="fa fa-desktop" aria-hidden="true"></em>
 
-```cpp
-#define X_PROBE_OFFSET_FROM_EXTRUDER -44  // X offset: -left  [of the nozzle] +right
-#define Y_PROBE_OFFSET_FROM_EXTRUDER -8  // Y offset: -front [of the nozzle] +behind
-#define Z_PROBE_OFFSET_FROM_EXTRUDER -2.50   // Z offset: -below [the nozzle](for most negative! positive when using tilt probes or the nozzle based probes)
-```
-These offsets specify the distance from the tip of the nozzle to the probe — or more precisely, to the point at which the probe triggers. The X and Y offsets are specified as integers. The Z offset should be specified as exactly as possible using a decimal value. The Z offset can be overridden with `M851 Z` or the LCD controller. The `M851` offset is saved to EEPROM with `M500`.
+These offsets specify the distance from the tip of the nozzle to the probe — or more precisely, to the point at which the probe triggers. The X and Y offsets are specified as integers. The Z offset should be specified as exactly as possible using a decimal value. The Z offset can be overridden with `M851 Z` or the LCD controller. The [`M851`](/docs/gcode/M851.html) offset is saved to EEPROM with [`M500`](/docs/gcode/M500.html).
 
 ### Distance from edge
 
 ```cpp
+#define X_PROBE_OFFSET_FROM_EXTRUDER 10  // X offset: -left  +right  [of the nozzle]
+#define Y_PROBE_OFFSET_FROM_EXTRUDER 10  // Y offset: -front +behind [the nozzle]
+#define Z_PROBE_OFFSET_FROM_EXTRUDER 0   // Z offset: -below +above  [the nozzle]
+
 #define MIN_PROBE_EDGE 10
 ```
-Some probes needs to stay away from the edge
+Certain types of probe need to stay away from the edge
 
 ### Probing Speed
 
 ```cpp
 // X and Y axis travel speed (mm/m) between probes
-#define XY_PROBE_SPEED 4000
-// Speed for the first approach when double-probing (with PROBE_DOUBLE_TOUCH)
+#define XY_PROBE_SPEED 8000
+
+// Feedrate (mm/m) for the first approach when double-probing (MULTIPLE_PROBING == 2)
 #define Z_PROBE_SPEED_FAST HOMING_FEEDRATE_Z
-// Speed for the "accurate" probe of each point
+
+// Feedrate (mm/m) for the "accurate" probe of each point
 #define Z_PROBE_SPEED_SLOW (Z_PROBE_SPEED_FAST / 2)
 ```
 Probing should be done quickly, but the Z speed should be tuned for best repeatability. Depending on the probe, a slower Z probing speed may be needed for repeatable results.
@@ -921,8 +994,9 @@ Probing should be done quickly, but the Z speed should be tuned for best repeata
 ### Multiple Probes
 ```cpp
 //#define MULTIPLE_PROBING 2
+//#define EXTRA_PROBING    1
 ```
-Set to 2 for a fast/slow probe, using the second probe result. Set to 3 or more for slow probes, averaging the results.
+Probing mutiple times yields better results. Set to 2 for a fast/slow probe - the second probe result will be used. Set to 3 or more for slow probes - the average result will be used.
 
 ### Probe Clearance
 
@@ -936,7 +1010,7 @@ Set to 2 for a fast/slow probe, using the second probe result. Set to 3 or more 
 ```
 Z probes require clearance when deploying, stowing, and moving between probe points to avoid hitting the bed and other hardware. Servo-mounted probes require extra space for the arm to rotate. Inductive probes need space to keep from triggering early.
 
-Use these settings to specify the distance (mm) to raise the probe (or lower the bed). The values set here apply over and above any (negative) probe Z Offset set with `Z_PROBE_OFFSET_FROM_EXTRUDER`, `M851`, or the LCD. Only integer values >= 1 are valid for these settings.
+Use these settings to specify the distance (mm) to raise the probe (or lower the bed). The values set here apply over and above any (negative) probe Z Offset set with `Z_PROBE_OFFSET_FROM_EXTRUDER`, [`M851`](/docs/gcode/M204.html), or the LCD. Only integer values >= 1 are valid for these settings.
 
 - *Example*: `M851 Z-5` with a CLEARANCE of 4  =>  9mm from bed to nozzle.
 - *But*: `M851 Z+1` with a CLEARANCE of 2  =>  2mm from bed to nozzle.
@@ -957,24 +1031,20 @@ For `M851` and LCD menus give a range for adjusting the Z probe offset.
 #define Z_MIN_PROBE_REPEATABILITY_TEST
 ```
 This enables you to test the reliability of your probe.
-Issue a M48 command to start testing. It will give you a standard deviation for the probe.
+Issue a [`M48`](/docs/gcode/M048.html) command to start testing. It will give you a standard deviation for the probe.
 Tip: 0.02 mm is normally acceptable for bed leveling to work.
 
 ```cpp
 // Before deploy/stow pause for user confirmation
 //#define PAUSE_BEFORE_DEPLOY_STOW
+#if ENABLED(PAUSE_BEFORE_DEPLOY_STOW)
+  //#define PAUSE_PROBE_DEPLOY_WHEN_TRIGGERED // For Manual Deploy Allenkey Probe
+#endif
 ```
 Before deploy/stow pause for user confirmation
 
 ### Probe with heaters off
 ```cpp
-/**
- * Enable one or more of the following if probing seems unreliable.
- * Heaters and/or fans can be disabled during probing to minimize electrical
- * noise. A delay can also be added to allow noise and vibration to settle.
- * These options are most useful for the BLTouch probe, but may also improve
- * readings with inductive probes and piezo sensors.
- */
 //#define PROBING_HEATERS_OFF       // Turn heaters off when probing
 #if ENABLED(PROBING_HEATERS_OFF)
   //#define WAIT_FOR_BED_HEATER     // Wait for bed to heat back up between probes (to improve accuracy)
@@ -983,6 +1053,7 @@ Before deploy/stow pause for user confirmation
 //#define PROBING_STEPPERS_OFF      // Turn steppers off (unless needed to hold position) when probing
 //#define DELAY_BEFORE_PROBING 200  // (ms) To prevent vibrations from triggering piezo sensors
 ```
+Heatinging the bed and extruder for probing will produce results that more accurately correspond with your bed if you typically print with the bed heated. Enable `PROBING_HEATERS_OFF` if you are experiencing electrical noise. A delay can also be added to allow noise and vibration to settle.
 
 ![Stepper Spin](/assets/images/config/motor-dir.jpg){: .floater}
 
@@ -1001,9 +1072,9 @@ These options set the pin states used for stepper enable. The most common settin
 ### Motor Disable
 
 ```cpp
-#define DISABLE_X false
-#define DISABLE_Y false
-#define DISABLE_Z false
+#define INVERT_X_DIR false
+#define INVERT_Y_DIR false
+#define INVERT_Z_DIR false
 ```
 Use these options to disable steppers when not being issued a movement. This was implemented as a hack to run steppers at higher-than-normal current in an effort to produce more torque at the cost of increased heat for drivers and steppers.
 
@@ -1019,17 +1090,18 @@ Most 3D printers use an "open loop" control system, meaning the software can't a
 Enable this option to suppress the warning given in cases when reduced accuracy is likely to occur.
 
 ```cpp
-#define DISABLE_E false // For all extruders
-#define DISABLE_INACTIVE_EXTRUDER true //disable only inactive extruders and keep active extruder enabled
+#define DISABLE_E false 			// For all extruders
+#define DISABLE_INACTIVE_EXTRUDER	// Keep only the active extruder enabled
+
 ```
 The E disable option works like `DISABLE_[XYZ]` but pertains to one or more extruders. The default setting keeps the active extruder enabled, disabling all inactive extruders. This is reasonable for situations where a "wipe tower" or other means is used to ensure that the nozzle is primed and not oozing between uses.
 
 ### Motor Direction
 
 ```cpp
-#define INVERT_X_DIR true
-#define INVERT_Y_DIR false
-#define INVERT_Z_DIR true
+#define INVERT_X_DIR false
+#define INVERT_Y_DIR true
+#define INVERT_Z_DIR false
 
 #define INVERT_E0_DIR false
 #define INVERT_E1_DIR false
@@ -1043,12 +1115,17 @@ These settings reverse the motor direction for each axis. Be careful when first 
 
 ### Z Homing Height
 
-![Home Icon](/assets/images/config/home.jpg){: .floater}
+![Home Icon](/assets/images/config/home.jpg){: .floater.framed}
 
 ```cpp
+//#define NO_MOTION_BEFORE_HOMING	// Inhibit movement until all axes have been homed
+//#define UNKNOWN_Z_NO_RAISE		// Don't raise Z (lower the bed) if Z is "unknown."
+									//For beds that fall when Z is powered off.
 //#define Z_HOMING_HEIGHT 4
+
 ```
 This value raises Z to the specified height above the bed before homing X or Y. This is useful to prevent the head crashing into bed mountings such as screws, bulldog clips, etc. This also works with auto bed leveling enabled and will be triggered only when the Z axis height is less than the defined value, otherwise the Z axis will not move.
+	`NO_MOTION_BEFORE_HOMING` and `UNKNOWN_Z_NO_RAISE` 
 
 ### Homing Direction
 
@@ -1085,12 +1162,25 @@ Although home positions are fixed, `M206` can be used to apply offsets to the ho
 
 ```cpp
 #define MIN_SOFTWARE_ENDSTOPS
+#if ENABLED(MIN_SOFTWARE_ENDSTOPS)
+  #define MIN_SOFTWARE_ENDSTOP_X
+  #define MIN_SOFTWARE_ENDSTOP_Y
+  #define MIN_SOFTWARE_ENDSTOP_Z
+#endif
+
 #define MAX_SOFTWARE_ENDSTOPS
+#if ENABLED(MAX_SOFTWARE_ENDSTOPS)
+  #define MAX_SOFTWARE_ENDSTOP_X
+  #define MAX_SOFTWARE_ENDSTOP_Y
+  #define MAX_SOFTWARE_ENDSTOP_Z
+#endif
 ```
-Set to `true` to enable the option to constrain movement to the physical boundaries of the machine (as set by `[XYZ]_(MIN|MAX)_POS`). For example, `G1 Z-100` can be min constrained to `G1 Z0`. It is recommended to enable these options as a safety feature. If software endstops need to be disabled, use `M211 S0`.
+Enable these options to constrain movement to the physical boundaries of the machine (as set by `[XYZ]_(MIN|MAX)_POS`). For example, `G1 Z-100` can be min constrained to `G1 Z0`. It is recommended to enable these options as a safety feature. If software endstops need to be disabled, use [`M211 S0`](/docs/gcode/M211.html).
 
 ```cpp
-//#define SOFT_ENDSTOPS_MENU_ITEM
+#if EITHER(MIN_SOFTWARE_ENDSTOPS, MAX_SOFTWARE_ENDSTOPS)
+  //#define SOFT_ENDSTOPS_MENU_ITEM
+#endif
 ```
 Enable/Disable software endstops from the LCD
 
@@ -1101,19 +1191,36 @@ Enable/Disable software endstops from the LCD
 ```cpp
 //#define FILAMENT_RUNOUT_SENSOR
 #if ENABLED(FILAMENT_RUNOUT_SENSOR)
-  #define FIL_RUNOUT_INVERTING false // set to true to invert the logic of the sensor.
-  #define ENDSTOPPULLUP_FIL_RUNOUT // Uncomment to use internal pullup for filament runout pins if the sensor is defined.
+  #define NUM_RUNOUT_SENSORS   1     // Number of sensors, up to one per extruder. Define a FIL_RUNOUT#_PIN for each.
+  #define FIL_RUNOUT_INVERTING false // Set to true to invert the logic of the sensor.
+  #define FIL_RUNOUT_PULLUP          // Use internal pullup for filament runout pins.
+  //#define FIL_RUNOUT_PULLDOWN      // Use internal pulldown for filament runout pins.
+
+  // Set one or more commands to execute on filament runout.
+  // (After 'M412 H' Marlin will ask the host to handle the process.)
   #define FILAMENT_RUNOUT_SCRIPT "M600"
+
+  // After a runout is detected, continue printing this length of filament
+  // before executing the runout script. Useful for a sensor at the end of
+  // a feed tube. Requires 4 bytes SRAM per sensor, plus 4 bytes overhead.
+  //#define FILAMENT_RUNOUT_DISTANCE_MM 25
+
+  #ifdef FILAMENT_RUNOUT_DISTANCE_MM
+    // Enable this option to use an encoder disc that toggles the runout pin
+    // as the filament moves. (Be sure to set FILAMENT_RUNOUT_DISTANCE_MM
+    // large enough to avoid false positives.)
+    //#define FILAMENT_MOTION_SENSOR
+  #endif
 #endif
 ```
-With this feature, a mechanical or opto endstop switch is used to check for the presence of filament in the feeder (usually the switch is closed when filament is present). If the filament runs out, Marlin will run the specified GCode script (by default "`M600`"). RAMPS-based boards use `SERVO3_PIN`. For other boards you may need to define `FIL_RUNOUT_PIN`.
 
+With this feature, a mechanical or opto endstop switch is used to check for the presence of filament in the feeder (usually the switch is closed when filament is present). If the filament runs out, Marlin will run the specified GCode script (by default [`M600`](/docs/gcode/M600.html)). RAMPS-based boards use `SERVO3_PIN`. For other boards you may need to define `FIL_RUNOUT_PIN`.
 
 ## Bed Leveling
 
 ![Bed Level](/assets/images/config/bedlevel.png){: .floater}
 
-There are many cases where it's useful to measure variances in bed height. Even if the bed on a 3D printer is perfectly flat and level, there may still be imperfections in the mechanics. For example, a machine may have a very flat bed, but a corner of the XY gantry is a half-mm high. The ends of the Z axis may not be perfectly level. The bed may move slightly in the Z plane as it moves in the X and/or Y plane. On a Delta there may be a lingering bowl-shape to its XY trajectory.
+There are many cases where it is useful to measure variances in bed height. Even if the bed on a 3D printer is perfectly flat and level, there may still be imperfections in the mechanics. For example, a machine may have a very flat bed, but a corner of the XY gantry is a half-mm high. The ends of the Z axis may not be perfectly level. The bed may move slightly in the Z plane as it moves in the X and/or Y plane. On a Delta there may be a lingering bowl-shape to its XY trajectory.
 
 Bed Compensation or "--- Bed Leveling" allows the machine —with a bed probe or user assistance— to take accurate measurements of the "bed height" at various points in the XY plane. With this data the machine can then adjust movement to align better to the tilt or "height" variances in the bed. (I'm scare-quoting "height" here because variances may come from other than the bed.)
 
@@ -1129,8 +1236,8 @@ With Bed Leveling enabled:
 
 - `G28` disables bed leveling, but leaves previous leveling data intact.
 - `G29` automatically or manually probes the bed at various points, measures the bed height, calculates a correction grid or matrix, and turns on leveling compensation. Specific behavior depends on configuration and type of bed leveling.
-- `M500` saves the bed leveling data to EEPROM. Use `M501` to load it, `M502` to clear it, and `M503` to report it.
-- `M420 S<bool>` can be used to enable/disable bed leveling. For example, `M420 S1` must be used after `M501` to enable the loaded mesh or matrix, and to re-enable leveling after `G28`, which disables leveling compensation.
+- [`M500`](/docs/gcode/M500.html) saves the bed leveling data to EEPROM. Use [`M501`](/docs/gcode/M501.html) to load it, [`M502`](/docs/gcode/M502.html) to clear it, and [`M503`](/docs/gcode/M503.html) to report it.
+- `M420 S<bool>` can be used to enable/disable bed leveling. For example, [`M420 S1`](/docs/gcode/M420.html) must be used after `M501` to enable the loaded mesh or matrix, and to re-enable leveling after `G28`, which disables leveling compensation.
 - A "Level Bed" menu item can be added to the LCD with the `LCD_BED_LEVELING` option.
 
 ```cpp
@@ -1187,8 +1294,10 @@ Example: To have leveling fade out over the first 10mm of layer printing use `M4
 #if ENABLED(G26_MESH_VALIDATION)
   #define MESH_TEST_NOZZLE_SIZE     0.4   // (mm) Diameter of primary nozzle.
   #define MESH_TEST_LAYER_HEIGHT    0.2   // (mm) Default layer height for the G26 Mesh Validation Tool.
-  #define MESH_TEST_HOTEND_TEMP   205.0   // (°C) Default nozzle temperature for the G26 Mesh Validation Tool.
-  #define MESH_TEST_BED_TEMP       60.0   // (°C) Default bed temperature for the G26 Mesh Validation Tool.
+  #define MESH_TEST_HOTEND_TEMP   205   // (°C) Default nozzle temperature for the G26 Mesh Validation Tool.
+  #define MESH_TEST_BED_TEMP       60   // (°C) Default bed temperature for the G26 Mesh Validation Tool.
+  #define G26_XY_FEEDRATE         20    // (mm/s) Feedrate for XY Moves for the G26 Mesh Validation Tool.
+
 #endif
 ```
 When using any of the mesh-based leveling systems (1.1.7) you can activate `G26_MESH_VALIDATION` to print test patterns and fine-tune the mesh. See [`G26` Mesh Validation](/docs/gcode/G026.html) for full details. The [`G26`]`](/docs/gcode/G026.html) command accepts parameters for nozzle size, layer height, etc. The sub-options above specify the default values that will be applied for omitted parameters.
@@ -1201,10 +1310,10 @@ When using any of the mesh-based leveling systems (1.1.7) you can activate `G26_
 These options specify the default number of points to probe in each dimension during `G29`.
 
 ```cpp
-#define LEFT_PROBE_BED_POSITION 15
-#define RIGHT_PROBE_BED_POSITION 145
-#define FRONT_PROBE_BED_POSITION 20
-#define BACK_PROBE_BED_POSITION 150
+  //#define LEFT_PROBE_BED_POSITION MIN_PROBE_EDGE
+  //#define RIGHT_PROBE_BED_POSITION (X_BED_SIZE - (MIN_PROBE_EDGE))
+  //#define FRONT_PROBE_BED_POSITION MIN_PROBE_EDGE
+  //#define BACK_PROBE_BED_POSITION (Y_BED_SIZE - (MIN_PROBE_EDGE))
 ```
 These settings specify the boundaries for probing with [`G29`](/docs/gcode/G029-mbl.html). This will most likely be a sub-section of the bed because probes are not usually able to reach every point that the nozzle can. Take account of the probe's XY offsets when setting these boundaries.
 
@@ -1236,12 +1345,12 @@ If you have SRAM to spare, this option will multiply the resolution of the bilin
 #define UBL_MESH_INSET 1          // Mesh inset margin on print area
 #define GRID_MAX_POINTS_X 10      // Don't use more than 15 points per axis, implementation limited.
 #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
-#define UBL_PROBE_PT_1_X 39       // These set the probe locations for when UBL does a 3-Point leveling
-#define UBL_PROBE_PT_1_Y 180      // of the mesh.
-#define UBL_PROBE_PT_2_X 39
-#define UBL_PROBE_PT_2_Y 20
-#define UBL_PROBE_PT_3_X 180
-#define UBL_PROBE_PT_3_Y 20
+
+  #define UBL_MESH_EDIT_MOVES_Z     // Sophisticated users prefer no movement of nozzle
+  #define UBL_SAVE_ACTIVE_ON_M500   // Save the currently active mesh in the current slot on M500
+
+  //#define UBL_Z_RAISE_WHEN_OFF_MESH 2.5 // When the nozzle is off the mesh, this value is used
+                                          // as the Z-Height correction value.
 ```
 These options specify the inset, grid, and 3-point triangle to use for UBL. Note that probe XY offsets and movement limits may constrain the probeable area of the bed.
 
@@ -1258,19 +1367,26 @@ These options specify the number of points that will always be probed in each di
 ### 3-Point Options
 
 ```cpp
-#define ABL_PROBE_PT_1_X 15
-#define ABL_PROBE_PT_1_Y 180
-#define ABL_PROBE_PT_2_X 15
-#define ABL_PROBE_PT_2_Y 20
-#define ABL_PROBE_PT_3_X 170
-#define ABL_PROBE_PT_3_Y 20
+#if EITHER(AUTO_BED_LEVELING_3POINT, AUTO_BED_LEVELING_UBL)
+  //#define PROBE_PT_1_X 15
+  //#define PROBE_PT_1_Y 180
+  //#define PROBE_PT_2_X 15
+  //#define PROBE_PT_2_Y 20
+  //#define PROBE_PT_3_X 170
+  //#define PROBE_PT_3_Y 20
+#endif
 ```
 These options specify the three points that will be probed during `G29`.
 
 ### LCD Bed Leveling
 
 ```cpp
-#define LCD_BED_LEVELING
+//#define LCD_BED_LEVELING
+#if ENABLED(LCD_BED_LEVELING)
+  #define MESH_EDIT_Z_STEP  0.025 // (mm) Step size while manually probing Z axis.
+  #define LCD_PROBE_Z_RANGE 4     // (mm) Z Range centered on Z_MIN_POS for LCD Z adjustment
+  //#define MESH_EDIT_MENU        // Add a menu to edit mesh points
+#endif
 ```
 `LCD_BED_LEVELING` adds a "Level Bed" menu to the LCD that starts a step-by-step guided leveling procedure that requires no probe. For Mesh Bed Leveling see [`G29` for MBL](/docs/gcode/G029-mbl.html), and for `PROBE_MANUALLY` see [`G29` for ABL](http://marlinfw.org/docs/gcode/G029-abl.html).
 
@@ -1280,8 +1396,14 @@ Available with `MESH_BED_LEVELING` and `PROBE_MANUALLY` (all forms of Auto Bed L
 
 ```cpp
 //#define LEVEL_BED_CORNERS
+#if ENABLED(LEVEL_BED_CORNERS)
+  #define LEVEL_CORNERS_INSET 30    // (mm) An inset for corner leveling
+  #define LEVEL_CORNERS_Z_HOP  4.0  // (mm) Move nozzle up before moving between corners
+  #define LEVEL_CORNERS_HEIGHT 0.0  // (mm) Z height of nozzle at leveling points
+  //#define LEVEL_CENTER_TOO        // Move to the center after the last corner
+#endif
 ```
-Add a menu item to move between bed corners for manual bed adjustment
+Add a menu item to move between bed corners for manual bed adjustment.
 
 ### Z Probe End Script
 
@@ -1314,8 +1436,8 @@ These settings are used to override the home position. Leave them undefined for 
 #define Z_SAFE_HOMING
 
 #if ENABLED(Z_SAFE_HOMING)
-  #define Z_SAFE_HOMING_X_POINT ((X_MIN_POS + X_MAX_POS) / 2)    // X point for Z homing when homing all axis (G28).
-  #define Z_SAFE_HOMING_Y_POINT ((Y_MIN_POS + Y_MAX_POS) / 2)    // Y point for Z homing when homing all axis (G28).
+  #define Z_SAFE_HOMING_X_POINT ((X_BED_SIZE) / 2)    // X point for Z homing when homing all axes (G28).
+  #define Z_SAFE_HOMING_Y_POINT ((Y_BED_SIZE) / 2)    // Y point for Z homing when homing all axes (G28).
 #endif
 ```
 **Z Safe Homing** prevents Z from homing when the probe (or nozzle) is outside bed area by moving to a defined XY point (by default, the middle of the bed) before Z Homing when homing all axes with `G28`. As a side-effect, X and Y homing are required before Z homing. If stepper drivers time out, X and Y homing will be required again.
@@ -1335,9 +1457,44 @@ Homing speed for use in auto home and auto bed leveling. These values may be set
 Setting these values too high may result in reduced accuracy and/or skipped steps. Reducing acceleration may help to achieve higher top speeds.
 {% endalert %}
 
-***
+```cpp
+#define VALIDATE_HOMING_ENDSTOPS
+```
 
-## Extras 1
+Validate that endstops are triggered on homing moves.
+
+### Bed Skew Compensation
+```cpp
+//#define SKEW_CORRECTION
+
+#if ENABLED(SKEW_CORRECTION)
+  // Input all length measurements here:
+  #define XY_DIAG_AC 282.8427124746
+  #define XY_DIAG_BD 282.8427124746
+  #define XY_SIDE_AD 200
+
+  // Or, set the default skew factors directly here
+  // to override the above measurements:
+  #define XY_SKEW_FACTOR 0.0
+
+  //#define SKEW_CORRECTION_FOR_Z
+  #if ENABLED(SKEW_CORRECTION_FOR_Z)
+    #define XZ_DIAG_AC 282.8427124746
+    #define XZ_DIAG_BD 282.8427124746
+    #define YZ_DIAG_AC 282.8427124746
+    #define YZ_DIAG_BD 282.8427124746
+    #define YZ_SIDE_AD 200
+    #define XZ_SKEW_FACTOR 0.0
+    #define YZ_SKEW_FACTOR 0.0
+  #endif
+
+  // Enable this option for M852 to set skew at runtime
+  //#define SKEW_CORRECTION_GCODE
+#endif
+```
+Correct for misalignment in the XYZ axes. See `configuration.h` for a thorough explanation.
+
+## Additional Features
 
 ### EEPROM
 
@@ -1412,9 +1569,12 @@ These are the default values for the `Prepare` > `Preheat` LCD menu options. The
 ```cpp
 //#define NOZZLE_PARK_FEATURE
 #if ENABLED(NOZZLE_PARK_FEATURE)
-  // Specify a park position as { X, Y, Z }
+  // Specify a park position as { X, Y, Z_raise }
   #define NOZZLE_PARK_POINT { (X_MIN_POS + 10), (Y_MAX_POS - 10), 20 }
+  #define NOZZLE_PARK_XY_FEEDRATE 100   // (mm/s) X and Y axes feedrate (also used for delta Z axis)
+  #define NOZZLE_PARK_Z_FEEDRATE 5      // (mm/s) Z axis feedrate (not used for delta printers)
 #endif
+
 ```
 Park the nozzle at the given XYZ position on idle or [`G27`](/docs/gcode/G027.html).
 
@@ -1427,6 +1587,30 @@ The "P" parameter controls the action applied to the Z axis:
 ### Nozzle Clean
 ```cpp
 //#define NOZZLE_CLEAN_FEATURE
+#if ENABLED(NOZZLE_CLEAN_FEATURE)
+  // Default number of pattern repetitions
+  #define NOZZLE_CLEAN_STROKES  12
+
+  // Default number of triangles
+  #define NOZZLE_CLEAN_TRIANGLES  3
+
+  // Specify positions as { X, Y, Z }
+  #define NOZZLE_CLEAN_START_POINT { 30, 30, (Z_MIN_POS + 1)}
+  #define NOZZLE_CLEAN_END_POINT   { 100, 60, (Z_MIN_POS + 1) }
+
+  // Circular pattern radius
+  #define NOZZLE_CLEAN_CIRCLE_RADIUS 6.5
+  // Circular pattern circle fragments number
+  #define NOZZLE_CLEAN_CIRCLE_FN 10
+  // Middle point of circle
+  #define NOZZLE_CLEAN_CIRCLE_MIDDLE NOZZLE_CLEAN_START_POINT
+
+  // Move the nozzle to the initial position after cleaning
+  #define NOZZLE_CLEAN_GOBACK
+
+  // Enable for a purge/clean station that's always at the gantry height (thus no Z move)
+  //#define NOZZLE_CLEAN_NO_Z
+#endif
 ```
 Adds the [`G12`](/docs/gcode/G012.html) command to perform a nozzle cleaning process. See `Configuration.h` for additional configuration options.
 
