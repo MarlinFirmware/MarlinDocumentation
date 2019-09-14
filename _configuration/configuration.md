@@ -881,7 +881,7 @@ Marlin supports any kind of probe that can be made to work like a switch. Specif
 //#define MANUAL_PROBE_START_Z 0.2
 ```
 Even if you have no bed probe you can still use any of the core `AUTO_BED_LEVELING_*` options below by selecting this option. With `PROBE_MANUALLY` the [`G29`](/docs/gcode/G029-mbl.html) command only moves the nozzle to the next probe point where it pauses. You adjust the Z height with a piece of paper or feeler gauge, then send [`G29`](/docs/gcode/G029-mbl.html)  again to continue to the next point. You can also enable `LCD_BED_LEVELING` to add a "Level Bed" Menu item to the LCD for a fully interactive leveling process.
-`MANUAL_PROBE_START_Z` sets the z-height the printer initially moves to at each mesh point during manual probing. With this disabled, printer moves to Z=0 at each manual mesh probe point.
+`MANUAL_PROBE_START_Z` sets the z-height the printer initially moves to at each mesh point during manual probing. With this disabled, the printer will move to Z0 for the first probe point. Then each consecutive probe point uses the Z position of the probe point preceding it.
 
 #### Fix Mounted Probe
 
@@ -1090,8 +1090,8 @@ Most 3D printers use an "open loop" control system, meaning the software can't a
 Enable this option to suppress the warning given in cases when reduced accuracy is likely to occur.
 
 ```cpp
-#define DISABLE_E false 			// For all extruders
-#define DISABLE_INACTIVE_EXTRUDER	// Keep only the active extruder enabled
+#define DISABLE_E false 					// For all extruders
+#define DISABLE_INACTIVE_EXTRUDER	false 	// Keep only the active extruder enabled
 
 ```
 The E disable option works like `DISABLE_[XYZ]` but pertains to one or more extruders. The default setting keeps the active extruder enabled, disabling all inactive extruders. This is reasonable for situations where a "wipe tower" or other means is used to ensure that the nozzle is primed and not oozing between uses.
@@ -1892,7 +1892,34 @@ Temperature status LEDs that display the hotend and bed temperature. If all hote
 Files sliced with SkeinForge contain the wrong arc GCodes when using "Arc Point" as fillet procedure. This option works around that bug, but otherwise should be left off.
 
 
-## Extras 3
+## Extra Features
+
+### Fast PWM Fan
+```cpp
+//#define FAST_PWM_FAN
+```
+`FAST_PWM_FAN` increases the FAN PWM frequency. The frequency and scaling can be adjusted in the `configuration_adv.h` file.
+
+### Fan Software PWM
+```cpp
+//#define FAN_SOFT_PWM
+#define SOFT_PWM_SCALE 0
+//#define SOFT_PWM_DITHER
+```
+Use software PWM to drive the fan. This uses a very low frequency which is not as annoying as with the hardware PWM. Increase `SOFT_PWM_SCALE` if the frequency is too low.
+If experiencing resolution loss when `SOFT_PWM_SCALE` is set to a value greater than 0, `SOFT_PWM_DITHER` can be used to mitigate it. If enabled.
+
+### Temperature Status LEDs
+```cpp
+//#define TEMP_STAT_LEDS
+```
+Adds a simple temperature status indicators using LEDs.
+
+### SkeinForge ARC G-code correction
+```cpp
+//#define SF_ARC_FIX
+```
+Correct the wrong arc g-codes sent by SkeinForge when using Arc Point as fillet procedure
 
 ### Paste Extruder
 
@@ -1939,6 +1966,24 @@ Adds the [`M150`](/docs/gcode/M150.html) command to set the LED (or LED strip) c
 LED Strips require a MOFSET Chip between PWM lines and LEDs, as the Arduino cannot handle the current the LEDs will require. Failure to follow this precaution can destroy your Arduino!
 {% endalert %}
 
+#### Adafruit Neopixel LED Driver
+```cpp
+//#define NEOPIXEL_LED
+#if ENABLED(NEOPIXEL_LED)
+  #define NEOPIXEL_TYPE   NEO_GRBW // NEO_GRBW / NEO_GRB - four/three channel driver type (defined in Adafruit_NeoPixel.h)
+  #define NEOPIXEL_PIN     4       // LED driving pin
+  //#define NEOPIXEL2_TYPE NEOPIXEL_TYPE
+  //#define NEOPIXEL2_PIN    5
+  #define NEOPIXEL_PIXELS 30       // Number of LEDs in the strip, larger of 2 strips if 2 neopixel strips are used
+  #define NEOPIXEL_IS_SEQUENTIAL   // Sequential display for temperature change - LED by LED. Disable to change all LEDs at once.
+  #define NEOPIXEL_BRIGHTNESS 127  // Initial brightness (0-255)
+  //#define NEOPIXEL_STARTUP_TEST  // Cycle through colors at startup
+  //#define NEOPIXEL_BKGD_LED_INDEX  0               // Index of the LED to use
+  //#define NEOPIXEL_BKGD_COLOR { 255, 255, 255, 0 } // R, G, B, W
+#endif
+```
+[NEOPIXELS](https://www.adafruit.com/category/168)
+
 #### Printer Event LEDs
 ```cpp
 #if ENABLED(BLINKM) || ENABLED(RGB_LED) || ENABLED(RGBW_LED) || ENABLED(PCA9632)
@@ -1959,7 +2004,7 @@ This option causes the printer to give status feedback on the installed color LE
 #### Number of Servos
 
 ```cpp
-#define NUM_SERVOS 1 // Servo index starts with 0 for M280 command
+//#define NUM_SERVOS 3 // Servo index starts with 0 for M280 command
 ```
 The total number of servos to enable for use. One common application for a servo is a Z bed probe consisting of an endstop switch mounted on a rotating arm. To use one of the servo connectors for this type of probe, set `Z_ENDSTOP_SERVO_NR` in the probe options above.
 
@@ -1980,7 +2025,90 @@ With this option servos are powered only during movement, then turned off to pre
 
 ## Temperature Options
 
+### Custom Thermistor 1000 Parameters
+```cpp
+#if TEMP_SENSOR_0 == 1000
+  #define HOTEND0_PULLUP_RESISTOR_OHMS 4700    // Pullup resistor
+  #define HOTEND0_RESISTANCE_25C_OHMS  100000  // Resistance at 25C
+  #define HOTEND0_BETA                 3950    // Beta value
+#endif
+
+#if TEMP_SENSOR_1 == 1000
+  #define HOTEND1_PULLUP_RESISTOR_OHMS 4700    // Pullup resistor
+  #define HOTEND1_RESISTANCE_25C_OHMS  100000  // Resistance at 25C
+  #define HOTEND1_BETA                 3950    // Beta value
+#endif
+
+#if TEMP_SENSOR_2 == 1000
+  #define HOTEND2_PULLUP_RESISTOR_OHMS 4700    // Pullup resistor
+  #define HOTEND2_RESISTANCE_25C_OHMS  100000  // Resistance at 25C
+  #define HOTEND2_BETA                 3950    // Beta value
+#endif
+
+#if TEMP_SENSOR_3 == 1000
+  #define HOTEND3_PULLUP_RESISTOR_OHMS 4700    // Pullup resistor
+  #define HOTEND3_RESISTANCE_25C_OHMS  100000  // Resistance at 25C
+  #define HOTEND3_BETA                 3950    // Beta value
+#endif
+
+#if TEMP_SENSOR_4 == 1000
+  #define HOTEND4_PULLUP_RESISTOR_OHMS 4700    // Pullup resistor
+  #define HOTEND4_RESISTANCE_25C_OHMS  100000  // Resistance at 25C
+  #define HOTEND4_BETA                 3950    // Beta value
+#endif
+
+#if TEMP_SENSOR_5 == 1000
+  #define HOTEND5_PULLUP_RESISTOR_OHMS 4700    // Pullup resistor
+  #define HOTEND5_RESISTANCE_25C_OHMS  100000  // Resistance at 25C
+  #define HOTEND5_BETA                 3950    // Beta value
+#endif
+
+#if TEMP_SENSOR_BED == 1000
+  #define BED_PULLUP_RESISTOR_OHMS     4700    // Pullup resistor
+  #define BED_RESISTANCE_25C_OHMS      100000  // Resistance at 25C
+  #define BED_BETA                     3950    // Beta value
+#endif
+
+#if TEMP_SENSOR_CHAMBER == 1000
+  #define CHAMBER_PULLUP_RESISTOR_OHMS 4700    // Pullup resistor
+  #define CHAMBER_RESISTANCE_25C_OHMS  100000  // Resistance at 25C
+  #define CHAMBER_BETA                 3950    // Beta value
+#endif
+```
+
+Marlin 2.0 allows for custom temperature sensors.
+
+```cpp
+//
+// Hephestos 2 24V heated bed upgrade kit.
+// https://store.bq.com/en/heated-bed-kit-hephestos2
+//
+//#define HEPHESTOS2_HEATED_BED_KIT
+#if ENABLED(HEPHESTOS2_HEATED_BED_KIT)
+  #undef TEMP_SENSOR_BED
+  #define TEMP_SENSOR_BED 70
+  #define HEATER_BED_INVERTING true
+#endif
+```
+
+Enables the use of Hephestos 2 24V heated bed. 
+
+### Heated Chamber
+```cpp
+#if TEMP_SENSOR_CHAMBER
+  #define CHAMBER_MINTEMP             5
+  #define CHAMBER_MAXTEMP            60
+  #define TEMP_CHAMBER_HYSTERESIS     1   // (°C) Temperature proximity considered "close enough" to the target
+  //#define CHAMBER_LIMIT_SWITCHING
+  //#define HEATER_CHAMBER_PIN       44   // Chamber heater on/off pin
+  //#define HEATER_CHAMBER_INVERTING false
+#endif
+```
+
+A heated chamber can greatly improve print quality. Check the pins file of your board for `TEMP_CHAMBER_PIN`. The spare extruder and hotend temperature pins can be used for `HEATER_CHAMBER_PIN` and `TEMP_CHAMBER_PIN`.
+
 ### Bang-Bang Bed Heating
+
 ```cpp
 #if DISABLED(PIDTEMPBED)
   #define BED_CHECK_INTERVAL 5000 // ms between checks in bang-bang control
@@ -1989,9 +2117,11 @@ With this option servos are powered only during movement, then turned off to pre
   #endif
 #endif
 ```
+
 These sub-options can be used when the bed isn't using PID heating. A "bang-bang" heating method will be used instead, simply checking against current temperature at regular intervals.
 
 ### Thermal Protection Settings
+
 #### Hotend Thermal Protection
 ```cpp
 #if ENABLED(THERMAL_PROTECTION_HOTENDS)
@@ -2025,6 +2155,20 @@ The first two options deal with continuous thermal protection during an entire p
 The second set of options applies to changes in target temperature. Whenever an [`M140`](/docs/gcode/M140.html) or [`M190`](/docs/gcode/M190.html) increases the target temperature the firmware will wait for the `WATCH_BED_TEMP_PERIOD` to expire, and if the temperature hasn't increased by `WATCH_BED_TEMP_INCREASE` degrees, the machine is halted, requiring a hard reset. This test restarts with any `M140`/`M190`, but only if the current temperature is far enough below the target for a reliable test.
 
 If you get too many "Heating failed" errors, increase `WATCH_BED_TEMP_PERIOD` and/or decrease `WATCH_BED_TEMP_INCREASE`. (`WATCH_BED_TEMP_INCREASE` should not be set below 2.)
+
+#### Heated Chamber Thermal Protection
+
+```cpp
+#if ENABLED(THERMAL_PROTECTION_CHAMBER)
+  #define THERMAL_PROTECTION_CHAMBER_PERIOD 20    // Seconds
+  #define THERMAL_PROTECTION_CHAMBER_HYSTERESIS 2 // Degrees Celsius
+  #define WATCH_CHAMBER_TEMP_PERIOD 60            // Seconds
+  #define WATCH_CHAMBER_TEMP_INCREASE 2           // Degrees Celsius
+#endif
+```
+
+Similar to the description for the Bed Thermal Protection above. Use `M141`](/docs/gcode/M141.html) to set target chamber temperature and [`M191`](/docs/gcode/M191.html) to set and wait target chamber temperature.
+
 
 ### PID Extrusion Scaling
 ```cpp
@@ -2077,10 +2221,12 @@ High Temperature Thermistors tend to give poor readings at ambient and lower tem
 
 To solve this issue, this option sets the number of milliseconds a hotend will preheat before Marlin starts to check the temperature. Set a delay sufficient to reach a temperature your sensor can reliably read. Lower values are better and safer. If you require a value over 30000, this could indicate a problem.
 
-### AD595 
+### AD595 / AD8495
 ```cpp
-#define TEMP_SENSOR_AD595_OFFSET 0.0
-#define TEMP_SENSOR_AD595_GAIN   1.0
+#define TEMP_SENSOR_AD595_OFFSET  0.0
+#define TEMP_SENSOR_AD595_GAIN    1.0
+#define TEMP_SENSOR_AD8495_OFFSET 0.0
+#define TEMP_SENSOR_AD8495_GAIN   1.0
 ```
 These defines help to calibrate the AD595 sensor in case you get wrong temperature measurements. The final reading is derived from `measuredTemp * TEMP_SENSOR_AD595_GAIN + TEMP_SENSOR_AD595_OFFSET`.
 
@@ -2096,6 +2242,7 @@ These defines help to calibrate the AD595 sensor in case you get wrong temperatu
 ```
 When the machine is idle and the temperature over a given value, Marlin can extrude a short length of filament every couple of seconds.
 
+
 ## Cooling Fans
 Cooling fans are needed on 3D printers to keep components cool and prevent failure.
 
@@ -2103,9 +2250,10 @@ Cooling fans are needed on 3D printers to keep components cool and prevent failu
 ```cpp
 //#define USE_CONTROLLER_FAN
 #if ENABLED(USE_CONTROLLER_FAN)
-  //#define CONTROLLER_FAN_PIN FAN1_PIN  // Set a custom pin for the controller fan
-  #define CONTROLLERFAN_SECS 60          // Duration in seconds for the fan to run after all motors are disabled
-  #define CONTROLLERFAN_SPEED 255        // 255 == full speed
+  //#define CONTROLLER_FAN_PIN -1           // Set a custom pin for the controller fan
+  #define CONTROLLERFAN_SECS 60             // Duration in seconds for the fan to run after all motors are disabled
+  #define CONTROLLERFAN_SPEED 255           // 255 == full speed
+  //#define CONTROLLERFAN_SPEED_Z_ONLY 127  // Reduce noise on machines that keep Z enabled
 #endif
 ```
 A controller fan is useful to cool down the stepper drivers and MOSFETs. When stepper drivers reach a certain temperature they'll turn off, either stuttering or stopping. With this option enabled the fan will turn on automatically whenever any steppers are enabled and turn off after a set period when all steppers are turned off.
@@ -2116,12 +2264,22 @@ A controller fan is useful to cool down the stepper drivers and MOSFETs. When st
 ```
 When PWM fans are set to low speed, they may need a higher-energy kickstart first to get moving. Once up to speed the fan can drop back to the set speed. This option specifies the kickstart duration in milliseconds. **This option doesn't work with the software PWM fan on Sanguinololu.**
 
-### PWM Fans Minimum Speed
+### PWM Fans Minimum and maximum Speeds
 ```cpp
 //#define FAN_MIN_PWM 50
+//#define FAN_MAX_PWM 128
 ```
-This option can be defined to set the minimum PWM speed (1-255) required to keep the PWM fans moving. Fan speeds set by `M106` will be scaled to the reduced range above this minimum.
+This option can be defined to set the minimum and maximum PWM speeds (1-255) required to keep the PWM fans moving. Fan speeds set by [`M106`](/docs/gcode/M106.html) will be scaled to the reduced range above this minimum.
 
+```cpp
+#if ENABLED(FAST_PWM_FAN)
+  //#define FAST_PWM_FAN_FREQUENCY 31400
+  //#define USE_OCR2A_AS_TOP
+#endif
+```
+
+The default frequency for `FAST_PWM_FAN` is F = F_CPU/(2*255*1). See `configuration_adv.h` for further information.
+ 
 ### Extruder Auto-Cooling Fans
 ```cpp
 #define E0_AUTO_FAN_PIN -1
@@ -2130,7 +2288,9 @@ This option can be defined to set the minimum PWM speed (1-255) required to keep
 #define E3_AUTO_FAN_PIN -1
 #define E4_AUTO_FAN_PIN -1
 #define EXTRUDER_AUTO_FAN_TEMPERATURE 50
-#define EXTRUDER_AUTO_FAN_SPEED   255  // == full speed
+#define EXTRUDER_AUTO_FAN_SPEED 255   // 255 == full speed
+#define CHAMBER_AUTO_FAN_TEMPERATURE 30
+#define CHAMBER_AUTO_FAN_SPEED 255
 ```
 Extruder auto fans turn on whenever their extruder temperatures go above `EXTRUDER_AUTO_FAN_TEMPERATURE`. Your board's pins file already specifies the recommended pins. Override those here or set to -1 to disable the fans completely.
 
@@ -2152,10 +2312,15 @@ This feature allows you to digitally multiplex the fan output. The multiplexer i
   #define INVERT_CASE_LIGHT false             // Set true if Case Light is ON when pin is LOW
   #define CASE_LIGHT_DEFAULT_ON true          // Set default power-up state on
   #define CASE_LIGHT_DEFAULT_BRIGHTNESS 105   // Set default power-up brightness (0-255, requires PWM pin)
-  //#define MENU_ITEM_CASE_LIGHT              // Add a Case Light option to the LCD main menu
+  //#define CASE_LIGHT_MENU                   // Add Case Light options to the LCD menu
+  //#define CASE_LIGHT_NO_BRIGHTNESS          // Disable brightness control. Enable for non-PWM lighting.
+  //#define CASE_LIGHT_USE_NEOPIXEL           // Use Neopixel LED as case light, requires NEOPIXEL_LED.
+  #if ENABLED(CASE_LIGHT_USE_NEOPIXEL)
+    #define CASE_LIGHT_NEOPIXEL_COLOR { 255, 255, 255, 255 } // { Red, Green, Blue, White }
+  #endif
 #endif
 ```
-Enable this option for a firmware-controlled digital or PWM case light.
+Enable this option for a firmware-controlled digital or PWM case light. Use [`M355`](/docs/gcode/M355.html) to turn on/off and control the brightness.
 
 ## Endstops Always On
 ```cpp
@@ -2168,6 +2333,16 @@ Enable this option to keep the endstops on (by default) even when not homing. Ov
 //#define Z_LATE_ENABLE
 ```
 With this option is active, the Z steppers will only turn on at the last moment before they move. This option may be needed if your Z driver tends to overheat. Not compatible with Core kinematics.
+
+## External Closed Loop Controller
+```cpp
+//#define EXTERNAL_CLOSED_LOOP_CONTROLLER
+#if ENABLED(EXTERNAL_CLOSED_LOOP_CONTROLLER)
+  //#define CLOSED_LOOP_ENABLE_PIN        -1
+  //#define CLOSED_LOOP_MOVE_COMPLETE_PIN -1
+#endif
+```
+Employ an external closed loop controller.
 
 ## Dual Steppers / Dual Endstops
 ```cpp
