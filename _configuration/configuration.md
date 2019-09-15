@@ -1494,7 +1494,7 @@ Validate that endstops are triggered on homing moves.
 ```
 Correct for misalignment in the XYZ axes. See `configuration.h` for a thorough explanation.
 
-## Additional Features
+## Additonal Features
 
 ### EEPROM
 
@@ -1842,9 +1842,6 @@ Option|Description
 `U8GLIB_SSD1306`|SSD1306 OLED full graphics generic display.
 `SAV_3DGLCD`|SAV OLED LCD module support using either SSD1306 or SH1106 based LCD modules.
 `OLED_PANEL_TINYBOY2`|TinyBoy2 128x64 OLED / Encoder Panel
-
-
-## Extras 2
 
 ### Fan PWM
 
@@ -2342,7 +2339,9 @@ With this option is active, the Z steppers will only turn on at the last moment 
   //#define CLOSED_LOOP_MOVE_COMPLETE_PIN -1
 #endif
 ```
-Employ an external closed loop controller.
+Employ an external closed loop controller that can be activated or deactivated by the main controller. Using a single wire for the control signal and another for the return "move complete" signal to signify whether or not the move was able to be made successfully.
+
+Benefits
 
 ## Dual Steppers / Dual Endstops
 ```cpp
@@ -2374,6 +2373,17 @@ Employ an external closed loop controller.
     #define Z_DUAL_ENDSTOPS_ADJUSTMENT  0
   #endif
 #endif
+
+//#define Z_TRIPLE_STEPPER_DRIVERS
+#if ENABLED(Z_TRIPLE_STEPPER_DRIVERS)
+  //#define Z_TRIPLE_ENDSTOPS
+  #if ENABLED(Z_TRIPLE_ENDSTOPS)
+    #define Z2_USE_ENDSTOP _XMAX_
+    #define Z3_USE_ENDSTOP _YMAX_
+    #define Z_TRIPLE_ENDSTOPS_ADJUSTMENT2  0
+    #define Z_TRIPLE_ENDSTOPS_ADJUSTMENT3  0
+  #endif
+#endif
 ```
 These options allow you to use extra E drivers to drive a second motor for X, Y, and/or Z axes.
 
@@ -2381,23 +2391,21 @@ Set `X_DUAL_STEPPER_DRIVERS` to use a second X motor. If the X motors need to sp
 
 If the two X axes aren't perfectly aligned, use `X_DUAL_ENDSTOP_ADJUSTMENT` to adjust for the difference. This offset is applied to the X2 motor after homing with [`G28`](/docs/gcode/G028.html). The dual endstop offsets can be set at runtime with `M666 X[offset] Y[offset] Z[offset]`.
 
+{% alert info %}
+Requires enabling the corresponding stepper driver ie `X2_DRIVER_TYPE` in `configuration.h`. Do `NOT` enable `E2_DRIVER_TYPE` - this may produce undesireabe results that can harm your machine.
+{% endalert %}
+
 ## Dual X Carriage
 ```cpp
 //#define DUAL_X_CARRIAGE
 #if ENABLED(DUAL_X_CARRIAGE)
-  #define X2_MIN_POS  80          // Minimum X to ensure that X-carriage T1 doesn't hit parked X-carriage T0
-  #define X2_MAX_POS 353          // Maximum to the distance between toolheads when both heads are homed
-  #define X2_HOME_DIR  1          // The second X-carriage always homes to the max endstop position
-  #define X2_HOME_POS X2_MAX_POS  // Default home position is the maximum carriage position
-
-  // Default power-up mode. Set at runtime with [`M605`](/docs/gcode/M605.html) `S[mode]`.
-  #define DEFAULT_DUAL_X_CARRIAGE_MODE DXC_FULL_CONTROL_MODE
-
-  // Default settings in Auto-park Mode
-  #define TOOLCHANGE_PARK_ZLIFT   0.2      // (mm) Amount to raise Z axis when parking
-  #define TOOLCHANGE_UNPARK_ZLIFT 1        // (mm) Amount to raise Z axis when unparking
-
-  // Default X offset in Duplication Mode (typically set to half print bed width)
+  #define X1_MIN_POS X_MIN_POS
+  #define X1_MAX_POS X_BED_SIZE
+  #define X2_MIN_POS    80 
+  #define X2_MAX_POS   353
+  #define X2_HOME_DIR    1 
+  #define X2_HOME_POS X2_MAX_POS
+  #define DEFAULT_DUAL_X_CARRIAGE_MODE DXC_AUTO_PARK_MODE
   #define DEFAULT_DUPLICATION_X_OFFSET 100
 #endif
 ```
@@ -2413,48 +2421,79 @@ Dual X-Carriage has three different movement modes, set with [`M605`](/docs/gcod
  
 - Mode 0: Full Control Mode. ([`M605`](/docs/gcode/M605.html) `S1`) Slicers that fully support dual x-carriages can use this mode for optimal travel results.
 - Mode 1: Auto-park Mode. ([`M605`](/docs/gcode/M605.html) `S1`) The firmware automatically parks/unparks the carriages on tool-change. No slicer support is required. ([`M605`](/docs/gcode/M605.html) `S1`)
-- Mode 2: Duplication Mode. (`M605 S2 X[offs] R[temp]`) The firmware will transparently make the second x-carriage and extruder copy all actions of the first x-carriage. This allows the printer to print 2 arbitrary items at once. (The 2nd extruder's X and temp offsets are set using: `M605 S2 X[offs] R[offs]`.)
+- Mode 2: Duplication Mode. (`[`M605`](/docs/gcode/M605.html) S2 X[offs] R[temp]`) The firmware will transparently make the second x-carriage and extruder copy all actions of the first x-carriage. This allows the printer to print 2 arbitrary items at once. (The 2nd extruder's X and temp offsets are set using: `[`M605`](/docs/gcode/M605.html) S2 X[offs] R[offs]`.)
 
-## TODO Options…
+## Solenoid
 ```cpp
-// Activate a solenoid on the active extruder with [`M380`](/docs/gcode/M380.html). Disable all with [`M381`](/docs/gcode/M381.html).
-// Define SOL0_PIN, SOL1_PIN, etc., for each extruder that has a solenoid.
 //#define EXT_SOLENOID
+```
+Adds control for any solenoid attached to an extruder. Activate the solenoid on the active extruder with [`M380`](/docs/gcode/M380.html). Disable all with [`M381`](/docs/gcode/M381.html).
+{% alert info %}
+Requires defining the corresponding pin ie SOL0_PIN, SOL1_PIN, etc.
+{% endalert %}
 
-// Homing hits each endstop, retracts by these distances, then does a slower bump.
+## Homing
+```cpp
 #define X_HOME_BUMP_MM 5
 #define Y_HOME_BUMP_MM 5
 #define Z_HOME_BUMP_MM 2
-#define HOMING_BUMP_DIVISOR { 2, 2, 4 }  // Re-Bump Speed Divisor (Divides the Homing Feedrate)
-//#define QUICK_HOME                     // If homing includes X and Y, do a diagonal move initially
-
-// When G28 is called, this option will make Y home before X
+#define HOMING_BUMP_DIVISOR { 2, 2, 4 }
+//#define QUICK_HOME
 //#define HOME_Y_BEFORE_X
-
 #define AXIS_RELATIVE_MODES {false, false, false, false}
-
-// Allow duplication mode with a basic dual-nozzle extruder
 //#define DUAL_NOZZLE_DUPLICATION_MODE
+```
+After an endstop is triggered during homing, the printerhead backs off by the set `HOME_BUMP_MM` distance then homes again at a slower speed.
+The slower homing speed for each axis is set by `HOMING_BUMP_DIVISOR`.
 
-// By default pololu step drivers require an active high signal. However, some high power drivers require an active low signal as step.
+## BLTouch
+```cpp
+#if ENABLED(BLTOUCH)
+//#define BLTOUCH_DELAY 500
+//#define BLTOUCH_FORCE_SW_MODE
+//#define BLTOUCH_SET_5V_MODE
+//#define BLTOUCH_FORCE_MODE_SET
+//#define BLTOUCH_HS_MODE
+//#define BLTOUCH_LCD_VOLTAGE_MENU
+#endif
+```
+The default BLTouch settings can be overriden with these options. See `configuration_adv.h` for more information.
+
+## Z Steppers Auto-Alignment
+```cpp
+//#define Z_STEPPER_AUTO_ALIGN
+#if ENABLED(Z_STEPPER_AUTO_ALIGN)
+  #define Z_STEPPER_ALIGN_X { 10, 150, 290 }
+  #define Z_STEPPER_ALIGN_Y { 290, 10, 290 }
+  #define Z_STEPPER_ALIGN_ITERATIONS 3
+  #define RESTORE_LEVELING_AFTER_G34
+  #define G34_MAX_GRADE  5 
+  #define Z_STEPPER_ALIGN_AMP 1.0
+  #define Z_STEPPER_ALIGN_ACC 0.02
+#endif
+```
+Add the [`G34`](/docs/gcode/G34.html) command to align multiple Z steppers using a bed probe.
+
+## TODO Options
+```cpp
+#define AXIS_RELATIVE_MODES { false, false, false, false }
+//#define MULTI_NOZZLE_DUPLICATION
+
 #define INVERT_X_STEP_PIN false
 #define INVERT_Y_STEP_PIN false
 #define INVERT_Z_STEP_PIN false
 #define INVERT_E_STEP_PIN false
 
-// Default stepper release if idle. Set to 0 to deactivate.
-// Steppers will shut down DEFAULT_STEPPER_DEACTIVE_TIME seconds after the last move when DISABLE_INACTIVE_? is true.
-// Time can be set by M18 and M84.
 #define DEFAULT_STEPPER_DEACTIVE_TIME 120
 #define DISABLE_INACTIVE_X true
 #define DISABLE_INACTIVE_Y true
-#define DISABLE_INACTIVE_Z true  // set to false if the nozzle will fall down on your printed part when print has finished.
+#define DISABLE_INACTIVE_Z true
 #define DISABLE_INACTIVE_E true
 
-#define DEFAULT_MINIMUMFEEDRATE       0.0     // minimum feedrate
+#define DEFAULT_MINIMUMFEEDRATE       0.0 
 #define DEFAULT_MINTRAVELFEEDRATE     0.0
 
-//#define HOME_AFTER_DEACTIVATE  // Require rehoming after steppers are deactivated
+//#define HOME_AFTER_DEACTIVATE
 
 #if ENABLED(ULTIPANEL)
   #define MANUAL_FEEDRATE {50*60, 50*60, 4*60, 60} // Feedrates for manual moves along X, Y, Z, E from panel
@@ -2467,82 +2506,38 @@ Dual X-Carriage has three different movement modes, set with [`M605`](/docs/gcod
 // If defined the movements slow down when the look ahead buffer is only half full
 #define SLOWDOWN
 
-// Frequency limit
-// See nophead's blog for more info
-// Not working O
 //#define XY_FREQUENCY_LIMIT  15
 
-// Minimum planner junction speed. Sets the default minimum speed the planner plans for at the end
-// of the buffer and all stops. This should not be much greater than zero and should only be changed
-// if unwanted behavior is observed on a user's machine when running at very slow speeds.
-#define MINIMUM_PLANNER_SPEED 0.05 // (mm/sec)
+#define MINIMUM_PLANNER_SPEED 0.05
 
-// Microstep setting (Only functional when stepper driver microstep pins are connected to MCU.
 #define MICROSTEP_MODES {16,16,16,16,16} // [1,2,4,8,16]
 
-/**
- *  Some boards have a means of setting the stepper motor current via firmware.
- *
- *  The power on motor currents are set by:
- *    PWM_MOTOR_CURRENT - used by MINIRAMBO & ULTIMAIN_2
- *                         known compatible chips: A4982
- *    DIGIPOT_MOTOR_CURRENT - used by BQ_ZUM_MEGA_3D, RAMBO & SCOOVO_X9H
- *                         known compatible chips: AD5206
- *    DAC_MOTOR_CURRENT_DEFAULT - used by PRINTRBOARD_REVF & RIGIDBOARD_V2
- *                         known compatible chips: MCP4728
- *    DIGIPOT_I2C_MOTOR_CURRENTS - used by 5DPRINT, AZTEEG_X3_PRO, MIGHTYBOARD_REVE
- *                         known compatible chips: MCP4451, MCP4018
- *
- *  Motor currents can also be set by [`M907`](/docs/gcode/M907.html) - [`M910`](/docs/gcode/M910.html) and by the LCD.
- *    M907 - applies to all.
- *    M908 - BQ_ZUM_MEGA_3D, RAMBO, PRINTRBOARD_REVF, RIGIDBOARD_V2 & SCOOVO_X9H
- *    M909, M910 & LCD - only PRINTRBOARD_REVF & RIGIDBOARD_V2
- */
-//#define PWM_MOTOR_CURRENT { 1300, 1300, 1250 }          // Values in milliamps
-//#define DIGIPOT_MOTOR_CURRENT { 135,135,135,135,135 }   // Values 0-255 (RAMBO 135 = ~0.75A, 185 = ~1A)
-//#define DAC_MOTOR_CURRENT_DEFAULT { 70, 80, 90, 80 }    // Default drive percent - X, Y, Z, E axis
+//#define PWM_MOTOR_CURRENT { 1300, 1300, 1250 }
+//#define DIGIPOT_MOTOR_CURRENT { 135,135,135,135,135 }
+//#define DAC_MOTOR_CURRENT_DEFAULT { 70, 80, 90, 80 }
 
-// Use an I2C based DIGIPOT (e.g., Azteeg X3 Pro)
 //#define DIGIPOT_I2C
 #if ENABLED(DIGIPOT_I2C) && !defined(DIGIPOT_I2C_ADDRESS_A)
-  /**
-   * Common slave addresses:
-   *
-   *                    A   (A shifted)   B   (B shifted)  IC
-   * Smoothie          0x2C (0x58)       0x2D (0x5A)       MCP4451
-   * AZTEEG_X3_PRO     0x2C (0x58)       0x2E (0x5C)       MCP4451
-   * MIGHTYBOARD_REVE  0x2F (0x5E)                         MCP4018
-   */
-  #define DIGIPOT_I2C_ADDRESS_A 0x2C  // unshifted slave address for first DIGIPOT
-  #define DIGIPOT_I2C_ADDRESS_B 0x2D  // unshifted slave address for second DIGIPOT
+  #define DIGIPOT_I2C_ADDRESS_A 0x2C 
+  #define DIGIPOT_I2C_ADDRESS_B 0x2D
 #endif
 
-//#define DIGIPOT_MCP4018          // Requires library from https://github.com/stawel/SlowSoftI2CMaster
-#define DIGIPOT_I2C_NUM_CHANNELS 8 // 5DPRINT: 4     AZTEEG_X3_PRO: 8
-// Actual motor currents in Amps, need as many here as DIGIPOT_I2C_NUM_CHANNELS
-#define DIGIPOT_I2C_MOTOR_CURRENTS { 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0 }  //  AZTEEG_X3_PRO
+//#define DIGIPOT_MCP4018
+#define DIGIPOT_I2C_NUM_CHANNELS 8
+#define DIGIPOT_I2C_MOTOR_CURRENTS { 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0 }
 
-//===========================================================================
-//=============================Additional Features===========================
-//===========================================================================
+#define ENCODER_RATE_MULTIPLIER
+#define ENCODER_10X_STEPS_PER_SEC 75
+#define ENCODER_100X_STEPS_PER_SEC 160
+//#define CHDK 4
+#define CHDK_DELAY 50
 
-#define ENCODER_RATE_MULTIPLIER         // If defined, certain menu edit operations automatically multiply the steps when the encoder is moved quickly
-#define ENCODER_10X_STEPS_PER_SEC 75    // If the encoder steps per sec exceeds this value, multiply steps moved x10 to quickly advance the value
-#define ENCODER_100X_STEPS_PER_SEC 160  // If the encoder steps per sec exceeds this value, multiply steps moved x100 to really quickly advance the value
-
-//#define CHDK 4        //Pin for triggering CHDK to take a picture see how to use it here http://captain-slow.dk/2014/03/09/3d-printing-timelapses/
-#define CHDK_DELAY 50 //How long in ms the pin should stay HIGH before going LOW again
-
-// Include a page of printer information in the LCD Main Menu
 //#define LCD_INFO_MENU
 
-// Scroll a longer status message into view
 //#define STATUS_MESSAGE_SCROLLING
 
-// On the Info Screen, display XY with one decimal place when possible
 //#define LCD_DECIMAL_SMALL_XY
 
-// The timeout (in ms) to return to the status screen from sub-menus
 //#define LCD_TIMEOUT_TO_STATUS 15000
 ```
 
@@ -2731,11 +2726,8 @@ This feature allows Marlin to use linear pressure control for print extrusion, t
 ```
 
 ## Enhanced G-code
-### G2/G3 Arc
+### G2/G3 Arc Support
 ```cpp
-//
-// [`G2/G3`](/docs/gcode/G002-G003.html) Arc Support
-//
 #define ARC_SUPPORT               // Disable this feature to save ~3226 bytes
 #if ENABLED(ARC_SUPPORT)
   #define MM_PER_ARC_SEGMENT  1   // Length of each arc segment
@@ -2744,6 +2736,8 @@ This feature allows Marlin to use linear pressure control for print extrusion, t
   //#define CNC_WORKSPACE_PLANES  // Allow G2/G3 to operate in XY, ZX, or YZ planes
 #endif
 ```
+[`G2/G3`](/docs/gcode/G002-G003.html) Arc Support
+
 ### G5 Bezier Curve
 ```cpp
 //#define BEZIER_CURVE_SUPPORT
@@ -2805,8 +2799,6 @@ Transmission to Host buffer size. To save 386 bytes of PROGMEM (and `TX_BUFFER_S
 ```cpp
 //#define RX_BUFFER_SIZE 1024
 #if RX_BUFFER_SIZE >= 1024
-  // Enable to have the controller send XON/XOFF control characters to
-  // the host to signal the RX buffer is becoming full.
   //#define SERIAL_XON_XOFF
 #endif
 ```
@@ -2815,10 +2807,7 @@ Host Receive buffer size. Without XON/XOFF flow control (see `SERIAL_XON_XOFF` b
 ### SD Transfer Stats
 ```cpp
 #if ENABLED(SDSUPPORT)
-  // Collect and display the maximum RX queue usage after an SD file transfer.
   //#define SERIAL_STATS_MAX_RX_QUEUED
-
-  // Collect and display the number of dropped bytes after an SD file transfer.
   //#define SERIAL_STATS_DROPPED_RX
 #endif
 ```
@@ -2874,28 +2863,19 @@ Add a secondary fan speed for each print-cooling fan. [`M106`](/docs/gcode/M106.
 ```cpp
 //#define ADVANCED_PAUSE_FEATURE
 #if ENABLED(ADVANCED_PAUSE_FEATURE)
-  #define PAUSE_PARK_X_POS 3                  // X position of hotend
-  #define PAUSE_PARK_Y_POS 3                  // Y position of hotend
-  #define PAUSE_PARK_Z_ADD 10                 // Z addition of hotend (lift)
-  #define PAUSE_PARK_XY_FEEDRATE 100          // X and Y axes feedrate in mm/s (also used for delta printers Z axis)
-  #define PAUSE_PARK_Z_FEEDRATE 5             // Z axis feedrate in mm/s (not used for delta printers)
-  #define PAUSE_PARK_RETRACT_FEEDRATE 60      // Initial retract feedrate in mm/s
-  #define PAUSE_PARK_RETRACT_LENGTH 2         // Initial retract in mm
-                                              // It is a short retract used immediately after print interrupt before move to filament exchange position
-  #define FILAMENT_CHANGE_UNLOAD_FEEDRATE 10  // Unload filament feedrate in mm/s - filament unloading can be fast
-  #define FILAMENT_CHANGE_UNLOAD_LENGTH 100   // Unload filament length from hotend in mm
-                                              // Longer length for bowden printers to unload filament from whole bowden tube,
-                                              // shorter length for printers without bowden to unload filament from extruder only,
-                                              // 0 to disable unloading for manual unloading
-  #define FILAMENT_CHANGE_LOAD_FEEDRATE 6     // Load filament feedrate in mm/s - filament loading into the bowden tube can be fast
-  #define FILAMENT_CHANGE_LOAD_LENGTH 0       // Load filament length over hotend in mm
-                                              // Longer length for bowden printers to fast load filament into whole bowden tube over the hotend,
-                                              // Short or zero length for printers without bowden where loading is not used
-  #define ADVANCED_PAUSE_EXTRUDE_FEEDRATE 3   // Extrude filament feedrate in mm/s - must be slower than load feedrate
-  #define ADVANCED_PAUSE_EXTRUDE_LENGTH 50    // Extrude filament length in mm after filament is loaded over the hotend,
-                                              // 0 to disable for manual extrusion
-                                              // Filament can be extruded repeatedly from the filament exchange menu to fill the hotend,
-                                              // or until outcoming filament color is not clear for filament color change
+  #define PAUSE_PARK_X_POS 3
+  #define PAUSE_PARK_Y_POS 3
+  #define PAUSE_PARK_Z_ADD 10
+  #define PAUSE_PARK_XY_FEEDRATE 100
+  #define PAUSE_PARK_Z_FEEDRATE 5
+  #define PAUSE_PARK_RETRACT_FEEDRATE 60
+  #define PAUSE_PARK_RETRACT_LENGTH 2
+  #define FILAMENT_CHANGE_UNLOAD_FEEDRATE 10
+  #define FILAMENT_CHANGE_UNLOAD_LENGTH 100
+  #define FILAMENT_CHANGE_LOAD_FEEDRATE 6
+  #define FILAMENT_CHANGE_LOAD_LENGTH 0
+  #define ADVANCED_PAUSE_EXTRUDE_FEEDRATE 3
+  #define ADVANCED_PAUSE_EXTRUDE_LENGTH 50
   #define PAUSE_PARK_NOZZLE_TIMEOUT 45        // Turn off nozzle if user doesn't change filament within this time limit in seconds
   #define FILAMENT_CHANGE_NUMBER_OF_ALERT_BEEPS 5 // Number of alert beeps before printer goes quiet
   #define PAUSE_PARK_NO_STEPPER_TIMEOUT       // Enable to have stepper motors hold position during filament change
@@ -2968,15 +2948,6 @@ echo:i2c-reply: from:99 bytes:5 data:hello
   #define SPINDLE_DIR_CHANGE            true   // set to true if your spindle controller supports changing spindle direction
   #define SPINDLE_INVERT_DIR            false
   #define SPINDLE_STOP_ON_DIR_CHANGE    true   // set to true if Marlin should stop the spindle before changing rotation direction
-
-  /**
-   *  The M3 & M4 commands use the following equation to convert PWM duty cycle to speed/power
-   *
-   *  SPEED/POWER = PWM duty cycle * SPEED_POWER_SLOPE + SPEED_POWER_INTERCEPT
-   *    where PWM duty cycle varies from 0 to 255
-   *
-   *  Set the following for your controller (ALL MUST BE SET)
-   */
 
   #define SPEED_POWER_SLOPE    118.4
   #define SPEED_POWER_INTERCEPT  0
@@ -3109,25 +3080,7 @@ This option uses a 28 byte SRAM buffer and an alternative method to get paramete
   #define USER_GCODE_5 "G28\nM503"
 #endif
 
-/**
- * Specify an action command to send to the host when the printer is killed.
- * Will be sent in the form '//action:ACTION_ON_KILL', e.g. '//action:poweroff'.
- * The host must be configured to handle the action command.
- */
 //#define ACTION_ON_KILL "poweroff"
-
-/**
- *  I2C position encoders for closed loop control.
- *  Developed by Chris Barr at Aus3D.
- *
- *  Wiki: http://wiki.aus3d.com.au/Magnetic_Encoder
- *  Github: https://github.com/Aus3D/MagneticEncoder
- *
- *  Supplier: http://aus3d.com.au/magnetic-encoder-module
- *  Alternative Supplier: http://reliabuild3d.com/
- *
- *  Reilabuild encoders have been modified to improve reliability.
- */
 
 //#define I2C_POSITION_ENCODERS
 #if ENABLED(I2C_POSITION_ENCODERS)
@@ -3140,16 +3093,10 @@ This option uses a 28 byte SRAM buffer and an alternative method to get paramete
   #define I2CPE_ENC_1_TYPE          I2CPE_ENC_TYPE_LINEAR   // Type of encoder:  I2CPE_ENC_TYPE_LINEAR -or-
                                                             // I2CPE_ENC_TYPE_ROTARY.
   #define I2CPE_ENC_1_TICKS_UNIT    2048                    // 1024 for magnetic strips with 2mm poles; 2048 for
-                                                            // 1mm poles. For linear encoders this is ticks / mm,
-                                                            // for rotary encoders this is ticks / revolution.
   //#define I2CPE_ENC_1_TICKS_REV     (16 * 200)            // Only needed for rotary encoders; number of stepper
-                                                            // steps per full revolution (motor steps/rev * microstepping)
   //#define I2CPE_ENC_1_INVERT                              // Invert the direction of axis travel.
   #define I2CPE_ENC_1_EC_METHOD     I2CPE_ECM_NONE          // Type of error error correction.
   #define I2CPE_ENC_1_EC_THRESH     0.10                    // Threshold size for error (in mm) above which the
-                                                            // printer will attempt to correct the error; errors
-                                                            // smaller than this are ignored to minimize effects of
-                                                            // measurement noise / latency (filter).
 
   #define I2CPE_ENC_2_ADDR          I2CPE_PRESET_ADDR_Y     // Same as above, but for encoder 2.
   #define I2CPE_ENC_2_AXIS          Y_AXIS
@@ -3169,59 +3116,32 @@ This option uses a 28 byte SRAM buffer and an alternative method to get paramete
   #define I2CPE_ENC_5_ADDR          34                      // Encoder 5.
   #define I2CPE_ENC_5_AXIS          E_AXIS
 
-  // Default settings for encoders which are enabled, but without settings configured above.
   #define I2CPE_DEF_TYPE            I2CPE_ENC_TYPE_LINEAR
   #define I2CPE_DEF_ENC_TICKS_UNIT  2048
   #define I2CPE_DEF_TICKS_REV       (16 * 200)
   #define I2CPE_DEF_EC_METHOD       I2CPE_ECM_NONE
   #define I2CPE_DEF_EC_THRESH       0.1
 
-  //#define I2CPE_ERR_THRESH_ABORT  100.0                   // Threshold size for error (in mm) error on any given
-                                                            // axis after which the printer will abort. Comment out to
-                                                            // disable abort behaviour.
+  //#define I2CPE_ERR_THRESH_ABORT  100.0
 
-  #define I2CPE_TIME_TRUSTED        10000                   // After an encoder fault, there must be no further fault
-                                                            // for this amount of time (in ms) before the encoder
-                                                            // is trusted again.
-
-  /**
-   * Position is checked every time a new command is executed from the buffer but during long moves,
-   * this setting determines the minimum update time between checks. A value of 100 works well with
-   * error rolling average when attempting to correct only for skips and not for vibration.
-   */
-  #define I2CPE_MIN_UPD_TIME_MS     100                     // Minimum time in miliseconds between encoder checks.
-
-  // Use a rolling average to identify persistant errors that indicate skips, as opposed to vibration and noise.
+  #define I2CPE_TIME_TRUSTED        10000 
+  #define I2CPE_MIN_UPD_TIME_MS     100
   #define I2CPE_ERR_ROLLING_AVERAGE
 
-#endif // I2C_POSITION_ENCODERS
+#endif
 
-/**
- * MAX7219 Debug Matrix
- *
- * Add support for a low-cost 8x8 LED Matrix based on the Max7219 chip, which can be used as a status
- * display. Requires 3 signal wires. Some useful debug options are included to demonstrate its usage.
- *
- * Fully assembled MAX7219 boards can be found on the internet for under $2(US).
- * For example, see https://www.ebay.com/sch/i.html?_nkw=332349290049
- */
 //#define MAX7219_DEBUG
 #if ENABLED(MAX7219_DEBUG)
-  #define MAX7219_CLK_PIN   64  // 77 on Re-ARM       // Configuration of the 3 pins to control the display
+  #define MAX7219_CLK_PIN   64  // 77 on Re-ARM
+  // Configuration of the 3 pins to control the display
   #define MAX7219_DIN_PIN   57  // 78 on Re-ARM
   #define MAX7219_LOAD_PIN  44  // 79 on Re-ARM
 
-  /**
-   * Sample debug features
-   * If you add more debug displays, be careful to avoid conflicts!
-   */
   #define MAX7219_DEBUG_PRINTER_ALIVE    // Blink corner LED of 8x8 matrix to show that the firmware is functioning
   #define MAX7219_DEBUG_STEPPER_HEAD  3  // Show the stepper queue head position on this and the next LED matrix row
   #define MAX7219_DEBUG_STEPPER_TAIL  5  // Show the stepper queue tail position on this and the next LED matrix row
 
   #define MAX7219_DEBUG_STEPPER_QUEUE 0  // Show the current stepper queue depth on this and the next LED matrix row
-                                         // If you experience stuttering, reboots, etc. this option can reveal how
-                                         // tweaks made to the configuration are affecting the printer in real-time.
 #endif
 
 ```
