@@ -365,13 +365,14 @@ footer { clear: both; margin-top: 1em; }
 
 .jumbotron {
   h1, p { text-align: center; }
+  h1>strong { color: #308; }
   ul li { display: block; margin: 0.5em auto; width: 20em; }
   table { margin: 1em auto; }
   th, td { border-bottom: 1px solid black; padding: 1em; }
   th { background: #CCC; font-size: 110%; }
   th+th { border-left: 4px solid #EEE; }
   td+td { border-left: 4px solid #FFF; }
-  em { display: block; font-size: x-small; text-align: right; }
+  td>em { display: block; font-size: x-small; text-align: right; }
   strong em { font-size: small; color: red; font-weight: bold; text-align: left; }
 }
 
