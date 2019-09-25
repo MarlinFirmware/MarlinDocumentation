@@ -66,7 +66,7 @@ Slicers prepare a solid 3D model by dividing it up into thin slices (layers). In
 
 - [Cura](https://ultimaker.com/en/products/cura-software).
 - [Slic3r](https://slic3r.org/).
-- [PrusaSlicer (formerly Slic3r Prusa Edition)](https://www.prusa3d.com/prusaslicer/) The new Kid on the block based on Slic3r.
+- [PrusaSlicer](https://www.prusa3d.com/prusaslicer/) (_formerly Slic3r Prusa Edition_) The new Kid on the block based on Slic3r.
 - [Simplify3D](https://www.simplify3d.com/) is a commercial offering.
 
 ### Printing
