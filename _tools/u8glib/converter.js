@@ -328,7 +328,9 @@ var bitmap_converter = function() {
         for (var y = 0; y < ih; y++) {          // loop Y
           var bitline = ' // ';
           cpp += '  ';
-          for (var x = 0; x <= iw; x += 8) {     // loop X
+          // for (var x = 0; x <= iw; x += 8) {     // loop X
+          for (var x = 0; x + 8 <= iw; x += 8) {     // loop X
+
             var byte = 0;
             for (var b = 0; b < 8; b++) {       // loop 8 bits
               var xx = x + b, i = y * iw + xx,
@@ -339,7 +341,7 @@ var bitmap_converter = function() {
                          : bb ? '#' : '.';
             }
             cpp += tobase(byte)
-                 + (x == lastx && y == ih - 1 && !extra_x ? ' ' : ',');
+                 + (x + 8 == lastx && y == ih - 1 && !extra_x ? ' ' : ',');
           }
           // Fill out stat lines
           for (var x = extra_x; x--;) cpp += zero + (x || y < ih - 1 ? ',' : ' ');
