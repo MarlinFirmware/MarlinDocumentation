@@ -294,7 +294,8 @@ var bitmap_converter = function() {
                 + ' * http://marlinfw.org/tools/u8glib/converter.html\n'
                 + ' *\n'
                 + ' * This bitmap from ' + data_source + '\n'
-                + ' */\n';
+                + ' */\n\n'
+                + '#pragma once\n';
 
         if (is_stat) {
           if (!is_lpad && rjust_add) { // Right-justified and not full width
