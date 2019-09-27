@@ -21,7 +21,7 @@
 /**
  * By : @jbrazio
  *      @thinkyhead
- *
+ *      @shitcreek
  * Todo:
  * - Composite status image from logo, nozzle, bed, fan
  * - Slider for threshold (jQuery.ui)
@@ -74,10 +74,11 @@ var bitmap_converter = function() {
       $rj         = $('#rj-on'),
       $bed        = $('#bed-on'),
       $fan        = $('#fan-on'),
+      $vers       = $('input[name=marlin-ver]'),
       $type       = $('input[name=bitmap-type]'),
       $statop     = $('#stat-sub'),
       $pasted     = $('#pasted'),
-      $field_arr  = $('#bin-on, #ascii-on, #skinny-on, #hotends, #rj-on, #bed-on, #fan-on, input[name=bitmap-type]'),
+      $field_arr  = $('#bin-on, #ascii-on, #skinny-on, #hotends, #rj-on, #bed-on, #fan-on, input[name=marlin-ver], input[name=bitmap-type]'),
       tobytes     = function(n) { return Math.ceil(n / 8); },
       tohex       = function(b) { return '0x' + ('0' + (b & 0xFF).toString(16)).toUpperCase().slice(-2); },
       tobin       = function(b) { return 'B' + ('0000000' + (b & 0xFF).toString(2)).slice(-8); },
@@ -180,8 +181,9 @@ var bitmap_converter = function() {
         var bytewidth = tobytes(iw),                          // Bytes wide is important
 
             type = $type.filter(':checked').val(),            // The selected output type
+            vers = $vers.filter(':checked').val(),
             name = type == 'boot' ? 'custom_start_bmp' :
-                   type == 'stat' ? 'status_screen0_bmp' :
+                   type == 'stat' ? 'status_logo_bmp' :
                    'bitmap_' + rnd_name,
 
             is_bin = $binary[0].checked,                      // Flags for binary, ascii, and narrow ascii
@@ -299,7 +301,12 @@ var bitmap_converter = function() {
             cpp += '#define STATUS_SCREEN_X ' + (rjust_add * 8) + '\n';
             extra_x = 0;
           }
-          cpp += '#define STATUS_SCREENWIDTH ' + ((bytewidth + extra_x) * 8) + '\n';
+          if (vers == 1){
+            cpp += '#define STATUS_SCREENWIDTH ' + ((bytewidth + extra_x) * 8) + '\n';
+          }
+          else if (vers == 2){
+            cpp += '#define STATUS_LOGO_WIDTH ' + ((bytewidth + extra_x) * 8) + '\n';
+          }
         }
         else if (type == 'boot') {
           cpp += '#define CUSTOM_BOOTSCREEN_BMPWIDTH  ' + iw + '\n' +

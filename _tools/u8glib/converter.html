@@ -11,7 +11,6 @@ category:     [ tools ]
     <div class="col-lg-12" id="bitmap-converter">
       <h1>Bitmap Converter</h1>
       <p>This tool converts a JPEG or PNG image file to a <a href="https://github.com/olikraus/u8glib">U8Glib</a>-compatible C/C++ array that can be used in Marlin as a custom <code>_Bootscreen.h</code> file or as icons for Graphical Displays. Darker colors in the source image will produce "on" pixels, while lighter colors will be converted to transparent pixels.</p>
-      <p>If this tool doesn't work in your browser, use the server-side tool <a href="http://www.digole.com/tools/PicturetoC_Hex_converter.php">at digole.com</a>.</p>
       <div class="file-selector">
         <canvas id="preview-sm" width="32" height="32"></canvas>
         <canvas id="preview-lg" width="32" height="32"></canvas>
@@ -22,10 +21,14 @@ category:     [ tools ]
           <label id="liton-lbl" title="Use light pixels from the source image.">&nbsp;&nbsp;<input type="checkbox" id="lit-on" />&nbsp;Light</label>
           <label title="Invert the output bits.">&nbsp;&nbsp;<input type="checkbox" id="inv-on" />&nbsp;Invert</label>
           &nbsp;&nbsp;&nbsp;
-          <label title="Output in Binary (not Hex) format.">&nbsp;&nbsp;<input type="checkbox" id="bin-on" />&nbsp;Binary</label>
-          <label title="Include an ASCII representation.">&nbsp;&nbsp;<input type="checkbox" id="ascii-on" checked="checked" />&nbsp;ASCII Art</label>
+          <label title="Output in Binary (not Hex) format.">&nbsp;&nbsp;<input type="checkbox" id="bin-on" checked="checked" />&nbsp;Binary</label>
+          <label title="Include an ASCII representation.">&nbsp;&nbsp;<input type="checkbox" id="ascii-on" />&nbsp;ASCII Art</label>
           <label title="Use UTF8 blocks instead of ASCII.">&nbsp;&nbsp;<input type="checkbox" id="skinny-on" />&nbsp;Narrow</label>
-          &nbsp;&nbsp;&nbsp;
+          <br/>
+          Marlin version:&nbsp;
+          <label title="Marlin 1.x">&nbsp;<input type="radio" name="marlin-ver" value="1" checked="checked" />&nbsp;1.x</label>
+          <label title="Marlin 2.x">&nbsp;<input type="radio" name="marlin-ver" value="2" />&nbsp;2.x</label>
+          <br/>
           <label title="Generic bitmap.">&nbsp;<input type="radio" name="bitmap-type" value="bits" checked="checked" />&nbsp;Bitmap</label>
           <label title="Format for _Bootscreen.h">&nbsp;<input type="radio" name="bitmap-type" value="boot" />&nbsp;Boot</label>
           <label title="Format for _Statusscreen.h">&nbsp;<input type="radio" name="bitmap-type" value="stat" />&nbsp;Status</label>
