@@ -662,7 +662,7 @@ In open loop systems, endstops are an inexpensive way to establish the actual po
 ```
 Specify all the endstop connectors that are connected to any endstop or probe. Most printers will use all three min plugs. On delta machines, all the max plugs should be used. Probes can share the Z min plug, or can use one or more of the extra connectors. Don't enable plugs used for non-endstop and non-probe purposes here.
 {% alert info %}
-`SENSORLESS_HOMING` will still need endstop connectors delcared.
+`SENSORLESS_HOMING` will still need endstop connectors declared.
 {% endalert %}
 
 ### Endstop Pullups
