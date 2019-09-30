@@ -21,7 +21,7 @@
 /**
  * By : @jbrazio
  *      @thinkyhead
- *
+ *      @shitcreek
  * Todo:
  * - Composite status image from logo, nozzle, bed, fan
  * - Slider for threshold (jQuery.ui)
@@ -74,10 +74,11 @@ var bitmap_converter = function() {
       $rj         = $('#rj-on'),
       $bed        = $('#bed-on'),
       $fan        = $('#fan-on'),
+      $vers       = $('input[name=marlin-ver]'),
       $type       = $('input[name=bitmap-type]'),
       $statop     = $('#stat-sub'),
       $pasted     = $('#pasted'),
-      $field_arr  = $('#bin-on, #ascii-on, #skinny-on, #hotends, #rj-on, #bed-on, #fan-on, input[name=bitmap-type]'),
+      $field_arr  = $('#bin-on, #ascii-on, #skinny-on, #hotends, #rj-on, #bed-on, #fan-on, input[name=marlin-ver], input[name=bitmap-type]'),
       tobytes     = function(n) { return Math.ceil(n / 8); },
       tohex       = function(b) { return '0x' + ('0' + (b & 0xFF).toString(16)).toUpperCase().slice(-2); },
       tobin       = function(b) { return 'B' + ('0000000' + (b & 0xFF).toString(2)).slice(-8); },
@@ -180,8 +181,9 @@ var bitmap_converter = function() {
         var bytewidth = tobytes(iw),                          // Bytes wide is important
 
             type = $type.filter(':checked').val(),            // The selected output type
+            vers = $vers.filter(':checked').val(),
             name = type == 'boot' ? 'custom_start_bmp' :
-                   type == 'stat' ? 'status_screen0_bmp' :
+                   type == 'stat' ? 'status_logo_bmp' :
                    'bitmap_' + rnd_name,
 
             is_bin = $binary[0].checked,                      // Flags for binary, ascii, and narrow ascii
@@ -292,14 +294,15 @@ var bitmap_converter = function() {
                 + ' * http://marlinfw.org/tools/u8glib/converter.html\n'
                 + ' *\n'
                 + ' * This bitmap from ' + data_source + '\n'
-                + ' */\n';
+                + ' */\n\n'
+                + '#pragma once\n';
 
         if (is_stat) {
           if (!is_lpad && rjust_add) { // Right-justified and not full width
             cpp += '#define STATUS_SCREEN_X ' + (rjust_add * 8) + '\n';
             extra_x = 0;
           }
-          cpp += '#define STATUS_SCREENWIDTH ' + ((bytewidth + extra_x) * 8) + '\n';
+          cpp += '#define ' + (vers == 2 ? 'STATUS_LOGO_WIDTH' : 'STATUS_SCREENWIDTH') + ' ' + ((bytewidth + extra_x) * 8) + '\n';
         }
         else if (type == 'boot') {
           cpp += '#define CUSTOM_BOOTSCREEN_BMPWIDTH  ' + iw + '\n' +
@@ -321,7 +324,9 @@ var bitmap_converter = function() {
         for (var y = 0; y < ih; y++) {          // loop Y
           var bitline = ' // ';
           cpp += '  ';
-          for (var x = 0; x <= iw; x += 8) {     // loop X
+          // for (var x = 0; x <= iw; x += 8) {     // loop X
+          for (var x = 0; x + 8 <= iw; x += 8) {     // loop X
+
             var byte = 0;
             for (var b = 0; b < 8; b++) {       // loop 8 bits
               var xx = x + b, i = y * iw + xx,
@@ -332,7 +337,7 @@ var bitmap_converter = function() {
                          : bb ? '#' : '.';
             }
             cpp += tobase(byte)
-                 + (x == lastx && y == ih - 1 && !extra_x ? ' ' : ',');
+                 + (x + 8 == lastx && y == ih - 1 && !extra_x ? ' ' : ',');
           }
           // Fill out stat lines
           for (var x = extra_x; x--;) cpp += zero + (x || y < ih - 1 ? ',' : ' ');
