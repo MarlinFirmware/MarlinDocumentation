@@ -302,12 +302,7 @@ var bitmap_converter = function() {
             cpp += '#define STATUS_SCREEN_X ' + (rjust_add * 8) + '\n';
             extra_x = 0;
           }
-          if (vers == 1){
-            cpp += '#define STATUS_SCREENWIDTH ' + ((bytewidth + extra_x) * 8) + '\n';
-          }
-          else if (vers == 2){
-            cpp += '#define STATUS_LOGO_WIDTH ' + ((bytewidth + extra_x) * 8) + '\n';
-          }
+          cpp += '#define ' + (vers == 2 ? 'STATUS_LOGO_WIDTH' : 'STATUS_SCREENWIDTH') + ' ' + ((bytewidth + extra_x) * 8) + '\n';
         }
         else if (type == 'boot') {
           cpp += '#define CUSTOM_BOOTSCREEN_BMPWIDTH  ' + iw + '\n' +
