@@ -1,0 +1,117 @@
+{% for cat in page.category %}
+  {% if cat == 'needs-review' %}
+    <div class="row">
+      <div class="col-lg-12">
+        {% alert info %}
+This document has been marked `needs-review`. The following information may be outdated or may no longer apply to the latest Marlin.
+        {% endalert %}
+      </div>
+    </div>
+  {% endif %}
+{% endfor %}
+
+<div id="setting-header" class="row meta">
+  <div class="col-lg-12">
+    <p class="text-right pull-right visible-lg-block hidden-print small custom-pt25">
+      {% assign authors = setting.author | append: ',' | append: setting.contrib | replace: ' ', '' | split: ',' %}
+      {% if authors %}
+        {% for author in authors %}
+          <a href="https://github.com/{{ author }}" data-toggle="tooltip" data-placement="bottom" title="Visit {{ author }}'s profile on Github">{% avatar user=author size=30 %}</a>
+        {% endfor %}
+      {% endif %}
+    </p>
+
+    <h1>{{ setting.title }}</h1>
+
+    {% if setting.experimental %}
+      <span class="label label-warning"><span data-toggle="tooltip" data-placement="bottom" title="Experimental feature"><i class="fa fa-flask" aria-hidden="true"></i></span></span>
+    {% endif %}
+
+    {% if setting.since %}
+      <span class="label label-success"><span data-toggle="tooltip" data-placement="bottom" title="Available since"><i class="fa fa-code" aria-hidden="true"></i>
+      {{ setting.since }}</span></span>
+    {% endif %}
+
+    {% if setting.tags %}
+      <span class="label label-default"><i class="fa fa-tags" aria-hidden="true"></i>
+      {{ setting.tags }}</span>
+    {% endif %}
+
+    {% if setting.requires %}
+      {% assign list = (setting.requires | split: ',') %}
+      {% for item in list %}
+        <span class="label label-requires"><code>{{item}}</code></span>
+      {% endfor %}
+    {% endif %}
+  </div>
+</div>
+
+<div class="row long">
+  <div class="col-lg-12">
+    <h3>Description</h3>
+    {% if setting.long %}
+      {% for line in setting.long %}
+        {{ line | markdownify }}
+      {% endfor %}
+    {% endif %}
+  </div>
+</div>
+
+{% if setting.notes %}
+  <div class="row notes">
+    <div class="col-lg-12">
+      <h3>Notes</h3>
+        {% for line in setting.notes %}
+          {{ line | markdownify }}
+        {% endfor %}
+    </div>
+  </div>
+{% endif %}
+
+{% if setting.preview %}
+  <div class="row preview">
+    <div class="col-lg-12">
+      <h3>Config Source</h3>
+      {% for line in setting.preview %}
+        {{ line | markdownify }}
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}
+
+{% if setting.options %}
+
+  {% assign list = ('' | split: '|') %}
+  {% for opt in setting.options %}
+    {% if opt.tag %}
+      {% assign list = list | push: opt %}
+    {% endif %}
+  {% endfor %}
+
+  {% if list.size > 0 %}
+    {% assign list = (list | sort: 'value') %}
+    <div class="row params">
+      <div class="col-lg-12">
+        <h3>Options</h3>
+        <ul>
+          {% for opt in list %}
+            <li>{{ opt.value }} - {{ opt.title | markdownify }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  {% endif %}
+
+{% endif %}
+
+{% if setting.videos %}
+<div class="row videos" id="videos-{{ setting.tag }}">
+  <div class="col-lg-12">
+    <h3>Related Media</h3>
+    {% for videoid in setting.videos %}
+      <iframe class="youtube" width="300" height="225" src="https://www.youtube.com/embed/{{ videoid }}"></iframe>
+    {% endfor %}
+    </details>
+  </div>
+</div>
+{% endif %}

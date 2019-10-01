@@ -1,0 +1,17 @@
+html, body { min-height: 100%; }
+
+body {
+  padding-top: 51px;
+  padding-bottom: 10px;
+  overflow-y: scroll;
+}
+
+p { /*text-align: justify;*/ }
+
+.navbar { font-weight: 600; }
+
+.nav.navbar-nav li a.here,
+.nav.navbar-nav li.here > a {
+  color: #FFF;
+  background: #0088CC;
+}

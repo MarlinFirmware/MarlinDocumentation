@@ -1,0 +1,52 @@
+---
+layout: default
+---
+
+<!-- content -->
+<div class="container gcode" role="main">
+  <div class="row">
+    <div class="col-lg-3 col-md-4 visible-lg-block visible-md-block custom-no-padding">
+      <div class="">
+        {% assign list = '' | split: '|' %}
+        {% for gcode in site.gcode %}
+          {% if gcode.codes[0] %}
+            {% assign list = list | push: gcode %}
+          {% endif %}
+        {% endfor %}
+
+        {% if list.size > 0 %}
+          <div class="tocify gcode">
+            <ul class="tocify-header nav nav-list">
+              {% assign list = list | sort: 'tag' %}
+              {% for gcode in list %}
+                  <li class="tocify-item{% if page.codes[0] == gcode.codes[0] and page.title == gcode.title %} active{% endif %}">
+                    <a href="{{ gcode.url | prepend: site.baseurl }}"><strong>{{ gcode.codes[0] }}{% if gcode.codes[1] %}-{{ gcode.codes[1] }}{% endif %}</strong>: {{ gcode.title }}</a></li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+    <div class="col-lg-9 col-md-8 custom-bg-white">
+      <div class="row">
+        <div class="col-md-12">
+          {% if page.collection == 'gcode' and page.codes %}
+            {% assign gcode = page %}
+            {% include gcode-info.html %}
+          {% else %}
+            <h1>G-code Index</h1>
+            {% for gcode in site.gcode %}
+              {% if gcode.codes %}
+                {% assign odd = forloop.index | modulo: 2 %}
+                <div class="gcode item{% if odd == 0 %} odd{% endif %}">
+                  {% include gcode-summ.html %}
+                </div>
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /content -->

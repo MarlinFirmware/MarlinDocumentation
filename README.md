@@ -2,28 +2,65 @@
 
 [![Build Status](https://travis-ci.org/MarlinFirmware/MarlinDocumentation.svg?branch=master)](https://travis-ci.org/MarlinFirmware/MarlinDocumentation)
 
-The aim of this project is to provide a clear and consise documentation of the [Marlin 3D printer firmware](https://github.com/MarlinFirmware/Marlin), we made it open and available on Github so anyone is welcome to contribute by either completing, correcting or creating new arcticles. Please see the chapter "[Most wanted contributions](#most-wanted-contributions)" for a list of the current most valuable needed contributions for the documenation project.
+The aim of this project is to provide clear and concise documentation for [Marlin 3D printer firmware](https://github.com/MarlinFirmware/Marlin). This documentation is made open and available on Github so anyone is welcome to contribute by either completing, correcting or creating new articles. See the section below, "[What We Need Most](#what-we-need-most)," for a current list of... what we need most.
 
 ![Marlin logo](assets/images/logo/marlin/small.png)
 
-Be safe, have fun and build anything.
+Be safe, have fun and build all the things!
 
-## Getting started
+## Technical details
 
-Marlin Documentation Project is built using the following technologies:
+The Marlin Documentation Project is built using the following technologies:
 - [Ruby](https://www.ruby-lang.org/en/downloads/)
 - [RubyGems](https://rubygems.org/pages/download)
 - [Jekyll](https://jekyllrb.com/)
 - [Github pages](https://pages.github.com/)
 
-We really recommend reading one of the following tutorials for a quick start with Jekyll:
+## How to contribute
+
+To work with the documentation, first you need to make a Fork of this repository in your own Github account, then locally clone **your MarlinDocumentation fork**. You should do all work within your own fork before submitting it to us. You can download the [GitHub Desktop app](https://desktop.github.com/) and use Github's "Open in Desktop" option, or from your own desktop open a terminal/cmd window and do:
+  - `cd C:\` (for example)
+  - `git clone https://github.com/MarlinFirmware/MarlinDocumentation.git`
+
+This will create a local `C:\MarlinDocumentation` folder linked to your fork.
+
+To add new documentation or edit existing documentation, start by creating a new branch as a copy of the 'master' branch. You can do this using the Github web interface, from within Github Desktop, or from the command line.
+
+If your new document is about "mashed potatoes" then name the new branch accordingly:
+```
+git checkout master -b doc-mashed_potatoes
+```
+Inside the `_docs` folder add the new file `mashed-potatoes.md` and let flow all your creativity into it. When you feel your masterpiece is ready to be shared with the world, commit the changes and push them up to your fork of **MarlinDocumentation**, then start a new Pull Request to the upstream repository (MarlinFirmware/MarlinDocumentation). This is done most easily from within the Github Desktop app. Please read Github's documentation on managing branches and creating Pull Requests if you're not sure how to proceed.
+```
+git add mashed-potatoes.md
+git commit -m "Added a new document about potatoes"
+git push
+```
+
+## Coding style
+
+This Jekyll-based site is based on the Markdown language in delicious YAML wrapper. Be careful with this format because small typos can cause Jekyll to reject the page. If you've installed Jekyll as described below, your local auto-building Jekyll server will tell you where your errors are.
+
+## Editorial style
+
+Try to be neutral, concise, and straightforward. Avoid use of personal pronouns, unless avoiding them proves awkward. Provide images and give examples where needed. Check your spelling, grammar, and punctuation.
+
+## What we need most
+
+1. Transfer documents from the old Marlin wiki into the new site.
+1. Transfer descriptions of the options in `Configuration.h` and `Configuration_adv.h` to the new system.
+1. Create "Getting Started" guides to ease the Marlin learning curve for new users.
+1. Document all supported GCodes with notes specific to Marlin.
+
+## Local Jekyll Preview
+
+If you'd like to be able to preview your contributions before submitting them, you'll need to install Jekyll on your system. Instructions are given below. As this is a non-trivial process, we recommend reading one of the following tutorials for a quick start with Jekyll:
 - [Jekyll running on Windows](http://jekyll-windows.juthilo.com/)
 - [Jekyll running on Linux, Unix, or Mac OS X](https://jekyllrb.com/docs/installation/)
 
+### Installing buildroot on Windows
 
-## Instaling buildroot on Windows
-
- 1. Get Ruby for Windows ([32 bit](http://dl.bintray.com/oneclick/rubyinstaller/rubyinstaller-2.2.2.exe), [64bit](http://dl.bintray.com/oneclick/rubyinstaller/rubyinstaller-2.2.2-x64.exe)), execute the installer and go through the steps of the installation, make sure to check the “Add Ruby executables to your PATH” box.
+ 1. Get Ruby for Windows ([32 bit](http://dl.bintray.com/oneclick/rubyinstaller/rubyinstaller-2.3.3.exe), [64bit](http://dl.bintray.com/oneclick/rubyinstaller/rubyinstaller-2.3.3-x64.exe)), execute the installer and go through the steps of the installation, make sure to check the “Add Ruby executables to your PATH” box.
  2. Get Ruby Devkit ([32 bit](http://dl.bintray.com/oneclick/rubyinstaller/DevKit-mingw64-32-4.7.2-20130224-1151-sfx.exe), [64bit](http://dl.bintray.com/oneclick/rubyinstaller/DevKit-mingw64-64-4.7.2-20130224-1432-sfx.exe)), the download is a self-extracting archive. When you execute the file, it’ll ask you for a destination for the files. Enter a path that has no spaces in it. We recommend something simple, like ` C:\RubyDevKit\` . Click Extract and wait until the process is finished.
  3. Open your favorite command line tool and do:
   - `cd C:\RubyDevKit`
@@ -31,50 +68,86 @@ We really recommend reading one of the following tutorials for a quick start wit
   - `ruby dk.rb install`
   - `gem install bundler`
 
-## Previewing content
+### Installing buildroot on macOS
 
-You must clone localy a copy **your** MarlinDocumentation fork, to do this open a terminal/cmd window and do:
-  - `cd C:\`
-  - `git clone https://github.com/MarlinFirmware/MarlinDocumentation.git`
+Ruby 2.3 or newer is required to use Jekyll, but macOS 10.12 only includes Ruby 2.2. For macOS 10.12 and earlier the custom `rbenv` install described below is required. Even when the OS comes with Ruby 2.3, we still find it easier to use `rbenv` and `ruby-build` to make a self-managed Ruby install.
 
-This will create locally a `C:\MarlinDocumentation`.
+To install [rbenv](https://github.com/rbenv/rbenv) and [ruby-build](https://github.com/rbenv/ruby-build#readme) we recommend using one of the popular package managers, [Homebrew](http://brew.sh) or [MacPorts](https://www.macports.org). (You can also download and install these tools manually.)
 
-Jekyll allows you to preview the changes before submitted them to Github, just open a terminal/cmd window chdir to your local copy of the repository and execute the following commands:
+**Important:** Don't install Ruby 2.3 itself using Homebrew/MacPorts/etc., as this leads down a twisty rabbit hole. Either trust the built-in Ruby 2.3 or newer installation or use `rbenv` to do everything. Note that `rbenv` is incompatible with `rvm`, so if you ever installed `rvm` before you'll need to remove it before proceeding.
+
+Once you have `rbenv` and `ruby-build` installed, follow the instructions on the [rbenv](https://github.com/rbenv/rbenv) project page to:
+
+- install a local version of Ruby (2.3 or newer),
+- modify your `.bash_profile` with code to set your Ruby environment, and
+- create a local `shims` folder with `$PATH` pointing to your Ruby.
+
+It sounds ugly, but hopefully the instructions on the [rbenv](https://github.com/rbenv/rbenv) project page are clear enough to get you that far. You'll be using `rbenv` from now on to install and manage local Ruby environments.
+
+With your Ruby environment set up and ready to go, you can now install the `bundler` Ruby gem with:
+- `gem install bundler`
+
+## Jekyll Primer
+
+Under Jekyll we use YAML, Markdown, Liquid, and HTML to fill out the site content and layout. A `_config.yml` file defines the site structure using "collections" that correspond to site sub-folders. The site is "compiled" to produce a static HTML and Javascript file structure. The most important folders are:
+
+- `_layouts` contains the general layouts (aka page templates).
+- `_includes` has partial layouts included by others.
+- `_meta` is where we keep top-level page descriptions.
+- Site sub-pages: `_basics`, `_configuration`, `_development`, `_features`, `_gcode`, `_hardware`
+
+### Previewing content
+
+Now that you have Ruby installed, you'll be able to use Jekyll to preview your changes exactly as they will appear on the final site. Just open a terminal/cmd window, use `chdir` or `cd` to change the working path to your local copy of the repository, and execute the following commands:
 
 ```
 bundle install --path vendor/bundle
-bundle exec jekyll serve --watch
+bundle exec jekyll serve --watch --incremental
 ```
 
-You only need to execute the `bundle install` once as it will make sure you have all the required dependencies installed.
+You'll only need to execute the `bundle install` command once to install all the required Ruby gems, including Jekyll itself. If you get errors at this stage, you may need to update your Ruby installation, fix your Ruby environment, or resolve dependencies between the Ruby gems.
 
-Jekyll will watch the local files and on every save you do will trigger an automatic build of the site which can then be easly previewed from [your own computer](http://localhost:4000/).
+With the `serve` option, Jekyll watches the local files and on every save triggers an automatic build of the site. It also runs a mini-webserver at [http://localhost:4000/](http://localhost:4000/) so the documentation can be previewed in the browser right on [your own computer](http://localhost:4000/).
 
-## How to contribute
+## Publishing changes
 
-Let's pretend you want to add a new article to the project, you should start by forking the **MarlinDocumentation** repository. Then you should create a new branch, as the new article is about "mashed potatos" we do the following command:
+If you're a developer with enough access rights to publish changes to the `gh-pages` branch, the following bash script will ease your life by applying a consistent process for website publication. Run this from inside your local working copy of the repo. The main Marlin repo also includes scripts (`mfdoc` and `mfpub`) to do all this heavy lifting for you.
 
-```
-git checkout -b article-mashed_potatos
-```
+### pub-marlindoc.sh
 
-Then inside the articles folder you should add the new file `mashed-potatos.md` and let flow all your creativity into it.
-When you feel it is ready to be shared with the world just submit a commit into your own fork of **MarlinDocumentation** a start a new Pull Request to upstream.
+```bash
+#!/bin/bash
+TMPFOLDER=$( mktemp -d )
+COMMIT=$( git log --format="%H" -n 1 )
 
-```
-git add mashed-potatos.md
-git commit -m "Added a new article about potatos"
+set -e
+
+git reset --hard
+git clean -d -f
+
+# Uncomment to compress the final html files
+#mv ./_plugins/jekyll-press.rb-disabled ./_plugins/jekyll-press.rb
+
+bundle install
+bundle exec jekyll build --profile --trace --no-watch
+bundle exec htmlproofer ./_site --only-4xx --allow-hash-href --check-favicon --check-html --url-swap ".*marlinfw.org/:/"
+
+rsync -av _site/ ${TMPFOLDER}/
+
+git reset --hard HEAD
+git clean -d -f
+git checkout gh-pages
+
+rsync -av ${TMPFOLDER}/ ./
+
+git add --all
+git commit --message "Built from ${COMMIT}"
 git push
+
+rm -rf ${TMPFOLDER}
+
+git checkout master
 ```
-
-## Coding style
-
-The preferred format for article contribution is Markdown language.
-
-## Most wanted contributions
-
-1. Transport all documents from old Marlin wiki into this new system.
-2. Create getting started guides to ease the Marlin learning curve for new users.
 
 ## License
 

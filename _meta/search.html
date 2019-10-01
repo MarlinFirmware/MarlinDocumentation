@@ -1,0 +1,37 @@
+---
+title:       Search
+description: Search the marlinfw.org site
+search_omit: true
+---
+
+<div id="search" class="container" role="main">
+
+<div class="overlay">
+
+<h1>Site Search</h1>
+
+<!-- Search form -->
+<form method="get" action="index.html" data-search-form>
+  <input type="search" name="q" id="q" placeholder="Enter search terms" autocomplete="off" data-search-input />
+  <input type="submit" value="Search" data-search-button />
+</form>
+
+<!-- Search results placeholder -->
+<p class="found" data-search-found>
+  <span data-search-found-count></span> result(s) found for &ldquo;<span data-search-found-term></span>&rdquo;.
+</p>
+
+</div>
+
+<div data-search-results></div>
+
+<!-- Search result template -->
+<script type="text/x-template" id="search-result">
+  <div class="##DivClass##">
+    ##CustomHTML##
+    <h2 class="title"><a href="##Url##">##Title##</a></h2>
+    <p class="excerpt"><a href="##Url##">##Excerpt##</a></p>
+  </div>
+</script>
+
+</div>

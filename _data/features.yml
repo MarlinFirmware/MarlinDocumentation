@@ -1,23 +1,17 @@
 - name: gcode
   img: gcode.png
-  alt: G-Code
-  title: Rich G-Code Support
-  link: gcode/overview.html  
+  alt: G-code
+  title: Rich G-code Dialect
+  link: meta/gcode/
 
 - name: ctrlboard
-  img: boards.png
+  img: boards.jpg
   alt: Controller Board
-  title: A sea of boards
-  link: hardware/boards.html
+  title: Supports AVR and ARM
+  link: docs/hardware/boards.html
 
 - name: inductiveprobe
-  img: probe.png
+  img: probe.jpg
   alt: Inductive Probe
-  title: Automatic bed leveling
-  link: howto/bed-auto-leveling.html
-
-- name: kinematics
-  img: kinematics.png
-  alt: Kinematics
-  title: Multiple Kinematics
-  link: #
+  title: Automatic Bed Leveling
+  link: docs/features/auto_bed_leveling.html
