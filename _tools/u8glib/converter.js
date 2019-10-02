@@ -294,8 +294,7 @@ var bitmap_converter = function() {
                 + ' * http://marlinfw.org/tools/u8glib/converter.html\n'
                 + ' *\n'
                 + ' * This bitmap from ' + data_source + '\n'
-                + ' */\n\n'
-                + '#pragma once\n';
+                + ' */\n';
 
         if (is_stat) {
           if (!is_lpad && rjust_add) { // Right-justified and not full width
@@ -324,12 +323,10 @@ var bitmap_converter = function() {
         for (var y = 0; y < ih; y++) {          // loop Y
           var bitline = ' // ';
           cpp += '  ';
-          // for (var x = 0; x <= iw; x += 8) {     // loop X
-          for (var x = 0; x + 8 <= iw; x += 8) {     // loop X
-
+          for (var x = 0; x <= iw -1 ; x += 8) {     // loop X
             var byte = 0;
             for (var b = 0; b < 8; b++) {       // loop 8 bits
-              var xx = x + b, i = y * iw + xx,
+              var xx = x + b, i = y * iw + xx, // - 8 shifts back 8
                   bb = xx < iw ? out[i] : is_inv; // a set bit?
               byte = (byte << 1) | bb;          // add to the byte
               bitline += is_thin
@@ -337,8 +334,9 @@ var bitmap_converter = function() {
                          : bb ? '#' : '.';
             }
             cpp += tobase(byte)
-                 + (x + 8 == lastx && y == ih - 1 && !extra_x ? ' ' : ',');
+                 + (x >= lastx && y == ih - 1 && !extra_x ? ' ' : ',');
           }
+
           // Fill out stat lines
           for (var x = extra_x; x--;) cpp += zero + (x || y < ih - 1 ? ',' : ' ');
           cpp += (is_asc ? bitline : '') + '\n';
