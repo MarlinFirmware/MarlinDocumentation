@@ -103,9 +103,9 @@ This document has been marked `needs-review`. The following information may be o
           {% assign list = (list | sort: 'tag') %}
           {% for parm in list %}
             <span data-toggle="tooltip" data-placement="bottom" data-original-title="{{ parm.description }}">
-              {% if parm.optional %}&#x5B;{% endif %}
-              {{ parm.tag }}
-              {% if parm.values.size > 0 %}
+              {% if parm.optional %}&#x5B;{% endif %}<!--
+              -->{{ parm.tag }}<!--
+              -->{% if parm.values.size > 0 %}
               {% if parm.values.size == 1 %}
               {% assign pv = parm.values[0] %}
               {% if pv.optional %}&#x5B;{% else %}&lt;{% endif %}
@@ -113,28 +113,31 @@ This document has been marked `needs-review`. The following information may be o
               {{ pv.tag }}
               {% if pv.unit %}
                in {{ pv.unit }}
-               {% endif %}
-               {% elsif pv.unit %}
-               {{ pv.unit }}
-               {% elsif pv.type %}
-               {{ pv.type }}
-               {% else %}
-               Unknown
-               {% endif %}
-               {% if pv.optional %}&#x5D;{% else %}&gt;{% endif %}
-               {% else %}
-               &lt;
-               {% for pv in parm.values %}
-               {{ pv.tag }}
-               {% if forloop.last != true %}
-               &#x7C;
-               {% endif %}
-               {% endfor %}
-               &gt;
-               {% endif %}
-               {% endif %}
-               {% if parm.optional %}&#x5D;{% endif %}
-            </span>
+              {% endif %}
+              {% elsif pv.unit %}
+              {{ pv.unit }}
+              {% elsif pv.type %}
+              {{ pv.type }}
+              {% else %}
+              Unknown
+              {% endif %}<!--
+              -->{% if pv.optional %}<!--
+              -->&#x5D;{% else %}&gt;<!--
+              -->{% endif %}<!--
+              -->{% else %}<!--
+              -->&lt;<!--
+              -->{% for pv in parm.values %}<!--
+              -->{{ pv.tag }}<!--
+              -->{% if forloop.last != true %}<!--
+              -->&#x7C;<!--
+              -->{% endif %}<!--
+              -->{% endfor %}<!--
+              -->&gt;{% endif %}<!--
+              -->{% endif %}<!--
+              -->{% if parm.optional %}<!--
+              -->&#x5D;<!--
+              -->{% endif %}<!--
+              --></span>
           {% endfor %}
         {% endif %}
       {% endif %}
@@ -162,37 +165,41 @@ This document has been marked `needs-review`. The following information may be o
                 {% for parm in list %}
                   <tr>
                     <td class="arg"><code>
-                      {% if parm.optional %}&#x5B;{% endif %}
-              {{ parm.tag }}
-              {% if parm.values.size > 0 %}
-              {% if parm.values.size == 1 %}
-              {% assign pv = parm.values[0] %}
-              {% if pv.optional %}&#x5B;{% else %}&lt;{% endif %}
-              {% if pv.tag %}
-              {{ pv.tag }}
-              {% if pv.unit %}
-               in {{ pv.unit }}
-               {% endif %}
-               {% elsif pv.unit %}
-               {{ pv.unit }}
-               {% elsif pv.type %}
-               {{ pv.type }}
-               {% else %}
-               Unknown
-               {% endif %}
-               {% if pv.optional %}&#x5D;{% else %}&gt;{% endif %}
-               {% else %}
-               &lt;
-               {% for pv in parm.values %}
-               {{ pv.tag }}
-               {% if forloop.last != true %}
-               &#x7C;
-               {% endif %}
-               {% endfor %}
-               &gt;
-               {% endif %}
-               {% endif %}
-               {% if parm.optional %}&#x5D;{% endif %}
+                      {% if parm.optional %}&#x5B;{% endif %}<!--
+                      -->{{ parm.tag }}<!--
+                      -->{% if parm.values.size > 0 %}
+                      {% if parm.values.size == 1 %}
+                      {% assign pv = parm.values[0] %}
+                      {% if pv.optional %}&#x5B;{% else %}&lt;{% endif %}
+                      {% if pv.tag %}
+                      {{ pv.tag }}
+                      {% if pv.unit %}
+                       in {{ pv.unit }}
+                      {% endif %}
+                      {% elsif pv.unit %}
+                      {{ pv.unit }}
+                      {% elsif pv.type %}
+                      {{ pv.type }}
+                      {% else %}
+                      Unknown
+                      {% endif %}<!--
+                      -->{% if pv.optional %}<!--
+                      -->&#x5D;{% else %}&gt;<!--
+                      -->{% endif %}<!--
+                      -->{% else %}<!--
+                      -->&lt;<!--
+                      -->{% for pv in parm.values %}<!--
+                      -->{{ pv.tag }}<!--
+                      -->{% if forloop.last != true %}<!--
+                      -->&#x7C;<!--
+                      -->{% endif %}<!--
+                      -->{% endfor %}<!--
+                      -->&gt;{% endif %}<!--
+                      -->{% endif %}<!--
+                      -->{% if parm.optional %}<!--
+                      -->&#x5D;<!--
+                      -->{% endif %}<!--
+                      -->
                     </code></td>
                     <td>
                       {{ parm.description | markdownify }}
