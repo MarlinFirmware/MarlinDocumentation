@@ -745,7 +745,7 @@ This will remove the need to poll the interrupt pins, saving many CPU cycles.
 ### Endstop Noise Threshold
 
 ```cpp
-//#define ENDSTOP_INTERRUPTS_FEATURE
+//#define ENDSTOP_NOISE_FEATURE
 ```
 Enable if your probe or endstops falsely trigger due to noise.
 
