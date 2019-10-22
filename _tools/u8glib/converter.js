@@ -294,7 +294,8 @@ var bitmap_converter = function() {
                 + ' * http://marlinfw.org/tools/u8glib/converter.html\n'
                 + ' *\n'
                 + ' * This bitmap from ' + data_source + '\n'
-                + ' */\n';
+                + ' */\n'
+                + '#pragma once\n\n';
 
         if (is_stat) {
           if (!is_lpad && rjust_add) { // Right-justified and not full width
@@ -304,13 +305,13 @@ var bitmap_converter = function() {
           cpp += '#define ' + (vers == 2 ? 'STATUS_LOGO_WIDTH' : 'STATUS_SCREENWIDTH') + ' ' + ((bytewidth + extra_x) * 8) + '\n';
         }
         else if (type == 'boot') {
-          cpp += '#define CUSTOM_BOOTSCREEN_BMPWIDTH  ' + iw + '\n' +
-                 '#define CUSTOM_BOOTSCREEN_BMPHEIGHT ' + ih + '\n';
+          cpp += '#define CUSTOM_BOOTSCREEN_BMPWIDTH  ' + iw + '\n';
+          if (vers != 2) cpp += '#define CUSTOM_BOOTSCREEN_BMPHEIGHT ' + ih + '\n';
         }
         else {
           var rn = rnd_name.toUpperCase();
-          cpp += '#define ' + rn + '_BMPWIDTH  ' + iw + '\n' +
-                 '#define ' + rn + '_BMPHEIGHT ' + ih + '\n';
+          cpp += '#define ' + rn + '_BMPWIDTH  ' + iw + '\n';
+          if (vers != 2) cpp += '#define ' + rn + '_BMPHEIGHT ' + ih + '\n';
         }
 
         cpp += 'const unsigned char ' + name + '[] PROGMEM = {\n';
