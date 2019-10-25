@@ -172,6 +172,7 @@ So however bed size and printable radius are defined, make sure that your mesh g
 
 **3-point probe positions** - If you plan to use 3-point probing to 'touch up' the orientation of a saved mesh then you will also need to make sure that the 3-point leveling probe points are all accessible by your probe.
 
+**Marlin 1.x**
 ```cpp
 #define UBL_PROBE_PT_1_X 39       // Probing points for 3-Point leveling of the mesh
 #define UBL_PROBE_PT_1_Y 180
@@ -179,6 +180,16 @@ So however bed size and printable radius are defined, make sure that your mesh g
 #define UBL_PROBE_PT_2_Y 20
 #define UBL_PROBE_PT_3_X 180
 #define UBL_PROBE_PT_3_Y 20
+```
+
+**Marlin 2.x**
+```cpp
+#define PROBE_PT_1_X 15
+#define PROBE_PT_1_Y 180
+#define PROBE_PT_2_X 15
+#define PROBE_PT_2_Y 20
+#define PROBE_PT_3_X 170
+#define PROBE_PT_3_Y 20
 ```
 
 ### Commands
