@@ -199,10 +199,7 @@ var bitmap_converter = function() {
             is_stat = type == 'stat',                         // "Status" has extra options
             is_lpad = is_stat && !$rj[0].checked,             // Right justify?
 
-            rjust_add = tobytes(max_size[0]) - bytewidth,
-            extra_x = /* is_stat ? rjust_add : */ 0;     // TODO: Status screen composer.
-
-        if (extra_x < 0) extra_x = 0;
+            rjust_add = tobytes(max_size[0]) - bytewidth;
 
         /**
          * Convert to grayscale, perform threshold.
@@ -298,11 +295,9 @@ var bitmap_converter = function() {
                 + '#pragma once\n\n';
 
         if (is_stat) {
-          if (!is_lpad && rjust_add) { // Right-justified and not full width
+          if (!is_lpad && rjust_add)  // Right-justified and not full width
             cpp += '#define STATUS_SCREEN_X ' + (rjust_add * 8) + '\n';
-            extra_x = 0;
-          }
-          cpp += '#define ' + (vers == 2 ? 'STATUS_LOGO_WIDTH' : 'STATUS_SCREENWIDTH') + ' ' + ((bytewidth + extra_x) * 8) + '\n';
+          cpp += '#define ' + (vers == 2 ? 'STATUS_LOGO_WIDTH' : 'STATUS_SCREENWIDTH') + ' ' + (bytewidth * 8) + '\n';
         }
         else if (type == 'boot') {
           cpp += '#define CUSTOM_BOOTSCREEN_BMPWIDTH  ' + iw + '\n';
@@ -320,26 +315,28 @@ var bitmap_converter = function() {
          * Print the data as hex or binary,
          * appending ASCII art if selected.
          */
-        var lastx = iw - (iw % 8);              // last item in each line
-        for (var y = 0; y < ih; y++) {          // loop Y
+        var lastx = (iw - 1) - ((iw + 7) % 8);      // last item in each line
+
+        for (var y = 0; y < ih; y++) {              // loop Y
           var bitline = ' // ';
           cpp += '  ';
-          for (var x = 0; x <= iw -1 ; x += 8) {     // loop X
+          var xx = 0;                               // pixel X
+          for (var x = 0; x < iw; x += 8) {         // loop the width, step by 8
             var byte = 0;
-            for (var b = 0; b < 8; b++) {       // loop 8 bits
-              var xx = x + b, i = y * iw + xx, // - 8 shifts back 8
-                  bb = xx < iw ? out[i] : is_inv; // a set bit?
-              byte = (byte << 1) | bb;          // add to the byte
+            for (var b = 0; b < 8; b++) {           // loop 8 bits
+              var i = y * iw + xx,                  // pixel index in the bitmap data
+                  bb = xx < iw ? out[i] : is_inv;   // a set bit?
+              byte = (byte << 1) | bb;              // add to the byte
               bitline += is_thin
                          ? b % 2 ? ['·','▐','▌','█'][byte & 3] : ''
                          : bb ? '#' : '.';
+              xx++;
             }
-            cpp += tobase(byte)
-                 + (x >= lastx && y == ih - 1 && !extra_x ? ' ' : ',');
+            // Append the byte and optional comma or space
+            cpp += tobase(byte) + (y != ih - 1 || x < lastx ? ',' : is_asc ? ' ' : '');
           }
 
-          // Fill out stat lines
-          for (var x = extra_x; x--;) cpp += zero + (x || y < ih - 1 ? ',' : ' ');
+          // Append ASCII art comment, if any
           cpp += (is_asc ? bitline : '') + '\n';
         }
 
