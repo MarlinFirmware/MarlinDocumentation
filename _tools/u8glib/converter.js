@@ -314,7 +314,7 @@ var bitmap_converter = function() {
           if (vers != 2) cpp += '#define ' + rn + '_BMPHEIGHT ' + ih + '\n';
         }
 
-        cpp += 'const unsigned char ' + name + '[] PROGMEM = {\n';
+        cpp += '\nconst unsigned char ' + name + '[] PROGMEM = {\n';
 
         /**
          * Print the data as hex or binary,
