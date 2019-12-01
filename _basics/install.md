@@ -18,10 +18,12 @@ Marlin only needs to be re-flashed when options are changed in the configuration
 Start by downloading the Marlin source code. There are a few [codebases](https://en.wikipedia.org/wiki/Codebase) to choose from.
 
 ----|-----------
-[Download 1.1.x](https://github.com/MarlinFirmware/Marlin/archive/1.1.x.zip)|Current release
-[Download 1.0.x](https://github.com/MarlinFirmware/Marlin/archive/1.0.x.zip)|Previous release
+[Download 2.0.x](https://github.com/MarlinFirmware/Marlin/archive/2.0.x.zip)|Current release
+[Download 1.1.x](https://github.com/MarlinFirmware/Marlin/archive/1.1.x.zip)|Previous release
+[Download 1.0.x](https://github.com/MarlinFirmware/Marlin/archive/1.0.x.zip)|Older release
 [Download bugfix-1.1.x](https://github.com/MarlinFirmware/Marlin/archive/bugfix-1.1.x.zip)|"Nightly" build. _Proceed with Caution!_
 [Download bugfix-2.0.x](https://github.com/MarlinFirmware/Marlin/archive/bugfix-2.0.x.zip)|"Nightly" build. _Proceed with Caution!_
+[Download dev-2.1.x](https://github.com/MarlinFirmware/Marlin/archive/dev-2.1.x.zip)|"Nightly" build. _Proceed with Caution!_
 
 {% alert warning %}
 - Marlin 1.0 **does not support PlatformIO**. For older versions of Marlin use Arduino IDE.

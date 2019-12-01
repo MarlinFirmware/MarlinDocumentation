@@ -41,7 +41,7 @@ Click on it to reveal a list of branches you can work in or create your own.
 ![View Command Palette](/assets/images/basics/install_platformio_vscode/select_git_branch.png)
 
 ### 5. Select Environment - or - use Auto Build Marlin 
-[Auto Build Marlin](auto_build_marlin.html) automatically selects the correct environment for your `MOTHERBOARD` setting. ![AutoBuild Icon](https://github.com/MarlinFirmware/Marlin/raw/bugfix-2.0.x/buildroot/share/vscode/AutoBuildMarlin/img/AB_icon.png)
+[Auto Build Marlin](auto_build_marlin.html) automatically selects the correct environment for your `MOTHERBOARD` setting. ![AutoBuild Icon](https://github.com/MarlinFirmware/Marlin/raw/2.0.x/buildroot/share/vscode/AutoBuildMarlin/img/AB_icon.png)
 
 To manually set the environment for your board:<br/>
 Open the file `platformio.ini` and change `default_envs` to the chip that your board uses. Look through this file for your chip's environment name. For example, the environment name for the **LPC1768** chip appears as `[env:LPC1768]`. Omit the outer wrapper: `[env:____]`.
@@ -50,7 +50,7 @@ Open the file `platformio.ini` and change `default_envs` to the chip that your b
 
 When you click the **PlatformIO** button, you will see the **PROJECT TASKS** including **Build** and **Upload**. These buttons will build and upload your default environment.
 
-![](https://github.com/MarlinFirmware/Marlin/raw/bugfix-2.0.x/buildroot/share/vscode/AutoBuildMarlin/img/AB_menu.png)
+![](https://github.com/MarlinFirmware/Marlin/raw/2.0.x/buildroot/share/vscode/AutoBuildMarlin/img/AB_menu.png)
 
 If you've installed [Auto Build Marlin](auto_build_marlin.html), you will see **Auto Build Options** buttons to the right of the **PROJECT TASKS** bar.
 

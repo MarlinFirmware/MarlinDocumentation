@@ -50,13 +50,13 @@ This method is recommended because it is relatively easy and closely parallels t
 
 ## Download Marlin 2.0
 
-1. Download the [Marlin 2.0 "bugfix" version](https://github.com/MarlinFirmware/Marlin/archive/bugfix-2.0.x.zip) which includes support for ARM-based boards.
+1. Download [Marlin 2.0](https://github.com/MarlinFirmware/Marlin/archive/2.0.x.zip) which includes support for ARM-based boards.
 
-2. Move the `bugfix-2.0.x.zip` file to your "Documents" folder (or wherever you prefer) and expand the ZIP archive as you usually do.
+2. Move the `2.0.x.zip` file to your "Documents" folder (or wherever you prefer) and expand the ZIP archive as you usually do.
 
 3. Rename the folder to "`MarlinFirmware`" so we're all on the same page here.
 
-_Pro Tip: If you're using **GitHub Desktop** to manage your own Marlin fork, simply activate the `bugfix-2.0.x` branch._
+_Pro Tip: If you're using **GitHub Desktop** to manage your own Marlin fork, simply select the `2.0.x` branch to check it out._
 
 ## Open Marlin in PlatformIO IDE
 

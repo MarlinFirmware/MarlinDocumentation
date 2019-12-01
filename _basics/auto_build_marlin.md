@@ -33,17 +33,17 @@ Before you install AutoBuildMarlin you'll first need to [Install PlatformIO in V
 
 - With Marlin open, the "File Explorer" should be firmly rooted in your Marlin Firmware folder:
 
-  ![](https://github.com/MarlinFirmware/Marlin/raw/bugfix-2.0.x/buildroot/share/vscode/AutoBuildMarlin/img/Activity_bar.png)
+  ![](https://github.com/MarlinFirmware/Marlin/raw/2.0.x/buildroot/share/vscode/AutoBuildMarlin/img/Activity_bar.png)
 
-- Click the **Marlin Auto Build** icon ![AutoBuild Icon](https://github.com/MarlinFirmware/Marlin/raw/bugfix-2.0.x/buildroot/share/vscode/AutoBuildMarlin/img/AB_icon.png) in the Activities Bar (on the left side of *Visual Studio Code* window) to bring up the **Marlin Auto Build** options bar.
+- Click the **Marlin Auto Build** icon ![AutoBuild Icon](https://github.com/MarlinFirmware/Marlin/raw/2.0.x/buildroot/share/vscode/AutoBuildMarlin/img/AB_icon.png) in the Activities Bar (on the left side of *Visual Studio Code* window) to bring up the **Marlin Auto Build** options bar.
 
-  ![](https://github.com/MarlinFirmware/Marlin/raw/bugfix-2.0.x/buildroot/share/vscode/AutoBuildMarlin/img/AB_menu.png)
+  ![](https://github.com/MarlinFirmware/Marlin/raw/2.0.x/buildroot/share/vscode/AutoBuildMarlin/img/AB_menu.png)
 
 - Click one of the four icons
 
   Icon|Action
   ----|------
-  ![](https://github.com/MarlinFirmware/Marlin/raw/bugfix-2.0.x/buildroot/share/vscode/AutoBuildMarlin/img/B_small.png)|Start **PIO Build** to test your Marlin build
-  ![](https://github.com/MarlinFirmware/Marlin/raw/bugfix-2.0.x/buildroot/share/vscode/AutoBuildMarlin/img/C_small.png)|Start **PIO Clean** to delete old build files
-  ![](https://github.com/MarlinFirmware/Marlin/raw/bugfix-2.0.x/buildroot/share/vscode/AutoBuildMarlin/img/U_small.png)|Start **PIO Upload** to install Marlin on your board
-  ![](https://github.com/MarlinFirmware/Marlin/raw/bugfix-2.0.x/buildroot/share/vscode/AutoBuildMarlin/img/Ut_small.png)|Start **PIO Upload (traceback)** to install Marlin with debugging
+  ![](https://github.com/MarlinFirmware/Marlin/raw/2.0.x/buildroot/share/vscode/AutoBuildMarlin/img/B_small.png)|Start **PIO Build** to test your Marlin build
+  ![](https://github.com/MarlinFirmware/Marlin/raw/2.0.x/buildroot/share/vscode/AutoBuildMarlin/img/C_small.png)|Start **PIO Clean** to delete old build files
+  ![](https://github.com/MarlinFirmware/Marlin/raw/2.0.x/buildroot/share/vscode/AutoBuildMarlin/img/U_small.png)|Start **PIO Upload** to install Marlin on your board
+  ![](https://github.com/MarlinFirmware/Marlin/raw/2.0.x/buildroot/share/vscode/AutoBuildMarlin/img/Ut_small.png)|Start **PIO Upload (traceback)** to install Marlin with debugging

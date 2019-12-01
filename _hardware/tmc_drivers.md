@@ -136,7 +136,7 @@ Command | Configuration<br>required | Description
 [M912]  | `MONITOR_DRIVER_STATUS`   | Clear TMC prewarn triggered flags.
 [M913]  | `HYBRID_THRESHOLD`        | Set HYBRID_THRESHOLD speed.
 [M914]  | `SENSORLESS_HOMING`       | Set SENSORLESS_HOMING sensitivity.
-[M915]  | `TMC_Z_CALIBRATION`       | Deprecated on bugfix-2.0.x since 2019-01-12.<br>Level your X axis by trying to move the Z axis past its physical limit. The movement is done at a reduced motor current to prevent breaking parts and promote skipped steps. Marlin will then rehome Z axis and restore normal current setting.
+[M915]  | `TMC_Z_CALIBRATION`       | (Deprecated in Marlin 2.0.)<br>Level your X axis by trying to move the Z axis past its physical limit. The movement is done at a reduced motor current to prevent breaking parts and promote skipped steps. Marlin will then rehome Z axis and restore normal current setting.
 
 [M122]: /docs/gcode/M122.html
 [M569]: /docs/gcode/M569.html

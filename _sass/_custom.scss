@@ -4,13 +4,24 @@ h1, h2, h3, h4, h5, h6 {
   }
 h1+h2 { margin-top: -0.4em; color: #BBC; }
 
-body[role=document] {
+.container {
   h2, h3, h4, h5, h6 {
     background: #EEE;
     background: linear-gradient(90deg, #E4E4E4FF, #E4E4E4FF, #EEEEEE00);
-    padding: 4px; margin-top: 1em;
+    padding: 4px;
+    margin-top: 1em;
   }
 }
+
+.container td {
+  h2, h3, h4, h5, h6 {
+    background: none !important;
+    padding: 4px;
+    margin-top: 0.25em;
+  }
+}
+
+.ctr { text-align: center; }
 
 .custom-border-warning { border-left-color: #F0AD4E; }
 
@@ -373,7 +384,7 @@ footer { clear: both; margin-top: 1em; }
   th+th { border-left: 4px solid #EEE; }
   td+td { border-left: 4px solid #FFF; }
   td>em { display: block; font-size: x-small; text-align: right; }
-  strong em { font-size: small; color: red; font-weight: bold; text-align: left; }
+  strong em { font-size: x-small; color: red; font-weight: bold; text-align: left; }
 }
 
 li#searchbox {

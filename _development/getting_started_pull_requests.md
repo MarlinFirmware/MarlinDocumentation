@@ -59,7 +59,7 @@ Type in the new title and click `Save`.
 
 # Change the Default Branch
 
-At this time `bugfix-2.0.x` is the work branch for our next release. For convenience you should change the "Default Branch" to `bugfix-2.0.x` in your fork to make it easier to do Pull Requests later.
+At this time we're using the `bugfix-2.0.x` branch to patch bugs for the next minor release, and the `dev-2.1.x` branch for new features for the next point release. We recommend you change the "Default Branch" in your fork to `bugfix-2.0.x` to make it easier to do Pull Requests later.
 
 Click on the **branches** tab to view all branches in your fork.
 
@@ -129,7 +129,7 @@ If you downloaded the wrong branch, go back to the GitHub website, select the co
 
 # Make a feature branch
 
-It's a good idea to keep an unaltered copy of the `bugfix-2.0.x` branch so you can keep it in sync with the main repository. Before you edit any code, make a copy of `bugfix-2.0.x` and give it a descriptive name.
+It's a good idea to keep an unaltered copy of the `bugfix-2.0.x` branch that you keep in sync with the main repository. Before editing any code you should make a copy of `bugfix-2.0.x` and give the new branch a descriptive name.
 
 ![image22]({{ '/assets/images/docs/development/pull_images/pull_22.jpg' | prepend: site.baseurl }})
 
@@ -192,7 +192,7 @@ GitHub should automatically detect the target for the Pull Request as `bugfix-2.
 
 ![image30]({{ '/assets/images/docs/development/pull_images/pull_30.jpg' | prepend: site.baseurl }})
 
-To target the `bugfix-2.0.x` branch in the main Marlin repository, click the **base** button and select `bugfix-2.0.x`.
+To target the `bugfix-2.0.x` branch in the main Marlin repository, click the **base** button and select `bugfix-2.0.x`. (For new features you should instead use `dev-2.1.x`.)
 
 ![image31]({{ '/assets/images/docs/development/pull_images/pull_31.jpg' | prepend: site.baseurl }})
 
