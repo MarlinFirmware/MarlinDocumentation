@@ -93,3 +93,7 @@
 - version: 1.1.9
   hash: 5cf6c44f47737bdf93df6ae7c835fe2d54d0675d
   date: 01/08/2018
+
+- version: 2.0.0
+  hash: 776eb7a3d0d16ceaaae87ea8790921ed16a8ec26
+  date: 01/12/2019
