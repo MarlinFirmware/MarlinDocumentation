@@ -12,9 +12,9 @@ Before reading this article, you should have already read [Installing Marlin](in
 ## PlatformIO
 
 PlatformIO is available as a stand alone CLI tool and as a plugin for 10+ environments. The most popular environments in the 3D printing community are:
-- Github's free ***Atom*** text editor
 - Microsoft's **Visual Studio Code** (aka ***VSCode***)
 - ***Sublime***
+- Github's free ***Atom*** text editor - DEPRECATED - No longer supported by PlatformIO
 
 Install PlatformIO as a stand alone CLI or with your choice of environment using the links below:
 - [PlatformIO in VSCode](install_platformio_vscode.html)

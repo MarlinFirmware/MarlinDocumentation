@@ -6,6 +6,9 @@ author: shitcreek
 contrib: thinkyhead, Bob-the-Kuhn
 category: [ articles, getting-started ]
 ---
+{% alert warning %}
+DEPRECATED: Atom is no longer supported by PlatfromIO. Please use [VSCode](install_platformio_vscode.html) instead.
+{% endalert %}
 
 Before reading this article, you should have already read [Installing Marlin with PlatformIO](install_platformio.html).
 

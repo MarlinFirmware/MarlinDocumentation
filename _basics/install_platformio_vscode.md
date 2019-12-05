@@ -50,10 +50,15 @@ Open the file `platformio.ini` and change `default_envs` to the chip that your b
 
 When you click the **PlatformIO** button, you will see the **PROJECT TASKS** including **Build** and **Upload**. These buttons will build and upload your default environment.
 
-![](https://github.com/MarlinFirmware/Marlin/raw/2.0.x/buildroot/share/vscode/AutoBuildMarlin/img/AB_menu.png)
+![AutoBuild Menu](https://github.com/MarlinFirmware/Marlin/raw/2.0.x/buildroot/share/vscode/AutoBuildMarlin/img/AB_menu.png)
 
-If you've installed [Auto Build Marlin](auto_build_marlin.html), you will see **Auto Build Options** buttons to the right of the **PROJECT TASKS** bar.
+If you've installed [Auto Build Marlin](auto_build_marlin.html) extension, you will see **Auto Build Options** buttons to the right of the **PROJECT TASKS** bar.
 
+* When building with **AB**, if further info is needed a popup will appear listing the available options. Select the correct option and click "**CONTINUE**".
+
+    ![AutoBuild Popup](/assets/images/basics/install_platformio/platformio_popup.png)
+
+    **`This window may appear behind the current window.`**
 
 ![Selecting Environment](/assets/images/basics/install_platformio_vscode/select_environment.png)
 
@@ -83,7 +88,7 @@ The PlatformIO environment needed for a motherboard is in the comments for the b
 
 ### 6. Initiate Build, Clean or Upload task
 
-Initiating a task is done by clicking an icon towards the left side of the blue Status Bar at the very bottom of the window.
+Initiating a task is done via **PlatformIO's Project Tasks**, the bottom **Status Bar** icons or the **Auto Build Options**.
 
 ![PIO Command Icons](/assets/images/basics/install_platformio_vscode/pio_command_icons_call_outs.png)
 
