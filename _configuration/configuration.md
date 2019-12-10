@@ -1072,9 +1072,9 @@ These options set the pin states used for stepper enable. The most common settin
 ### Motor Disable
 
 ```cpp
-#define INVERT_X_DIR false
-#define INVERT_Y_DIR false
-#define INVERT_Z_DIR false
+#define DISABLE_X false
+#define DISABLE_Y false
+#define DISABLE_Z false
 ```
 Use these options to disable steppers when not being issued a movement. This was implemented as a hack to run steppers at higher-than-normal current in an effort to produce more torque at the cost of increased heat for drivers and steppers.
 
