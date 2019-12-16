@@ -130,9 +130,13 @@ td.arg code { white-space: nowrap; }
  * Scrolling code blocks
  */
 div.language-cpp {
-  overflow: scroll;
-  pre.highlight { width: 1200px; }
+  overflow: hidden;
+  pre.highlight {
+    width: auto;
+    margin: 0 1px;
+    code { white-space: pre; }
   }
+}
 
 .tocify.gcode,
 .custom-fixed-sidebar .tocify {
