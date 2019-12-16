@@ -35,32 +35,20 @@ Switch to new PlatformIO View in Activity Bar (left side bar), then Quick Access
 
 ### 4. Select Repository Branch
 
-The name of the branch you are working in is indicated in the bottom left corner in the blue bar.
-Click on it to reveal a list of branches you can work in or create your own.
+The name of the active branch is shown in the bottom left corner in the blue bar. Click on the branch name to reveal a list of branches you can work in. There's also an option to create a new branch.
 
 ![View Command Palette](/assets/images/basics/install_platformio_vscode/select_git_branch.png)
 
-### 5. Select Environment - or - use Auto Build Marlin 
-[Auto Build Marlin](auto_build_marlin.html) automatically selects the correct environment for your `MOTHERBOARD` setting. ![AutoBuild Icon](https://github.com/MarlinFirmware/Marlin/raw/2.0.x/buildroot/share/vscode/AutoBuildMarlin/img/AB_icon.png)
+### 5. Select Environment
 
 To manually set the environment for your board:<br/>
-Open the file `platformio.ini` and change `default_envs` to the chip that your board uses. Look through this file for your chip's environment name. For example, the environment name for the **LPC1768** chip appears as `[env:LPC1768]`. Omit the outer wrapper: `[env:____]`.
+Open the file `platformio.ini` and change `default_envs` to the environment that your board uses. Look through this file for your chip's environment name. For example, the environment name for the **LPC1768** chip appears as `[env:LPC1768]`. Omit the outer wrapper: `[env:____]`.
 
 ![Multi Environments](/assets/images/basics/install_platformio_vscode/platformio_ini.png)
 
 When you click the **PlatformIO** button, you will see the **PROJECT TASKS** including **Build** and **Upload**. These buttons will build and upload your default environment.
 
-![AutoBuild Menu](https://github.com/MarlinFirmware/Marlin/raw/2.0.x/buildroot/share/vscode/AutoBuildMarlin/img/AB_menu.png)
-
-If you've installed [Auto Build Marlin](auto_build_marlin.html) extension, you will see **Auto Build Options** buttons to the right of the **PROJECT TASKS** bar.
-
-* When building with **AB**, if further info is needed a popup will appear listing the available options. Select the correct option and click "**CONTINUE**".
-
-    ![AutoBuild Popup](/assets/images/basics/install_platformio/platformio_popup.png)
-
-    **`This window may appear behind the current window.`**
-
-![Selecting Environment](/assets/images/basics/install_platformio_vscode/select_environment.png)
+![Select PIO Environment](/assets/images/basics/install_platformio_vscode/select_environment.png)
 
 If you don't want to set `default_envs`, select the environment for your board from the **PlatformIO Project Tasks list**.
 
@@ -85,6 +73,11 @@ The PlatformIO environment needed for a motherboard is in the comments for the b
 
   In this case **megaatmega2560** is the one used 99.9% of the time.
 
+#### Or, Use AutoBuildMarlin
+
+![AutoBuild Menu](/assets/images/basics/install_platformio_vscode/AB_menu.png){: .floater} [AutoBuildMarlin](auto_build_marlin.html) is a Visual Studio Code extension that automatically selects the correct environment for your `MOTHERBOARD` and provides buttons for quick Build and Upload.
+
+Extra steps are needed to install the extension. See the [AutoBuildMarlin](auto_build_marlin.html) page for full instructions.
 
 ### 6. Initiate Build, Clean or Upload task
 
@@ -95,17 +88,14 @@ Initiating a task is done via **PlatformIO's Project Tasks**, the bottom **Statu
 ![Terminal Window](/assets/images/basics/install_platformio_vscode/terminal_window.png)
 
 Working with the build window is a little bit better than shown in [Installing Marlin with PlatformIO](install_arduino.html).
-* It can be re-sized.
-* It can be scrolled via the mouse scroll wheel *or with the scroll bar*.
-* Text can be copied by
-  - highlighting it via the mouse
-  - moving the mouse insert point over the selected text
-  - pressing CTRL C on the keyboard *or right clicking with the mouse*
+- The panel can be re-sized.
+- The console can be scrolled via the mouse scroll wheel *or with the scroll bar*.
+- Text can be highlighted and copied to the clipboard.
 
 #### 'firmware.bin' file
 
-For platforms that use a `firmware.bin` file such as the LPC1768 and LPC1769
+Some newer boards require the `firmware.bin` file to be copied onto the onboard SD card, and then you must reboot the printer to complete the install. PlatformIO will try to copy the file automatically if the board is connected and your PC can see the SD card, but this may not always work.
 
 ![Bin file location](/assets/images/basics/install_platformio_vscode/firmware_bin.png)
 
-- Transfer the automatically generated `firmware.bin` over to the SD card to be used
+In these cases, you'll need to locate the `firmware.bin` file and copy it over to the SD card manually.

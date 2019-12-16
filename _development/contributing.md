@@ -8,17 +8,38 @@ category: [ development ]
 ---
 
 <!-- ## The Layers of Marlin -->
-As a community-supported open source project, Marlin relies entirely on volunteers who donate their time, effort, and insights to move the project forward. All the great stuff in today's Marlin is due to a [bright and engaged group](https://github.com/MarlinFirmware/Marlin/graphs/contributors) of debaters, experimenters, and makers who screw up their sleep schedules, grind their steppers, and twerk their deltas so the rest of us don't have to.
+As a community-supported open source project, Marlin relies on the time and talent of many volunteers. All the great stuff you see in Marlin today comes from a [bright and engaged group](https://github.com/MarlinFirmware/Marlin/graphs/contributors) of debaters, experimenters, and makers who screw up their sleep schedules, grind their steppers, and twerk their axes so the rest of us don't have to.
 
-A core team of 2 to 5 volunteers deals with low-level code, platform support, responding to issues, etc., while one or two main editors review all new code, take part in discussions with other developers, track known bugs, make sure the final code complies with [Coding Standards](coding_standards.html), periodically publish new releases, and update the website and RepRap Wiki. See the [project page](https://github.com/MarlinFirmware/Marlin) for current team contacts.
-
-Marlin needs many types of assistance beyond the code itself.
+The core Marlin team consists of a few maintainers who review contributions, discuss ideas, track bugs, apply [Coding Standards](coding_standards.html), publish releases, and update this website. See the [project page](https://github.com/MarlinFirmware/Marlin) for current team contacts.
 
 # Ways to contribute
-- **[Submit some code!](/docs/development/getting_started_pull_requests.html)** If you know C or C++ and can help to patch bugs, fix typos, or just add helpful comments, we welcome your expertise. See "[Contributing Code with Pull Requests](/docs/development/getting_started_pull_requests.html)" to find out how to submit code.
-- **Test the cutting-edge!** Marlin's "nightly" builds are posted at [`bugfix-2.0.x`](https://github.com/MarlinFirmware/Marlin/tree/bugfix-2.0.x), [`dev-2.1.x`](https://github.com/MarlinFirmware/Marlin/tree/dev-2.1.x), and [`bugfix-1.1.x`](https://github.com/MarlinFirmware/Marlin/tree/bugfix-1.1.x). These branches contain the most up-to-date code at all times. While they include patches to the most recent release (yay, fewer bugs!) they can also contain untested code, so your feedback is essential.
-- **[Contribute Documentation](https://github.com/MarlinFirmware/MarlinDocumentation), text, images, videos!** This website needs imminent and continuous improvement to properly cover Configuration, Installation, and Calibration, and we want to do it in style. We need your photos, diagrams, and YouTube videos to embed on these pages. A well-chosen image or well-produced video can have more impact than many pages of written documentation.
-- **Promote Marlin!** Marlin needs evangelists, enthusiasts, fans, and everyday users to tell everyone just how awesome Marlin is. Users and vendors may be wary of installing Marlin 1.1 on their trusty old and reliable (esp. Mega2560-based) hardware. Let them know that Marlin continues to evolve! And be sure to engage with Marlin's Twitter feed at [@MarlinFirmware](https://twitter.com/MarlinFirmware).
+
+### Submit code
+If you know C or C++ and can help to patch bugs, fix typos, or just add helpful comments, we welcome your expertise. See "[Contributing Code with Pull Requests](/docs/development/getting_started_pull_requests.html)" to find out how to submit code.
+
+### Do Some Testing
+Marlin posts "nightly" builds that contain the most up-to-date code. While they include patches to the most recent release (yay, fewer bugs!) they can also contain untested code, so your feedback is essential.
+
+### Contribute Documentation
+Are you skilled in information design? This website is far from complete, and it's a bit text-heavy. We need more photos, diagrams, and YouTube videos to embed on these pages. A well-chosen image or well-produced video can have more impact than many pages of written documentation. Visit the [MarlinDocumentation Project](https://github.com/MarlinFirmware/MarlinDocumentation) for more information.
+
+### Fund Development
+The current maintainer of Marlin is [Scott Lahteine](http://www.thinkyhead.com/donate-to-marlin) aka @thinkyhead. Scott has been writing software for a few decades, with a focus on shareware and open source. He reviews every contribution before it goes into Marlin, and has turned his apartment into a test lab. It's fair to say that Marlin is his life.
+
+### Join the Community
+There are now many community resources for users of Marlin. If you're looking for help installing or troubleshooting these are the best places to go.
+
+- [MarlinFirmware on Discord](https://discord.gg/n5NJ59y) - Realtime chat with users and developers
+- [Marlin Firmware](https://www.facebook.com/groups/1049718498464482/) and [Marlin Firmware for 3D Printers](https://www.facebook.com/groups/3Dtechtalk/) Facebook Groups
+- [Tom's 3D Forums](https://discuss.toms3d.org/) - Hosted by Tom Sanladerer
+- [Marlin Forum](http://forums.reprap.org/list.php?415) at RepRap.org
+- [Marlin YouTube Videos](https://www.youtube.com/results?search_query=marlin+firmware)
+
+### Promote Marlin
+Marlin needs evangelists, enthusiasts, fans, and everyday users to tell everyone just how awesome Marlin is. Users and vendors may be wary of installing Marlin 2.0 on their trusty old and reliable hardware. Let them know that Marlin continues to evolve! And be sure to engage with Marlin's Twitter feed at [@MarlinFirmware](https://twitter.com/MarlinFirmware).
+
+### Nag Your Vendor
+The dark side of open source is that some companies don't honor the terms of our license which requires them to give customers the exact source code for the Marlin Firmware that ships on their machines. We understand that Capitalists want to be protective of their trade secrets, but our license terms are clear, and Marlin is a major foundation of these businesses. If your vendor is misbehaving, send them a polite message to remind them of your rights under the GPL.
 
 # Community Guidelines
 Marlin is hosted on GitHub, so you'll need a free GitHub user account to post issues and take part in development. GitHub provides tools to ban fake and SPAM users, but it's up to each project to maintain general civility by adhering to some basic policies.

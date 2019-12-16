@@ -7,23 +7,23 @@ contrib: thinkyhead, Bob-the-Kuhn
 category: [ articles, getting-started ]
 ---
 {% alert warning %}
-DEPRECATED: Atom is no longer supported by PlatfromIO. Please use [VSCode](install_platformio_vscode.html) instead.
+**Atom** is no longer supported by **PlatformIO**. While it may partly work,  you should switch to **[Visual Studio Code](install_platformio_vscode.html)** for future installs.
 {% endalert %}
 
 Before reading this article, you should have already read [Installing Marlin with PlatformIO](install_platformio.html).
 
-# **PlatformIO with Atom Overview**
+## **PlatformIO with Atom Overview**
 
 There are two ways of using **PlatformIO** with **Atom**.
 - **Auto Build** - This is a Python script that automates the build/compile/upload process (just 2 or 3 mouse clicks needed) and provides an improved build/compile/upload window. This is available only for **Marlin**. The remainder of this document assumes that **Auto Build** is used unless stated otherwise.
 - **Manual** - This is the method documented in the PlatfomIO website. It is documented in the **Advanced topics** section under **Manual Selection of PlatformIO Build and Upload Tasks**.
 
-## Install Atom and PlatformIO
+### Install Atom and PlatformIO
 
 1. Install **Atom** and **PlatformIO** as described in [PlatformIO for Atom](http://docs.platformio.org/en/latest/ide/atom.html#installation).
 1. Repeat steps 2 and 3 of the above to install the **process-palette** package in Atom.
 
-## Build Marlin
+### Build Marlin
 
 - Open the top level Marlin directory in PlatformIO.
 - Click on the "**Auto Build**" menu at the right end of the main menu bar to bring up the dialog.
@@ -33,7 +33,7 @@ There are two ways of using **PlatformIO** with **Atom**.
 - Check in the build window that PlatformIO reports SUCCESS. Any ERRORs that appear must be fixed before you can continue.
 - Once all errors are fixed, proceed with flashing/uploading.
 
-## Flash (Upload) your board
+### Flash (Upload) your board
 
 - Open the top level Marlin directory in PlatformIO.
 - A few boards require setting "program mode" before they can be flashed/uploaded, but most do not.
@@ -45,13 +45,13 @@ There are two ways of using **PlatformIO** with **Atom**.
 
 That’s it! Now that you’ve flashed Marlin to your board, enjoy silky smooth printing!
 
-# **Details**
+## **Details**
 
 Auto-build requires only **two or three mouse clicks** to build and upload Marlin. This method invokes PlatformIO directly, using Atom's process-palette plugin and a custom script to choose the right settings according to your `MOTHERBOARD` setting.
 
 A sample customization process is described below to demonstrate how this method can be used by Marlin / PlatformIO neophytes.
 
-## Install Atom, process-palette and PlatformIO
+### Install Atom, process-palette and PlatformIO
 
 1. Install Atom
 
@@ -100,7 +100,7 @@ A sample customization process is described below to demonstrate how this method
 
     ![Restart](/assets/images/basics/install_platformio/restart.png)
 
-## Preflight Test
+### Preflight Test
 
 This section explains how to upload a minimally-configured Marlin to your board.
 
@@ -108,7 +108,7 @@ This will verify that the Build and Upload process works after you've completed 
 
 This step is optional, but we recommend doing the minimal build because configuration errors can mask toolchain problems.
 
-### Open Marlin in PlatformIO IDE
+#### Open Marlin in PlatformIO IDE
 
 1. At this point you may already have the project editor running. If not, go ahead and launch ***Atom***.
 
@@ -144,7 +144,7 @@ This step is optional, but we recommend doing the minimal build because configur
 
        ![Explorer](/assets/images/basics/install_platformio/explorer.png)
        
-### Prepare **platformio.ini**
+#### Prepare **platformio.ini**
 
 The **Auto Build** option and PlatformIO tasks/build menu will allow you to select your build environment, and it will make the selected environment the default for building until the next program restart. But you can set your environment in **platformio.ini** for a faster build or to make command-line pio build easier.
 
@@ -156,7 +156,7 @@ The **Auto Build** option and PlatformIO tasks/build menu will allow you to sele
 
 All available build environment names are listed at the top of **platformio.ini**.
 
-### Prepare minimal **Configuration.h**
+#### Prepare minimal **Configuration.h**
 
 For a minimal build you just need to set the `MOTHERBOARD` value appropriate to your printer's control board. Marlin defines all available board names in **boards.h**.
 
@@ -173,7 +173,7 @@ For a minimal build you just need to set the `MOTHERBOARD` value appropriate to 
 
 4. Save **Configuration.h** and you're ready to do a test build.
 
-### Build
+#### Build
 
 1. Click on the "**Auto Build**" menu at the right end of the Atom menu bar to bring up the dialog.
 
@@ -208,7 +208,7 @@ For a minimal build you just need to set the `MOTHERBOARD` value appropriate to 
 
 Do NOT proceed to the next step unless **SUCCESS** is seen near the bottom of the build window. If **ERROR** is seen then trouble shooting is required.
 
-### Upload Marlin
+#### Upload Marlin
 
 Repeat the steps in **Build** but, in step 2, click on "**PIO Upload**" instead of "**PIO Build**"
 
@@ -216,11 +216,11 @@ Do NOT proceed to the next step unless **SUCCESS** is seen near the bottom of th
 
 **That’s it! You’ve successfully flashed Marlin to your board. Happy printing!**
 
-### Test the install
+#### Test the install
 
 You should now be able to communicate with Marlin and send commands using your favorite host software such as ***Simplify3D***, ***OctoPrint***, ***Pronterface*** or ***Repetier Host***.
 
-# Custom configuration
+## Custom configuration
 
 For the first test build you should have used the default **Configuration.h** and **Configuration_adv.h** files. Now it's time to test your own configurations.
 
@@ -228,9 +228,9 @@ If one exists for your board, we **`strongly`** suggest rebuilding your configs 
 
 You can use your favorite editor to modify the files.
 
-# Advanced topics
+## Advanced topics
 
-## Run Time Problems
+### Run Time Problems
 
 See [Auto Build Run Time Problems](auto_build_problems.html) if any of the following happen:
  - Clicking on an Auto Build option results in nothing
@@ -238,7 +238,7 @@ See [Auto Build Run Time Problems](auto_build_problems.html) if any of the follo
  - Auto Build hangs
  - REALLY slow build times. Building the default configuration usually takes 10 seconds to 2 minutes, depending on CPU and OS.
 
-## Auto Build options
+### Auto Build options
 
 The Auto Build menu items exactly duplicates their PlatformIO counterparts. See the PlatformIO documentation if you need further information.
 
@@ -264,19 +264,19 @@ The Auto Build menu items exactly duplicates their PlatformIO counterparts. See 
 
 - **PIO Remote** : See PlatformIO documentation on how to use the **Remote** feature
 
-## SD Cards over 32G
+### SD Cards over 32G
 
 SD cards over 32G in size must be partitioned so that the first partition is 32G or less. Marlin will only use the first partition.
 
-## PlatformIO Hidden Folders
+### PlatformIO Hidden Folders
 
-The folders described below are hidden in the File Explorer / Finder unless you change your OS (Windows, macOS, Linux) settings to reveal them. They may be visible within your project editor (e.g., ***Atom***, ***Visual Studio Code***, etc.) depending on your workspace settings.
+The folders described below are hidden in the File Explorer / Finder unless you change your OS (Windows, macOS, Linux) settings to reveal them. They may be visible within your project editor (e.g., ***Atom***, **Visual Studio Code**, etc.) depending on your workspace settings.
 
-#### `.pioenvs`
+##### `.pioenvs`
 
 This folder, located in the top level project folder (i.e., `MarlinFirmware`), contains the image created by the **build** and **upload** functions.
 
-#### `.piolibdeps`
+##### `.piolibdeps`
 
 - This folder contains all the libraries downloaded as part of the compile/build process. If it is not present it will be recreated according to `platformio.ini`, using the specified (or latest) library versions.
 
@@ -284,7 +284,7 @@ This folder, located in the top level project folder (i.e., `MarlinFirmware`), c
 
 - It **must be deleted** when switching between Marlin 1.1 and 2.0.
 
-## Modifying pins_YOUR_BOARD.h files
+### Modifying pins_YOUR_BOARD.h files
 
 The **pins_YOUR_BOARD.h** file is the only other file besides **Configuration.h** and **Configuration_adv.h** that is expected to be modified by the user, but only in rare cases.
 
@@ -296,7 +296,7 @@ The pins files only need to be modified if you're addeing hardware that isn't al
 
 If you're not comfortable modifying the pins file [Post a New Issue](https://github.com/MarlinFirmware/Marlin/issues/new) and ask for help.
 
-## LPC1768 & LPC1769 based boards
+### LPC1768 & LPC1769 based boards
 
 **SERIAL_PORT** for these boards **MUST** be set to **-1**. See [Installing Marlin on Re-ARM](install_rearm.html) for a detailed description of setting up this type of board.
 
@@ -312,7 +312,7 @@ Marlin contains a utility that will search the disks on the computer and copy **
 
 If the utility fails then the upload will fail and the user will need to manually copy **firmware.bin** from **.pioenvs** to the correct disk.
 
-## Marlin 1.1 to 2.0 Upgrade
+### Marlin 1.1 to 2.0 Upgrade
 
 There's no automated upgrade path to convert configurations from 1.1 to 2.0 at this time. It requires manually copying your altered settings from the 1.1 **Configuration.h** and **Configuration_adv.h** files to their 2.0 counterparts.
 
@@ -322,7 +322,7 @@ This procedure may be complicated by options that have been renamed, added, relo
 
 As before, start with the example configuration for your board if one is available in 2.0.
 
-## Manual Selection of PlatformIO Build and Upload Tasks
+### Manual Selection of PlatformIO Build and Upload Tasks
 
 1. Get the correct environment for the selected board
 
@@ -336,7 +336,7 @@ As before, start with the example configuration for your board if one is availab
 
   ```cpp
   #elif MB(RAMPS_14_EEB)
-     #include "pins_RAMPS.h"     // ATmega1280, ATmega2560                     env:megaatmega1280 env:megaatmega2560'
+     #include "ramps/pins_RUMBA.h" // ATmega2560  env:megaatmega2560
   ```
 
   The first part of the comment lists the CPU(s) used in the board.
@@ -367,7 +367,7 @@ As before, start with the example configuration for your board if one is availab
     - moving the mouse insert point over the selected text
     - pressing CTRL C on the keyboard
 
-## AT90USB based boards
+### AT90USB based boards
 
 1. Upload Protocols
 
@@ -394,7 +394,7 @@ As before, start with the example configuration for your board if one is availab
   * **at90USB1286_DFU**
   * **at90USB1286_CDC**
 
-## Auto Build aids for troubleshooting errors and warnings
+### Auto Build aids for troubleshooting errors and warnings
 
 The Auto Build build window has features that make it much easier to troubleshoot errors and warnings than the build window provided by PlatformIO.
 
