@@ -2,7 +2,7 @@ baseurl: ''
 url: 'http://marlinfw.org'
 js: '/assets/javascript/'
 
-version: '0.0.8-beta'
+version: '1.0.0'
 environment: development
 
 name: 'Marlin Firmware'
@@ -28,7 +28,7 @@ analytics:
 
 markdown: kramdown
 highlighter: rouge
-timezone: 'Europe/Lisbon'
+timezone: 'America/Chicago'
 
 kramdown:
   input: GFM

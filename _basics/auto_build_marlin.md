@@ -12,21 +12,16 @@ category: [ articles, getting-started ]
 
 Before you install *AutoBuildMarlin* you'll first need to [Install PlatformIO in VSCode](http://marlinfw.org/docs/basics/install_platformio_vscode.html). Once that is done, continue below.
 
-## Installing This Extension
+## Installation
 
-- [Download Marlin Firmware](http://marlinfw.org/meta/download/) and unzip it to your documents folder.
-- Open the directory `buildroot/share/vscode` and copy the "`AutoBuildMarlin`" folder to **the *Visual Studio Code* `extensions` directory**.
-- Relaunch *Visual Studio Code* to complete the installation.
-
-### Locate your `extensions` directory:
-
-- **Windows** - Use Windows Explorer's address bar to open `C:/Users/USERNAME/.vscode/extensions`.
-- **Mac** - Use the Finder's `Go` menu to open `~/.vscode/extensions`.
-- **Linux** - In the Terminal type `open ~/.vscode/extensions`.
+- Click the "Extensions" button on the left of the *VSCode* window to show the **Extensions: Marketplace** panel.
+- Type "Marlin" into the search box at the top.
+- Locate **Auto Build Marlin** in the list and click **Install**.<br/>
+  ![Auto Build Marlin extension](/assets/images/basics/mab-install.jpg)
 
 ## Usage
 
-- Open up the downloaded *Marlin Firmware* project folder (***NOT the "Marlin" folder within***) in *Visual Studio Code*. (You may also use the **Import Project…** option from the "PlaformIO Home" page.)
+- Launch *Visual Studio Code* and open up your downloaded *Marlin Firmware* project folder (***not the "Marlin" folder within it***). If you have the "PlaformIO Home" home tab open, you can use the **Import Project…** button instead of the **Open** command.
 
 - With Marlin open in *VSCode*, the "File Explorer" should be firmly rooted in your Marlin Firmware folder:
 
@@ -45,6 +40,5 @@ Before you install *AutoBuildMarlin* you'll first need to [Install PlatformIO in
   ![](/assets/images/basics/install_platformio_vscode/U_small.png)|Start **PIO Upload** to install Marlin on your board
   ![](/assets/images/basics/install_platformio_vscode/T_small.png)|Start **PIO Upload (traceback)** to install Marlin with debugging
 
-- At the start of the build a popup may appear with additional options. Usually the default is fine. Click "**Continue**" after setting your preferred build options, or **Cancel** to abort the build.
-
-  ![AutoBuild Popup](/assets/images/basics/install_platformio_vscode/platformio_popup.png)
+- At the start of the build a popup may appear with additional options. Usually the default is fine. Click "**Continue**" after setting your preferred build options, or **Cancel** to abort the build.<br/>
+![AutoBuild Popup](/assets/images/basics/install_platformio_vscode/platformio_popup.jpg)
