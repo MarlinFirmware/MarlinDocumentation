@@ -96,7 +96,7 @@ exclude:
   - 'script'
   - 'vendor'
 
-gems:
+plugins:
   - jekyll-mentions
   - jekyll-seo-tag
   - jekyll-avatar
