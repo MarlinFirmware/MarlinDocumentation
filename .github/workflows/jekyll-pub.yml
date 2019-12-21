@@ -1,0 +1,23 @@
+#
+# jekyll-pub.yml
+#
+# Publish the Jekyll site whenever 'master' is pushed
+#
+
+on:
+  push:
+    branch:
+    - master
+
+jobs:
+  publish:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: Check out master
+      uses: actions/checkout@v1
+
+    - name: Publish the site
+      run: source .github/mfpub.sh
