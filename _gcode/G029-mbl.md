@@ -110,7 +110,7 @@ examples:
     pre: 'S0 mesh report:'
     code:
       - |
-        > S0
+        > G29 S0
         Num X,Y: 3,3
         Z offset: 0
         Measured points:
@@ -123,9 +123,9 @@ examples:
     pre: '**(Marlin 1.x)** Modify some mesh points and view the new mesh:'
     code:
       - |
-        > S3 X3 Y3 Z0.042
-        > S3 X2 Y2 Z-0.666
-        > S0
+        > G29 S3 X3 Y3 Z0.042
+        > G29 S3 X2 Y2 Z-0.666
+        > G29 S0
         Num X,Y: 3,3
         Z offset: 0
         Measured points:
@@ -137,9 +137,9 @@ examples:
     pre: '**(Marlin 2.x)** Modify some mesh points and view the new mesh:'
     code:
       - |
-        > S3 I2 J2 Z0.042
-        > S3 I1 J1 Z-0.666
-        > S0
+        > G29 S3 I2 J2 Z0.042
+        > G29 S3 I1 J1 Z-0.666
+        > G29 S0
         3x3 mesh. Z offset: 0
         Measured points:
                0      1       2
