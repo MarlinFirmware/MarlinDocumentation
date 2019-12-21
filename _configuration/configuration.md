@@ -2472,7 +2472,7 @@ The default BLTouch settings can be overriden with these options. See `configura
   #define Z_STEPPER_ALIGN_ACC 0.02
 #endif
 ```
-Add the [`G34`](/docs/gcode/G34.html) command to align multiple Z steppers using a bed probe.
+Add the [`G34`](/docs/gcode/G034.html) command to align multiple Z steppers using a bed probe.
 
 ## TODO Options
 ```cpp
@@ -3039,7 +3039,7 @@ Activate this option to make volumetric extrusion the default method The last va
 ```cpp
 //#define NO_WORKSPACE_OFFSETS
 ```
-Enable this option for a leaner build of Marlin that removes all workspace offsets. This simplifies all coordinate transformations, leveling, etc., and may allow for slightly faster printing. With this option, [`M206`](/docs/gcode/M206.html) and [`M428`](/docs/gcode/M428.html) are disabled, and [`G92`](/docs/gcode/G92.html) reverts to its old behavior, as it is in Marlin 1.0.
+Enable this option for a leaner build of Marlin that removes all workspace offsets. This simplifies all coordinate transformations, leveling, etc., and may allow for slightly faster printing. With this option, [`M206`](/docs/gcode/M206.html) and [`M428`](/docs/gcode/M428.html) are disabled, and [`G92`](/docs/gcode/G092.html) reverts to its old behavior, as it is in Marlin 1.0.
 
 ## Proportional Font Ratio
 ```cpp
