@@ -968,9 +968,9 @@ function validateInput() {
   $('#K_START, #K_END, #K_STEP, #SPACE_LINE, #SLOW_LENGTH, #FAST_LENGTH, #FIL_DIA, #NOZ_DIA, #LAYER_HEIGHT, #EXTRUSION_MULT, #PRIME_EXT, #OFFSET_Z, #NOZ_LIN_R, \
      #NOZZLE_TEMP, #BED_TEMP, #MOVE_SPEED, #RETRACT_SPEED, #PRINT_ACCL, #RETRACTION, #PRIME_SPEED, #DWELL_PRIME, #FAST_SPEED, #SLOW_SPEED, #X_JERK, #Y_JERK, #Z_JERK, #E_JERK').each(function() {
     $(this)[0].setCustomValidity('');
-    $('label[for=' + $(this).attr('id') + ']').removeClass('calibpat_invalidSize');
-    $('label[for=' + $(this).attr('id') + ']').removeClass('calibpat_invalidDiv');
-    $('label[for=' + $(this).attr('id') + ']').removeClass('calibpat_invalidNumber');
+    $('label[for=' + $(this).attr('id') + ']').removeClass('invalidSize');
+    $('label[for=' + $(this).attr('id') + ']').removeClass('invalidDiv');
+    $('label[for=' + $(this).attr('id') + ']').removeClass('invalidNumber');
   });
   $('#warning1').hide();
   $('#warning2').hide();
@@ -980,10 +980,10 @@ function validateInput() {
   // Check for proper numerical values
   Object.keys(testNaN).forEach(function(k) {
     if ((isNaN(testNaN[k]) && !isFinite(testNaN[k])) || testNaN[k].trim().length === 0) {
-      $('label[for=' + k + ']').addClass('calibpat_invalidNumber');
+      $('label[for=' + k + ']').addClass('invalidNumber');
       $('#' + k)[0].setCustomValidity('The value is not a proper number.');
       $('#warning3').text('Some values are not proper numbers. Check highlighted Settings.');
-      $('#warning3').addClass('calibpat_invalidNumber');
+      $('#warning3').addClass('invalidNumber');
       $('#warning3').show();
       $('#button').prop('disabled', true);
     }
@@ -991,14 +991,14 @@ function validateInput() {
 
   // Check if K-Factor Stepping is a multiple of the K-Factor Range
   if ((Math.round10(parseFloat(testNaN['K_END']) - parseFloat(testNaN['K_START']), -3) * Math.pow(10, decimals)) % (parseFloat(testNaN['K_STEP']) * Math.pow(10, decimals)) !== 0) {
-    $('label[for=K_START]').addClass('calibpat_invalidDiv');
+    $('label[for=K_START]').addClass('invalidDiv');
     $('#K_START')[0].setCustomValidity('Your K-Factor range cannot be cleanly divided.');
-    $('label[for=K_END]').addClass('calibpat_invalidDiv');
+    $('label[for=K_END]').addClass('invalidDiv');
     $('#K_END')[0].setCustomValidity('Your K-Factor range cannot be cleanly divided.');
-    $('label[for=K_STEP]').addClass('calibpat_invalidDiv');
+    $('label[for=K_STEP]').addClass('invalidDiv');
     $('#K_STEP')[0].setCustomValidity('Your K-Factor range cannot be cleanly divided.');
     $('#warning1').text('Your K-Factor range cannot be cleanly divided. Check highlighted Pattern Settings.');
-    $('#warning1').addClass('calibpat_invalidDiv');
+    $('#warning1').addClass('invalidDiv');
     $('#warning1').show();
     $('#button').prop('disabled', true);
     invalidDiv = 1;
@@ -1006,50 +1006,50 @@ function validateInput() {
 
   // Check if pattern settings exceed bed size
   if (bedShape === 'Round' && (Math.sqrt(Math.pow(fitWidth, 2) + Math.pow(fitHeight, 2)) > (parseInt(testNaN['BEDSIZE_X']) - 5)) && fitHeight > fitWidth) {
-    $('label[for=K_START]').addClass('calibpat_invalidSize');
+    $('label[for=K_START]').addClass('invalidSize');
     $('#K_START')[0].setCustomValidity('Your Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your bed\'s diameter.');
-    $('label[for=K_END]').addClass('calibpat_invalidSize');
+    $('label[for=K_END]').addClass('invalidSize');
     $('#K_END')[0].setCustomValidity('Your Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your bed\'s diameter.');
-    $('label[for=K_STEP]').addClass('calibpat_invalidSize');
+    $('label[for=K_STEP]').addClass('invalidSize');
     $('#K_STEP')[0].setCustomValidity('Your Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your bed\'s diameter.');
-    $('label[for=SPACE_LINE]').addClass('calibpat_invalidSize');
+    $('label[for=SPACE_LINE]').addClass('invalidSize');
     $('#SPACE_LINE')[0].setCustomValidity('Your Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your bed\'s diameter.');
     $((invalidDiv ? '#warning2' : '#warning1')).text('Your Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your bed\'s diameter. Check highlighted Pattern Settings.');
-    $((invalidDiv ? '#warning2' : '#warning1')).addClass('calibpat_invalidSize');
+    $((invalidDiv ? '#warning2' : '#warning1')).addClass('invalidSize');
     $((invalidDiv ? '#warning2' : '#warning1')).show();
   }
 
   if (bedShape === 'Round' && (Math.sqrt(Math.pow(fitWidth, 2) + Math.pow(fitHeight, 2)) > (parseInt(testNaN['BEDSIZE_X']) - 5)) && fitWidth > fitHeight) {
-    $('label[for=SLOW_LENGTH]').addClass('calibpat_invalidSize');
+    $('label[for=SLOW_LENGTH]').addClass('invalidSize');
     $('#SLOW_LENGTH')[0].setCustomValidity('Your Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your bed\'s diameter.');
-    $('label[for=FAST_LENGTH]').addClass('calibpat_invalidSize');
+    $('label[for=FAST_LENGTH]').addClass('invalidSize');
     $('#FAST_LENGTH')[0].setCustomValidity('Your Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your bed\'s diameter.');
     $((invalidDiv ? '#warning2' : '#warning1')).text('Your Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your bed\'s diameter. Check highlighted Pattern Settings.');
-    $((invalidDiv ? '#warning2' : '#warning1')).addClass('calibpat_invalidSize');
+    $((invalidDiv ? '#warning2' : '#warning1')).addClass('invalidSize');
     $((invalidDiv ? '#warning2' : '#warning1')).show();
   }
 
   if (bedShape === 'Rect' && fitWidth > (parseInt(testNaN['BEDSIZE_X']) - 5)) {
-    $('label[for=SLOW_LENGTH]').addClass('calibpat_invalidSize');
+    $('label[for=SLOW_LENGTH]').addClass('invalidSize');
     $('#SLOW_LENGTH')[0].setCustomValidity('Your Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your X bed size.');
-    $('label[for=FAST_LENGTH]').addClass('calibpat_invalidSize');
+    $('label[for=FAST_LENGTH]').addClass('invalidSize');
     $('#FAST_LENGTH')[0].setCustomValidity('Your Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your X bed size.');
     $((invalidDiv ? '#warning2' : '#warning1')).text('Your Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your X bed size. Check highlighted Pattern Settings.');
-    $((invalidDiv ? '#warning2' : '#warning1')).addClass('calibpat_invalidSize');
+    $((invalidDiv ? '#warning2' : '#warning1')).addClass('invalidSize');
     $((invalidDiv ? '#warning2' : '#warning1')).show();
   }
 
   if (bedShape === 'Rect' && fitHeight > (parseInt(testNaN['BEDSIZE_Y']) - 5)) {
-    $('label[for=K_START]').addClass('calibpat_invalidSize');
+    $('label[for=K_START]').addClass('invalidSize');
     $('#K_START')[0].setCustomValidity('Your Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your Y bed size.');
-    $('label[for=K_END]').addClass('calibpat_invalidSize');
+    $('label[for=K_END]').addClass('invalidSize');
     $('#K_END')[0].setCustomValidity('Your Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your Y bed size.');
-    $('label[for=K_STEP]').addClass('calibpat_invalidSize');
+    $('label[for=K_STEP]').addClass('invalidSize');
     $('#K_STEP')[0].setCustomValidity('Your Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your Y bed size.');
-    $('label[for=SPACE_LINE]').addClass('calibpat_invalidSize');
+    $('label[for=SPACE_LINE]').addClass('invalidSize');
     $('#SPACE_LINE')[0].setCustomValidity('Your Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your Y bed size.');
     $((invalidDiv ? '#warning2' : '#warning1')).text('Your Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your Y bed size. Check highlighted Pattern Settings.');
-    $((invalidDiv ? '#warning2' : '#warning1')).addClass('calibpat_invalidSize');
+    $((invalidDiv ? '#warning2' : '#warning1')).addClass('invalidSize');
     $((invalidDiv ? '#warning2' : '#warning1')).show();
   }
 }

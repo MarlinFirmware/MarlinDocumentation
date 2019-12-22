@@ -43,8 +43,7 @@ module Jekyll
 
       source  = "<div class=\"panel panel-#{@type}\">"
       source += "<div class=\"panel-heading\">"
-      source += "<i class=\"fa #{@icon} pull-left\" aria-hidden=\"true\"></i>"
-      source += "<h4 class=\"panel-title\">#{@title}</h4></div>"
+      source += "<h4 class=\"panel-title\"><i class=\"fa #{@icon} pull-left\" aria-hidden=\"true\"></i>#{@title}</h4></div>"
       source += "<div class=\"panel-body\"><p>#{markdownify(super)}</p></div>"
       source += "</div>"
     end

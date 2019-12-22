@@ -1,121 +1,127 @@
-/* Needs height 100% as parent otherwise */
-/* textarea will not scale to cell size */
-.calibpat table {
+#kfactor {
+
   border-collapse: separate;
   border-spacing: 0px;
   border: thin solid #848484;
   height: 100%;
   width: 100%;
+
+  tr {
+    height: 100%;
+    border: thin solid #848484;
+    }
+
+  td {
+    height: 100%;
+    padding: 4px;
+    vertical-align: middle;
+    border: thin solid #848484;
+    }
+
+  .txtareatd {
+    width: 34% !important;
+    min-width: 34% !important;
+    max-width: 34% !important;
+    }
+
+  td:nth-child(1) { width: 14%; }
+
+  td:nth-child(2) {
+    width: 7%;
+    min-width: 7%;
+    text-align: center;
+    }
+
+  td:nth-child(3) {
+    width: 45%;
+    font-size: 80%;
+    }
+
+  .tdHead { background-color: #EDEDED; }
+
+  .tdSection { background-color: #F5F5F5; }
+
+  textarea {
+    font-family: $font-family-monospace;
+    font-size: 90%;
+    border: none;
+    width: 100%;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    display: block;
+    resize: none;
+    }
+
+  input[type=number] { width: 140px; }
+
+  select { width: 140px; }
+  #button2 { background: #BFA; }
+
+  label {
+    color: #c7254e;
+    font-weight: bold;
+    display: block;
+    width: 150px;
+    float: left;
+    }
+
+  .calibpat2 td {
+    padding: 1em 0;
+    vertical-align: middle;
+    background-color: #CCC;
   }
 
-/* Needs height 100% as parent otherwise */
-/* textarea will not scale to cell size */
-.calibpat tr {
-  height: 100%;
-  border: thin solid #848484;
-  }
+  .calibpat2 td:nth-child(2) { text-align: inherit; }
+  .calibpat2 td:nth-child(3) { font-size: inherit; }
 
-.calibpat td {
-  height: 100%;
-  padding: 4px;
-  vertical-align: middle;
-  border: thin solid #848484;
-  }
+  .disabled {
+    color: #c7254e;
+    font-weight: bold;
+    display: block;
+    width: 150px;
+    float: left;
+    opacity: 0.5;
+    }
 
-.calibpat .txtareatd {
-  width: 34% !important;
-  min-width: 34% !important;
-  max-width: 34% !important;
-  }
+  .invalidDiv {
+    background-color: #FFFF00;
+    font-weight: bold;
+    display: block;
+    float: left;
+    }
 
-.calibpat td:nth-child(1) {
-  width: 14%;
-  }
+  .invalidSize {
+    background-color: #FFFF00;
+    font-weight: bold;
+    display: block;
+    float: left;
+    }
 
-.calibpat td:nth-child(2) {
-  width: 7%;
-  min-width: 7%;
-  text-align: center;
-  }
+  .invalidNumber {
+    background-color: #FFFF00;
+    font-weight: bold;
+    display: block;
+    float: left;
+    }
 
-.calibpat td:nth-child(3) {
-  width: 45%;
-  font-size: 80%;
-  }
+  :invalid {
+    box-shadow: 0 0 3px red;
+    outline: 0;
+    }
+}
 
-.calibpat .tdHead {
-   background-color: #EDEDED;
+body.night #kfactor {
+  background: #222;
+  border-color: #222;
+  tr, td { border-color: #222; }
+  input, textarea { color: #001; }
+  .tdHead { background-color: #202; }
+  .tdSection { background-color: #333; }
+  label { color: #CCC; text-align: right; }
+  .calibpat2 td { background-color: #111; }
+  .disabled { color: #0F0; }
+  .invalidDiv, .invalidSize, .invalidNumber {
+    background-color: #FFFF00;
   }
-
-.calibpat .tdSection {
-   background-color: #F5F5F5;
-  }
-
-/* Scale textarea to cell size */
-.calibpat textarea {
-  font-family: $font-family-monospace;
-  font-size: 90%;
-  border: none;
-  width: 100%;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  display: block;
-  resize: none;
-  }
-
-/* Input and label styles */
-.calibpat input[type=number]{
-  width: 140px;
-  }
-
-.calibpat select{
-  width: 140px;
-  }
-
-.calibpat2 td {
-  height: 70px;
-  }
-
-.calibpat label {
-  color: #c7254e;
-  font-weight: bold;
-  display: block;
-  width: 150px;
-  float: left;
-  }
-
-.calibpat_disabled {
-  color: #c7254e;
-  font-weight: bold;
-  display: block;
-  width: 150px;
-  float: left;
-  opacity: 0.5;
-  }
-
-.calibpat_invalidDiv {
-  background-color: #FFFF00;
-  font-weight: bold;
-  display: block;
-  float: left;
-  }
-
-.calibpat_invalidSize {
-  background-color: #FFFF00;
-  font-weight: bold;
-  display: block;
-  float: left;
-  }
-
-.calibpat_invalidNumber {
-  background-color: #FFFF00;
-  font-weight: bold;
-  display: block;
-  float: left;
-  }
-
-:invalid {
-  box-shadow: 0 0 3px red;
-  outline: 0;
-  }
+}
