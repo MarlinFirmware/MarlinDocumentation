@@ -1,3 +1,13 @@
+// Set or remove 'night' class
+function setLighting(night) {
+  var p = '/assets/images/logo/marlin/', $b = $('body');
+  if (night) $b.addClass('night'); else $b.removeClass('night');
+  $('img.mflogo').attr('src', p + 'text-' + (night ? 'night' : 'day') + '.png');
+}
+
+var d = new Date(), h = d.getHours();
+setLighting(n = h >= 19 || h < 6);
+
 $(function() {
 
   /**
@@ -69,5 +79,4 @@ $(function() {
 
   // Fire the singleton init on document.ready
   jekyllSearch.init();
-
 });

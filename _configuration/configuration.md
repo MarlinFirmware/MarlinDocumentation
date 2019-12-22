@@ -484,9 +484,10 @@ Maximum temperature for each temperature sensor. If Marlin reads a temperature a
 `Err: MAXTEMP`: This error usually means that the temperature sensor wires are shorted together. It may also indicate an issue with the heater MOSFET or relay that is causing it to stay on.
 {% endalert %}
 {% alert warning %}
-Remeber that where cold and heat meet dew forms, and dew in electronics will give you a VERY bad day. [Dew Point Calculator](http://www.dpcalc.org/) is a good tool to tell if you are likely to run in to dew.
+Remember that cold surfaces near hot surfaces can lead to **condensation**, which is NOT GOOD for electronics. Use blower fans to keep air moving and use a [Dew Point Calculator](http://www.dpcalc.org/) to check your local dew point.
 {% endalert %}
-***
+
+---
 
 ### PID
 
@@ -496,7 +497,7 @@ Most vitally, correct PID settings will prevent excessive overshoot, which is a 
 
 See the [PID Tuning](http://reprap.org/wiki/PID_Tuning) topic on the RepRap wiki for detailed instructions on [`M303`](/docs/gcode/M303.html) auto-tuning. The PID settings should be tuned whenever changing a hotend, temperature sensor, heating element, board, power supply voltage (12v/24v), or anything else related to the high-voltage circuitry.
 
-***
+---
 
 #### Hotend PID Options
 
@@ -544,7 +545,7 @@ Sample PID values are included for reference, but they won't apply to most setup
 [`M301`](/docs/gcode/M301.html) can be used to set Hotend PID and is also accessible through the LCD. [`M304`](/docs/gcode/M304.html) can be used to set bed PID. [`M303`](/docs/gcode/M303.html) should be used to tune PID values before using any new hotend components.
 {% endalert %}
 
-***
+---
 
 #### Bed PID Options
 
@@ -823,7 +824,7 @@ Override with [`M204`](/docs/gcode/M204.html).
 Don't set these too high. Larger acceleration values can lead to excessive vibration, noisy steppers, or even skipped steps. Lower acceleration produces smoother motion, eliminates vibration, and helps reduce wear on mechanical parts.
 {% endalert %}
 
-***
+---
 
 #### Junction Deviation <em class="fa fa-sticky-note-o" aria-hidden="true"></em> <em class="fa fa-desktop" aria-hidden="true"></em>
 ```cpp

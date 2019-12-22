@@ -14,11 +14,14 @@ category:     [ tools ]
       <div class="row alert alert-info custom-alert">
         <div class="col-lg-1 col-md-2 visible-lg-block visible-md-block custom-alert-icon"> <i class="fa fa-info-circle fa-4x" aria-hidden="true"></i> </div>
         <div class="col-lg-11 col-md-10 custom-alert-text">
-          <p>There are two versions of Linear Advance. Linear Advance 1.0 is in Marlin 1.1.8 and earlier. Marlin 1.1.9 and up have Linear Advance 1.5.</p>
+          <p><em>Caution!</em><br/>
+          K-values for Linear Advance 1.0 and 1.5 are not compatible.<br/>
+          Linear Advance 1.0 is used in Marlin 1.1.8 and earlier.<br/>
+          Linear Advance 1.5 is used in Marlin 1.1.9 and later.</p>
         </div>
       </div>
-      <p>The Javascript below generates G-code to calibrate the Linear Advance K-factor. The default values apply to typical PLA with a 0.4mm nozzle.</p>
-      <p>Press the <code class="highlighter-rouge">Generate G-code</code> button then use <code class="highlighter-rouge">Download as file</code> to save the result.</p>
+      <p>Use this form to generate G-code that you can use to calibrate your Linear Advance K-factor. Default values apply to standard PLA with a 0.4mm nozzle.</p>
+      <p>Press the <code class="highlighter-rouge">Generate G-code</code> button followed by <code class="highlighter-rouge">Download as file</code> to save the result.</p>
       <table id="kfactor">
         <tbody>
           <tr>
@@ -27,7 +30,7 @@ category:     [ tools ]
           </tr>
           <tr>
             <td colspan="3" class="tdSection"><h4>Printer:</h4></td>
-            <td rowspan="45" class="txtareatd"><textarea name="textarea" id="textarea"></textarea></td>
+            <td rowspan="47" class="txtareatd"><textarea name="textarea" id="textarea"></textarea></td>
           </tr>
           <tr>
             <td><label for="PRINTER">Printer:</label></td>
@@ -276,11 +279,9 @@ category:     [ tools ]
           </tr>
           <tr class="calibpat2">
             <td><label for="FILENAME">Filename:</label></td>
-            <td><input name="FILENAME" id="FILENAME" value="filename" /></td>
-            <td colspan="3"><p>
-                <input name="button" type="button" id="button" onclick="genGcode()" value="Generate G-code" />
-                <input name="button3" type="button" id="button3" onclick="setLocalStorage()" value="Save as default" />
-            </p>
+            <td colspan="2"><input name="FILENAME" id="FILENAME" value="filename" />
+              <input name="button" type="button" id="button" onclick="genGcode()" value="Generate G-code" />
+              <input name="button3" type="button" id="button3" onclick="setLocalStorage()" value="Save as default" title="Save settings in a cookie." />
             <p id="warning1" style="display: none;">warning</p>
             <p id="warning2" style="display: none;">warning</p>
             <p id="warning3" style="display: none;">warning</p></td>
