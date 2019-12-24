@@ -278,6 +278,11 @@ h1.config { background: #B8B; }
 }
 
 #bitmap-converter {
+  margin-top: 0.5em;
+
+  .left13 { float: left; width: 33.3%; color: #118; }
+  .right23 { padding-top: 0.5em; float: left; width: 66.7%; }
+
   p { font-size: 120%; }
   label:hover { color: #090; }
   canvas {
@@ -295,7 +300,7 @@ h1.config { background: #B8B; }
   }
   input#pasted {
     margin: 0.5em 0.5em 0.5em 0;
-    color: #BBF;
+    color: #ABF;
     font-family: $font-family-monospace;
   }
   textarea#output {
@@ -311,8 +316,10 @@ h1.config { background: #B8B; }
     cursor: default;
   }
   div.file-selector {
+    clear: both;
     padding: 1em;
     margin: 1em 0;
+    border-radius: 1em;
     background: #EEE;
 
     // noselect
@@ -371,6 +378,7 @@ div.container.gcode div.tocify.gcode {
 
 .tocify.gcode>ul { padding: 65px 0 1em; }
 .nav-list > li > a strong { color: #900; }
+.nav-list>.active>a strong { background-color: none; }
 
 div[role=main] { padding-bottom: 33vh; }
 
@@ -514,22 +522,21 @@ body.night {
   background: #000; color: #FFFFF8;
   a { color: #8492fd; }
   .custom-tagline-btn a { color: #FFF; }
-  code { color: #C99; background-color: #300; }
+  code { color: #ACF; background-color: #226; }
   pre, pre>code { color: #CCC; background-color: #000; }
-  .highlight { background: #000; }
+  .highlight { background: none; }
   .navbar-default { background-color: #111; border-color: #222; }
   .nav.navbar-nav li a.here, .nav.navbar-nav li.here>a {
     color: #99B; background: #004466;
   }
   .nav-list>.active>a strong,
   .nav-list>.active>a:hover strong {
-    background-color: none;
+    color: #FFF;
   }
   .navbar-default .navbar-brand:hover,
   .navbar-default .navbar-brand:focus {
     color: #AAA;
     background-color: #333;
-    strong { background-color: #333; }
   }
   h1+h2 { color: #BBC; }
   .custom-bg-white { background-color: #111; }
@@ -625,8 +632,8 @@ body.night {
       color: #2D2;
       }
     div.file-selector {
-      background: #666;
-      .options { background-color: #888; }
+      background: #226;
+      .options { background-color: #8888; }
       label.tbd, label.tbd:hover { color: #FDD !important; }
       }
     div#err-box { color: red; }
@@ -687,6 +694,9 @@ body.night {
     background-color: #004;
     color: white;
     }
-  .dropdown-menu>li>a { color: #FFF; }
+  .dropdown-menu>li>a { color: #A4AAFD; }
   .dropdown-menu>li>a:hover, .dropdown-menu>li>a:active { color: #000; }
+
+  #bitmap-converter .left13 { color: #CCF; }
+
 }
