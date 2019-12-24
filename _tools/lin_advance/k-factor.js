@@ -24,9 +24,9 @@ const SETTINGS_VERSION = '1.0';
 function genGcode() {
 
   // get the values from the HTML elements
-  var PRINTER = parseFloat(document.getElementById('PRINTER').value),
-      FILAMENT = parseFloat(document.getElementById('FILAMENT').value),
-      FILENAME = parseFloat(document.getElementById('FILENAME').value),
+  var PRINTER = document.getElementById('PRINTER').value,
+      FILAMENT = document.getElementById('FILAMENT').value,
+      FILENAME = document.getElementById('FILENAME').value,
       FILAMENT_DIAMETER = parseFloat(document.getElementById('FIL_DIA').value),
       NOZZLE_DIAMETER = parseFloat(document.getElementById('NOZ_DIA').value),
       NOZZLE_TEMP = parseInt(document.getElementById('NOZZLE_TEMP').value),
