@@ -1,12 +1,55 @@
-// Set or remove 'night' class
-function setLighting(night) {
-  var p = '/assets/images/logo/marlin/', $b = $('body');
-  if (night) $b.addClass('night'); else $b.removeClass('night');
-  $('img.mflogo').attr('src', p + 'text-' + (night ? 'night' : 'day') + '.png');
+//
+// Marlin custom Javascript
+//
+
+// Cookie Helpers
+
+function setCookie(cname, cvalue, exdays) {
+  var d = new Date();
+  d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+  var expires = "expires=" + d.toUTCString();
+  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 }
 
-var d = new Date(), h = d.getHours();
-setLighting(n = h >= 19 || h < 6);
+function getCookie(cname) {
+  var name = cname + '=',
+      decodedCookie = decodeURIComponent(document.cookie),
+      ca = decodedCookie.split(';');
+  for (var i = 0; i < ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ' ') c = c.substring(1);
+    if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+  }
+  return '';
+}
+
+// Set Lighting according to cookie or time
+
+function setDarkMode(dark) {
+  console.log((dark ? "Setting" :  "Clearing") + " dark mode.");
+  var $b = $('body'), q = '/assets/images/', p = q + 'logo/marlin/';
+  if (dark) $b.addClass('night'); else $b.removeClass('night');
+  $('#mflogo').attr('src', p + 'text-' + (dark ? 'night' : 'day') + '.png');
+  $('#daynite')
+    .attr('src', q + 'btn-' + (dark ? 'day' : 'night') + '.svg')
+    .css('display', 'inline');
+}
+
+function toggleDarkMode() {
+  var dark = !$('body').hasClass('night');
+  setDarkMode(dark);
+  return dark;
+}
+
+var nightMode = getCookie('nightMode');
+if (nightMode === '') {
+  var d = new Date(), h = d.getHours();
+  nightMode = (h >= 19 || h < 6);
+}
+else
+  nightMode = (nightMode === 'true');
+
+setDarkMode(nightMode);
 
 $(function() {
 
@@ -76,6 +119,11 @@ $(function() {
   resizeImage();
 
   $(window).resize(shiftSubMenu, resizeImage);
+
+  $('#daynite').click(function(){
+    var dark = toggleDarkMode();
+    setCookie('nightMode', dark);
+  });
 
   // Fire the singleton init on document.ready
   jekyllSearch.init();

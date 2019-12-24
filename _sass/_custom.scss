@@ -1,3 +1,5 @@
+#daynite { display: none; margin: 8px 0 0 4px; }
+
 h1, h2, h3, h4, h5, h6 {
   font-family: $font-family-heading;
   margin-top: 0.2em;
@@ -463,7 +465,7 @@ summary h3 { display: inline; }
 @media (min-width: $screen-sm-min) {
   #search.container .overlay { width: 750px; }
   .navbar-nav>li>a { padding-left: 8px; padding-right: 8px; }
-  .navbar-brand { padding: 15px 2px; }
+  .navbar-brand { padding: 2px 4px 0; }
 }
 @media (min-width: $screen-md-min) {
   .container.gcode+footer { float: right; width: 66%; }
@@ -516,9 +518,19 @@ body.night {
   pre, pre>code { color: #CCC; background-color: #000; }
   .highlight { background: #000; }
   .navbar-default { background-color: #111; border-color: #222; }
-  .nav.navbar-nav li a.here, .nav.navbar-nav li.here>a { color: #99B; background: #004466; }
+  .nav.navbar-nav li a.here, .nav.navbar-nav li.here>a {
+    color: #99B; background: #004466;
+  }
+  .nav-list>.active>a strong,
+  .nav-list>.active>a:hover strong {
+    background-color: none;
+  }
   .navbar-default .navbar-brand:hover,
-  .navbar-default .navbar-brand:focus { color: #AAA; background-color: #333; }
+  .navbar-default .navbar-brand:focus {
+    color: #AAA;
+    background-color: #333;
+    strong { background-color: #333; }
+  }
   h1+h2 { color: #BBC; }
   .custom-bg-white { background-color: #111; }
   .custom-bg-red   { background-color: #FDD; }
@@ -631,7 +643,7 @@ body.night {
     div.row.gallery p { color: #904; }
   }
 
-  .nav-list > li > a strong { color: #900; }
+  .nav-list > li > a strong { color: #09B; }
   .jumbotron {
     background-color: #202;
     color: #FFF;
