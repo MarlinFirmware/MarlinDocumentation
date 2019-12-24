@@ -321,7 +321,7 @@ function saveTextAsFile() {
   var textToWrite = document.getElementById('textarea').value,
       textFileAsBlob = new Blob([textToWrite], {type: 'text/plain'}),
       usersFilename = document.getElementById('FILENAME').value,
-      filename = userFilename || '',
+      filename = usersFilename || '',
       fileNameToSaveAs = filename + 'kfactor.gcode';
   if (textToWrite) {
     saveAs(textFileAsBlob, fileNameToSaveAs);
