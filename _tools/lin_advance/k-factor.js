@@ -128,8 +128,8 @@ function genGcode() {
   txtArea.value = '; ### Marlin K-Factor Calibration Pattern ###\n' +
                   '; -------------------------------------------\n' +
                   ';\n' +
-                  '; Printer: ' + PRINTER + ' mm\n' +
-                  '; Filament: ' + FILAMENT + ' mm\n' +
+                  '; Printer: ' + PRINTER + '\n' +
+                  '; Filament: ' + FILAMENT + '\n' +
                   '; Created: ' + new Date() + '\n' +
                   ';\n' +
                   '; Settings Printer:\n' +
