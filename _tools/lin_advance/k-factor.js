@@ -320,7 +320,9 @@ function genGcode() {
 function saveTextAsFile() {
   var textToWrite = document.getElementById('textarea').value,
       textFileAsBlob = new Blob([textToWrite], {type: 'text/plain'}),
-      fileNameToSaveAs = FILENAME + 'kfactor.gcode';
+      usersFilename = document.getElementById('FILENAME').value,
+      filename = userFilename || '',
+      fileNameToSaveAs = filename + 'kfactor.gcode';
   if (textToWrite) {
     saveAs(textFileAsBlob, fileNameToSaveAs);
   } else {
