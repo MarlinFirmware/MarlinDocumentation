@@ -32,7 +32,7 @@ function setDarkMode(dark) {
   $('#mflogo').attr('src', p + 'text-' + (dark ? 'night' : 'day') + '.png');
   $('#daynite')
     .attr('src', q + 'btn-' + (dark ? 'day' : 'night') + '.svg')
-    .css('display', 'inline');
+    .css('visibility', 'visible');
 }
 
 function toggleDarkMode() {

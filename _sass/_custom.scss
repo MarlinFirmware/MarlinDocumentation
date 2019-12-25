@@ -1,4 +1,4 @@
-#daynite { display: none; margin: 8px 0 0 4px; }
+#daynite { visibility: hidden; margin: 8px 0 0 4px; }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: $font-family-heading;
@@ -469,17 +469,25 @@ summary h3 { display: inline; }
   list-style-type: upper-alpha;
 }
 
+.navbar-collapse.in, .navbar-collapse.collapsing {
+  .navbar-nav>li>a { padding-top: 0; padding-bottom: 0; }
+  #daynite { margin-top: -23px; }
+}
+
+.navbar-brand { padding: 2px 0 0; }
+
 // Keep footer from overlapping g-codes nav
 @media (min-width: $screen-sm-min) {
   #search.container .overlay { width: 750px; }
-  .navbar-nav>li>a { padding-left: 8px; padding-right: 8px; }
-  .navbar-brand { padding: 2px 4px 0; }
+  .navbar-nav>li>a { padding-left: 4px; padding-right: 4px; }
+  #daynite { display: none; }
 }
 @media (min-width: $screen-md-min) {
   .container.gcode+footer { float: right; width: 66%; }
   li#searchbox input[type="search"] { width: 13em !important; }
   #search.container .overlay { width: 970px; }
   .navbar-nav>li>a { padding-left: 12px; padding-right: 12px; }
+  #daynite { display: inline; }
 }
 @media (min-width: $screen-lg-min) {
   .container.gcode+footer .container { margin-left: 35%; width: 75%; }
