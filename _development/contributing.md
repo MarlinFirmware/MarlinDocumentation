@@ -24,7 +24,9 @@ Marlin posts "nightly" builds that contain the most up-to-date code. While they 
 Are you skilled in information design? This website is far from complete, and it's a bit text-heavy. We need more photos, diagrams, and YouTube videos to embed on these pages. A well-chosen image or well-produced video can have more impact than many pages of written documentation. Visit the [MarlinDocumentation Project](https://github.com/MarlinFirmware/MarlinDocumentation) for more information.
 
 ### Fund Development
-The current maintainer of Marlin is [Scott Lahteine](http://www.thinkyhead.com/donate-to-marlin) aka @thinkyhead. Scott has been writing software for a few decades, with a focus on shareware and open source. He reviews every contribution before it goes into Marlin, and has turned his apartment into a test lab. It's fair to say that Marlin is his life.
+The current maintainer of Marlin is [Scott Lahteine](http://www.thinkyhead.com/donate-to-marlin) aka @thinkyhead. Scott has been writing software for a few decades, with a focus on shareware and open source. He reviews every contribution before it goes into Marlin, maintains documentation, hosts Facebook and Discord groups, and maintains a small 3D printer test lab in Austin, TX.
+
+Your donation accelerates development, testing, and advancement of the most ambitious open source multi-platform 3D printing firmware in the world. See "[Donate to Marlin](http://www.thinkyhead.com/donate-to-marlin)" for funding options. The best deal for us today is [GitHub Sponsors](https://github.com/sponsors/thinkyhead) as they now provide one-to-one donation matching!
 
 ### Join the Community
 There are now many community resources for users of Marlin. If you're looking for help installing or troubleshooting these are the best places to go.

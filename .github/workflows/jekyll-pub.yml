@@ -4,18 +4,21 @@
 # Publish the Jekyll site whenever 'master' is pushed
 #
 
+name: Jekyll Deploy
+
 on:
   push:
     branch:
     - master
 
 jobs:
-  publish:
-
+  deploy_site:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Check out master
-      uses: actions/checkout@v1
-    - name: Publish the site
-      run: source .github/mfpub.sh
+      - uses: actions/checkout@v1
+      - name: Build & Deploy to GitHub Pages
+        uses: BryanSchuetz/jekyll-deploy-gh-pages@master
+        env: 
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ secrets.GITHUB_REPOSITORY }}
+          GITHUB_ACTOR: ${{ secrets.GITHUB_ACTOR }}

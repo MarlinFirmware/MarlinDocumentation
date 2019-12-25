@@ -54,8 +54,7 @@ You can continue this pattern if you have more nested elements. */
   padding: 5px 0px 5px 5px;
 }
 
-.nav-list > .active > a, .nav-list > .active > a:hover, .nav-list > .active > a:focus,
-.nav-list > .active > a strong, .nav-list > .active > a:hover strong, .nav-list > .active > a:focus strong {
+.nav-list > .active > a, .nav-list > .active > a:hover, .nav-list > .active > a:focus {
   color: #FFF;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
   background-color: #0088CC;
