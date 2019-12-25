@@ -6,11 +6,11 @@
 
 # build the site statically and proof it
 bundle exec jekyll build --profile --trace --no-watch
-bundle exec htmlproofer ./_site --only-4xx --allow-hash-href --check-favicon --check-html --url-swap ".*marlinfw.org/:/"
+bundle exec htmlproofer ./build --only-4xx --allow-hash-href --check-favicon --check-html --url-swap ".*marlinfw.org/:/"
 
 # Sync the built site into a temporary folder
 TMPFOLDER=$( mktemp -d )
-rsync -av _site/ ${TMPFOLDER}/
+rsync -av build/ ${TMPFOLDER}/
 
 # Copy built-site into the gh-pages branch
 git checkout gh-pages || { echo "Something went wrong!"; exit 1; }

@@ -1,4 +1,5 @@
-_site
+_site/
+build/
 .sass-cache
 .jekyll-metadata
 Gemfile.lock

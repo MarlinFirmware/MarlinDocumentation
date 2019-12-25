@@ -5,6 +5,8 @@ js: '/assets/javascript/'
 version: '1.0.0'
 environment: development
 
+destination: ./build
+
 name: 'Marlin Firmware'
 logo: '/assets/images/logo/marlin/small.png'
 description: 'Printing the planet, one layer at a time.'
@@ -86,17 +88,14 @@ collections:
     permalink: /:collection/:path:output_ext
 
 exclude:
-  - '.gitignore'
   - '_config.yml'
-  - 'CNAME'
   - 'Gemfile'
   - 'LICENSE'
   - 'public'
-  - 'README.md'
   - 'script'
   - 'vendor'
 
-gems:
+plugins:
   - jekyll-mentions
   - jekyll-seo-tag
   - jekyll-avatar

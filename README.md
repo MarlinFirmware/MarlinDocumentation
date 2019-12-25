@@ -111,43 +111,7 @@ With the `serve` option, Jekyll watches the local files and on every save trigge
 
 ## Publishing changes
 
-If you're a developer with enough access rights to publish changes to the `gh-pages` branch, the following bash script will ease your life by applying a consistent process for website publication. Run this from inside your local working copy of the repo. The main Marlin repo also includes scripts (`mfdoc` and `mfpub`) to do all this heavy lifting for you.
-
-### pub-marlindoc.sh
-
-```bash
-#!/bin/bash
-TMPFOLDER=$( mktemp -d )
-COMMIT=$( git log --format="%H" -n 1 )
-
-set -e
-
-git reset --hard
-git clean -d -f
-
-# Uncomment to compress the final html files
-#mv ./_plugins/jekyll-press.rb-disabled ./_plugins/jekyll-press.rb
-
-bundle install
-bundle exec jekyll build --profile --trace --no-watch
-bundle exec htmlproofer ./_site --only-4xx --allow-hash-href --check-favicon --check-html --url-swap ".*marlinfw.org/:/"
-
-rsync -av _site/ ${TMPFOLDER}/
-
-git reset --hard HEAD
-git clean -d -f
-git checkout gh-pages
-
-rsync -av ${TMPFOLDER}/ ./
-
-git add --all
-git commit --message "Built from ${COMMIT}"
-git push
-
-rm -rf ${TMPFOLDER}
-
-git checkout master
-```
+We now use GitHub Actions to publish to the `gh-pages` branch whenever the `master` branch is updated, so no extra steps are needed to publish the site.
 
 ## License
 

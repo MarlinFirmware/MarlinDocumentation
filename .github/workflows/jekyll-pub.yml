@@ -15,6 +15,9 @@ jobs:
   deploy_site:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/setup-ruby@v1
+        with:
+          ruby-version: '>=2.4.4'
       - uses: actions/checkout@v1
       - name: Build & Deploy to GitHub Pages
         uses: BryanSchuetz/jekyll-deploy-gh-pages@master
