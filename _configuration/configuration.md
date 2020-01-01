@@ -165,7 +165,7 @@ This is the name of your printer as displayed on the LCD and by [`M115`](/docs/g
 ```cpp
 //#define MACHINE_UUID "00000000-0000-0000-0000-000000000000"
 ```
-A unique ID for your 3D printer. A suitable unique ID can be generated randomly at [uuidgenerator.net](http://www.uuidgenerator.net/version4). Some host programs and slicers may use this identifier to differentiate between specific machines on your network.
+A unique ID for your 3D printer. A suitable unique ID can be generated randomly at [uuidtools.com](https://www.uuidtools.com/generate/v4). Some host programs and slicers may use this identifier to differentiate between specific machines on your network.
 
 
 ## Extruder Info
