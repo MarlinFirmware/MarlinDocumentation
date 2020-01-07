@@ -6,7 +6,7 @@ h1, h2, h3, h4, h5, h6 {
   }
 h1+h2 { margin-top: -0.4em; color: #BBC; }
 
-.highlight { margin-bottom: 25px; }
+div.highlight { margin-bottom: 25px; }
 
 .container {
   h2, h3, h4, h5, h6 {
@@ -522,7 +522,7 @@ div.panel.panel-info, div.panel.panel-warning {
 body.night[role=document] {
   h2, h3, h4, h5, h6 {
     background: #000;
-    background: linear-gradient(90deg, #000, #888, #888);
+    background: linear-gradient(90deg, #444, #222, #111);
   }
 }
 
@@ -532,7 +532,7 @@ body.night {
   .custom-tagline-btn a { color: #FFF; }
   code { color: #ACF; background-color: #226; }
   pre, pre>code { color: #CCC; background-color: #000; }
-  .highlight { background: none; }
+  div.highlight { background: none; }
   .navbar-default { background-color: #111; border-color: #222; }
   .nav.navbar-nav li a.here, .nav.navbar-nav li.here>a {
     color: #99B; background: #004466;
