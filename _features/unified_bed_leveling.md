@@ -12,7 +12,7 @@ This page is a work in progress, based on Marlin 1.1.x. Corrections/improvements
 {% endalert %}
 
  - A comprehensive LCD menu system for UBL is coming soon.
- - See also [G26 Mesh Validation](http://marlinfw.org/docs/gcode/G026.html) and [G29 for UBL](http://marlinfw.org/docs/gcode/G029-ubl.html).
+ - See also [G26 Mesh Validation](/docs/gcode/G026.html) and [G29 for UBL](/docs/gcode/G029-ubl.html).
 
 # UBL Startup Guide
 
@@ -273,9 +273,7 @@ Again, `G29 S[n]` will save the mesh to EEPROM.
 
 Once you have a reasonable looking mesh then it’s time to do a test print.
 
-The easiest way to do this is to use the `G26` command.
-
-There are several options for the `G26` command. See [GCode G26](http://marlinfw.org/docs/gcode/G026.html) for details.
+The easiest way to do this is to use the `G26` command. There are several options for the `G26` command. (See [`G26`](/docs/gcode/G026.html) for full details.)
 
 `G26 Bxx Hyy F1.75 L0.2 S0.4` will usually get you something reasonable:
 - `Bxx` – bed temperature

@@ -9,7 +9,7 @@ name: Jekyll Deploy
 on:
   push:
     branch:
-    - master
+    - deploy
 
 jobs:
   deploy_site:

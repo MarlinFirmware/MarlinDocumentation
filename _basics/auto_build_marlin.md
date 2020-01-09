@@ -10,7 +10,7 @@ category: [ articles, getting-started ]
 
 ## Get PlatformIO
 
-Before you install *AutoBuildMarlin* you'll first need to [Install PlatformIO in VSCode](http://marlinfw.org/docs/basics/install_platformio_vscode.html). Once that is done, continue below.
+Before you install *AutoBuildMarlin* you'll first need to [Install PlatformIO in VSCode](/docs/basics/install_platformio_vscode.html). Once that is done, continue below.
 
 ## Installation
 
@@ -25,20 +25,20 @@ Before you install *AutoBuildMarlin* you'll first need to [Install PlatformIO in
 
 - With Marlin open in *VSCode*, the "File Explorer" should be firmly rooted in your Marlin Firmware folder:
 
-  ![](/assets/images/basics/install_platformio_vscode/Activity_bar.png)
+  ![AutoBuild Icon](/assets/images/basics/install_platformio_vscode/Activity_bar.png)
 
 - Click the *Auto Build Marlin* icon ![AutoBuild Icon](/assets/images/basics/install_platformio_vscode/AB_icon.png) in the Activities Bar to bring up the *Auto Build Marlin* options bar.
 
-  ![](/assets/images/basics/install_platformio_vscode/AB_menu.png)
+  ![AutoBuild Menu](/assets/images/basics/install_platformio_vscode/AB_menu.png)
 
 - Click one of the four icons
 
   Icon|Action
   ----|------
-  ![](/assets/images/basics/install_platformio_vscode/B_small.png)|Start **PIO Build** to test your Marlin build
-  ![](/assets/images/basics/install_platformio_vscode/C_small.png)|Start **PIO Clean** to delete old build files
-  ![](/assets/images/basics/install_platformio_vscode/U_small.png)|Start **PIO Upload** to install Marlin on your board
-  ![](/assets/images/basics/install_platformio_vscode/T_small.png)|Start **PIO Upload (traceback)** to install Marlin with debugging
+  ![PIO Build](/assets/images/basics/install_platformio_vscode/B_small.png)|Start **PIO Build** to test your Marlin build
+  ![PIO Clean](/assets/images/basics/install_platformio_vscode/C_small.png)|Start **PIO Clean** to delete old build files
+  ![PIO Upload](/assets/images/basics/install_platformio_vscode/U_small.png)|Start **PIO Upload** to install Marlin on your board
+  ![PIO Debug](/assets/images/basics/install_platformio_vscode/T_small.png)|Start **PIO Upload (traceback)** to install Marlin with debugging
 
 - At the start of the build a popup may appear with additional options. Usually the default is fine. Click "**Continue**" after setting your preferred build options, or **Cancel** to abort the build.<br/>
 ![AutoBuild Popup](/assets/images/basics/install_platformio_vscode/platformio_popup.jpg)

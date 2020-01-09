@@ -11,7 +11,7 @@ This document is based on Marlin 1.1.9
 {% endalert %}
 
 ---
-Note: Because of the way Marlin currently (1.1.9) implements `M3`-`M5`, for best results we recommend ([#11576](https://github.com/MarlinFirmware/Marlin/issues/11576)) using a fan PWM pin and the [`M106`](http://marlinfw.org/docs/gcode/M106.html) command instead of `M3`-`M5`. The simplest way to do this is to define `FAN1_PIN` as one of the available PWM pins on your board.
+Note: Because of the way Marlin currently (1.1.9) implements `M3`-`M5`, for best results we recommend ([#11576](https://github.com/MarlinFirmware/Marlin/issues/11576)) using a fan PWM pin and the [`M106`](/docs/gcode/M106.html) command instead of `M3`-`M5`. The simplest way to do this is to define `FAN1_PIN` as one of the available PWM pins on your board.
 
 For example, to define pin 6 as the second fan just add this line to `Configuration.h`:
 ```cpp

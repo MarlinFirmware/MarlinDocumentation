@@ -114,7 +114,7 @@ properly reference the coordinate system to the nozzle position. To measure
 this see [here](#measure_offsets).  For a mechanical probe like a BL-Touch, this offset
 is geometrically fixed.  For a remote sensing probe (e. g. inductive
 or capacitive), the offset might vary with bed material. You can tweak
-it using [M851](http://marlinfw.org/docs/gcode/M851).
+it using [M851](http://marlinfw.org/docs/gcode/M851.html).
 
 ![Fig. 1](/assets/images/docs/hardware/endstops/bltouchwithbltouch.png)
 {: style="text-align: center;"}

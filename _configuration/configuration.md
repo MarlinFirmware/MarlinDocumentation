@@ -150,7 +150,7 @@ The most important setting is Marlin is the motherboard. The firmware needs to k
 Using [`boards.h`](/docs/hardware/boards.html) as a reference, replace `BOARD_RAMPS_14_EFB` with your board's ID. The [`boards.h`](/docs/hardware/boards.html) file has the most up-to-date listing of supported boards, so check it first if you don't see yours listed there.
 
 {% alert info %}
-The Sanguino board requires adding "Sanguino" support to Arduino IDE. Open `Preferences` and locate the `Additional Boards Manager URLs` field. Copy and paste [this source URL](https://raw.githubusercontent.com/Lauszus/Sanguino/master/package_lauszus_sanguino_index.json). Then use `Tools` > `Boards` > `Boards Manager` to install "Sanguino" from the list. An internet connection is required. (Thanks to [Dust's RepRap Blog](http://dustsreprap.blogspot.my/2015/06/better-way-to-install-sanguino-in.html) for the tip.)
+The Sanguino board requires adding "Sanguino" support to Arduino IDE. Open `Preferences` and locate the `Additional Boards Manager URLs` field. Copy and paste [this source URL](https://raw.githubusercontent.com/Lauszus/Sanguino/master/package_lauszus_sanguino_index.json). Then use `Tools` > `Boards` > `Boards Manager` to install "Sanguino" from the list. An internet connection is required. (Thanks to "Dust's RepRap Blog" for the tip.)
 {% endalert %}
 
 ### Custom Machine Name
@@ -386,7 +386,7 @@ Hotend offsets are needed if your extruder has more than one nozzle. These value
   #endif
 #endif
 ```
-This option allows the controller board to switch the power supply 12v on and off - [`M80`](/docs/gcode/M80.html),  [`M80`](/docs/gcode/M80.html). Requires `PS_ON_PIN`.
+This option allows the controller board to switch the power supply 12v on and off with [`M80`](/docs/gcode/M080.html) and [`M81`](/docs/gcode/M081.html). Requires `PS_ON_PIN`.
 
 ```cpp
 //#define PS_DEFAULT_OFF
@@ -1389,7 +1389,7 @@ These options specify the three points that will be probed during `G29`.
   //#define MESH_EDIT_MENU        // Add a menu to edit mesh points
 #endif
 ```
-`LCD_BED_LEVELING` adds a "Level Bed" menu to the LCD that starts a step-by-step guided leveling procedure that requires no probe. For Mesh Bed Leveling see [`G29` for MBL](/docs/gcode/G029-mbl.html), and for `PROBE_MANUALLY` see [`G29` for ABL](http://marlinfw.org/docs/gcode/G029-abl.html).
+`LCD_BED_LEVELING` adds a "Level Bed" menu to the LCD that starts a step-by-step guided leveling procedure that requires no probe. For Mesh Bed Leveling see [`G29` for MBL](/docs/gcode/G029-mbl.html), and for `PROBE_MANUALLY` see [`G29` for ABL](/docs/gcode/G029-abl.html).
 
 Available with `MESH_BED_LEVELING` and `PROBE_MANUALLY` (all forms of Auto Bed Leveling). See the `Configuration.h` file for sub-options.
 

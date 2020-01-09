@@ -208,9 +208,10 @@ This document has been marked `needs-review`. The following information may be o
   <h3>Gallery</h3>
   {% for img in gcode.images %}
     {% assign cap = img.caption | markdownify %}
-    <h4>{{ img.title | markdownify | strip_html }}</h4>
+    {% assign ttl = img.title | markdownify | strip_html %}
+    <h4>{{ ttl }}</h4>
     {{ cap }}
-    <img src="{{ img.path | prepend: '/assets/images/gcode/' }}" title="{{ title | strip_html | xml_escape }}" />
+    <img src="{{ img.path | prepend: '/assets/images/gcode/' }}" alt="{{ ttl | xml_escape }}" title="{{ ttl | xml_escape }}" />
   {% endfor %}
 </div>
 {% endif %}
