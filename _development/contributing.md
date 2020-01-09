@@ -37,6 +37,8 @@ There are now many community resources for users of Marlin. If you're looking fo
 - [Marlin Forum](http://forums.reprap.org/list.php?415) at RepRap.org
 - [Marlin YouTube Videos](https://www.youtube.com/results?search_query=marlin+firmware)
 
+<iframe id="discord-frame" src="https://discordapp.com/widget?id=461605380783472640&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0"></iframe>
+
 ### Promote Marlin
 Marlin needs evangelists, enthusiasts, fans, and everyday users to tell everyone just how awesome Marlin is. Users and vendors may be wary of installing Marlin 2.0 on their trusty old and reliable hardware. Let them know that Marlin continues to evolve! And be sure to engage with Marlin's Twitter feed at [@MarlinFirmware](https://twitter.com/MarlinFirmware).
 
