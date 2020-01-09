@@ -681,7 +681,7 @@ body.night {
     color: #FFF;
     background: #111;
     a { color: #C80; }
-    input[type="search"] { border-color: #FF0; }
+    input[type="search"] { border-color: #FC0; background: #000; color: #FCA; }
     input[type="submit"] { background: #425FB3; border-color: #FFF8; }
     .overlay {
       background: linear-gradient(0deg, #000, #142, #000);

@@ -27,4 +27,4 @@ By default, EEPROM is disabled. This is to avoid the "unintended consequence" of
 [M502](/docs/gcode/M502.html) - Reset current settings to defaults, as set in Configurations.h - follow with `M500` to reset the EEPROM.
 [M503](/docs/gcode/M503.html) - Print the current settings – ''Not the settings stored in EEPROM.''
 
-EEPROM is also accessible through the [LCD menu](docs/features/lcd_menu.html).
+EEPROM is also accessible through the [LCD menu](/docs/features/lcd_menu.html).

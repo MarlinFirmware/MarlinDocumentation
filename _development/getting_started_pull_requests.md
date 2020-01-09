@@ -7,218 +7,212 @@ author: Bob-the-Kuhn, thinkyhead
 category: [ development ]
 ---
 
-{% alert info %}
-The current version of this document is targeted at Windows users.
-{% endalert %}
+### Introduction
 
-<!-- ## Introduction -->
+GitHub is a great tool for collaboration, but it has a bit of a learning curve. The power of GitHub comes from the [Git version control system](https://en.wikipedia.org/wiki/Git). Git will be familiar if you've used other version control systems like [CVS](https://en.wikipedia.org/wiki/Concurrent_Versions_System), [Apache Subversion](https://en.wikipedia.org/wiki/Apache_Subversion), or [Mercurial](https://en.wikipedia.org/wiki/Mercurial). GitHub adds helpful collaboration features that make it an ideal platform for maintaining the Marlin project.
 
-GitHub is a great tool for collaboration, but it can take some time and effort to learn how to use it. The power of GitHub centers around the [Git version control system](https://en.wikipedia.org/wiki/Git). If you've used other version control systems such as [CVS](https://en.wikipedia.org/wiki/Concurrent_Versions_System), [Apache Subversion](https://en.wikipedia.org/wiki/Apache_Subversion), or [Mercurial](https://en.wikipedia.org/wiki/Mercurial), then Git should be familiar. GitHub adds issue management, bug tracking, and other features, making it an ideal platform for maintaining the Marlin project.
+Before submitting code and other content, please review [Contributing to Marlin](contributing.html) and [Marlin Coding Standards](coding_standards.html). Following our guidelines ensures that your changes will be accepted more quickly.
 
-Before submitting code and other content, please review [Contributing to Marlin](contributing.html) and [Marlin Coding Standards](coding_standards.html).
-
-----
-
-# Set up GitHub, Fork, and Clone
+### Set up GitHub, Fork, and Clone
 
 Before you can contribute to Marlin, you need to get a [free GitHub.com account](https://github.com/join). This is a pretty quick process. Please upload a unique icon or image so it will be easier to identify you on the project pages! You'll also need to download and install the [GitHub Desktop](https://desktop.github.com) application.
 
 After signing in to your GitHub account, go to the main Marlin repository at: [https://github.com/MarlinFirmware/Marlin](https://github.com/MarlinFirmware/Marlin) and create a fork of Marlin by clicking the `fork` icon in the top right of the page.
 
-![image1]({{ '/assets/images/docs/development/pull_images/pull_1.jpg' | prepend: site.baseurl }})
+![image1]({{ 'pull_1.jpg' | prepend: site.pull_img }})
 
 When GitHub is done copying files, a page will appear displaying your shiny new fork of Marlin. This takes about 10-20 seconds, so be patient. You may need to wait for the `Fetching Latest Commit` message to go away also. If it still hasn't finished after few minutes then GitHub might be hung up (not unusual).
 
 ----
 
-# Rename your Fork (not recommended)
+### Rename your Fork (not recommended)
 
 It's always best to leave the repository name as "Marlin" unless you plan to make your own custom version of Marlin for publication. Here are the instructions if you want to rename it.
 
 Click on the `Settings` icon.
 
-![image2]({{ '/assets/images/docs/development/pull_images/pull_2.jpg' | prepend: site.baseurl }})
+![image2]({{ 'pull_2.jpg' | prepend: site.pull_img }})
 
 Click in the `Repository name` box, type the new name, and click `Rename`.
 
-![image3]({{ '/assets/images/docs/development/pull_images/pull_3.jpg' | prepend: site.baseurl }})
+![image3]({{ 'pull_3.jpg' | prepend: site.pull_img }})
 
-![image4]({{ '/assets/images/docs/development/pull_images/pull_4.jpg' | prepend: site.baseurl }})
+![image4]({{ 'pull_4.jpg' | prepend: site.pull_img }})
 
 This takes you back to your fork's main page, where the new name is displayed.
 
 Edit the title by clicking `Edit`.
 
-![image5]({{ '/assets/images/docs/development/pull_images/pull_5.jpg' | prepend: site.baseurl }})
+![image5]({{ 'pull_5.jpg' | prepend: site.pull_img }})
 
 Type in the new title and click `Save`.
 
-![image6]({{ '/assets/images/docs/development/pull_images/pull_6.jpg' | prepend: site.baseurl }})
+![image6]({{ 'pull_6.jpg' | prepend: site.pull_img }})
 
 ----
 
-# Change the Default Branch
+### Change the Default Branch
 
 At this time we're using the `bugfix-2.0.x` branch to patch bugs for the next minor release, and the `dev-2.1.x` branch for new features for the next point release. We recommend you change the "Default Branch" in your fork to `bugfix-2.0.x` to make it easier to do Pull Requests later.
 
 Click on the **branches** tab to view all branches in your fork.
 
-![image8]({{ '/assets/images/docs/development/pull_images/pull_8.jpg' | prepend: site.baseurl }})
+![image8]({{ 'pull_8.jpg' | prepend: site.pull_img }})
 
 Click on the **Change default branch** button.
 
-![image9]({{ '/assets/images/docs/development/pull_images/pull_9.jpg' | prepend: site.baseurl }})
+![image9]({{ 'pull_9.jpg' | prepend: site.pull_img }})
 
 Click on the branch dropdown button. Select `bugfix-2.0.x` and click **Update**.
 
-![image10]({{ '/assets/images/docs/development/pull_images/pull_10.jpg' | prepend: site.baseurl }})
+![image10]({{ 'pull_10.jpg' | prepend: site.pull_img }})
 
 A warning pops up. Just click the button.
 
-![image11]({{ '/assets/images/docs/development/pull_images/pull_11.jpg' | prepend: site.baseurl }})
+![image11]({{ 'pull_11.jpg' | prepend: site.pull_img }})
 
 ----
 
-# Clone Marlin to GitHub Desktop
+### Clone Marlin to GitHub Desktop
 
-Click on **<> Code**
+Click the "**<> Code**" tab
 
-![image12]({{ '/assets/images/docs/development/pull_images/pull_12.jpg' | prepend: site.baseurl }})
+![image12]({{ 'pull_12.jpg' | prepend: site.pull_img }})
 
 Click the **Clone or download** button
 
-![image13]({{ '/assets/images/docs/development/pull_images/pull_13.jpg' | prepend: site.baseurl }})
+![image13]({{ 'pull_13.jpg' | prepend: site.pull_img }})
 
 Select **Open in Desktop**
 
-![image14]({{ '/assets/images/docs/development/pull_images/pull_14.jpg' | prepend: site.baseurl }})
+![image14]({{ 'pull_14.jpg' | prepend: site.pull_img }})
 
 A security popup may appear. Just click the **Allow** button
 
-![image15]({{ '/assets/images/docs/development/pull_images/pull_15.jpg' | prepend: site.baseurl }})
+![image15]({{ 'pull_15.jpg' | prepend: site.pull_img }})
 
 Click **OK** to save it in the default location.
 
-![image16]({{ '/assets/images/docs/development/pull_images/pull_16.jpg' | prepend: site.baseurl }})
+![image16]({{ 'pull_16.jpg' | prepend: site.pull_img }})
 
 A progress bar appears.
 
-![image17]({{ '/assets/images/docs/development/pull_images/pull_17.jpg' | prepend: site.baseurl }})
+![image17]({{ 'pull_17.jpg' | prepend: site.pull_img }})
 
-# Using GitHub Desktop...
+### Using GitHub Desktop...
 
 You now have a "working copy" of Marlin. Note that only the branch you selected on your GitHub page may have been downloaded. Check that the desired branch was downloaded by clicking on **Changes**.
 
-![image18]({{ '/assets/images/docs/development/pull_images/pull_18.jpg' | prepend: site.baseurl }})
+![image18]({{ 'pull_18.jpg' | prepend: site.pull_img }})
 
 Click **Open this repository**.
 
-![image19]({{ '/assets/images/docs/development/pull_images/pull_19.jpg' | prepend: site.baseurl }})
+![image19]({{ 'pull_19.jpg' | prepend: site.pull_img }})
 
 A Windows Explorer window appears. Open the `Marlin` directory and then open the `Version.h` file.
 
-![image20]({{ '/assets/images/docs/development/pull_images/pull_20.jpg' | prepend: site.baseurl }})
+![image20]({{ 'pull_20.jpg' | prepend: site.pull_img }})
 
 Scroll down until the `#define SHORT_BUILD_VERSION` is visible. The text should be "`bugfix-2.0.x`."
 
-![image21]({{ '/assets/images/docs/development/pull_images/pull_21.jpg' | prepend: site.baseurl }})
+![image21]({{ 'pull_21.jpg' | prepend: site.pull_img }})
 
 If you downloaded the wrong branch, go back to the GitHub website, select the correct branch, and choose "**Open in Desktop**" again.
 
 ----
 
-# Make a feature branch
+### Make a feature branch
 
 It's a good idea to keep an unaltered copy of the `bugfix-2.0.x` branch that you keep in sync with the main repository. Before editing any code you should make a copy of `bugfix-2.0.x` and give the new branch a descriptive name.
 
-![image22]({{ '/assets/images/docs/development/pull_images/pull_22.jpg' | prepend: site.baseurl }})
+![image22]({{ 'pull_22.jpg' | prepend: site.pull_img }})
 
 Make a new branch via Desktop by clicking this icon:
 
-![image23]({{ '/assets/images/docs/development/pull_images/pull_23.jpg' | prepend: site.baseurl }})
+![image23]({{ 'pull_23.jpg' | prepend: site.pull_img }})
 
 Type in the branch name and click **Create new branch**.
 
-![image24]({{ '/assets/images/docs/development/pull_images/pull_24.jpg' | prepend: site.baseurl }})
+![image24]({{ 'pull_24.jpg' | prepend: site.pull_img }})
 
 The new branch is automatically selected. Click the **Publish** button to upload the branch to your fork on GitHub. (The button changes to **Sync** once the branch has been published.)
 
-![image25]({{ '/assets/images/docs/development/pull_images/pull_25.jpg' | prepend: site.baseurl }})
+![image25]({{ 'pull_25.jpg' | prepend: site.pull_img }})
 
 ----
 
-# Make Changes and Test
+### Make Changes and Test
 
 You can freely edit code files, configurations, etc., in your working copy. You can make new branches in your working copy to experiment, then throw them away. Nothing counts until you publish and sync your changes. And thanks to the magic of `git` you can always go back to earlier points in time.
 
 In the main view, GitHub Desktop shows all your uncommitted changes in a list. You can click on each item to see the specific changes in the right pane. Previous commits are shown under the "History" tab.
 
-# Commit to your Working Copy
+### Commit to your Working Copy
 
 Use GitHub Desktop to "commit" the changes you want to keep (to your working copy). A commit stores your changes and provides a "bookmark" (Commit ID) for the point in time when the changes were committed. The "commit message" summarizes why the changes were made.
 
 Tick the checkboxes on all the files that you want to commit. (Note that you can also "cherry-pick" selected changes by clicking in the margin of the second pane.)
 
-![image26]({{ '/assets/images/docs/development/pull_images/pull_26.jpg' | prepend: site.baseurl }})
+![image26]({{ 'pull_26.jpg' | prepend: site.pull_img }})
 
 Fill in the **Summary** and **Description**, then click **Commit**. Voila! The selected changes are packaged and ready for submission.
 
-![image27]({{ '/assets/images/docs/development/pull_images/pull_27.jpg' | prepend: site.baseurl }})
+![image27]({{ 'pull_27.jpg' | prepend: site.pull_img }})
 
 Once everything is committed, publish to your GitHub account by clicking the `Sync` button:
 
-![image28]({{ '/assets/images/docs/development/pull_images/pull_28.jpg' | prepend: site.baseurl }})
+![image28]({{ 'pull_28.jpg' | prepend: site.pull_img }})
 
 ----
 
-# Submit code with a Pull Request
+### Submit code with a Pull Request
 
 Before submitting the Pull Request:
 
 - Please review the [Marlin project guidelines](https://github.com/MarlinFirmware/Marlin/wiki/DNE-Contributing).
 - Make sure you've compiled and done some sanity tests on the code.
 
-## Submit from GitHub Desktop
+#### Submit from GitHub Desktop
 
 You can use GitHub Desktop to submit a Pull Request by using the **Pull Request** button, but you must be careful to _**specifically target the `MarlinFirmware/bugfix-2.0.x` branch!**_
 
-## Submit from the GitHub website
+#### Submit from the GitHub website
 
 Return to your fork's page on GitHub, select your updated branch, and click the **New Pull Request** button.
 
-![image29]({{ '/assets/images/docs/development/pull_images/pull_29.jpg' | prepend: site.baseurl }})
+![image29]({{ 'pull_29.jpg' | prepend: site.pull_img }})
 
 GitHub should automatically detect the target for the Pull Request as `bugfix-2.0.x` in the main `MarlinFirmware` project. However, you may instead see a page like the one below. In that case, click the **Compare across forks** button:
 
-![image30]({{ '/assets/images/docs/development/pull_images/pull_30.jpg' | prepend: site.baseurl }})
+![image30]({{ 'pull_30.jpg' | prepend: site.pull_img }})
 
 To target the `bugfix-2.0.x` branch in the main Marlin repository, click the **base** button and select `bugfix-2.0.x`. (For new features you should instead use `dev-2.1.x`.)
 
-![image31]({{ '/assets/images/docs/development/pull_images/pull_31.jpg' | prepend: site.baseurl }})
+![image31]({{ 'pull_31.jpg' | prepend: site.pull_img }})
 
 Click **compare across forks** (again).
 
-![image32]({{ '/assets/images/docs/development/pull_images/pull_32.jpg' | prepend: site.baseurl }})
+![image32]({{ 'pull_32.jpg' | prepend: site.pull_img }})
 
 Click on the **head fork:** button and then click on **your repository**.
 
-![image33]({{ '/assets/images/docs/development/pull_images/pull_33.jpg' | prepend: site.baseurl }})
+![image33]({{ 'pull_33.jpg' | prepend: site.pull_img }})
 
 Click on the **compare** button and then click the **name of the branch** you created with Desktop.
 
-![image34]({{ '/assets/images/docs/development/pull_images/pull_34.jpg' | prepend: site.baseurl }})
+![image34]({{ 'pull_34.jpg' | prepend: site.pull_img }})
 
 If you have only a single commit, its text will be copied into the Pull Request. Edit as needed to provide all the relevant details. When your description is complete click the **Create Pull Request** button.
 
-![image35]({{ '/assets/images/docs/development/pull_images/pull_35.jpg' | prepend: site.baseurl }})
+![image35]({{ 'pull_35.jpg' | prepend: site.pull_img }})
 
 Here's the Pull Request that was just created.
 
-![image36]({{ '/assets/images/docs/development/pull_images/pull_36.jpg' | prepend: site.baseurl }})
+![image36]({{ 'pull_36.jpg' | prepend: site.pull_img }})
 
 If you have an open issue associated with your Pull Request, include that issue's number in your Pull Request description (e.g., "`#1536`"), and a link to the Pull Request will automatically appear on the issue's page. The same goes for individual commit descriptions.
 
-# Updating the PR
+### Updating the PR
 
 Typically you'll get requests to correct, improve and add features to your code.
 The top level steps of doing this are:
@@ -229,22 +223,22 @@ The top level steps of doing this are:
 5. Resolve "All checks have failed" issues
 6. Make the PR pretty & sync to main repository ( may need to be done multiple times)
 
-## Open your branch in Windows Explorer
+#### Open your branch in Windows Explorer
 
 You've done most of this before when you created your branch.
 
 Open Desktop, select your repository (on the left side), select your branch (top left), click on **Changes** (top middle) and then click on **open this repository** (right middle)
 
-![image37]({{ '/assets/images/docs/development/pull_images/pull_37.jpg' | prepend: site.baseurl }})
+![image37]({{ 'pull_37.jpg' | prepend: site.pull_img }})
 A Windows Explorer window will popup. Copy the `Marlin` directory to your work area. Close the Windows Explorer window and close Desktop.
 
-![image38]({{ '/assets/images/docs/development/pull_images/pull_38.jpg' | prepend: site.baseurl }})
+![image38]({{ 'pull_38.jpg' | prepend: site.pull_img }})
 
-## Edit and Test
+#### Edit and Test
 
 As before, do all your work & testing in your local copy.
 
-## Move the code to the PR (commit & sync your code)
+#### Move the code to the PR (commit & sync your code)
 
 Open Desktop and the Windows Explorer window as before
 
@@ -258,29 +252,29 @@ Most of the time you've made changes to the Configuration.h and Configuration_ad
 * Don't copy them into the GitHub directory
 * Don't include them in the commit
 
-## Repeat the above as necessary
+#### Repeat the above as necessary
 
-## Resolve "All checks have failed" issues
+#### Resolve "All checks have failed" issues
 
 When you create a PR (and every time you commit new code) GitHub uses the "Travis CI" service to run several tests on the code by enabling various combinations of options and compiling for various target platforms. Any failed tests need to be resolved before the PR can be merged into the main Marlin repository.
 
 Within 30-90 seconds of doing the sync the PR will have a section that looks like this:
 
-![image39]({{ '/assets/images/docs/development/pull_images/pull_39.jpg' | prepend: site.baseurl }})
+![image39]({{ 'pull_39.jpg' | prepend: site.pull_img }})
 
 Several minutes later the PR will show this status if there are no problems:
 
-![image40]({{ '/assets/images/docs/development/pull_images/pull_40.jpg' | prepend: site.baseurl }})
+![image40]({{ 'pull_40.jpg' | prepend: site.pull_img }})
 
 If you see a "failed" status instead then something needs to be fixed. You don't have to fix the PR immediately but it must be fixed before it can be merged into the main Marlin repository.
 
 To see the errors click on **Details**
 
-![image41]({{ '/assets/images/docs/development/pull_images/pull_41.jpg' | prepend: site.baseurl }})
+![image41]({{ 'pull_41.jpg' | prepend: site.pull_img }})
 
 This will bring up the **Travis** log. Green means that the test has passed. Red means there's a problem.
 
-![image42]({{ '/assets/images/docs/development/pull_images/pull_42.jpg' | prepend: site.baseurl }})
+![image42]({{ 'pull_42.jpg' | prepend: site.pull_img }})
 
 It's recommended that you include the fixes in the next code you commit.
 
@@ -288,7 +282,7 @@ The errors you're looking at come from the compiler. Resolve just like you do wh
 
 Unfortunately the Travis log does not include the options that were enabled when the errors were found. That makes it harder to reproduce the problem locally.
 
-## Organize and Sync the PR
+#### Organize and Sync the PR
 
 If you've made a lot of small fix-up commits it can be hard to see the combined result. So before a PR is merged it's helpful to reduce your commits down to a manageable number and get them organized. They can even be combined into a single commit.
 
@@ -300,25 +294,25 @@ Open **Desktop** and open the **Windows Explorer** window. Make a copy of the di
 
 Next, right-click on the repository to open the popup menu. Select **Open in Git Shell**.
 
-![image43]({{ '/assets/images/docs/development/pull_images/pull_43.jpg' | prepend: site.baseurl }})
+![image43]({{ 'pull_43.jpg' | prepend: site.pull_img }})
 
 The Git Shell will open.
 
-![image44]({{ '/assets/images/docs/development/pull_images/pull_44.jpg' | prepend: site.baseurl }})
+![image44]({{ 'pull_44.jpg' | prepend: site.pull_img }})
 
 Type `git remote –v` into the Git Shell and press return to execute the command.
 
-![image45]({{ '/assets/images/docs/development/pull_images/pull_45.jpg' | prepend: site.baseurl }})
+![image45]({{ 'pull_45.jpg' | prepend: site.pull_img }})
 
 If the `upstream` remote is missing then type `git remote add upstream https://github.com/MarlinFirmware/Marlin.git` followed by return.
 
 Next type `git fetch upstream` followed by `git rebase upstream/bugfix-2.0.x`. If the rebase succeeds the output will look like this:
 
-![image46]({{ '/assets/images/docs/development/pull_images/pull_46.jpg' | prepend: site.baseurl }})
+![image46]({{ 'pull_46.jpg' | prepend: site.pull_img }})
 
 If Git can't automatically merge the code then it'll look like this.
 
-![image47]({{ '/assets/images/docs/development/pull_images/pull_47.jpg' | prepend: site.baseurl }})
+![image47]({{ 'pull_47.jpg' | prepend: site.pull_img }})
 
 This tells you the number of files that need to be examined and the names of the files. In this example there's only one file needing attention.
 
@@ -328,13 +322,13 @@ Open the modified file (the file name didn't change but the timestamp did) and s
 
 Resolving conclicts is a bit of an art, and it may take some practice to start getting a feel for what's going on. Often it may be helpful to consult the copy you made just before opening the Git Shell. It may help to keep the latest `bugfix-2.0.x` on GitHub open in the browser as a reference on what to keep and what to change.
 
-![image48]({{ '/assets/images/docs/development/pull_images/pull_48.jpg' | prepend: site.baseurl }})
+![image48]({{ 'pull_48.jpg' | prepend: site.pull_img }})
 
 Save the file.
 
 Go to Git Shell and enter the command `git rebase --continue`. This will tell `git` to keep your changes and continue with the rebase.
 
-![image49]({{ '/assets/images/docs/development/pull_images/pull_49.jpg' | prepend: site.baseurl }})
+![image49]({{ 'pull_49.jpg' | prepend: site.pull_img }})
 
 Repeat the **edit-save-add-commit** cycle until all the files have been committed.
 
@@ -346,25 +340,25 @@ The next step is to "squash" the commits using an interactive rebase. This allow
 
 Assuming there are no conflicts, an editor window should open with a list of your commits. Each line begins with the action you want performed, which is `pick` by default. You may see extra commits if the main code base has been updated, so make sure the commits are all yours. Change the action to `drop` for any commits you don't want to keep. Your first commit should be left as `pick` (or `reword` if you want to change the commit message). Set the action to `fixup` (or just `f`) for any commits you want to combine with the `pick` commit that precedes it.
 
-![image50]({{ '/assets/images/docs/development/pull_images/pull_50.jpg' | prepend: site.baseurl }})
+![image50]({{ 'pull_50.jpg' | prepend: site.pull_img }})
 
 After making all necessary changes, save the file.
 
-![image51]({{ '/assets/images/docs/development/pull_images/pull_51.jpg' | prepend: site.baseurl }})
+![image51]({{ 'pull_51.jpg' | prepend: site.pull_img }})
 
 In a few seconds a second editor window will pop up. Here you can provide a description for the squashed commit.
 
 All lines _without_ a leading `#` will be included the description. Edit the description to itemize the combined changes, then save and close the file.
 
-![image52]({{ '/assets/images/docs/development/pull_images/pull_52.jpg' | prepend: site.baseurl }})
+![image52]({{ 'pull_52.jpg' | prepend: site.pull_img }})
 
 After saving and closing the editor, the Git Shell will show this:
 
-![image53]({{ '/assets/images/docs/development/pull_images/pull_53.jpg' | prepend: site.baseurl }})
+![image53]({{ 'pull_53.jpg' | prepend: site.pull_img }})
 
 In Git Shell type `git push –f` to push the changes to your fork on Github. Check the output to make sure it succeeds.
 
-![image54]({{ '/assets/images/docs/development/pull_images/pull_54.jpg' | prepend: site.baseurl }})
+![image54]({{ 'pull_54.jpg' | prepend: site.pull_img }})
 
 You can now close Git Shell.
 

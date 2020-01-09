@@ -2,7 +2,7 @@ module Jekyll
   module IndexifyFilter
     def indexify(input)
       re0 = /<[^>]*>/
-      re1 = /(\b(a[mnst]?|[a-z][a-z]|a(ll|nd|re)|but|can(\'t|not)?|d(id|oes)(n\'t)?|end|for|it\'?s|odd|the|use[ds]?|was|wh[oy]|your?|even|from|many|more|much|some|th[ae]n|that|the[my]|this|were|what|when|will|other|th[eo]se|the(ir|re)|users?|wh(ere|ich)|people|(al)?though)\b)|(\s+)/
+      re1 = /(\b([a-z]{,2}|a(ll|nd|re(n\'t)?)|but|can(\'t|not)?|d(id|oes)(n\'t)?|end|for|ha(d|s|ve)(n\'t)?|it\'?s|odd|use[ds]?|even|from|many|more|much|some|this|tha[nt]|th[eo]se|the([mny]|ir|re|y\'re)?|was|were(n\'t)?|wh(at|en|ere|ich|o|y)|will|won\'t|other|users?|people|(al)?though|your?)\b)|(\s+)/
       re2 = /!\[[^\]]+\]\([^\)]+\)\s*(\{[^\}]+\})?/
       re3 = /\[([^\]]+)\]\([^\)]+\)\s*(\{[^\}]+\})?/
       re4 = /\\q/

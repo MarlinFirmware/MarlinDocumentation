@@ -42,7 +42,7 @@ The advantage with using the nozzle to probe the bed is that it garantees that t
 
 ## Bi-Linear
 
-Using a [probe](docs/configuration/probes.), the process of leveling is automated and produces very accurate results. Bilinear Interpolation is then applied to the entire bed to compensate for any irregularities.
+Using a [probe](/docs/configuration/probes.html), the process of leveling is automated and produces very accurate results. Bilinear Interpolation is then applied to the entire bed to compensate for any irregularities.
 
 ![Bi - Linear](/assets/images/features/bed leveling/BL-bi-linear.png)
 
