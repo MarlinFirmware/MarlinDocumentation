@@ -9,7 +9,7 @@ name: Jekyll Deploy
 on:
   push:
     branches:
-    - deploy
+    - master
 
 jobs:
   deploy_site:
@@ -19,6 +19,8 @@ jobs:
         with:
           ruby-version: '>=2.4.4'
       - uses: actions/checkout@v1
+        with:
+          ref: master
       - name: Build & Deploy to GitHub Pages
         uses: BryanSchuetz/jekyll-deploy-gh-pages@master
         env: 
