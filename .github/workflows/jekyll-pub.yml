@@ -8,7 +8,7 @@ name: Jekyll Deploy
 
 on:
   push:
-    branch:
+    branches:
     - deploy
 
 jobs:
