@@ -1,5 +1,11 @@
 #daynite { visibility: hidden; margin: 8px 0 0 4px; }
 
+#discord-frame { float: right; margin-left: 1em; }
+.home-discord { width: 350px; margin: 0 auto; text-align: center; }
+
+#marlin-carousel { background-color: #F8F8F9; .item { height: 440px; img { padding: 50px 0; } } }
+.carousel-inner { max-width: 1500px; margin: 0 auto; }
+
 h1, h2, h3, h4, h5, h6 {
   font-family: $font-family-heading;
   margin-top: 0.2em;
@@ -10,10 +16,15 @@ div.highlight { margin-bottom: 25px; }
 
 .container {
   h2, h3, h4, h5, h6 {
+    padding: 4px;
+    border-top-left-radius: 0.25em;
+    border-bottom-left-radius: 0.25em;
+  }
+  h3, h4, h5, h6 {
+    margin-top: 1em;
+    margin-left: 0.25em;
     background: #EEE;
     background: linear-gradient(90deg, #E4E4E4FF, #E4E4E4FF, #EEEEEE00);
-    padding: 4px;
-    margin-top: 1em;
   }
 }
 
@@ -520,7 +531,7 @@ div.panel.panel-info, div.panel.panel-warning {
 */
 
 body.night[role=document] {
-  h2, h3, h4, h5, h6 {
+  h3, h4, h5, h6 {
     background: #000;
     background: linear-gradient(90deg, #444, #222, #111);
   }
@@ -555,7 +566,7 @@ body.night {
     h1 { color: #DDF; }
     }
   #tagline { color: cadetblue; }
-  .custom-tile { color: #EEE; background-color: #111; }
+  #marlin-carousel, .custom-tile { color: #EEE; background-color: #111; }
   .custom-tile-image-wrapper { border-color: white; }
   .custom-tile-image-legend {
     color: white;

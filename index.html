@@ -5,29 +5,6 @@ description:  'Marlin Firmware - A really good 3D printer driver.'
 category:     [ default ]
 ---
 
-<div id="carousel-generic" class="carousel slide" data-ride="carousel">
-  <div class="carousel-inner">
-    <div class="item active">
-      <img src="{{ '/assets/images/carousel/marlin-outrun-slide.jpg' | prepend: site.baseurl }}" alt="Marlin - Outrun" />
-    </div>
-    <div class="item">
-      <img src="{{ '/assets/images/carousel/what_is_marlin_slide.png' | prepend: site.baseurl }}" alt="What is Marlin?" />
-    </div>
-    <div class="item">
-      <img src="{{ '/assets/images/carousel/carousel-code.jpg' | prepend: site.baseurl }}" alt="The codes" />
-    </div>
-    <div class="item">
-      <img src="{{ '/assets/images/carousel/banner-01.jpg' | prepend: site.baseurl }}" alt="Marlin in action" />
-    </div>
-    <div class="item">
-      <img src="{{ '/assets/images/carousel/example-450.jpg' | prepend: site.baseurl }}" alt="Printing with Marlin" />
-    </div>
-    <div class="item">
-      <img src="{{ '/assets/images/carousel/controller.jpg' | prepend: site.baseurl }}" alt="LCD Menu Controls" />
-    </div>
-  </div>
-</div>
-
 <div class="custom-tagline">
   <div class="container">
     <div class="row">
@@ -38,32 +15,69 @@ category:     [ default ]
         <p>As an <a href="https://opensource.org/">Open Source</a> project hosted on <a href="https://github.com/">Github</a>, Marlin is owned and maintained by the maker community. <a href="/docs/development/contributing.html">Learn how you can contribute!</a></p>
       </div>
       <div class="col-sm-12 col-md-5 custom-tagline-btn">
-        <p><a class="btn btn-success btn-block btn-lg" href="{{ '/docs/basics/introduction.html' | prepend: site.baseurl }}" role="button">
+        <p><a class="btn btn-success btn-block btn-lg" href="{{ '/docs/basics/introduction.html' }}" role="button">
           <em class="fa fa-book fa-1x" aria-hidden="true"></em>&nbsp; Learn more</a></p>
-        <p><a class="btn btn-info btn-block btn-lg" href="{{ '/meta/download/' | prepend: site.baseurl }}" role="button">
+        <p><a class="btn btn-primary btn-block btn-lg" href="{{ '/docs/development/contributing.html' }}" role="button">
+          <em class="fa fa-user fa-1x" aria-hidden="true"></em>&nbsp; Contribute</a></p>
+        <p><a class="btn btn-info btn-block btn-lg" href="{{ '/meta/download/' }}" role="button">
           <em class="fa fa-download fa-1x" aria-hidden="true"></em>&nbsp; Download</a></p>
       </div>
     </div>
   </div>
 </div>
 
-<div class="custom-tile">
-  <div class="container">
-    <div class="row">
-{% for feature in site.data.features %}
-        <div class="col-sm-4">
-          <div class="custom-tile-image-wrapper">
-            <a href="{{ feature.link | prepend: site.baseurl }}">
-            <div class="custom-tile-image-block" style="background: url({{ '/assets/images/features/' | append: feature.img | prepend: site.baseurl }}) no-repeat center top; background-size: cover;">
-              <div class="custom-tile-image-legend">
-                {{ feature.title }}
-                <em class="fa fa-arrow-circle-right fa-1x" aria-hidden="true"></em>
+{% capture tiles %}
+  <div class="custom-tile">
+    <div class="container">
+      <div class="row">
+        {% for feature in site.data.features %}
+          <div class="col-sm-4">
+            <div class="custom-tile-image-wrapper">
+              <a href="{{ feature.link }}">
+              <div class="custom-tile-image-block" style="background: url({{ '/assets/images/features/' | append: feature.img }}) no-repeat center top; background-size: cover;">
+                <div class="custom-tile-image-legend">
+                  {{ feature.title }}
+                  <em class="fa fa-arrow-circle-right fa-1x" aria-hidden="true"></em>
+                </div>
               </div>
+              </a>
             </div>
-            </a>
           </div>
-        </div>
-{% endfor %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% endcapture %}
+
+{% capture discord %}
+  <div class="home-discord">
+    <h3>A helpful user community!</h3>
+    <iframe src="https://discordapp.com/widget?id=461605380783472640&theme=light" width="350" height="340" allowtransparency="true" frameborder="0"></iframe>
+  </div>
+{% endcapture %}
+
+<div id="marlin-carousel" class="carousel slide" data-ride="carousel">
+  <div class="carousel-inner">
+    <div class="item active">
+      <img src="/assets/images/carousel/marlin-outrun-slide.jpg" alt="Marlin - Outrun" />
+    </div>
+    <div class="item">{{ tiles }}</div>
+    <div class="item">
+      <img src="/assets/images/carousel/what_is_marlin_slide.png" alt="What is Marlin?" />
+    </div>
+    <div class="item">{{ discord }}</div>
+    <div class="item">
+      <img src="/assets/images/carousel/carousel-code.jpg" alt="The codes" />
+    </div>
+    <div class="item">{{ tiles }}</div>
+    <div class="item">
+      <img src="/assets/images/carousel/banner-01.jpg" alt="Marlin in action" />
+    </div>
+    <div class="item">
+      <img src="/assets/images/carousel/example-450.jpg" alt="Printing with Marlin" />
+    </div>
+    <div class="item">
+      <img src="/assets/images/carousel/controller.jpg" alt="LCD Menu Controls" />
     </div>
   </div>
 </div>
