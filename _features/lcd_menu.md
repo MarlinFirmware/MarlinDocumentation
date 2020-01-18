@@ -11,9 +11,9 @@ category: [ features, lcd ]
 This page is a work in progress, based on Marlin 1.1.2.
 {% endalert %}
 
-In addition to a serial/usb/host interface, Marlin also includes a comprehensive user interface designed for inexpensive character and graphical LCD controllers. Rotate a knob or use buttons to navigate menu items, edit values, and make other adjustments. Click the knob or press a button to choose menu items, exit adjustment screens, and perform other actions.
+In addition to a serial/usb/host interface, Marlin also includes a menu-based user interface for inexpensive character and graphical LCD controllers. Rotate a knob or use buttons to navigate menu items, edit values, and make other adjustments. Click the knob or press a button to choose menu items, exit adjustment screens, and perform other actions.
 
-_Note: In low-level contexts we refer to the first extruder as `E0`, the second as `E1`, etc. However, at "user level" in the LCD menus, we refer to the first extruder as `E1`, the second as `E2`, etc. (This may change in future depending on user-preference.)_
+_Note: In low-level contexts we refer to the first extruder as `E0`, the second as `E1`, etc. However, at "user level" in the LCD menus, we refer to the first extruder as `E1`, the second as `E2`, etc. (Marlin 2.0 includes an option to show the first extruder as `E0`.)_
 
 ----
 
