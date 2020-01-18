@@ -67,7 +67,7 @@ While probe calibration is active bed temperature is held constant (e.g. 110°C)
 After running `G76` or `M871` the compensation data is only stored in RAM. You have to use `M500` to save the values to EEPROM, otherwise the data will be lost when you restart (or reconnect) the printer. Use `M501` to reload your last-saved compensation values from EEPROM. This is done automatically on reboot.
 
 # Example values
-Following are example values calibrated using a genuine MK52 and P.I.N.D.A V2 probe. Values for probe above 50°C were extrapolated. Note: it is possible to 
+Following are example values calibrated using a genuine MK52 and P.I.N.D.A V2 probe. Values for probe above 50°C were extrapolated. Note: you can always tidy up your compensation curve manually using the `M871` command.
 
 ## Probe
 |  °C   |  30°C |  35°C |  40°C |  45°C |  50°C |  55°C |  60°C |  65°C |  70°C |  75°C |  80°C |
