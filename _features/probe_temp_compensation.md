@@ -77,11 +77,13 @@ The `G76` or `M871` commands only store their results in SRAM, so you must save 
 These values were calibrated using a genuine MK52 and P.I.N.D.A V2 probe. The values for the probe above 50°C are extrapolated. Note that you can always tidy up your compensation curve manually using the `M871` command.
 
 ### Probe
-|  °C   |  30°C |  35°C |  40°C |  45°C |  50°C |  55°C |  60°C |  65°C |  70°C |  75°C |  80°C |
-| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-|  um   |   0   |  -5   |  -27  |  -46  |  -57  |  -63  |  -80  |  -98  | -115  | -133  | -150  |
+
+|°C|30°C|35°C|40°C|45°C|50°C|55°C|60°C|65°C|70°C|75°C|80°C|
+|-|-|-|-|-|-|-|-|-|-|-|-|
+|um|0|-5|-27|-46|-57|-63|-80|-98|-115|-133|-150|
 
 ### Bed
-|  °C   |  60°C |  65°C |  70°C |  75°C |  80°C |  85°C |  90°C |  95°C | 100°C | 105°C | 110°C |
-| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-|  um   |   0   |   3   |   11  |   27  |   30  |   35  |   37  |   37  |   39  |   50  |   55  |
+
+|°C|60°C|65°C|70°C|75°C|80°C|85°C|90°C|95°C|100°C|105°C|110°C|
+|-|-|-|-|-|-|-|-|-|-|-|-|
+|um|0|3|11|27|30|35|37|37|39|50|55|
