@@ -31,13 +31,13 @@
       var domains  = [ 'marlinfw.org', 'localhost', '127.0.0.1' ];
       var pathname = location.pathname.replace(/^\/MarlinDocumentation/, '')
       if (domains.indexOf(window.location.hostname) == -1)
-          window.top.location.href = 'http://marlinfw.org' + pathname;
+        window.top.location.href = 'https://marlinfw.org' + pathname;
 
       /**
        * Another ugly workaround trying to improve UX reported by #35
        */
-      if (location.protocol != 'http:')
-        location.href = 'http:' + window.location.href.substring(window.location.protocol.length);
+      if (location.protocol != 'https:' && window.location.hostname == 'marlinfw.org')
+        location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
 
       /**
        * Improves overall speed by loading javascript and css resources in parallel

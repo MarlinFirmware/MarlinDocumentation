@@ -20,7 +20,7 @@ Endstops fulfill two important functions in a 3D printer: Reference system for t
 ## Reference for the axes system
 After powering up a 3D printer the printer's controller board does not know at which position its axes are. Marlin indicates this by blinking question-marks in place of X, Y and Z on the LCD screen (v1.1.8 and older) or blinking '?' in place of the coordinates besides X,Y and Z (Marlin v1.1.9 / v2.0.0 and newer).
 
-This means the system needs first to establish its starting point of the physical (machine) coordinate system, a process called *Homing*. Homing can be initiated either via the [G28 G-code](http://marlinfw.org/docs/gcode/G028.html) or via the LCD controller. 
+This means the system needs first to establish its starting point of the physical (machine) coordinate system, a process called *Homing*. Homing can be initiated either via the [G28 G-code](/docs/gcode/G028.html) or via the LCD controller. 
 
 ![real](/assets/images/docs/hardware/endstops/not_homed.jpg)
 {: style="text-align: center;"}
@@ -65,12 +65,12 @@ Probes can act like an endstop for the minimum Z-axis. While the typical endstop
 Illustration 3: Common probe types: Inductive (left), solenoid touch probe (right)
 {: style="color:gray; font-size: 80%; text-align: center;"}
 
-Some aspects of probe configuration are considered in this endstop introduction. Further reading is provided in the Chapter [Probes Configuration](http://marlinfw.org/docs/configuration/probes.html), [Auto Bed Leveling](http://marlinfw.org/docs/features/auto_bed_leveling.html) and [Unified Bed Leveling](http://marlinfw.org/docs/features/unified_bed_leveling.html).
+Some aspects of probe configuration are considered in this endstop introduction. Further reading is provided in the Chapter [Probes Configuration](/docs/configuration/probes.html), [Auto Bed Leveling](/docs/features/auto_bed_leveling.html) and [Unified Bed Leveling](/docs/features/unified_bed_leveling.html).
 
 ## Software Endstops
 Typically 3D printers are only equipped with hardware endstops on one side of each axis (Minimum or Maximum of the respective axis). As discussed above this is used to determine the starting point (origin) of the machine coordinate system. 
 
-In order to also protect the other side of the axes software endstops should be defined in the firmware via the `#define MAX_SOFTWARE_ENDSTOPS` /  `#define MIN_SOFTWARE_ENDSTOPS` directive. This then uses the value from `#define [XYZ]_MAX_POS` / `#define [XYZ]_MIN_POS` to determine the maximum distance between the physical endstop and the software commanded stop of the axis. Software endstops can be (de-)activated via the [M211 G-code](http://marlinfw.org/docs/gcode/M211.html).
+In order to also protect the other side of the axes software endstops should be defined in the firmware via the `#define MAX_SOFTWARE_ENDSTOPS` /  `#define MIN_SOFTWARE_ENDSTOPS` directive. This then uses the value from `#define [XYZ]_MAX_POS` / `#define [XYZ]_MIN_POS` to determine the maximum distance between the physical endstop and the software commanded stop of the axis. Software endstops can be (de-)activated via the [M211 G-code](/docs/gcode/M211.html).
  
  <br>
 
@@ -82,9 +82,9 @@ and build upwards from there. The result of homing the z-axis should thus place 
 build surface at the z=0 plane. After homing in z, the hardware
 z endstop is deactivated (unless you have set 
 `ENDSTOPS_ALWAYS_ON_DEFAULT` in configuration_adv.h, which can be overridden by
-[M120](http://marlinfw.org/docs/gcode/M120.html), [M121](http://marlinfw.org/docs/gcode/M120.html)), but to protect the hardware a software endstop is
+[M120](/docs/gcode/M120.html), [M121](/docs/gcode/M120.html)), but to protect the hardware a software endstop is
 activated (which in turn can be overridden by
-[M211](http://marlinfw.org/docs/gcode/M211.html) S0). This software
+[M211](/docs/gcode/M211.html) S0). This software
 endstop is located at `Z_MIN_POS` (defined in configuration.h) .
 This is normally at z=0 at the nominal location of the bed. Note that
 when using bed-leveling, this software endstop is applied to the
@@ -114,7 +114,7 @@ properly reference the coordinate system to the nozzle position. To measure
 this see [here](#measure_offsets).  For a mechanical probe like a BL-Touch, this offset
 is geometrically fixed.  For a remote sensing probe (e. g. inductive
 or capacitive), the offset might vary with bed material. You can tweak
-it using [M851](http://marlinfw.org/docs/gcode/M851.html).
+it using [M851](/docs/gcode/M851.html).
 
 ![Fig. 1](/assets/images/docs/hardware/endstops/bltouchwithbltouch.png)
 {: style="text-align: center;"}
