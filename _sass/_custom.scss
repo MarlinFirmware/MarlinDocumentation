@@ -492,9 +492,8 @@ summary h3 { display: inline; }
   #search.container .overlay { width: 750px; }
   .navbar-nav>li>a { padding-left: 4px; padding-right: 4px; }
   #daynite { display: none; }
-  @media (min-width: 768px)
-  .navbar-nav {
-      margin: 0 0 0 10px;
+  @media (min-width: 768px) {
+    .navbar-nav { margin: 0 0 0 10px; }
   }
 }
 @media (min-width: $screen-md-min) {
@@ -542,7 +541,7 @@ body.night[role=document] {
 }
 
 body.night {
-  background: #000; color: #b5b5b5;
+  background: #000; color: #B5B5B5;
   a { color: #8492fd; }
   .custom-tagline-btn a { color: #FFF; }
   code { color: #ACF; background-color: #226; }
