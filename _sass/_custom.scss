@@ -500,14 +500,14 @@ summary h3 { display: inline; }
   .container.gcode+footer { float: right; width: 66%; }
   li#searchbox input[type="search"] { width: 13em !important; }
   #search.container .overlay { width: 970px; }
-  .navbar-nav>li>a { padding-left: 12px; padding-right: 12px; }
+  .navbar-nav>li>a { padding-left: 10px; padding-right: 10px; }
   #daynite { display: inline; }
 }
 @media (min-width: $screen-lg-min) {
   .container.gcode+footer .container { margin-left: 35%; width: 75%; }
   li#searchbox input[type="search"] { width: 14em !important; }
   #search.container .overlay { width: 1170px; }
-  .navbar-nav>li>a { padding-left: 15px; padding-right: 15px; }
+  .navbar-nav>li>a { padding-left: 12px; padding-right: 12px; }
 }
 @media (max-width: $screen-sm-min) {
   li#searchbox input[type="search"] { width: 12em !important; }
@@ -680,10 +680,10 @@ body.night {
     h1 strong { color: #F80; }
     table { background: #404; }
     th, td { border-bottom-color: black; }
-    th { background: #606; }
-    th+th { border-left-color: #EEE; }
-    td+td { border-left-color: #FFF; }
-    strong em { color: #F90; }
+    th { background: #614; }
+    th+th { border-left-color: #202; }
+    td+td { border-left-color: #101; }
+    strong em { color: #FE4; }
     h2 { background: transparent; }
     }
   li#searchbox input[type="search"] {
@@ -709,16 +709,17 @@ body.night {
     }
   a.list-group-item, button.list-group-item { color: #CCC; }
   .highlighter-rouge code { color: #C99; background-color: #000; }
+  .navbar-default .navbar-nav>li>a { color: #77BFFF; }
   .navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:hover, .navbar-default .navbar-nav>.open>a:focus {
-    background-color: #777;
-    color: #FF0;
+    background-color: #3A633F;
+    color: #ACF;
     }
   .dropdown-menu {
-    background-color: #004;
-    color: white;
+    background-color: #255;
+    color: #A4AAFD;
     }
   .dropdown-menu>li>a { color: #A4AAFD; }
-  .dropdown-menu>li>a:hover, .dropdown-menu>li>a:active { color: #000; }
+  .dropdown-menu>li>a:hover, .dropdown-menu>li>a:active { color: #C6DBFB; background-color: #3A633F; }
 
   #bitmap-converter .left13 { color: #CCF; }
 
