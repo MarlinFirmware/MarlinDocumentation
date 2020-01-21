@@ -1,7 +1,7 @@
 #
 # jekyll-pub.yml
 #
-# Publish the Jekyll site whenever 'master' is pushed
+# Publish the Jekyll site whenever 'deploy' is pushed
 #
 
 name: Jekyll Deploy
@@ -9,7 +9,7 @@ name: Jekyll Deploy
 on:
   push:
     branches:
-    - master
+    - deploy
 
 jobs:
   deploy_site:
@@ -19,10 +19,10 @@ jobs:
         uses: actions/setup-ruby@v1
         with:
           ruby-version: '>=2.4.4'
-      - name: Check out 'master'
+      - name: Check out 'deploy'
         uses: actions/checkout@v1
         with:
-          ref: master
+          ref: deploy
       - name: Deploy Site
         uses: BryanSchuetz/jekyll-deploy-gh-pages@master
         env: 
