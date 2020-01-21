@@ -432,11 +432,6 @@ iframe.youtube {
   margin: 0.5em auto;
 }
 
-@media (min-width: $screen-md-min) {
-  .col-md-7 { width: 70%; }
-  .col-md-5 { width: 30%; }
-}
-
 hr { margin-top: 0; margin-bottom: 0; }
 
 summary h3 { display: inline; }
@@ -487,11 +482,20 @@ summary h3 { display: inline; }
 
 .navbar-brand { padding: 2px 0 0; }
 
+@media (min-width: $screen-md-min) {
+  .col-md-7 { width: 70%; }
+  .col-md-5 { width: 30%; }
+}
+
 // Keep footer from overlapping g-codes nav
 @media (min-width: $screen-sm-min) {
   #search.container .overlay { width: 750px; }
   .navbar-nav>li>a { padding-left: 4px; padding-right: 4px; }
   #daynite { display: none; }
+  @media (min-width: 768px)
+  .navbar-nav {
+      margin: 0 0 0 10px;
+  }
 }
 @media (min-width: $screen-md-min) {
   .container.gcode+footer { float: right; width: 66%; }
@@ -538,7 +542,7 @@ body.night[role=document] {
 }
 
 body.night {
-  background: #000; color: #FFFFF8;
+  background: #000; color: #b5b5b5;
   a { color: #8492fd; }
   .custom-tagline-btn a { color: #FFF; }
   code { color: #ACF; background-color: #226; }
