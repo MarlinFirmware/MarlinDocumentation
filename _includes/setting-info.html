@@ -13,7 +13,7 @@ This document has been marked `needs-review`. The following information may be o
 <div id="setting-header" class="row meta">
   <div class="col-lg-12">
     <p class="text-right pull-right visible-lg-block hidden-print small custom-pt25">
-      {% assign authors = setting.author | append: ',' | append: setting.contrib | replace: ' ', '' | split: ',' %}
+      {% assign authors = setting.author | append: ',' | append: setting.contrib | replace: " ","" | split: ',' %}
       {% if authors %}
         {% for author in authors %}
           <a href="https://github.com/{{ author }}" data-toggle="tooltip" data-placement="bottom" title="Visit {{ author }}'s profile on Github">{% avatar user=author size=30 %}</a>

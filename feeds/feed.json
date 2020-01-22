@@ -35,7 +35,7 @@ layout: null
   {% unless first %},{% endunless %}{
     "title":{{ feature.title | jsonify }},
     "content":{{ feature.content | indexify | jsonify }},
-    "link":"{{ site.baseurl }}{{ feature.url | replace: 'index.html', '' }}",
+    "link":"{{ site.baseurl }}{{ feature.url | replace: 'index.html','' }}",
     "excerpt":{{ feature.description | jsonify }},
     "class":"feat"
   }
@@ -48,7 +48,7 @@ layout: null
   {% unless first %},{% endunless %}{
     "title":{{ hw.title | jsonify }},
     "content":{{ hw.content | indexify | jsonify }},
-    "link":"{{ site.baseurl }}{{ hw.url | replace: 'index.html', '' }}",
+    "link":"{{ site.baseurl }}{{ hw.url | replace: 'index.html','' }}",
     "excerpt":{{ hw.description | jsonify }},
     "class":"hardware"
   }
@@ -61,7 +61,7 @@ layout: null
   {% unless first %},{% endunless %}{
     "title":{{ inst.title | jsonify }},
     "content":{{ inst.content | indexify | jsonify }},
-    "link":"{{ site.baseurl }}{{ inst.url | replace: 'index.html', '' }}",
+    "link":"{{ site.baseurl }}{{ inst.url | replace: 'index.html','' }}",
     "excerpt":{{ inst.description | jsonify }},
     "class":"basics"
   }
@@ -74,7 +74,7 @@ layout: null
   {% unless first %},{% endunless %}{
     "title":{{ dev.title | jsonify }},
     "content":{{ dev.content | markdownify | indexify | jsonify }},
-    "link":"{{ site.baseurl }}{{ dev.url | replace: 'index.html', '' }}",
+    "link":"{{ site.baseurl }}{{ dev.url | replace: 'index.html','' }}",
     "excerpt":{{ dev.description | jsonify }},
     "class":"devel"
   }
@@ -87,7 +87,7 @@ layout: null
   {% unless first %},{% endunless %}{
     "title":{{ cnf.title | jsonify }},
     "content":{{ cnf.content | indexify | jsonify }},
-    "link":"{{ site.baseurl }}{{ cnf.url | replace: 'index.html', '' }}",
+    "link":"{{ site.baseurl }}{{ cnf.url | replace: 'index.html','' }}",
     "excerpt":{{ cnf.description | jsonify }},
     "class":"config"
   }
@@ -100,7 +100,7 @@ layout: null
   {% unless first %},{% endunless %}{
     "title":{{ page.title | jsonify }},
     "content":{{ page.content | indexify | jsonify }},
-    "link":"{{ site.baseurl }}{{ page.url | replace: 'index.html', '' }}",
+    "link":"{{ site.baseurl }}{{ page.url | replace: 'index.html','' }}",
     "excerpt":{{ page.description | jsonify }},
     "class":"page"
   }

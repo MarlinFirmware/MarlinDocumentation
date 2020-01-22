@@ -8,8 +8,7 @@ experimental: false
 requires: MESH_BED_LEVELING
 group: calibration
 
-codes:
-  - G29
+codes: [ G29 ]
 
 long:
   - |

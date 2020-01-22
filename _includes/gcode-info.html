@@ -10,7 +10,7 @@ This document has been marked `needs-review`. The following information may be o
 
 <div class="col-lg-12 row meta" id="gcode-header">
   <p class="text-right pull-right visible-lg-block hidden-print small custom-pt25">
-    {% assign authors = gcode.author | append: ',' | append: gcode.contrib | replace: ' ', '' | split: ',' %}
+    {% assign authors = gcode.author | append: ',' | append: gcode.contrib | replace: " ","" | split: ',' %}
     {% if authors %}
       {% for author in authors %}
         <a href="https://github.com/{{ author }}" data-toggle="tooltip" data-placement="bottom" title="Visit {{ author }}'s profile on Github">{% avatar user=author size=30 %}</a>
@@ -140,7 +140,7 @@ This document has been marked `needs-review`. The following information may be o
 
   {% if list.size > 0 %}
     <div class="col-lg-12 row params">
-      <h3>Parameters</h3>
+      <h4>Parameters</h4>
       <div class="table-responsive">
         <table class="table">
           <tbody>
@@ -226,14 +226,9 @@ This document has been marked `needs-review`. The following information may be o
 {% endif %}
 
 {% if gcode.related %}
-  <div class="row related">
-    <div class="col-lg-12">
-      <h3>Related</h3>
-      {% assign list = (gcode.related | split: ',') %}
-      {% for item in list %}
-        <code>{{item}}</code>
-      {% endfor %}
-    </div>
+  <div class="col-lg-12 row related">
+    <h3>Related codes</h3>
+    {% for item in gcode.related %}<a href="/docs/gcode/{{ item | linkify }}.html"><code>{{item}}</code></a>{% endfor %}
   </div>
 {% endif %}
 
