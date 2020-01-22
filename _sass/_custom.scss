@@ -379,9 +379,10 @@ table.pretty-list {
 }
 table.pretty-list.headless thead { display: none; }
 
-.tocify.gcode {
+.tocify.gcode,
+.custom-fixed-sidebar .tocify {
   position: fixed;
-  border-bottom: 2px solid #EEE;
+  // border-bottom: 2px solid #EEE;
 }
 
 .tocify.gcode>ul {
@@ -486,7 +487,7 @@ summary h3 { display: inline; }
 @media (min-width: $screen-md-min) {
   .col-md-7 { width: 70%; }
   .col-md-5 { width: 30%; }
-  .tocify.gcode { width: 320px; }
+  .tocify.gcode, .custom-fixed-sidebar .tocify { width: 320px; }
 }
 
 // Keep footer from overlapping g-codes nav
@@ -504,18 +505,18 @@ summary h3 { display: inline; }
   #search.container .overlay { width: 970px; }
   .navbar-nav>li>a { padding-left: 10px; padding-right: 10px; }
   #daynite { display: inline; }
-  .tocify.gcode { width: 322px; }
+  .tocify.gcode, .custom-fixed-sidebar .tocify { width: 322px; }
 }
 @media (min-width: $screen-lg-min) {
   .container.gcode+footer .container { margin-left: 35%; width: 75%; }
   li#searchbox input[type="search"] { width: 14em !important; }
   #search.container .overlay { width: 1170px; }
   .navbar-nav>li>a { padding-left: 12px; padding-right: 12px; }
-  .tocify.gcode { width: 292px; }
+  .tocify.gcode, .custom-fixed-sidebar .tocify { width: 292px; }
 }
 @media (max-width: $screen-sm-min) {
   li#searchbox input[type="search"] { width: 12em !important; }
-  .tocify.gcode { width: 324px; }
+  .tocify.gcode, .custom-fixed-sidebar .tocify { width: 324px; }
 }
 
 // Fix headings in panels

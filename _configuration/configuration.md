@@ -71,9 +71,10 @@ The core and default settings of Marlin live in the `Configuration.h` file. Most
 
 {% alert info %}
 Settings that can be changed and saved to EEPROM are marked with <em class="fa fa-sticky-note-o" aria-hidden="true"></em>. Options marked with <em class="fa fa-desktop" aria-hidden="true"></em> can be changed from the LCD controller.
-{% endalert %}
-{% alert info %}
-Remember that settings saved in EEPROM may still be active after flashing new firmware. Always send `M502`, `M500` or "Reset EEPROM" from the LCD after flashing.
+
+---
+
+Settings saved in EEPROM persist across reboots and still remain after flashing new firmware, so always send `M502`, `M500` (or "Reset EEPROM" from the LCD) after flashing.
 {% endalert %}
 
 This section follows the order of settings as they appear. The order isn't always logical, so "Search In Page" may be helpful. We've tried to keep descriptions brief and to the point. For more detailed information on various topics, please read the main articles and follow the links provided in the option descriptions.
@@ -114,7 +115,7 @@ The index of the on-board serial port that will be used for primary host communi
 The first serial port (-1 or 0) will always be used by the Arduino bootloader regardless of this setting.
 {% endalert %} 
 
- ```cpp
+```cpp
 #define SERIAL_PORT_2 -1
 ```
 Enable this if your board has a secondary serial port.
@@ -221,8 +222,7 @@ Enable support for the Prusa Multi-material unit 2. This requires a free serial 
  - enable [NOZZLE_PARK_FEATURE](#nozzle-park)
  - set [EXTRUDERS](#extruders) = 5
 
-
- All details are configured in [Configuration_adv.h]
+All details are configured in [Configuration_adv.h]
 
 ### Switching Extruder
 ```cpp

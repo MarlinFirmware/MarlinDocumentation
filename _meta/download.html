@@ -9,6 +9,7 @@ releases:
     description: Latest release
     tools: Supports AVR and ARM<br/>Arduino and PlatformIO
     file: 2.0.x.zip
+    config: release-2.0.1
   -
     version: 1.1.9
     description: Previous release
@@ -27,12 +28,14 @@ nightlies:
     extra: Patches to latest 2.0.x
     tools: Supports AVR and ARM<br/>Arduino and PlatformIO
     file: bugfix-2.0.x.zip
+    config: master
   -
     version: dev-2.1.x
     description: Marlin 2.1 development
     extra: Proceed with Caution!
     tools: Supports AVR and ARM<br/>Arduino and PlatformIO
     file: dev-2.1.x.zip
+    config: dev-2.1.x
   -
     version: bugfix-1.1.x
     description: 1.1.x "bugfix" snapshot
@@ -57,7 +60,7 @@ footer: |
   <h1><i class="fa fa-download" aria-hidden="true"></i> Download <strong>Marlin</strong></h1>
   {{ page.header | markdownify }}
   <table>
-    <tr><th>Description</th><th>Version</th><th>Download</th>
+    <tr><th>Description</th><th>Version</th><th>Download</th><th>Configurations</th>
     {% for release in page.releases %}
       <tr>
         <td>
@@ -67,12 +70,17 @@ footer: |
         </td>
         <td><code>{{ release.version }}</code></td>
         <td><a href="https://github.com/MarlinFirmware/Marlin/archive/{{ release.file }}">{{ release.file }}</a></td>
+        <td>
+          {% if release.config %}
+            <a href="https://github.com/MarlinFirmware/Configurations/tree/{{ release.config }}">View / Download</a>
+          {% endif %}
+        </td>
       </tr>
     {% endfor %}
   </table>
   <h2 class="ctr">Marlin "Nightly" Builds</h2>
   <table>
-    <tr><th>Description</th><th>Version</th><th>Download</th>
+    <tr><th>Description</th><th>Version</th><th>Download</th><th>Configurations</th>
     {% for nightly in page.nightlies %}
       <tr>
         <td>
@@ -82,6 +90,11 @@ footer: |
         </td>
         <td><code>{{ nightly.version }}</code></td>
         <td><a href="https://github.com/MarlinFirmware/Marlin/archive/{{ nightly.file }}">{{ nightly.file }}</a></td>
+        <td>
+          {% if nightly.config %}
+            <a href="https://github.com/MarlinFirmware/Configurations/tree/{{ nightly.config }}">View / Download</a>
+          {% endif %}
+        </td>
       </tr>
     {% endfor %}
   </table>
