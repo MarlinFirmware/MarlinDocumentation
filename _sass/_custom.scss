@@ -158,8 +158,8 @@ pre {
   li {
     line-height: 1em;
     margin: -1px 0 0;
-    }
   }
+}
 
 img.floater {
   float: right;
@@ -379,15 +379,16 @@ table.pretty-list {
 }
 table.pretty-list.headless thead { display: none; }
 
-div.container.gcode div.tocify.gcode {
+.tocify.gcode {
   position: fixed;
-  height: 100vh;
-  overflow: scroll;
   border-bottom: 2px solid #EEE;
-  margin-top: -60px;
 }
 
-.tocify.gcode>ul { padding: 65px 0 1em; }
+.tocify.gcode>ul {
+  height: 100vh;
+  overflow: scroll;
+  li:last-child { margin-bottom: 80px; }
+}
 .nav-list > li > a strong { color: #900; }
 .nav-list>.active>a strong { background-color: none; }
 
@@ -485,6 +486,7 @@ summary h3 { display: inline; }
 @media (min-width: $screen-md-min) {
   .col-md-7 { width: 70%; }
   .col-md-5 { width: 30%; }
+  .tocify.gcode { width: 320px; }
 }
 
 // Keep footer from overlapping g-codes nav
@@ -502,15 +504,18 @@ summary h3 { display: inline; }
   #search.container .overlay { width: 970px; }
   .navbar-nav>li>a { padding-left: 10px; padding-right: 10px; }
   #daynite { display: inline; }
+  .tocify.gcode { width: 322px; }
 }
 @media (min-width: $screen-lg-min) {
   .container.gcode+footer .container { margin-left: 35%; width: 75%; }
   li#searchbox input[type="search"] { width: 14em !important; }
   #search.container .overlay { width: 1170px; }
   .navbar-nav>li>a { padding-left: 12px; padding-right: 12px; }
+  .tocify.gcode { width: 292px; }
 }
 @media (max-width: $screen-sm-min) {
   li#searchbox input[type="search"] { width: 12em !important; }
+  .tocify.gcode { width: 324px; }
 }
 
 // Fix headings in panels
@@ -549,8 +554,9 @@ body.night {
   div.highlight { background: none; }
   .navbar-default { background-color: #111; border-color: #222; }
   .nav.navbar-nav li a.here, .nav.navbar-nav li.here>a {
-    color: #99B; background: #004466;
+    color: #FF6; background: #004466;
   }
+  .nav.navbar-nav li.here.open>a { color: #FF6; }
   .nav-list>.active>a strong,
   .nav-list>.active>a:hover strong {
     color: #FFF;
@@ -667,7 +673,7 @@ body.night {
 
   div.container.gcode {
     div.col-lg-12.row {
-      h4, h5, h6 { background: white; color: #200; }
+      h4, h5, h6 { background: black; color: #FFF; }
     }
     div.row.examples pre { background: #000; }
     div.row.gallery p { color: #904; }
