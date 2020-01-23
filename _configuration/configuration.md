@@ -3147,8 +3147,7 @@ This option uses a 28 byte SRAM buffer and an alternative method to get paramete
 
 ```
 
-
-## Prusa MMU2 advanced settings (since Marlin 2.0)
+## Prusa MMU2 advanced settings
 
 ### Serial connection
 
