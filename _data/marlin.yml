@@ -103,5 +103,9 @@
   date: 24/12/2019
 
 - version: 2.0.2
-  hash: e6a37ba2a05131873b4b1d1f2b6b2697c388f944
-  date: 17/01/2020
+  hash: 016e4c01934b78672af3552b8bf2d655aa23752d
+  date: 27/01/2020
+
+- version: 2.0.3
+  hash: e6a7be922b300bc68030a5d301743ac30d6d1834
+  date: 31/01/2020
