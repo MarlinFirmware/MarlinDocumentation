@@ -3,11 +3,11 @@ title:        Installing Marlin (CLI)
 description:  Marlin Installation Quick Start Guide, PlatformIO CLI
 
 author: Bob-the-Kuhn
-contrib:
+contrib: ChrisBountalis
 category: [ articles, getting-started ]
 ---
 
-Before reading this article, you should have already read [Installing Marlin with PlatformIO](install_arduino.html).
+Before reading this article, you should have already read [Installing Marlin with PlatformIO](install_platformio.html).
 
 This article documents:
   * Invoking **PlatformIO** from the command line
@@ -25,7 +25,7 @@ NOTE: If a **PlatformIO** plugin/extension has previously been installed then **
 
 ## Get the correct environment for the selected board
 
-This step is the same as in [Installing Marlin with PlatformIO](install_arduino.html).
+This step is the same as in [Installing Marlin with PlatformIO](install_platformio.html).
 
 The PlatformIO environment needed for a motherboard is in the comments for the board in the **pins.h** file. In Marlin 2.0 it's located in  a subdirectory **Marlin/src/pins/pins.h**.
 
