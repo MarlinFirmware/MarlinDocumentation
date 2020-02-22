@@ -113,3 +113,7 @@
 - version: 2.0.4
   hash: 7e8505fc119543e8de6322e79fed239272aa1c6e
   date: 21/02/2020
+
+- version: 2.0.4.1
+  hash: 20fa62043ea0ec09ab0a12fd11b7ca919bfe1268
+  date: 22/02/2020
