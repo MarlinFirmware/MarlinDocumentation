@@ -8,7 +8,8 @@ experimental: false
 requires: AUTO_BED_LEVELING_(3POINT|LINEAR|BILINEAR)
 group: calibration
 
-codes: [ G29 ]
+codes: G29
+related: [ M420, M421 ]
 
 long:
   - |
