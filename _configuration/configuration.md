@@ -1266,7 +1266,10 @@ Only `AUTO_BED_LEVELING_BILINEAR` currently supports `SCARA`.<br/>
 ```cpp
 //#define RESTORE_LEVELING_AFTER_G28
 ```
-Normally [`G28`](/docs/gcode/G028.html) leaves leveling disabled on completion. Enable this option to have [`G28`](/docs/gcode/G028.html) restore the prior leveling state.
+Normally [`G28`](/docs/gcode/G028.html) leaves leveling disabled on completion. Enable this option to have [`G28`](/docs/gcode/G028.html) restore the prior leveling state after completion of G28.
+ - If leveling is OFF prior to G28, then leveling will remain off after completion of G28. 
+ - If leveling is ON prior to G28, then G28 will disable leveling. Leveling will turn back on after completion of G28.
+
 
 ### Debug Leveling
 ```cpp
