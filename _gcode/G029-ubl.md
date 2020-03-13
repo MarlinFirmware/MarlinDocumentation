@@ -16,7 +16,8 @@ long:
 
 notes:
   - Requires `AUTO_BED_LEVELING_UBL`.
-  - "`G28` disables bed leveling. Follow with `M420 S` to turn leveling on, or use `RESTORE_LEVELING_AFTER_G28` to automatically keep leveling on after `G28`."
+  - "`G28` disables bed leveling. Follow with `G29 A` to turn leveling on, or use `RESTORE_LEVELING_AFTER_G28` to automatically keep leveling on after `G28`."
+  - `M420 S1` can be used to turn leveling on, but requires a valid (complete) mesh. See [M420](/docs/gcode/M420.html) for more details
 
   ### Release Notes:
 
@@ -32,6 +33,11 @@ notes:
     a mesh only to realize that the the resolution or `M851 Z` probe offset is off. UBL mesh generation
     gathers points closest the nozzle unless you specify an (X,Y) coordinate pair.
 
+  - You can use `G29 P3` to automatically fill in the unpopulated points of the mesh. If you have an LCD 
+    controller on your printer and prefer manual adjustment, you can use `G29 P2` to have the printer move 
+    the nozzle to each unpopulated point, then manually adjust the offset nozzle height. 
+    See the ‘P2’ and ‘P3’ parameters for full details on usage.
+  
   - UBL requires a decent amount of EEPROM to store its mesh data. And it takes some effort
     to get this Mesh data correct for a given machine. To keep this data from being destroyed when the
     EEPROM version changes the Mesh data is stored at the high end of the EEPROM. (Happily, no developers
