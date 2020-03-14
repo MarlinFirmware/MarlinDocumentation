@@ -129,3 +129,7 @@
 - version: 2.0.4.4
   hash: 193f1fd135ec9a85364cded0b5aa319ddf2ff73b
   date: 26/02/2020
+
+- version: 2.0.5
+  hash: 8dbbcfd382356eb5d16b8bfa75c713bbc1de1631
+  date: 14/03/2020
