@@ -7,8 +7,8 @@ experimental: true
 requires: AUTO_BED_LEVELING_UBL
 group: calibration
 
-codes: G29
 related: [ M420, M421 ]
+codes: [ G29 ]
 
 long:
   - The Unified Bed Leveling System (UBL) provides a comprehensive set of resources to produce the best bed leveling results possible.
