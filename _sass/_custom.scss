@@ -202,7 +202,6 @@ img.floater.framed { border: 4px solid black; }
   margin: -1em 0 1em;
   background-color: #EEE;
   padding: 0.5em 0.5em 0.25em;
-  p { font-size: 85%; }
   }
 
 #gcode-header h1 { margin-bottom: 4px; }
@@ -214,6 +213,11 @@ div.container.gcode {
     h4, h5, h6 { background: #200; color: white; margin-left: -0.5em; padding-left: 0.5em; }
     p { font-size: 120% }
   }
+  div.col-lg-12.row.examples .post {
+    margin: -0.25em 0 1em;
+    p { font-size: 85%; }
+  }
+
   div.col-lg-12.row.meta { margin-left: 0; }
   div.row.long, div.row.notes { font-size: 110%; }
   div.row.examples pre { background: #E9F5FF; }
@@ -604,7 +608,7 @@ body.night {
       color: #000;
       }
     }
-  .post { background-color: #EEE; }
+  .post { background-color: #556; }
   [data-search-results]>h1 { color: #FFF; background: #BBB; }
   h1.gcode { background: #B88; }
   h1.basics { background: #8B8; }
