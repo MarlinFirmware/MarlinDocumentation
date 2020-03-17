@@ -1,5 +1,5 @@
 ---
-tag: g029a
+tag: g029m
 title: Bed Leveling (Manual)
 brief: Measure Z heights in a grid, enable leveling compensation
 author: thinkyhead

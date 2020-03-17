@@ -12,7 +12,7 @@ category: [ articles, getting-started ]
 
 - Click the "Extensions" button on the left of the *VSCode* window to show the **Extensions: Marketplace** panel.
 - Type "Marlin" into the search box at the top.
-- Locate **Auto Build Marlin** in the list and click **Install**. ([PlatformIO](/docs/basics/abm.html) will also be installed automatically.)
+- Locate **Auto Build Marlin** in the list and click **Install**. ([PlatformIO](/docs/basics/install_platformio_vscode.html) will also be installed automatically.)
   ![Auto Build Marlin extension](/assets/images/basics/abm/install.png)
 
 ## Usage

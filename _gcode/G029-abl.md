@@ -1,5 +1,5 @@
 ---
-tag: g029b
+tag: g029a
 title: Bed Leveling (Automatic)
 brief: Probe the bed and enable leveling compensation.
 author: thinkyhead
