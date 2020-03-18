@@ -27,7 +27,7 @@ Head over to the "[Get PlatformIO IDE](https://platformio.org/install/ide?instal
 
 ![Install PlatformIO IDE](/assets/images/basics/install_platformio_vscode/install_platformio_vscode.png)
 
-(The quickest way to get started is to install [AutoBuildMarlin](auto_build_marlin.html) and PlatformIO will be installed along with it.)
+(The quickest way to get started is to install *[Auto Build Marlin](auto_build_marlin.html)* and PlatformIO will be installed along with it.)
 
 ## Open Marlin in VSCode / PlatformIO
 

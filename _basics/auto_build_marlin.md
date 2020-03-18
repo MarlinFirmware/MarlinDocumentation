@@ -1,12 +1,12 @@
 ---
-title:        AutoBuildMarlin
-description:  Installation and use of the AutoBuildMarlin extension
+title:        Auto Build Marlin
+description:  How to install and use "Auto Build Marlin"
 
 author: thinkyhead
 category: [ articles, getting-started ]
 ---
 
-"*AutoBuildMarlin*" is a *Visual Studio Code* extension that provides a one-button interface to build and upload Marlin Firmware to your selected `MOTHERBOARD`. This removes the need to edit your `platformio.ini` file or scroll through a long list of Marlin environments.
+"*Auto Build Marlin*" is a *Visual Studio Code* extension that provides a one-button interface to build and upload Marlin Firmware to your selected `MOTHERBOARD`. This removes the need to edit your `platformio.ini` file or scroll through a long list of Marlin environments.
 
 ## Installation
 
