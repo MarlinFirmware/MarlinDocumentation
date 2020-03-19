@@ -149,11 +149,13 @@ Command | Configuration<br>required | Description
 
 # Troubleshooting
 
+- Some SilentStepSticks with variable 3-5V logic voltage (VIO) [might get damaged](//github.com/MarlinFirmware/Marlin/issues/10162#issuecomment-397844847) if only powered over USB.
 - Test driver communication status with `M122`.
-- Test the current **bugfix** branch of Marlin posted on GitHub (in case your issue is already fixed).
-- Use the latest TMC Stepper libraries.
+- Test Marlin's **bugfix** branch (on GitHub) to see if your issue is fixed.
+- Test the latest TMCStepper library to see if your issue is fixed.
 - Check all wiring and wire crimps.
-  - **SPI**: Use a multimeter to check connectivity all the way down the chain on all the communication lines
+  - **SPI**: Use a multimeter to check connectivity all the way down the chain on all the communication lines.
+  - **SPI** conflict with the **SD card**? Solutions vary.
   - **UART**:
     - Make sure your receive (RX) pin is interrupt capable
     - Check the resistance value between receive (RX) and transmit (TX) lines. You should see 1kOhm.
