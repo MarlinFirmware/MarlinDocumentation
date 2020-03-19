@@ -7,7 +7,7 @@ contrib: bob-the-kuhn
 category: [ articles, getting-started ]
 ---
 
-To install Marlin on your printer you'll need to Download, Configure, [Compile](https://en.wikipedia.org/wiki/Compiler), and finally [Upload](https://www.arduino.cc/en/Guide/Environment#toc9) the compiled firmware to your board. This process may seem a bit daunting at first, but it quickly becomes second-nature.
+To install Marlin on your printer you'll need to Download, Configure, [Compile](//en.wikipedia.org/wiki/Compiler), and finally [Upload](//www.arduino.cc/en/Guide/Environment#toc9) the compiled firmware to your board. This process may seem a bit daunting at first, but it quickly becomes second-nature.
 
 {% alert info %}
 Marlin only needs to be re-flashed when options are changed in the configuration files. Several settings can be changed and saved to EEPROM while the printer is running.
@@ -15,15 +15,15 @@ Marlin only needs to be re-flashed when options are changed in the configuration
 
 ### Download
 
-Start by downloading the Marlin source code. There are a few [codebases](https://en.wikipedia.org/wiki/Codebase) to choose from.
+Start by downloading the Marlin source code. There are a few [codebases](//en.wikipedia.org/wiki/Codebase) to choose from.
 
 ----|-----------
-[Download 2.0.x](https://github.com/MarlinFirmware/Marlin/archive/2.0.x.zip)|Current release
-[Download 1.1.x](https://github.com/MarlinFirmware/Marlin/archive/1.1.x.zip)|Previous release
-[Download 1.0.x](https://github.com/MarlinFirmware/Marlin/archive/1.0.x.zip)|Older release
-[Download bugfix-1.1.x](https://github.com/MarlinFirmware/Marlin/archive/bugfix-1.1.x.zip)|"Nightly" build. _Proceed with Caution!_
-[Download bugfix-2.0.x](https://github.com/MarlinFirmware/Marlin/archive/bugfix-2.0.x.zip)|"Nightly" build. _Proceed with Caution!_
-[Download dev-2.1.x](https://github.com/MarlinFirmware/Marlin/archive/dev-2.1.x.zip)|"Nightly" build. _Proceed with Caution!_
+[Download 2.0.x](//github.com/MarlinFirmware/Marlin/archive/2.0.x.zip)|Current release
+[Download 1.1.x](//github.com/MarlinFirmware/Marlin/archive/1.1.x.zip)|Previous release
+[Download 1.0.x](//github.com/MarlinFirmware/Marlin/archive/1.0.x.zip)|Older release
+[Download bugfix-1.1.x](//github.com/MarlinFirmware/Marlin/archive/bugfix-1.1.x.zip)|"Nightly" build. _Proceed with Caution!_
+[Download bugfix-2.0.x](//github.com/MarlinFirmware/Marlin/archive/bugfix-2.0.x.zip)|"Nightly" build. _Proceed with Caution!_
+[Download dev-2.1.x](//github.com/MarlinFirmware/Marlin/archive/dev-2.1.x.zip)|"Nightly" build. _Proceed with Caution!_
 
 {% alert warning %}
 - Marlin 1.0 **does not support PlatformIO**. For older versions of Marlin use Arduino IDE.
@@ -33,7 +33,7 @@ Start by downloading the Marlin source code. There are a few [codebases](https:/
 
 ### Configure
 
-To configure Marlin you can use the Arduino IDE or your [favorite text editor](https://www.sublimetext.com/) to edit the `Configuration.h` and `Configuration_adv.h` files. See [Configuring Marlin](/docs/configuration/configuration.html) for full details.
+To configure Marlin you can use the Arduino IDE or your [favorite text editor](//www.sublimetext.com/) to edit the `Configuration.h` and `Configuration_adv.h` files. See [Configuring Marlin](/docs/configuration/configuration.html) for full details.
 
 ### Build and Install
 

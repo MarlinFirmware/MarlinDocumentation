@@ -55,7 +55,7 @@ A sample customization process is described below to demonstrate how this method
 
 1. Install Atom
 
-   [Download Atom](https://atom.io/) and run the installer (Windows) or install (macOS and Linux).
+   [Download Atom](//atom.io/) and run the installer (Windows) or install (macOS and Linux).
 
 1. Open Atom Package Manager
    1. Bring up the Core Settings window
@@ -294,7 +294,7 @@ The pins files only need to be modified if you're addeing hardware that isn't al
 
 **`Use caution! In some cases these modifications can damage your electronics!`**
 
-If you're not comfortable modifying the pins file [Post a New Issue](https://github.com/MarlinFirmware/Marlin/issues/new) and ask for help.
+If you're not comfortable modifying the pins file [Post a New Issue](//github.com/MarlinFirmware/Marlin/issues/new) and ask for help.
 
 ### LPC1768 & LPC1769 based boards
 

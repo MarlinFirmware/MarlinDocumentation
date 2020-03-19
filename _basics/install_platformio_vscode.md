@@ -11,7 +11,7 @@ Before reading this article, you should have already read [Installing Marlin wit
 
 # PlatformIO with VSCode
 
-[PlatformIO](https://platformio.org/install/ide?install=vscode) turns VSCode into a complete IDE for compiling and developing Marlin.
+[PlatformIO](//platformio.org/install/ide?install=vscode) turns VSCode into a complete IDE for compiling and developing Marlin.
 
 ![PlatformIO with VSCode](/assets/images/basics/install_platformio_vscode/platformio_vscode_screenshot.png)
 
@@ -19,11 +19,11 @@ Before reading this article, you should have already read [Installing Marlin wit
 
 ### 1. Install VSCode
 
-Visit the [Setting up Visual Studio Code](https://code.visualstudio.com/docs/setup/setup-overview) page to download and install the latest VSCode for your particular platform.
+Visit the [Setting up Visual Studio Code](//code.visualstudio.com/docs/setup/setup-overview) page to download and install the latest VSCode for your particular platform.
 
 ### 2. Install the PlatformIO IDE
 
-Head over to the "[Get PlatformIO IDE](https://platformio.org/install/ide?install=vscode)" page to learn how to install PlatformIO IDE in VSCode.
+Head over to the "[Get PlatformIO IDE](//platformio.org/install/ide?install=vscode)" page to learn how to install PlatformIO IDE in VSCode.
 
 ![Install PlatformIO IDE](/assets/images/basics/install_platformio_vscode/install_platformio_vscode.png)
 

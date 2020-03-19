@@ -23,8 +23,8 @@ Currently Marlin includes support for two display technologies:
 On the other hand, symbols 128 and above have major differences from one display to another.
 
 Marlin 1.0 and 1.1 currently support:
-- HD44780 (and similar) with Kana charset A00 [HD44780](https://www.sparkfun.com/datasheets/LCD/HD44780.pdf) (Page 17) These are very common, but sadly not very useful when writing in European languages.
-- HD44780 (and similar) with Western charset A02 [HD44780](https://www.sparkfun.com/datasheets/LCD/HD44780.pdf) (Page 18). These are rare, but fairly useful for European languages. Also a limited number of Cyrillic symbols is available.
+- HD44780 (and similar) with Kana charset A00 [HD44780](//www.sparkfun.com/datasheets/LCD/HD44780.pdf) (Page 17) These are very common, but sadly not very useful when writing in European languages.
+- HD44780 (and similar) with Western charset A02 [HD44780](//www.sparkfun.com/datasheets/LCD/HD44780.pdf) (Page 18). These are rare, but fairly useful for European languages. Also a limited number of Cyrillic symbols is available.
 - HD44780 (and similar) with [Cyrillic charset](http://store.comet.bg/download-file.php?id=466) (Page 14). Some of our Russian friends use them.
 
 On all these displays you can define 8 custom symbols to display at once. In Marlin these characters are used on the Boot Screen, and on the Info Screen for the Bed Temp, Degree symbol, Thermometer, "FR" (feed-rate), Clock, and Progress Bar. On the SD Card listing screens some of these characters are re-used again for Up-level, Folder, and Refresh.
@@ -165,7 +165,7 @@ All translatable strings are first declared in `language_en.h` and then language
 
 Strings in `language.h` are for serial output, so don't require any translation. Core error strings must always be in English to satisfy host protocols.
 
-For information about fonts see [`buildroot/share/fonts/README.md` file](https://github.com/MarlinFirmware/Marlin/tree/1.1.x/buildroot/share/fonts#readme).
+For information about fonts see [`buildroot/share/fonts/README.md` file](//github.com/MarlinFirmware/Marlin/tree/1.1.x/buildroot/share/fonts#readme).
 
 # User Instructions
 

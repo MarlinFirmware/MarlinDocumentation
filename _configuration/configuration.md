@@ -44,10 +44,10 @@ If you've never configured and calibrated a 3D Printer before, here are some goo
 - [Prusa's calculators](http://calculator.josefprusa.cz)
 - [Triffid Hunter's Calibration Guide](http://reprap.org/wiki/Triffid_Hunter%27s_Calibration_Guide)
 - [The Essential Calibration Set](http://www.thingiverse.com/thing:5573)
-- [Calibration of your RepRap](https://sites.google.com/site/repraplogphase/calibration-of-your-reprap)
+- [Calibration of your RepRap](//sites.google.com/site/repraplogphase/calibration-of-your-reprap)
 - [XY 20 mm Calibration Box](http://www.thingiverse.com/thing:298812)
 - [G-code reference](http://reprap.org/wiki/G-code)
-- [Marlin3DprinterTool](https://github.com/cabbagecreek/Marlin3DprinterTool)
+- [Marlin3DprinterTool](//github.com/cabbagecreek/Marlin3DprinterTool)
 
 
 ## Before You Begin
@@ -151,7 +151,7 @@ The most important setting is Marlin is the motherboard. The firmware needs to k
 Using [`boards.h`](/docs/hardware/boards.html) as a reference, replace `BOARD_RAMPS_14_EFB` with your board's ID. The [`boards.h`](/docs/hardware/boards.html) file has the most up-to-date listing of supported boards, so check it first if you don't see yours listed there.
 
 {% alert info %}
-The Sanguino board requires adding "Sanguino" support to Arduino IDE. Open `Preferences` and locate the `Additional Boards Manager URLs` field. Copy and paste [this source URL](https://raw.githubusercontent.com/Lauszus/Sanguino/master/package_lauszus_sanguino_index.json). Then use `Tools` > `Boards` > `Boards Manager` to install "Sanguino" from the list. An internet connection is required. (Thanks to "Dust's RepRap Blog" for the tip.)
+The Sanguino board requires adding "Sanguino" support to Arduino IDE. Open `Preferences` and locate the `Additional Boards Manager URLs` field. Copy and paste [this source URL](//raw.githubusercontent.com/Lauszus/Sanguino/master/package_lauszus_sanguino_index.json). Then use `Tools` > `Boards` > `Boards Manager` to install "Sanguino" from the list. An internet connection is required. (Thanks to "Dust's RepRap Blog" for the tip.)
 {% endalert %}
 
 ### Custom Machine Name
@@ -166,7 +166,7 @@ This is the name of your printer as displayed on the LCD and by [`M115`](/docs/g
 ```cpp
 //#define MACHINE_UUID "00000000-0000-0000-0000-000000000000"
 ```
-A unique ID for your 3D printer. A suitable unique ID can be generated randomly at [uuidtools.com](https://www.uuidtools.com/generate/v4). Some host programs and slicers may use this identifier to differentiate between specific machines on your network.
+A unique ID for your 3D printer. A suitable unique ID can be generated randomly at [uuidtools.com](//www.uuidtools.com/generate/v4). Some host programs and slicers may use this identifier to differentiate between specific machines on your network.
 
 
 ## Extruder Info
@@ -491,7 +491,7 @@ Remember that cold surfaces near hot surfaces can lead to **condensation**, whic
 
 ### PID
 
-Marlin uses PID (Proportional, Integral, Derivative) control ([Wikipedia](https://en.wikipedia.org/wiki/PID_controller)) to stabilize the dynamic heating system for the hotends and bed. When PID values are set correctly, heaters reach their target temperatures faster, maintain temperature better, and experience less wear over time.
+Marlin uses PID (Proportional, Integral, Derivative) control ([Wikipedia](//en.wikipedia.org/wiki/PID_controller)) to stabilize the dynamic heating system for the hotends and bed. When PID values are set correctly, heaters reach their target temperatures faster, maintain temperature better, and experience less wear over time.
 
 Most vitally, correct PID settings will prevent excessive overshoot, which is a safety hazard. During PID calibration, use the highest target temperature you intend to use (where overshoots are more critical).
 
@@ -910,7 +910,7 @@ To indicate a Servo Z Probe (e.g., an endstop switch mounted on a rotating arm) 
 ```cpp
 //#define BLTOUCH
 ```
-The [ANTCLABS BLTouch](https://plus.google.com/113792662927481823969) probe uses custom circuitry and a magnet to raise and lower a metal pin which acts as a touch probe. The BLTouch uses the servo connector and is controlled using specific servo angles. With this option enabled the other required settings are automatically configured (so there's no need to enter servo angles, for example).
+The [ANTCLABS BLTouch](//plus.google.com/113792662927481823969) probe uses custom circuitry and a magnet to raise and lower a metal pin which acts as a touch probe. The BLTouch uses the servo connector and is controlled using specific servo angles. With this option enabled the other required settings are automatically configured (so there's no need to enter servo angles, for example).
 
 #### TOUCH MI PROBE
 
@@ -1806,10 +1806,10 @@ Option|Description
 ------|-----------
 `CARTESIO_UI`|[Cartesio UI](http://mauk.cc/webshop/cartesio-shop/electronics/user-interface).
 `MAKRPANEL`|[MaKr3d Makr-Panel](http://reprap.org/wiki/MaKr3d_MaKrPanel) with graphic controller and SD support.
-`REPRAPWORLD_GRAPHICAL_LCD`|[ReprapWorld Graphical LCD](https://reprapworld.com/?products_details&products_id/1218).
+`REPRAPWORLD_GRAPHICAL_LCD`|[ReprapWorld Graphical LCD](//reprapworld.com/?products_details&products_id/1218).
 `VIKI2`|[Panucatt Devices](http://panucatt.com) [Viki 2.0](http://panucatt.com).
 `miniVIKI`|[mini Viki with Graphic LCD](http://panucatt.com).
-`ELB_FULL_GRAPHIC_CONTROLLER`|[Adafruit ST7565 Full Graphic Controller](https://github.com/eboston/Adafruit-ST7565-Full-Graphic-Controller/).
+`ELB_FULL_GRAPHIC_CONTROLLER`|[Adafruit ST7565 Full Graphic Controller](//github.com/eboston/Adafruit-ST7565-Full-Graphic-Controller/).
 `REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER`|[RepRapDiscount Full Graphic Smart Controller](http://reprap.org/wiki/RepRapDiscount_Full_Graphic_Smart_Controller).
 `MINIPANEL`|[MakerLab Mini Panel](http://reprap.org/wiki/Mini_panel) with graphic controller and SD support.
 `BQ_LCD_SMART_CONTROLLER`|BQ LCD Smart Controller shipped with the BQ Hephestos 2 and Witbox 2.
@@ -1823,20 +1823,20 @@ Option|Description
 
 ### I2C Character LCDs
 
-These controllers all require the [LiquidCrystal_I2C library](https://github.com/kiyoshigawa/LiquidCrystal_I2C).
+These controllers all require the [LiquidCrystal_I2C library](//github.com/kiyoshigawa/LiquidCrystal_I2C).
 
 Option|Description
 ------|-----------
 `RA_CONTROL_PANEL`|Elefu RA Board Control Panel
 `LCD_I2C_SAINSMART_YWROBOT`|Sainsmart [YWRobot LCM1602 LCD Display](http://henrysbench.capnfatz.com/henrys-bench/arduino-displays/ywrobot-lcm1602-iic-v1-lcd-arduino-tutorial/).
 `LCM1602`|Generic LCM1602 LCD adapter
-`LCD_I2C_PANELOLU2`|PANELOLU2 LCD with status LEDs, separate encoder and click inputs. The click input can either be directly connected to a pin (if `BTN_ENC` is defined) or read through I2C (with `BTN_ENC` undefined). Requires [LiquidTWI2 library](https://github.com/lincomatic/LiquidTWI2) v1.2.3 or later.
+`LCD_I2C_PANELOLU2`|PANELOLU2 LCD with status LEDs, separate encoder and click inputs. The click input can either be directly connected to a pin (if `BTN_ENC` is defined) or read through I2C (with `BTN_ENC` undefined). Requires [LiquidTWI2 library](//github.com/lincomatic/LiquidTWI2) v1.2.3 or later.
 `LCD_I2C_VIKI`|Panucatt VIKI LCD with status LEDs, integrated click & L/R/U/D buttons, separate encoder inputs.
-`SAV_3DLCD`|Shift register panels. [2 wire Non-latching LCD SR](https://goo.gl/aJJ4sH). See [LCD configuration](http://reprap.org/wiki/SAV_3D_LCD).
+`SAV_3DLCD`|Shift register panels. [2 wire Non-latching LCD SR](//goo.gl/aJJ4sH). See [LCD configuration](http://reprap.org/wiki/SAV_3D_LCD).
 
 ### I2C Graphical LCDs
 
-These controllers all require the [LiquidCrystal_I2C library](https://github.com/kiyoshigawa/LiquidCrystal_I2C).
+These controllers all require the [LiquidCrystal_I2C library](//github.com/kiyoshigawa/LiquidCrystal_I2C).
 
 Option|Description
 ------|-----------
@@ -1938,13 +1938,13 @@ Marlin currently supplies two options for RGB-addressable color indicators. In b
 //define BlinkM/CyzRgb Support
 //#define BLINKM
 ```
-The [BLINKM board](https://thingm.com/products/blinkm/) supplies the backlighting for some LCD controllers. Its color is set using I2C messages.
+The [BLINKM board](//thingm.com/products/blinkm/) supplies the backlighting for some LCD controllers. Its color is set using I2C messages.
 
 ```cpp
 //define PCA9632 PWM LED driver Support
 //#define PCA9632
 ```
-The [Philips PCA9632](https://www.digchip.com/datasheets/3286493-pca9632.html) is a common PWM LED driver, controlled (like BlinkM) using I2C.
+The [Philips PCA9632](//www.digchip.com/datasheets/3286493-pca9632.html) is a common PWM LED driver, controlled (like BlinkM) using I2C.
 
 ```cpp
 //#define RGB_LED
@@ -1980,7 +1980,7 @@ LED Strips require a MOFSET Chip between PWM lines and LEDs, as the Arduino cann
   //#define NEOPIXEL_BKGD_COLOR { 255, 255, 255, 0 } // R, G, B, W
 #endif
 ```
-[NEOPIXELS](https://www.adafruit.com/category/168)
+[NEOPIXELS](//www.adafruit.com/category/168)
 
 #### Printer Event LEDs
 ```cpp
@@ -2892,13 +2892,13 @@ Experimental feature for filament change support and parking the nozzle when pau
 ```cpp
 //#define HAVE_TMCDRIVER
 ```
-Enable this section if you have TMC26X motor drivers. You'll need to import the [TMC26XStepper](https://github.com/trinamic/TMC26XStepper.git) library into the Arduino IDE. See the `Configuration_adv.h` file for the full set of sub-options.
+Enable this section if you have TMC26X motor drivers. You'll need to import the [TMC26XStepper](//github.com/trinamic/TMC26XStepper.git) library into the Arduino IDE. See the `Configuration_adv.h` file for the full set of sub-options.
 
 ### Trinamic TMC2130
 ```cpp
 //#define HAVE_TMC2130
 ```
-Enable this option for SilentStepStick Trinamic TMC2130 SPI-configurable stepper drivers. You'll also need the [TMC2130Stepper](https://github.com/teemuatlut/TMC2130Stepper) Arduino library. See the `Configuration_adv.h` file for the full set of sub-options.
+Enable this option for SilentStepStick Trinamic TMC2130 SPI-configurable stepper drivers. You'll also need the [TMC2130Stepper](//github.com/teemuatlut/TMC2130Stepper) Arduino library. See the `Configuration_adv.h` file for the full set of sub-options.
 
 To use TMC2130 stepper drivers in SPI mode connect your SPI2130 pins to the hardware SPI interface on your board and define the required CS pins in your `pins_MYBOARD.h` file. (e.g., RAMPS 1.4 uses AUX3 pins `X_CS_PIN 53`, `Y_CS_PIN 49`, etc.).
 
@@ -2906,7 +2906,7 @@ To use TMC2130 stepper drivers in SPI mode connect your SPI2130 pins to the hard
 ```cpp
 //#define HAVE_L6470DRIVER
 ```
-Enable this section if you have L6470 motor drivers. You need to import the [L6470 library](https://github.com/ameyer/Arduino-L6470) into the Arduino IDE for this. See the `Configuration_adv.h` file for the full set of sub-options.
+Enable this section if you have L6470 motor drivers. You need to import the [L6470 library](//github.com/ameyer/Arduino-L6470) into the Arduino IDE for this. See the `Configuration_adv.h` file for the full set of sub-options.
 
 ## Experimental i2c Bus
 ```cpp
