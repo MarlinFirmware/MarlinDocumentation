@@ -11,7 +11,7 @@ Before proceeding be sure to read [Installing Marlin](install.html) first and do
 
 ### Get Arduino IDE
 
-The first thing you'll need to do is [download Arduino IDE](http://www.arduino.cc/en/Main/Software) and install it following the usual procedure for your OS. Arduino IDE is available for Linux, Windows, macOS, and Unix.
+The first thing you'll need to do is [download Arduino IDE](//www.arduino.cc/en/Main/Software) and install it following the usual procedure for your OS. Arduino IDE is available for Linux, Windows, macOS, and Unix.
 
 {% alert warning %}
 - Your printer may require you to install [additional libraries](//www.arduino.cc/en/Guide/Libraries) or a [non-standard Arduino core](//www.arduino.cc/en/Guide/Cores) (e.g., *Sanguino*, *Teensy++*). See [Configuring Marlin](/docs/configuration/configuration.html) and comments in `Configuration.h`, `Configuration_adv.h`, and `pins_YOUR_BOARD.h` pertaining to your hardware and add-ons. In many cases, instructions and links to resources are included.

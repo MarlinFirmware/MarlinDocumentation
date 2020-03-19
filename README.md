@@ -55,13 +55,13 @@ Try to be neutral, concise, and straightforward. Avoid use of personal pronouns,
 ## Local Jekyll Preview
 
 If you'd like to be able to preview your contributions before submitting them, you'll need to install Jekyll on your system. Instructions are given below. As this is a non-trivial process, we recommend reading one of the following tutorials for a quick start with Jekyll:
-- [Jekyll running on Windows](http://jekyll-windows.juthilo.com/)
+- [Jekyll running on Windows](//jekyll-windows.juthilo.com/)
 - [Jekyll running on Linux, Unix, or Mac OS X](//jekyllrb.com/docs/installation/)
 
 ### Installing buildroot on Windows
 
- 1. Get Ruby for Windows ([32 bit](http://dl.bintray.com/oneclick/rubyinstaller/rubyinstaller-2.3.3.exe), [64bit](http://dl.bintray.com/oneclick/rubyinstaller/rubyinstaller-2.3.3-x64.exe)), execute the installer and go through the steps of the installation, make sure to check the “Add Ruby executables to your PATH” box.
- 2. Get Ruby Devkit ([32 bit](http://dl.bintray.com/oneclick/rubyinstaller/DevKit-mingw64-32-4.7.2-20130224-1151-sfx.exe), [64bit](http://dl.bintray.com/oneclick/rubyinstaller/DevKit-mingw64-64-4.7.2-20130224-1432-sfx.exe)), the download is a self-extracting archive. When you execute the file, it’ll ask you for a destination for the files. Enter a path that has no spaces in it. We recommend something simple, like ` C:\RubyDevKit\` . Click Extract and wait until the process is finished.
+ 1. Get Ruby for Windows ([32 bit](//dl.bintray.com/oneclick/rubyinstaller/rubyinstaller-2.3.3.exe), [64bit](//dl.bintray.com/oneclick/rubyinstaller/rubyinstaller-2.3.3-x64.exe)), execute the installer and go through the steps of the installation, make sure to check the “Add Ruby executables to your PATH” box.
+ 2. Get Ruby Devkit ([32 bit](//dl.bintray.com/oneclick/rubyinstaller/DevKit-mingw64-32-4.7.2-20130224-1151-sfx.exe), [64bit](//dl.bintray.com/oneclick/rubyinstaller/DevKit-mingw64-64-4.7.2-20130224-1432-sfx.exe)), the download is a self-extracting archive. When you execute the file, it’ll ask you for a destination for the files. Enter a path that has no spaces in it. We recommend something simple, like ` C:\RubyDevKit\` . Click Extract and wait until the process is finished.
  3. Open your favorite command line tool and do:
   - `cd C:\RubyDevKit`
   - `ruby dk.rb init`
@@ -72,7 +72,7 @@ If you'd like to be able to preview your contributions before submitting them, y
 
 Ruby 2.3 or newer is required to use Jekyll, but macOS 10.12 only includes Ruby 2.2. For macOS 10.12 and earlier the custom `rbenv` install described below is required. Even when the OS comes with Ruby 2.3, we still find it easier to use `rbenv` and `ruby-build` to make a self-managed Ruby install.
 
-To install [rbenv](//github.com/rbenv/rbenv) and [ruby-build](//github.com/rbenv/ruby-build#readme) we recommend using one of the popular package managers, [Homebrew](http://brew.sh) or [MacPorts](//www.macports.org). (You can also download and install these tools manually.)
+To install [rbenv](//github.com/rbenv/rbenv) and [ruby-build](//github.com/rbenv/ruby-build#readme) we recommend using one of the popular package managers, [Homebrew](//brew.sh) or [MacPorts](//www.macports.org). (You can also download and install these tools manually.)
 
 **Important:** Don't install Ruby 2.3 itself using Homebrew/MacPorts/etc., as this leads down a twisty rabbit hole. Either trust the built-in Ruby 2.3 or newer installation or use `rbenv` to do everything. Note that `rbenv` is incompatible with `rvm`, so if you ever installed `rvm` before you'll need to remove it before proceeding.
 
@@ -107,7 +107,7 @@ bundle exec jekyll serve --watch --incremental
 
 You'll only need to execute the `bundle install` command once to install all the required Ruby gems, including Jekyll itself. If you get errors at this stage, you may need to update your Ruby installation, fix your Ruby environment, or resolve dependencies between the Ruby gems.
 
-With the `serve` option, Jekyll watches the local files and on every save triggers an automatic build of the site. It also runs a mini-webserver at [http://localhost:4000/](http://localhost:4000/) so the documentation can be previewed in the browser right on [your own computer](http://localhost:4000/).
+With the `serve` option, Jekyll watches the local files and on every save triggers an automatic build of the site. It also runs a mini-webserver at [http://localhost:4000/](//localhost:4000/) so the documentation can be previewed in the browser right on [your own computer](//localhost:4000/).
 
 ## Publishing changes
 

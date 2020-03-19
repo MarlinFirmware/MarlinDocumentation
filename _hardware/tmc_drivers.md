@@ -185,7 +185,7 @@ Command | Configuration<br>required | Description
 
 [Trinamic.com](//www.trinamic.com)
 
-[Watterott documentation](http://learn.watterott.com/silentstepstick/)
+[Watterott documentation](//learn.watterott.com/silentstepstick/)
 
 [stallGuard](//www.trinamic.com/technology/adv-technologies/stallguard/)
 

@@ -20,7 +20,7 @@ There are two ways of using **PlatformIO** with **Atom**.
 
 ### Install Atom and PlatformIO
 
-1. Install **Atom** and **PlatformIO** as described in [PlatformIO for Atom](http://docs.platformio.org/en/latest/ide/atom.html#installation).
+1. Install **Atom** and **PlatformIO** as described in [PlatformIO for Atom](//docs.platformio.org/en/latest/ide/atom.html#installation).
 1. Repeat steps 2 and 3 of the above to install the **process-palette** package in Atom.
 
 ### Build Marlin

@@ -68,4 +68,4 @@ In addition to following the guidelines above, we ask that you follow a thorough
   - [Issue Queue](//github.com/MarlinFirmware/Marlin/issues)
   - [Post a New Issue](//github.com/MarlinFirmware/Marlin/issues/new)
   - [Bug Fix branch](//github.com/MarlinFirmware/Marlin/tree/bugfix-1.1.x)
-  - [RepRap forums](http://forums.reprap.org/)
+  - [RepRap forums](//forums.reprap.org/)

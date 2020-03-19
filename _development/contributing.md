@@ -24,9 +24,9 @@ Marlin posts "nightly" builds that contain the most up-to-date code. While they 
 Are you skilled in information design? This website is far from complete, and it's a bit text-heavy. We need more photos, diagrams, and YouTube videos to embed on these pages. A well-chosen image or well-produced video can have more impact than many pages of written documentation. Visit the [MarlinDocumentation Project](//github.com/MarlinFirmware/MarlinDocumentation) for more information.
 
 ### Fund Development
-The current maintainer of Marlin is [Scott Lahteine](http://www.thinkyhead.com/donate-to-marlin) aka @thinkyhead. Scott has been writing software for a few decades, with a focus on shareware and open source. He reviews every contribution before it goes into Marlin, maintains documentation, hosts Facebook and Discord groups, and maintains a small 3D printer test lab in Austin, TX.
+The current maintainer of Marlin is [Scott Lahteine](//www.thinkyhead.com/donate-to-marlin) aka @thinkyhead. Scott has been writing software for a few decades, with a focus on shareware and open source. He reviews every contribution before it goes into Marlin, maintains documentation, hosts Facebook and Discord groups, and maintains a small 3D printer test lab in Austin, TX.
 
-Your donation accelerates development, testing, and advancement of the most ambitious open source multi-platform 3D printing firmware in the world. See "[Donate to Marlin](http://www.thinkyhead.com/donate-to-marlin)" for funding options. The best deal for us today is [GitHub Sponsors](//github.com/sponsors/thinkyhead) as they now provide one-to-one donation matching!
+Your donation accelerates development, testing, and advancement of the most ambitious open source multi-platform 3D printing firmware in the world. See "[Donate to Marlin](//www.thinkyhead.com/donate-to-marlin)" for funding options. The best deal for us today is [GitHub Sponsors](//github.com/sponsors/thinkyhead) as they now provide one-to-one donation matching!
 
 ### Join the Community
 
@@ -37,7 +37,7 @@ There are now many community resources for users of Marlin. If you're looking fo
 - [MarlinFirmware on Discord](//discord.gg/n5NJ59y) - Realtime chat with users and developers
 - [Marlin Firmware](//www.facebook.com/groups/1049718498464482/) and [Marlin Firmware for 3D Printers](//www.facebook.com/groups/3Dtechtalk/) Facebook Groups
 - [Tom's 3D Forums](//discuss.toms3d.org/) - Hosted by Tom Sanladerer
-- [Marlin Forum](http://forums.reprap.org/list.php?415) at RepRap.org
+- [Marlin Forum](//forums.reprap.org/list.php?415) at RepRap.org
 - [Marlin YouTube Videos](//www.youtube.com/results?search_query=marlin+firmware)
 
 ### Promote Marlin
