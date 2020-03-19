@@ -206,6 +206,9 @@ img.floater.framed { border: 4px solid black; }
 
 #gcode-header h1 { margin-bottom: 4px; }
 
+div.custom-article>p { font-size: 120%; }
+div.custom-article>table { margin: 0 auto 1em; }
+
 div.container.gcode {
   div.col-lg-12.row {
     margin-left: 16px;
@@ -506,7 +509,6 @@ footer>.container { display: block; clear: both; margin: 1em auto; }
 @media (min-width: $screen-sm-min) {
   #search.container .overlay { width: 750px; }
   .navbar-nav>li>a { padding-left: 4px; padding-right: 4px; }
-  #daynite { display: none; }
   @media (min-width: 768px) {
     .navbar-nav { margin: 0 0 0 10px; }
   }
