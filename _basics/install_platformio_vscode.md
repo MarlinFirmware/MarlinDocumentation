@@ -1,45 +1,42 @@
 ---
 title:        Installing Marlin (VSCode)
-description:  Marlin Installation Quick Start Guide, PlatformIO with VSCode
+description:  How to install Marlin using PlatformIO in VSCode
 
 author: Bob-the-Kuhn
-contrib: shitcreek, ivankravets
+contrib: shitcreek, ivankravets, thinkyhead
 category: [ articles, getting-started ]
 ---
 
 Before reading this article, you should have already read [Installing Marlin with PlatformIO](install_platformio.html).
 
-![PlatformIO with VSCode](/assets/images/basics/install_platformio_vscode/platformio_vscode_screenshot.png)
-
 # PlatformIO with VSCode
 
-PlatformIO turns VSCode into a complete IDE for compiling and developing Marlin. 
+[PlatformIO](//platformio.org/install/ide?install=vscode) turns VSCode into a complete IDE for compiling and developing Marlin.
+
+![PlatformIO with VSCode](/assets/images/basics/install_platformio_vscode/platformio_vscode_screenshot.png)
 
 ## Installation
 
 ### 1. Install VSCode
 
-Pointers to setup instructions for the supported platforms are near the top of [Setting up Visual Studio Code](https://code.visualstudio.com/docs/setup/setup-overview).
+Visit the [Setting up Visual Studio Code](//code.visualstudio.com/docs/setup/setup-overview) page to download and install the latest VSCode for your particular platform.
 
 ### 2. Install the PlatformIO IDE
 
-PlatformIO IDE for VSCode [Get PlatformIO IDE](https://platformio.org/install/ide?install=vscode)
+Head over to the "[Get PlatformIO IDE](//platformio.org/install/ide?install=vscode)" page to learn how to install PlatformIO IDE in VSCode.
 
 ![Install PlatformIO IDE](/assets/images/basics/install_platformio_vscode/install_platformio_vscode.png)
 
-### 3. Clone Git Project
+(The quickest way to get started is to install *[Auto Build Marlin](auto_build_marlin.html)* and PlatformIO will be installed along with it.)
 
-Switch to new PlatformIO View in Activity Bar (left side bar), then Quick Access > Clone Git Project ...
+## Open Marlin in VSCode / PlatformIO
 
-![View Command Palette](/assets/images/basics/install_platformio_vscode/platformio_clone_git.png)
+You can open Marlin in *Visual Studio Code* in one of several ways:
+- Drag your downloaded Marlin Firmware folder onto the *Visual Studio Code* application icon, or
+- Use the **Open…** command in the *VSCode* **File** menu, or
+- Open the PIO Home tab and click the "**Open Project**" button.
 
-### 4. Select Repository Branch
-
-The name of the active branch is shown in the bottom left corner in the blue bar. Click on the branch name to reveal a list of branches you can work in. There's also an option to create a new branch.
-
-![View Command Palette](/assets/images/basics/install_platformio_vscode/select_git_branch.png)
-
-### 5. Select Environment
+## Set your environment
 
 To manually set the environment for your board:<br/>
 Open the file `platformio.ini` and change `default_envs` to the environment that your board uses. Look through this file for your chip's environment name. For example, the environment name for the **LPC1768** chip appears as `[env:LPC1768]`. Omit the outer wrapper: `[env:____]`.
@@ -52,7 +49,7 @@ When you click the **PlatformIO** button, you will see the **PROJECT TASKS** inc
 
 If you don't want to set `default_envs`, select the environment for your board from the **PlatformIO Project Tasks list**.
 
-#### Identifying the correct environment for the selected board
+#### Identifying your board's environment
 
 The PlatformIO environment needed for a motherboard is in the comments for the board in the **pins.h** file. In Marlin 2.0 it's located in  a subdirectory **Marlin/src/pins/pins.h**.
 
@@ -64,20 +61,12 @@ The PlatformIO environment needed for a motherboard is in the comments for the b
 
   ```cpp
   #elif MB(RAMPS_14_EEB)
-     #include "pins_RAMPS.h"     // ATmega1280, ATmega2560                     env:megaatmega1280 env:megaatmega2560'
+     #include "pins_RAMPS.h"     // ATmega1280, ATmega2560  env:megaatmega1280 env:megaatmega2560
   ```
 
   The first part of the comment lists the CPU(s) used in the board.
 
   The env:xxxx section(s) are the PlatformIO environment(s) that are used for this board.
-
-  In this case **megaatmega2560** is the one used 99.9% of the time.
-
-#### Or, Use AutoBuildMarlin
-
-![AutoBuild Menu](/assets/images/basics/install_platformio_vscode/AB_menu.png){: .floater} [AutoBuildMarlin](auto_build_marlin.html) is a Visual Studio Code extension that automatically selects the correct environment for your `MOTHERBOARD` and provides buttons for quick Build and Upload.
-
-Extra steps are needed to install the extension. See the [AutoBuildMarlin](auto_build_marlin.html) page for full instructions.
 
 ### 6. Initiate Build, Clean or Upload task
 

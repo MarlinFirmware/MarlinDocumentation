@@ -99,9 +99,9 @@ There are several technologies specific to Trinamic drivers that are supported b
 * [stallGuard] measures the load that is applied to the motor. If the load is sufficiently high, Marlin can react to the event. Such an event can be when we drive an axis to its physical limit and the signal provided by the driver can be detected just like an endstop. That way you can use the driver itself as an axis sensor negating the need to an additional endstop and the wiring needed. StallGuard is only active when the driver is in spreadCycle mode.
 * Hybrid Mode: Marlin can configure the driver to automatically change between stepping modes using a user configured switching velocity. If the velocity is lower than the threshold the stepper is in quiet stealthChop mode. When the axis velocity increases the driver will automatically switch to spreadCycle.
 
-[stealthChop]: https://www.trinamic.com/technology/adv-technologies/stealthchop/
-[spreadCycle]: https://www.trinamic.com/technology/adv-technologies/spreadcycle/
-[stallGuard]: https://www.trinamic.com/technology/adv-technologies/stallguard/
+- [stealthChop](//www.trinamic.com/technology/adv-technologies/stealthchop/)
+- [spreadCycle](//www.trinamic.com/technology/adv-technologies/spreadcycle/)
+- [stallGuard](//www.trinamic.com/technology/adv-technologies/stallguard/)
 
 Option | Description
 ---:|:---
@@ -149,11 +149,13 @@ Command | Configuration<br>required | Description
 
 # Troubleshooting
 
+- Some SilentStepSticks with variable 3-5V logic voltage (VIO) [might get damaged](//github.com/MarlinFirmware/Marlin/issues/10162#issuecomment-397844847) if only powered over USB.
 - Test driver communication status with `M122`.
-- Test the current **bugfix** branch of Marlin posted on GitHub (in case your issue is already fixed).
-- Use the latest TMC Stepper libraries.
+- Test Marlin's **bugfix** branch (on GitHub) to see if your issue is fixed.
+- Test the latest TMCStepper library to see if your issue is fixed.
 - Check all wiring and wire crimps.
-  - **SPI**: Use a multimeter to check connectivity all the way down the chain on all the communication lines
+  - **SPI**: Use a multimeter to check connectivity all the way down the chain on all the communication lines.
+  - **SPI** conflict with the **SD card**? Solutions vary.
   - **UART**:
     - Make sure your receive (RX) pin is interrupt capable
     - Check the resistance value between receive (RX) and transmit (TX) lines. You should see 1kOhm.
@@ -173,32 +175,32 @@ Command | Configuration<br>required | Description
 
 # External resources
 
-[Arduino library for TMC drivers](https://github.com/teemuatlut/TMCStepper) (Replaces the following two)
+[Arduino library for TMC drivers](//github.com/teemuatlut/TMCStepper) (Replaces the following two)
 
-[Arduino library for TMC2130](https://github.com/teemuatlut/TMC2130Stepper)
+[Arduino library for TMC2130](//github.com/teemuatlut/TMC2130Stepper)
 
-[Arduino library for TMC2208](https://github.com/teemuatlut/TMC2208Stepper)
+[Arduino library for TMC2208](//github.com/teemuatlut/TMC2208Stepper)
 
-[SilentStepStick TMC2130 schematic and pinout](https://github.com/watterott/SilentStepStick/blob/master/hardware/SilentStepStick-TMC2130_v11.pdf)
+[SilentStepStick TMC2130 schematic and pinout](//github.com/watterott/SilentStepStick/blob/master/hardware/SilentStepStick-TMC2130_v11.pdf)
 
-[SilentStepStick TMC2208 schematic and pinout](https://github.com/watterott/SilentStepStick/blob/master/hardware/SilentStepStick-TMC2208_v12.pdf)
+[SilentStepStick TMC2208 schematic and pinout](//github.com/watterott/SilentStepStick/blob/master/hardware/SilentStepStick-TMC2208_v12.pdf)
 
-[Trinamic.com](https://www.trinamic.com)
+[Trinamic.com](//www.trinamic.com)
 
-[Watterott documentation](http://learn.watterott.com/silentstepstick/)
+[Watterott documentation](//learn.watterott.com/silentstepstick/)
 
-[stallGuard](https://www.trinamic.com/technology/adv-technologies/stallguard/)
+[stallGuard](//www.trinamic.com/technology/adv-technologies/stallguard/)
 
-[stealthChop](https://www.trinamic.com/technology/adv-technologies/stealthchop/)
+[stealthChop](//www.trinamic.com/technology/adv-technologies/stealthchop/)
 
-[spreadCycle](https://www.trinamic.com/technology/adv-technologies/spreadcycle/)
+[spreadCycle](//www.trinamic.com/technology/adv-technologies/spreadcycle/)
 
-[TMC2130 datasheet](https://www.trinamic.com/fileadmin/assets/Products/ICs_Documents/TMC2130_datasheet.pdf)
+[TMC2130 datasheet](//www.trinamic.com/fileadmin/assets/Products/ICs_Documents/TMC2130_datasheet.pdf)
 
-[TMC2208 datasheet](https://www.trinamic.com/fileadmin/assets/Products/ICs_Documents/TMC220x_TMC2224_datasheet_Rev1.09.pdf)
+[TMC2208 datasheet](//www.trinamic.com/fileadmin/assets/Products/ICs_Documents/TMC220x_TMC2224_datasheet_Rev1.09.pdf)
 
-[TMC2130 Hackaday article by Moritz Walter](https://hackaday.com/2016/09/30/3d-printering-trinamic-tmc2130-stepper-motor-drivers-shifting-the-gears/)
+[TMC2130 Hackaday article by Moritz Walter](//hackaday.com/2016/09/30/3d-printering-trinamic-tmc2130-stepper-motor-drivers-shifting-the-gears/)
 
-[Video guide by Thomas Sanladerer](https://www.youtube.com/watch?v=sPvTB3irCxQ)
+[Video guide by Thomas Sanladerer](//www.youtube.com/watch?v=sPvTB3irCxQ)
 
-[TMC2208 Torque testing by Alex Kenis](https://www.youtube.com/watch?v=GVs2d-TOims)
+[TMC2208 Torque testing by Alex Kenis](//www.youtube.com/watch?v=GVs2d-TOims)

@@ -8,15 +8,15 @@ contrib: thinkyhead, AnHardt
 category: [ development ]
 ---
 # Editing
-All the Marlin fonts were created using [Fony](http://hukka.ncn.fi/?fony) but any other font editor such as [Fontforge](https://fontforge.github.io/en-US/) may be used to create and edit fonts.
+All the Marlin fonts were created using [Fony](//hukka.ncn.fi/?fony) but any other font editor such as [Fontforge](//fontforge.github.io/en-US/) may be used to create and edit fonts.
 
 # Exporting
 Marlin can't directly read font files in the **FON** file format. These must be exported to a C/C++ byte array. The workflow is simple.
-- Open a font file using [Fony](http://hukka.ncn.fi/?fony) or the [Online Font Converter](https://onlinefontconverter.com/).
+- Open a font file using [Fony](//hukka.ncn.fi/?fony) or the [Online Font Converter](//onlinefontconverter.com/).
 - Export the font to **BDF** format, giving it a **`.bdf`** extension.
-- Use the [bdf2u8g](https://github.com/olikraus/u8glib/tree/master/tools/font/bdf2u8g) program to convert to C/C++ data.
+- Use the [bdf2u8g](//github.com/olikraus/u8glib/tree/master/tools/font/bdf2u8g) program to convert to C/C++ data.
 
-Before converting the font, you'll need to choose the character range to use. In the [Fony](http://hukka.ncn.fi/?fony) window select the first "symbol" from your font file (**1**) and take note of its index (**3**). In the following example the index of our first symbol is 32. Repeat the operation for the last symbol (**2**). In our example the value is 255.
+Before converting the font, you'll need to choose the character range to use. In the [Fony](//hukka.ncn.fi/?fony) window select the first "symbol" from your font file (**1**) and take note of its index (**3**). In the following example the index of our first symbol is 32. Repeat the operation for the last symbol (**2**). In our example the value is 255.
 
 ![Figure #001]({{ '/assets/images/docs/development/fonts/figure-001.jpg' | prepend: site.baseurl }})
 {: style="text-align: center;"}

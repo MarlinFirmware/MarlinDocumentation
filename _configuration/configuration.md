@@ -18,7 +18,7 @@ These two files contain all of Marlin's build-time configuration options. Simply
 
 To use configurations from an earlier version of Marlin, try dropping them into the newer Marlin and building. As part of the build process, the `SanityCheck.h` will print helpful error messages explaining what needs to be changed.
 
-Also a tool like [Winmerge](http://winmerge.org/) is usefull to compare the old file to the new one and you can copy over the settings.
+Also a tool like [Winmerge](//winmerge.org/) is usefull to compare the old file to the new one and you can copy over the settings.
 
 ## Compiler Directives
 
@@ -39,15 +39,15 @@ The most authoritative source on configuration details will always be **the conf
 
 If you've never configured and calibrated a 3D Printer before, here are some good resources:
 
-- [Calibration](http://reprap.org/wiki/Calibration)
-- [Calibrating Steps-per-unit](http://youtu.be/wAL9d7FgInk)
-- [Prusa's calculators](http://calculator.josefprusa.cz)
-- [Triffid Hunter's Calibration Guide](http://reprap.org/wiki/Triffid_Hunter%27s_Calibration_Guide)
-- [The Essential Calibration Set](http://www.thingiverse.com/thing:5573)
-- [Calibration of your RepRap](https://sites.google.com/site/repraplogphase/calibration-of-your-reprap)
-- [XY 20 mm Calibration Box](http://www.thingiverse.com/thing:298812)
-- [G-code reference](http://reprap.org/wiki/G-code)
-- [Marlin3DprinterTool](https://github.com/cabbagecreek/Marlin3DprinterTool)
+- [Calibration](//reprap.org/wiki/Calibration)
+- [Calibrating Steps-per-unit](//youtu.be/wAL9d7FgInk)
+- [Prusa's calculators](//calculator.josefprusa.cz)
+- [Triffid Hunter's Calibration Guide](//reprap.org/wiki/Triffid_Hunter%27s_Calibration_Guide)
+- [The Essential Calibration Set](//www.thingiverse.com/thing:5573)
+- [Calibration of your RepRap](//sites.google.com/site/repraplogphase/calibration-of-your-reprap)
+- [XY 20 mm Calibration Box](//www.thingiverse.com/thing:298812)
+- [G-code reference](//reprap.org/wiki/G-code)
+- [Marlin3DprinterTool](//github.com/cabbagecreek/Marlin3DprinterTool)
 
 
 ## Before You Begin
@@ -151,7 +151,7 @@ The most important setting is Marlin is the motherboard. The firmware needs to k
 Using [`boards.h`](/docs/hardware/boards.html) as a reference, replace `BOARD_RAMPS_14_EFB` with your board's ID. The [`boards.h`](/docs/hardware/boards.html) file has the most up-to-date listing of supported boards, so check it first if you don't see yours listed there.
 
 {% alert info %}
-The Sanguino board requires adding "Sanguino" support to Arduino IDE. Open `Preferences` and locate the `Additional Boards Manager URLs` field. Copy and paste [this source URL](https://raw.githubusercontent.com/Lauszus/Sanguino/master/package_lauszus_sanguino_index.json). Then use `Tools` > `Boards` > `Boards Manager` to install "Sanguino" from the list. An internet connection is required. (Thanks to "Dust's RepRap Blog" for the tip.)
+The Sanguino board requires adding "Sanguino" support to Arduino IDE. Open `Preferences` and locate the `Additional Boards Manager URLs` field. Copy and paste [this source URL](//raw.githubusercontent.com/Lauszus/Sanguino/master/package_lauszus_sanguino_index.json). Then use `Tools` > `Boards` > `Boards Manager` to install "Sanguino" from the list. An internet connection is required. (Thanks to "Dust's RepRap Blog" for the tip.)
 {% endalert %}
 
 ### Custom Machine Name
@@ -166,7 +166,7 @@ This is the name of your printer as displayed on the LCD and by [`M115`](/docs/g
 ```cpp
 //#define MACHINE_UUID "00000000-0000-0000-0000-000000000000"
 ```
-A unique ID for your 3D printer. A suitable unique ID can be generated randomly at [uuidtools.com](https://www.uuidtools.com/generate/v4). Some host programs and slicers may use this identifier to differentiate between specific machines on your network.
+A unique ID for your 3D printer. A suitable unique ID can be generated randomly at [uuidtools.com](//www.uuidtools.com/generate/v4). Some host programs and slicers may use this identifier to differentiate between specific machines on your network.
 
 
 ## Extruder Info
@@ -484,18 +484,18 @@ Maximum temperature for each temperature sensor. If Marlin reads a temperature a
 `Err: MAXTEMP`: This error usually means that the temperature sensor wires are shorted together. It may also indicate an issue with the heater MOSFET or relay that is causing it to stay on.
 {% endalert %}
 {% alert warning %}
-Remember that cold surfaces near hot surfaces can lead to **condensation**, which is NOT GOOD for electronics. Use blower fans to keep air moving and use a [Dew Point Calculator](http://www.dpcalc.org/) to check your local dew point.
+Remember that cold surfaces near hot surfaces can lead to **condensation**, which is NOT GOOD for electronics. Use blower fans to keep air moving and use a [Dew Point Calculator](//www.dpcalc.org/) to check your local dew point.
 {% endalert %}
 
 ---
 
 ### PID
 
-Marlin uses PID (Proportional, Integral, Derivative) control ([Wikipedia](https://en.wikipedia.org/wiki/PID_controller)) to stabilize the dynamic heating system for the hotends and bed. When PID values are set correctly, heaters reach their target temperatures faster, maintain temperature better, and experience less wear over time.
+Marlin uses PID (Proportional, Integral, Derivative) control ([Wikipedia](//en.wikipedia.org/wiki/PID_controller)) to stabilize the dynamic heating system for the hotends and bed. When PID values are set correctly, heaters reach their target temperatures faster, maintain temperature better, and experience less wear over time.
 
 Most vitally, correct PID settings will prevent excessive overshoot, which is a safety hazard. During PID calibration, use the highest target temperature you intend to use (where overshoots are more critical).
 
-See the [PID Tuning](http://reprap.org/wiki/PID_Tuning) topic on the RepRap wiki for detailed instructions on [`M303`](/docs/gcode/M303.html) auto-tuning. The PID settings should be tuned whenever changing a hotend, temperature sensor, heating element, board, power supply voltage (12v/24v), or anything else related to the high-voltage circuitry.
+See the [PID Tuning](//reprap.org/wiki/PID_Tuning) topic on the RepRap wiki for detailed instructions on [`M303`](/docs/gcode/M303.html) auto-tuning. The PID settings should be tuned whenever changing a hotend, temperature sensor, heating element, board, power supply voltage (12v/24v), or anything else related to the high-voltage circuitry.
 
 ---
 
@@ -771,7 +771,7 @@ These are the most crucial settings for your printer, as they determine how accu
 Override with [`M92`](/docs/gcode/M092.html).
 
 {% panel info Step Calculator %}
-The [Prusa Calculator](http://prusaprinters.org/calculator/) is a great tool to help find the right values for your specific printer configuration.
+The [Prusa Calculator](//prusaprinters.org/calculator/) is a great tool to help find the right values for your specific printer configuration.
 {% endpanel %}
 
 #### Default Max Feed Rate <em class="fa fa-sticky-note-o" aria-hidden="true"></em> <em class="fa fa-desktop" aria-hidden="true"></em>
@@ -910,7 +910,7 @@ To indicate a Servo Z Probe (e.g., an endstop switch mounted on a rotating arm) 
 ```cpp
 //#define BLTOUCH
 ```
-The [ANTCLABS BLTouch](https://plus.google.com/113792662927481823969) probe uses custom circuitry and a magnet to raise and lower a metal pin which acts as a touch probe. The BLTouch uses the servo connector and is controlled using specific servo angles. With this option enabled the other required settings are automatically configured (so there's no need to enter servo angles, for example).
+The [ANTCLABS BLTouch](//plus.google.com/113792662927481823969) probe uses custom circuitry and a magnet to raise and lower a metal pin which acts as a touch probe. The BLTouch uses the servo connector and is controlled using specific servo angles. With this option enabled the other required settings are automatically configured (so there's no need to enter servo angles, for example).
 
 #### TOUCH MI PROBE
 
@@ -959,7 +959,7 @@ A probe deployed by moving the x-axis, such as the Wilson II's rack-and-pinion p
 ```cpp
 //#define Z_PROBE_ALLEN_KEY
 ```
-A retractable z-probe for deltas that uses an Allen key as the probe. See "[Kossel automatic bed leveling probe](http://reprap.org/wiki/Kossel#Automatic_bed_leveling_probe)" at the RepRap wiki. It deploys by leveraging against the z-axis belt, and retracts by pushing the probe down.
+A retractable z-probe for deltas that uses an Allen key as the probe. See "[Kossel automatic bed leveling probe](//reprap.org/wiki/Kossel#Automatic_bed_leveling_probe)" at the RepRap wiki. It deploys by leveraging against the z-axis belt, and retracts by pushing the probe down.
 
 More information will be included in an upcoming Delta configuration page.
 
@@ -1266,7 +1266,7 @@ Only `AUTO_BED_LEVELING_BILINEAR` currently supports `SCARA`.<br/>
 ```cpp
 //#define RESTORE_LEVELING_AFTER_G28
 ```
-Normally [`G28`](/docs/gcode/G028.html) leaves leveling disabled on completion. Enable this option to have [`G28`](/docs/gcode/G028.html) restore the prior leveling state.
+Normally [`G28`](/docs/gcode/G028.html) causes leveling to be disabled, so you have to re-enable it with `M420 S1` or `G29`. If you enable this option then `G28` will make sure to turn leveling back on if it was enabled beforehand.
 
 ### Debug Leveling
 ```cpp
@@ -1793,50 +1793,50 @@ Most other LCD controllers are variants of these. Enable just one of the followi
 Option|Description
 ------|-----------
 `ULTIMAKERCONTROLLER`|The original Ultimaker Controller.
-`ULTIPANEL`|[ULTIPANEL](http://www.thingiverse.com/thing:15081) as seen on Thingiverse.
-`PANEL_ONE`|[PanelOne from T3P3](http://reprap.org/wiki/PanelOne) (via RAMPS 1.4 AUX2/AUX3). A variant of `ULTIMAKERCONTROLLER`.
-`REPRAP_DISCOUNT_SMART_CONTROLLER`|[RepRapDiscount Smart Controller](http://reprap.org/wiki/RepRapDiscount_Smart_Controller). Usually sold with a white PCB.
-`G3D_PANEL`|[Gadgets3D G3D LCD/SD Controller](http://reprap.org/wiki/RAMPS_1.3/1.4_GADGETS3D_Shield_with_Panel). Usually sold with a blue PCB.
-`RIGIDBOT_PANEL`|[RigidBot Panel V1.0](http://www.inventapart.com/).
-`ANET_KEYPAD_LCD`|[Anet Keypad LCD](http://www.anet3d.com/prod_view.aspx?TypeId=10&Id=178) for the Anet A3
+`ULTIPANEL`|[ULTIPANEL](//www.thingiverse.com/thing:15081) as seen on Thingiverse.
+`PANEL_ONE`|[PanelOne from T3P3](//reprap.org/wiki/PanelOne) (via RAMPS 1.4 AUX2/AUX3). A variant of `ULTIMAKERCONTROLLER`.
+`REPRAP_DISCOUNT_SMART_CONTROLLER`|[RepRapDiscount Smart Controller](//reprap.org/wiki/RepRapDiscount_Smart_Controller). Usually sold with a white PCB.
+`G3D_PANEL`|[Gadgets3D G3D LCD/SD Controller](//reprap.org/wiki/RAMPS_1.3/1.4_GADGETS3D_Shield_with_Panel). Usually sold with a blue PCB.
+`RIGIDBOT_PANEL`|[RigidBot Panel V1.0](//www.inventapart.com/).
+`ANET_KEYPAD_LCD`|[Anet Keypad LCD](//www.anet3d.com/prod_view.aspx?TypeId=10&Id=178) for the Anet A3
 
 ### Graphical LCDs
 
 Option|Description
 ------|-----------
-`CARTESIO_UI`|[Cartesio UI](http://mauk.cc/webshop/cartesio-shop/electronics/user-interface).
-`MAKRPANEL`|[MaKr3d Makr-Panel](http://reprap.org/wiki/MaKr3d_MaKrPanel) with graphic controller and SD support.
-`REPRAPWORLD_GRAPHICAL_LCD`|[ReprapWorld Graphical LCD](https://reprapworld.com/?products_details&products_id/1218).
-`VIKI2`|[Panucatt Devices](http://panucatt.com) [Viki 2.0](http://panucatt.com).
-`miniVIKI`|[mini Viki with Graphic LCD](http://panucatt.com).
-`ELB_FULL_GRAPHIC_CONTROLLER`|[Adafruit ST7565 Full Graphic Controller](https://github.com/eboston/Adafruit-ST7565-Full-Graphic-Controller/).
-`REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER`|[RepRapDiscount Full Graphic Smart Controller](http://reprap.org/wiki/RepRapDiscount_Full_Graphic_Smart_Controller).
-`MINIPANEL`|[MakerLab Mini Panel](http://reprap.org/wiki/Mini_panel) with graphic controller and SD support.
+`CARTESIO_UI`|[Cartesio UI](//mauk.cc/webshop/cartesio-shop/electronics/user-interface).
+`MAKRPANEL`|[MaKr3d Makr-Panel](//reprap.org/wiki/MaKr3d_MaKrPanel) with graphic controller and SD support.
+`REPRAPWORLD_GRAPHICAL_LCD`|[ReprapWorld Graphical LCD](//reprapworld.com/?products_details&products_id/1218).
+`VIKI2`|[Panucatt Devices](//panucatt.com) [Viki 2.0](//panucatt.com).
+`miniVIKI`|[mini Viki with Graphic LCD](//panucatt.com).
+`ELB_FULL_GRAPHIC_CONTROLLER`|[Adafruit ST7565 Full Graphic Controller](//github.com/eboston/Adafruit-ST7565-Full-Graphic-Controller/).
+`REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER`|[RepRapDiscount Full Graphic Smart Controller](//reprap.org/wiki/RepRapDiscount_Full_Graphic_Smart_Controller).
+`MINIPANEL`|[MakerLab Mini Panel](//reprap.org/wiki/Mini_panel) with graphic controller and SD support.
 `BQ_LCD_SMART_CONTROLLER`|BQ LCD Smart Controller shipped with the BQ Hephestos 2 and Witbox 2.
-`ANET_FULL_GRAPHICS_LCD`|[Anet Full Graphics LCD](http://www.anet3d.com/prod_view.aspx?TypeId=10&Id=178) for the Anet A3
+`ANET_FULL_GRAPHICS_LCD`|[Anet Full Graphics LCD](//www.anet3d.com/prod_view.aspx?TypeId=10&Id=178) for the Anet A3
 
 ### Keypads
 
 Option|Description
 ------|-----------
-`REPRAPWORLD_KEYPAD`|[RepRapWorld Keypad v1.1](http://reprapworld.com/?products_details&products_id=202&cPath=1591_1626) Use `REPRAPWORLD_KEYPAD_MOVE_STEP` to set how much the robot should move on each keypress (e.g., 10mm per click).
+`REPRAPWORLD_KEYPAD`|[RepRapWorld Keypad v1.1](//reprapworld.com/?products_details&products_id=202&cPath=1591_1626) Use `REPRAPWORLD_KEYPAD_MOVE_STEP` to set how much the robot should move on each keypress (e.g., 10mm per click).
 
 ### I2C Character LCDs
 
-These controllers all require the [LiquidCrystal_I2C library](https://github.com/kiyoshigawa/LiquidCrystal_I2C).
+These controllers all require the [LiquidCrystal_I2C library](//github.com/kiyoshigawa/LiquidCrystal_I2C).
 
 Option|Description
 ------|-----------
 `RA_CONTROL_PANEL`|Elefu RA Board Control Panel
-`LCD_I2C_SAINSMART_YWROBOT`|Sainsmart [YWRobot LCM1602 LCD Display](http://henrysbench.capnfatz.com/henrys-bench/arduino-displays/ywrobot-lcm1602-iic-v1-lcd-arduino-tutorial/).
+`LCD_I2C_SAINSMART_YWROBOT`|Sainsmart [YWRobot LCM1602 LCD Display](//henrysbench.capnfatz.com/henrys-bench/arduino-displays/ywrobot-lcm1602-iic-v1-lcd-arduino-tutorial/).
 `LCM1602`|Generic LCM1602 LCD adapter
-`LCD_I2C_PANELOLU2`|PANELOLU2 LCD with status LEDs, separate encoder and click inputs. The click input can either be directly connected to a pin (if `BTN_ENC` is defined) or read through I2C (with `BTN_ENC` undefined). Requires [LiquidTWI2 library](https://github.com/lincomatic/LiquidTWI2) v1.2.3 or later.
+`LCD_I2C_PANELOLU2`|PANELOLU2 LCD with status LEDs, separate encoder and click inputs. The click input can either be directly connected to a pin (if `BTN_ENC` is defined) or read through I2C (with `BTN_ENC` undefined). Requires [LiquidTWI2 library](//github.com/lincomatic/LiquidTWI2) v1.2.3 or later.
 `LCD_I2C_VIKI`|Panucatt VIKI LCD with status LEDs, integrated click & L/R/U/D buttons, separate encoder inputs.
-`SAV_3DLCD`|Shift register panels. [2 wire Non-latching LCD SR](https://goo.gl/aJJ4sH). See [LCD configuration](http://reprap.org/wiki/SAV_3D_LCD).
+`SAV_3DLCD`|Shift register panels. [2 wire Non-latching LCD SR](//goo.gl/aJJ4sH). See [LCD configuration](//reprap.org/wiki/SAV_3D_LCD).
 
 ### I2C Graphical LCDs
 
-These controllers all require the [LiquidCrystal_I2C library](https://github.com/kiyoshigawa/LiquidCrystal_I2C).
+These controllers all require the [LiquidCrystal_I2C library](//github.com/kiyoshigawa/LiquidCrystal_I2C).
 
 Option|Description
 ------|-----------
@@ -1879,7 +1879,7 @@ Temperature status LEDs that display the hotend and bed temperature. If all hote
 ```cpp
 //#define PHOTOGRAPH_PIN     23
 ```
-[`M240`](/docs/gcode/M240.html) triggers a camera by emulating a Canon RC-1 Remote Data as described on [this site](http://www.doc-diy.net/photo/rc-1_hacked/).
+[`M240`](/docs/gcode/M240.html) triggers a camera by emulating a Canon RC-1 Remote Data as described on [this site](//www.doc-diy.net/photo/rc-1_hacked/).
 
 
 ### SkeinForge Arc Fix
@@ -1925,10 +1925,10 @@ Correct the wrong arc g-codes sent by SkeinForge when using Arc Point as fillet 
 // Support for the BariCUDA Paste Extruder.
 //#define BARICUDA
 ```
-Marlin includes support for the [Baricuda Extruder for 3D Printing Sugar and Chocolate](http://www.thingiverse.com/thing:26343) also [hosted on GitHub](http://www.github.com/jmil/BariCUDA). The feature adds the codes [`M126`](/docs/gcode/M126.html), [`M127`](/docs/gcode/M127.html), [`M128`](/docs/gcode/M128.html), and [`M129`](/docs/gcode/M129.html) for controlling the pump and valve of the Baricuda.
+Marlin includes support for the [Baricuda Extruder for 3D Printing Sugar and Chocolate](//www.thingiverse.com/thing:26343) also [hosted on GitHub](//www.github.com/jmil/BariCUDA). The feature adds the codes [`M126`](/docs/gcode/M126.html), [`M127`](/docs/gcode/M127.html), [`M128`](/docs/gcode/M128.html), and [`M129`](/docs/gcode/M129.html) for controlling the pump and valve of the Baricuda.
 
 
-[![LED Lights](/assets/images/config/led-lights.jpg){: .floater.framed}](http://www.instructables.com/id/3D-Printer-RGB-LED-Feedback/){:target="_blank"}
+[![LED Lights](/assets/images/config/led-lights.jpg){: .floater.framed}](//www.instructables.com/id/3D-Printer-RGB-LED-Feedback/){:target="_blank"}
 
 ### RGB Color LEDs
 
@@ -1938,13 +1938,13 @@ Marlin currently supplies two options for RGB-addressable color indicators. In b
 //define BlinkM/CyzRgb Support
 //#define BLINKM
 ```
-The [BLINKM board](https://thingm.com/products/blinkm/) supplies the backlighting for some LCD controllers. Its color is set using I2C messages.
+The [BLINKM board](//thingm.com/products/blinkm/) supplies the backlighting for some LCD controllers. Its color is set using I2C messages.
 
 ```cpp
 //define PCA9632 PWM LED driver Support
 //#define PCA9632
 ```
-The [Philips PCA9632](https://www.digchip.com/datasheets/3286493-pca9632.html) is a common PWM LED driver, controlled (like BlinkM) using I2C.
+The [Philips PCA9632](//www.digchip.com/datasheets/3286493-pca9632.html) is a common PWM LED driver, controlled (like BlinkM) using I2C.
 
 ```cpp
 //#define RGB_LED
@@ -1980,7 +1980,7 @@ LED Strips require a MOFSET Chip between PWM lines and LEDs, as the Arduino cann
   //#define NEOPIXEL_BKGD_COLOR { 255, 255, 255, 0 } // R, G, B, W
 #endif
 ```
-[NEOPIXELS](https://www.adafruit.com/category/168)
+[NEOPIXELS](//www.adafruit.com/category/168)
 
 #### Printer Event LEDs
 ```cpp
@@ -2892,13 +2892,13 @@ Experimental feature for filament change support and parking the nozzle when pau
 ```cpp
 //#define HAVE_TMCDRIVER
 ```
-Enable this section if you have TMC26X motor drivers. You'll need to import the [TMC26XStepper](https://github.com/trinamic/TMC26XStepper.git) library into the Arduino IDE. See the `Configuration_adv.h` file for the full set of sub-options.
+Enable this section if you have TMC26X motor drivers. You'll need to import the [TMC26XStepper](//github.com/trinamic/TMC26XStepper.git) library into the Arduino IDE. See the `Configuration_adv.h` file for the full set of sub-options.
 
 ### Trinamic TMC2130
 ```cpp
 //#define HAVE_TMC2130
 ```
-Enable this option for SilentStepStick Trinamic TMC2130 SPI-configurable stepper drivers. You'll also need the [TMC2130Stepper](https://github.com/teemuatlut/TMC2130Stepper) Arduino library. See the `Configuration_adv.h` file for the full set of sub-options.
+Enable this option for SilentStepStick Trinamic TMC2130 SPI-configurable stepper drivers. You'll also need the [TMC2130Stepper](//github.com/teemuatlut/TMC2130Stepper) Arduino library. See the `Configuration_adv.h` file for the full set of sub-options.
 
 To use TMC2130 stepper drivers in SPI mode connect your SPI2130 pins to the hardware SPI interface on your board and define the required CS pins in your `pins_MYBOARD.h` file. (e.g., RAMPS 1.4 uses AUX3 pins `X_CS_PIN 53`, `Y_CS_PIN 49`, etc.).
 
@@ -2906,7 +2906,7 @@ To use TMC2130 stepper drivers in SPI mode connect your SPI2130 pins to the hard
 ```cpp
 //#define HAVE_L6470DRIVER
 ```
-Enable this section if you have L6470 motor drivers. You need to import the [L6470 library](https://github.com/ameyer/Arduino-L6470) into the Arduino IDE for this. See the `Configuration_adv.h` file for the full set of sub-options.
+Enable this section if you have L6470 motor drivers. You need to import the [L6470 library](//github.com/ameyer/Arduino-L6470) into the Arduino IDE for this. See the `Configuration_adv.h` file for the full set of sub-options.
 
 ## Experimental i2c Bus
 ```cpp
@@ -2976,7 +2976,7 @@ See the [Laser and Spindle page](/docs/configuration/laser_spindle.html) for mor
 ```cpp
 //#define FILAMENT_WIDTH_SENSOR
 ```
-Enable to add support for a filament width sensor such as [Filament Width Sensor Prototype Version 3](http://www.thingiverse.com/thing:454584). With a filament sensor installed, Marlin can adjust the flow rate according to the measured filament width. Adjust the sub-options below according to your setup.
+Enable to add support for a filament width sensor such as [Filament Width Sensor Prototype Version 3](//www.thingiverse.com/thing:454584). With a filament sensor installed, Marlin can adjust the flow rate according to the measured filament width. Adjust the sub-options below according to your setup.
 
 Only a single extruder is supported at this time.
 

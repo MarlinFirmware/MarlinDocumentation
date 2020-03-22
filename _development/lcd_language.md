@@ -23,9 +23,9 @@ Currently Marlin includes support for two display technologies:
 On the other hand, symbols 128 and above have major differences from one display to another.
 
 Marlin 1.0 and 1.1 currently support:
-- HD44780 (and similar) with Kana charset A00 [HD44780](https://www.sparkfun.com/datasheets/LCD/HD44780.pdf) (Page 17) These are very common, but sadly not very useful when writing in European languages.
-- HD44780 (and similar) with Western charset A02 [HD44780](https://www.sparkfun.com/datasheets/LCD/HD44780.pdf) (Page 18). These are rare, but fairly useful for European languages. Also a limited number of Cyrillic symbols is available.
-- HD44780 (and similar) with [Cyrillic charset](http://store.comet.bg/download-file.php?id=466) (Page 14). Some of our Russian friends use them.
+- HD44780 (and similar) with Kana charset A00 [HD44780](//www.sparkfun.com/datasheets/LCD/HD44780.pdf) (Page 17) These are very common, but sadly not very useful when writing in European languages.
+- HD44780 (and similar) with Western charset A02 [HD44780](//www.sparkfun.com/datasheets/LCD/HD44780.pdf) (Page 18). These are rare, but fairly useful for European languages. Also a limited number of Cyrillic symbols is available.
+- HD44780 (and similar) with [Cyrillic charset](//store.comet.bg/download-file.php?id=466) (Page 14). Some of our Russian friends use them.
 
 On all these displays you can define 8 custom symbols to display at once. In Marlin these characters are used on the Boot Screen, and on the Info Screen for the Bed Temp, Degree symbol, Thermometer, "FR" (feed-rate), Clock, and Progress Bar. On the SD Card listing screens some of these characters are re-used again for Up-level, Folder, and Refresh.
 
@@ -117,9 +117,9 @@ On a full-featured desktop system like Windows or Linux we could install `unifon
 - If you want to make use of more than a few symbols outside standard ASCII or want to improve the portability to more types of displays, use UTF-8 input. Which means defining another mapper.
 - UTF-8 input is used for mappers other than `MAPPER_NON`. With a mapper, instead of "`\xe1`" (JAPANESE) or `STR_ae` you can simply type "`ä`". The "`ä`" expands to "`\xc3\xa4`". "Я" expands to "`\xd0\xaf`" … "ホ" expands to "`\xe3\x83\x9b`" … etc.
 - Due to storage limitations we can't use every UTF-8 glyph at once, so we capture only a subset containing the characters we need:
-  - `MAPPER_C2C3` corresponds well with Western-European languages. The possible symbols are listed at [this Latin-1 page](http://en.wikipedia.org/wiki/Latin-1_Supplement_(Unicode_block)).
-  - `MAPPER_D0D1` corresponds well with the Cyrillic languages. See [this Cyrillic page](http://en.wikipedia.org/wiki/Cyrillic_(Unicode_block)).
-  - `MAPPER_E382E383` works with the Japanese Katakana script. See [this Katakana page](http://en.wikipedia.org/wiki/Katakana_(Unicode_block)).
+  - `MAPPER_C2C3` corresponds well with Western-European languages. The possible symbols are listed at [this Latin-1 page](//en.wikipedia.org/wiki/Latin-1_Supplement_(Unicode_block)).
+  - `MAPPER_D0D1` corresponds well with the Cyrillic languages. See [this Cyrillic page](//en.wikipedia.org/wiki/Cyrillic_(Unicode_block)).
+  - `MAPPER_E382E383` works with the Japanese Katakana script. See [this Katakana page](//en.wikipedia.org/wiki/Katakana_(Unicode_block)).
   - There a few other language-specific mappers, and more are being developed.
 
 Mapper functions will only catch the 'lead-in' described in the mapper's name (e.g., `C2C3`). If the input doesn't match, the mapper will output a '?' or garbage.
@@ -142,7 +142,7 @@ If you get a lot of question marks on the Hitachi-based displays with your new t
   - In this file specify the mapper (e.g., `MAPPER_NON`) and font (e.g., `DISPLAY_CHARSET_ISO10646_1`) and translate some of the strings defined in `language_en.h`. (Remove `#ifndef` `#endif` from the defines.)
   - You don't have to translate all strings. Omitted definitions will simply use the English strings in in `language_en.h`.
 - If there's no existing mapper for your language then things get a bit more complex. With the Hitachi-based displays you can't make something useful without a matching charset. For graphical display… let's take the example of Greek:
-  - Find a matching charset. ([Greek and Coptic](http://en.wikipedia.org/wiki/Greek_and_Coptic))
+  - Find a matching charset. ([Greek and Coptic](//en.wikipedia.org/wiki/Greek_and_Coptic))
   - Provide a bitmap font containing the symbols in the right size (5x9 to 6x10 recommended). Normal ASCII characters should occupy 1 to 127, and the upper 128 places should be populated with your special characters.
   - Write a mapper that catches -in this case- `0xCD` to `0xCF` and add it to `utf_mapper.h`.
   - In case of an ISO10646 font we have a `MAPPER_ONE_TO_ONE` and don't have to make a table.
@@ -165,7 +165,7 @@ All translatable strings are first declared in `language_en.h` and then language
 
 Strings in `language.h` are for serial output, so don't require any translation. Core error strings must always be in English to satisfy host protocols.
 
-For information about fonts see [`buildroot/share/fonts/README.md` file](https://github.com/MarlinFirmware/Marlin/tree/1.1.x/buildroot/share/fonts#readme).
+For information about fonts see [`buildroot/share/fonts/README.md` file](//github.com/MarlinFirmware/Marlin/tree/1.1.x/buildroot/share/fonts#readme).
 
 # User Instructions
 

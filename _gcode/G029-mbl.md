@@ -1,5 +1,5 @@
 ---
-tag: g029a
+tag: g029m
 title: Bed Leveling (Manual)
 brief: Measure Z heights in a grid, enable leveling compensation
 author: thinkyhead
@@ -8,8 +8,8 @@ experimental: false
 requires: MESH_BED_LEVELING
 group: calibration
 
-codes: G29
 related: [ M420, M421 ]
+codes: [ G29 ]
 
 long:
   - |
