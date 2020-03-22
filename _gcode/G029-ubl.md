@@ -83,7 +83,7 @@ parameters:
     description: |
       **Fade** height. (UBL only! For others use `M420 Z`)
 
-      Fade the amount of Mesh Based Compensation over a specified height. At the specified height, no correction is applied and natural printer kenimatics take over. If no number is specified for the command, 10mm is assumed to be reasonable.
+      Fade the amount of Mesh Based Compensation over a specified height. At the specified height, no correction is applied and natural printer kinematics take over. If no number is specified for the command, 10mm is assumed to be reasonable.
     values:
       -
         unit: linear
