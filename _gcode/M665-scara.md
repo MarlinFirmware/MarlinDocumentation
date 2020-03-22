@@ -8,7 +8,7 @@ experimental: false
 requires: MORGAN_SCARA|MAKERARM_SCARA
 group: none
 
-codes: M665
+codes: [ M665 ]
 
 long:
   - Configure SCARA geometry values

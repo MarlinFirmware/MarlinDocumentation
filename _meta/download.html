@@ -5,13 +5,13 @@ category:    [ default ]
 
 releases:
   -
-    version: 2.0.4.4
+    version: 2.0.5.1
     description: Latest release
     tools: Supports AVR and ARM<br/>Arduino and PlatformIO
     file: 2.0.x.zip
-    config: release-2.0.4
+    config: release-2.0.5
   -
-    version: 1.1.9
+    version: 1.1.9.1
     description: Previous release
     tools: Supports AVR<br/>Arduino and PlatformIO
     file: 1.1.x.zip
@@ -45,14 +45,14 @@ nightlies:
     file: bugfix-1.1.x.zip
  
 header: |
-        Previous releases can be downloaded directly from the [Marlin Github page](https://github.com/MarlinFirmware/Marlin).
+        Previous releases can be downloaded directly from the [Marlin Github page](//github.com/MarlinFirmware/Marlin).
 
 footer: |
         Also find on the project page...
 
-        - Detailed [release notes](https://github.com/MarlinFirmware/Marlin/releases),
-        - Resources for [reporting issues](https://github.com/MarlinFirmware/Marlin/issues), and
-        - The tools needed to [join the project](https://guides.github.com/activities/contributing-to-open-source/).
+        - Detailed [release notes](//github.com/MarlinFirmware/Marlin/releases),
+        - Resources for [reporting issues](//github.com/MarlinFirmware/Marlin/issues), and
+        - The tools needed to [join the project](//guides.github.com/activities/contributing-to-open-source/).
 
 ---
 
@@ -70,10 +70,10 @@ footer: |
           <em>{{ release.tools }}<em>
         </td>
         <td><code>{{ release.version }}</code></td>
-        <td><a href="https://github.com/MarlinFirmware/Marlin/archive/{{ release.file }}">{{ release.file }}</a></td>
+        <td><a href="//github.com/MarlinFirmware/Marlin/archive/{{ release.file }}">{{ release.file }}</a></td>
         <td>
           {% if release.config %}
-            <a href="https://github.com/MarlinFirmware/Configurations/tree/{{ release.config }}">View / Download</a>
+            <a href="//github.com/MarlinFirmware/Configurations/tree/{{ release.config }}">View / Download</a>
           {% endif %}
         </td>
       </tr>
@@ -90,10 +90,10 @@ footer: |
           <em>{{ nightly.tools }}<em>
         </td>
         <td><code>{{ nightly.version }}</code></td>
-        <td><a href="https://github.com/MarlinFirmware/Marlin/archive/{{ nightly.file }}">{{ nightly.file }}</a></td>
+        <td><a href="//github.com/MarlinFirmware/Marlin/archive/{{ nightly.file }}">{{ nightly.file }}</a></td>
         <td>
           {% if nightly.config %}
-            <a href="https://github.com/MarlinFirmware/Configurations/tree/{{ nightly.config }}">View / Download</a>
+            <a href="//github.com/MarlinFirmware/Configurations/tree/{{ nightly.config }}">View / Download</a>
           {% endif %}
         </td>
       </tr>

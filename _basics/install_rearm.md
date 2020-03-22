@@ -50,7 +50,7 @@ This method is recommended because it is relatively easy and closely parallels t
 
 ## Download Marlin 2.0
 
-1. Download [Marlin 2.0](https://github.com/MarlinFirmware/Marlin/archive/2.0.x.zip) which includes support for ARM-based boards.
+1. Download [Marlin 2.0](//github.com/MarlinFirmware/Marlin/archive/2.0.x.zip) which includes support for ARM-based boards.
 
 2. Move the `2.0.x.zip` file to your "Documents" folder (or wherever you prefer) and expand the ZIP archive as you usually do.
 
