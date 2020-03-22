@@ -888,8 +888,8 @@ function toggleVersion() {
     $('#K_START').val('0');
     $('#K_END').val('2');
     $('#K_STEP').val('0.2');
-    $('#start_factor').text('Starting value for the K-factor. Usually 0 but for bowden setups you might want to start higher, e.g. 2');
-    $('#end_factor').text('Ending value of the K-factor. Bowden setups may be higher than 2');
+    $('#start_factor').text('Starting value for the K-factor');
+    $('#end_factor').text('Ending value of the K-factor');
     $('#step_factor').text('Stepping of the K-factor in the test pattern. Needs to be an exact divisor of the K-factor Range (End - Start)');
   } else {
     $('#K_START').attr('step', '1');
