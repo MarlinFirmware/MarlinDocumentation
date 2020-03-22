@@ -16,17 +16,26 @@ long:
 
 notes:
   - Requires `AUTO_BED_LEVELING_UBL`.
-  - "`G28` disables bed leveling. Follow with `M420 S` to turn leveling on, or use `RESTORE_LEVELING_AFTER_G28` to automatically keep leveling on after `G28`."
+  - "`G28` disables bed leveling. Follow with `G29 A` to turn leveling on, or use `RESTORE_LEVELING_AFTER_G28` to automatically keep leveling on after `G28`."
+  - `M420 S1` can be used to turn leveling on, but requires a valid (complete) mesh. See [M420](/docs/gcode/M420.html) for more details
 
   ### Release Notes:
 
+  - UBL builds on Edward Patel's "Mesh Bed Leveling" system (also included).
+
+  - UBL does not replace 3-Point or Planar leveling. These use a 3D matrix to tilt the whole model. UBL's 3-point and Planar operations only apply to the mesh, not to the whole model.
+
   - It is highly recommended to enable EEPROM. Without EEPROM storage enabled, UBL is limited to 3-Point or Grid Leveling (`G29 P0 T` or `G29 P0 G`) and can't save meshes for later use.
 
-  - When you do a `G28` and then a `G29 P1` to automatically build your first mesh, you'll notice that UBL probes increasingly far from the starting location. (The starting location defaults to the center of the bed.) Other grid leveling systems start in the corner and probe in a zigzag. UBL's pattern is better for Delta machines, allowing for the center of the Mesh to be populated (and edited) more quickly. You can then do a small test print to check the mesh early in the process. You don't need to populate the entire mesh to use it. You don't want to spend a lot of time generating a mesh only to realize that the the resolution or `M851 Z` probe offset is off. UBL mesh generation gathers points closest the nozzle unless you specify an (X,Y) coordinate pair.
+  - For the initial `G28` and `G29 P1` that automatically populates the mesh, UBL probes the mesh points in a growing spiral starting from the center of the bed. This pattern is better for Deltabots, allowing the center of the Mesh to be populated (and edited) more quickly so you can do test printing early in the process.
 
-  - UBL requires a decent amount of EEPROM to store its mesh data. And it takes some effort to get this Mesh data correct for a given machine. To keep this data from being destroyed when the EEPROM version changes the Mesh data is stored at the high end of the EEPROM. (Happily, no developers seem to mind.)
+  - You don't need to populate the entire mesh to use it. This saves time if you need to adjust settings and probe again.
 
-  - This system is built around Edward Patel's "Mesh Bed Leveling" system. A big "Thanks!" to him and to the creators of 3-Point and Grid Based leveling. Combining their contributions we now have the functionality and features of all three systems combined.
+  - UBL gathers the points closest the nozzle unless you specify an (X,Y) coordinate pair.
+
+  - Use `G29 P3` to automatically fill in unpopulated mesh points. You can also use an LCD controller with `G29 P2` to move the nozzle to each unpopulated point and manually adjust the height. See the ‘P2’ and ‘P3’ parameters for usage info.
+ 
+  - We know it takes a lot of effort to create good working Mesh data, so UBL stores its mesh data in a separate location where it won't be affected by EEPROM errors or version changes.
 
 parameters:
   -
