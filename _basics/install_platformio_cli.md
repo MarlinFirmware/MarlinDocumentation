@@ -19,9 +19,9 @@ Python 2.7 is required for both **Auto Build** and **PlatformIO**.  It is automa
 
 ## Install PlatformIO Core
 
-Follow [these instructions](http://docs.platformio.org/en/latest/installation.html) to install **PlatformIO Core** and it's dependencies.
+Follow [these instructions](//docs.platformio.org/en/latest/installation.html) to install **PlatformIO Core** and it's dependencies.
 
-NOTE: If a **PlatformIO** plugin/extension has previously been installed then **PlatformIO Core** is already installed.  You may still need to follow the [Install PlatformIO Core Shell Commands](http://docs.platformio.org/en/latest/faq.html#faq-install-shell-commands) section in the above link.
+NOTE: If a **PlatformIO** plugin/extension has previously been installed then **PlatformIO Core** is already installed.  You may still need to follow the [Install PlatformIO Core Shell Commands](//docs.platformio.org/en/latest/faq.html#faq-install-shell-commands) section in the above link.
 
 ## Get the correct environment for the selected board
 

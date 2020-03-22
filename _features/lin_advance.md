@@ -73,14 +73,14 @@ For each new line the K-Factor will be increased by the `K-Factor Stepping` valu
 
 ### General considerations for the Test Pattern Settings
 
- - [Bowden](http://reprap.org/wiki/Erik%27s_Bowden_Extruder) extruders need a higher K-Factor than direct extruders. Consider a `Start value for K` of around 0.1 up to an `End Value for K` of around 2.0 for LIN_ADVANCE v1.5 or around 30 up to an `End Value for K` of around 130 for v1.0.
+ - [Bowden](//reprap.org/wiki/Erik%27s_Bowden_Extruder) extruders need a higher K-Factor than direct extruders. Consider a `Start value for K` of around 0.1 up to an `End Value for K` of around 2.0 for LIN_ADVANCE v1.5 or around 30 up to an `End Value for K` of around 130 for v1.0.
  - The best matching K-Factor to be used in production depends on.
    - Type of filament. Extremely flexible filaments like Ninjaflex may not work at all.
    - Printing temperature.
    - Extruder characteristics: Bowden vs.  direct extruder , bowden length, free filament length in the extruder, etc.
    - Nozzle size and geometry.
- - The extruder's steps/mm value has to be [calibrated precisely](http://reprap.org/wiki/Triffid_Hunter%27s_Calibration_Guide#E_steps). Calibration is recommended at low speeds to avoid additional influences.
- - Minimize Backlash caused by gears [geared extruder](http://reprap.org/wiki/Wade%27s_Geared_Extruder) or by push fittings. As it will not influence the K-Factor, it can lead to strange noises from the extruder due to the pressure control.
+ - The extruder's steps/mm value has to be [calibrated precisely](//reprap.org/wiki/Triffid_Hunter%27s_Calibration_Guide#E_steps). Calibration is recommended at low speeds to avoid additional influences.
+ - Minimize Backlash caused by gears [geared extruder](//reprap.org/wiki/Wade%27s_Geared_Extruder) or by push fittings. As it will not influence the K-Factor, it can lead to strange noises from the extruder due to the pressure control.
 
 > Repeat the calibration, if any of the above parameters change.
 
@@ -141,7 +141,7 @@ If only one filament material is used, the best way is to set the K-Factor insid
     #define LIN_ADVANCE_K <your_value_here>
 
 ## Adding the K-Factor to the G-code Start Script
-[G-code Start Scripts](http://reprap.org/wiki/Start_GCode_routines) are supported by various slicers. The big advantage of setting the K-Factor via this methods is that it can easily be modified, e.g. when switching to a different material.
+[G-code Start Scripts](//reprap.org/wiki/Start_GCode_routines) are supported by various slicers. The big advantage of setting the K-Factor via this methods is that it can easily be modified, e.g. when switching to a different material.
 The K-Factor is defined by adding the command `M900 Kxx` to the end of the start script, where *xx* is the value determined with the above test pattern.
 
 The following chapter briefly describes where to find the relevant setting in popular slicers.
@@ -203,7 +203,7 @@ During deceleration, the filament compression is released again by the same form
 
 The basic formula (`advance_steps = delta_extrusion_speed * K`) is the same as in the famous JKN pressure control, but with one important difference: JKN calculates the sum of all required advance extruder steps inside the planner loop and distributes them equally over every acceleration and deceleration stepper ISR loop. This leads to the wrong distribution of advance steps, resulting in an imperfect print result. `LIN_ADVANCE` calculates the extra steps on the fly in *every* stepper ISR loop, therefore applying the required steps precisely where needed.
 
-For further details and graphs have a look into [this presentation, slides 7-9](https://drive.google.com/file/d/0B5UvosQgK3adaHVtdUI5OFR3VUU/view).
+For further details and graphs have a look into [this presentation, slides 7-9](//drive.google.com/file/d/0B5UvosQgK3adaHVtdUI5OFR3VUU/view).
 
 In Marlin, all the work is done in the `stepper.*` and `planner.*` files. In the planner loop, `LIN_ADVANCE` checks whether a move needs pressure control. This applies only to print moves, not to travel moves and extruder-only moves (like retract and prime).
 

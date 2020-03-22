@@ -8,7 +8,7 @@ experimental: false
 group: calibration
 requires: (X|Y|Z)_DUAL_ENDSTOPS
 
-codes: M666
+codes: [ M666 ]
 
 long: |
     The `M666` command allows adjusting the offsets for dual endstops

@@ -3,6 +3,7 @@ title:        Troubleshooting Tips
 description:  Getting past common configuration problems
 
 author: thinkyhead
+contrib: LVD-AC
 category: [ articles, getting-started ]
 ---
 
@@ -26,8 +27,22 @@ category: [ articles, getting-started ]
 - For AVR boards open `ultralcd_st7920_u8glib_rrd_AVR.h` and remove `#pragma GCC optimize (3)` to reduce code optimization.
 - Add 4.7k pullup resistors to the SPI lines if they are not commonly used for SPI.
 
+### Hanging LCD?
+Try doubling `BLOCK_BUFFER_SIZE` to see if the problem goes away.
+
+### No LCD / SD on ReARM?
+As seen in this [Chris's Basement video](//www.youtube.com/watch?v=H-c8UTg-EMU), the RRD display doesn't always work on first install. It didn't even light up. A custom adapter is needed with the ReARM. See [this issue](//github.com/MarlinFirmware/Marlin/pull/7390#issuecomment-320371735), and [this issue](//github.com/MarlinFirmware/Marlin/issues/11927#issuecomment-441435170), and [this page](//github.com/wolfmanjm/universal-panel-adapter).
+
+### FTDI USB Bandwidth
+At 115K baud use 167 latency, 192 USB block request. As one goes up the other goes down.
+
 ### Long Beep on Boot
 This is a hardware issue due to the connected beeper pin being HIGH when the board is first powered. Marlin turns off the BEEPER pin as soon as it possibly can. A new bootloader for your board might fix the issue in the future.
+
+### Random Halting
+An under-powered PSU combined with heaters and high speed moves can lead to a frozen board. No kill, no watchdog, heaters stuck on. See [#17202](//github.com/MarlinFirmware/Marlin/issues/17202). To test for this:
+- To test for this, enable the bed and extruder heaters and print at high speed to see if a hard freeze occurs. Try disabling heaters and/or slower printing to see if the problem goes away.
+- Read the input voltage from PSU with a meter during fast moves. If you see a drop too far below your expected voltage (e.g., 12V or 24V) this indicates a problem.
 
 ### EEPROM Errors
 
@@ -59,11 +74,24 @@ Marlin's `SanityCheck.h` files exist to check the validity of settings and make 
 
 A Marlin build can range in size from under 60K to over 200K with a generous complement of features enabled. All features try to use as little SRAM as possible, but some have a higher SRAM cost. As a guide and starting-point, be sure to use the example configuration included with Marlin that best matches your specific machine model.
 
+### Delta Height, Z Probe Offset, and G33
+
+Since Marlin 1.1 "Delta Height" is defined as the distance between Z Home Position and the Z-MIN trigger point (so it remains constant). The Z Probe Offset is added to that distance in order to go to the height of the first printed layer and as such is independent from Delta Height. (Printers without a probe have no Z Probe Offset. Instead, the Z-MIN trigger-point comes from the paper test height, aka Z0.)
+
 ### Trinamic Stepper Drivers
 
-- See [Trinamic troubleshooting](/docs/hardware/tmc_drivers.html#troubleshooting) for guidance.
+These tips are collected from various reports we have received. See [Trinamic troubleshooting](/docs/hardware/tmc_drivers.html#troubleshooting) for additional guidance.
 
-### Babystep Double-click
+- Some SilentStepSticks with variable 3-5V logic voltage (VIO) [might get damaged](https://github.com/MarlinFirmware/Marlin/issues/10162#issuecomment-397844847) if only powered over USB.
+- **SPI conflict with the SD card?** Solutions vary.
+- **E Stepper won't move when using Linear Advance with TMC drivers?**
+  - "I ended up using the drivers in legacy mode and setting them to SpreadCycle using the OTP (One Time Programmer). Unfortunately trying to set individual drivers to SpreadCycle via UART by enabling HybridThreshhold and setting the threshold to 0 for the respective axes did not work." See [#11825](//github.com/MarlinFirmware/Marlin/issues/11825).
+- **Loud / grinding TMC2208?** Increase the current to ~1500mA and lower the Hybrid Threshold.
+- **Unreliable printing, shifting layers?** Make sure the 'rsense' value is configured according to recommendations. See [#9368](//github.com/MarlinFirmware/Marlin/issues/9368).
+- **TMC2208** uses **SoftwareSerial**, and this conflicts with **Endstop Interrupts**. Disable Endstop Interrupts to proceed.
+- **Should I use `SOFTWARE_DRIVER_ENABLE`?** Not unless required by the hardware. See [#13326](//github.com/MarlinFirmware/Marlin/issues/13326).
+
+### Babystep Double-click ignored
 - Increase the `DOUBLECLICK_MAX_INTERVAL` value
 
 ### False Endstop Triggering
