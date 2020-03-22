@@ -37,7 +37,7 @@ Marlin uses a brace style intended to
 
 If vertical spacing makes code more readable, add _one_ extra blank line rather than using a different brace style.
 
- - Known by the Ancients as ["One True Brace Style"](https://en.wikipedia.org/wiki/Indent_style#Variant:_1TBS_.28OTBS.29)
+ - Known by the Ancients as ["One True Brace Style"](//en.wikipedia.org/wiki/Indent_style#Variant:_1TBS_.28OTBS.29)
  - Place opening braces at the end of the line: `if (a == 1) {`
  - Do the same for a declaration line: `void pizza(int slices) {`
  - Vertically align closing braces to the opening line.

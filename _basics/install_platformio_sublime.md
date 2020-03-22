@@ -26,7 +26,7 @@ Overview:
 
 ## Install Sublime
 
-Open the [Sublime main page](https://www.sublimetext.com/) and then click on the **"DOWNLOAD FOR ..."** button where the **"..."** will list your operating system.
+Open the [Sublime main page](//www.sublimetext.com/) and then click on the **"DOWNLOAD FOR ..."** button where the **"..."** will list your operating system.
 
 ![Downloading Sublime](/assets/images/basics/install_platformio_sublime/sublime_download.png)
 

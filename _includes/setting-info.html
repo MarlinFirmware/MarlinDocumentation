@@ -16,7 +16,7 @@ This document has been marked `needs-review`. The following information may be o
       {% assign authors = setting.author | append: ',' | append: setting.contrib | replace: " ","" | split: ',' %}
       {% if authors %}
         {% for author in authors %}
-          <a href="https://github.com/{{ author }}" data-toggle="tooltip" data-placement="bottom" title="Visit {{ author }}'s profile on Github">{% avatar user=author size=30 %}</a>
+          <a href="//github.com/{{ author }}" data-toggle="tooltip" data-placement="bottom" title="Visit {{ author }}'s profile on Github">{% avatar user=author size=30 %}</a>
         {% endfor %}
       {% endif %}
     </p>
