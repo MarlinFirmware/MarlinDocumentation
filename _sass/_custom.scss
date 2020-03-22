@@ -206,7 +206,7 @@ img.floater.framed { border: 4px solid black; }
 
 #gcode-header h1 { margin-bottom: 4px; }
 
-div.custom-article>p { font-size: 120%; }
+div.custom-article { p, ul>li { font-size: 110%; } }
 div.custom-article>table { margin: 0 auto 1em; }
 
 div.container.gcode {
@@ -214,7 +214,7 @@ div.container.gcode {
     margin-left: 16px;
     h3 { margin-left: -16px; }
     h4, h5, h6 { background: #200; color: white; margin-left: -0.5em; padding-left: 0.5em; }
-    p { font-size: 120% }
+    p, ul>li { font-size: 110% }
   }
   div.col-lg-12.row.examples .post {
     margin: -0.25em 0 1em;
@@ -222,7 +222,6 @@ div.container.gcode {
   }
 
   div.col-lg-12.row.meta { margin-left: 0; }
-  div.row.long, div.row.notes { font-size: 110%; }
   div.row.examples pre { background: #E9F5FF; }
   div.row.gallery p { font-size: normal; color: #601; }
   img { max-width: 100%; }
