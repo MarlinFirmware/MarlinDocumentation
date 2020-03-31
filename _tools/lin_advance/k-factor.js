@@ -185,24 +185,25 @@ function genGcode() {
                   ';\n' +
                   '; prepare printing\n' +
                   ';\n' +
-                  'M104 S' + NOZZLE_TEMP + ' ; set nozzle temperature but do not wait\n' +
-                  'M190 S' + BED_TEMP + ' ; set bed temperature and wait\n' +
-                  'M109 S' + NOZZLE_TEMP + ' ; block waiting for nozzle temp\n' +
-                  'G28 ; home all axes with heated bed\n' +
+                  'G21 ; Millimeter units\n' +
+                  'G90 ; Absolute XYZ\n' +
+                  'M83 ; Relative E\n' +
+                  'G28 ; Home all axes\n' +
+                  'G1 Z5 F100 ; Z raise\n' +
+                  'M104 S' + NOZZLE_TEMP + ' ; Set nozzle temperature (no wait)\n' +
+                  'M190 S' + BED_TEMP + ' ; Set bed temperature (wait)\n' +
+                  'M109 S' + NOZZLE_TEMP + ' ; Wait for nozzle temp\n' +
                   (BED_LEVELING !== '0' ? BED_LEVELING + '; Activate bed leveling compensation\n' : '') +
-                  'G21 ; set units to millimeters\n' +
-                  'M204 P' + ACCELERATION + ' ; set acceleration\n' +
-                  (JERK_X !== -1 ? 'M205 X' + JERK_X + ' ; set X jerk\n' : '') +
-                  (JERK_Y !== -1 ? 'M205 Y' + JERK_Y + ' ; set Y jerk\n' : '') +
-                  (JERK_Z !== -1 ? 'M205 Z' + JERK_Z + ' ; set Z jerk\n' : '') +
-                  (JERK_E !== -1 ? 'M205 E' + JERK_E + ' ; set E jerk\n' : '') +
-                  'G90 ; use absolute coordinates\n' +
-                  'M83 ; use relative distances for extrusion\n' +
-                  'G92 E0 ; reset extruder distance\n';
+                  'M204 P' + ACCELERATION + ' ; Acceleration\n' +
+                  (JERK_X !== -1 ? 'M205 X' + JERK_X + ' ; X Jerk\n' : '') +
+                  (JERK_Y !== -1 ? 'M205 Y' + JERK_Y + ' ; Y Jerk\n' : '') +
+                  (JERK_Z !== -1 ? 'M205 Z' + JERK_Z + ' ; Z Jerk\n' : '') +
+                  (JERK_E !== -1 ? 'M205 E' + JERK_E + ' ; E Jerk\n' : '') +
+                  'G92 E0 ; Reset extruder distance\n';
 
   //move to center and layer Height
   txtArea.value += moveTo(CENTER_X, CENTER_Y, basicSettings) +
-                   'G1 Z' + (HEIGHT_LAYER + Z_OFFSET) + ' F' + SPEED_SLOW + ' ; move to layer height\n';
+                   'G1 Z' + (HEIGHT_LAYER + Z_OFFSET) + ' F' + SPEED_SLOW + ' ; Move to layer height\n';
 
   // Prime nozzle if activated
   if (USE_PRIME) {
@@ -267,9 +268,9 @@ function genGcode() {
       refStartY = CENTER_Y + (PRINT_SIZE_Y / 2) - 20;
 
   txtArea.value += ';\n' +
-                   '; mark the test area for reference\n' +
-                   'M117 K0 ;\n' +
-                   'M900 K0 ; set K-factor 0\n' +
+                   '; Mark the test area for reference\n' +
+                   'M117 K0\n' +
+                   'M900 K0 ; Set K-factor 0\n' +
                    moveTo(refStartX1, refStartY, basicSettings) +
                    doEfeed('+', basicSettings, (USE_FWR ? 'FWR' : 'STD')) +
                    createLine(refStartX1, refStartY + 20, 20, basicSettings) +
@@ -304,14 +305,13 @@ function genGcode() {
   }
 
   txtArea.value += ';\n' +
-                   '; finish\n' +
+                   '; FINISH\n' +
                    ';\n' +
-                   'M104 S0 ; turn off hotend\n' +
-                   'M140 S0 ; turn off bed\n' +
-                   'G1 Z30 X' + (NULL_CENTER ? 0 : BED_X) + ' Y' + (NULL_CENTER ? 0 : BED_Y) + ' F' + SPEED_MOVE + ' ; move away from the print\n' +
-                   'M84 ; disable motors\n' +
-                   'M502 ; resets parameters from ROM\n' +
-                   'M501 ; resets parameters from EEPROM\n' +
+                   'M104 S0 ; Turn off hotend\n' +
+                   'M140 S0 ; Turn off bed\n' +
+                   'G1 Z30 X' + (NULL_CENTER ? 0 : BED_X) + ' Y' + (NULL_CENTER ? 0 : BED_Y) + ' F' + SPEED_MOVE + ' ; Move away from the print\n' +
+                   'M84 ; Disable motors\n' +
+                   'M501 ; Load settings from EEPROM\n' +
                    ';';
 }
 
@@ -399,7 +399,7 @@ function getDecimals(num) {
 // print a line between current position and target
 function createLine(coordX, coordY, length, basicSettings, optional) {
   var ext = 0,
-      gcode ='';
+      gcode = '';
 
   //handle optional function arguements passed as object
   var defaults = {
