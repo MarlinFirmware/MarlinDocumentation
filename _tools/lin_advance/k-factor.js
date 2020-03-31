@@ -19,58 +19,54 @@
 
 // Settings version of localStorage
 // Increase if default settings are changed / amended
-const SETTINGS_VERSION = '1.0';
+const SETTINGS_VERSION = '1.1';
 
 function genGcode() {
 
   // get the values from the HTML elements
-  var PRINTER = document.getElementById('PRINTER').value,
-      FILAMENT = document.getElementById('FILAMENT').value,
-      FILENAME = document.getElementById('FILENAME').value,
-      FILAMENT_DIAMETER = parseFloat(document.getElementById('FIL_DIA').value),
-      NOZZLE_DIAMETER = parseFloat(document.getElementById('NOZ_DIA').value),
-      NOZZLE_TEMP = parseInt(document.getElementById('NOZZLE_TEMP').value),
-      NOZZLE_LINE_RATIO = parseFloat(document.getElementById('NOZ_LIN_R').value),
-      BED_TEMP = parseInt(document.getElementById('BED_TEMP').value),
-      SPEED_SLOW = parseInt(document.getElementById('SLOW_SPEED').value),
-      SPEED_FAST = parseInt(document.getElementById('FAST_SPEED').value),
-      SPEED_MOVE = parseInt(document.getElementById('MOVE_SPEED').value),
-      SPEED_RETRACT = parseInt(document.getElementById('RETRACT_SPEED').value),
-      ACCELERATION = parseInt(document.getElementById('PRINT_ACCL').value),
-      RETRACT_DIST = parseFloat(document.getElementById('RETRACTION').value),
-      SELECT_SHAPE = document.getElementById('SHAPE_BED'),
-      BED_SHAPE = SELECT_SHAPE.options[SELECT_SHAPE.selectedIndex].value,
-      BED_X = parseInt(document.getElementById('BEDSIZE_X').value),
-      BED_Y = parseInt(document.getElementById('BEDSIZE_Y').value),
-      NULL_CENTER = document.getElementById('CENTER_NULL').checked,
-      HEIGHT_LAYER = parseFloat(document.getElementById('LAYER_HEIGHT').value),
-      EXT_MULT = parseFloat(document.getElementById('EXTRUSION_MULT').value),
-      SELECT_VERSION = document.getElementById('LIN_VERSION'),
-      VERSION_LIN = SELECT_VERSION.options[SELECT_VERSION.selectedIndex].value,
-      SELECT_PATTERN = document.getElementById('TYPE_PATTERN'),
-      PATTERN_TYPE = SELECT_PATTERN.options[SELECT_PATTERN.selectedIndex].value,
-      START_K = parseFloat(document.getElementById('K_START').value),
-      END_K = parseFloat(document.getElementById('K_END').value),
-      STEP_K = parseFloat(document.getElementById('K_STEP').value),
-      JERK_X = parseFloat(document.getElementById('X_JERK').value),
-      JERK_Y = parseFloat(document.getElementById('Y_JERK').value),
-      JERK_Z = parseFloat(document.getElementById('Z_JERK').value),
-      JERK_E = parseFloat(document.getElementById('E_JERK').value),
-      SELECT_DIR = document.getElementById('DIR_PRINT'),
-      PRINT_DIR = SELECT_DIR.options[SELECT_DIR.selectedIndex].value,
-      LINE_SPACING = parseFloat(document.getElementById('SPACE_LINE').value),
-      USE_FRAME = document.getElementById('FRAME').checked,
-      USE_PRIME = document.getElementById('PRIME').checked,
-      BED_LEVELING = SELECT_BED_LEVELING.options[SELECT_BED_LEVELING.selectedIndex].value,
-      USE_MMS = document.getElementById('MM_S').checked,
-      USE_FWR = document.getElementById('USE_FWR').checked,
-      EXT_MULT_PRIME = parseFloat(document.getElementById('PRIME_EXT').value),
-      SPEED_PRIME = parseFloat(document.getElementById('PRIME_SPEED').value),
-      PRIME_DWELL = parseFloat(document.getElementById('DWELL_PRIME').value),
-      LENGTH_SLOW = parseFloat(document.getElementById('SLOW_LENGTH').value),
-      LENGTH_FAST = parseFloat(document.getElementById('FAST_LENGTH').value),
-      Z_OFFSET = parseFloat(document.getElementById('OFFSET_Z').value),
-      USE_LINENO = document.getElementById('LINE_NO').checked;
+  var PRINTER = $('#PRINTER').val(),
+      FILAMENT = $('#FILAMENT').val(),
+      FILENAME = $('#FILENAME').val(),
+      FILAMENT_DIAMETER = parseFloat($('#FIL_DIA').val()),
+      NOZZLE_DIAMETER = parseFloat($('#NOZ_DIA').val()),
+      NOZZLE_TEMP = parseInt($('#NOZZLE_TEMP').val()),
+      NOZZLE_LINE_RATIO = parseFloat($('#NOZ_LIN_R').val()),
+      BED_TEMP = parseInt($('#BED_TEMP').val()),
+      SPEED_SLOW = parseInt($('#SLOW_SPEED').val()),
+      SPEED_FAST = parseInt($('#FAST_SPEED').val()),
+      SPEED_MOVE = parseInt($('#MOVE_SPEED').val()),
+      SPEED_RETRACT = parseInt($('#RETRACT_SPEED').val()),
+      ACCELERATION = parseInt($('#PRINT_ACCL').val()),
+      RETRACT_DIST = parseFloat($('#RETRACTION').val()),
+      BED_SHAPE = $('#SHAPE_BED').val(),
+      BED_X = parseInt($('#BEDSIZE_X').val()),
+      BED_Y = parseInt($('#BEDSIZE_Y').val()),
+      NULL_CENTER = $('#CENTER_NULL').prop('checked'),
+      HEIGHT_LAYER = parseFloat($('#LAYER_HEIGHT').val()),
+      EXT_MULT = parseFloat($('#EXTRUSION_MULT').val()),
+      VERSION_LIN = $('#LIN_VERSION').val(),
+      PATTERN_TYPE = $('#TYPE_PATTERN').val(),
+      K_START = parseFloat($('#K_START').val()),
+      K_END = parseFloat($('#K_END').val()),
+      K_STEP = parseFloat($('#K_STEP').val()),
+      X_JERK = parseFloat($('#X_JERK').val()),
+      Y_JERK = parseFloat($('#Y_JERK').val()),
+      Z_JERK = parseFloat($('#Z_JERK').val()),
+      E_JERK = parseFloat($('#E_JERK').val()),
+      PRINT_DIR = $('#DIR_PRINT').val(),
+      LINE_SPACING = parseFloat($('#SPACE_LINE').val()),
+      USE_FRAME = $('#FRAME').prop('checked'),
+      USE_PRIME = $('#PRIME').prop('checked'),
+      BED_LEVELING = SELECT_BED_LEVELING.val(),
+      USE_MMS = $('#MM_S').prop('checked'),
+      USE_FWR = $('#USE_FWR').prop('checked'),
+      EXT_MULT_PRIME = parseFloat($('#PRIME_EXT').val()),
+      SPEED_PRIME = parseFloat($('#PRIME_SPEED').val()),
+      PRIME_DWELL = parseFloat($('#DWELL_PRIME').val()),
+      LENGTH_SLOW = parseFloat($('#SLOW_LENGTH').val()),
+      LENGTH_FAST = parseFloat($('#FAST_LENGTH').val()),
+      Z_OFFSET = parseFloat($('#OFFSET_Z').val()),
+      USE_LINENO = $('#LINE_NO').prop('checked');
 
   if (BED_SHAPE === 'Round') {
     BED_Y = BED_X;
@@ -84,8 +80,8 @@ function genGcode() {
     SPEED_RETRACT *= 60;
   }
 
-  var RANGE_K = END_K - START_K,
-      PRINT_SIZE_Y = (RANGE_K / STEP_K * LINE_SPACING) + 25, // +25 with ref marking
+  var RANGE_K = K_END - K_START,
+      PRINT_SIZE_Y = (RANGE_K / K_STEP * LINE_SPACING) + 25, // +25 with ref marking
       PRINT_SIZE_X = (2 * LENGTH_SLOW) + LENGTH_FAST + (USE_PRIME ? 10 : 0) + (USE_LINENO ? 8 : 0),
       CENTER_X = (NULL_CENTER ? 0 : BED_X / 2),
       CENTER_Y = (NULL_CENTER ? 0 : BED_Y / 2),
@@ -117,15 +113,14 @@ function genGcode() {
   var patSettings = {
     'lengthSlow' : LENGTH_SLOW,
     'lengthFast': LENGTH_FAST,
-    'kStart' : START_K,
-    'kEnd' : END_K,
-    'kStep' : STEP_K,
+    'kStart' : K_START,
+    'kEnd' : K_END,
+    'kStep' : K_STEP,
     'lineSpacing' : LINE_SPACING
   };
 
   // Start G-code for pattern
-  txtArea.value = '';
-  txtArea.value = '; ### Marlin K-Factor Calibration Pattern ###\n' +
+  var k_script =  '; ### Marlin K-Factor Calibration Pattern ###\n' +
                   '; -------------------------------------------\n' +
                   ';\n' +
                   '; Printer: ' + PRINTER + '\n' +
@@ -153,16 +148,16 @@ function genGcode() {
                   '; Movement Speed = ' + SPEED_MOVE + ' mm/min\n' +
                   '; Retract Speed = ' + SPEED_RETRACT + ' mm/min\n' +
                   '; Printing Acceleration = ' + ACCELERATION + ' mm/s^2\n' +
-                  '; Jerk X-axis = ' + (JERK_X !== -1 ? JERK_X + '\n': ' firmware default\n') +
-                  '; Jerk Y-axis = ' + (JERK_Y !== -1 ? JERK_Y + '\n': ' firmware default\n') +
-                  '; Jerk Z-axis = ' + (JERK_Z !== -1 ? JERK_Z + '\n': ' firmware default\n') +
-                  '; Jerk Extruder = ' + (JERK_E !== -1 ? JERK_E + '\n': ' firmware default\n') +
+                  '; Jerk X-axis = ' + (X_JERK !== -1 ? X_JERK + '\n': ' firmware default\n') +
+                  '; Jerk Y-axis = ' + (Y_JERK !== -1 ? Y_JERK + '\n': ' firmware default\n') +
+                  '; Jerk Z-axis = ' + (Z_JERK !== -1 ? Z_JERK + '\n': ' firmware default\n') +
+                  '; Jerk Extruder = ' + (E_JERK !== -1 ? E_JERK + '\n': ' firmware default\n') +
                   ';\n' +
                   '; Settings Pattern:\n' +
                   '; Linear Advance Version = ' + VERSION_LIN + '\n' +
-                  '; Starting Value Factor = ' + START_K + '\n' +
-                  '; Ending Value Factor = ' + END_K + '\n' +
-                  '; Factor Stepping = ' + STEP_K + '\n' +
+                  '; Starting Value Factor = ' + K_START + '\n' +
+                  '; Ending Value Factor = ' + K_END + '\n' +
+                  '; Factor Stepping = ' + K_STEP + '\n' +
                   '; Test Line Spacing = ' + LINE_SPACING + ' mm\n' +
                   '; Test Line Length Slow = ' + LENGTH_SLOW + ' mm\n' +
                   '; Test Line Length Fast = ' + LENGTH_FAST + ' mm\n' +
@@ -195,29 +190,29 @@ function genGcode() {
                   'M109 S' + NOZZLE_TEMP + ' ; Wait for nozzle temp\n' +
                   (BED_LEVELING !== '0' ? BED_LEVELING + '; Activate bed leveling compensation\n' : '') +
                   'M204 P' + ACCELERATION + ' ; Acceleration\n' +
-                  (JERK_X !== -1 ? 'M205 X' + JERK_X + ' ; X Jerk\n' : '') +
-                  (JERK_Y !== -1 ? 'M205 Y' + JERK_Y + ' ; Y Jerk\n' : '') +
-                  (JERK_Z !== -1 ? 'M205 Z' + JERK_Z + ' ; Z Jerk\n' : '') +
-                  (JERK_E !== -1 ? 'M205 E' + JERK_E + ' ; E Jerk\n' : '') +
+                  (X_JERK !== -1 ? 'M205 X' + X_JERK + ' ; X Jerk\n' : '') +
+                  (Y_JERK !== -1 ? 'M205 Y' + Y_JERK + ' ; Y Jerk\n' : '') +
+                  (Z_JERK !== -1 ? 'M205 Z' + Z_JERK + ' ; Z Jerk\n' : '') +
+                  (E_JERK !== -1 ? 'M205 E' + E_JERK + ' ; E Jerk\n' : '') +
                   'G92 E0 ; Reset extruder distance\n';
 
   //move to center and layer Height
-  txtArea.value += moveTo(CENTER_X, CENTER_Y, basicSettings) +
-                   'G1 Z' + (HEIGHT_LAYER + Z_OFFSET) + ' F' + SPEED_SLOW + ' ; Move to layer height\n';
+  k_script += moveTo(CENTER_X, CENTER_Y, basicSettings) +
+              'G1 Z' + (HEIGHT_LAYER + Z_OFFSET) + ' F' + SPEED_SLOW + ' ; Move to layer height\n';
 
   // Prime nozzle if activated
   if (USE_PRIME) {
     var primeStartX = CENTER_X - LENGTH_SLOW - (0.5 * LENGTH_FAST) - (USE_LINENO ? 4 : 0) - 5,
         primeStartY = CENTER_Y - (PRINT_SIZE_Y / 2);
 
-    txtArea.value += ';\n' +
-                     '; prime nozzle\n' +
-                     ';\n' +
-                     moveTo(primeStartX, primeStartY, basicSettings) +
-                     createLine(primeStartX, primeStartY + PRINT_SIZE_Y, PRINT_SIZE_Y, basicSettings, {'extMult': EXT_MULT_PRIME, 'speed': SPEED_PRIME}) +
-                     moveTo(primeStartX + (LINE_WIDTH * 1.5), primeStartY + PRINT_SIZE_Y, basicSettings) +
-                     createLine(primeStartX + (LINE_WIDTH * 1.5), primeStartY, -PRINT_SIZE_Y, basicSettings, {'extMult': EXT_MULT_PRIME, 'speed': SPEED_PRIME}) +
-                     doEfeed('-', basicSettings, (USE_FWR ? 'FWR' : 'STD'));
+    k_script += ';\n' +
+                '; prime nozzle\n' +
+                ';\n' +
+                moveTo(primeStartX, primeStartY, basicSettings) +
+                createLine(primeStartX, primeStartY + PRINT_SIZE_Y, PRINT_SIZE_Y, basicSettings, {'extMult': EXT_MULT_PRIME, 'speed': SPEED_PRIME}) +
+                moveTo(primeStartX + (LINE_WIDTH * 1.5), primeStartY + PRINT_SIZE_Y, basicSettings) +
+                createLine(primeStartX + (LINE_WIDTH * 1.5), primeStartY, -PRINT_SIZE_Y, basicSettings, {'extMult': EXT_MULT_PRIME, 'speed': SPEED_PRIME}) +
+                doEfeed('-', basicSettings, (USE_FWR ? 'FWR' : 'STD'));
   }
 
   // if selected, print an anchor frame around test line start and end points
@@ -227,59 +222,57 @@ function genGcode() {
         frameStartY = PAT_START_Y - 3,
         frameLength = PRINT_SIZE_Y - 19;
 
-    txtArea.value += ';\n' +
-                     '; print anchor frame\n' +
-                     ';\n' +
-                     moveTo(frameStartX1, frameStartY, basicSettings) +
-                     (USE_PRIME ? doEfeed('+', basicSettings, (USE_FWR ? 'FWR' : 'STD')) : '') +
-                     createLine(frameStartX1, frameStartY + frameLength, frameLength, basicSettings, {'extMult': EXT_MULT * 1.1}) +
-                     moveTo(frameStartX1 + LINE_WIDTH, frameStartY + frameLength, basicSettings) +
-                     createLine(frameStartX1 + LINE_WIDTH, frameStartY, -frameLength, basicSettings, {'extMult': EXT_MULT * 1.1}) +
-                     doEfeed('-', basicSettings, (USE_FWR ? 'FWR' : 'STD')) +
-                     moveTo(frameStartX2, frameStartY, basicSettings) +
-                     doEfeed('+', basicSettings, (USE_FWR ? 'FWR' : 'STD')) +
-                     createLine(frameStartX2, frameStartY + frameLength, frameLength, basicSettings, {'extMult': EXT_MULT * 1.1}) +
-                     moveTo(frameStartX2 - LINE_WIDTH, frameStartY + frameLength, basicSettings) +
-                     createLine(frameStartX2 - LINE_WIDTH, frameStartY, -frameLength, basicSettings, {'extMult': EXT_MULT * 1.1}) +
-                     doEfeed('-', basicSettings, (USE_FWR ? 'FWR' : 'STD'));
+    k_script += ';\n' +
+                '; print anchor frame\n' +
+                ';\n' +
+                moveTo(frameStartX1, frameStartY, basicSettings) +
+                (USE_PRIME ? doEfeed('+', basicSettings, (USE_FWR ? 'FWR' : 'STD')) : '') +
+                createLine(frameStartX1, frameStartY + frameLength, frameLength, basicSettings, {'extMult': EXT_MULT * 1.1}) +
+                moveTo(frameStartX1 + LINE_WIDTH, frameStartY + frameLength, basicSettings) +
+                createLine(frameStartX1 + LINE_WIDTH, frameStartY, -frameLength, basicSettings, {'extMult': EXT_MULT * 1.1}) +
+                doEfeed('-', basicSettings, (USE_FWR ? 'FWR' : 'STD')) +
+                moveTo(frameStartX2, frameStartY, basicSettings) +
+                doEfeed('+', basicSettings, (USE_FWR ? 'FWR' : 'STD')) +
+                createLine(frameStartX2, frameStartY + frameLength, frameLength, basicSettings, {'extMult': EXT_MULT * 1.1}) +
+                moveTo(frameStartX2 - LINE_WIDTH, frameStartY + frameLength, basicSettings) +
+                createLine(frameStartX2 - LINE_WIDTH, frameStartY, -frameLength, basicSettings, {'extMult': EXT_MULT * 1.1}) +
+                doEfeed('-', basicSettings, (USE_FWR ? 'FWR' : 'STD'));
   }
 
   // insert a retract if no prime and no frame
-  if (!USE_PRIME && !USE_FRAME) {
-    txtArea.value += doEfeed('-', basicSettings, (USE_FWR ? 'FWR' : 'STD'));
-  }
+  if (!USE_PRIME && !USE_FRAME)
+    k_script += doEfeed('-', basicSettings, (USE_FWR ? 'FWR' : 'STD'));
 
   // generate the k-factor Test pattern
-  txtArea.value += ';\n' +
-                   '; start the Test pattern\n' +
-                   ';\n' +
-                   (PRIME_DWELL ? 'G4 P' + (PRIME_DWELL * 1000) + ' ; Pause (dwell) for 2 seconds\n' : '') +
-                   moveTo(PAT_START_X, PAT_START_Y, basicSettings);
+  k_script += ';\n' +
+              '; start the Test pattern\n' +
+              ';\n' +
+              (PRIME_DWELL ? 'G4 P' + (PRIME_DWELL * 1000) + ' ; Pause (dwell) for 2 seconds\n' : '') +
+              moveTo(PAT_START_X, PAT_START_Y, basicSettings);
 
-  if (PATTERN_TYPE === 'std') {
-    txtArea.value += createStdPattern(PAT_START_X, PAT_START_Y, basicSettings, patSettings);
-  } else if (PATTERN_TYPE === 'alt') {
-    txtArea.value += createAltPattern(PAT_START_X, PAT_START_Y, basicSettings, patSettings);
-  }
+  if (PATTERN_TYPE === 'std')
+    k_script += createStdPattern(PAT_START_X, PAT_START_Y, basicSettings, patSettings);
+  else if (PATTERN_TYPE === 'alt')
+    k_script += createAltPattern(PAT_START_X, PAT_START_Y, basicSettings, patSettings);
 
   // mark area of speed changes
   var refStartX1 = CENTER_X - (0.5 * LENGTH_FAST) + (USE_PRIME ? 5 : 0) - (USE_LINENO ? 4 : 0),
       refStartX2 = CENTER_X + (0.5 * LENGTH_FAST) + (USE_PRIME ? 5 : 0) - (USE_LINENO ? 4 : 0),
       refStartY = CENTER_Y + (PRINT_SIZE_Y / 2) - 20;
 
-  txtArea.value += ';\n' +
-                   '; Mark the test area for reference\n' +
-                   'M117 K0\n' +
-                   'M900 K0 ; Set K-factor 0\n' +
-                   moveTo(refStartX1, refStartY, basicSettings) +
-                   doEfeed('+', basicSettings, (USE_FWR ? 'FWR' : 'STD')) +
-                   createLine(refStartX1, refStartY + 20, 20, basicSettings) +
-                   doEfeed('-', basicSettings, (USE_FWR ? 'FWR' : 'STD')) +
-                   moveTo(refStartX2, refStartY, basicSettings) +
-                   doEfeed('+', basicSettings, (USE_FWR ? 'FWR' : 'STD')) +
-                   createLine(refStartX2, refStartY + 20, 20, basicSettings) +
-                   doEfeed('-', basicSettings, (USE_FWR ? 'FWR' : 'STD')) +
-                   zHop((HEIGHT_LAYER + Z_OFFSET) + 0.1, basicSettings);
+  k_script += ';\n' +
+              '; Mark the test area for reference\n' +
+              'M117 K0\n' +
+              'M900 K0 ; Set K-factor 0\n' +
+              moveTo(refStartX1, refStartY, basicSettings) +
+              doEfeed('+', basicSettings, (USE_FWR ? 'FWR' : 'STD')) +
+              createLine(refStartX1, refStartY + 20, 20, basicSettings) +
+              doEfeed('-', basicSettings, (USE_FWR ? 'FWR' : 'STD')) +
+              moveTo(refStartX2, refStartY, basicSettings) +
+              doEfeed('+', basicSettings, (USE_FWR ? 'FWR' : 'STD')) +
+              createLine(refStartX2, refStartY + 20, 20, basicSettings) +
+              doEfeed('-', basicSettings, (USE_FWR ? 'FWR' : 'STD')) +
+              zHop((HEIGHT_LAYER + Z_OFFSET) + 0.1, basicSettings);
 
   // print K values beside the test lines
   if (USE_LINENO) {
@@ -287,32 +280,34 @@ function genGcode() {
         numStartY = PAT_START_Y - 2,
         stepping = 0;
 
-    txtArea.value += ';\n' +
-                     '; print K-values\n' +
-                     ';\n';
+    k_script += ';\n' +
+                '; print K-values\n' +
+                ';\n';
 
-    for (var i = START_K; i <= END_K; i += STEP_K) {
+    for (var i = K_START; i <= K_END; i += K_STEP) {
       if (stepping % 2 === 0) {
-        txtArea.value += moveTo(numStartX, numStartY + (stepping * LINE_SPACING), basicSettings) +
-                         zHop((HEIGHT_LAYER + Z_OFFSET), basicSettings) +
-                         doEfeed('+', basicSettings, (USE_FWR ? 'FWR' : 'STD')) +
-                         createGlyphs(numStartX, numStartY + (stepping * LINE_SPACING), basicSettings, Math.round10(i, -3)) +
-                         doEfeed('-', basicSettings, (USE_FWR ? 'FWR' : 'STD')) +
-                         zHop((HEIGHT_LAYER + Z_OFFSET) + 0.1, basicSettings);
+        k_script += moveTo(numStartX, numStartY + (stepping * LINE_SPACING), basicSettings) +
+                    zHop((HEIGHT_LAYER + Z_OFFSET), basicSettings) +
+                    doEfeed('+', basicSettings, (USE_FWR ? 'FWR' : 'STD')) +
+                    createGlyphs(numStartX, numStartY + (stepping * LINE_SPACING), basicSettings, Math.round10(i, -3)) +
+                    doEfeed('-', basicSettings, (USE_FWR ? 'FWR' : 'STD')) +
+                    zHop((HEIGHT_LAYER + Z_OFFSET) + 0.1, basicSettings);
       }
       stepping += 1;
     }
   }
 
-  txtArea.value += ';\n' +
-                   '; FINISH\n' +
-                   ';\n' +
-                   'M104 S0 ; Turn off hotend\n' +
-                   'M140 S0 ; Turn off bed\n' +
-                   'G1 Z30 X' + (NULL_CENTER ? 0 : BED_X) + ' Y' + (NULL_CENTER ? 0 : BED_Y) + ' F' + SPEED_MOVE + ' ; Move away from the print\n' +
-                   'M84 ; Disable motors\n' +
-                   'M501 ; Load settings from EEPROM\n' +
-                   ';';
+  k_script += ';\n' +
+              '; FINISH\n' +
+              ';\n' +
+              'M104 S0 ; Turn off hotend\n' +
+              'M140 S0 ; Turn off bed\n' +
+              'G1 Z30 X' + (NULL_CENTER ? 0 : BED_X) + ' Y' + (NULL_CENTER ? 0 : BED_Y) + ' F' + SPEED_MOVE + ' ; Move away from the print\n' +
+              'M84 ; Disable motors\n' +
+              'M501 ; Load settings from EEPROM\n' +
+              ';';
+
+  txtArea.value = k_script;
 }
 
 // Save content of textarea to file using
@@ -607,49 +602,45 @@ function rotateY(x, xm, y, ym, a) {
 
 // save current settings as localStorage object
 function setLocalStorage() {
-  var FILAMENT_DIAMETER = parseFloat(document.getElementById('FIL_DIA').value),
-      NOZZLE_DIAMETER = parseFloat(document.getElementById('NOZ_DIA').value),
-      NOZZLE_TEMP = parseInt(document.getElementById('NOZZLE_TEMP').value),
-      NOZZLE_LINE_RATIO = parseFloat(document.getElementById('NOZ_LIN_R').value),
-      BED_TEMP = parseInt(document.getElementById('BED_TEMP').value),
-      SPEED_SLOW = parseInt(document.getElementById('SLOW_SPEED').value),
-      SPEED_FAST = parseInt(document.getElementById('FAST_SPEED').value),
-      SPEED_MOVE = parseInt(document.getElementById('MOVE_SPEED').value),
-      SPEED_RETRACT = parseInt(document.getElementById('RETRACT_SPEED').value),
-      ACCELERATION = parseInt(document.getElementById('PRINT_ACCL').value),
-      RETRACT_DIST = parseFloat(document.getElementById('RETRACTION').value),
-      SELECT_SHAPE = document.getElementById('SHAPE_BED'),
-      BED_SHAPE = SELECT_SHAPE.options[SELECT_SHAPE.selectedIndex].value,
-      BED_X = parseInt(document.getElementById('BEDSIZE_X').value),
-      BED_Y = parseInt(document.getElementById('BEDSIZE_Y').value),
-      NULL_CENTER = document.getElementById('CENTER_NULL').checked,
-      HEIGHT_LAYER = parseFloat(document.getElementById('LAYER_HEIGHT').value),
-      EXT_MULT = parseFloat(document.getElementById('EXTRUSION_MULT').value),
-      SELECT_VERSION = document.getElementById('LIN_VERSION'),
-      VERSION_LIN = SELECT_VERSION.options[SELECT_VERSION.selectedIndex].value,
-      SELECT_PATTERN = document.getElementById('TYPE_PATTERN'),
-      PATTERN_TYPE = SELECT_PATTERN.options[SELECT_PATTERN.selectedIndex].value,
-      START_K = parseFloat(document.getElementById('K_START').value),
-      END_K = parseFloat(document.getElementById('K_END').value),
-      STEP_K = parseFloat(document.getElementById('K_STEP').value),
-      JERK_X = parseFloat(document.getElementById('X_JERK').value),
-      JERK_Y = parseFloat(document.getElementById('Y_JERK').value),
-      JERK_Z = parseFloat(document.getElementById('Z_JERK').value),
-      JERK_E = parseFloat(document.getElementById('E_JERK').value),
-      SELECT_DIR = document.getElementById('DIR_PRINT'),
-      PRINT_DIR = SELECT_DIR.options[SELECT_DIR.selectedIndex].value,
-      LINE_SPACING = parseFloat(document.getElementById('SPACE_LINE').value),
-      USE_FRAME = document.getElementById('FRAME').checked,
-      USE_PRIME = document.getElementById('PRIME').checked,
-      EXT_MULT_PRIME = parseFloat(document.getElementById('PRIME_EXT').value),
-      SPEED_PRIME = parseFloat(document.getElementById('PRIME_SPEED').value),
-      PRIME_DWELL = parseFloat(document.getElementById('DWELL_PRIME').value),
-      LENGTH_SLOW = parseFloat(document.getElementById('SLOW_LENGTH').value),
-      LENGTH_FAST = parseFloat(document.getElementById('FAST_LENGTH').value),
-      Z_OFFSET = parseFloat(document.getElementById('OFFSET_Z').value),
-      USE_FWR = document.getElementById('USE_FWR').checked,
-      USE_MMS = document.getElementById('MM_S').checked,
-      USE_LINENO = document.getElementById('LINE_NO').checked;
+  var FILAMENT_DIAMETER = parseFloat($('#FIL_DIA').val()),
+      NOZZLE_DIAMETER = parseFloat($('#NOZ_DIA').val()),
+      NOZZLE_TEMP = parseInt($('#NOZZLE_TEMP').val()),
+      NOZZLE_LINE_RATIO = parseFloat($('#NOZ_LIN_R').val()),
+      BED_TEMP = parseInt($('#BED_TEMP').val()),
+      SPEED_SLOW = parseInt($('#SLOW_SPEED').val()),
+      SPEED_FAST = parseInt($('#FAST_SPEED').val()),
+      SPEED_MOVE = parseInt($('#MOVE_SPEED').val()),
+      SPEED_RETRACT = parseInt($('#RETRACT_SPEED').val()),
+      ACCELERATION = parseInt($('#PRINT_ACCL').val()),
+      RETRACT_DIST = parseFloat($('#RETRACTION').val()),
+      BED_SHAPE = $('#SHAPE_BED').val(),
+      BED_X = parseInt($('#BEDSIZE_X').val()),
+      BED_Y = parseInt($('#BEDSIZE_Y').val()),
+      NULL_CENTER = $('#CENTER_NULL').prop('checked'),
+      HEIGHT_LAYER = parseFloat($('#LAYER_HEIGHT').val()),
+      EXT_MULT = parseFloat($('#EXTRUSION_MULT').val()),
+      VERSION_LIN = $('#LIN_VERSION').val(),
+      PATTERN_TYPE = $('#TYPE_PATTERN').val(),
+      K_START = parseFloat($('#K_START').val()),
+      K_END = parseFloat($('#K_END').val()),
+      K_STEP = parseFloat($('#K_STEP').val()),
+      X_JERK = parseFloat($('#X_JERK').val()),
+      Y_JERK = parseFloat($('#Y_JERK').val()),
+      Z_JERK = parseFloat($('#Z_JERK').val()),
+      E_JERK = parseFloat($('#E_JERK').val()),
+      PRINT_DIR = $('#DIR_PRINT').val(),
+      LINE_SPACING = parseFloat($('#SPACE_LINE').val()),
+      USE_FRAME = $('#FRAME').prop('checked'),
+      USE_PRIME = $('#PRIME').prop('checked'),
+      EXT_MULT_PRIME = parseFloat($('#PRIME_EXT').val()),
+      SPEED_PRIME = parseFloat($('#PRIME_SPEED').val()),
+      PRIME_DWELL = parseFloat($('#DWELL_PRIME').val()),
+      LENGTH_SLOW = parseFloat($('#SLOW_LENGTH').val()),
+      LENGTH_FAST = parseFloat($('#FAST_LENGTH').val()),
+      Z_OFFSET = parseFloat($('#OFFSET_Z').val()),
+      USE_FWR = $('#USE_FWR').prop('checked'),
+      USE_MMS = $('#MM_S').prop('checked'),
+      USE_LINENO = $('#LINE_NO').prop('checked');
 
   var settings = {
     'Version' : SETTINGS_VERSION,
@@ -672,13 +663,13 @@ function setLocalStorage() {
     'EXT_MULT': EXT_MULT,
     'VERSION_LIN': VERSION_LIN,
     'PATTERN_TYPE': PATTERN_TYPE,
-    'START_K': START_K,
-    'END_K': END_K,
-    'STEP_K': STEP_K,
-    'JERK_X': JERK_X,
-    'JERK_Y': JERK_Y,
-    'JERK_Z': JERK_Z,
-    'JERK_E': JERK_E,
+    'K_START': K_START,
+    'K_END': K_END,
+    'K_STEP': K_STEP,
+    'X_JERK': X_JERK,
+    'Y_JERK': Y_JERK,
+    'Z_JERK': Z_JERK,
+    'E_JERK': E_JERK,
     'PRINT_DIR': PRINT_DIR,
     'LINE_SPACING': LINE_SPACING,
     'USE_FRAME': USE_FRAME,
@@ -694,112 +685,9 @@ function setLocalStorage() {
     'USE_LINENO': USE_LINENO
   };
 
-  var lsSettings = JSON.stringify(settings);
+  const lsSettings = JSON.stringify(settings);
   window.localStorage.setItem('LIN_SETTINGS', lsSettings);
 }
-
-// toggle html elements
-$(window).load(function() {
-  // Adapt textarea to cell size
-  var TXTAREAHEIGHT = $('.txtareatd').height();
-  $('.calibpat textarea').css({'height': (TXTAREAHEIGHT) + 'px'});
-
-  // create tab index dynamically
-  $(':input:not(:hidden)').each(function(i) {
-    $(this).attr('tabindex', i + 1);
-  });
-
-  //Get localStorage data
-  var lsSettings,
-      settings;
-
-  if (window.localStorage.getItem('LIN_SETTINGS')) {
-    lsSettings = unescape(window.localStorage.getItem('LIN_SETTINGS'));
-    settings = jQuery.parseJSON(lsSettings);
-    if (!settings['Version'] || Number(settings['Version']) < Number(SETTINGS_VERSION)) {
-      window.localStorage.removeItem('LIN_SETTINGS');
-      alert('Script settings have been updated. Saved settings are reset to default values');
-    } else {
-      $('#FIL_DIA').val(settings['FILAMENT_DIAMETER']);
-      $('#NOZ_DIA').val(settings['NOZZLE_DIAMETER']);
-      $('#NOZZLE_TEMP').val(settings['NOZZLE_TEMP']);
-      $('#NOZ_LIN_R').val(settings['NOZZLE_LINE_RATIO']);
-      $('#BED_TEMP').val(settings['BED_TEMP']);
-      $('#SLOW_SPEED').val(settings['SPEED_SLOW']);
-      $('#FAST_SPEED').val(settings['SPEED_FAST']);
-      $('#MOVE_SPEED').val(settings['SPEED_MOVE']);
-      $('#RETRACT_SPEED').val(settings['SPEED_RETRACT']);
-      $('#PRINT_ACCL').val(settings['ACCELERATION']);
-      $('#RETRACTION').val(settings['RETRACT_DIST']);
-      $('#SHAPE_BED').val(settings['BED_SHAPE']);
-      $('#BEDSIZE_X').val(settings['BED_X']);
-      $('#BEDSIZE_Y').val(settings['BED_Y']);
-      $('#CENTER_NULL').prop('checked', settings['NULL_CENTER']);
-      $('#LAYER_HEIGHT').val(settings['HEIGHT_LAYER']);
-      $('#EXTRUSION_MULT').val(settings['EXT_MULT']);
-      $('#LIN_VERSION').val(settings['VERSION_LIN']);
-      $('#TYPE_PATTERN').val(settings['PATTERN_TYPE']);
-      $('#K_START').val(settings['START_K']);
-      $('#K_END').val(settings['END_K']);
-      $('#K_STEP').val(settings['STEP_K']);
-      $('#X_JERK').val(settings['JERK_X']);
-      $('#Y_JERK').val(settings['JERK_Y']);
-      $('#Z_JERK').val(settings['JERK_Z']);
-      $('#E_JERK').val(settings['JERK_E']);
-      $('#DIR_PRINT').val(settings['PRINT_DIR']);
-      $('#SPACE_LINE').val(settings['LINE_SPACING']);
-      $('#FRAME').prop('checked', settings['USE_FRAME']);
-      $('#PRIME').prop('checked', settings['USE_PRIME']);
-      $('#PRIME_EXT').val(settings['EXT_MULT_PRIME']);
-      $('#PRIME_SPEED').val(settings['SPEED_PRIME']);
-      $('#DWELL_PRIME').val(settings['PRIME_DWELL']);
-      $('#SLOW_LENGTH').val(settings['LENGTH_SLOW']);
-      $('#FAST_LENGTH').val(settings['LENGTH_FAST']);
-      $('#OFFSET_Z').val(settings['Z_OFFSET']);
-      $('#USE_FWR').prop('checked', settings['USE_FWR']);
-      $('#MM_S').prop('checked', settings['USE_MMS']);
-      $('#LINE_NO').prop('checked', settings['USE_LINENO']);
-
-      toggleBedShape();
-      patternType();
-      togglePrime();
-      toggleVersion();
-      toggleRetract();
-    }
-  }
-
-  // toggle between mm/s and mm/min speeds
-  $('#MM_S').change(function() {
-    speedToggle();
-  });
-
-  // Toggle Bed Shape
-  $('#SHAPE_BED').change(function() {
-    toggleBedShape();
-    validateInput();
-  });
-
-  // toggle prime relevant html elements
-  $('#PRIME').change(function() {
-    togglePrime();
-  });
-
-  // frame and alternate pattern are mutually exclusive
-  $('#TYPE_PATTERN').change(function() {
-    patternType();
-  });
-
-  // Change factor type
-  $('#LIN_VERSION').change(function() {
-    toggleVersion();
-    validateInput();
-  });
-
-  // Change retract type
-  $('#USE_FWR').change(function() {
-    toggleRetract();
-  });
-});
 
 // toggle between mm/s and mm/min speed settings
 function speedToggle() {
@@ -882,23 +770,16 @@ function togglePrime() {
 // toggle options for LIN_ADVANCE v1.0 and v1.5
 function toggleVersion() {
   if ($('#LIN_VERSION').val() === '1.5') {
-    $('#K_START').attr('step', 'any');
-    $('#K_END').attr('step', 'any');
-    $('#K_STEP').attr('step', 'any');
-    $('#K_START').val('0');
-    $('#K_END').val('2');
-    $('#K_STEP').val('0.2');
+    $('#K_START').attr('step', 'any').val('0');
+    $('#K_END').attr('step', 'any').val('2');
+    $('#K_STEP').attr('step', 'any').val('0.2');
     $('#start_factor').text('Starting value for the K-factor');
     $('#end_factor').text('Ending value of the K-factor');
     $('#step_factor').text('Stepping of the K-factor in the test pattern. Needs to be an exact divisor of the K-factor Range (End - Start)');
   } else {
-    $('#K_START').attr('step', '1');
-    $('#K_END').attr('step', '1');
-    $('#K_STEP').attr('step', '1');
-    $('#K_STEP').attr('value', '5');
-    $('#K_START').val('0');
-    $('#K_END').val('100');
-    $('#K_STEP').val('5');
+    $('#K_START').attr('step', '1').val('0');
+    $('#K_END').attr('step', '1').val('100');
+    $('#K_STEP').attr({ step: '1', value: '5' }).val('5');
     $('#start_factor').text('Starting value for the K-factor. Usually 0 but for bowden setups you might want to start higher, e.g. 30');
     $('#end_factor').text('Ending value of the K-factor. Bowden setups may be higher than 100');
     $('#step_factor').text('Stepping of the K-factor in the test pattern. Needs to be an exact divisor of the K-factor Range (End - Start)');
@@ -922,42 +803,42 @@ function validateInput() {
         // do not use parseInt or parseFloat for validating, since both
         // functions will have special parsing characteristics leading to
         // false numeric validation
-        BEDSIZE_X: document.getElementById('BEDSIZE_X').value,
-        BEDSIZE_Y: document.getElementById('BEDSIZE_Y').value,
-        K_START: document.getElementById('K_START').value,
-        K_END: document.getElementById('K_END').value,
-        K_STEP: document.getElementById('K_STEP').value,
-        SPACE_LINE: document.getElementById('SPACE_LINE').value,
-        SLOW_SPEED: document.getElementById('SLOW_SPEED').value,
-        FAST_SPEED: document.getElementById('FAST_SPEED').value,
-        SLOW_LENGTH: document.getElementById('SLOW_LENGTH').value,
-        FAST_LENGTH: document.getElementById('FAST_LENGTH').value,
-        FIL_DIA: document.getElementById('FIL_DIA').value,
-        NOZ_DIA: document.getElementById('NOZ_DIA').value,
-        NOZ_LIN_R: document.getElementById('NOZ_LIN_R').value,
-        LAYER_HEIGHT: document.getElementById('LAYER_HEIGHT').value,
-        EXTRUSION_MULT: document.getElementById('EXTRUSION_MULT').value,
-        PRIME_EXT: document.getElementById('PRIME_EXT').value,
-        OFFSET_Z: document.getElementById('OFFSET_Z').value,
-        X_JERK: document.getElementById('X_JERK').value,
-        Y_JERK: document.getElementById('Y_JERK').value,
-        Z_JERK: document.getElementById('Z_JERK').value,
-        E_JERK: document.getElementById('E_JERK').value,
-        NOZZLE_TEMP: document.getElementById('NOZZLE_TEMP').value,
-        BED_TEMP: document.getElementById('BED_TEMP').value,
-        MOVE_SPEED: document.getElementById('MOVE_SPEED').value,
-        RETRACT_SPEED: document.getElementById('RETRACT_SPEED').value,
-        PRINT_ACCL: document.getElementById('PRINT_ACCL').value,
-        RETRACTION: document.getElementById('RETRACTION').value,
-        PRIME_SPEED: document.getElementById('PRIME_SPEED').value,
-        DWELL_PRIME: document.getElementById('DWELL_PRIME').value
+        BEDSIZE_X: $('#BEDSIZE_X').val(),
+        BEDSIZE_Y: $('#BEDSIZE_Y').val(),
+        K_START: $('#K_START').val(),
+        K_END: $('#K_END').val(),
+        K_STEP: $('#K_STEP').val(),
+        SPACE_LINE: $('#SPACE_LINE').val(),
+        SLOW_SPEED: $('#SLOW_SPEED').val(),
+        FAST_SPEED: $('#FAST_SPEED').val(),
+        SLOW_LENGTH: $('#SLOW_LENGTH').val(),
+        FAST_LENGTH: $('#FAST_LENGTH').val(),
+        FIL_DIA: $('#FIL_DIA').val(),
+        NOZ_DIA: $('#NOZ_DIA').val(),
+        NOZ_LIN_R: $('#NOZ_LIN_R').val(),
+        LAYER_HEIGHT: $('#LAYER_HEIGHT').val(),
+        EXTRUSION_MULT: $('#EXTRUSION_MULT').val(),
+        PRIME_EXT: $('#PRIME_EXT').val(),
+        OFFSET_Z: $('#OFFSET_Z').val(),
+        X_JERK: $('#X_JERK').val(),
+        Y_JERK: $('#Y_JERK').val(),
+        Z_JERK: $('#Z_JERK').val(),
+        E_JERK: $('#E_JERK').val(),
+        NOZZLE_TEMP: $('#NOZZLE_TEMP').val(),
+        BED_TEMP: $('#BED_TEMP').val(),
+        MOVE_SPEED: $('#MOVE_SPEED').val(),
+        RETRACT_SPEED: $('#RETRACT_SPEED').val(),
+        PRINT_ACCL: $('#PRINT_ACCL').val(),
+        RETRACTION: $('#RETRACTION').val(),
+        PRIME_SPEED: $('#PRIME_SPEED').val(),
+        DWELL_PRIME: $('#DWELL_PRIME').val()
       },
-      selectShape = document.getElementById('SHAPE_BED'),
-      bedShape = selectShape.options[selectShape.selectedIndex].value,
-      selectDir = document.getElementById('DIR_PRINT'),
-      printDir = selectDir.options[selectDir.selectedIndex].value,
-      usePrime = document.getElementById('PRIME').checked,
-      useLineNo = document.getElementById('LINE_NO').checked,
+      selectShape = $('#SHAPE_BED'),
+      bedShape = selectShape.val(),
+      selectDir = $('#DIR_PRINT'),
+      printDir = selectDir.val(),
+      usePrime = $('#PRIME').prop('checked'),
+      useLineNo = $('#LINE_NO').prop('checked'),
       sizeY = ((parseFloat(testNaN['K_END']) - parseFloat(testNaN['K_START'])) / parseFloat(testNaN['K_STEP']) * parseFloat(testNaN['SPACE_LINE'])) + 25, // +25 with ref marking
       sizeX = (2 * parseFloat(testNaN['SLOW_LENGTH'])) + parseFloat(testNaN['FAST_LENGTH']) + (usePrime ? 10 : 0) + (useLineNo ? 8 : 0),
       printDirRad = printDir * Math.PI / 180,
@@ -966,13 +847,12 @@ function validateInput() {
       decimals = getDecimals(parseFloat(testNaN['K_STEP'])),
       invalidDiv = 0;
 
-  //Start clean
-  $('#K_START, #K_END, #K_STEP, #SPACE_LINE, #SLOW_LENGTH, #FAST_LENGTH, #FIL_DIA, #NOZ_DIA, #LAYER_HEIGHT, #EXTRUSION_MULT, #PRIME_EXT, #OFFSET_Z, #NOZ_LIN_R, \
-     #NOZZLE_TEMP, #BED_TEMP, #MOVE_SPEED, #RETRACT_SPEED, #PRINT_ACCL, #RETRACTION, #PRIME_SPEED, #DWELL_PRIME, #FAST_SPEED, #SLOW_SPEED, #X_JERK, #Y_JERK, #Z_JERK, #E_JERK').each(function() {
-    $(this)[0].setCustomValidity('');
-    $('label[for=' + $(this).attr('id') + ']').removeClass('invalidSize');
-    $('label[for=' + $(this).attr('id') + ']').removeClass('invalidDiv');
-    $('label[for=' + $(this).attr('id') + ']').removeClass('invalidNumber');
+  // Start clean
+  $('#K_START,#K_END,#K_STEP,#SPACE_LINE,#SLOW_LENGTH,#FAST_LENGTH,#FIL_DIA,#NOZ_DIA,#LAYER_HEIGHT,#EXTRUSION_MULT,#PRIME_EXT,#OFFSET_Z,#NOZ_LIN_R,'
+     + '#NOZZLE_TEMP,#BED_TEMP,#MOVE_SPEED,#RETRACT_SPEED,#PRINT_ACCL,#RETRACTION,#PRIME_SPEED,#DWELL_PRIME,#FAST_SPEED,#SLOW_SPEED,#X_JERK,#Y_JERK,#Z_JERK,#E_JERK').each((i,t) => {
+    t.setCustomValidity('');
+    const tid = $(t).attr('id');
+    $(`label[for=${tid}]`).removeClass();
   });
   $('#warning1').hide();
   $('#warning2').hide();
@@ -980,7 +860,7 @@ function validateInput() {
   $('#button').prop('disabled', false);
 
   // Check for proper numerical values
-  Object.keys(testNaN).forEach(function(k) {
+  Object.keys(testNaN).forEach((k) => {
     if ((isNaN(testNaN[k]) && !isFinite(testNaN[k])) || testNaN[k].trim().length === 0) {
       $('label[for=' + k + ']').addClass('invalidNumber');
       $('#' + k)[0].setCustomValidity('The value is not a proper number.');
@@ -994,11 +874,11 @@ function validateInput() {
   // Check if K-Factor Stepping is a multiple of the K-Factor Range
   if ((Math.round10(parseFloat(testNaN['K_END']) - parseFloat(testNaN['K_START']), -3) * Math.pow(10, decimals)) % (parseFloat(testNaN['K_STEP']) * Math.pow(10, decimals)) !== 0) {
     $('label[for=K_START]').addClass('invalidDiv');
-    $('#K_START')[0].setCustomValidity('Your K-Factor range cannot be cleanly divided.');
+    $('#K_START')[0].setCustomValidity('K-Factor range cannot be cleanly divided.');
     $('label[for=K_END]').addClass('invalidDiv');
-    $('#K_END')[0].setCustomValidity('Your K-Factor range cannot be cleanly divided.');
+    $('#K_END')[0].setCustomValidity('K-Factor range cannot be cleanly divided.');
     $('label[for=K_STEP]').addClass('invalidDiv');
-    $('#K_STEP')[0].setCustomValidity('Your K-Factor range cannot be cleanly divided.');
+    $('#K_STEP')[0].setCustomValidity('K-Factor range cannot be cleanly divided.');
     $('#warning1').text('Your K-Factor range cannot be cleanly divided. Check highlighted Pattern Settings.');
     $('#warning1').addClass('invalidDiv');
     $('#warning1').show();
@@ -1009,13 +889,13 @@ function validateInput() {
   // Check if pattern settings exceed bed size
   if (bedShape === 'Round' && (Math.sqrt(Math.pow(fitWidth, 2) + Math.pow(fitHeight, 2)) > (parseInt(testNaN['BEDSIZE_X']) - 5)) && fitHeight > fitWidth) {
     $('label[for=K_START]').addClass('invalidSize');
-    $('#K_START')[0].setCustomValidity('Your Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your bed\'s diameter.');
+    $('#K_START')[0].setCustomValidity('Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your bed\'s diameter.');
     $('label[for=K_END]').addClass('invalidSize');
-    $('#K_END')[0].setCustomValidity('Your Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your bed\'s diameter.');
+    $('#K_END')[0].setCustomValidity('Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your bed\'s diameter.');
     $('label[for=K_STEP]').addClass('invalidSize');
-    $('#K_STEP')[0].setCustomValidity('Your Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your bed\'s diameter.');
+    $('#K_STEP')[0].setCustomValidity('Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your bed\'s diameter.');
     $('label[for=SPACE_LINE]').addClass('invalidSize');
-    $('#SPACE_LINE')[0].setCustomValidity('Your Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your bed\'s diameter.');
+    $('#SPACE_LINE')[0].setCustomValidity('Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your bed\'s diameter.');
     $((invalidDiv ? '#warning2' : '#warning1')).text('Your Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your bed\'s diameter. Check highlighted Pattern Settings.');
     $((invalidDiv ? '#warning2' : '#warning1')).addClass('invalidSize');
     $((invalidDiv ? '#warning2' : '#warning1')).show();
@@ -1023,9 +903,9 @@ function validateInput() {
 
   if (bedShape === 'Round' && (Math.sqrt(Math.pow(fitWidth, 2) + Math.pow(fitHeight, 2)) > (parseInt(testNaN['BEDSIZE_X']) - 5)) && fitWidth > fitHeight) {
     $('label[for=SLOW_LENGTH]').addClass('invalidSize');
-    $('#SLOW_LENGTH')[0].setCustomValidity('Your Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your bed\'s diameter.');
+    $('#SLOW_LENGTH')[0].setCustomValidity('Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your bed\'s diameter.');
     $('label[for=FAST_LENGTH]').addClass('invalidSize');
-    $('#FAST_LENGTH')[0].setCustomValidity('Your Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your bed\'s diameter.');
+    $('#FAST_LENGTH')[0].setCustomValidity('Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your bed\'s diameter.');
     $((invalidDiv ? '#warning2' : '#warning1')).text('Your Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your bed\'s diameter. Check highlighted Pattern Settings.');
     $((invalidDiv ? '#warning2' : '#warning1')).addClass('invalidSize');
     $((invalidDiv ? '#warning2' : '#warning1')).show();
@@ -1033,9 +913,9 @@ function validateInput() {
 
   if (bedShape === 'Rect' && fitWidth > (parseInt(testNaN['BEDSIZE_X']) - 5)) {
     $('label[for=SLOW_LENGTH]').addClass('invalidSize');
-    $('#SLOW_LENGTH')[0].setCustomValidity('Your Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your X bed size.');
+    $('#SLOW_LENGTH')[0].setCustomValidity('Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your X bed size.');
     $('label[for=FAST_LENGTH]').addClass('invalidSize');
-    $('#FAST_LENGTH')[0].setCustomValidity('Your Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your X bed size.');
+    $('#FAST_LENGTH')[0].setCustomValidity('Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your X bed size.');
     $((invalidDiv ? '#warning2' : '#warning1')).text('Your Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your X bed size. Check highlighted Pattern Settings.');
     $((invalidDiv ? '#warning2' : '#warning1')).addClass('invalidSize');
     $((invalidDiv ? '#warning2' : '#warning1')).show();
@@ -1043,15 +923,108 @@ function validateInput() {
 
   if (bedShape === 'Rect' && fitHeight > (parseInt(testNaN['BEDSIZE_Y']) - 5)) {
     $('label[for=K_START]').addClass('invalidSize');
-    $('#K_START')[0].setCustomValidity('Your Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your Y bed size.');
+    $('#K_START')[0].setCustomValidity('Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your Y bed size.');
     $('label[for=K_END]').addClass('invalidSize');
-    $('#K_END')[0].setCustomValidity('Your Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your Y bed size.');
+    $('#K_END')[0].setCustomValidity('Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your Y bed size.');
     $('label[for=K_STEP]').addClass('invalidSize');
-    $('#K_STEP')[0].setCustomValidity('Your Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your Y bed size.');
+    $('#K_STEP')[0].setCustomValidity('Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your Y bed size.');
     $('label[for=SPACE_LINE]').addClass('invalidSize');
-    $('#SPACE_LINE')[0].setCustomValidity('Your Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your Y bed size.');
+    $('#SPACE_LINE')[0].setCustomValidity('Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your Y bed size.');
     $((invalidDiv ? '#warning2' : '#warning1')).text('Your Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your Y bed size. Check highlighted Pattern Settings.');
     $((invalidDiv ? '#warning2' : '#warning1')).addClass('invalidSize');
     $((invalidDiv ? '#warning2' : '#warning1')).show();
   }
 }
+
+$(window).load(() => {
+  // Adapt textarea to cell size
+  var TXTAREAHEIGHT = $('.txtareatd').height();
+  $('.calibpat textarea').css({'height': (TXTAREAHEIGHT) + 'px'});
+
+  // create tab index dynamically
+  $(':input:not(:hidden)').each(function(i) {
+    $(this).attr('tabindex', i + 1);
+  });
+
+  // Get localStorage data
+  var lsSettings = window.localStorage.getItem('LIN_SETTINGS');
+
+  if (lsSettings !== undefined) {
+    var settings = jQuery.parseJSON(lsSettings);
+    if (!settings['Version'] || settings['Version'] != SETTINGS_VERSION) {
+      window.localStorage.removeItem('LIN_SETTINGS');
+      alert('Script settings have been updated. Saved settings are reset to default values');
+    } else {
+      $('#FIL_DIA').val(settings['FILAMENT_DIAMETER']);
+      $('#NOZ_DIA').val(settings['NOZZLE_DIAMETER']);
+      $('#NOZZLE_TEMP').val(settings['NOZZLE_TEMP']);
+      $('#NOZ_LIN_R').val(settings['NOZZLE_LINE_RATIO']);
+      $('#BED_TEMP').val(settings['BED_TEMP']);
+      $('#SLOW_SPEED').val(settings['SPEED_SLOW']);
+      $('#FAST_SPEED').val(settings['SPEED_FAST']);
+      $('#MOVE_SPEED').val(settings['SPEED_MOVE']);
+      $('#RETRACT_SPEED').val(settings['SPEED_RETRACT']);
+      $('#PRINT_ACCL').val(settings['ACCELERATION']);
+      $('#RETRACTION').val(settings['RETRACT_DIST']);
+      $('#SHAPE_BED').val(settings['BED_SHAPE']);
+      $('#BEDSIZE_X').val(settings['BED_X']);
+      $('#BEDSIZE_Y').val(settings['BED_Y']);
+      $('#CENTER_NULL').prop('checked', settings['NULL_CENTER']);
+      $('#LAYER_HEIGHT').val(settings['HEIGHT_LAYER']);
+      $('#EXTRUSION_MULT').val(settings['EXT_MULT']);
+      $('#LIN_VERSION').val(settings['VERSION_LIN']);
+      $('#TYPE_PATTERN').val(settings['PATTERN_TYPE']);
+      $('#K_START').val(settings['K_START']);
+      $('#K_END').val(settings['K_END']);
+      $('#K_STEP').val(settings['K_STEP']);
+      $('#X_JERK').val(settings['X_JERK']);
+      $('#Y_JERK').val(settings['Y_JERK']);
+      $('#Z_JERK').val(settings['Z_JERK']);
+      $('#E_JERK').val(settings['E_JERK']);
+      $('#DIR_PRINT').val(settings['PRINT_DIR']);
+      $('#SPACE_LINE').val(settings['LINE_SPACING']);
+      $('#FRAME').prop('checked', settings['USE_FRAME']);
+      $('#PRIME').prop('checked', settings['USE_PRIME']);
+      $('#PRIME_EXT').val(settings['EXT_MULT_PRIME']);
+      $('#PRIME_SPEED').val(settings['SPEED_PRIME']);
+      $('#DWELL_PRIME').val(settings['PRIME_DWELL']);
+      $('#SLOW_LENGTH').val(settings['LENGTH_SLOW']);
+      $('#FAST_LENGTH').val(settings['LENGTH_FAST']);
+      $('#OFFSET_Z').val(settings['Z_OFFSET']);
+      $('#USE_FWR').prop('checked', settings['USE_FWR']);
+      $('#MM_S').prop('checked', settings['USE_MMS']);
+      $('#LINE_NO').prop('checked', settings['USE_LINENO']);
+
+      //toggleBedShape();
+      //patternType();
+      //togglePrime();
+      //toggleVersion();
+      //toggleRetract();
+    }
+  }
+
+  // toggle between mm/s and mm/min speeds
+  $('#MM_S').change(speedToggle);
+
+  // Toggle Bed Shape
+  $('#SHAPE_BED').change(() => {
+    toggleBedShape();
+    validateInput();
+  });
+
+  // toggle prime relevant html elements
+  $('#PRIME').change(togglePrime);
+
+  // frame and alternate pattern are mutually exclusive
+  $('#TYPE_PATTERN').change(patternType);
+
+  // Change factor type
+  $('#LIN_VERSION').change(() => {
+    toggleVersion();
+    validateInput();
+  });
+
+  // Change retract type
+  $('#USE_FWR').change(toggleRetract);
+
+});

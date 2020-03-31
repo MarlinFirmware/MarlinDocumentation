@@ -239,11 +239,12 @@ category:     [ tools ]
             <td><label for="USE_BL">Use Bed Leveling:</label></td>
             <td><select name="SELECT_BED_LEVELING" id="SELECT_BED_LEVELING" onchange="validateInput()">
               <option value="0" selected="selected">No</option>
-              <option value="G29">Level bed (G29)</option>
-              <option value="M420 L0 S1;">Load UBL mesh 0</option>
-              <option value="M420 L1 S1;">Load UBL mesh 1</option>
-              <option value="M420 L2 S1;">Load UBL mesh 2</option>
-              <option value="M420 L3 S1;">Load UBL mesh 3</option>
+              <option value="G29 ; Level bed">Level bed (G29)</option>
+              <option value="M420 S1 ; Leveling ON">Leveling ON</option>
+              <option value="M420 L0 S1 ; Load UBL mesh 0">Load UBL mesh 0</option>
+              <option value="M420 L1 S1 ; Load UBL mesh 1">Load UBL mesh 1</option>
+              <option value="M420 L2 S1 ; Load UBL mesh 2">Load UBL mesh 2</option>
+              <option value="M420 L3 S1 ; Load UBL mesh 3">Load UBL mesh 3</option>
             </select></td>
             <td>Level bed or load a saved mesh (i.e. for UBL) before printing. Bed leveling has to be activated in Configuration.h! Loading a mesh requires UBL to be activated!</td>
           </tr>

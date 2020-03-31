@@ -26,16 +26,9 @@
 
   td:nth-child(1) { width: 14%; }
 
-  td:nth-child(2) {
-    width: 7%;
-    min-width: 7%;
-    text-align: center;
-    }
+  td:nth-child(2) { width: 7%; min-width: 7%; }
 
-  td:nth-child(3) {
-    width: 45%;
-    font-size: 80%;
-    }
+  td:nth-child(3) { width: 45%; font-size: 80%; }
 
   .tdHead { background-color: #EDEDED; }
 
@@ -55,7 +48,7 @@
 
   input[type=number] { width: 140px; }
 
-  select { width: 140px; }
+  select { width: 140px; color: #000; }
   #button2 { background: #BFA; }
 
   label {
@@ -122,6 +115,6 @@ body.night #kfactor {
   .calibpat2 td { background-color: #111; }
   .disabled { color: #0F0; }
   .invalidDiv, .invalidSize, .invalidNumber {
-    background-color: #FFFF00;
+    background-color: #990000;
   }
 }
