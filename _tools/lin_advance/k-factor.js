@@ -57,7 +57,7 @@ function genGcode() {
       LINE_SPACING = parseFloat($('#SPACE_LINE').val()),
       USE_FRAME = $('#FRAME').prop('checked'),
       USE_PRIME = $('#PRIME').prop('checked'),
-      BED_LEVELING = SELECT_BED_LEVELING.val(),
+      BED_LEVELING = $('#SELECT_BED_LEVELING').val(),
       USE_MMS = $('#MM_S').prop('checked'),
       USE_FWR = $('#USE_FWR').prop('checked'),
       EXT_MULT_PRIME = parseFloat($('#PRIME_EXT').val()),
