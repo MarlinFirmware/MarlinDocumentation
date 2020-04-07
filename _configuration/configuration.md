@@ -343,8 +343,8 @@ Adjust the relavant settings to your specifications for use with `SWITCHING_TOOL
 //#define MIXING_EXTRUDER
 #if ENABLED(MIXING_EXTRUDER)
   #define MIXING_STEPPERS 2        // Number of steppers in your mixing extruder
-  #define MIXING_VIRTUAL_TOOLS 16  // Use the Virtual Tool method with [`M163`](/docs/gcode/M163.html) and [`M164`](/docs/gcode/M164.html)
-  //#define DIRECT_MIXING_IN_G1    // Allow ABCDHI mix factors in [`G1`](/docs/gcode/G000-G001.html) movement commands
+  #define MIXING_VIRTUAL_TOOLS 16  // Use the Virtual Tool method with M163 and M164
+  //#define DIRECT_MIXING_IN_G1    // Allow ABCDHI mix factors in G1 movement commands
 #endif
 ```
 A Mixing Extruder uses two or more stepper motors to drive multiple filaments into a mixing chamber, with the mixed filaments extruded from a single nozzle. This option adds the ability to set a mixture, to save mixtures, and to recall mixtures using the `T` command. The extruder still uses a single E axis, while the current mixture is used to determine the proportion of each filament to use. An "experimental" [`G1`](/docs/gcode/G000-G001.html) direct mixing option is included.
@@ -2554,7 +2554,7 @@ Some RAMPS and other boards don't detect when an SD card is inserted. You can wo
 ### SD Finished Stepper Release
 ```cpp
 #define SD_FINISHED_STEPPERRELEASE true          // Disable steppers when SD Print is finished
-#define SD_FINISHED_RELEASECOMMAND "[`M84`](/docs/gcode/M018.html) X Y Z E" // You might want to keep the z enabled so your bed stays in place.
+#define SD_FINISHED_RELEASECOMMAND "M84 X Y Z E" // You might want to keep the z enabled so your bed stays in place.
 ```
 
 ### SD Menu Autostart
