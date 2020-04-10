@@ -11,7 +11,7 @@ This document is based on Marlin 1.1.9
 {% endalert %}
 
 ---
-Note: Because of the way Marlin currently (1.1.9) implements `M3`-`M5`, for best results we recommend ([#11576](//github.com/MarlinFirmware/Marlin/issues/11576)) using a fan PWM pin and the [`M106`](/docs/gcode/M106.html) command instead of `M3`-`M5`. The simplest way to do this is to define `FAN1_PIN` as one of the available PWM pins on your board.
+Note: For best results with Marlin 1.1.9, we recommend ([#11576](//github.com/MarlinFirmware/Marlin/issues/11576)) using a fan PWM pin and the [`M106`](/docs/gcode/M106.html) command instead of `M3`-`M5`. The simplest way to do this is to define `FAN1_PIN` as one of the available PWM pins on your board. Ignore this recommendation for **Marlin 2.0.x**.
 
 For example, to define pin 6 as the second fan just add this line to `Configuration.h`:
 ```cpp
@@ -25,6 +25,8 @@ M106 P1 S255 ; Laser at 100%
 ```
 
 **NOTE**: You can use Fan0 if it is available, in which case you will not need to define the above. As of this edit, Marlin can control up to 3 fans via `M106`/`M107`. To use more pins you may need to modify Marlin as described in [Issue #12961](//github.com/MarlinFirmware/Marlin/issues/12961).
+
+
 
 ---
 
