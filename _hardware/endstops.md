@@ -319,7 +319,7 @@ Illustration 10: Endstop with 100nF capacitor
 <br>
 
 #### Effect of the hardware filtering
-Illustration 8 below shows the effect of such hardware filtering: The noise level is smoothed and peaks will be reduced so much that they no longer will cause false readings. Additionally the fast bouncing at the beginning of the triggering will also be damped. 
+Illustration 11 below shows the effect of such hardware filtering: The noise level is smoothed and peaks will be reduced so much that they no longer will cause false readings. Additionally the fast bouncing at the beginning of the triggering will also be damped. 
 
 ![filter](/assets/images/docs/hardware/endstops/switch_filter.png)
 {: style="text-align: center;"}
