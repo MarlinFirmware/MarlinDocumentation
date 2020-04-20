@@ -39,7 +39,7 @@ Graphical displays provide complete freedom to display whatever we want, so long
 
 # The Languages
 
-Marlin currently supports 33 different language variants:
+Marlin currently supports 34 different language variants:
 
 Code|Language| |Code|Language
 ----|--------|-|----|--------
