@@ -4147,7 +4147,7 @@ See [`M100`](/docs/gcode/M100.html) for more details.
 ```
 Display pin status, toggle pins, watch pins, watch endstops & toggle LED, test servo probe with [`M43`](/docs/gcode/M043.html).
 
-#### Enabcle Marlin Dev Mode
+#### Enable Marlin Dev Mode
 ```cpp
 //#define MARLIN_DEV_MODE
 ```
