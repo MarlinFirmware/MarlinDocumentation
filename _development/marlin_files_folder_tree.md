@@ -1,7 +1,7 @@
 ---
 title:        'Marlin files and folders tree'
 description:  'file tree explained'
-tag: contributing
+tag: documentation
 
 author: chepo92
 category: [ development ]
@@ -9,45 +9,62 @@ category: [ development ]
 
 <!-- ## The Layers of Marlin -->
 
+## File and folder tree
 
-# File and folder tree
+### Code and compiling
 
-## Marlin
+### Marlin
 
-### Configuration.h 	
+{:.pretty-list.headless}
+File|Description
+----|-----------
+`Configuration.h`| Contains 
+`Configuration_adv.h`  | Contains
+`Makefile`| Contains
+`Marlin.ino`| Contains
+`Version.h`| Contains
 
-### Configuration_adv.h 
-	
-### Makefile 	
 
-### Marlin.ino 	
+### lib
 
-### Version.h
+{:.pretty-list.headless}
+File|Description
+----|-----------
+`libs`| Contains 
 
-## Lib
+### src
 
-## src
+{:.pretty-list.headless}
+File|Description
+----|-----------
+`MarlinCore.cpp`| Contains 
+`MarlinCore.h`  | Contains
 
-### HAL
+
+#### HAL
+
+{:.pretty-list.headless}
+File|Description
+----|-----------
+`HAL.h`| Contains 
+`platforms.h`  | Contains
+
  	 
-### core
+#### core
  	 
-### feature 
+#### feature 
 	 
-### gcode 
+#### gcode 
 	
-### inc 
+#### inc 
 	
-### lcd 
+#### lcd 
 	
-### libs 
+#### libs 
 	
-### module 
+#### module 
 	
-### pins 
+#### pins 
 	
-### sd 	
+#### sd 	
 
-### MarlinCore.cpp 	
-
-### MarlinCore.h 	

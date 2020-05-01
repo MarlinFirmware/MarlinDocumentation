@@ -1,7 +1,7 @@
 ---
-title:        'marlin_inner_working_explained'
-description:  'How to help improve Marlin'
-tag: contributing
+title:        'Marlin working explained'
+description:  'Finally! How marlin works as Marlin'
+tag: documentation
 
 author: chepo92
 category: [ development ]
@@ -9,56 +9,54 @@ category: [ development ]
 
 <!-- ## The Layers of Marlin -->
 
-# Code and compiling
+## Main
 
-# Main
+## Libraries
 
-# Libraries
+### From code to bits and pins: pins and marlin HAL
 
-# From code to bits and pins: pins and marlin HAL
+### Pins
 
-## Pins
+### HAL
 
-## HAL
+## The primitive's 3D printer: Basic functions
 
-# The primitive's 3D printer: Basic functions
+### Movement
 
-## Movement
+### Temperature reading
 
-## Temperature reading
+### Heating
 
-## Heating
+## From grbl and sprinter to Marlin
 
-# From grbl and sprinter to Marlin
+### GCode Parser
 
-## GCode Parser
+### Planner
 
-## Planner
+## The beginner's 3D printer
 
-# The begginer's 3D printer
+### Endstops
 
-## Endstops
+### Temperature control loop
 
-## Temperature control loop
+### Serial comunitation
 
-## Serial comunitation
+### SD support
 
-## SD support
+### LCD
 
-## LCD
+## The advanced 3D printer
 
-# The advanced 3D printer
+### Probe
 
-## Probe
+### Bed Leveling
 
-## Bed Leveling
+### Digipots
 
-## Digipots
+### LEDs
 
-## LEDs
+### MMU2
 
-## MMU2
+### Touch
 
-## Touch
-
-## Laser
+### Laser
