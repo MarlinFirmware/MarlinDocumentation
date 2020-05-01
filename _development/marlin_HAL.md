@@ -1,5 +1,5 @@
 ---
-title:        'Hardware Abstraction Layer'
+title:        'Marlin HAL'
 description:  'marlin HAL explained'
 tag: documentation
 
@@ -9,27 +9,10 @@ category: [ development ]
 
 <!-- ## The Layers of Marlin -->
 
-## Intro: The Marlin HAL
 
-_**'Nobody understands it'**_
+## Hardware Abstraction Layer, in simple
 
-
-_**'It's a trial by fire'**_
-
-
-_**'Hiring writers is only way to get marlin documented'**_
-
-
-_**'Programmers don't like to write docs, even for money, or tons of coffee'**_
-
-
-_**'Documentation has a nasty habit of becoming obsolete'**_
-
-
-
-## HAL: Hardware Abstraction Layer, in simple
-
-A Hardware Abstraction Layer allows applications to discover and use the hardware of the host system through a simple, portable and abstract API, regardless of the type of the underlying hardware. [HAL](https://ometer.com/hardware.html)
+A Hardware Abstraction Layer allows applications to discover and use the hardware of the host system through a simple, portable and abstract API, regardless of the type of the underlying hardware. ([Pennington H., 2003](https://ometer.com/hardware.html) ) 
 
 
 Due to the high proliferation of new boards and hardware in the market based in different MCU and CPU, and to keep pace between them and marlin development in a hardware independent way, Marlin 2.0 implmenents an architecture-specific HAL (AVR's, SAM, STM, ESP) - a key difference with Marlin 1.0 that was initialy intended for AVR 8 Bit as a derivation of [Sprinter](https://github.com/kliment/Sprinter) and [GRBL](https://github.com/gnea/grbl) - , which takes care of comunicating, executing, processing and translating operations between marlin code and functions to Microcontroler/CPU hardware, using pins.h definitions and related files.
@@ -110,3 +93,31 @@ board|processor|speed|flash|sram|logic|fpu
   [Teensy 3.5](https://www.pjrc.com/store/teensy35.html)|[MK64FX512VMD12](https://www.mouser.com/ProductDetail/NXP-Freescale/MK64FX512VMD12) ARM-Cortex M4|120MHz|512k|192k|3.3-5V|yes
   [Teensy 3.6](https://www.pjrc.com/store/teensy36.html)|[MK66FX1M0VMD18](https://www.mouser.com/ProductDetail/NXP-Freescale/MK66FX1M0VMD18) ARM-Cortex M4|180MHz|1M|256k|3.3V|yes
 
+
+### Developing a HAL
+
+
+### Developing a HAL: Walkthrough 32 bit examples
+
+
+### Testing a HAL
+
+
+### Submitting a HAL
+
+
+### Comunity opinions
+
+_**'Nobody understands it'**_
+
+
+_**'It's a trial by fire'**_
+
+
+_**'Hiring writers is only way to get marlin documented'**_
+
+
+_**'Programmers don't like to write docs, even for money, or tons of coffee'**_
+
+
+_**'Documentation has a nasty habit of becoming obsolete'**_
