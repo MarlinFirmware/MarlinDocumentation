@@ -11,8 +11,8 @@ category: [ development, hardware ]
 ### General information
 
 Marlin supports a wide variety of 3D printers, including all RAMPS variants, and is adaptable to virtually any Arduino/Genuino-based electronics through pin-mapping - associating pins with their functions. 
-Originaly Marlin was desinged to run in cheap AVR 8 bit boards, but with the advent of new 16 and 32 bit boards, wider types of boards have been supported up to Marlin 1.1.9.
-With the addition of a [Hardware Abstraction Layer](#HAL) in Marlin 2.0, it can support an even wider variety of boards.
+Originaly Marlin was desinged to run in cheap AVR 8 bit boards, but with the advent of ARM-based boards, a wider variety of boards has been supported since Marlin 1.1.9.
+Marlin 2.0 adds a [Hardware Abstraction Layer](#HAL) to support an even wider variety of boards.
 
 Several files in the Marlin source code provide hardware support, but the files supporting the core electronics are:
 
