@@ -11,21 +11,16 @@ group: calibration
 related: [ M420, M421 ]
 codes: [ G29 ]
 
-long:
-- |
-    Automatic (Bilinear) Bed Leveling probes the bed at some fixed number of points and produces a mesh representing the imperfections across the bed.
+long: |
+  Automatic (Bilinear) Bed Leveling probes the bed at some fixed number of points and produces a mesh representing the imperfections across the bed.
 
-- |
   The printer must be homed with `G28` before `G29`.
 
   * For `AUTO_BED_LEVELING_UBL` see [G29 UBL](/docs/gcode/G029-ubl.html) and [G26 Mesh Editing](/docs/gcode/G026.html).
   * For `MESH_BED_LEVELING` see the [G29 MBL](/docs/gcode/G029-mbl.html) page.
 
-- |
-  #### Automatic Probing
   Using an electronic probe Marlin can probe the entire bed with a single `G29` command. See parameter descriptions and examples below for details.
 
-- |
   #### Manual Probing
   <details>
     Auto Bed Leveling now includes a `PROBE_MANUALLY` option for systems lacking a probe.
@@ -61,7 +56,6 @@ long:
 
   </details>
 
-- |
   #### Mesh Editing
 
   `AUTO_BED_LEVELING_BILINEAR` adds these parameters to `G29` for editing mesh points:
@@ -128,7 +122,10 @@ parameters:
 -
   tag: W
   optional: true
-  description: Write a mesh Z offset (`AUTO_BED_LEVELING_BILINEAR`). Requires `X`,`Y` or `I`,`J` to specify the point, and `Z` to specify the value.
+  description: |
+    Write a mesh Z offset.
+    - Use `X`,`Y` or `I`,`J` to specify the point.
+    - Use `Z` to specify the new value to set.
   values:
     -
       type: bool
@@ -144,9 +141,9 @@ parameters:
   tag: E
   optional: true
   description: |
-               - By default G29 will engage the Z probe, test the bed, then disengage.
-               - Include "E" to engage/disengage the Z probe for each sample.
-               - There's no extra effect if you have a fixed Z probe.
+    - By default G29 will engage the Z probe, test the bed, then disengage.
+    - Include "E" to engage/disengage the Z probe for each sample.
+    - There's no extra effect if you have a fixed Z probe.
   values:
     -
       type: bool
@@ -215,14 +212,14 @@ parameters:
 
 examples:
 -
-  pre: 'Automatic Probing examples'
+  pre: Automatic Probing examples
   post: '`G29` without arguments uses your default settings.'
   code: G29 ; Measure the bed
 -
   post: 'Probe your configured N x N matrix within the bounds `X50` `Y50` to `X150` `Y150` (verbose).'
   code: G29 L50 R150 F50 B150 V4
 -
-  pre: 'Manual Probing example'
+  pre: Manual Probing example
   post: 'Each `G29` command goes to the next step until the whole procedure is done. The `V1` parameter provides a progress report.'
   code:
     - G29 V1 ;  Ready!  Go to Point 1, wait...

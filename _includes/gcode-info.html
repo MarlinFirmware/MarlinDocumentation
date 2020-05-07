@@ -98,7 +98,7 @@ This document has been marked `needs-review`. The following information may be o
       {% if list.size > 0 %}
         {% assign list = (list | sort: 'tag') %}
         {% for parm in list %}
-          <span data-toggle="tooltip" data-placement="top" data-original-title="{{ parm.description }}">
+          <span data-toggle="tooltip" data-placement="top" data-original-title="{{ parm.description | markdownify | strip_html }}">
             {% if parm.optional %}&#x5B;{% endif %}<!--
             -->{{ parm.tag }}<!--
             -->{% if parm.values.size > 0 %}<!--

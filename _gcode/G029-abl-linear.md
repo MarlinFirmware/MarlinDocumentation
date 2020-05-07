@@ -11,15 +11,14 @@ group: calibration
 related: [ M420 ]
 codes: [ G29 ]
 
-long:
-- |
+long: |
   Automatic (Linear) Bed Leveling probes the bed in a grid and enables bed leveling compensation using a matrix to compensate for bed tilt, applying a "least-squares" approximation.
-- |
+
   The printer must be homed with `G28` before `G29`.
-- |
+
   #### Automatic Probing
   Using an electronic probe Marlin can probe the entire grid with a single `G29` command. See parameter descriptions and examples below for details.
-- |
+
   #### Manual Probing
   <details>
     Auto Bed Leveling now includes a `PROBE_MANUALLY` option for systems lacking a probe.
@@ -90,35 +89,17 @@ parameters:
 -
   tag: X
   optional: true
-  description: |
-               - Override the X-size of the grid that will be probed.
-               - Specify X when setting a mesh value (`PROBE_MANUALLY`).
+  description: Set the number of columns (in X) that will be probed.
   values:
     -
-      type: int/float
+      type: int
 -
   tag: Y
   optional: true
-  description: |
-               - Override the Y-size of the grid that will be probed.
-               - Specify Y when setting a mesh value.
+  description: Set the number of rows (in Y) that will be probed.
   values:
     -
-      type: int/float
--
-  tag: Z
-  optional: true
-  description: Specify the Z offset when setting a mesh value (`AUTO_BED_LEVELING_BILINEAR`).
-  values:
-    -
-      type: float
--
-  tag: W
-  optional: true
-  description: Write a mesh Z offset (`AUTO_BED_LEVELING_BILINEAR`). Requires `X`,`Y` or `I`,`J` to specify the point, and `Z` to specify the value.
-  values:
-    -
-      type: bool
+      type: int
 -
   tag: P
   optional: true
@@ -201,19 +182,18 @@ parameters:
 -
   tag: J
   optional: true
-  description: (Without `W`) Jettison the leveling data stored in SRAM and turn off leveling compensation. Data in EEPROM is not affected.
+  description: Jettison the leveling data stored in SRAM and turn off leveling compensation. Data in EEPROM is not affected.
   values:
     -
       type: bool
 -
   tag: V
   optional: true
-  description: Set the verbose level
+  description: Set the verbose level. Level 2 and up act like 'T'.
   values:
     -
       type: int
       tag: 0-4
-      description: Level 2 and up act like 'T'
 
 examples:
 -
