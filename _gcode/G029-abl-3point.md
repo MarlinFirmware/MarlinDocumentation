@@ -107,7 +107,7 @@ parameters:
 -
   tag: J
   optional: true
-  description: (Without `W`) Jettison the leveling data stored in SRAM and turn off leveling compensation. Data in EEPROM is not affected.
+  description: Jettison the leveling data stored in SRAM and turn off leveling compensation. Data in EEPROM is not affected.
   values:
     -
       type: bool
