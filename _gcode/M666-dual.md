@@ -10,9 +10,6 @@ requires: (X|Y|Z)_DUAL_ENDSTOPS
 
 codes: [ M666 ]
 
-long: |
-    The `M666` command allows adjusting the offsets for dual endstops
-
 parameters:
   -
     tag: X
@@ -42,3 +39,5 @@ parameters:
 examples:
 
 ---
+
+Use the `M666` command to adjust the offsets for dual (or multiple) endstops.

@@ -11,28 +11,6 @@ group: calibration
 related: [ M420, M421 ]
 codes: [ G29 ]
 
-long: |
-  Mesh Bed Leveling (MBL) allows interactively measuring a Z height mesh without a bed probe. The only tool required is a piece of paper or a feeler gauge. MBL uses the mesh to compensate for variations in height across the bed.
-
-  **Mesh Bed Leveling from the host:**
-
-  1. Use `G29 S0` to get the current status and mesh. If there’s an existing mesh, you can send M420 S1 to use it.
-  2. Use `G29 S1` to move to the first point for Z adjustment.
-  3. Adjust Z so a piece of paper can just pass under the nozzle.
-  4. Use `G29 S2` to save the Z value and move to the next point.
-  5. Repeat steps 3-4 until completed.
-  6. Use `M500` to save the mesh to EEPROM, if desired.
-
-  **Mesh Bed Leveling using an LCD controller:** (Requires `LCD_BED_LEVELING`)
-
-  1. Select `Level Bed` then choose `Level Bed` (not `Cancel`) in the sub-menu.
-  2. Wait for `Homing XYZ` to complete.
-  3. When `Click to Begin` appears, press the controller button to move to the first point.
-  4. Use the controller wheel to adjust Z so that a piece of paper can just pass under the nozzle.
-  5. Press the controller button to save the Z value and move to the next point.
-  6. Repeat steps 4-5 until completed.
-  7. Use `Control` > `Store memory` to save the mesh to EEPROM, if desired.
-
 notes:
 - Requires the `MESH_BED_LEVELING` option in `Configuration.h`.
 - Similar to `AUTO_BED_LEVELING_BILINEAR` with `PROBE_MANUALLY` but uses less SRAM.
@@ -145,3 +123,24 @@ examples:
       1 +0.017 -0.666  -0.019
       2 +0.022 -0.030  +0.042
 ---
+
+Mesh Bed Leveling (MBL) allows interactively measuring a Z height mesh without a bed probe. The only tool required is a piece of paper or a feeler gauge. MBL uses the mesh to compensate for variations in height across the bed.
+
+**Mesh Bed Leveling from the host:**
+
+1. Use `G29 S0` to get the current status and mesh. If there’s an existing mesh, you can send M420 S1 to use it.
+2. Use `G29 S1` to move to the first point for Z adjustment.
+3. Adjust Z so a piece of paper can just pass under the nozzle.
+4. Use `G29 S2` to save the Z value and move to the next point.
+5. Repeat steps 3-4 until completed.
+6. Use `M500` to save the mesh to EEPROM, if desired.
+
+**Mesh Bed Leveling using an LCD controller:** (Requires `LCD_BED_LEVELING`)
+
+1. Select `Level Bed` then choose `Level Bed` (not `Cancel`) in the sub-menu.
+2. Wait for `Homing XYZ` to complete.
+3. When `Click to Begin` appears, press the controller button to move to the first point.
+4. Use the controller wheel to adjust Z so that a piece of paper can just pass under the nozzle.
+5. Press the controller button to save the Z value and move to the next point.
+6. Repeat steps 4-5 until completed.
+7. Use `Control` > `Store memory` to save the mesh to EEPROM, if desired.
