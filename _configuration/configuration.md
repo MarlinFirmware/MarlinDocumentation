@@ -186,7 +186,7 @@ This value should be set to the total number of E stepper motors on the machine,
 ```cpp
 #define DEFAULT_NOMINAL_FILAMENT_DIA 3.00
 ```
-This is the "nominal" filament diameter as written on the filament spool (1.75, 2.85, 3.0). If you typically use 1.75mm filament, but physically measure the diameter as 1.70mm, you should still use 1.75 if that's what you have set in your slicer.
+This is the "nominal" filament diameter as written on the filament spool (1.75, 2.85, 3.0). If you typically use 1.75 mm filament, but physically measure the diameter as 1.70 mm, you should still use 1.75 if that's what you have set in your slicer.
 
 This value is used by Marlin to compensate for Filament Width when printing in volumetric mode (See `M200`), and by the Unified Bed Leveling command [`G26`](/docs/gcode/G026.html) when printing a test grid.
 
@@ -386,7 +386,7 @@ Hotend offsets are needed if your extruder has more than one nozzle. These value
   #endif
 #endif
 ```
-This option allows the controller board to switch the power supply 12v on and off with [`M80`](/docs/gcode/M080.html) and [`M81`](/docs/gcode/M081.html). Requires `PS_ON_PIN`.
+This option allows the controller board to switch the power supply 12 V on and off with [`M80`](/docs/gcode/M080.html) and [`M81`](/docs/gcode/M081.html). Requires `PS_ON_PIN`.
 
 ```cpp
 //#define PS_DEFAULT_OFF
@@ -495,7 +495,7 @@ Marlin uses PID (Proportional, Integral, Derivative) control ([Wikipedia](//en.w
 
 Most vitally, correct PID settings will prevent excessive overshoot, which is a safety hazard. During PID calibration, use the highest target temperature you intend to use (where overshoots are more critical).
 
-See the [PID Tuning](//reprap.org/wiki/PID_Tuning) topic on the RepRap wiki for detailed instructions on [`M303`](/docs/gcode/M303.html) auto-tuning. The PID settings should be tuned whenever changing a hotend, temperature sensor, heating element, board, power supply voltage (12v/24v), or anything else related to the high-voltage circuitry.
+See the [PID Tuning](//reprap.org/wiki/PID_Tuning) topic on the RepRap wiki for detailed instructions on [`M303`](/docs/gcode/M303.html) auto-tuning. The PID settings should be tuned whenever changing a hotend, temperature sensor, heating element, board, power supply voltage (12 V/24 V), or anything else related to the high-voltage circuitry.
 
 ---
 
@@ -534,7 +534,7 @@ Enable `PID_AUTOTUNE_MENU` to add an option on the LCD to run an Autotune cycle 
   //#define  DEFAULT_Ki 0.1
   //#define  DEFAULT_Kd 12
 
-  // Mendel Parts V9 on 12V
+  // Mendel Parts V9 on 12 V
   //#define  DEFAULT_Kp 63.0
   //#define  DEFAULT_Ki 2.25
   //#define  DEFAULT_Kd 440
@@ -552,7 +552,7 @@ Sample PID values are included for reference, but they won't apply to most setup
 ```cpp
 //#define PIDTEMPBED
 ```
-Enable `PIDTEMPBED` to use PID for the bed heater (at the same PWM frequency as the extruders). With the default PID_dT the PWM frequency is 7.689Hz, fine for driving a square wave into a resistive load without significant impact on FET heating. This also works fine on a Fotek SSR-10DA Solid State Relay into a 250W heater. If your configuration is significantly different than this and you don't understand the issues involved, you probably shouldn't use bed PID until it's verified that your hardware works. Use `M303 E-1` to tune the bed PID for this option.
+Enable `PIDTEMPBED` to use PID for the bed heater (at the same PWM frequency as the extruders). With the default PID_dT the PWM frequency is 7.689 Hz, fine for driving a square wave into a resistive load without significant impact on FET heating. This also works fine on a Fotek SSR-10DA Solid State Relay into a 250 W heater. If your configuration is significantly different than this and you don't understand the issues involved, you probably shouldn't use bed PID until it's verified that your hardware works. Use `M303 E-1` to tune the bed PID for this option.
 
 ```cpp
 //#define BED_LIMIT_SWITCHING
@@ -796,7 +796,7 @@ Setting these too high will cause the corresponding stepper motor to lose steps,
 ```
 When the velocity of any axis changes, its acceleration (or deceleration) in mm/s/s is limited by the current max acceleration setting. Also see the *jerk* settings below, which specify the largest instant speed change that can occur between segments.
 
-A value of 3000 means that an axis may accelerate from 0 to 3000mm/m (50mm/s) within a one second movement.
+A value of 3000 means that an axis may accelerate from 0 to 3000 mm/m (50 mm/s) within a one second movement.
 
 Jerk sets the floor for accelerated moves. If the change in top speed for a given axis between segments is less than the jerk value for the axis, an instantaneous change in speed may be allowed. Limits placed on other axes also apply. Basically, lower jerk values result in more accelerated moves, which may be near-instantaneous in some cases, depending on the final acceleration determined by the planner.
 
@@ -1037,8 +1037,8 @@ Z probes require clearance when deploying, stowing, and moving between probe poi
 
 Use these settings to specify the distance (mm) to raise the probe (or lower the bed). The values set here apply over and above any (negative) probe Z Offset set with `Z_PROBE_OFFSET_FROM_EXTRUDER`, [`M851`](/docs/gcode/M204.html), or the LCD. Only integer values >= 1 are valid for these settings.
 
-- *Example*: `M851 Z-5` with a CLEARANCE of 4  =>  9mm from bed to nozzle.
-- *But*: `M851 Z+1` with a CLEARANCE of 2  =>  2mm from bed to nozzle.
+- *Example*: `M851 Z-5` with a CLEARANCE of 4  =>  9 mm from bed to nozzle.
+- *But*: `M851 Z+1` with a CLEARANCE of 2  =>  2 mm from bed to nozzle.
 
 {% panel warning G29 Movement %}
 Make sure you have enough clearance for the probe to move between points!
@@ -1308,7 +1308,7 @@ This option adds the `Z` parameter to [`M420`](/docs/gcode/M420.html) which sets
 
 This feature exists to prevent irregularities in the bed from propagating through the model's entire height. Fading out leveling also reduces computational requirements and resonance from the Z axis above the fade height. For a well-aligned machine, this feature can improve print results.
 
-Example: To have leveling fade out over the first 10mm of layer printing use `M420 Z10`. If each layer is 0.2mm high, leveling compensation will be reduced by 1/50th (2%) after each layer. Above 10mm the machine will move without compensation.
+Example: To have leveling fade out over the first 10 mm of layer printing use `M420 Z10`. If each layer is 0.2 mm high, leveling compensation will be reduced by 1/50th (2 %) after each layer. Above 10mm the machine will move without compensation.
 
 #### G26 Mesh Validation Pattern
 ```cpp
@@ -1972,7 +1972,7 @@ The [Philips PCA9632](//www.digchip.com/datasheets/3286493-pca9632.html) is a co
   //#define RGB_LED_W_PIN -1
 #endif
 ```
-Enable support for an RGB(W) LED connected to 5V digital pins, or an RGB(W) Strip connected to MOSFETs controlled by digital pins. An inexpensive RGB LED can be used simply by assigning digital pins for each component. If the pins are able to do hardware PWM then a wide range of colors will be available. With simple digital pins only 7 colors are possible.
+Enable support for an RGB(W) LED connected to 5 V digital pins, or an RGB(W) Strip connected to MOSFETs controlled by digital pins. An inexpensive RGB LED can be used simply by assigning digital pins for each component. If the pins are able to do hardware PWM then a wide range of colors will be available. With simple digital pins only 7 colors are possible.
 
 Adds the [`M150`](/docs/gcode/M150.html) command to set the LED (or LED strip) color. If pins are PWM capable (e.g., 4, 5, 6, 11) then a range of luminance values can be set from 0 to 255.
 
@@ -2105,7 +2105,7 @@ Marlin 2.0 allows for custom temperature sensors.
 #endif
 ```
 
-Enables the use of Hephestos 2 24V heated bed. 
+Enables the use of Hephestos 2 24 V heated bed. 
 
 ### Heated Chamber
 ```cpp
@@ -2874,7 +2874,7 @@ This option makes it easier to print the same SD Card file again. Whenever an SD
 ```cpp
   //#define AUTO_REPORT_SD_STATUS
 ```
-Auto-report SdCard status with [`M27`](/docs/gcode/M027.html) S<seconds>
+Auto-report SD card status with [`M27`](/docs/gcode/M027.html) S<seconds>
 
 ### USB Flash Drive Support
 ```cpp
