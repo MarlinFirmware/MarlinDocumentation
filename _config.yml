@@ -40,7 +40,6 @@ timezone: 'America/Chicago'
 kramdown:
   input: GFM
   syntax_highlighter: rouge
-  parse_block_html: true
 
 jekyll_tidy:
   compress_html: true

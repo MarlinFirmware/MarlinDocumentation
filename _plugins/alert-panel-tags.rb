@@ -95,6 +95,5 @@ module Jekyll
   end
 end
 
-
 Liquid::Template.register_tag('panel', Jekyll::Panel)
 Liquid::Template.register_tag('alert', Jekyll::Alert)
