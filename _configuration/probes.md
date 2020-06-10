@@ -51,7 +51,7 @@ Before configuring any bed probe be sure to read its documentation and the docum
 In general, on deltabots the probe should be connected to the unused Z-Min endstop pin (if there is one). On machines that use Z-min for an endstop, the Z-Max pin is recommended next, so this is set as the default alternative on most boards.
 
 - If the probe is connected to the Z-Min pin, enable `Z_MIN_PROBE_USES_Z_MIN_ENDSTOP_PIN`.
-- If the probe is connected to any other pin, enable `Z_MIN_PROBE_ENDSTOP`.
+- If the probe is connected to any other pin, enable `Z_MIN_PROBE_ENDSTOP` - deprecated for version 2.0.5.3 and later.
 - If the probe is connected to any other pin, set `Z_MIN_PROBE_PIN` to its digital (DIO) pin number.
 
 ### 2. Probe Type
