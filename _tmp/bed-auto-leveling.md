@@ -22,7 +22,7 @@ The following options define the probing positions. These are good starting valu
 #define FRONT_PROBE_BED_POSITION 30
 ```
 
-X and Y axis travel speed between probes, in mm/min. Bear in mind that really fast moves may render step skipping. 6000 mm/min (100mm/s) is a good value:
+X and Y axis travel speed between probes, in mm/m. Bear in mind that really fast moves may render step skipping. 6000mm/m (100mm/s) is a good value:
 
 `#define XY_TRAVEL_SPEED 6000`
 
@@ -110,7 +110,7 @@ Test the auto bed leveling sequence after set up via:
 
  - `G28` safe homing and clearing the matrix
  - `G29` run the auto bed leveling
- - `G1 Z10` move z to 10 mm above the bed and start manually lowering via the Pronterface or CURA user interface
+ - `G1 Z10` move z to 10mm above the bed and start manually lowering via the Pronterface or CURA user interface
 
 Does the head hit the bed at Z0? If it does hit the bed before or does not (a gap remains) then use `M114` to read out the height difference between the probed z and actual printer head i.e. 0.2mm. Use `M851` to adjust the length Z probe (`M851 Z-6.80` if it was -7). Store in EEPROM with `M500` and repeat the sequence `G28`, `G29`, `M114` again. Is the gap bigger then you adjusted the Z probe offset in the opposite direction. So redo `M851` Z-something, `M500` and repeat `G28`, `G29`, `M114` and measure (read Z from `M114`) z at 0. If you cannot get this reliable adjusted than it might be an unreliable Z probe which you can test via `M48`. This test the probe via a series of probing measurements on one spot at the bed and returns the standard deviation (i.e. 0.02mm).
 

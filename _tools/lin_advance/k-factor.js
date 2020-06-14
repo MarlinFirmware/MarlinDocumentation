@@ -143,10 +143,10 @@ function genGcode() {
                   '; Origin Bed Center = ' + (NULL_CENTER ? 'true' : 'false') + '\n' +
                   ';\n' +
                   '; Settings Speed:\n' +
-                  '; Slow Printing Speed = ' + SPEED_SLOW + ' mm/min\n' +
-                  '; Fast Printing Speed = ' + SPEED_FAST + ' mm/min\n' +
-                  '; Movement Speed = ' + SPEED_MOVE + ' mm/min\n' +
-                  '; Retract Speed = ' + SPEED_RETRACT + ' mm/min\n' +
+                  '; Slow Printing Speed = ' + SPEED_SLOW + ' mm/m\n' +
+                  '; Fast Printing Speed = ' + SPEED_FAST + ' mm/m\n' +
+                  '; Movement Speed = ' + SPEED_MOVE + ' mm/m\n' +
+                  '; Retract Speed = ' + SPEED_RETRACT + ' mm/m\n' +
                   '; Printing Acceleration = ' + ACCELERATION + ' mm/s^2\n' +
                   '; Jerk X-axis = ' + (X_JERK !== -1 ? X_JERK + '\n': ' firmware default\n') +
                   '; Jerk Y-axis = ' + (Y_JERK !== -1 ? Y_JERK + '\n': ' firmware default\n') +
@@ -689,7 +689,7 @@ function setLocalStorage() {
   window.localStorage.setItem('LIN_SETTINGS', lsSettings);
 }
 
-// toggle between mm/s and mm/min speed settings
+// toggle between mm/s and mm/m speed settings
 function speedToggle() {
   var SPEED_SLOW = $('#SLOW_SPEED').val(),
       SPEED_FAST = $('#FAST_SPEED').val(),
@@ -1003,7 +1003,7 @@ $(window).load(() => {
     }
   }
 
-  // toggle between mm/s and mm/min speeds
+  // toggle between mm/s and mm/m speeds
   $('#MM_S').change(speedToggle);
 
   // Toggle Bed Shape

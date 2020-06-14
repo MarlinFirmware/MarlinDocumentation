@@ -45,7 +45,7 @@ If you've never configured and calibrated a 3D Printer before, here are some goo
 - [Triffid Hunter's Calibration Guide](//reprap.org/wiki/Triffid_Hunter%27s_Calibration_Guide)
 - [The Essential Calibration Set](//www.thingiverse.com/thing:5573)
 - [Calibration of your RepRap](//sites.google.com/site/repraplogphase/calibration-of-your-reprap)
-- [XY 20 mm Calibration Box](//www.thingiverse.com/thing:298812)
+- [XY 20mm Calibration Box](//www.thingiverse.com/thing:298812)
 - [G-code reference](//reprap.org/wiki/G-code)
 - [Marlin3DprinterTool](//github.com/cabbagecreek/Marlin3DprinterTool)
 
@@ -186,7 +186,7 @@ This value should be set to the total number of E stepper motors on the machine,
 ```cpp
 #define DEFAULT_NOMINAL_FILAMENT_DIA 3.00
 ```
-This is the "nominal" filament diameter as written on the filament spool (1.75, 2.85, 3.0). If you typically use 1.75 mm filament, but physically measure the diameter as 1.70 mm, you should still use 1.75 if that's what you have set in your slicer.
+This is the "nominal" filament diameter as written on the filament spool (1.75, 2.85, 3.0). If you typically use 1.75mm filament, but physically measure the diameter as 1.70mm, you should still use 1.75 if that's what you have set in your slicer.
 
 This value is used by Marlin to compensate for Filament Width when printing in volumetric mode (See `M200`), and by the Unified Bed Leveling command [`G26`](/docs/gcode/G026.html) when printing a test grid.
 
@@ -386,7 +386,7 @@ Hotend offsets are needed if your extruder has more than one nozzle. These value
   #endif
 #endif
 ```
-This option allows the controller board to switch the power supply 12 V on and off with [`M80`](/docs/gcode/M080.html) and [`M81`](/docs/gcode/M081.html). Requires `PS_ON_PIN`.
+This option allows the controller board to switch the power supply 12V on and off with [`M80`](/docs/gcode/M080.html) and [`M81`](/docs/gcode/M081.html). Requires `PS_ON_PIN`.
 
 ```cpp
 //#define PS_DEFAULT_OFF
@@ -495,7 +495,7 @@ Marlin uses PID (Proportional, Integral, Derivative) control ([Wikipedia](//en.w
 
 Most vitally, correct PID settings will prevent excessive overshoot, which is a safety hazard. During PID calibration, use the highest target temperature you intend to use (where overshoots are more critical).
 
-See the [PID Tuning](//reprap.org/wiki/PID_Tuning) topic on the RepRap wiki for detailed instructions on [`M303`](/docs/gcode/M303.html) auto-tuning. The PID settings should be tuned whenever changing a hotend, temperature sensor, heating element, board, power supply voltage (12 V/24 V), or anything else related to the high-voltage circuitry.
+See the [PID Tuning](//reprap.org/wiki/PID_Tuning) topic on the RepRap wiki for detailed instructions on [`M303`](/docs/gcode/M303.html) auto-tuning. The PID settings should be tuned whenever changing a hotend, temperature sensor, heating element, board, power supply voltage (12/24V), or anything else related to the high-voltage circuitry.
 
 ---
 
@@ -534,7 +534,7 @@ Enable `PID_AUTOTUNE_MENU` to add an option on the LCD to run an Autotune cycle 
   //#define  DEFAULT_Ki 0.1
   //#define  DEFAULT_Kd 12
 
-  // Mendel Parts V9 on 12 V
+  // Mendel Parts V9 on 12V
   //#define  DEFAULT_Kp 63.0
   //#define  DEFAULT_Ki 2.25
   //#define  DEFAULT_Kd 440
@@ -796,7 +796,7 @@ Setting these too high will cause the corresponding stepper motor to lose steps,
 ```
 When the velocity of any axis changes, its acceleration (or deceleration) in mm/s/s is limited by the current max acceleration setting. Also see the *jerk* settings below, which specify the largest instant speed change that can occur between segments.
 
-A value of 3000 means that an axis may accelerate from 0 to 3000 mm/m (50 mm/s) within a one second movement.
+A value of 3000 means that an axis may accelerate from 0 to 3000mm/m (50mm/s) within a one second movement.
 
 Jerk sets the floor for accelerated moves. If the change in top speed for a given axis between segments is less than the jerk value for the axis, an instantaneous change in speed may be allowed. Limits placed on other axes also apply. Basically, lower jerk values result in more accelerated moves, which may be near-instantaneous in some cases, depending on the final acceleration determined by the planner.
 
@@ -1057,7 +1057,7 @@ For `M851` and LCD menus give a range for adjusting the Z probe offset.
 ```
 This enables you to test the reliability of your probe.
 Issue a [`M48`](/docs/gcode/M048.html) command to start testing. It will give you a standard deviation for the probe.
-Tip: 0.02 mm is normally acceptable for bed leveling to work.
+Tip: 0.02mm is normally acceptable for bed leveling to work.
 
 ```cpp
 // Before deploy/stow pause for user confirmation
@@ -1308,7 +1308,7 @@ This option adds the `Z` parameter to [`M420`](/docs/gcode/M420.html) which sets
 
 This feature exists to prevent irregularities in the bed from propagating through the model's entire height. Fading out leveling also reduces computational requirements and resonance from the Z axis above the fade height. For a well-aligned machine, this feature can improve print results.
 
-Example: To have leveling fade out over the first 10 mm of layer printing use `M420 Z10`. If each layer is 0.2 mm high, leveling compensation will be reduced by 1/50th (2 %) after each layer. Above 10mm the machine will move without compensation.
+Example: To have leveling fade out over the first 10mm of layer printing use `M420 Z10`. If each layer is 0.2 mm high, leveling compensation will be reduced by 1/50th (2 %) after each layer. Above 10mm the machine will move without compensation.
 
 #### G26 Mesh Validation Pattern
 ```cpp
@@ -2105,7 +2105,7 @@ Marlin 2.0 allows for custom temperature sensors.
 #endif
 ```
 
-Enables the use of Hephestos 2 24 V heated bed. 
+Enables the use of Hephestos 2 24V heated bed. 
 
 ### Heated Chamber
 ```cpp
@@ -4064,7 +4064,7 @@ Adds [`M486`](/docs/gcode/M486.h) to allow Marlin to skip objects.
 - On a board with a ATmega2560/1280 microcontroller you have three potential serial ports to use for the MMU2: serial 1 (pins 18/19), serial 2 (pins 16/17), serial 3 (pins 14/15). Define the port your MMU2 is connected to - this activates an additional serial connection in Marlin named (in the example configuration) `internalSerial`.
 - When using a 32-bit board you just have to define the name of the serial port which will be used for communication with the MMU2.
 - The MMU2 provides two options how the printer board can trigger a reset: software and hardware reset. By default software reset is enabled. Hardware reset requires a digital output pin wired to the reset pin on the MMU2. To activate hardware reset you define the pin (`MMU2_RST_PIN`) to use on the printer board
-- If your MMU2 is powered from 12 V you can activate a special mode on the MMU2 (`MMU2_MODE_12V`). This should reduce the noise of the MMU2 but has no effect on the general operation.
+- If your MMU2 is powered from 12V you can activate a special mode on the MMU2 (`MMU2_MODE_12V`). This should reduce the noise of the MMU2 but has no effect on the general operation.
 
 ### Filament runout handling
 Here you define the gcode script which will be executed when the so-called FINDA sensor on the MMU2 detects a filament runout.
