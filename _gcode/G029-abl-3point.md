@@ -89,16 +89,18 @@ The printer must be homed with `G28` before `G29`.
 Using an electronic probe Marlin can probe all three points with a single `G29` command. See parameter descriptions and examples below for details.
 
 #### Manual Probing
-{% details %}
-  Auto Bed Leveling now includes a `PROBE_MANUALLY` option for systems lacking a probe.
+Auto Bed Leveling now includes a `PROBE_MANUALLY` option for systems lacking a probe.
 
-  **`PROBE_MANUALLY` adds these parameters to `G29`:**
-  - `Q` : Query leveling and `G29` state
-  - `A` : Abort current leveling procedure
+**`PROBE_MANUALLY` adds these parameters to `G29`:**
 
-  To do manual probing simply repeat `G29` until the procedure is complete.
+- `Q` : Query leveling and `G29` state
+- `A` : Abort current leveling procedure
 
-  The first `G29` accepts the same parameters , shown in the [Usage](#usage-g029a) section below. The exact parameters available will depend on which style of bed leveling is enabled. (***Note:** UBL parameters are not covered on this page unless they coincide. See the [`G29` for UBL](/docs/gcode/G029-ubl.html) page for a full list of its options.*)
+To do manual probing simply repeat `G29` until the procedure is complete.
+
+The first `G29` accepts the same parameters , shown in the [Usage](#usage-g029a) section below. The exact parameters available will depend on which style of bed leveling is enabled. (**Note:** UBL parameters are not covered on this page unless they coincide. See the [`G29` for UBL](/docs/gcode/G029-ubl.html) page for a full list of its options.*)
+
+{% details Probing Procedure %}
 
   **Before probing the bed:**
   1. Use `G29 Q` to get the current status. If `G29` isn't idle, abort with `G29 A`.

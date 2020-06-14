@@ -4,11 +4,13 @@ module Jekyll
 
     def initialize(tag_name, markup, tokens)
       super
+      @title = markup.strip!
+      @title = "Click for Details" if @title.nil? || @title.empty?
     end
 
     def render(context)
       @context = context
-      source  = "<details><summary>Click for Details</summary>"
+      source  = "<details><summary>#{@title}</summary>"
       source += "  #{markdownify(super)}"
       source += "</details>"
     end
