@@ -55,17 +55,16 @@ While probe calibration is active bed temperature is held constant (_e.g.,_ 110Â
 1. Make sure you have a heated bed and a probe with thermistor.
 2. Enable option for probe + bed compensation + calibration:
     - `PROBE_TEMP_COMPENSATION`
-3. Ensure the maximum temperature that can be reached by your heated bed is set in `Configuration.h`:
-    - `BED_MAXTEMP`
-3. Set the park position to wait for probe to cool down:
+3. Set `BED_MAXTEMP` in `Configuration.h`.
+4. Set the park position to wait for probe to cool down:
     - `PTC_PARK_POS`
-4. Set the probe position to wait for probe to heat up and perform Z-probings:
+5. Set the probe position to wait for probe to heat up and perform Z-probings:
     - `PTC_PROBE_POS`
-5. If enabled option `PROBE_TEMP_COMPENSATION`, additionally enable option for extruder compensation (no auto-calibration available):
+6. If enabled option `PROBE_TEMP_COMPENSATION`, additionally enable option for extruder compensation (no auto-calibration available):
     - `USE_TEMP_EXT_COMPENSATION`
-6. Run `G76` command to start calibration process
-7. Use `M871` command to check/adjust values in tables
-8. Use `M500` command to store values in EEPROM
+7. Run `G76` command to start calibration process
+8. Use `M871` command to check/adjust values in tables
+9. Use `M500` command to store values in EEPROM
 
 ## Saving and Loading
 The `G76` or `M871` commands only store their results in SRAM, so you must save the data to EEPROM with `M500` to preserve the data across reboots. If you've used `G76` or `M871` and don't want to use the results, you can send `M501` to load the last-saved values or `M502` to reset them to zero.
