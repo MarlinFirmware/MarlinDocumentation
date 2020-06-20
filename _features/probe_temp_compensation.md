@@ -3,7 +3,7 @@ title:       'Probe Temperature Compensation'
 description: 'Probe measurement temperature calibration'
 
 author: tompe-proj
-contrib: thinkyhead
+contrib: thinkyhead, thisiskeithb
 category: [ features, leveling ]
 ---
 
@@ -50,20 +50,17 @@ While probe calibration is active bed temperature is held constant (_e.g.,_ 110Â
    - Wait until the probe reaches the new target temperature.
    - Probe the bed to get a delta value.
  - In the case of a timeout, compensation values for higher temperatures will be extrapolated from the existing values.
- 
+
 ## Configuration
 1. Make sure you have a heated bed and a probe with thermistor.
 2. Enable option for probe + bed compensation + calibration:
     - `PROBE_TEMP_COMPENSATION`
-3. Set the maximum temperature that can be reached by your heated bed:
-    - `PTC_MAX_BED_TEMP`
+3. Ensure the maximum temperature that can be reached by your heated bed is set in `Configuration.h`:
+    - `BED_MAXTEMP`
 3. Set the park position to wait for probe to cool down:
-    - `PTC_PARK_POS_X`
-    - `PTC_PARK_POS_Y`
-    - `PTC_PARK_POS_Z`
+    - `PTC_PARK_POS`
 4. Set the probe position to wait for probe to heat up and perform Z-probings:
-    - `PTC_PROBE_POS_X`
-    - `PTC_PROBE_POS_Y`
+    - `PTC_PROBE_POS`
 5. If enabled option `PROBE_TEMP_COMPENSATION`, additionally enable option for extruder compensation (no auto-calibration available):
     - `USE_TEMP_EXT_COMPENSATION`
 6. Run `G76` command to start calibration process
