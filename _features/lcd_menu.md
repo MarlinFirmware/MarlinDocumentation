@@ -67,7 +67,7 @@ The Prepare menu is only available when the machine is not printing.
 Item|Description|Requirements
 ----|-----------|------------
 **[<< Main](#main-menu)** ||
-**[Move Axis >>](#move-axis)** || `DELTA` requires `G28` first
+**[Move Axis >>](#move-axis)** || `DELTA` requires [`G28`](/docs/gcode/G028.html) first
 Auto Home              |[`G28`](/docs/gcode/G028.html)|
 Auto Home X            |[`G28 X`](/docs/gcode/G028.html)| `INDIVIDUAL_AXIS_HOMING_MENU`
 Auto Home Y            |[`G28 Y`](/docs/gcode/G028.html)| `INDIVIDUAL_AXIS_HOMING_MENU`
@@ -107,20 +107,20 @@ Select E1/E2           |Sends "`T0`" / "`T1`"| `SWITCHING_EXTRUDER`
 
 ## Bed Leveling
 
-The Bed Leveling menu groups together commands for calibrating the nozzle-to-bed distance. Different options will appear depending on your setup and the type of leveling you've enabled. **Level Bed** runs the default `G29` procedure. For auto bed leveling this will deploy the probe, measure all points, and stop. For manual leveling (`PROBE_MANUALLY` or `MESH_BED_LEVELING`) you'll be taken through a step-by-step process.
+The Bed Leveling menu groups together commands for calibrating the nozzle-to-bed distance. Different options will appear depending on your setup and the type of leveling you've enabled. **Level Bed** runs the default [`G29`](/docs/gcode/G029.html) procedure. For auto bed leveling this will deploy the probe, measure all points, and stop. For manual leveling (`PROBE_MANUALLY` or `MESH_BED_LEVELING`) you'll be taken through a step-by-step process.
 
 Item|Description|Requirements
 ----|-----------|------------
 **[<< Prepare](#prepare)** ||
 Free XY                |Move Z down to safe-zone      | `DELTA` (above safe zone)
-Auto Home              |`G28`                         | Unknown position
+Auto Home              |[`G28`](/docs/gcode/G028.html)                         | Unknown position
 Leveling On/Off        |`M420 S`                      | Valid mesh, known position
-Level Bed              |`G29`/`G29 S1`                | Known position
+Level Bed              |[`G29`](/docs/gcode/G029.html)/`G29 S1`                | Known position
 Fade Height: -–-       |`M420 Z`                      | `ENABLE_LEVELING_FADE_HEIGHT`
 Mesh Z Offset: -–-     |`G29 Z`                       | `MESH_BED_LEVELING`
 Z Probe Offset: -–-    |`M851 Z`                      | `HAS_BED_PROBE` (`BABYSTEP_ZPROBE_OFFSET` for active Z adjust)
-Load Settings          |`M501`                        | `EEPROM_SETTINGS`
-Save Settings          |`M500`                        | `EEPROM_SETTINGS`
+Load Settings          |[`M501`](/docs/gcode/M501.html)                        | `EEPROM_SETTINGS`
+Save Settings          |[`M500`](/docs/gcode/M500.html)                        | `EEPROM_SETTINGS`
 
 ## Unified Bed Leveling
 
@@ -182,8 +182,8 @@ Item|Description|Requirements
 **[BLTouch >>](#bltouch)** || `BLTOUCH`
 Store settings         || `EEPROM_SETTINGS`
 Load settings          || `EEPROM_SETTINGS`
-Restore failsafe       |`M502` Settings to defaults|
-Init EEPROM            |`M502`+`M500` Default settings and store to EEPROM|
+Restore failsafe       |[`M502`](/docs/gcode/M502.html) Settings to defaults|
+Init EEPROM            |[`M502`](/docs/gcode/M502.html)+[`M500`](/docs/gcode/M500.html) Default settings and store to EEPROM|
 
 ## Temperature
 
@@ -249,7 +249,7 @@ Item|Description|Requirements
 Fan Speed: -–-||`HAS_FAN`
 Nozzle: -–-||
 Bed: -–-||`TEMP_SENSOR_BED`
-Store settings|`M500`|
+Store settings|[`M500`](/docs/gcode/M500.html)|
 
 ### Preheat ABS conf
 
@@ -261,7 +261,7 @@ Item|Description|Requirements
 Fan Speed: -–-||`HAS_FAN`
 Nozzle: -–-||
 Bed: -–-||`TEMP_SENSOR_BED`
-Store settings|`M500`|
+Store settings|[`M500`](/docs/gcode/M500.html)|
 
 ## Motion
 

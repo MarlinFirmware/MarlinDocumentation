@@ -13,15 +13,15 @@ As of this writing, this is still an experimental feature and should be used wit
 
 ## Introduction
 
-Temperature can significantly affect bed probing and as a consequence first layer quality. To address this, probes like the P.I.N.D.A V2 include a thermistor so they can compensate for measurements taken at different temperatures. However, in order to find these compensation values a calibration process is required (`G76`).
+Temperature can significantly affect bed probing and as a consequence first layer quality. To address this, probes like the P.I.N.D.A V2 include a thermistor so they can compensate for measurements taken at different temperatures. However, in order to find these compensation values a calibration process is required ([`G76`](/docs/gcode/G076.html)).
 
-Keeping in mind that the probe temperature is not the only part affecting first layer quality, the current implementation can compensate for the bed, probe, and extruder, but only first two can be calibrated automatically. The measured values are used during `G29` mesh bed leveling to adjust the probe measurements at different temperature readings.
+Keeping in mind that the probe temperature is not the only part affecting first layer quality, the current implementation can compensate for the bed, probe, and extruder, but only first two can be calibrated automatically. The measured values are used during [`G29`](/docs/gcode/G029.html) mesh bed leveling to adjust the probe measurements at different temperature readings.
 
 During the calibration process it's important to keep other parts at a constant temperature to prevent them from affecting measurement. For the bed this is fairly easy since Marlin can control its temperature. For the probe we can control its proximity to the heated bed. On some printers (_e.g.,_ Prusa MK3) it may be necessary to shield the probe from active fans or it won't heat up enough. The probe calibration table starts at 30°C, the bed at 60°C, and the extruder at 180°C. In reality we might not reach maximum temperatures while calibrating, so linear regression and extrapolation are used to fill in the gaps. While this is hardly exact, it's still better than applying the last value for higher temperatures. The more measurements taken, the better the extrapolated values will be.
 
-The calibration process simply does some probing at a lower temperature (_e.g.,_ probe at 30°C and bed constant) and uses that measurement as the base value. After heating up the probe or bed by an incremental value (+5°C) another probe reading is taken and the measured offset is stored in the appropriate table. During `G29` the probe and bed temperature are used to look up and calculate an offset and this offset is added to each Z probe result.
+The calibration process simply does some probing at a lower temperature (_e.g.,_ probe at 30°C and bed constant) and uses that measurement as the base value. After heating up the probe or bed by an incremental value (+5°C) another probe reading is taken and the measured offset is stored in the appropriate table. During [`G29`](/docs/gcode/G029.html) the probe and bed temperature are used to look up and calculate an offset and this offset is added to each Z probe result.
 
-After calibration print, verify sanity, and eventually modify single values (outliers) with [the `M871` command](/docs/gcode/M871.html).
+After calibration print, verify sanity, and eventually modify single values (outliers) with [the [`M871`](/docs/gcode/M871.html) command](/docs/gcode/M871.html).
 
 ## Bed calibration process
 During bed calibration the probe temperature is held constant (_e.g.,_ 30°C).
@@ -62,15 +62,15 @@ While probe calibration is active bed temperature is held constant (_e.g.,_ 110�
     - `PTC_PROBE_POS`
 6. If enabled option `PROBE_TEMP_COMPENSATION`, additionally enable option for extruder compensation (no auto-calibration available):
     - `USE_TEMP_EXT_COMPENSATION`
-7. Run `G76` command to start calibration process
-8. Use `M871` command to check/adjust values in tables
-9. Use `M500` command to store values in EEPROM
+7. Run [`G76`](/docs/gcode/G076.html) command to start calibration process
+8. Use [`M871`](/docs/gcode/M871.html) command to check/adjust values in tables
+9. Use [`M500`](/docs/gcode/M500.html) command to store values in EEPROM
 
 ## Saving and Loading
-The `G76` or `M871` commands only store their results in SRAM, so you must save the data to EEPROM with `M500` to preserve the data across reboots. If you've used `G76` or `M871` and don't want to use the results, you can send `M501` to load the last-saved values or `M502` to reset them to zero.
+The [`G76`](/docs/gcode/G076.html) or [`M871`](/docs/gcode/M871.html) commands only store their results in SRAM, so you must save the data to EEPROM with [`M500`](/docs/gcode/M500.html) to preserve the data across reboots. If you've used [`G76`](/docs/gcode/G076.html) or [`M871`](/docs/gcode/M871.html) and don't want to use the results, you can send [`M501`](/docs/gcode/M501.html) to load the last-saved values or [`M502`](/docs/gcode/M502.html) to reset them to zero.
 
 ## Example values
-These values were calibrated using a genuine MK52 and P.I.N.D.A V2 probe. The values for the probe above 50°C are extrapolated. Note that you can always tidy up your compensation curve manually using the `M871` command.
+These values were calibrated using a genuine MK52 and P.I.N.D.A V2 probe. The values for the probe above 50°C are extrapolated. Note that you can always tidy up your compensation curve manually using the [`M871`](/docs/gcode/M871.html) command.
 
 ### Probe
 

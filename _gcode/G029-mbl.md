@@ -15,7 +15,7 @@ notes:
 - Requires the `MESH_BED_LEVELING` option in `Configuration.h`.
 - Similar to `AUTO_BED_LEVELING_BILINEAR` with `PROBE_MANUALLY` but uses less SRAM.
 - For automatic probe-based leveling enable one of the [`AUTO_BED_LEVELING_*`](/docs/configuration/configuration.html#bed-leveling) options instead.
-- "`G28` disables bed leveling. Follow with `M420 S` to turn leveling on, or use `RESTORE_LEVELING_AFTER_G28` to automatically keep leveling on after `G28`."
+- "[`G28`](/docs/gcode/G028.html) disables bed leveling. Follow with `M420 S` to turn leveling on, or use `RESTORE_LEVELING_AFTER_G28` to automatically keep leveling on after [`G28`](/docs/gcode/G028.html)."
 
 parameters:
 -
@@ -133,7 +133,7 @@ Mesh Bed Leveling (MBL) allows interactively measuring a Z height mesh without a
 3. Adjust Z so a piece of paper can just pass under the nozzle.
 4. Use `G29 S2` to save the Z value and move to the next point.
 5. Repeat steps 3-4 until completed.
-6. Use `M500` to save the mesh to EEPROM, if desired.
+6. Use [`M500`](/docs/gcode/M500.html) to save the mesh to EEPROM, if desired.
 
 **Mesh Bed Leveling using an LCD controller:** (Requires `LCD_BED_LEVELING`)
 

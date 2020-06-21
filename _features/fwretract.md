@@ -18,7 +18,7 @@ Normally you configure the retraction length and feedrate in your slicer softwar
 
 # Firmware-based Retraction
 
-With Firmware-based Retraction, Marlin manages all the details of retraction and recovery. Instead of generating extra E moves, the slicer just outputs [`G10`](/docs/gcode/G010.html) for retract moves and [`G11`](/docs/gcode/G011.html) for recover moves. Before doing a tool-change, the slicer outputs `G10 S1` for a swap-retract, and then the next `G11` for that extruder will automatically be a swap-recover.
+With Firmware-based Retraction, Marlin manages all the details of retraction and recovery. Instead of generating extra E moves, the slicer just outputs [`G10`](/docs/gcode/G010.html) for retract moves and [`G11`](/docs/gcode/G011.html) for recover moves. Before doing a tool-change, the slicer outputs `G10 S1` for a swap-retract, and then the next [`G11`](/docs/gcode/G011.html) for that extruder will automatically be a swap-recover.
 
 In addition to producing a smaller G-code file, firmware-based retraction allows you to tune your retract/recover settings during a print and save them to EEPROM for all future prints with the same material. This means you never have to re-slice your models for a different material or new filament spool. Just run a test print to recheck and fine-tune retraction settings, save them to EEPROM, and get on with more printing.
 
@@ -32,9 +32,9 @@ Marlin includes Automatic Firmware Retraction (aka "Auto Retract") to convert sl
 
 # AFR Caveats
 
-Currently, the `M209` state is persistent and the state is saved to EEPROM. The expectation has been that once you've settled on a preference for firmware retraction you'll set the machine and keep it on or off. This behavior may change so that auto-retract is disabled most often, as it is safer to always leave it off. For legacy G-code, just add `M209 S1` to the starting code and `M209 S0` to the end.
+Currently, the [`M209`](/docs/gcode/M209.html) state is persistent and the state is saved to EEPROM. The expectation has been that once you've settled on a preference for firmware retraction you'll set the machine and keep it on or off. This behavior may change so that auto-retract is disabled most often, as it is safer to always leave it off. For legacy G-code, just add `M209 S1` to the starting code and `M209 S0` to the end.
 
-Auto-retract has a `MIN_RETRACT` setting, but it has no `MAX_RETRACT` setting. So when Auto Retract is enabled, long `G0` moves (e.g., for a manual filament change) will be done as retract/recover moves. So it is very important to turn off automatic firmware retraction with `M209 S0` before doing any manual E moves.
+Auto-retract has a `MIN_RETRACT` setting, but it has no `MAX_RETRACT` setting. So when Auto Retract is enabled, long [`G0`](/docs/gcode/G000.html) moves (e.g., for a manual filament change) will be done as retract/recover moves. So it is very important to turn off automatic firmware retraction with `M209 S0` before doing any manual E moves.
 
 {% alert warning %}
 ** **Avoid using Automatic Firmware Retraction unless absolutely needed!** **

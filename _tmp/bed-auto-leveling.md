@@ -40,21 +40,21 @@ You will probably need to attach a swivel Z-MIN endstop to the extruder (aka All
 In order to get the servo working, you need to enable the following options:
 
 ```
-#define NUM_SERVOS 1 // Servo index starts with 0 for `M280` command
+#define NUM_SERVOS 1 // Servo index starts with 0 for [`M280`](/docs/gcode/M280.html) command
 #define SERVO_ENDSTOPS {-1, -1, 0} // Servo index for X, Y, Z. Disable with -1
 #define SERVO_ENDSTOP_ANGLES {0,0, 0,0, 165,60} // X,Y,Z Axis Extend and Retract angles
 ```
 
-`NUM_SERVOS` tells the firmware how many servos are attached. `SERVO_ENDSTOPS` is a list that tells the firmware which axes (X, Y, Z) have servos attached. The default setting (shown above) is for a servo on the Z axis. `SERVO_ENDSTOP_ANGLES` provides two angles for each servo. The first is the deployed angle (e.g., 165º) and the second is the stowed angle (e.g., 60º). You can use `M280` to figure out these angles (For example `M280 P0 S60` rotates the servo to 60º).
+`NUM_SERVOS` tells the firmware how many servos are attached. `SERVO_ENDSTOPS` is a list that tells the firmware which axes (X, Y, Z) have servos attached. The default setting (shown above) is for a servo on the Z axis. `SERVO_ENDSTOP_ANGLES` provides two angles for each servo. The first is the deployed angle (e.g., 165º) and the second is the stowed angle (e.g., 60º). You can use [`M280`](/docs/gcode/M280.html) to figure out these angles (For example `M280 P0 S60` rotates the servo to 60º).
 
 Next you need to define the Z endstop (probe) offset from hot-end. My preferred method:
 
  - Make a small mark in the bed with a marker or felt-tip pen.
  - Move the tip of the hot-end as close as possible to the mark, touching the bed. Raise the hot-end 0.1mm (about the thickness of a sheet of paper) and zero all axes with `G92 X0 Y0 Z0`.
- - Raise the hot-end 10mm (or more) for probe clearance, lower the Z probe (Z-Endstop) with `M401` and place it on the mark by moving X, Y and Z with your host software or LCD controller.
- - Lower the Z in 0.1mm steps, keeping the probe touching the mark. It may be necessary to adjust X and Y as well. When you hear the switch make a click, the endstop is trigged. Confirm this with `M119`.
- - Now the probe is in the same position where the hot-end tip was. Use `M114` to get the current position and write it down. Example output: `X:24.3 Y:-31.4 Z:5.1`.
- - Raise the Z probe with `M402`. (Note that this may not work properly until you've flashed the new configuration.)
+ - Raise the hot-end 10mm (or more) for probe clearance, lower the Z probe (Z-Endstop) with [`M401`](/docs/gcode/M401.html) and place it on the mark by moving X, Y and Z with your host software or LCD controller.
+ - Lower the Z in 0.1mm steps, keeping the probe touching the mark. It may be necessary to adjust X and Y as well. When you hear the switch make a click, the endstop is trigged. Confirm this with [`M119`](/docs/gcode/M119.html).
+ - Now the probe is in the same position where the hot-end tip was. Use [`M114`](/docs/gcode/M114.html) to get the current position and write it down. Example output: `X:24.3 Y:-31.4 Z:5.1`.
+ - Raise the Z probe with [`M402`](/docs/gcode/M402.html). (Note that this may not work properly until you've flashed the new configuration.)
  - Fill in the defines below, multiplying the values by -1 (i.e., use the opposite sign). For example:
 
 ```
@@ -89,14 +89,14 @@ Next you need to define the Z probe's offset from the hot end. My preferred meth
  4. Home the X axis and use a straight edge to make a line between the two points.
  5.  Repeat (2) to (4) reversing the X and Y. When you are done you will have two lines on the print bed. We will use these to measure the offset for the Z probe endstop.
  6. Move the nozzle so that it is positioned on the center point of the two lines. You can use fine movement of 0.1mm to get it as close as possible. Note the position of X and Y.
- 7. Zero the Z axis with the `G92` Z0 command.
+ 7. Zero the Z axis with the [`G92`](/docs/gcode/G092.html) Z0 command.
  8. Raise the Z axis about 20mmm.
- 9. Use the `G32` command to retrieve the sled.
+ 9. Use the [`G32`](/docs/gcode/G032.html) command to retrieve the sled.
  10. Now more the X and Y axis to the position recorded in (6).
- 11. Lower the Z axis in 0.1mm steps until you hear the "click" meaning the mechanical endstop was trigged. You can confirm with the `M119` command. Note the position of the Z axis.
+ 11. Lower the Z axis in 0.1mm steps until you hear the "click" meaning the mechanical endstop was trigged. You can confirm with the [`M119`](/docs/gcode/M119.html) command. Note the position of the Z axis.
  12. Make a mark on the print bed where the endstop lever has touched the print bed. Raise the Z-axis about 30mm to give yourself some room.
  13. Now measure the distance from the center point to the endstop impact site along the X and Y axis using the lines drawn previously.
- 14. Fill in the values below. If the endstop mark is in front of the line running left-to-right, use positive values. If it is behind, use negative values. For the Z axis use the value from (11) and subtract 0.1mm. (Note: you can adjust z probe offset via `M851`)
+ 14. Fill in the values below. If the endstop mark is in front of the line running left-to-right, use positive values. If it is behind, use negative values. For the Z axis use the value from (11) and subtract 0.1mm. (Note: you can adjust z probe offset via [`M851`](/docs/gcode/M851.html))
 
 For example, suppose you measured the endstop position and it was 20mm to the right of the line running front-to-back, 10mm toward the front of the line running left-to-right, and the value from (11) was 2.85. The values for the defines would be:
 
@@ -108,15 +108,15 @@ For example, suppose you measured the endstop position and it was 20mm to the ri
 
 Test the auto bed leveling sequence after set up via:
 
- - `G28` safe homing and clearing the matrix
- - `G29` run the auto bed leveling
+ - [`G28`](/docs/gcode/G028.html) safe homing and clearing the matrix
+ - [`G29`](/docs/gcode/G029.html) run the auto bed leveling
  - `G1 Z10` move z to 10mm above the bed and start manually lowering via the Pronterface or CURA user interface
 
-Does the head hit the bed at Z0? If it does hit the bed before or does not (a gap remains) then use `M114` to read out the height difference between the probed z and actual printer head i.e. 0.2mm. Use `M851` to adjust the length Z probe (`M851 Z-6.80` if it was -7). Store in EEPROM with `M500` and repeat the sequence `G28`, `G29`, `M114` again. Is the gap bigger then you adjusted the Z probe offset in the opposite direction. So redo `M851` Z-something, `M500` and repeat `G28`, `G29`, `M114` and measure (read Z from `M114`) z at 0. If you cannot get this reliable adjusted than it might be an unreliable Z probe which you can test via `M48`. This test the probe via a series of probing measurements on one spot at the bed and returns the standard deviation (i.e. 0.02mm).
+Does the head hit the bed at Z0? If it does hit the bed before or does not (a gap remains) then use [`M114`](/docs/gcode/M114.html) to read out the height difference between the probed z and actual printer head i.e. 0.2mm. Use [`M851`](/docs/gcode/M851.html) to adjust the length Z probe (`M851 Z-6.80` if it was -7). Store in EEPROM with [`M500`](/docs/gcode/M500.html) and repeat the sequence [`G28`](/docs/gcode/G028.html), [`G29`](/docs/gcode/G029.html), [`M114`](/docs/gcode/M114.html) again. Is the gap bigger then you adjusted the Z probe offset in the opposite direction. So redo [`M851`](/docs/gcode/M851.html) Z-something, [`M500`](/docs/gcode/M500.html) and repeat [`G28`](/docs/gcode/G028.html), [`G29`](/docs/gcode/G029.html), [`M114`](/docs/gcode/M114.html) and measure (read Z from [`M114`](/docs/gcode/M114.html)) z at 0. If you cannot get this reliable adjusted than it might be an unreliable Z probe which you can test via [`M48`](/docs/gcode/M048.html). This test the probe via a series of probing measurements on one spot at the bed and returns the standard deviation (i.e. 0.02mm).
 
 Note: if you haven't enabled the EEPROM then you need to re-flash the MEGA. If you use a fixed proximity sensor then you can just adjust the height of the sensor to get it adjusted.
 
-Configure G-start up sequence code of your slicer to include `G28`, `G29`.
+Configure G-start up sequence code of your slicer to include [`G28`](/docs/gcode/G028.html), [`G29`](/docs/gcode/G029.html).
 Every print will start with an auto bed leveling.
 
 ## Example start G-code

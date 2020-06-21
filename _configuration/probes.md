@@ -39,7 +39,7 @@ Marlin includes various methods of probing and leveling:
 - "3-Point" probes a triangle to determine the height and tilt of the bed plane. During printing the nozzle is adjusted in X, Y, and Z, so you can even print on a badly-tilted bed. However, this method requires a very flat and even surface.
 - "Linear Grid" probes a square grid (as much as possible on `DELTA`) to determine the height and tilt of the bed. After that it works just the same way as 3-point leveling.
 - "Bilinear Grid" probes a grid in the same manner as Linear Grid, but during printing the Z axis is adjusted according to bilinear interpolation between the measured points. This allows the printer to compensate for an uneven surface,
-- "Mesh Bed Leveling" works in the same manner as "Bilinear Grid" but takes different `G29` parameters. (This feature is superseded by combining the manual probe option with bilinear leveling,  and will not be included in future versions of Marlin.)
+- "Mesh Bed Leveling" works in the same manner as "Bilinear Grid" but takes different [`G29`](/docs/gcode/G029.html) parameters. (This feature is superseded by combining the manual probe option with bilinear leveling,  and will not be included in future versions of Marlin.)
 - "Unified Bed Leveling" combines elements of bilinear and planar leveling and includes extra utilities to help improve measurement accuracy, especially for deltas. See (link) for an article specifically about this feature.
 
 ## Configuration
@@ -86,7 +86,7 @@ What kind of probe do you have?
 
 ### 3. Other Probe Options
 
-- `LCD_BED_LEVELING` provides a guided process to assist with `PROBE_MANUALLY` (or Mesh Bed Leveling). Without this option you must send `G29` to move to the next point and `G1` (or buttons in your host software) to adjust the Z axis.
+- `LCD_BED_LEVELING` provides a guided process to assist with `PROBE_MANUALLY` (or Mesh Bed Leveling). Without this option you must send [`G29`](/docs/gcode/G029.html) to move to the next point and [`G1`](/docs/gcode/G001.html) (or buttons in your host software) to adjust the Z axis.
 - `Z_MIN_PROBE_ENDSTOP_INVERTING` should be set to `true` if your probe uses normally-open (NO) switches. Normally-closed switches are recommended because they have the appropriate failsafe state and are less prone to false positives.
 - `ENDSTOPPULLUP_ZMIN_PROBE` may be used if you need to _disable_ the endstop pullup for some reason, such as having an external pull-down resistor on a normally-open switch.
 - `USE_ZMAX_PLUG` must be enabled if the probe is connected to the Z-Max endstop pin. `USE_ZMIN_PLUG` must be enabled if the probe is connected to the Z-Min endstop pin. _Et cetera_, _et cetera_.

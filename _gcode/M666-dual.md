@@ -40,4 +40,4 @@ examples:
 
 ---
 
-Use the `M666` command to adjust the offsets for dual (or multiple) endstops.
+Use the [`M666`](/docs/gcode/M666.html) command to adjust the offsets for dual (or multiple) endstops.
