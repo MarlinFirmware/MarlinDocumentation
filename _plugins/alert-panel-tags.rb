@@ -11,7 +11,6 @@ module Jekyll
       @attributes.shift;
       @title = @attributes.join(" ")
 
-
       case @type
         when "success"
           @icon = "fa-check-square"
