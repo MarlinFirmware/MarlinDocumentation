@@ -1245,23 +1245,17 @@ With this feature, a mechanical or opto endstop switch is used to check for the 
 
 ![Bed Level](/assets/images/config/bedlevel.png){: .floater}
 
-There are many cases where it is useful to measure variances in bed height. Even if the bed on a 3D printer is perfectly flat and level, there may still be imperfections in the mechanics. For example, a machine may have a very flat bed, but a corner of the XY gantry is a half-mm high. The ends of the Z axis may not be perfectly level. The bed may move slightly in the Z plane as it moves in the X and/or Y plane. On a Delta there may be a lingering bowl-shape to its XY trajectory.
+Bed Leveling is a standard feature on many 3D printers. It takes the guess-work out of getting a good first layer and good bed adhesion.
 
-Bed Compensation or "--- Bed Leveling" allows the machine —with a bed probe or user assistance— to take accurate measurements of the "bed height" at various points in the XY plane. With this data the machine can then adjust movement to align better to the tilt or "height" variances in the bed. (I'm scare-quoting "height" here because variances may come from other than the bed.)
+It is highly recommended to get your printer aligned and constrained as much as possible before using bed leveling, because it exists to compensate for imperfections in the hardware.
 
-For more details on these features, see [`G29` for MBL](/docs/gcode/G029-mbl.html) and [`G29` for ABL](/docs/gcode/G029-abl.html).
-
-**We recommend** that you try and get your printer the best it can be before using bedlevel, after all bedlevel only compensates for "bad" hardware, it does not correct it.
-
-### Bed Leveling Style
-
-Bed Leveling is a standard feature on many 3D printers. It takes the guess-work out of getting a good first layer and good bed adhesion.  All forms of bed leveling add `G29` Bed Probing, `M420` enable/disable, and can save their results to EEPROM with `M500`. Bravo!
+For all the in-depth details please read the [Auto Bed Leveling](/docs/features/auto_bed_leveling.html) documentation and the `G29` G-codes documentation.
 
 With Bed Leveling enabled:
 
-- `G28` disables bed leveling, but leaves previous leveling data intact.
-- `G29` automatically or manually probes the bed at various points, measures the bed height, calculates a correction grid or matrix, and turns on leveling compensation. Specific behavior depends on configuration and type of bed leveling.
-- [`M500`](/docs/gcode/M500.html) saves the bed leveling data to EEPROM. Use [`M501`](/docs/gcode/M501.html) to load it, [`M502`](/docs/gcode/M502.html) to clear it, and [`M503`](/docs/gcode/M503.html) to report it.
+- `G28` will disable bed leveling (but preserves your leveling data). You can enable `RESTORE_LEVELING_AFTER_G28` to keep leveling in its previous state.
+- `G29` will automatically probe the bed or guide you to do a paper-test at various points. After measurement it calculates a correction grid or matrix and enables leveling compensation. The specific behavior depends on configuration and type of bed leveling.
+- [`M500`](/docs/gcode/M500.html) will save the bed leveling data to EEPROM. [`M501`](/docs/gcode/M501.html) will load it. [`M502`](/docs/gcode/M502.html) will erase it. And [`M503`](/docs/gcode/M503.html) will report it.
 - `M420 S<bool>` can be used to enable/disable bed leveling. For example, [`M420 S1`](/docs/gcode/M420.html) must be used after `M501` to enable the loaded mesh or matrix, and to re-enable leveling after `G28`, which disables leveling compensation.
 - A "Level Bed" menu item can be added to the LCD with the `LCD_BED_LEVELING` option.
 
@@ -1399,9 +1393,9 @@ These options specify the number of points that will always be probed in each di
   //#define MESH_EDIT_MENU        // Add a menu to edit mesh points
 #endif
 ```
-`LCD_BED_LEVELING` adds a "Level Bed" menu to the LCD that starts a step-by-step guided leveling procedure that requires no probe. For Mesh Bed Leveling see [`G29` for MBL](/docs/gcode/G029-mbl.html), and for `PROBE_MANUALLY` see [`G29` for ABL](/docs/gcode/G029-abl.html).
+`LCD_BED_LEVELING` adds a "Level Bed" menu to the LCD that starts a step-by-step guided leveling procedure that requires no probe.
 
-Available with `MESH_BED_LEVELING` and `PROBE_MANUALLY` (all forms of Auto Bed Leveling). See the `Configuration.h` file for sub-options.
+Available with `MESH_BED_LEVELING` and `PROBE_MANUALLY` (all forms of Auto Bed Leveling). See the `Configuration.h` file for sub-options and the `G29` G-code documentation that applies to your selected leveling system.
 
 ### Corner Leveling
 
@@ -3425,7 +3419,7 @@ This option adds [`G10`](/docs/gcode/G010.html)/[`G11`](/docs/gcode/G011.html) c
   //#define FILAMENT_UNLOAD_ALL_EXTRUDERS         // Allow M702 to unload all extruders above a minimum target temp (as set by M302)
 #endif
 ```
-Experimental feature for filament change support and parking the nozzle when paused. Adds the [`M600`](/docs/gcode.M600.html) command to perform a filament change. With `PARK_HEAD_ON_PAUSE` enabled also adds the [`M115`](/docs/gcode/M115.html) command to pause printing and park the nozzle. Requires an LCD display. Note that `M600` is required for the default `FILAMENT_RUNOUT_SCRIPT`. Requires LCD display and `NOZZLE_PARK_FEATURE`.
+Experimental feature for filament change support and parking the nozzle when paused. Adds the [`M600`](/docs/gcode/M600.html) command to perform a filament change. With `PARK_HEAD_ON_PAUSE` enabled also adds the [`M115`](/docs/gcode/M115.html) command to pause printing and park the nozzle. Requires an LCD display. Note that `M600` is required for the default `FILAMENT_RUNOUT_SCRIPT`. Requires LCD display and `NOZZLE_PARK_FEATURE`.
 
 ## Stepper Drivers
 ### Trinamic TMC26X
@@ -3728,7 +3722,7 @@ echo:i2c-reply: from:99 bytes:5 data:hello
   #endif
 #endif
 ```
-Add the [`M240`](/docs/gcode/M240.h) to take a photo. The photo can be triggered by a digital pin or a physical movement.
+Add the [`M240`](/docs/gcode/M240.html) to take a photo. The photo can be triggered by a digital pin or a physical movement.
 
 ## Spindle / Laser
 ```cpp
@@ -3947,7 +3941,7 @@ Execute specified G-code commands immediately after power-on.
 ```cpp
 //#define CANCEL_OBJECTS
 ```
-Adds [`M486`](/docs/gcode/M486.h) to allow Marlin to skip objects.
+Adds [`M486`](/docs/gcode/M486.html) to allow Marlin to skip objects.
 
 ## I2C Position Encoders
 ```cpp

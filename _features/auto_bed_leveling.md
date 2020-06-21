@@ -65,4 +65,9 @@ Marlin now includes a `PROBE_MANUALLY` option as a kind of faux probe. With this
 
 The `LCD_BED_LEVELING` option makes manual leveling a lot faster and easier by providing a guided procedure and direct Z adjustment.
 
-For even more exciting details about ABL, see the [`G29` Auto Bed Leveling](/docs/gcode/G029-abl.html) page.
+# G29 Command Options
+
+For even more exciting details about ABL, see:
+- [`G29` ABL (3-Point)](/docs/gcode/G029-abl-3point.html)
+- [`G29` ABL (Linear)](/docs/gcode/G029-abl-linear.html)
+- [`G29` ABL (Bilinear)](/docs/gcode/G029-abl-bilinear.html)
