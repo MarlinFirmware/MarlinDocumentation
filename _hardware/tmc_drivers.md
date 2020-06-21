@@ -27,18 +27,18 @@ The TMC stepper drivers require an external library that allows Marlin to commun
 ## Installing from Arduino IDE library manager
 * Open up the Arduino IDE
 * Go to Sketch -> Include Library -> Manage Libraries...
-* 1.1.9 =>
+* 1.1.9
   * Search for **TMCStepper**
 * Older versions of Marlin
   * Search for **TMC2130Stepper** or **TMC2208Stepper**
 * Click `Install`
 
 ## Installing from a zip file
-* 1.1.9 =>
-  * Go to TMC library homepage at <https://github.com/teemuatlut/TMCStepper>
+* 1.1.9
+  * Go to TMC library homepage at https://github.com/teemuatlut/TMCStepper
 * Older versions of Marlin
-  * TMC2130: Go to the library homepage at <https://github.com/teemuatlut/TMC2130Stepper>
-  * TMC2208: Go to the library homepage at <https://github.com/teemuatlut/TMC2208Stepper>
+  * TMC2130: Go to the library homepage at https://github.com/teemuatlut/TMC2130Stepper
+  * TMC2208: Go to the library homepage at https://github.com/teemuatlut/TMC2208Stepper
 * Click `Clone or download` and `Download ZIP`
 * In Arduino IDE and go to Sketch -> Include Library -> Add .ZIP Library...
 * Point to the downloaded file and click `Open`
@@ -197,7 +197,7 @@ Command | Configuration<br>required | Description
 
 [TMC2130 datasheet](//www.trinamic.com/fileadmin/assets/Products/ICs_Documents/TMC2130_datasheet.pdf)
 
-[TMC2208 datasheet](//www.trinamic.com/fileadmin/assets/Products/ICs_Documents/TMC220x_TMC2224_datasheet_Rev1.09.pdf)
+[TMC2208 datasheet](//www.trinamic.com/fileadmin/assets/Products/ICs_Documents/TMC220x_TMC2224_Datasheet_Rev1.10.pdf)
 
 [TMC2130 Hackaday article by Moritz Walter](//hackaday.com/2016/09/30/3d-printering-trinamic-tmc2130-stepper-motor-drivers-shifting-the-gears/)
 
