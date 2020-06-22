@@ -8,7 +8,7 @@ category: features
 
 <!-- ## Background -->
 
-Molten filament extrusion is an inexact science at best. While 3D printers can perform XYZ movements with incredible accuracy and repeatability, extruding molten filament continues to be one of the most challenging aspects of 3D printing due to its inherent slop. Many factors can influence extrusion latency and ooze, including the volume of the melt chamber, the hotend temperature, the viscosity of the material, the diameter of the nozzle, ambient temperature, and so on. As a result, tuning extrusion can be one of the most time-consuming aspects of printer calibration.
+Molten filament extrusion is an inexact science at best. While 3D printers can perform XYZ movements with incredible accuracy and repeatability, extrusion continues to be one of the most challenging aspects of 3D printing due to its inherent slop. Many factors can influence extrusion latency and ooze, including the volume of the melt chamber, the hotend temperature, the viscosity of the material, the diameter of the nozzle, ambient temperature, and so on. As a result, tuning extrusion can be one of the most time-consuming aspects of printer calibration.
 
 To help deal with latency and reduce ooze, almost every extruder needs to apply some amount of **retraction** in between continuous extrusions, then an equal amount of **recovery** when starting the next extrusion. In a retract move, the extruder pulls the filament up out of the hot end to create negative pressure and (hopefully) prevent the filament from oozing during the next travel move. The recover move reverses the retraction to restore pressure before starting the next extruded line. Proper length and speed of retraction can vary widely, so it helps to experiment.
 
