@@ -300,6 +300,7 @@ function genGcode() {
   k_script += ';\n' +
               '; FINISH\n' +
               ';\n' +
+              'M400 ; finish moving\n' +
               'M104 S0 ; Turn off hotend\n' +
               'M140 S0 ; Turn off bed\n' +
               'G1 Z30 X' + (NULL_CENTER ? 0 : BED_X) + ' Y' + (NULL_CENTER ? 0 : BED_Y) + ' F' + SPEED_MOVE + ' ; Move away from the print\n' +
