@@ -65,7 +65,7 @@ The generated G-code will print a test pattern as shown in the following illustr
 ![basics](/assets/images/features/lin_advance/k-factor_basics.png)
 
 
-Beginning with the chosen `Start value for K`, individual lines will be printed from left to right. Each line consists of 20 mm extrusion using `Slow Printing Speed` being followed by 40 mm of `Fast Printing Speed` and finally being concluded by another 20 mm of `Slow Printing Speed`.
+Beginning with the chosen `Start value for K`, individual lines will be printed from left to right. Each line consists of 20mm extrusion using `Slow Printing Speed` being followed by 40mm of `Fast Printing Speed` and finally being concluded by another 20mm of `Slow Printing Speed`.
 
 For each new line the K-Factor will be increased by the `K-Factor Stepping` value,  up to the provided `End Value for K`.
 

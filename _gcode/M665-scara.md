@@ -10,9 +10,6 @@ group: none
 
 codes: [ M665 ]
 
-long:
-  - Configure SCARA geometry values
-
 notes:
 
 parameters:
@@ -77,3 +74,4 @@ examples:
 
 ---
 
+Configure SCARA geometry values

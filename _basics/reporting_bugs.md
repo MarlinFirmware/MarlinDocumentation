@@ -5,7 +5,7 @@ description:  'Detailed guide about bugs and how to report them'
 category: [ getting-started, development ]
 ---
 
-Please submit bug reports to the [Marlin Issue Queue] so that we can try to resolve it. Use the [New Issue] button and follow the guidelines below. Before submitting an issue, please *search first to make sure the issue is new*. You can always add comments to an existing issue, even if it is closed, then we can re-open and continue to explore it.
+Please submit bug reports to the [Marlin Issue Queue] so that we can try to resolve them. Use the [New Issue] button and follow the guidelines below. Before submitting an issue, please *search first to make sure the issue is new*. You can always add comments to an existing issue, even if it is closed, then we can re-open and continue to explore it.
 
 ## Bug Reporting Guidelines
 
@@ -13,7 +13,7 @@ Based on Mozilla and Simon Tatham bug writing guidelines, a good bug report alwa
 
 ### Is reproducible
 
-If the developers cannot reproduce the bug or conclusively prove that it exists, they probably will not be able to fix it, and move on to the next bug.
+If the developers cannot reproduce the bug or conclusively prove that it exists, they probably will not be able to fix it, and will move on to the next bug.
 
  -   Provide step-by-step instructions for reproducing the bug for a quicker resolution.
  -   Attached or linked videos and screenshots are welcome.
@@ -34,7 +34,9 @@ Include information about:
   - Host software (if any)
   - Slicer (if relevant)
   - Printing method (SD or host)
-  - `Configuration.h` and `Configuration_adv.h` files (if requested)
+  - `Configuration.h` and `Configuration_adv.h` files (in a ZIP file)
+  
+In most browsers, you can attach a file to a GitHub issue by dragging and dropping the file into the comment box. It will automatically be uploaded to GitHub storage.
 
 ### Provides a good summary
 
@@ -53,7 +55,7 @@ It helps a lot when managing the bug reports that users include:
 
 ### Is not anonymous
 
-You will need to create a free Github account to report bugs. Please pay attention to the bugs you report ad follow up on your initial report. If we can't get feedback then we may not be able to resolve the problem.
+You will need to create a free Github account to report bugs. Please pay attention to the bugs you report and follow up on your initial report. If we can't get feedback then we may not be able to resolve the problem.
 
 ## Before Submitting a Bug
 

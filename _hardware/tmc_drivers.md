@@ -27,18 +27,18 @@ The TMC stepper drivers require an external library that allows Marlin to commun
 ## Installing from Arduino IDE library manager
 * Open up the Arduino IDE
 * Go to Sketch -> Include Library -> Manage Libraries...
-* 1.1.9 =>
+* 1.1.9
   * Search for **TMCStepper**
 * Older versions of Marlin
   * Search for **TMC2130Stepper** or **TMC2208Stepper**
 * Click `Install`
 
 ## Installing from a zip file
-* 1.1.9 =>
-  * Go to TMC library homepage at <https://github.com/teemuatlut/TMCStepper>
+* 1.1.9
+  * Go to TMC library homepage at https://github.com/teemuatlut/TMCStepper
 * Older versions of Marlin
-  * TMC2130: Go to the library homepage at <https://github.com/teemuatlut/TMC2130Stepper>
-  * TMC2208: Go to the library homepage at <https://github.com/teemuatlut/TMC2208Stepper>
+  * TMC2130: Go to the library homepage at https://github.com/teemuatlut/TMC2130Stepper
+  * TMC2208: Go to the library homepage at https://github.com/teemuatlut/TMC2208Stepper
 * Click `Clone or download` and `Download ZIP`
 * In Arduino IDE and go to Sketch -> Include Library -> Add .ZIP Library...
 * Point to the downloaded file and click `Open`
@@ -121,7 +121,7 @@ HYBRID_THRESHOLD          | Configure the axis speed when the driver should swit
 SENSORLESS_HOMING         | Use the TMC drivers that support this feature to act as endstops by using stallGuard to detect a physical limit.
 SENSORLESS_PROBING        | Use stallGuard on supporting TMC drivers to replace a bed probe.<br>Recommended to be used on delta printers only.
 HOMING_SENSITIVITY        | The Sensorless Homing sensitivity can be tuned to suit the specific machine.<br>A **higher** value will make homing **less** sensitive.<br>A **lower** value will make homing **more** sensitive.
-TMC_DEBUG                 | Extend the information `M122` reports. This will give you _a lot_ of additional information about the status of your TMC drivers.
+TMC_DEBUG                 | Extend the information [`M122`](/docs/gcode/M122.html) reports. This will give you _a lot_ of additional information about the status of your TMC drivers.
 TMC_ADV                   | You can use this to add your own configuration settings. The requirement is that the command used must be part of the respective TMC stepper library. Remember to add a backslash after each command!
 AUTOMATIC_CURRENT_CONTROL | Replaced by `MONITOR_DRIVER_STATUS`.<br>Marlin will poll the driver twice a second to see if the driver is in an error state. Such an error can be overtemperature pre-warn condition (OTPW) or short to ground or open load. Marlin can react to the temperature warning and automatically reduce the driver current. Short to ground error will disable the driver and Marlin can terminate the print to save time and material.
 
@@ -150,7 +150,7 @@ Command | Configuration<br>required | Description
 # Troubleshooting
 
 - Some SilentStepSticks with variable 3-5V logic voltage (VIO) [might get damaged](//github.com/MarlinFirmware/Marlin/issues/10162#issuecomment-397844847) if only powered over USB.
-- Test driver communication status with `M122`.
+- Test driver communication status with [`M122`](/docs/gcode/M122.html).
 - Test Marlin's **bugfix** branch (on GitHub) to see if your issue is fixed.
 - Test the latest TMCStepper library to see if your issue is fixed.
 - Check all wiring and wire crimps.
@@ -162,7 +162,7 @@ Command | Configuration<br>required | Description
     - Check connectivity from RX to the TMC chip
 - Check **12V** (**24V**) power in the **Vm** pin and **5V** (**3.3V**) in the **Vio** pin.
 - Check that configured pins match your firmware configuration.
-- Enable `TMC_DEBUG` and send `M122` to see further debugging output.
+- Enable `TMC_DEBUG` and send [`M122`](/docs/gcode/M122.html) to see further debugging output.
   - Reported register values of either `0x00000000` or `0xFFFFFFFF` are bad responses.
 - Try the examples provided by the respective library. Please detach any belts beforehand however, as the examples will not respect any endstop signals or physical limits. You may need to change the pin definitions.
 - If you're experiencing skipped steps there are a few things you can try
@@ -197,7 +197,7 @@ Command | Configuration<br>required | Description
 
 [TMC2130 datasheet](//www.trinamic.com/fileadmin/assets/Products/ICs_Documents/TMC2130_datasheet.pdf)
 
-[TMC2208 datasheet](//www.trinamic.com/fileadmin/assets/Products/ICs_Documents/TMC220x_TMC2224_datasheet_Rev1.09.pdf)
+[TMC2208 datasheet](//www.trinamic.com/fileadmin/assets/Products/ICs_Documents/TMC220x_TMC2224_Datasheet_Rev1.10.pdf)
 
 [TMC2130 Hackaday article by Moritz Walter](//hackaday.com/2016/09/30/3d-printering-trinamic-tmc2130-stepper-motor-drivers-shifting-the-gears/)
 

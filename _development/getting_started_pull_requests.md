@@ -53,7 +53,7 @@ Type in the new title and click `Save`.
 
 ### Change the Default Branch
 
-At this time we're using the `bugfix-2.0.x` branch to patch bugs for the next minor release, and the `dev-2.1.x` branch for new features for the next point release. We recommend you change the "Default Branch" in your fork to `bugfix-2.0.x` to make it easier to do Pull Requests later.
+At this time we're using the `bugfix-2.0.x` branch to patch bugs for the next minor release, and we'll create a new branch for the next major release as we develop a plan. We recommend you change the "Default Branch" in your fork to `bugfix-2.0.x` to make it easier to do Pull Requests later.
 
 Click on the **branches** tab to view all branches in your fork.
 
