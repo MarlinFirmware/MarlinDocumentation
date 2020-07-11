@@ -11,7 +11,6 @@ module Jekyll
       @attributes.shift;
       @title = @attributes.join(" ")
 
-
       case @type
         when "success"
           @icon = "fa-check-square"
@@ -94,7 +93,6 @@ module Jekyll
     end
   end
 end
-
 
 Liquid::Template.register_tag('panel', Jekyll::Panel)
 Liquid::Template.register_tag('alert', Jekyll::Alert)

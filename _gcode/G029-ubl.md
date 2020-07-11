@@ -1,5 +1,5 @@
 ---
-tag: g029u
+tag: g029m3
 title: Bed Leveling (Unified)
 brief: Probe the bed and enable leveling compensation.
 
@@ -10,13 +10,9 @@ group: calibration
 related: [ M420, M421 ]
 codes: [ G29 ]
 
-long:
-  - The Unified Bed Leveling System (UBL) provides a comprehensive set of resources to produce the best bed leveling results possible.
-  - See the full [Unified Bed Leveling](/docs/features/unified_bed_leveling.html) documentation for more details. (Examples below.)
-
 notes: |
   - Requires `AUTO_BED_LEVELING_UBL`.
-  - `G28` disables bed leveling. Follow with `G29 A` to turn leveling on, or use `RESTORE_LEVELING_AFTER_G28` to automatically keep leveling on after `G28`.
+  - [`G28`](/docs/gcode/G028.html) disables bed leveling. Follow with `G29 A` to turn leveling on, or use `RESTORE_LEVELING_AFTER_G28` to automatically keep leveling on after [`G28`](/docs/gcode/G028.html).
   - `M420 S1` can be used to turn leveling on, but requires a valid (complete) mesh. See [M420](/docs/gcode/M420.html) for more details
 
   ### Release Notes:
@@ -27,7 +23,7 @@ notes: |
 
   - It is highly recommended to enable EEPROM. Without EEPROM storage enabled, UBL is limited to 3-Point or Grid Leveling (`G29 P0 T` or `G29 P0 G`) and can't save meshes for later use.
 
-  - For the initial `G28` and `G29 P1` that automatically populates the mesh, UBL probes the mesh points in a growing spiral starting from the center of the bed. This pattern is better for Deltabots, allowing the center of the Mesh to be populated (and edited) more quickly so you can do test printing early in the process.
+  - For the initial [`G28`](/docs/gcode/G028.html) and `G29 P1` that automatically populates the mesh, UBL probes the mesh points in a growing spiral starting from the center of the bed. This pattern is better for Deltabots, allowing the center of the Mesh to be populated (and edited) more quickly so you can do test printing early in the process.
 
   - You don't need to populate the entire mesh to use it. This saves time if you need to adjust settings and probe again.
 
@@ -188,13 +184,13 @@ parameters:
         description: |
           **Fill Unpopulated** regions of the mesh with a fixed value (`C`) or use 'smart fill' to extrapolate from already probed points (`no argument`).
           - With a `C` constant, the closest invalid mesh points to the nozzle will be filled, and then a repeat count can also be specified with `R`.
-          - Without `C` it does a **Smart Fill**, which scans the mesh from the edges inward looking for invalid mesh points. Adjacent points are used to determine the bed slope. If the bed is sloped upward from the invalid point, it takes the value of the nearest point. If sloped downward, it's replaced by a value that puts all three points in a line. This version of `G29 P3` is a quick, easy and (usually) safe way to populate unprobed mesh regions before continuing to `G26` Mesh Validation Pattern. Note that this populates the mesh with unverified values. Pay attention and use caution.
+          - Without `C` it does a **Smart Fill**, which scans the mesh from the edges inward looking for invalid mesh points. Adjacent points are used to determine the bed slope. If the bed is sloped upward from the invalid point, it takes the value of the nearest point. If sloped downward, it's replaced by a value that puts all three points in a line. This version of `G29 P3` is a quick, easy and (usually) safe way to populate unprobed mesh regions before continuing to [`G26`](/docs/gcode/G026.html) Mesh Validation Pattern. Note that this populates the mesh with unverified values. Pay attention and use caution.
       -
         tag: 4
         description: |
           **Fine Tune** the Mesh. Generally used in the form `G29 P4 Rnn Xxxx Yyyy`.
-          - This phase requires an LCD Panel. To fine-tune the mesh without a controller, use `G42` and `M421`.
-          - Phase 4 is meant to be used with `G26` Mesh Validation to fine tune the mesh by direct editing of Mesh Points. Raise and lower points to fine tune the mesh until it gives consistently reliable adhesion.
+          - This phase requires an LCD Panel. To fine-tune the mesh without a controller, use [`G42`](/docs/gcode/G042.html) and [`M421`](/docs/gcode/M421.html).
+          - Phase 4 is meant to be used with [`G26`](/docs/gcode/G026.html) Mesh Validation to fine tune the mesh by direct editing of Mesh Points. Raise and lower points to fine tune the mesh until it gives consistently reliable adhesion.
           - `P4` moves to the closest Mesh Point (and/or the given `X` `Y`), raises the nozzle above the mesh height by the given `H` offset (or default Z_CLEARANCE_BETWEEN_PROBES), and waits while the controller is used to adjust the nozzle height. On click the displayed height is saved in the mesh.
           - Start Phase 4 at a specific location with `X` and `Y`. Adjust a specific number of Mesh Points with the `R` (Repeat) parameter. (If `R` is left out, the whole matrix is assumed.) This command can be terminated early (e.g., after editing the area of interest) by pressing and holding the encoder button.
           - The general form is `G29 P4 [R points] [X position] [Y position]`.
@@ -330,7 +326,7 @@ examples:
       G29 A         ; Activate the UBL System.
       M500          ; Save current setup. WARNING - UBL will be active at power up, before any G28.
   -
-    pre: Use `G26` and `G29` commands to fine-tune a measured mesh
+    pre: Use [`G26`](/docs/gcode/G026.html) and [`G29`](/docs/gcode/G029.html) commands to fine-tune a measured mesh
     code: |
       G26 C P T3.0  ; Produce mesh validation pattern with primed nozzle.
           ; NOTE - PLA temperatures are assumed unless you specify - e.g. - B 105 H 225 for ABS Plastic
@@ -345,3 +341,7 @@ examples:
       G29 J         ; No size specified on the J option tells G29 to probe the specified 3 points and tilt the mesh according to what it finds.
 
 ---
+
+The Unified Bed Leveling System (UBL) provides a comprehensive set of resources to produce the best bed leveling results possible.
+
+See the full [Unified Bed Leveling](/docs/features/unified_bed_leveling.html) documentation for more details. (Examples below.)

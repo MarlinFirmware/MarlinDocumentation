@@ -214,6 +214,8 @@ div.container.gcode {
     margin-left: 16px;
     h3 { margin-left: -16px; }
     h4, h5, h6 { background: #200; color: white; margin-left: -0.5em; padding-left: 0.5em; }
+    h5 { background: #CCC; color: #000; }
+    h5 code { background: #AAA; color: #FF9; }
     p, ul>li { font-size: 110% }
   }
   div.col-lg-12.row.examples .post {
@@ -225,6 +227,17 @@ div.container.gcode {
   div.row.examples pre { background: #E9F5FF; }
   div.row.gallery p { font-size: normal; color: #601; }
   img { max-width: 100%; }
+
+  .row.usage>code {
+    background: transparent;
+    >span {
+      background: #FFFDBF;
+      white-space: nowrap;
+    }
+    >span:hover {
+      background: #FFFD90;
+    }
+  }
 }
 
 .clear { clear: both; }
@@ -694,6 +707,14 @@ body.night {
   div.container.gcode {
     div.col-lg-12.row {
       h4, h5, h6 { background: black; color: #FFF; }
+      h5 {
+        background: #222;
+        code { background: #444; color: #FFC; }
+      }
+    }
+    .row.usage>code {
+      >span { color: #ADF; background: #246; }
+      >span:hover { background: #358; }
     }
     div.row.examples pre { background: #000; }
     div.row.gallery p { color: #904; }

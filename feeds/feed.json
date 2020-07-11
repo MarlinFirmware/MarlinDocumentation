@@ -6,10 +6,8 @@ layout: null
 {% for gcode in site.gcode %}
   {% if gcode.codes[0] %}
   {% unless first %},{% endunless %}{
-    {% assign codes = gcode.codes | join: ", " %}
-    {% assign words = gcode.long | markdownify | indexify %}
-    "title":{{ codes | append: " : " | append: gcode.title | jsonify }},
-    "content":{{ words | jsonify }},
+    "title":{{ gcode.codes | join: ", " | append: " : " | append: gcode.title | jsonify }},
+    "content":{{ gcode.content | indexify | jsonify }},
     "excerpt":"{{ gcode.brief }}",
     "link":"{{ site.baseurl }}{{ gcode.url }}",
     {% if gcode.experimental %}

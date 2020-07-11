@@ -68,11 +68,11 @@ module Jekyll
       # Configuration
       sitemap_config = site.config['sitemap'] || {}
       @config = {}
-      @config['filename'] = sitemap_config['filename'] || SITEMAP_FILE_NAME
+      @config['filename']              = sitemap_config['filename']              || SITEMAP_FILE_NAME
       @config['change_frequency_name'] = sitemap_config['change_frequency_name'] || CHANGE_FREQUENCY_NAME
-      @config['priority_name'] = sitemap_config['priority_name'] || PRIORITY_NAME
-      @config['exclude'] = sitemap_config['exclude'] || EXCLUDE
-      @config['include_posts'] = sitemap_config['include_posts'] || INCLUDE_POSTS
+      @config['priority_name']         = sitemap_config['priority_name']         || PRIORITY_NAME
+      @config['exclude']               = sitemap_config['exclude']               || EXCLUDE
+      @config['include_posts']         = sitemap_config['include_posts']         || INCLUDE_POSTS
 
       sitemap = REXML::Document.new << REXML::XMLDecl.new("1.0", "UTF-8")
 
@@ -146,8 +146,6 @@ module Jekyll
 
       lastmod = fill_last_modified(site, page_or_post)
       url.add_element(lastmod) if lastmod
-
-
 
       if (page_or_post.data[@config['change_frequency_name']])
         change_frequency =

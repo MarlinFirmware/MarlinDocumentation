@@ -58,12 +58,12 @@ EEPROM CRC mismatch - (stored) 4235 != 6244 (calculated)!
 **Troubleshooting Procedure**
 
 - If using Octoprint, turn off the option to disconnect on "Error" messages before proceeding.
-- Do `M502` and `M500` and then reboot the machine. This procedure will initialize the EEPROM to your configured "factory" settings.
+- Do [`M502`](/docs/gcode/M502.html) and [`M500`](/docs/gcode/M500.html) and then reboot the machine. This procedure will initialize the EEPROM to your configured "factory" settings.
 - If you still see checksum or data-size errors, add the following option to your `Configuration.h`, flash, and reboot.
   ```cpp
   #define DEBUG_EEPROM_READWRITE
   ```
-  This option makes Marlin check the EEPROM data during `M501` (read) and `M500` (write) and report mismatched fields. Please report these errors to the Marlin project, because a mismatched field may indicate a bug in the code.
+  This option makes Marlin check the EEPROM data during [`M501`](/docs/gcode/M501.html) (read) and [`M500`](/docs/gcode/M500.html) (write) and report mismatched fields. Please report these errors to the Marlin project, because a mismatched field may indicate a bug in the code.
 - You can also enable the `EEPROM_AUTO_INIT` option to automatically reset the EEPROM when the data structure changes or the data gets corrupted.
 
 ### Sanity Check Errors

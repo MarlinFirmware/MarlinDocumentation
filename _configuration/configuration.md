@@ -45,7 +45,7 @@ If you've never configured and calibrated a 3D Printer before, here are some goo
 - [Triffid Hunter's Calibration Guide](//reprap.org/wiki/Triffid_Hunter%27s_Calibration_Guide)
 - [The Essential Calibration Set](//www.thingiverse.com/thing:5573)
 - [Calibration of your RepRap](//sites.google.com/site/repraplogphase/calibration-of-your-reprap)
-- [XY 20 mm Calibration Box](//www.thingiverse.com/thing:298812)
+- [XY 20mm Calibration Box](//www.thingiverse.com/thing:298812)
 - [G-code reference](//reprap.org/wiki/G-code)
 - [Marlin3DprinterTool](//github.com/cabbagecreek/Marlin3DprinterTool)
 
@@ -74,7 +74,7 @@ Settings that can be changed and saved to EEPROM are marked with <em class="fa f
 
 ---
 
-Settings saved in EEPROM persist across reboots and still remain after flashing new firmware, so always send `M502`, `M500` (or "Reset EEPROM" from the LCD) after flashing.
+Settings saved in EEPROM persist across reboots and still remain after flashing new firmware, so always send [`M502`](/docs/gcode/M502.html), [`M500`](/docs/gcode/M500.html) (or "Reset EEPROM" from the LCD) after flashing.
 {% endalert %}
 
 This section follows the order of settings as they appear. The order isn't always logical, so "Search In Page" may be helpful. We've tried to keep descriptions brief and to the point. For more detailed information on various topics, please read the main articles and follow the links provided in the option descriptions.
@@ -188,7 +188,7 @@ This value should be set to the total number of E stepper motors on the machine,
 ```
 This is the "nominal" filament diameter as written on the filament spool (1.75, 2.85, 3.0). If you typically use 1.75mm filament, but physically measure the diameter as 1.70mm, you should still use 1.75 if that's what you have set in your slicer.
 
-This value is used by Marlin to compensate for Filament Width when printing in volumetric mode (See `M200`), and by the Unified Bed Leveling command [`G26`](/docs/gcode/G026.html) when printing a test grid.
+This value is used by Marlin to compensate for Filament Width when printing in volumetric mode (See [`M200`](/docs/gcode/M200.html)), and by the Unified Bed Leveling command [`G26`](/docs/gcode/G026.html) when printing a test grid.
 
 You can override this value with [`M404 W`](/docs/gcode/M404.html).
 
@@ -386,7 +386,7 @@ Hotend offsets are needed if your extruder has more than one nozzle. These value
   #endif
 #endif
 ```
-This option allows the controller board to switch the power supply 12v on and off with [`M80`](/docs/gcode/M080.html) and [`M81`](/docs/gcode/M081.html). Requires `PS_ON_PIN`.
+This option allows the controller board to switch the power supply 12V on and off with [`M80`](/docs/gcode/M080.html) and [`M81`](/docs/gcode/M081.html). Requires `PS_ON_PIN`.
 
 ```cpp
 //#define PS_DEFAULT_OFF
@@ -495,7 +495,7 @@ Marlin uses PID (Proportional, Integral, Derivative) control ([Wikipedia](//en.w
 
 Most vitally, correct PID settings will prevent excessive overshoot, which is a safety hazard. During PID calibration, use the highest target temperature you intend to use (where overshoots are more critical).
 
-See the [PID Tuning](//reprap.org/wiki/PID_Tuning) topic on the RepRap wiki for detailed instructions on [`M303`](/docs/gcode/M303.html) auto-tuning. The PID settings should be tuned whenever changing a hotend, temperature sensor, heating element, board, power supply voltage (12v/24v), or anything else related to the high-voltage circuitry.
+See the [PID Tuning](//reprap.org/wiki/PID_Tuning) topic on the RepRap wiki for detailed instructions on [`M303`](/docs/gcode/M303.html) auto-tuning. The PID settings should be tuned whenever changing a hotend, temperature sensor, heating element, board, power supply voltage (12/24V), or anything else related to the high-voltage circuitry.
 
 ---
 
@@ -552,7 +552,7 @@ Sample PID values are included for reference, but they won't apply to most setup
 ```cpp
 //#define PIDTEMPBED
 ```
-Enable `PIDTEMPBED` to use PID for the bed heater (at the same PWM frequency as the extruders). With the default PID_dT the PWM frequency is 7.689Hz, fine for driving a square wave into a resistive load without significant impact on FET heating. This also works fine on a Fotek SSR-10DA Solid State Relay into a 250W heater. If your configuration is significantly different than this and you don't understand the issues involved, you probably shouldn't use bed PID until it's verified that your hardware works. Use `M303 E-1` to tune the bed PID for this option.
+Enable `PIDTEMPBED` to use PID for the bed heater (at the same PWM frequency as the extruders). With the default PID_dT the PWM frequency is 7.689 Hz, fine for driving a square wave into a resistive load without significant impact on FET heating. This also works fine on a Fotek SSR-10DA Solid State Relay into a 250 W heater. If your configuration is significantly different than this and you don't understand the issues involved, you probably shouldn't use bed PID until it's verified that your hardware works. Use `M303 E-1` to tune the bed PID for this option.
 
 ```cpp
 //#define BED_LIMIT_SWITCHING
@@ -810,7 +810,7 @@ Override with [`M201`](/docs/gcode/M201.html).
 #define DEFAULT_RETRACT_ACCELERATION  3000    // E acceleration for retracts
 #define DEFAULT_TRAVEL_ACCELERATION   3000    // X, Y, Z acceleration for travel (non printing) moves
 ```
-The planner uses the default accelerations set here (or by `M204`) as the starting values for movement acceleration, and then constrains them further, if needed. There are separate default acceleration values for printing moves, retraction moves, and travel moves.
+The planner uses the default accelerations set here (or by [`M204`](/docs/gcode/M204.html)) as the starting values for movement acceleration, and then constrains them further, if needed. There are separate default acceleration values for printing moves, retraction moves, and travel moves.
 
 - Printing moves include E plus at least one of the XYZ axes.
 - Retraction moves include only the E axis.
@@ -1037,8 +1037,8 @@ Z probes require clearance when deploying, stowing, and moving between probe poi
 
 Use these settings to specify the distance (mm) to raise the probe (or lower the bed). The values set here apply over and above any (negative) probe Z Offset set with `Z_PROBE_OFFSET_FROM_EXTRUDER`, [`M851`](/docs/gcode/M204.html), or the LCD. Only integer values >= 1 are valid for these settings.
 
-- *Example*: `M851 Z-5` with a CLEARANCE of 4  =>  9mm from bed to nozzle.
-- *But*: `M851 Z+1` with a CLEARANCE of 2  =>  2mm from bed to nozzle.
+- *Example*: `M851 Z-5` with a CLEARANCE of 4  =>  9 mm from bed to nozzle.
+- *But*: `M851 Z+1` with a CLEARANCE of 2  =>  2 mm from bed to nozzle.
 
 {% panel warning G29 Movement %}
 Make sure you have enough clearance for the probe to move between points!
@@ -1048,7 +1048,7 @@ Make sure you have enough clearance for the probe to move between points!
 #define Z_PROBE_OFFSET_RANGE_MIN -20
 #define Z_PROBE_OFFSET_RANGE_MAX 20
 ```
-For `M851` and LCD menus give a range for adjusting the Z probe offset.
+For [`M851`](/docs/gcode/M851.html) and LCD menus give a range for adjusting the Z probe offset.
 
 ### Probe Testing
 
@@ -1057,7 +1057,7 @@ For `M851` and LCD menus give a range for adjusting the Z probe offset.
 ```
 This enables you to test the reliability of your probe.
 Issue a [`M48`](/docs/gcode/M048.html) command to start testing. It will give you a standard deviation for the probe.
-Tip: 0.02 mm is normally acceptable for bed leveling to work.
+Tip: 0.02mm is normally acceptable for bed leveling to work.
 
 ```cpp
 // Before deploy/stow pause for user confirmation
@@ -1180,7 +1180,7 @@ With Marlin you can directly specify the bed size. This allows Marlin to do extr
 These values specify the physical limits of the machine. Usually the `[XYZ]_MIN_POS` values are set to 0, because endstops are positioned at the bed limits. `[XYZ]_MAX_POS` should be set to the farthest reachable point. By default, these are used as your homing positions as well. However, the `MANUAL_[XYZ]_HOME_POS` options can be used to override these, if needed.
 
 {% panel info Home Offset %}
-Although home positions are fixed, `M206` can be used to apply offsets to the home position if needed.
+Although home positions are fixed, [`M206`](/docs/gcode/M206.html) can be used to apply offsets to the home position if needed.
 {% endpanel %}
 
 ### Software Endstops
@@ -1245,24 +1245,18 @@ With this feature, a mechanical or opto endstop switch is used to check for the 
 
 ![Bed Level](/assets/images/config/bedlevel.png){: .floater}
 
-There are many cases where it is useful to measure variances in bed height. Even if the bed on a 3D printer is perfectly flat and level, there may still be imperfections in the mechanics. For example, a machine may have a very flat bed, but a corner of the XY gantry is a half-mm high. The ends of the Z axis may not be perfectly level. The bed may move slightly in the Z plane as it moves in the X and/or Y plane. On a Delta there may be a lingering bowl-shape to its XY trajectory.
+Bed Leveling is a standard feature on many 3D printers. It takes the guess-work out of getting a good first layer and good bed adhesion.
 
-Bed Compensation or "--- Bed Leveling" allows the machine —with a bed probe or user assistance— to take accurate measurements of the "bed height" at various points in the XY plane. With this data the machine can then adjust movement to align better to the tilt or "height" variances in the bed. (I'm scare-quoting "height" here because variances may come from other than the bed.)
+It is highly recommended to get your printer aligned and constrained as much as possible before using bed leveling, because it exists to compensate for imperfections in the hardware.
 
-For more details on these features, see [`G29` for MBL](/docs/gcode/G029-mbl.html) and [`G29` for ABL](/docs/gcode/G029-abl.html).
-
-**We recommend** that you try and get your printer the best it can be before using bedlevel, after all bedlevel only compensates for "bad" hardware, it does not correct it.
-
-### Bed Leveling Style
-
-Bed Leveling is a standard feature on many 3D printers. It takes the guess-work out of getting a good first layer and good bed adhesion.  All forms of bed leveling add `G29` Bed Probing, `M420` enable/disable, and can save their results to EEPROM with `M500`. Bravo!
+For all the in-depth details please read the [Auto Bed Leveling](/docs/features/auto_bed_leveling.html) documentation and the [`G29`](/docs/gcode/G029.html) G-codes documentation.
 
 With Bed Leveling enabled:
 
-- `G28` disables bed leveling, but leaves previous leveling data intact.
-- `G29` automatically or manually probes the bed at various points, measures the bed height, calculates a correction grid or matrix, and turns on leveling compensation. Specific behavior depends on configuration and type of bed leveling.
-- [`M500`](/docs/gcode/M500.html) saves the bed leveling data to EEPROM. Use [`M501`](/docs/gcode/M501.html) to load it, [`M502`](/docs/gcode/M502.html) to clear it, and [`M503`](/docs/gcode/M503.html) to report it.
-- `M420 S<bool>` can be used to enable/disable bed leveling. For example, [`M420 S1`](/docs/gcode/M420.html) must be used after `M501` to enable the loaded mesh or matrix, and to re-enable leveling after `G28`, which disables leveling compensation.
+- [`G28`](/docs/gcode/G028.html) will disable bed leveling (but preserves your leveling data). You can enable `RESTORE_LEVELING_AFTER_G28` to keep leveling in its previous state.
+- [`G29`](/docs/gcode/G029.html) will automatically probe the bed or guide you to do a paper-test at various points. After measurement it calculates a correction grid or matrix and enables leveling compensation. The specific behavior depends on configuration and type of bed leveling.
+- [`M500`](/docs/gcode/M500.html) will save the bed leveling data to EEPROM. [`M501`](/docs/gcode/M501.html) will load it. [`M502`](/docs/gcode/M502.html) will erase it. And [`M503`](/docs/gcode/M503.html) will report it.
+- `M420 S<bool>` can be used to enable/disable bed leveling. For example, [`M420 S1`](/docs/gcode/M420.html) must be used after [`M501`](/docs/gcode/M501.html) to enable the loaded mesh or matrix, and to re-enable leveling after [`G28`](/docs/gcode/G028.html), which disables leveling compensation.
 - A "Level Bed" menu item can be added to the LCD with the `LCD_BED_LEVELING` option.
 
 ```cpp
@@ -1278,7 +1272,7 @@ Enable just one type of Bed Leveling.
 - `AUTO_BED_LEVELING_LINEAR` probes the bed in a grid. A transform matrix is produced by least-squares method to compensate for a flat but tilted bed.
 - `AUTO_BED_LEVELING_BILINEAR` probes the bed in a grid, with optional Catmull-Rom subdivision. The mesh data is used to adjust Z height across the bed using bilinear interpolation. Good for delta, large, or uneven beds.
 - `AUTO_BED_LEVELING_UBL` (recommended) combines the features of 3-point, linear, bilinear, and mesh leveling. As with bilinear leveling, the mesh data generated by UBL is used to adjust Z height across the bed using bilinear interpolation. An LCD controller is currently required.
-- `MESH_BED_LEVELING` provides a custom `G29` command to measure the bed height at several grid points using a piece of paper or feeler gauge. See [`G29` for MBL](/docs/gcode/G029-mbl.html) for the full procedure. This type of leveling is only compatible with `PROBE_MANUALLY`.
+- `MESH_BED_LEVELING` provides a custom [`G29`](/docs/gcode/G029.html) command to measure the bed height at several grid points using a piece of paper or feeler gauge. See [`G29` for MBL](/docs/gcode/G029-mbl.html) for the full procedure. This type of leveling is only compatible with `PROBE_MANUALLY`.
 
 {% alert info %}
 Only `AUTO_BED_LEVELING_BILINEAR` and `AUTO_BED_LEVELING_UBL` support `DELTA`.<br/>
@@ -1290,13 +1284,13 @@ Only `AUTO_BED_LEVELING_BILINEAR` currently supports `SCARA`.<br/>
 ```cpp
 //#define RESTORE_LEVELING_AFTER_G28
 ```
-Normally [`G28`](/docs/gcode/G028.html) causes leveling to be disabled, so you have to re-enable it with `M420 S1` or `G29`. If you enable this option then `G28` will make sure to turn leveling back on if it was enabled beforehand.
+Normally [`G28`](/docs/gcode/G028.html) causes leveling to be disabled, so you have to re-enable it with `M420 S1` or [`G29`](/docs/gcode/G029.html). If you enable this option then [`G28`](/docs/gcode/G028.html) will make sure to turn leveling back on if it was enabled beforehand.
 
 ### Debug Leveling
 ```cpp
 //#define DEBUG_LEVELING_FEATURE
 ```
-Use this option to enable extra debugging of homing and leveling. You can then use `M111 S32` before issuing `G28` and `G29 V4` to get a detailed log of the process for diagnosis. This option is useful to figure out the cause of unexpected behaviors, or when reporting issues to the project.
+Use this option to enable extra debugging of homing and leveling. You can then use `M111 S32` before issuing [`G28`](/docs/gcode/G028.html) and `G29 V4` to get a detailed log of the process for diagnosis. This option is useful to figure out the cause of unexpected behaviors, or when reporting issues to the project.
 
 ### Leveling Fade Height
 ```cpp
@@ -1308,7 +1302,7 @@ This option adds the `Z` parameter to [`M420`](/docs/gcode/M420.html) which sets
 
 This feature exists to prevent irregularities in the bed from propagating through the model's entire height. Fading out leveling also reduces computational requirements and resonance from the Z axis above the fade height. For a well-aligned machine, this feature can improve print results.
 
-Example: To have leveling fade out over the first 10mm of layer printing use `M420 Z10`. If each layer is 0.2mm high, leveling compensation will be reduced by 1/50th (2%) after each layer. Above 10mm the machine will move without compensation.
+Example: To have leveling fade out over the first 10mm of layer printing use `M420 Z10`. If each layer is 0.2 mm high, leveling compensation will be reduced by 1/50th (2 %) after each layer. Above 10mm the machine will move without compensation.
 
 #### G26 Mesh Validation Pattern
 ```cpp
@@ -1332,7 +1326,7 @@ When using any of the mesh-based leveling systems (1.1.7) you can activate `G26_
 #define GRID_MAX_POINTS_X 3
 #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
 ```
-These options specify the default number of points to probe in each dimension during `G29`.
+These options specify the default number of points to probe in each dimension during [`G29`](/docs/gcode/G029.html).
 
 ```cpp
   //#define MIN_PROBE_EDGE_LEFT MIN_PROBE_EDGE
@@ -1387,7 +1381,7 @@ These options specify the inset, grid, and 3-point triangle to use for UBL. Note
 
 //#define MESH_G28_REST_ORIGIN // After homing all axes ('G28' or 'G28 XYZ') rest Z at Z_MIN_POS
 ```
-These options specify the number of points that will always be probed in each dimension during `G29`. The mesh inset is used to automatically calculate the probe boundaries. These can be set explicitly in `Configuration_adv.h`. `MESH_G28_REST_ORIGIN` moves the nozzle to rest at `Z_MIN_POS` when mesh probing is done. If Z is offset (e.g., due to `home_offset` or some other cause) this is intended to move Z to a good starting point, usually Z=0.
+These options specify the number of points that will always be probed in each dimension during [`G29`](/docs/gcode/G029.html). The mesh inset is used to automatically calculate the probe boundaries. These can be set explicitly in `Configuration_adv.h`. `MESH_G28_REST_ORIGIN` moves the nozzle to rest at `Z_MIN_POS` when mesh probing is done. If Z is offset (e.g., due to `home_offset` or some other cause) this is intended to move Z to a good starting point, usually Z=0.
 
 ### LCD Bed Leveling
 
@@ -1399,9 +1393,9 @@ These options specify the number of points that will always be probed in each di
   //#define MESH_EDIT_MENU        // Add a menu to edit mesh points
 #endif
 ```
-`LCD_BED_LEVELING` adds a "Level Bed" menu to the LCD that starts a step-by-step guided leveling procedure that requires no probe. For Mesh Bed Leveling see [`G29` for MBL](/docs/gcode/G029-mbl.html), and for `PROBE_MANUALLY` see [`G29` for ABL](/docs/gcode/G029-abl.html).
+`LCD_BED_LEVELING` adds a "Level Bed" menu to the LCD that starts a step-by-step guided leveling procedure that requires no probe.
 
-Available with `MESH_BED_LEVELING` and `PROBE_MANUALLY` (all forms of Auto Bed Leveling). See the `Configuration.h` file for sub-options.
+Available with `MESH_BED_LEVELING` and `PROBE_MANUALLY` (all forms of Auto Bed Leveling). See the `Configuration.h` file for sub-options and the [`G29`](/docs/gcode/G029.html) G-code documentation that applies to your selected leveling system.
 
 ### Corner Leveling
 
@@ -1421,7 +1415,7 @@ Add a menu item to move between bed corners for manual bed adjustment.
 ```cpp
 //#define Z_PROBE_END_SCRIPT "G1 Z10 F12000\nG1 X15 Y330\nG1 Z0.5\nG1 Z10"
 ```
-A custom script to do at the very end of `G29`. If multiple commands are needed, divide them with `\n` (the newline character).
+A custom script to do at the very end of [`G29`](/docs/gcode/G029.html). If multiple commands are needed, divide them with `\n` (the newline character).
 
 ## Homing Options
 
@@ -1451,7 +1445,8 @@ These settings are used to override the home position. Leave them undefined for 
   #define Z_SAFE_HOMING_Y_POINT ((Y_BED_SIZE) / 2)    // Y point for Z homing when homing all axes (G28).
 #endif
 ```
-**Z Safe Homing** prevents Z from homing when the probe (or nozzle) is outside bed area by moving to a defined XY point (by default, the middle of the bed) before Z Homing when homing all axes with `G28`. As a side-effect, X and Y homing are required before Z homing. If stepper drivers time out, X and Y homing will be required again.
+
+**Z Safe Homing** prevents Z from homing when the probe (or nozzle) is outside bed area by moving to a defined XY point (by default, the middle of the bed) before Z Homing when homing all axes with [`G28`](/docs/gcode/G028.html). As a side-effect, X and Y homing are required before Z homing. If stepper drivers time out, X and Y homing will be required again.
 
 Enable this option if a probe (not an endstop) is being used for Z homing. Z Safe Homing isn't needed if a Z endstop is used for homing, but it may also be enabled just to have XY always move to some custom position after homing.
 
@@ -1512,7 +1507,7 @@ Correct for misalignment in the XYZ axes. See `configuration.h` for a thorough e
 ```cpp
 //#define EEPROM_SETTINGS
 ```
-Commands like [`M92`](/docs/gcode/M092.html) only change the settings in volatile memory, and these settings are lost when the machine is powered off. With this option enabled, Marlin uses the built-in EEPROM to preserve settings across reboots. Settings saved to EEPROM (with `M500`) are loaded automatically whenever the machine restarts (and in most setups, when connecting to a host), overriding the defaults set in the configuration files. This option is highly recommended, as it makes configurations easier to manage.
+Commands like [`M92`](/docs/gcode/M092.html) only change the settings in volatile memory, and these settings are lost when the machine is powered off. With this option enabled, Marlin uses the built-in EEPROM to preserve settings across reboots. Settings saved to EEPROM (with [`M500`](/docs/gcode/M500.html)) are loaded automatically whenever the machine restarts (and in most setups, when connecting to a host), overriding the defaults set in the configuration files. This option is highly recommended, as it makes configurations easier to manage.
 
 The EEPROM-related commands are:
 
@@ -1533,7 +1528,7 @@ Settings that can be changed and saved to EEPROM are marked with <em class="fa f
 {% endalert %}
 
 {% alert info %}
-When you change saveable settings in the configuration files and re-flash, the new values don't take effect right away. They are still overridden by the saved values in EEPROM. To get your new default settings into the EEPROM, use `M502` followed by `M500`.
+When you change saveable settings in the configuration files and re-flash, the new values don't take effect right away. They are still overridden by the saved values in EEPROM. To get your new default settings into the EEPROM, use [`M502`](/docs/gcode/M502.html) followed by [`M500`](/docs/gcode/M500.html).
 {% endalert %}
 
 ### Host Keepalive
@@ -1645,7 +1640,7 @@ When enabled Marlin will keep track of some print statistics such as:
 - Total failed print jobs
 - Total time printing
 
-This information can be viewed by the `M78` command.
+This information can be viewed by the [`M78`](/docs/gcode/M078.html) command.
 
 ## User Interface Language
 
@@ -1971,7 +1966,7 @@ The [Philips PCA9632](//www.digchip.com/datasheets/3286493-pca9632.html) is a co
   //#define RGB_LED_W_PIN -1
 #endif
 ```
-Enable support for an RGB(W) LED connected to 5V digital pins, or an RGB(W) Strip connected to MOSFETs controlled by digital pins. An inexpensive RGB LED can be used simply by assigning digital pins for each component. If the pins are able to do hardware PWM then a wide range of colors will be available. With simple digital pins only 7 colors are possible.
+Enable support for an RGB(W) LED connected to 5 V digital pins, or an RGB(W) Strip connected to MOSFETs controlled by digital pins. An inexpensive RGB LED can be used simply by assigning digital pins for each component. If the pins are able to do hardware PWM then a wide range of colors will be available. With simple digital pins only 7 colors are possible.
 
 Adds the [`M150`](/docs/gcode/M150.html) command to set the LED (or LED strip) color. If pins are PWM capable (e.g., 4, 5, 6, 11) then a range of luminance values can be set from 0 to 255.
 
@@ -2148,7 +2143,7 @@ Hot end thermal protection can be tuned with these sub-options.
 
 The first two options deal with continuous thermal protection during an entire print job.
 
-The second set of options applies to changes in target temperature. Whenever an `M104` or `M109` increases the target temperature the firmware will wait for the `WATCH_TEMP_PERIOD` to expire, and if the temperature hasn't increased by `WATCH_TEMP_INCREASE` degrees, the machine is halted, requiring a hard reset. This test restarts with any `M104`/`M109`, but only if the current temperature is far enough below the target for a reliable test.
+The second set of options applies to changes in target temperature. Whenever an [`M104`](/docs/gcode/M104.html) or [`M109`](/docs/gcode/M109.html) increases the target temperature the firmware will wait for the `WATCH_TEMP_PERIOD` to expire, and if the temperature hasn't increased by `WATCH_TEMP_INCREASE` degrees, the machine is halted, requiring a hard reset. This test restarts with any [`M104`](/docs/gcode/M104.html)/[`M109`](/docs/gcode/M109.html), but only if the current temperature is far enough below the target for a reliable test.
 
 If you get false positives for "Heating failed" increase `WATCH_TEMP_PERIOD` and/or decrease `WATCH_TEMP_INCREASE`. (`WATCH_TEMP_INCREASE` should not be set below 2.)
 
@@ -2165,7 +2160,7 @@ Heated bed thermal protection can be tuned with these sub-options.
 
 The first two options deal with continuous thermal protection during an entire print job.
 
-The second set of options applies to changes in target temperature. Whenever an [`M140`](/docs/gcode/M140.html) or [`M190`](/docs/gcode/M190.html) increases the target temperature the firmware will wait for the `WATCH_BED_TEMP_PERIOD` to expire, and if the temperature hasn't increased by `WATCH_BED_TEMP_INCREASE` degrees, the machine is halted, requiring a hard reset. This test restarts with any `M140`/`M190`, but only if the current temperature is far enough below the target for a reliable test.
+The second set of options applies to changes in target temperature. Whenever an [`M140`](/docs/gcode/M140.html) or [`M190`](/docs/gcode/M190.html) increases the target temperature the firmware will wait for the `WATCH_BED_TEMP_PERIOD` to expire, and if the temperature hasn't increased by `WATCH_BED_TEMP_INCREASE` degrees, the machine is halted, requiring a hard reset. This test restarts with any [`M140`](/docs/gcode/M140.html)/[`M190`](/docs/gcode/M190.html), but only if the current temperature is far enough below the target for a reliable test.
 
 If you get too many "Heating failed" errors, increase `WATCH_BED_TEMP_PERIOD` and/or decrease `WATCH_BED_TEMP_INCREASE`. (`WATCH_BED_TEMP_INCREASE` should not be set below 2.)
 
@@ -2180,7 +2175,7 @@ If you get too many "Heating failed" errors, increase `WATCH_BED_TEMP_PERIOD` an
 #endif
 ```
 
-Similar to the description for the Bed Thermal Protection above. Use `M141`](/docs/gcode/M141.html) to set target chamber temperature and [`M191`](/docs/gcode/M191.html) to set and wait target chamber temperature.
+Similar to the description for the Bed Thermal Protection above. Use [`M141`](/docs/gcode/M141.html)](/docs/gcode/M141.html) to set target chamber temperature and [`M191`](/docs/gcode/M191.html) to set and wait target chamber temperature.
 
 
 ### PID Extrusion Scaling
@@ -2873,7 +2868,7 @@ This option makes it easier to print the same SD Card file again. Whenever an SD
 ```cpp
   //#define AUTO_REPORT_SD_STATUS
 ```
-Auto-report SdCard status with [`M27`](/docs/gcode/M027.html) S<seconds>
+Auto-report SD card status with [`M27`](/docs/gcode/M027.html) S<seconds>
 
 ### USB Flash Drive Support
 ```cpp
@@ -3221,7 +3216,7 @@ Support for [`G5`](/docs/gcode/G005.html) with XYZE destination and IJPQ offsets
   #define G38_MINIMUM_MOVE 0.0275 // (mm) Minimum distance that will produce a move
 #endif
 ```
-Add commands [`G38.2`](/docs/gcode/G038.html) and [`G38.3`](/docs/gcode/G038.html) to probe towards target. Enable `PROBE_DOUBLE_TOUCH` if you want `G38` to double touch.
+Add commands [`G38.2`](/docs/gcode/G038.html) and [`G38.3`](/docs/gcode/G038.html) to probe towards target. Enable `PROBE_DOUBLE_TOUCH` if you want [`G38`](/docs/gcode/G038.html) to double touch.
 
 ## Minimum Steps Per Segment
 ```cpp
@@ -3276,7 +3271,7 @@ The ASCII buffer for serial input. Individual command line length is set by `MAX
 ```cpp
 #define TX_BUFFER_SIZE 0
 ```
-Transmission to Host buffer size. To save 386 bytes of PROGMEM (and `TX_BUFFER_SIZE`+3 bytes of SRAM) set to 0. To buffer a simple "ok" you need 4 bytes. An `ADVANCED_OK` (`M105`) needs 32 bytes. For debug-echo: 128 bytes for the optimal speed. Other output doesn't need to be that speedy.
+Transmission to Host buffer size. To save 386 bytes of PROGMEM (and `TX_BUFFER_SIZE`+3 bytes of SRAM) set to 0. To buffer a simple "ok" you need 4 bytes. An `ADVANCED_OK` ([`M105`](/docs/gcode/M105.html)) needs 32 bytes. For debug-echo: 128 bytes for the optimal speed. Other output doesn't need to be that speedy.
 
 ### Host Receive Buffer
 ```cpp
@@ -3350,7 +3345,7 @@ Add a secondary fan speed for each print-cooling fan. [`M106`](/docs/gcode/M106.
   #endif
 #endif
 ```
-This option adds [`G10`](/docs/gcode/G010.html)/[`G11`](/docs/gcode/G011.html) commands for automatic firmware-based retract/recover. Use [`M207`](/docs/gcode/M207.html) and [`M208`](/docs/gcode/G038.html) to set the parameters, and `M209` to enable/disable. With auto-retract enabled, all `G1 E` moves within the set range will be converted to firmware-based retract/recover moves.
+This option adds [`G10`](/docs/gcode/G010.html)/[`G11`](/docs/gcode/G011.html) commands for automatic firmware-based retract/recover. Use [`M207`](/docs/gcode/M207.html) and [`M208`](/docs/gcode/G038.html) to set the parameters, and [`M209`](/docs/gcode/M209.html) to enable/disable. With auto-retract enabled, all `G1 E` moves within the set range will be converted to firmware-based retract/recover moves.
 
 **Be sure to turn off auto-retract during filament change!** All [`M207`](/docs/gcode/M207.html)/[`M208`](/docs/gcode/M208.html)/[`M209`](/docs/gcode/M209.html) settings are saved to EEPROM.
 
@@ -3424,7 +3419,7 @@ This option adds [`G10`](/docs/gcode/G010.html)/[`G11`](/docs/gcode/G011.html) c
   //#define FILAMENT_UNLOAD_ALL_EXTRUDERS         // Allow M702 to unload all extruders above a minimum target temp (as set by M302)
 #endif
 ```
-Experimental feature for filament change support and parking the nozzle when paused. Adds the [`M600`](/docs/gcode.M600.html) command to perform a filament change. With `PARK_HEAD_ON_PAUSE` enabled also adds the [`M115`](/docs/gcode/M115.html) command to pause printing and park the nozzle. Requires an LCD display. Note that `M600` is required for the default `FILAMENT_RUNOUT_SCRIPT`. Requires LCD display and `NOZZLE_PARK_FEATURE`.
+Experimental feature for filament change support and parking the nozzle when paused. Adds the [`M600`](/docs/gcode/M600.html) command to perform a filament change. With `PARK_HEAD_ON_PAUSE` enabled also adds the [`M115`](/docs/gcode/M115.html) command to pause printing and park the nozzle. Requires an LCD display. Note that [`M600`](/docs/gcode/M600.html) is required for the default `FILAMENT_RUNOUT_SCRIPT`. Requires LCD display and `NOZZLE_PARK_FEATURE`.
 
 ## Stepper Drivers
 ### Trinamic TMC26X
@@ -3727,7 +3722,7 @@ echo:i2c-reply: from:99 bytes:5 data:hello
   #endif
 #endif
 ```
-Add the [`M240`](/docs/gcode/M240.h) to take a photo. The photo can be triggered by a digital pin or a physical movement.
+Add the [`M240`](/docs/gcode/M240.html) to take a photo. The photo can be triggered by a digital pin or a physical movement.
 
 ## Spindle / Laser
 ```cpp
@@ -3844,7 +3839,7 @@ Enables [`G53`](/docs/gcode/G053.html) and [`G54`-`G59.3`](/docs/gcode/G054-G059
 ```cpp
 #define AUTO_REPORT_TEMPERATURES
 ```
-It is recommended to enable this feature (along with `EXTENDED_CAPABILITIES_REPORT`) to install the [`M155`](/docs/gcode/M115.html) Auto-Report Temperature command. [`M115`](/docs/gcode/M115.html) tells Marlin to send the current temperature to the host at regular intervals, instead of requiring the host software to send `M105` repeatedly. This saves a space in the command buffer and reduces overhead.
+It is recommended to enable this feature (along with `EXTENDED_CAPABILITIES_REPORT`) to install the [`M155`](/docs/gcode/M115.html) Auto-Report Temperature command. [`M115`](/docs/gcode/M115.html) tells Marlin to send the current temperature to the host at regular intervals, instead of requiring the host software to send [`M105`](/docs/gcode/M105.html) repeatedly. This saves a space in the command buffer and reduces overhead.
 
 ## Extended Capabilities Report
 ```cpp
@@ -3946,7 +3941,7 @@ Execute specified G-code commands immediately after power-on.
 ```cpp
 //#define CANCEL_OBJECTS
 ```
-Adds [`M486`](/docs/gcode/M486.h) to allow Marlin to skip objects.
+Adds [`M486`](/docs/gcode/M486.html) to allow Marlin to skip objects.
 
 ## I2C Position Encoders
 ```cpp
@@ -4063,7 +4058,7 @@ Adds [`M486`](/docs/gcode/M486.h) to allow Marlin to skip objects.
 - On a board with a ATmega2560/1280 microcontroller you have three potential serial ports to use for the MMU2: serial 1 (pins 18/19), serial 2 (pins 16/17), serial 3 (pins 14/15). Define the port your MMU2 is connected to - this activates an additional serial connection in Marlin named (in the example configuration) `internalSerial`.
 - When using a 32-bit board you just have to define the name of the serial port which will be used for communication with the MMU2.
 - The MMU2 provides two options how the printer board can trigger a reset: software and hardware reset. By default software reset is enabled. Hardware reset requires a digital output pin wired to the reset pin on the MMU2. To activate hardware reset you define the pin (`MMU2_RST_PIN`) to use on the printer board
-- If your MMU2 is powered from 12 V you can activate a special mode on the MMU2 (`MMU2_MODE_12V`). This should reduce the noise of the MMU2 but has no effect on the general operation.
+- If your MMU2 is powered from 12V you can activate a special mode on the MMU2 (`MMU2_MODE_12V`). This should reduce the noise of the MMU2 but has no effect on the general operation.
 
 ### Filament runout handling
 Here you define the gcode script which will be executed when the so-called FINDA sensor on the MMU2 detects a filament runout.
