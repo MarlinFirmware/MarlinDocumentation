@@ -1,4 +1,7 @@
+_site/
+!_site/sitemap.xml
 build/
+!build/sitemap.xml
 .sass-cache
 .jekyll-metadata
 Gemfile.lock
