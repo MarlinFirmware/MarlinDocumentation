@@ -1,6 +1,6 @@
-_site/
+_site/*
 !_site/sitemap.xml
-build/
+build/*
 !build/sitemap.xml
 .sass-cache
 .jekyll-metadata
