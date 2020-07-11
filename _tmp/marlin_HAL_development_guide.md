@@ -20,20 +20,3 @@ category: [ development ]
 
 
 ### Submitting a HAL
-
-
-### Comunity opinions
-
-_**'Nobody understands it'**_
-
-
-_**'It's a trial by fire'**_
-
-
-_**'Hiring writers is only way to get marlin documented'**_
-
-
-_**'Programmers don't like to write docs, even for money, or tons of coffee'**_
-
-
-_**'Documentation has a nasty habit of becoming obsolete'**_
