@@ -90,7 +90,7 @@ module Jekyll
 
       # File I/O: create sitemap.xml file and write out pretty-printed XML
       filename = @config['filename']
-      file = File.new(File.join(site.dest+"/../", filename), "w")   # 
+      file = File.new(File.join(site.dest+"/../", filename), "w") 
       formatter = REXML::Formatters::Pretty.new(4)
       formatter.compact = true
       formatter.write(sitemap, file)
