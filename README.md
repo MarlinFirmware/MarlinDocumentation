@@ -52,6 +52,9 @@ Try to be neutral, concise, and straightforward. Avoid use of personal pronouns,
 1. Create "Getting Started" guides to ease the Marlin learning curve for new users.
 1. Document all supported GCodes with notes specific to Marlin.
 
+### Work in progress
+There is a temp folder for work in progress files, documents that neeed improvement or are incomplete are there.
+
 ## Local Jekyll Preview
 
 If you'd like to be able to preview your contributions before submitting them, you'll need to install Jekyll on your system. Instructions are given below. As this is a non-trivial process, we recommend reading one of the following tutorials for a quick start with Jekyll:
