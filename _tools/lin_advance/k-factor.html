@@ -71,6 +71,16 @@ category:     [ tools ]
             <td>Layer Height (mm)</td>
           </tr>
           <tr>
+            <td><label for="TOOL_INDEX">Extruder:</label></td>
+            <td><input name="TOOL_INDEX" id="TOOL_INDEX" step="1" value="0" onblur="validateInput()" /></td>
+            <td>Extruder Index (0 to ?)</td>
+          </tr>
+          <tr>
+            <td><label for="FAN_SPEED">Fan Speed:</label></td>
+            <td><input name="FAN_SPEED" id="FAN_SPEED" step="1" value="0" onblur="validateInput()" /></td>
+            <td>Fan Speed (%)</td>
+          </tr>
+          <tr>
             <td colspan="3" class="tdSection"><h4>Print Bed:</h4></td>
           </tr>
           <tr>
@@ -123,6 +133,11 @@ category:     [ tools ]
             <td><label for="RETRACT_SPEED">Retract Speed:</label></td>
             <td><input name="RETRACT_SPEED" id="RETRACT_SPEED" step="any" value="30" onblur="validateInput()" /></td>
             <td>Retract Speed of the extruder</td>
+          </tr>
+          <tr>
+            <td><label for="UNRETRACT_SPEED">Unretract Speed:</label></td>
+            <td><input name="UNRETRACT_SPEED" id="UNRETRACT_SPEED" step="any" value="30" onblur="validateInput()" /></td>
+            <td>Unretract Speed of the extruder</td>
           </tr>
           <tr>
             <td><label for="PRINT_ACCL">Acceleration:</label></td>
