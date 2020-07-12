@@ -1,37 +1,27 @@
 ---
 title:        'Marlin HAL'
-description:  'marlin HAL explained'
+description:  'Overview of the Marlin HAL'
 tag: documentation
 
 author: chepo92
 category: [ development ]
 ---
 
-<!-- ## The Layers of Marlin -->
+## Hardware Abstraction Layer
 
+A Hardware Abstraction Layer allows applications to discover and use the hardware of the host system through a simple, portable and abstract API, regardless of the type of the underlying hardware. ([Pennington H., 2003](https://ometer.com/hardware.html))
 
-## Hardware Abstraction Layer, in simple
+Marlin 1.0 was originally derived from [Sprinter](https://github.com/kliment/Sprinter) and [GRBL](https://github.com/gnea/grbl) which could only run on 8-bit AVR boards. With the proliferation of new boards based on a variety of processor architectures, for Marlin 2.0 we decided to keep the existing code, but add architecture-specific HALs (AVR, SAM, STM, ESP) as a bridge between Marlin's high-level code and the low-level functions that control the microcontroller's pins, ports, timers, etc.
 
-A Hardware Abstraction Layer allows applications to discover and use the hardware of the host system through a simple, portable and abstract API, regardless of the type of the underlying hardware. ([Pennington H., 2003](https://ometer.com/hardware.html) ) 
+This way all the existing high-level Marlin code can work on any platform without needing to be concerned about the details. Retaining AVR compatibility and a single codebase is important to us, because we want to make sure that features and patches get as much testing and attention as possible, and that all platforms always benefit from the latest improvements.
 
-
-Due to the high proliferation of new boards and hardware in the market based in different MCU and CPU, and to keep pace between them and marlin development in a hardware independent way, Marlin 2.0 implmenents an architecture-specific HAL (AVR's, SAM, STM, ESP) - a key difference with Marlin 1.0 that was initialy intended for AVR 8 Bit as a derivation of [Sprinter](https://github.com/kliment/Sprinter) and [GRBL](https://github.com/gnea/grbl) - , which takes care of comunicating, executing, processing and translating operations between marlin code and functions to Microcontroler/CPU hardware, using pins.h definitions and related files.
-
-
-So the HAL it handles IO Port register write/read, fuses, register configurations, timers, flags, comparators, Interrupts, hardware like ADC, SPI, I2C, Serial, maths, WiFi
-
-
-This way all the existing high-level code can be built for 32-bit platforms while still retaining full 8-bit AVR compatibility. Retaining AVR compatibility and a single code-base is important to us, because we want to make sure that features and patches get as much testing and attention as possible, and that all platforms always benefit from the latest improvements.
-
-
-### Current Marlin HAL's
-
+### Current Marlin HALs
 
 #### AVR (8-bit)
 
-board|processor|speed|flash|sram|logic|fpu
-----|---------|-----|-----|----|-----|---
-[Arduino AVR](https://www.arduino.cc/)|ATmega, ATTiny, etc.|16-20MHz|64-256k|2-16k|5V|no
+  board|processor|speed|flash|sram|logic|fpu
+  ----|---------|-----|-----|----|-----|---
+  [Arduino AVR](https://www.arduino.cc/)|ATmega, ATTiny, etc.|16-20MHz|64-256k|2-16k|5V|no
 
 #### DUE
 
