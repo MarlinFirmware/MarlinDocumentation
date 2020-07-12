@@ -7,9 +7,6 @@ author: chepo92
 category: [ development ]
 ---
 
-<!-- ## The Layers of Marlin -->
-
-
 ### Developing a HAL
 
 
