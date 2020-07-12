@@ -53,7 +53,8 @@ Try to be neutral, concise, and straightforward. Avoid use of personal pronouns,
 1. Document all supported GCodes with notes specific to Marlin.
 
 ### Work in progress
-There is a temp folder for work in progress files, documents that neeed improvement or are incomplete are there.
+
+You can use the `_tmp` folder for files in progress, and they will not be included in the site deployment.
 
 ## Local Jekyll Preview
 
