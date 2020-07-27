@@ -153,3 +153,7 @@
 - version: 2.0.5.4
   hash: 5513e67512481024e0d571d84487f7c636996803
   date: 09/07/2020
+
+- version: 2.0.6
+  hash: 92076c65601de5fdfe0facf32dd60c57aab05747
+  date: 27/07/2020
