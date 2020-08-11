@@ -14,7 +14,7 @@ codes: [ G29 ]
 notes:
 - Any arguments left out of [`G29`](/docs/gcode/G029.html) will use the default values set in `Configuration.h`.
 - "[`G28`](/docs/gcode/G028.html) disables bed leveling. Follow with `M420 S1` to turn leveling on, or use `RESTORE_LEVELING_AFTER_G28` to automatically keep leveling on after [`G28`](/docs/gcode/G028.html)."
-- To save time and machine wear, save your mesh to EEPROM with [`M500`](/docs/gcode/M500.html) and in your slicer's "Starting G-Code" replace [`G29`](/docs/gcode/G029.html) with `M420 S1` to enable your last-saved mesh.
+- To save time and machine wear, save your mesh to EEPROM with [`M500`](/docs/gcode/M500.html) and in your slicer's "Starting G-code" replace [`G29`](/docs/gcode/G029.html) with `M420 S1` to enable your last-saved mesh.
 
 parameters:
 -
@@ -204,7 +204,7 @@ Using an electronic probe Marlin can probe the entire bed with a single [`G29`](
   1. Use `G29 Q` to get the current status. If [`G29`](/docs/gcode/G029.html) isn't idle, abort with `G29 A`.
   2. Use `M420 V` to view leveling data. You can send `M420 S1` to use the existing data.
 
-  **To probe the bed using GCode:**
+  **To probe the bed using G-code:**
   1. Use [`G29`](/docs/gcode/G029.html) to move to the first point for Z adjustment.
   2. Adjust Z so a piece of paper can just pass under the nozzle.
   3. Use [`G29`](/docs/gcode/G029.html) to save the Z value and move to the next point.

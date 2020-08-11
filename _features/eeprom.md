@@ -20,7 +20,7 @@ Most 3D printer electronics include a little bit of storage (512K, 3K, or more) 
 
 By default, EEPROM is disabled. This is to avoid the "unintended consequence" of local developers making changes to the values in Source Code and then having the printer boot up using the EEPROM values instead. But note that if you have EEPROM enabled, you can load it with "factory defaults" (coming from the Source Code) using [`M502`](/docs/gcode/M502.html) followed by [`M500`](/docs/gcode/M500.html).
 
-# EEPROM GCodes
+# EEPROM G-codes
 
 [M500](/docs/gcode/M500.html) - store current settings in EEPROM for the next startup or [`M501`](/docs/gcode/M501.html).
 [M501](/docs/gcode/M501.html) - read all parameters from EEPROM, or undo changes.

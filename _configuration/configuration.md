@@ -1239,7 +1239,7 @@ Enable/Disable software endstops from the LCD
 #endif
 ```
 
-With this feature, a mechanical or opto endstop switch is used to check for the presence of filament in the feeder (usually the switch is closed when filament is present). If the filament runs out, Marlin will run the specified GCode script (by default [`M600`](/docs/gcode/M600.html)). RAMPS-based boards use `SERVO3_PIN`. For other boards you may need to define `FIL_RUNOUT_PIN`.
+With this feature, a mechanical or opto endstop switch is used to check for the presence of filament in the feeder (usually the switch is closed when filament is present). If the filament runs out, Marlin will run the specified G-code script (by default [`M600`](/docs/gcode/M600.html)). RAMPS-based boards use `SERVO3_PIN`. For other boards you may need to define `FIL_RUNOUT_PIN`.
 
 ## Bed Leveling
 
@@ -1893,7 +1893,7 @@ Temperature status LEDs that display the hotend and bed temperature. If all hote
 ```cpp
 //#define SF_ARC_FIX
 ```
-Files sliced with SkeinForge contain the wrong arc GCodes when using "Arc Point" as fillet procedure. This option works around that bug, but otherwise should be left off.
+Files sliced with SkeinForge contain the wrong arc G-codes when using "Arc Point" as fillet procedure. This option works around that bug, but otherwise should be left off.
 
 ## Extra Features
 
