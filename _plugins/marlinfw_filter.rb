@@ -8,7 +8,7 @@ module Jekyll
       some = some.gsub("“", '"')
       some = some.gsub("-", ' ')
       some = some.gsub(/\b([a-z]{,2})\b/, '')
-      some = some.gsub(/\b(a(ll|nd|re(n't)?)|but|can('t|not)?|d(id|oes)(n't)?|end|for|ha(d|s|ve)(n't)?|it'?s|odd|use[ds]?|even|from|man?y|more|much|some|this|tha[nt]|th[eo]se|the([mny]|ir|re|y're)?|(was|were)(n't)?|wh(at|en|ere|ich|o|y)|will|won't|other|users?|people|(al)?though|your?|one|two)\b/, '')
+      some = some.gsub(/\b(a(ll|nd|re(n't)?)|but|can('t|not)?|d(id|oes)(n't)?|end|for|ha(d|s|ve)(n't)?|it'?s|odd|use[ds]?|even|from|man?y|more|much|some|this|tha[nt]|th[eo]se|the([mny]|ir|re|y're)?|(was|were)(n't)?|wh(at|en|ere|ich|o|y)|will|won't|other|users|people|(al)?though|your?|one|two)\b/, '')
       some = some.gsub(/!\[[^\]]+\]\([^\)]+\)\s*(\{[^\}]+\})?/, ' ')
       some = some.gsub(/\[([^\]]+)\]\([^\)]+\)\s*(\{[^\}]+\})?/, '\1')
       some = some.gsub(/\\q/, '\1')

@@ -14,7 +14,7 @@
 //
 var jekyllSearch = (function(){
 
-  var q, jsonFeedUrl = '/feeds/feed.json',
+  var q, qmatch, jsonFeedUrl = '/feeds/feed.json',
     $searchForm, $searchInput, $searchButton,
     $resultTemplate, $resultsPlaceholder, $results,
     $foundContainer, $foundTerm, $foundCount,
@@ -22,6 +22,8 @@ var jekyllSearch = (function(){
     loadingClass = 'is--loading',
     self, searchTimer, odd = false,
     section_head = { gcode:"G-code", basics:"Getting Started", config:"Configuration", feat:"Features", devel:"Development" };
+
+  const ignore_pattern = /\b(a(ll|nd|re(n't)?)|but|can('t|not)?|d(id|oes)(n't)?|end|for|ha(d|s|ve)(n't)?|it'?s|odd|use[ds]?|even|from|man?y|more|much|some|this|tha[nt]|th[eo]se|the([mny]|ir|re|y're)?|(was|were)(n't)?|wh(at|en|ere|ich|o|y)|will|won't|other|people|(al)?though|users|your?|one|two)\b/g;
 
   // Return the public interface
   return {
@@ -79,7 +81,7 @@ var jekyllSearch = (function(){
       if (self.getParameterByName('q')) {
         var newq = decodeURIComponent(self.getParameterByName('q'));
         $searchInput.val(newq);
-        self.execSearch(newq);
+        self.execSearch(newq, newq);
       }
 
       //$searchForm.on('submit',function(e){ return false; });
@@ -98,15 +100,27 @@ var jekyllSearch = (function(){
 
       $searchButton.click(function(e) { self.onSearchChanged(e); });
 
+      self.searchFromField();
+    },
+
+    searchFieldString: function() {
+      return $searchInput.val().trim();
+    },
+
+    searchPattern: function(str) {
+      const patt = str.replace(ignore_pattern, '').trim().replace(/\s+/g, '.+');
+      return new RegExp(patt);
     },
 
     searchFromField: function() {
-      self.execSearch($searchInput.val());
+      var newq = self.searchFieldString(),
+          newm = self.searchPattern(newq);
+      self.execSearch(newq, newm);
     },
 
     onSearchChanged: function(e) {
       e.preventDefault();
-      var newq = $searchInput.val().trim();
+      var newq = self.searchFieldString();
       if (newq.length >= 3 || newq.match(/^[gm]\d+/i))
         self.searchFromField();
       return false;
@@ -114,7 +128,7 @@ var jekyllSearch = (function(){
 
     onSearchKeyUp: function() {
       if (searchTimer) { clearTimeout(searchTimer); searchTimer = 0; }
-      var newq = $searchInput.val().trim();
+      var newq = self.searchFieldString();
       if (newq.length >= 3 || newq.match(/^[gm]\d+/i))
         searchTimer = setTimeout(self.searchFromField, 800);
     },
@@ -128,9 +142,10 @@ var jekyllSearch = (function(){
      * Execute search
      * @return null
      */
-    execSearch: function(newq) {
+    execSearch: function(newq, newm) {
       if (newq != '' || allowEmpty) {
-        q = newq.toLowerCase();
+        q = newq;
+        qmatch = newm;
         if (showLoader) self.toggleLoadingClass();
         self.getSearchResults(self.resultsProcessor());
         var loc = window.location;
@@ -165,14 +180,14 @@ var jekyllSearch = (function(){
 
       return function(data) {
 
-        //console.log(data);
+        //console.log("Processor data", data);
 
         var resultsCount = 0, results = '', lastclass = '';
 
         $.each(data, function(index, item) {
           // check if search term is in content or title
-          var comp = (item.title + ' ' + item.content).toLowerCase();
-          if (comp.indexOf(q.toLowerCase()) > -1) {
+          const comp = (item.title + ' ' + item.content).toLowerCase();
+          if (comp.match(qmatch)) {
             if (item.class != lastclass) {
               lastclass = item.class;
               var fancy = section_head[item.class];
