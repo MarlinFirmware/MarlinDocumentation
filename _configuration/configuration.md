@@ -97,7 +97,7 @@ Marlin now checks for a configuration version and won't compile without this set
 #define CUSTOM_STATUS_SCREEN_IMAGE
 
 ```
-- `STRING_CONFIG_H_AUTHOR` is shown in the Marlin startup message, and is meant to identify the author (and optional variant) of the firmware. Use this setting as a way to uniquely identify all your custom configurations. The startup message is printed when connecting to host software, when the board reboots and M115.
+- `STRING_CONFIG_H_AUTHOR` is shown in the Marlin startup message, and is meant to identify the author (and optional variant) of the firmware. Use this setting as a way to uniquely identify all your custom configurations. The startup message is printed whenever the board reboots.
 - `SHOW_BOOTSCREEN` enables the boot screen for LCD controllers.
 - `SHOW_CUSTOM_BOOTSCREEN` shows the bitmap in Marlin/_Bootscreen.h on startup.
 - `CUSTOM_STATUS_SCREEN_IMAGE` shows the bitmap in Marlin/_Statusscreen.h on the status screen.
