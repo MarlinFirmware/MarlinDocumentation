@@ -12,7 +12,7 @@ This page is a work in progress, based on Marlin 1.1.x. Corrections/improvements
 {% endalert %}
 
  - A comprehensive LCD menu system for UBL is coming soon.
- - See also [G26 Mesh Validation](/docs/gcode/G026.html) and [G29 for UBL](/docs/gcode/G029-ubl.html).
+ - See also [G26 Mesh Validation](https://marlinfw.org/docs/gcode/G026.html) and [G29 for UBL](https://marlinfw.org/docs/gcode/G029-ubl.html).
 
 # UBL Startup Guide
 
@@ -32,7 +32,7 @@ UBL is a superset of previous automatic leveling systems, but it does not necess
 
 The printer must be already fully functional and tested, with a well-constrained movement system. The more physically level and straight the bed is, the better your results will be. See `Configuration.h` and `Configuration_adv.h` for all of UBL's settings.
 
-You should be able to successfully print a small object at the center of the bed with bed leveling turned off. It's very important to verify that your `Configuration.h` settings make this possible before trying to bring up UBL. Most problems bringing up the UBL Bed Leveling system occur when this step has been ignored. Please pay particular attention to your `Z_PROBE_OFFSET_FROM_EXTRUDER` value. Usually it's best to home the Z-Axis in the center of the bed. But wherever you decide to home, the Z value reported on the LCD (or with [`M114`](/docs/gcode/M114.html)) should be _very_ close to 0.0 mm when the nozzle is just touching the bed. Failure to calibrate `Z_PROBE_OFFSET_FROM_EXTRUDER` properly will result in dimensional errors in your printed parts. 
+You should be able to successfully print a small object at the center of the bed with bed leveling turned off. It's very important to verify that your `Configuration.h` settings make this possible before trying to bring up UBL. Most problems bringing up the UBL Bed Leveling system occur when this step has been ignored. Please pay particular attention to your `Z_PROBE_OFFSET_FROM_EXTRUDER` value. Usually it's best to home the Z-Axis in the center of the bed. But wherever you decide to home, the Z value reported on the LCD (or with [`M114`](https://marlinfw.org/docs/gcode/M114.html)) should be _very_ close to 0.0 mm when the nozzle is just touching the bed. Failure to calibrate `Z_PROBE_OFFSET_FROM_EXTRUDER` properly will result in dimensional errors in your printed parts. 
 
 The following command sequence can then be used as a quick-start guide to home, level, and then fine-tune the results. These commands are for a 'normal' setup; see the relevant [addenda](#addenda) for concerns and gcode sequences related to setups without an lcd or z-probe.:
 
@@ -121,7 +121,7 @@ UBL configuration options are located in `Configuration.h` and `Configuration_ad
 
 Enable these options:
 - `AUTO_BED_LEVELING_UBL`. Leave the others commented out.
-- `G26_MESH_VALIDATION` to enable the [`G26`](/docs/gcode/G026.html) test print utility.
+- `G26_MESH_VALIDATION` to enable the [`G26`](https://marlinfw.org/docs/gcode/G026.html) test print utility.
 - `EEPROM_SETTINGS`. **EEPROM support is required.**
 - One of the LCD options. ***An LCD with a rotary encoder is strongly recommended.***
 
@@ -205,13 +205,13 @@ Command|Description
 `G29 P3`|Phase 3 – Assign values to points that still need values.
 `G29 P4`|Phase 4 – Fine tune the mesh.
 `G29 Snn`|Store the mesh in EEPROM slot `nn`.
-`G29 Lnn` or `M420 Lnn`|Load a mesh from EEPROM slot `nn`. (Other leveling systems use [`M501`](/docs/gcode/M501.html).)
+`G29 Lnn` or `M420 Lnn`|Load a mesh from EEPROM slot `nn`. (Other leveling systems use [`M501`](https://marlinfw.org/docs/gcode/M501.html).)
 `G29 A` or `M420 S1`|Activate the Z compensation bed leveling.
 `G29 D` or `M420 S0`|Disable the Z compensation bed leveling.
 `G29 T` or `M420 V`|Print a map of the mesh.
-[`G26`](/docs/gcode/G026.html)|Print a pattern to test mesh accuracy.
-[`M421`](/docs/gcode/M421.html)|Touch up mesh points by specifying a value (`Z`) or offset (`Q`).
-[`M502`](/docs/gcode/M502.html), [`M500`](/docs/gcode/M500.html)|Reset settings to defaults, save to EEPROM.
+[`G26`](https://marlinfw.org/docs/gcode/G026.html)|Print a pattern to test mesh accuracy.
+[`M421`](https://marlinfw.org/docs/gcode/M421.html)|Touch up mesh points by specifying a value (`Z`) or offset (`Q`).
+[`M502`](https://marlinfw.org/docs/gcode/M502.html), [`M500`](https://marlinfw.org/docs/gcode/M500.html)|Reset settings to defaults, save to EEPROM.
 
 ### Automated probing
 
@@ -221,7 +221,7 @@ To start the process issue `G29 P1` or, if you want to see the values as they ar
 
 If the EEPROM hasn’t been initialized then it’ll tell you to issue the `M502, M500, M501` sequence. If that happens then you’ll need to re-issue the `G29 P1` command.
 
-If a [`G28`](/docs/gcode/G028.html) hasn’t already been done then the [`G28`](/docs/gcode/G028.html) sequence will automatically be done followed by the` G29 P1` probing.
+If a [`G28`](/docs/gcode/G028.html) hasn’t already been done then the [`G28`](https://marlinfw.org/docs/gcode/G028.html) sequence will automatically be done followed by the` G29 P1` probing.
 
 No further action is required of the user for this phase.
 
@@ -263,9 +263,9 @@ When done, you can use `G29 S` to save the mesh to EEPROM.
 
 UBL includes a third phase, `G29 P3`, which fills in points on the mesh that were not probed automatically or manually. Note that unlike in bilinear leveling, UBL does not automatically extrapolate correction beyond the bounds of the mesh. If a mesh point is not defined no correction will be applied, and a missing point can affect up to 4 mesh cells. 
 
-Issue `G29 P3` (no other parameters) to do a 'smart fill' of missing mesh points. This uses an extrapolation algorithm - which varies between delta and Cartesian systems - to give the unfilled mesh points reasonable initial values. You may need to run this more than once -- each instance of `G29 P3` will fill in one missing line of the grid. This allows fine tuning between `P3` steps when filling the remainder of larger grids. From this point, [`G26`](/docs/gcode/G026.html) and `G29 P4` can be used to iteratively refine the mesh.
+Issue `G29 P3` (no other parameters) to do a 'smart fill' of missing mesh points. This uses an extrapolation algorithm - which varies between delta and Cartesian systems - to give the unfilled mesh points reasonable initial values. You may need to run this more than once -- each instance of `G29 P3` will fill in one missing line of the grid. This allows fine tuning between `P3` steps when filling the remainder of larger grids. From this point, [`G26`](https://marlinfw.org/docs/gcode/G026.html) and `G29 P4` can be used to iteratively refine the mesh.
 
-`G29 P3 Cx.xx` can be used to manually fill a value into a mesh point(s), like [`M421`](/docs/gcode/M421.html), if for some reason that is necessary. `G29 P3 Cx.xx Rn` will fill the nearest n points with the value x.xx; 'nearest' is referenced to the nozzle position, unless X and Y arguments are provided to override the search start point.
+`G29 P3 Cx.xx` can be used to manually fill a value into a mesh point(s), like [`M421`](https://marlinfw.org/docs/gcode/M421.html), if for some reason that is necessary. `G29 P3 Cx.xx Rn` will fill the nearest n points with the value x.xx; 'nearest' is referenced to the nozzle position, unless X and Y arguments are provided to override the search start point.
 
 Again, `G29 S[n]` will save the mesh to EEPROM.
 
@@ -273,7 +273,7 @@ Again, `G29 S[n]` will save the mesh to EEPROM.
 
 Once you have a reasonable looking mesh then it’s time to do a test print.
 
-The easiest way to do this is to use the [`G26`](/docs/gcode/G026.html) command. There are several options for the [`G26`](/docs/gcode/G026.html) command. (See [`G26`](/docs/gcode/G026.html) for full details.)
+The easiest way to do this is to use the [`G26`](https://marlinfw.org/docs/gcode/G026.html) command. There are several options for the [`G26`](https://marlinfw.org/docs/gcode/G026.html) command. (See [`G26`](https://marlinfw.org/docs/gcode/G026.html) for full details.)
 
 `G26 Bxx Hyy F1.75 L0.2 S0.4` will usually get you something reasonable:
 - `Bxx` – bed temperature
@@ -284,11 +284,11 @@ The easiest way to do this is to use the [`G26`](/docs/gcode/G026.html) command.
 
 ### Fine-tuning of the matrix
 
-Look over the results of the [`G26`](/docs/gcode/G026.html) print and note where adjustments are needed.
+Look over the results of the [`G26`](https://marlinfw.org/docs/gcode/G026.html) print and note where adjustments are needed.
 
 To edit a single point move the nozzle close to the point that needs adjustment. Issue a `G29 P4 T`. The head will move to nearest point. Use the encoder wheel to change the value. If `UBL_MESH_EDIT_MOVES_Z` is enabled in `Configuration.h` (the default setting) the nozzle will change height during this process. If it is disabled the nozzle will not move.
 
-The values in the mesh indicate how far the nozzle needs to move along the Z axis to compensate for imperfections in the bed. Positive values mean that the nozzle needs to move **away from** the bed ("up") and negative values mean that the nozzle needs to move **towards** the bed ("down"). Thus, if the [`G26`](/docs/gcode/G026.html) print shows that for a specific mesh point the nozzle is too close to the bed (the lines are "squished" or the nozzle hit the bed when printing the test pattern) the value of the mesh point should be **increased**. If the nozzle is too far away from the bed (lines are too thin or not even sticking to the bed) the value of the mesh point should be **decreased**. This may cause the mesh point value to change from positive to negative or vice versa.
+The values in the mesh indicate how far the nozzle needs to move along the Z axis to compensate for imperfections in the bed. Positive values mean that the nozzle needs to move **away from** the bed ("up") and negative values mean that the nozzle needs to move **towards** the bed ("down"). Thus, if the [`G26`](https://marlinfw.org/docs/gcode/G026.html) print shows that for a specific mesh point the nozzle is too close to the bed (the lines are "squished" or the nozzle hit the bed when printing the test pattern) the value of the mesh point should be **increased**. If the nozzle is too far away from the bed (lines are too thin or not even sticking to the bed) the value of the mesh point should be **decreased**. This may cause the mesh point value to change from positive to negative or vice versa.
 
 For example, suppose that a mesh point has a probed value of -0.022 and the test pattern shows that the nozzle is too close at that point. If an adjustment of +0.050 is desired (moving the nozzle 0.050mm **away from** the bed) the new value for the mesh point would be +0.028.
 
@@ -302,7 +302,7 @@ There are options (`G29 P4 X... Y...`) to make it easier to move to the desired 
 
 It’s probably a good idea to issue a `G29 S` command to save the mesh to EEPROM at this stage.
 
-Repeat the [`G26`](/docs/gcode/G026.html), `G29 P4 T` sequence until you have the desired first layer height quality.
+Repeat the [`G26`](https://marlinfw.org/docs/gcode/G026.html), `G29 P4 T` sequence until you have the desired first layer height quality.
 
 Issue a `G29 S` command periodically to save your mesh.
 
@@ -318,9 +318,9 @@ First, it is **especially important** that you physically level the bed as well 
 
 Possible workarounds are to keep your finger on the reset button/power switch so you can quickly stop the probe process, or being ready to quickly issue [`M112`](/docs/gcode/M112.html) (emergency stop) if **and only if** you have `EMERGENCY_PARSER` enabled in `Configuration_adv.h`.
 
-The same cautions apply to using the [`G26`](/docs/gcode/G026.html) test print command; if something goes wrong you want a way to quickly abort the process before your print head is driven into the bed.
+The same cautions apply to using the [`G26`](https://marlinfw.org/docs/gcode/G026.html) test print command; if something goes wrong you want a way to quickly abort the process before your print head is driven into the bed.
 
-`G29 P2` (manual probe) is not available without a functional LCD, so instead of the sequence above users should skip directly from `G29 P1` (auto-probe) to `G29 P3` (smart fill). Likewise, `G29 P4 R...` cannot be used to interactively edit the mesh, so [`M421`](/docs/gcode/M421.html) must be used instead to manually adjust individual mesh points. With UBL, the `M421 Q` form can be used to offset the specified mesh point, avoiding the need to specify absolute values.
+`G29 P2` (manual probe) is not available without a functional LCD, so instead of the sequence above users should skip directly from `G29 P1` (auto-probe) to `G29 P3` (smart fill). Likewise, `G29 P4 R...` cannot be used to interactively edit the mesh, so [`M421`](https://marlinfw.org/docs/gcode/M421.html) must be used instead to manually adjust individual mesh points. With UBL, the `M421 Q` form can be used to offset the specified mesh point, avoiding the need to specify absolute values.
 
 In summary, initial set-up without an LCD might look like this:
 
@@ -340,7 +340,7 @@ As in the case of no LCD, it is important to have good physical leveling of the 
 
 In this case instead of starting with `G29 P1` to automatically probe the bed, you want to start with `G29 P0` to zero the mesh. From here you can go straight to the cycle of `G26...` to print a test pattern and `G29 P4 R...` to fine-tune mesh points - probably working your way 'down' from the worst area(s) of the validation pattern, and using `G29 S` to save results between iterations. You can also use `G29 P2` to manually probe first, which is recommended.
 
-If you use `G29 P2` to probe manually first, you probably want to *at least* probe the center and four corners of the bed -- possibly some points in between as well. Then you want to use `G29 P3` commands to fill in reasonable initial values for the rest of the mesh before moving on to the [`G26`](/docs/gcode/G026.html) / `G29 P4` cycle. `G29 P3 Rn Cx.xx` will fill in the nearest n grid points (to the nozzle) with the value specified by `Cx.xx`. You will probably have to use the `G29 P3 C...` form initially, rather than trying to let the smart fill algorithm handle lots of undefined points.
+If you use `G29 P2` to probe manually first, you probably want to *at least* probe the center and four corners of the bed -- possibly some points in between as well. Then you want to use `G29 P3` commands to fill in reasonable initial values for the rest of the mesh before moving on to the [`G26`](https://marlinfw.org/docs/gcode/G026.html) / `G29 P4` cycle. `G29 P3 Rn Cx.xx` will fill in the nearest n grid points (to the nozzle) with the value specified by `Cx.xx`. You will probably have to use the `G29 P3 C...` form initially, rather than trying to let the smart fill algorithm handle lots of undefined points.
 
 So in summary, initial set-up of a mesh might look like this:
 
