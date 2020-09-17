@@ -524,6 +524,12 @@ Enable `PID_AUTOTUNE_MENU` to add an option on the LCD to run an Autotune cycle 
 
 #### PID Values <em class="fa fa-sticky-note-o" aria-hidden="true"></em> <em class="fa fa-desktop" aria-hidden="true"></em>
 ```cpp
+  // For more than 1 hotend with different PID values use DEFAULT_Kp_LIST, DEFAULT_Ki_LIST and DEFAULT_Kd_LIST
+  // Eg. Dual hotend with separate PIDs
+  //#define  DEFAULT_Kp_LIST  { 8.73,  21.4 }
+  //#define  DEFAULT_Ki_LIST  { 0.35,  1.57 } 
+  //#define  DEFAULT_Kd_LIST { 54.91, 72.75 }
+
   // Ultimaker
   #define  DEFAULT_Kp 22.2
   #define  DEFAULT_Ki 1.08
