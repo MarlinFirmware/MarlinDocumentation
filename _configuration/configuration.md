@@ -513,10 +513,11 @@ Disable `PIDTEMP` to run extruders in bang-bang mode. Bang-bang is a pure binary
 #if ENABLED(PIDTEMP)
   //#define PID_EDIT_MENU
   //#define PID_AUTOTUNE_MENU
+  //#define PID_PARAMS_PER_HOTEND
+
   //#define PID_DEBUG
   //#define PID_OPENLOOP 1
   //#define SLOW_PWM_HEATERS
-  //#define PID_PARAMS_PER_HOTEND
   #define PID_FUNCTIONAL_RANGE 10
   
 ```
@@ -524,26 +525,17 @@ Enable `PID_AUTOTUNE_MENU` to add an option on the LCD to run an Autotune cycle 
 
 #### PID Values <em class="fa fa-sticky-note-o" aria-hidden="true"></em> <em class="fa fa-desktop" aria-hidden="true"></em>
 ```cpp
-  // For more than 1 hotend with different PID values use DEFAULT_Kp_LIST, DEFAULT_Ki_LIST and DEFAULT_Kd_LIST
-  // Eg. Dual hotend with separate PIDs
-  //#define  DEFAULT_Kp_LIST  { 8.73,  21.4 }
-  //#define  DEFAULT_Ki_LIST  { 0.35,  1.57 } 
-  //#define  DEFAULT_Kd_LIST { 54.91, 72.75 }
-
-  // Ultimaker
-  #define  DEFAULT_Kp 22.2
-  #define  DEFAULT_Ki 1.08
-  #define  DEFAULT_Kd 114
-
-  // MakerGear
-  //#define  DEFAULT_Kp 7.0
-  //#define  DEFAULT_Ki 0.1
-  //#define  DEFAULT_Kd 12
-
-  // Mendel Parts V9 on 12V
-  //#define  DEFAULT_Kp 63.0
-  //#define  DEFAULT_Ki 2.25
-  //#define  DEFAULT_Kd 440
+  #if ENABLED(PID_PARAMS_PER_HOTEND)
+    // Specify between 1 and HOTENDS values per array.
+    // If fewer than EXTRUDER values are provided, the last element will be repeated.
+    #define DEFAULT_Kp_LIST {  22.20,  22.20 }
+    #define DEFAULT_Ki_LIST {   1.08,   1.08 }
+    #define DEFAULT_Kd_LIST { 114.00, 114.00 }
+  #else
+    #define DEFAULT_Kp  22.20
+    #define DEFAULT_Ki   1.08
+    #define DEFAULT_Kd 114.00
+  #endif
 ```
 Sample PID values are included for reference, but they won't apply to most setups. The PID values you get from [`M303`](/docs/gcode/M303.html) may be very different, but will be better for your specific machine.
 
