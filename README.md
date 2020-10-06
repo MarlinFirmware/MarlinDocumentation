@@ -101,7 +101,8 @@ Under Jekyll we use YAML, Markdown, Liquid, and HTML to fill out the site conten
 Now that you have Ruby installed, you'll be able to use Jekyll to preview your changes exactly as they will appear on the final site. Just open a terminal/cmd window, use `chdir` or `cd` to change the working path to your local copy of the repository, and execute the following commands:
 
 ```
-bundle install --path vendor/bundle
+bundle config set path 'vendor/bundle'
+bundle install
 bundle exec jekyll serve --watch --incremental
 ```
 
