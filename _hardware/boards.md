@@ -27,11 +27,11 @@ To build Marlin for a specific board, set the `MOTHERBOARD` option in `Configura
 #define MOTHERBOARD BOARD_RAMPS_EFB
 ```
 
-See the [boards list](#board_list) at the bottom of this page for a complete list of boards supported in the latest release of Marlin. 
+See the [boards list](#board_list) at the bottom of this page for a complete list of boards supported in the latest release of Marlin.
 
 ### FastIO and Pin Mapping
 
-FastIO is a set of macros that allows Marlin to read and write pins quickly, using the same code on all processors. Marlin uses FastIO macros whenever possible because [direct port manipulation](//www.arduino.cc/en/Reference/PortManipulation) is many times faster than the pin functions provided by `Arduino.h`. 
+FastIO is a set of macros that allows Marlin to read and write pins quickly, using the same code on all processors. Marlin uses FastIO macros whenever possible because [direct port manipulation](//www.arduino.cc/en/Reference/PortManipulation) is many times faster than the pin functions provided by `Arduino.h`.
 
 Pin Mapping refers to the relationship between assigned "pin numbers" and the actual hardware ports on the CPU. For example, pins might be mapped starting with 0 to represent **Port A Pin 0**, then numbered sequentially up to **Port L Pin 15**.
 

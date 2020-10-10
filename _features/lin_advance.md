@@ -105,9 +105,9 @@ The transition between `Slow Printing Speed` phases and `Fast Printing Speed` ph
 
 A too high K-Factor essentially reverses the above picture. The extruded amount will overshoot at the start of an acceleration and starve in the deceleration phase.
 <br>
-> The test line, which has a fluid and barely visible or even invisible 
-> transition between the different speed phases represents the best 
-> matching K-Factor. 
+> The test line, which has a fluid and barely visible or even invisible
+> transition between the different speed phases represents the best
+> matching K-Factor.
 
 <br>
 
@@ -118,7 +118,7 @@ A too high K-Factor essentially reverses the above picture. The extruded amount 
  - Some slicers have options to control the nozzle pressure. Common names are: *Pressure advance*, *Coast at end*, *extra restart length after retract*. Disable these options as they will interfere with Linear Advance.
  - Also disable options like *wipe while retract* or *combing*. There should be almost no ooze, once the proper K-Factor is found.
  - Recheck retraction distance, once Linear Advance is calibrated and working well. It may even be as low as 0, since pressure control reduces the material pressure at the end of a line to nearly zero.
- 
+
 ## The following considerations are no longer a problem with LIN_ADVANCE version 1.5
  - This feature adds extra load to the CPU (and possibly more wear on the extruder). Using a communication speed of 115200 baud or lower to prevent communication errors and "weird" movements is recommended.
  - The print host software should be using line numbers and checksums. (This is disabled by default e.g. in Simplify3D)

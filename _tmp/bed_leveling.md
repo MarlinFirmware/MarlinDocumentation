@@ -18,11 +18,11 @@ Marlin provides serveral ways to level your bed for improved print quality and b
  - [Planar Grid](auto_bed_leveling.html): Probe the bed in a grid and (like three-point) apply a matrix to the bed's overall tilt.
  - [Bilinear Grid](auto_bed_leveling.html): Probe the bed in a grid and apply mesh-based compensation. Best for an irregular bed.
  - [Unified Bed Leveling](unified_bed_leveling.html): A superset of the above leveling systems with optimized line-splitting algorithm and allows for fine tuning mesh results.
- 
+
 
 ## Three-Point and Planar Grid (Linear)
 
-Ideal for perfectly flat beds that may be tilted, Three-Point and Planar Grid (linear) bed leveling apply a single plane to compensate for bed tilt. 
+Ideal for perfectly flat beds that may be tilted, Three-Point and Planar Grid (linear) bed leveling apply a single plane to compensate for bed tilt.
 
 Three-Point is the quickest option and saves on memory.
 
