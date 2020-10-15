@@ -57,9 +57,7 @@
                         {% assign docs = (col.docs | sort: 'tag') %}
                         {% for doc in docs %}
                           {% if doc.title %}
-                            <li><a href="{{ doc.url }}">
-                              <strong>{{ doc.codes[0] }}{% if doc.codes[1] %}-{{ doc.codes[1] }}{% endif %}</strong>: {{ doc.title }}
-                            </a></li>
+                            <li><a href="{{ doc.url }}"><strong>{{ doc.codes | codes_desc }}</strong>: {{ doc.title }}</a></li>
                           {% endif %}
                         {% endfor %}
                       {% else %}
