@@ -167,5 +167,9 @@
   date: 28/09/2020
 
 - version: 2.0.7.1
-  hash: e4c23f85d39228cf6386d80927e33af0769e751e
+  hash: 11662bf2b65e0762e7ed7c95522a15477215c013
   date: 10/10/2020
+
+- version: 2.0.7.2
+  hash: 1b4d038efaa3dfc0b06b0e9d32e637fdb821368e
+  date: 15/10/2020
