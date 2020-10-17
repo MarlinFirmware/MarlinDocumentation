@@ -4,7 +4,6 @@ title: Bed Leveling (Linear)
 brief: Probe the bed and enable leveling compensation.
 author: thinkyhead
 
-experimental: false
 requires: AUTO_BED_LEVELING_LINEAR
 group: calibration
 

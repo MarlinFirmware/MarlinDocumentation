@@ -4,7 +4,6 @@ title: Bed Leveling (Bilinear)
 brief: Probe the bed and enable leveling compensation.
 author: thinkyhead
 
-experimental: false
 requires: AUTO_BED_LEVELING_BILINEAR
 group: calibration
 

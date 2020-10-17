@@ -3,7 +3,6 @@ tag: g029m3
 title: Bed Leveling (Unified)
 brief: Probe the bed and enable leveling compensation.
 
-experimental: true
 requires: AUTO_BED_LEVELING_UBL
 group: calibration
 

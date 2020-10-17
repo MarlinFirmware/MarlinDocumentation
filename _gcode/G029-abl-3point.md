@@ -4,7 +4,6 @@ title: Bed Leveling (3-Point)
 brief: Probe the bed and enable leveling compensation.
 author: thinkyhead
 
-experimental: false
 requires: AUTO_BED_LEVELING_3POINT
 group: calibration
 
