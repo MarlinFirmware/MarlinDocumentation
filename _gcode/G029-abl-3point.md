@@ -98,7 +98,7 @@ Auto Bed Leveling now includes a `PROBE_MANUALLY` option for systems lacking a p
 
 To do manual probing simply repeat [`G29`](/docs/gcode/G029.html) until the procedure is complete.
 
-The first [`G29`](/docs/gcode/G029.html) accepts the same parameters , shown in the [Usage](#usage-g029a) section below. The exact parameters available will depend on which style of bed leveling is enabled. (**Note:** UBL parameters are not covered on this page unless they coincide. See the [`G29` for UBL](/docs/gcode/G029-ubl.html) page for a full list of its options.*)
+The first [`G29`](/docs/gcode/G029.html) accepts the same parameters , shown in the [Usage](#usage-g029g1) section below. The exact parameters available will depend on which style of bed leveling is enabled. (**Note:** UBL parameters are not covered on this page unless they coincide. See the [`G29` for UBL](/docs/gcode/G029-ubl.html) page for a full list of its options.*)
 
 {% details Probing Procedure %}
 

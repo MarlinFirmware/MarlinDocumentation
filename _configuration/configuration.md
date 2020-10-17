@@ -1838,7 +1838,7 @@ Option|Description
 `LCM1602`|Generic LCM1602 LCD adapter
 `LCD_I2C_PANELOLU2`|PANELOLU2 LCD with status LEDs, separate encoder and click inputs. The click input can either be directly connected to a pin (if `BTN_ENC` is defined) or read through I2C (with `BTN_ENC` undefined). Requires [LiquidTWI2 library](//github.com/lincomatic/LiquidTWI2) v1.2.3 or later.
 `LCD_I2C_VIKI`|Panucatt VIKI LCD with status LEDs, integrated click & L/R/U/D buttons, separate encoder inputs.
-`SAV_3DLCD`|Shift register panels. [2 wire Non-latching LCD SR](//goo.gl/aJJ4sH). See [LCD configuration](//reprap.org/wiki/SAV_3D_LCD).
+`SAV_3DLCD`|Shift register panels. [2 wire Non-latching LCD SR](//github.com/fmalpartida/New-LiquidCrystal). See [LCD configuration](//reprap.org/wiki/SAV_3D_LCD).
 
 ### I2C Graphical LCDs
 
