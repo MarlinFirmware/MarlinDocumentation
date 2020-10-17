@@ -143,7 +143,7 @@ This step is optional, but we recommend doing the minimal build because configur
        The project folder and its contents should appear in the Project Navigator on the left side.
 
        ![Explorer](/assets/images/basics/install_platformio/explorer.png)
-       
+
 #### Prepare **platformio.ini**
 
 The **Auto Build** option and PlatformIO tasks/build menu will allow you to select your build environment, and it will make the selected environment the default for building until the next program restart. But you can set your environment in **platformio.ini** for a faster build or to make command-line pio build easier.
