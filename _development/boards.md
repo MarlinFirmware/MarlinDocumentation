@@ -10,7 +10,8 @@ category: [ development, hardware ]
 
 ### General information
 
-Marlin supports a wide variety of 3D printers, including all RAMPS variants, and is adaptable to virtually any Arduino/Genuino-based electronics through pin-mapping - associating pins with their functions. With the addition of a hardware abstraction layer, Marlin 1.2 will address an even wider variety of boards.
+Marlin supports a wide variety of 3D printers, including all RAMPS variants, and is adaptable to virtually any Arduino/Genuino-based electronics through pin-mapping - associating pins with their functions. 
+Originally Marlin was designed to run on low-powered 8-bit AVR boards, but starting with Marlin 1.1.9 it has been gaining support for more and more ARM-based boards. The Hardware Abstraction Layer created for Marlin 2.0 provides a consistent set of interfaces, making it much easier to add support for new platforms.
 
 Several files in the Marlin source code provide hardware support, but the files supporting the core electronics are:
 
@@ -19,7 +20,8 @@ File|Description
 ----|-----------
 `boards.h`|Contains the full list of boards supported by Marlin. Set `MOTHERBOARD` to one of the boards listed here.
 `pins.h`|Manages pin definitions, including the appropriate `pins_BOARD.h` file for the specified `MOTHERBOARD`.
-`pins_BOARDNAME.h`|Each of these files contains the pin definitions for a single board. Some pins files form the basis for other pins files, most notably `pins_RAMPS.h`.
+`pins_BOARDNAME.h`|Pins files define which Marlin functions use which board pins. Most pins files stand alone, but some form the basis for related pins files.
+`platformio.ini`|Some boards will need a new [PlatformIO environment](//docs.platformio.org/en/latest/projectconf/) with custom build settings.
 
 To build Marlin for a specific board, set the `MOTHERBOARD` option in `Configuration.h`. This example selects a RAMPS 1.4 board with the 12V power MOSFET connectors arranged in Extruder, Fan, Bed (EFB) order:
 
@@ -52,7 +54,7 @@ Analog inputs are always assigned using an index from 0-15. Marlin doesn't need 
 The easiest way to add a new board to Marlin is to start with one of the existing pins files that has pin mappings similar to the new board, make a copy, and modify the pins that differ. Once your pins file is ready, simply add a new define to the `boards.h` file and a conditional include to `pins.h`. And you're done! [Submit a PR](/docs/development/getting_started_pull_requests.html) to share it with the world.
 
 {% alert warning %}
-If you're developing a custom Arduino-based board, try to use standard RAMPS 1.4 pinouts as much as possible, or choose a pin-mapping similar to another board Marlin supports. The more a new board resembles an existing board, the easier it will be to integrate.
+If you're developing a custom board, try to use common pinouts as much as possible, or choose a pin-mapping similar to another board Marlin supports. The more a new board resembles an existing board, the easier it will be to integrate.
 {% endalert %}
 
 ### Board list

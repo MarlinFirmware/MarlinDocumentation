@@ -14,8 +14,18 @@ The core Marlin team consists of a few maintainers who review contributions, dis
 
 ## Ways to contribute
 
+### Report bugs
+- Use the community links below for help with configuration and troubleshooting.
+- Submit your **Confirmed Bugs** to the [Issue Queue](//github.com/MarlinFirmware/Marlin/issues/new/choose). Search the Issue Queue first!
+
+### Request features
+- Submit your **Feature Requests** to the [Issue Queue](//github.com/MarlinFirmware/Marlin/issues/new/choose). Search the Issue Queue first!
+
 ### Submit code
 If you know C or C++ and can help to patch bugs, fix typos, or just add helpful comments, we welcome your expertise. See "[Contributing Code with Pull Requests](/docs/development/getting_started_pull_requests.html)" to find out how to submit code.
+
+- Submit **Bug Fixes** and **New Features** as Pull Requests to the ([bugfix-2.0.x](//github.com/MarlinFirmware/Marlin/tree/bugfix-2.0.x)) branch.
+- Follow the [Coding Standards](/docs/development/coding_standards.html) to gain points with the maintainers.
 
 ### Do Some Testing
 Marlin posts "nightly" builds that contain the most up-to-date code. While they include patches to the most recent release (yay, fewer bugs!) they can also contain untested code, so your feedback is essential.
@@ -24,9 +34,9 @@ Marlin posts "nightly" builds that contain the most up-to-date code. While they 
 Are you skilled in information design? This website is far from complete, and it's a bit text-heavy. We need more photos, diagrams, and YouTube videos to embed on these pages. A well-chosen image or well-produced video can have more impact than many pages of written documentation. Visit the [MarlinDocumentation Project](//github.com/MarlinFirmware/MarlinDocumentation) for more information.
 
 ### Fund Development
-The current maintainer of Marlin is [Scott Lahteine](//www.thinkyhead.com/donate-to-marlin) aka @thinkyhead. Scott has been writing software for a few decades, with a focus on shareware and open source. He reviews every contribution before it goes into Marlin, maintains documentation, hosts Facebook and Discord groups, and maintains a small 3D printer test lab in Austin, TX.
+The current maintainer of Marlin is [Scott Lahteine](//www.thinkyhead.com/donate-to-marlin) aka @thinkyhead. Scott has been writing software for a few decades, with a focus on shareware and open source. He reviews every contribution before it goes into Marlin, maintains documentation, hosts Facebook and Discord groups, and maintains a little test lab in Austin, TX.
 
-Your donation accelerates development, testing, and advancement of the most ambitious open source multi-platform 3D printing firmware in the world. See "[Donate to Marlin](//www.thinkyhead.com/donate-to-marlin)" for funding options. The best deal for us today is [GitHub Sponsors](//github.com/sponsors/thinkyhead) as they now provide one-to-one donation matching!
+Your donation accelerates development, testing, and advancement of the most ambitious open source multi-platform 3D printing firmware in the world. See "[Donate to Marlin](//www.thinkyhead.com/donate-to-marlin)" for funding options. The newest way to provide support is through [GitHub Sponsors](//github.com/sponsors/thinkyhead).
 
 ### Join the Community
 
@@ -44,7 +54,7 @@ There are now many community resources for users of Marlin. If you're looking fo
 Marlin needs evangelists, enthusiasts, fans, and everyday users to tell everyone just how awesome Marlin is. Users and vendors may be wary of installing Marlin 2.0 on their trusty old and reliable hardware. Let them know that Marlin continues to evolve! And be sure to engage with Marlin's Twitter feed at [@MarlinFirmware](//twitter.com/MarlinFirmware).
 
 ### Nag Your Vendor
-The dark side of open source is that some companies don't honor the terms of our license which requires them to give customers the exact source code for the Marlin Firmware that ships on their machines. We understand that Capitalists want to be protective of their trade secrets, but our license terms are clear, and Marlin is a major foundation of these businesses. If your vendor is misbehaving, send them a polite message to remind them of your rights under the GPL.
+Some companies do a very poor job of deploying Marlin on their hardware. And a dark side of open source is that some vendors fail to honor the terms of our license which requires them to give you the exact Marlin source code for the firmware on your machine. We understand that companies want to be protective of their trade secrets, but our license terms are clear, and the years of work we have put into Marlin is a major foundation of these businesses. If your vendor is misbehaving, send them a polite message to remind them of your rights under the GPL and their obligation as beneficiaries of Open Source software.
 
 # Community Guidelines
 Marlin is hosted on GitHub, so you'll need a free GitHub user account to post issues and take part in development. GitHub provides tools to ban fake and SPAM users, but it's up to each project to maintain general civility by adhering to some basic policies.
