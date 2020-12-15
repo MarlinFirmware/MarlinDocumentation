@@ -125,7 +125,7 @@ TMC_DEBUG                 | Extend the information [`M122`](/docs/gcode/M122.htm
 TMC_ADV                   | You can use this to add your own configuration settings. The requirement is that the command used must be part of the respective TMC stepper library. Remember to add a backslash after each command!
 AUTOMATIC_CURRENT_CONTROL | Replaced by `MONITOR_DRIVER_STATUS`.<br>Marlin will poll the driver twice a second to see if the driver is in an error state. Such an error can be overtemperature pre-warn condition (OTPW) or short to ground or open load. Marlin can react to the temperature warning and automatically reduce the driver current. Short to ground error will disable the driver and Marlin can terminate the print to save time and material.
 
-# GCodes
+# G-codes
 
 Command | Configuration<br>required | Description
 -------:|:-------------------------:|:-----------

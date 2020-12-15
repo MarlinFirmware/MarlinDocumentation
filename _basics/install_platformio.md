@@ -24,7 +24,7 @@ Install PlatformIO as a stand alone CLI or with your choice of environment using
 
 {% alert info %}
 As of this writing, *Atom* can still be used to some extent, but going forward PlatformIO will be focusing its main support on *Visual Studio Code*, so this is the editor we recommend, and it's a very good environment.
-{% endalert %} 
+{% endalert %}
 
 ## Auto Build Marlin
 

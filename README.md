@@ -50,7 +50,7 @@ Try to be neutral, concise, and straightforward. Avoid use of personal pronouns,
 1. Transfer documents from the old Marlin wiki into the new site.
 1. Transfer descriptions of the options in `Configuration.h` and `Configuration_adv.h` to the new system.
 1. Create "Getting Started" guides to ease the Marlin learning curve for new users.
-1. Document all supported GCodes with notes specific to Marlin.
+1. Document all supported G-codes with notes specific to Marlin.
 
 ### Work in progress
 

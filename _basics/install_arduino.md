@@ -56,7 +56,7 @@ That’s it! With Marlin installed you can now enjoy silky smooth printing!
 
 #### Generate 'firmware.bin' file
 
-For platforms require a `firmware.bin` file such as the LPC1768  
+For platforms that require a `firmware.bin` file such as the LPC1768
 
 ![Generate bin file](/assets/images/basics/install_arduino/firmware_bin.png)
 

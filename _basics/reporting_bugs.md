@@ -35,7 +35,7 @@ Include information about:
   - Slicer (if relevant)
   - Printing method (SD or host)
   - `Configuration.h` and `Configuration_adv.h` files (in a ZIP file)
-  
+
 In most browsers, you can attach a file to a GitHub issue by dragging and dropping the file into the comment box. It will automatically be uploaded to GitHub storage.
 
 ### Provides a good summary

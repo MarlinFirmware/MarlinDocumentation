@@ -4,7 +4,6 @@ title: Set dual endstop offsets
 brief: Set dual endstop offsets
 author: ManuelMcLure
 
-experimental: false
 group: calibration
 requires: (X|Y|Z)_DUAL_ENDSTOPS
 

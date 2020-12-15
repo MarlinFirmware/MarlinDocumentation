@@ -3,7 +3,6 @@ tag: g029m3
 title: Bed Leveling (Unified)
 brief: Probe the bed and enable leveling compensation.
 
-experimental: true
 requires: AUTO_BED_LEVELING_UBL
 group: calibration
 
@@ -30,7 +29,7 @@ notes: |
   - UBL gathers the points closest the nozzle unless you specify an (X,Y) coordinate pair.
 
   - Use `G29 P3` to automatically fill in unpopulated mesh points. You can also use an LCD controller with `G29 P2` to move the nozzle to each unpopulated point and manually adjust the height. See the ‘P2’ and ‘P3’ parameters for usage info.
- 
+
   - We know it takes a lot of effort to create good working Mesh data, so UBL stores its mesh data in a separate location where it won't be affected by EEPROM errors or version changes.
 
 parameters:

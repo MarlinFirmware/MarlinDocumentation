@@ -72,7 +72,7 @@ Auto Home              |[`G28`](/docs/gcode/G028.html)|
 Auto Home X            |[`G28 X`](/docs/gcode/G028.html)| `INDIVIDUAL_AXIS_HOMING_MENU`
 Auto Home Y            |[`G28 Y`](/docs/gcode/G028.html)| `INDIVIDUAL_AXIS_HOMING_MENU`
 Auto Home Z            |[`G28 Z`](/docs/gcode/G028.html)| `INDIVIDUAL_AXIS_HOMING_MENU`
-[Bed Leveling >>](#bed-leveling)|[`G29`](/docs/features/auto_bed_leveling.html#no-probe?-no-problem!) guided manual probing| `LCD_BED_LEVELING`
+[Bed Leveling >>](#bed-leveling)|[`G29`](/docs/features/auto_bed_leveling.html#no-probe-no-problem) guided manual probing| `LCD_BED_LEVELING`
 [Unified Bed Leveling >>](#unified-bed-leveling)|[`G29`](/docs/gcode/G029-ubl.html)| `UNIFIED_BED_LEVELING`
 Set Home Offsets       |[`M428`](/docs/gcode/M428.html)| `!DELTA && !NO_WORKSPACE_OFFSETS`
 Disable Steppers       |[`M18`](/docs/gcode/M018.html)|

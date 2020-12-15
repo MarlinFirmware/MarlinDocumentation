@@ -14,6 +14,7 @@ on:
 jobs:
   deploy_site:
     runs-on: ubuntu-latest
+    if: github.repository == 'MarlinFirmware/MarlinDocumentation'
     steps:
       - name: Use Ruby >=2.4.4
         uses: actions/setup-ruby@v1
@@ -25,7 +26,7 @@ jobs:
           ref: deploy
       - name: Deploy Site
         uses: BryanSchuetz/jekyll-deploy-gh-pages@master
-        env: 
+        env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ secrets.GITHUB_REPOSITORY }}
           GITHUB_ACTOR: ${{ secrets.GITHUB_ACTOR }}

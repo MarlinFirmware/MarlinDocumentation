@@ -19,11 +19,7 @@
   {% endfor %}
 {% endif %}
 
-<h2><a href="{{ gcode.url | prepend: site.baseurl }}">
-  {% for code in gcode.codes %}
-    {{ code }}{% if forloop.last != true %}, {% endif %}
-  {% endfor %} - {{ gcode.title }}
-</a></h2>
+<h2><a href="{{ gcode.url | prepend: site.baseurl }}">{{ gcode.codes | codes_desc }} - {{ gcode.title }}</a></h2>
 
 {% if gcode.brief %}
   <p>{{gcode.brief}}</p>

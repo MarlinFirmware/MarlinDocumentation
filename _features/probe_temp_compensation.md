@@ -21,7 +21,7 @@ During the calibration process it's important to keep other parts at a constant 
 
 The calibration process simply does some probing at a lower temperature (_e.g.,_ probe at 30°C and bed constant) and uses that measurement as the base value. After heating up the probe or bed by an incremental value (+5°C) another probe reading is taken and the measured offset is stored in the appropriate table. During [`G29`](/docs/gcode/G029.html) the probe and bed temperature are used to look up and calculate an offset and this offset is added to each Z probe result.
 
-After calibration print, verify sanity, and eventually modify single values (outliers) with [the [`M871`](/docs/gcode/M871.html) command](/docs/gcode/M871.html).
+After calibration print, verify sanity, and eventually modify single values (outliers) with the [`M871`](/docs/gcode/M871.html) command.
 
 ## Bed calibration process
 During bed calibration the probe temperature is held constant (_e.g.,_ 30°C).

@@ -36,6 +36,7 @@ function genGcode() {
       SPEED_FAST = parseInt($('#FAST_SPEED').val()),
       SPEED_MOVE = parseInt($('#MOVE_SPEED').val()),
       SPEED_RETRACT = parseInt($('#RETRACT_SPEED').val()),
+      SPEED_UNRETRACT = parseInt($('#UNRETRACT_SPEED').val()),
       ACCELERATION = parseInt($('#PRINT_ACCL').val()),
       RETRACT_DIST = parseFloat($('#RETRACTION').val()),
       BED_SHAPE = $('#SHAPE_BED').val(),
@@ -43,6 +44,8 @@ function genGcode() {
       BED_Y = parseInt($('#BEDSIZE_Y').val()),
       NULL_CENTER = $('#CENTER_NULL').prop('checked'),
       HEIGHT_LAYER = parseFloat($('#LAYER_HEIGHT').val()),
+      TOOL_INDEX = parseFloat($('#TOOL_INDEX').val()),
+      FAN_SPEED = parseFloat($('#FAN_SPEED').val()),
       EXT_MULT = parseFloat($('#EXTRUSION_MULT').val()),
       VERSION_LIN = $('#LIN_VERSION').val(),
       PATTERN_TYPE = $('#TYPE_PATTERN').val(),
@@ -78,6 +81,7 @@ function genGcode() {
     SPEED_MOVE *= 60;
     SPEED_PRIME *= 60;
     SPEED_RETRACT *= 60;
+    SPEED_UNRETRACT *= 60;
   }
 
   var RANGE_K = K_END - K_START,
@@ -107,6 +111,7 @@ function genGcode() {
     'extMultPrime': EXT_MULT_PRIME,
     'retractDist': RETRACT_DIST,
     'retractSpeed' : SPEED_RETRACT,
+    'unretractSpeed' : SPEED_UNRETRACT,
     'fwRetract' : USE_FWR
   };
 
@@ -134,6 +139,8 @@ function genGcode() {
                   '; Bed Temperature = ' + BED_TEMP + ' °C\n' +
                   '; Retraction Distance = ' + RETRACT_DIST + ' mm\n' +
                   '; Layer Height = ' + HEIGHT_LAYER + ' mm\n' +
+                  '; Extruder = ' + TOOL_INDEX + ' \n' +
+                  '; Fan Speed = ' + FAN_SPEED + ' %\n' +
                   '; Z-axis Offset = ' + Z_OFFSET + ' mm\n' +
                   ';\n' +
                   '; Settings Print Bed:\n' +
@@ -147,6 +154,7 @@ function genGcode() {
                   '; Fast Printing Speed = ' + SPEED_FAST + ' mm/m\n' +
                   '; Movement Speed = ' + SPEED_MOVE + ' mm/m\n' +
                   '; Retract Speed = ' + SPEED_RETRACT + ' mm/m\n' +
+                  '; Unretract Speed = ' + SPEED_UNRETRACT + ' mm/m\n' +
                   '; Printing Acceleration = ' + ACCELERATION + ' mm/s^2\n' +
                   '; Jerk X-axis = ' + (X_JERK !== -1 ? X_JERK + '\n': ' firmware default\n') +
                   '; Jerk Y-axis = ' + (Y_JERK !== -1 ? Y_JERK + '\n': ' firmware default\n') +
@@ -184,6 +192,7 @@ function genGcode() {
                   'G90 ; Absolute XYZ\n' +
                   'M83 ; Relative E\n' +
                   'G28 ; Home all axes\n' +
+                  'T' + TOOL_INDEX + ' ; Switch to tool ' + TOOL_INDEX + '\n' +
                   'G1 Z5 F100 ; Z raise\n' +
                   'M104 S' + NOZZLE_TEMP + ' ; Set nozzle temperature (no wait)\n' +
                   'M190 S' + BED_TEMP + ' ; Set bed temperature (wait)\n' +
@@ -194,7 +203,8 @@ function genGcode() {
                   (Y_JERK !== -1 ? 'M205 Y' + Y_JERK + ' ; Y Jerk\n' : '') +
                   (Z_JERK !== -1 ? 'M205 Z' + Z_JERK + ' ; Z Jerk\n' : '') +
                   (E_JERK !== -1 ? 'M205 E' + E_JERK + ' ; E Jerk\n' : '') +
-                  'G92 E0 ; Reset extruder distance\n';
+                  'G92 E0 ; Reset extruder distance\n' +
+                  'M106 P' + TOOL_INDEX + ' S' + Math.round(FAN_SPEED * 2.55) + '\n';
 
   //move to center and layer Height
   k_script += moveTo(CENTER_X, CENTER_Y, basicSettings) +
@@ -300,7 +310,8 @@ function genGcode() {
   k_script += ';\n' +
               '; FINISH\n' +
               ';\n' +
-              'M400 ; finish moving\n' +
+              'M107 ; Turn off fan\n' +
+              'M400 ; Finish moving\n' +
               'M104 S0 ; Turn off hotend\n' +
               'M140 S0 ; Turn off bed\n' +
               'G1 Z30 X' + (NULL_CENTER ? 0 : BED_X) + ' Y' + (NULL_CENTER ? 0 : BED_Y) + ' F' + SPEED_MOVE + ' ; Move away from the print\n' +
@@ -430,7 +441,7 @@ function doEfeed(dir, basicSettings, type) {
 
   switch (true) {
   case (type === 'STD' && dir === '+'):
-    gcode += 'G1 E' + basicSettings['retractDist'] + ' F' + basicSettings['retractSpeed'] + ' ; un-retract\n';
+    gcode += 'G1 E' + basicSettings['retractDist'] + ' F' + basicSettings['unretractSpeed'] + ' ; un-retract\n';
     break;
   case (type === 'STD' && dir === '-'):
     gcode += 'G1 E-' + basicSettings['retractDist'] + ' F' + basicSettings['retractSpeed'] + ' ; retract\n';
@@ -619,6 +630,8 @@ function setLocalStorage() {
       BED_Y = parseInt($('#BEDSIZE_Y').val()),
       NULL_CENTER = $('#CENTER_NULL').prop('checked'),
       HEIGHT_LAYER = parseFloat($('#LAYER_HEIGHT').val()),
+      TOOL_INDEX = parseFloat($('#TOOL_INDEX').val()),
+      FAN_SPEED = parseFloat($('#FAN_SPEED').val()),
       EXT_MULT = parseFloat($('#EXTRUSION_MULT').val()),
       VERSION_LIN = $('#LIN_VERSION').val(),
       PATTERN_TYPE = $('#TYPE_PATTERN').val(),
@@ -661,6 +674,8 @@ function setLocalStorage() {
     'BED_Y': BED_Y,
     'NULL_CENTER': NULL_CENTER,
     'HEIGHT_LAYER': HEIGHT_LAYER,
+    'TOOL_INDEX' : TOOL_INDEX,
+    'FAN_SPEED' : FAN_SPEED,
     'EXT_MULT': EXT_MULT,
     'VERSION_LIN': VERSION_LIN,
     'PATTERN_TYPE': PATTERN_TYPE,
@@ -818,6 +833,7 @@ function validateInput() {
         NOZ_DIA: $('#NOZ_DIA').val(),
         NOZ_LIN_R: $('#NOZ_LIN_R').val(),
         LAYER_HEIGHT: $('#LAYER_HEIGHT').val(),
+        FAN_SPEED: $('#FAN_SPEED').val(),
         EXTRUSION_MULT: $('#EXTRUSION_MULT').val(),
         PRIME_EXT: $('#PRIME_EXT').val(),
         OFFSET_Z: $('#OFFSET_Z').val(),
@@ -850,7 +866,7 @@ function validateInput() {
 
   // Start clean
   $('#K_START,#K_END,#K_STEP,#SPACE_LINE,#SLOW_LENGTH,#FAST_LENGTH,#FIL_DIA,#NOZ_DIA,#LAYER_HEIGHT,#EXTRUSION_MULT,#PRIME_EXT,#OFFSET_Z,#NOZ_LIN_R,'
-     + '#NOZZLE_TEMP,#BED_TEMP,#MOVE_SPEED,#RETRACT_SPEED,#PRINT_ACCL,#RETRACTION,#PRIME_SPEED,#DWELL_PRIME,#FAST_SPEED,#SLOW_SPEED,#X_JERK,#Y_JERK,#Z_JERK,#E_JERK').each((i,t) => {
+     + '#NOZZLE_TEMP,#BED_TEMP,#MOVE_SPEED,#RETRACT_SPEED,#UNRETRACT_SPEED,#PRINT_ACCL,#RETRACTION,#PRIME_SPEED,#DWELL_PRIME,#FAST_SPEED,#SLOW_SPEED,#X_JERK,#Y_JERK,#Z_JERK,#E_JERK').each((i,t) => {
     t.setCustomValidity('');
     const tid = $(t).attr('id');
     $(`label[for=${tid}]`).removeClass();
@@ -972,6 +988,8 @@ $(window).load(() => {
       $('#BEDSIZE_Y').val(settings['BED_Y']);
       $('#CENTER_NULL').prop('checked', settings['NULL_CENTER']);
       $('#LAYER_HEIGHT').val(settings['HEIGHT_LAYER']);
+      $('#TOOL_INDEX').val(settings['TOOL_INDEX']);
+      $('#FAN_SPEED').val(settings['FAN_SPEED']);
       $('#EXTRUSION_MULT').val(settings['EXT_MULT']);
       $('#LIN_VERSION').val(settings['VERSION_LIN']);
       $('#TYPE_PATTERN').val(settings['PATTERN_TYPE']);

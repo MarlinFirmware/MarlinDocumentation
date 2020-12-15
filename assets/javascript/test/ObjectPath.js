@@ -99,5 +99,5 @@
 	else {
 		window.ObjectPath = ObjectPath;
 	}
-	
+
 }();
