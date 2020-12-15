@@ -82,7 +82,7 @@ Since Marlin 1.1 "Delta Height" is defined as the distance between Z Home Positi
 
 These tips are collected from various reports we have received. See [Trinamic troubleshooting](/docs/hardware/tmc_drivers.html#troubleshooting) for additional guidance.
 
-- Some SilentStepSticks with variable 3-5V logic voltage (VIO) [might get damaged](https://github.com/MarlinFirmware/Marlin/issues/10162#issuecomment-397844847) if only powered over USB.
+- Some SilentStepSticks with variable 3-5V logic voltage (VIO) [might get damaged](//github.com/MarlinFirmware/Marlin/issues/10162#issuecomment-397844847) if only powered over USB.
 - **SPI conflict with the SD card?** Solutions vary.
 - **E Stepper won't move when using Linear Advance with TMC drivers?**
   - "I ended up using the drivers in legacy mode and setting them to SpreadCycle using the OTP (One Time Programmer). Unfortunately trying to set individual drivers to SpreadCycle via UART by enabling HybridThreshhold and setting the threshold to 0 for the respective axes did not work." See [#11825](//github.com/MarlinFirmware/Marlin/issues/11825).

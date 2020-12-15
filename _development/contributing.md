@@ -19,10 +19,10 @@ If you know C or C++ and can help to patch bugs, fix typos, or just add helpful 
 
 #### Submitting Changes
 
-- Submit **Bug Fixes** as Pull Requests to the ([bugfix-2.0.x](https://github.com/MarlinFirmware/Marlin/tree/bugfix-2.0.x)) branch.
-- Submit **New Features** to the ([dev-2.1.x](https://github.com/MarlinFirmware/Marlin/tree/dev-2.1.x)) branch.
-- Follow the [Coding Standards](http://marlinfw.org/docs/development/coding_standards.html) to gain points with the maintainers.
-- Please submit your questions and concerns to the [Issue Queue](https://github.com/MarlinFirmware/Marlin/issues).
+- Submit **Bug Fixes** as Pull Requests to the ([bugfix-2.0.x](//github.com/MarlinFirmware/Marlin/tree/bugfix-2.0.x)) branch.
+- Submit **New Features** to the ([dev-2.1.x](//github.com/MarlinFirmware/Marlin/tree/dev-2.1.x)) branch.
+- Follow the [Coding Standards](/docs/development/coding_standards.html) to gain points with the maintainers.
+- Please submit your questions and concerns to the [Issue Queue](//github.com/MarlinFirmware/Marlin/issues).
 
 ### Do Some Testing
 Marlin posts "nightly" builds that contain the most up-to-date code. While they include patches to the most recent release (yay, fewer bugs!) they can also contain untested code, so your feedback is essential.
