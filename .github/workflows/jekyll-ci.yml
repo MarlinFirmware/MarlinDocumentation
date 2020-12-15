@@ -4,13 +4,15 @@
 
 name: Jekyll site CI
 
-on: [pull_request]
+on:
+  pull_request:
+    branches:
+    - ci-testing
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
+    if: github.repository == 'MarlinFirmware/MarlinDocumentation'
     steps:
     - uses: actions/checkout@v1
     - name: Build the site in the jekyll/builder container

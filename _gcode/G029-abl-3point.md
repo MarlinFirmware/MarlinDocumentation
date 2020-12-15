@@ -4,7 +4,6 @@ title: Bed Leveling (3-Point)
 brief: Probe the bed and enable leveling compensation.
 author: thinkyhead
 
-experimental: false
 requires: AUTO_BED_LEVELING_3POINT
 group: calibration
 
@@ -14,7 +13,7 @@ codes: [ G29 ]
 notes:
 - Any arguments left out of [`G29`](/docs/gcode/G029.html) will use your configured defaults.
 - "By default [`G28`](/docs/gcode/G028.html) disables bed leveling. Follow with `M420 S` to turn leveling on, or use `RESTORE_LEVELING_AFTER_G28` to automatically keep leveling on after [`G28`](/docs/gcode/G028.html)."
-- To save time and machine wear, save your matrix to EEPROM with [`M500`](/docs/gcode/M500.html) and in your slicer's "Starting G-Code" replace [`G29`](/docs/gcode/G029.html) with `M420 S1` to enable your last-saved matrix.
+- To save time and machine wear, save your matrix to EEPROM with [`M500`](/docs/gcode/M500.html) and in your slicer's "Starting G-code" replace [`G29`](/docs/gcode/G029.html) with `M420 S1` to enable your last-saved matrix.
 
 parameters:
 -
@@ -98,7 +97,7 @@ Auto Bed Leveling now includes a `PROBE_MANUALLY` option for systems lacking a p
 
 To do manual probing simply repeat [`G29`](/docs/gcode/G029.html) until the procedure is complete.
 
-The first [`G29`](/docs/gcode/G029.html) accepts the same parameters , shown in the [Usage](#usage-g029a) section below. The exact parameters available will depend on which style of bed leveling is enabled. (**Note:** UBL parameters are not covered on this page unless they coincide. See the [`G29` for UBL](/docs/gcode/G029-ubl.html) page for a full list of its options.*)
+The first [`G29`](/docs/gcode/G029.html) accepts the same parameters , shown in the [Usage](#usage-g029g1) section below. The exact parameters available will depend on which style of bed leveling is enabled. (**Note:** UBL parameters are not covered on this page unless they coincide. See the [`G29` for UBL](/docs/gcode/G029-ubl.html) page for a full list of its options.*)
 
 {% details Probing Procedure %}
 
@@ -106,7 +105,7 @@ The first [`G29`](/docs/gcode/G029.html) accepts the same parameters , shown in 
   1. Use `G29 Q` to get the current status. If [`G29`](/docs/gcode/G029.html) isn't idle, abort with `G29 A`.
   2. Use `M420 V` to view leveling data. You can send `M420 S1` to use the existing data.
 
-  **To probe the bed using GCode:**
+  **To probe the bed using G-code:**
   1. Use [`G29`](/docs/gcode/G029.html) to move to the first point for Z adjustment.
   2. Adjust Z so a piece of paper can just pass under the nozzle.
   3. Use [`G29`](/docs/gcode/G029.html) to save the Z value and move to the next point.

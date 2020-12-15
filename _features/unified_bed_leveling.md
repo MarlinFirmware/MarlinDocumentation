@@ -28,11 +28,11 @@ The main improvements over the previous systems are:
 
 Currently an LCD display with a rotary encoder is recommended. Note that the MKS TFT 2.8 and 3.2 *do not* actually fulfill the LCD requirements. The main documentation below assumes that a conforming LCD and a z-probe are present. See [the no-lcd addendum](#ubl-without-an-lcd) for information on using UBL without a display, and [the no-z-probe addendum](#ubl-without-a-z-probe) to get UBL working without a z-probe installed. Note that operation without an LCD is still work-in-progress, and subject to change.
 
-UBL is a superset of previous automatic leveling systems, but it does not necessarily supersede them in all cases. Its goal is to allow the best features of the previous leveling schemes to be used together and combined, as well as providing a richer set of commands and feedback for the user. However, this functionality comes at a cost of program space. Compared to bilinear leveling, for example, the difference might be 50 kB for UBL vs. 5 kB for bilinear -- and for an equally precise mesh the printed results could be quite similar. With that said, the cost in program space is likely only a concern for more resource constrained parts like the 128k ATMegas.  
+UBL is a superset of previous automatic leveling systems, but it does not necessarily supersede them in all cases. Its goal is to allow the best features of the previous leveling schemes to be used together and combined, as well as providing a richer set of commands and feedback for the user. However, this functionality comes at a cost of program space. Compared to bilinear leveling, for example, the difference might be 50 kB for UBL vs. 5 kB for bilinear -- and for an equally precise mesh the printed results could be quite similar. With that said, the cost in program space is likely only a concern for more resource constrained parts like the 128k ATMegas.
 
 The printer must be already fully functional and tested, with a well-constrained movement system. The more physically level and straight the bed is, the better your results will be. See `Configuration.h` and `Configuration_adv.h` for all of UBL's settings.
 
-You should be able to successfully print a small object at the center of the bed with bed leveling turned off. It's very important to verify that your `Configuration.h` settings make this possible before trying to bring up UBL. Most problems bringing up the UBL Bed Leveling system occur when this step has been ignored. Please pay particular attention to your `Z_PROBE_OFFSET_FROM_EXTRUDER` value. Usually it's best to home the Z-Axis in the center of the bed. But wherever you decide to home, the Z value reported on the LCD (or with [`M114`](/docs/gcode/M114.html)) should be _very_ close to 0.0 mm when the nozzle is just touching the bed. Failure to calibrate `Z_PROBE_OFFSET_FROM_EXTRUDER` properly will result in dimensional errors in your printed parts. 
+You should be able to successfully print a small object at the center of the bed with bed leveling turned off. It's very important to verify that your `Configuration.h` settings make this possible before trying to bring up UBL. Most problems bringing up the UBL Bed Leveling system occur when this step has been ignored. Please pay particular attention to your `Z_PROBE_OFFSET_FROM_EXTRUDER` value. Usually it's best to home the Z-Axis in the center of the bed. But wherever you decide to home, the Z value reported on the LCD (or with [`M114`](/docs/gcode/M114.html)) should be _very_ close to 0.0 mm when the nozzle is just touching the bed. Failure to calibrate `Z_PROBE_OFFSET_FROM_EXTRUDER` properly will result in dimensional errors in your printed parts.
 
 The following command sequence can then be used as a quick-start guide to home, level, and then fine-tune the results. These commands are for a 'normal' setup; see the relevant [addenda](#addenda) for concerns and gcode sequences related to setups without an lcd or z-probe.:
 
@@ -42,7 +42,7 @@ The following command sequence can then be used as a quick-start guide to home, 
 ;------------------------------------------
 M502            ; Reset settings to configuration defaults...
 M500            ; ...and Save to EEPROM. Use this on a new install.
-M501            ; Read back in the saved EEPROM.  
+M501            ; Read back in the saved EEPROM.
 
 M190 S65        ; Not required, but having the printer at temperature helps accuracy
 M104 S210       ; Not required, but having the printer at temperature helps accuracy
@@ -60,7 +60,7 @@ M500            ; Save current setup. WARNING: UBL will be active at power up, b
 ;---------------------------------------------
 ;--- Fine Tuning of the mesh happens below ---
 ;---------------------------------------------
-G26 C P5.0 F3.0 ; Produce mesh validation pattern with primed nozzle (5mm) and filament diameter 3mm 
+G26 C P5.0 F3.0 ; Produce mesh validation pattern with primed nozzle (5mm) and filament diameter 3mm
                 ; PLA temperatures are assumed unless you specify, e.g., B 105 H 225 for ABS Plastic
 G29 P4 T        ; Move nozzle to 'bad' areas and fine tune the values if needed
                 ; Repeat G26 and G29 P4 T  commands as needed.
@@ -166,7 +166,7 @@ The automated mesh boundary settings assume that the printable area is centered 
 #define MESH_MAX_Y (Y_BED_SIZE - (UBL_MESH_INSET))
 ```
 
-For delta printers the situation is similar. It is necessary to have grid points defined that can be filled covering the entirety of `DELTA_PRINTABLE_RADIUS`, but there should also be a 'border' of valid mesh points that lie just outside the printable radius. This ensures that every grid cell within the printable radius will have all four of its corners defined. 
+For delta printers the situation is similar. It is necessary to have grid points defined that can be filled covering the entirety of `DELTA_PRINTABLE_RADIUS`, but there should also be a 'border' of valid mesh points that lie just outside the printable radius. This ensures that every grid cell within the printable radius will have all four of its corners defined.
 
 So however bed size and printable radius are defined, make sure that your mesh grid is defined so that a full circle of 'extra' mesh points lie outside of the printable radius.
 
@@ -261,7 +261,7 @@ When done, you can use `G29 S` to save the mesh to EEPROM.
 
 ### Filling in the mesh
 
-UBL includes a third phase, `G29 P3`, which fills in points on the mesh that were not probed automatically or manually. Note that unlike in bilinear leveling, UBL does not automatically extrapolate correction beyond the bounds of the mesh. If a mesh point is not defined no correction will be applied, and a missing point can affect up to 4 mesh cells. 
+UBL includes a third phase, `G29 P3`, which fills in points on the mesh that were not probed automatically or manually. Note that unlike in bilinear leveling, UBL does not automatically extrapolate correction beyond the bounds of the mesh. If a mesh point is not defined no correction will be applied, and a missing point can affect up to 4 mesh cells.
 
 Issue `G29 P3` (no other parameters) to do a 'smart fill' of missing mesh points. This uses an extrapolation algorithm - which varies between delta and Cartesian systems - to give the unfilled mesh points reasonable initial values. You may need to run this more than once -- each instance of `G29 P3` will fill in one missing line of the grid. This allows fine tuning between `P3` steps when filling the remainder of larger grids. From this point, [`G26`](/docs/gcode/G026.html) and `G29 P4` can be used to iteratively refine the mesh.
 
@@ -353,7 +353,7 @@ G29 P3...   ; Fill in missing points
 G26         ; Jump into validation print / edit process
 G29 P4 R... ; Refine mesh points
 G29 S1      ; Save to slot 1, return to G26 for further refinement
-``` 
+```
 
 ### Bilinear computation
 

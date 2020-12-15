@@ -51,7 +51,7 @@
   //#endif
 
   STATUS_COMBINE_HEATERS
-  All heaters are in a single image, 
+  All heaters are in a single image,
 
 */
 

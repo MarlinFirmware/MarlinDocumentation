@@ -18,11 +18,7 @@ This document has been marked `needs-review`. The following information may be o
     {% endif %}
   </p>
 
-  <h1>
-    {% for code in gcode.codes %}
-      {{ code }}{% if forloop.last != true %}, {% endif %}
-    {% endfor %} - {{ gcode.title }}
-  </h1>
+  <h1>{{ gcode.codes | codes_desc }} - {{ gcode.title }}</h1>
 
   {% if gcode.experimental %}
     <span class="label label-warning"><span data-toggle="tooltip" data-placement="bottom" title="Experimental feature"><i class="fa fa-flask" aria-hidden="true"></i></span></span>
@@ -252,7 +248,7 @@ This document has been marked `needs-review`. The following information may be o
           {{ line | markdownify }}
         {% endfor %}
       {% endif %}
-      {% highlight gcode %}{% for line in example.code %}{{ line }} 
+      {% highlight gcode %}{% for line in example.code %}{{ line }}
 {% endfor %}{% endhighlight %}
       {% if example.post %}
         <div class="post">

@@ -122,7 +122,6 @@ Use `firstpush` after `mfnew` or whenever you want establish the current branch 
 
 - Fetch `upstream` to make sure you have the latest code.
 - Create a new branch with the given name as a copy of the Dev Branch.
-- If the name is 
 
 Note that the new branch is not sync'ed to your fork. Run `firstpush` if you want to create the remote copy.
 

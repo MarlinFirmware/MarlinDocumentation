@@ -24,7 +24,7 @@
         <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="navbar-tools">Tools <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="{{ '/tools/u8glib/converter.html' }}">Bitmap Converter</a></li>      
+            <li><a href="{{ '/tools/u8glib/converter.html' }}">Bitmap Converter</a></li>
             <li><a href="{{ '/tools/lin_advance/k-factor.html' }}">K-Factor Calibration Pattern</a></li>
             <li class="divider"></li>
             <li><a href="//github.com/MarlinFirmware/Marlin/issues">Bugtracker</a></li>
@@ -57,9 +57,7 @@
                         {% assign docs = (col.docs | sort: 'tag') %}
                         {% for doc in docs %}
                           {% if doc.title %}
-                            <li><a href="{{ doc.url }}">
-                              <strong>{{ doc.codes[0] }}{% if doc.codes[1] %}-{{ doc.codes[1] }}{% endif %}</strong>: {{ doc.title }}
-                            </a></li>
+                            <li><a href="{{ doc.url }}"><strong>{{ doc.codes | codes_desc }}</strong>: {{ doc.title }}</a></li>
                           {% endif %}
                         {% endfor %}
                       {% else %}

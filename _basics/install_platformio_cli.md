@@ -36,9 +36,9 @@ The PlatformIO environment needed for a motherboard is in the comments for the b
   Search the **pins.h** file for **RAMPS_14_EFB** until you come to the following:
 
   ```cpp
-  #elif MB(RAMPS_14_EEB)   
+  #elif MB(RAMPS_14_EEB)
      #include "pins_RAMPS.h"     // ATmega1280, ATmega2560                     env:megaatmega1280 env:megaatmega2560'
-  ```   
+  ```
 
   The first part of the comment lists the CPU(s) used in the board.
 
@@ -57,12 +57,12 @@ The PlatformIO environment needed for a motherboard is in the comments for the b
     | **FUNCTION**     | **COMMAND**                                             |
     |:-----------------|:--------------------------------------------------------|
     | **PIO Build**|	   	platformio run -e  target_env
-    | **PIO Clean**|	   	platformio run --target clean -e  target_env
-    | **PIO Upload**|		  platformio run --target upload -e  target_env
-    | **PIO Traceback**|	platformio run --target upload -e  target_env
-    | **PIO Program**|		platformio run --target program -e  target_env
+    | **PIO Clean**|	   	platformio run -\-target clean -e  target_env
+    | **PIO Upload**|		  platformio run -\-target upload -e  target_env
+    | **PIO Traceback**|	platformio run -\-target upload -e  target_env
+    | **PIO Program**|		platformio run -\-target program -e  target_env
     | **PIO Test**|			  platformio test upload -e  target_env
-    | **PIO Remote**|		  platformio remote run --target upload -e  target_env
+    | **PIO Remote**|		  platformio remote run -\-target upload -e  target_env
     | **PIO Debug**|		  platformio debug -e  target_env
 
 ## Run Auto Build from the command line
@@ -71,7 +71,7 @@ The **Get the correct environment for the selected board** step is not needed.  
 
 1. Open a terminal/shell window.
 
-2. Set the current working directory (CWD) to the folder that has the **Marlin** directory and the **platformio.ini** file in it.  
+2. Set the current working directory (CWD) to the folder that has the **Marlin** directory and the **platformio.ini** file in it.
 
 3. Issue one of these commands
 

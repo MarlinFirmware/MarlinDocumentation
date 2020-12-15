@@ -4,7 +4,6 @@ title: Bed Leveling (Manual)
 brief: Measure Z heights in a grid, enable leveling compensation
 author: thinkyhead
 
-experimental: false
 requires: MESH_BED_LEVELING
 group: calibration
 

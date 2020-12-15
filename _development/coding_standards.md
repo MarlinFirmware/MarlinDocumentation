@@ -152,8 +152,9 @@ Going forward, Marlin does not need to be backward-compatible with older (pre-20
 ## Memory Usage
 
  - Dynamic allocation (`malloc()`, `free()`, `new`, `delete`) is ***verboten***!
- - Avoid unconstrained recursion so the stack won't explode.
- - Avoid using globals and `static` locals because SRAM is a precious resource.
+   There may be some flexibility for certain 32-bit features.
+ - Avoid unconstrained recursion (e.g., calling `idle()` from `idle()`) so the stack won't explode.
+ - Avoid using globals and `static` locals because SRAM is a precious resource on many boards.
  - Use `PSTR` and `PROGMEM` macros to keep strings in Program Memory.
 
 ## Minimize Repetition
@@ -175,6 +176,10 @@ const char blue =
     '0'
   #endif
 ;
+```
+...or, better yet, use this...
+```cpp
+const char blue = TERN(FEATURE_ONE, '1', '0');
 ```
 
 ## Avoid Expensive Code
@@ -201,8 +206,8 @@ const char blue =
 
  - Use `#define` instead of `const` for configurable values
  - Don't use `#if` / `#endif` for commenting-out unused, old or broken code. We have a git repository! If it's obsolete, delete it.
- - Use `#if ENABLED(FEATURE_NAME)` / `#endif` to compile enabled features. (Using these macros allows features to be set externally.)
- - Use `#if DISABLED(FEATURE_NAME)` / `#endif` to compile disabled features. (Using these macros allows features to be set externally.)
+ - Use `#if ENABLED(FEATURE_NAME)` / `#endif` to compile code for an enabled feature. (Using these macros allows features to be set externally.)
+ - Use `#if DISABLED(FEATURE_NAME)` / `#endif` to compile code for a disabled feature. See more macros below.
  - Use `#define` macros to avoid repeating boilerplate code.<br />Consider both readability and maintainability.
  - Label `#endif` with the opening `#if` condition(s) if the block is over ~15 lines. Make the label compact. For example, `#endif // SDSUPPORT || ULTRALCD`.
 
@@ -223,7 +228,14 @@ Marlin provides several shorthand macros in the `macros.h` file. Get to know the
 {:.pretty-list.headless}
 Macro|Description
 ----|-----------
-`ENABLED(OPTION)`/`DISABLED(OPTION)`| Test whether an option is on/off. (Precompiler only.) These macros are required so that `make` can set options.
+`ENABLED(OPTION)`/`DISABLED(OPTION)`| Test whether an option is on/off. These macros are required so that `make` can set options.
+`EITHER(OPT1, OPT2)`| True if either of the listed options is enabled.
+`BOTH(OPT1, OPT2)`| True if both of the listed options is enabled.
+`ANY(...)`| True if any of the listed options is enabled.
+`MANY(...)`| True only if more than one of the listed options is enabled.
+`ALL(...)`| True only if all of the listed options are enabled.
+`NONE(...)`| True only if none of the listed options is enabled.
+`COUNT_ENABLED(OPT1, OPT2, ...)`| Count the number of options in the list that are enabled.
 `COUNT(array)`| Count the number of items in an array in-place. e.g., `for (i = 0; i < COUNT(my_arr); i++)`…
 `WITHIN(var,low,high)`| Check that a variable is within a given range, inclusive.
 `NUMERIC(c)`| True if a character is numeric: `0123456789`
@@ -231,15 +243,37 @@ Macro|Description
 `NUMERIC_SIGNED(c)`| True if a character is signed numeric: `0123456789+-`
 `DECIMAL_SIGNED(c)`| True if a character is signed decimal: `0123456789+-.`
 `NOLESS(var,min)`/`NOMORE(var,max)`| Constrain a variable to a minimum or maximum value.
-`FORCE_INLINE`| Force a function or method to be compiled inline (almost like a macro).
+`FORCE_INLINE`| Force a function or method to be compiled inline.
 `STRINGIFY(DEFINE)`| Resolve a define to a quoted string. (If undefined, the name of the define.)
 `ARRAY_N(N,values)`| Expand into a prepopulated array of size N (based on an option like `EXTRUDERS`).
-`PIN_EXISTS(NAME)`| True if the pin is defined. Precompiler only. (Takes the name minus `_PIN`.)
+`PIN_EXISTS(NAME)`| True if the pin is defined. **Precompiler only.** (Takes a pin name minus `_PIN`.)
+`PINS_EXISTS(...)`| True if all the listed pins are defined. **Precompiler only.** (Takes pin names minus `_PIN`.)
+`ANY_PIN(...)`| True if any of the listed pins is defined. **Precompiler only.** (Takes pin names minus `_PIN`.)
 `NEAR_ZERO(V)`/`UNEAR_ZERO(V)`/`NEAR(V1,V2)`| Check whether a float value is very near zero or another value.
 `RECIPROCAL(N)`| The reciprocal of a value, except return 0.0 (not infinity) for 0.0.
 `RADIANS(d)`/`DEGREES(r)`| Convert degrees to radians and back again.
 `FIXFLOAT(N)`| Add a tiny value to a float to compensate for rounding errors.
 `NOOP`| A do-nothing macro to use for empty macro functions.
+
+## Ternary Macros
+
+Since Marlin 2.0 all the macros above except the ones marked "**Precompiler only**" can be used anywhere in code where a value would be used. This is a really handy capability and allows the code to be a lot more concise. The `ENABLED` and related macros simply emit an integer 0 or 1. A more interesting macro is `TERN` and its relatives `TERN0`, `TERN1`, `TERN_`, `IF_ENABLED`, and `IF_DISABLED`.
+
+Macro|Description
+----|-----------
+`TERN(OPTION, T, F)`| If `OPTION` is enabled emit T otherwise emit F.
+`TERN0(OPTION, T)`| If `OPTION` is enabled emit T otherwise emit 0 (`false`).
+`TERN1(OPTION, T)`| If `OPTION` is enabled emit T otherwise emit 1 (`true`).
+`TERN_(OPTION, T)`| If `OPTION` is enabled emit T otherwise emit nothing.
+`IF_ENABLED(OPTION, T)`| Alias for `TERN_`.
+`IF_DISABLED(OPTION, F)`| If `OPTION` is disabled emit F otherwise emit nothing.
+
+Here are some ternary macro examples:
+```cpp
+millis_t ms = millis() + TERN(USE_LONG_TIMEOUT, 200, 100); // A longer timeout
+bool is_ready = TERN1(HAS_READY_STATE, get_ready_state()); // Get state, if any. Otherwise assume ready.
+TERN_(EEPROM_SETTINGS, settings.read()); // Read settings (or not)
+```
 
 ## Time Comparison
 
