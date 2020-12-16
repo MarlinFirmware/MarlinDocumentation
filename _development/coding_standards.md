@@ -271,7 +271,7 @@ Macro|Description
 Here are some ternary macro examples:
 ```cpp
 millis_t ms = millis() + TERN(USE_LONG_TIMEOUT, 200, 100); // A longer timeout
-bool is_ready = TERN1(HAS_READY_STATE, get_ready_state()); // Get state, if any. Otherwise assume ready.
+bool is_ready = TERN1(HAS_READY_STATE, get_ready_state()); // Get state (or assume true)
 TERN_(EEPROM_SETTINGS, settings.read()); // Read settings (or not)
 ```
 
@@ -370,7 +370,7 @@ Since Marlin needs to runs on the most modest hardware, much care has been taken
   #define OVERRIDDEN_SETTING 1234
 #endif
 ```
-**In Marlin_main.cpp, for example:**
+**In MarlinCore.cpp, for example:**
 ```cpp
 // My Feature, when Your Feature is disabled
 #if ENABLED(MYFEATURE) && DISABLED(YOURFEATURE)
