@@ -130,7 +130,7 @@ AUTOMATIC_CURRENT_CONTROL | Replaced by `MONITOR_DRIVER_STATUS`.<br>Marlin will 
 Command | Configuration<br>required | Description
 -------:|:-------------------------:|:-----------
 [M122]  | none                      | Test driver communication line and get debugging information of your drivers. `TMC_DEBUG` adds more reported information.
-[M569]  | `TMC2130` or `TMC2208`    | Toggle between stealthChop and spreadCycle on supporting drivers.
+[M569]  | `TMC2130`,`TMC2208` or `TMC2209`| Toggle between stealthChop and spreadCycle on supporting drivers.
 [M906]  | none                      | Set the driver current using axis letters X/Y/Z/E.
 [M911]  | `MONITOR_DRIVER_STATUS`   | Report TMC prewarn triggered flags held by the library.
 [M912]  | `MONITOR_DRIVER_STATUS`   | Clear TMC prewarn triggered flags.
