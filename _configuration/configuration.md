@@ -996,7 +996,7 @@ These offsets specify the distance from the tip of the nozzle to the probe — o
 #define Y_PROBE_OFFSET_FROM_EXTRUDER 10  // Y offset: -front +behind [the nozzle]
 #define Z_PROBE_OFFSET_FROM_EXTRUDER 0   // Z offset: -below +above  [the nozzle]
 
-#define MIN_PROBE_EDGE 10
+#define PROBING_MARGIN 10
 ```
 Certain types of probe need to stay away from the edge
 
@@ -1327,10 +1327,10 @@ When using any of the mesh-based leveling systems (1.1.7) you can activate `G26_
 These options specify the default number of points to probe in each dimension during [`G29`](/docs/gcode/G029.html).
 
 ```cpp
-  //#define MIN_PROBE_EDGE_LEFT MIN_PROBE_EDGE
-  //#define MIN_PROBE_EDGE_RIGHT MIN_PROBE_EDGE
-  //#define MIN_PROBE_EDGE_FRONT MIN_PROBE_EDGE
-  //#define MIN_PROBE_EDGE_BACK MIN_PROBE_EDGE
+  //#define MIN_PROBE_EDGE_LEFT PROBING_MARGIN
+  //#define MIN_PROBE_EDGE_RIGHT PROBING_MARGIN
+  //#define MIN_PROBE_EDGE_FRONT PROBING_MARGIN
+  //#define MIN_PROBE_EDGE_BACK PROBING_MARGIN
 ```
 These settings specify the boundaries for probing with [`G29`](/docs/gcode/G029-mbl.html). This will most likely be a sub-section of the bed because probes are not usually able to reach every point that the nozzle can. Take account of the probe's XY offsets when setting these boundaries.
 
@@ -3139,10 +3139,10 @@ These options specify the three points that will be probed during [`G29`](/docs/
 ### Custom Mininum Probe Edge
 ```cpp
 #if PROBE_SELECTED && !IS_KINEMATIC
-  //#define MIN_PROBE_EDGE_LEFT MIN_PROBE_EDGE
-  //#define MIN_PROBE_EDGE_RIGHT MIN_PROBE_EDGE
-  //#define MIN_PROBE_EDGE_FRONT MIN_PROBE_EDGE
-  //#define MIN_PROBE_EDGE_BACK MIN_PROBE_EDGE
+  //#define MIN_PROBE_EDGE_LEFT PROBING_MARGIN
+  //#define MIN_PROBE_EDGE_RIGHT PROBING_MARGIN
+  //#define MIN_PROBE_EDGE_FRONT PROBING_MARGIN
+  //#define MIN_PROBE_EDGE_BACK PROBING_MARGIN
 #endif
 ```
 See `configuration_adv.h` for more details.
