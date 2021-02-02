@@ -280,7 +280,7 @@ parameters:
     tag: W
     optional: true
     description: |
-      **_What?_**: Display valuable UBL data.
+      **_What?_**: Display valuable UBL data. (Requires `UBL_DEVEL_DEBUGGING`)
     values:
       -
         type: bool
