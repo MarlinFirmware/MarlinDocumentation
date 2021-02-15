@@ -1,30 +1,16 @@
 source 'https://rubygems.org'
 
-gem 'github-pages', '>= 105'
-gem 'html-proofer', '>= 3.0.2'
-gem 'jekyll', '>= 3.8.5'
-gem 'jekyll-avatar', '>= 0.4.2'
+gem 'github-pages', '>= 207'
+gem 'html-proofer', '>= 3.18.5'
+gem 'jekyll', '= 3.9.0'
+gem 'jekyll-avatar', '>= 0.7.0'
+gem 'bootstrap', '>= 4.1.3'
 gem 'jekyll-bootstrap-sass', '>= 0.1.0'
-gem 'jekyll-mentions', '>= 1.2.0'
+gem 'jekyll-mentions', '>= 1.5.1'
 gem 'jekyll-press', '>= 0.2.1'
-gem 'jekyll-seo-tag', '>= 2.1.0'
-gem 'jekyll-tidy'
-gem 'kramdown', '>= 1.17'
-gem 'naturally', '>= 2.1.0'
+gem 'jekyll-seo-tag', '>= 2.6.1'
+gem 'jekyll-tidy', '>= 0.2.2'
+gem 'kramdown', '>= 2.3.0'
+gem 'naturally', '>= 2.2.1'
 gem 'wdm', '>= 0.1.0' if Gem.win_platform?
-gem 'tzinfo-data'
-
-# If you have issues installing rdiscount make sure you're using one
-# of the following Ruby versions:
-#
-#   - Windows: 2.2.2
-#   - Linux: 2.3.0
-#
-# On Windows you can download the required files from:
-#   - 32 bit
-#     - http://dl.bintray.com/oneclick/rubyinstaller/rubyinstaller-2.2.2.exe
-#     - http://dl.bintray.com/oneclick/rubyinstaller/DevKit-mingw64-32-4.7.2-20130224-1151-sfx.exe
-#
-#   - 64 bit
-#     - http://dl.bintray.com/oneclick/rubyinstaller/rubyinstaller-2.2.2-x64.exe
-#     - http://dl.bintray.com/oneclick/rubyinstaller/DevKit-mingw64-64-4.7.2-20130224-1432-sfx.exe
+gem 'tzinfo-data', '>= 1.2020.1'
