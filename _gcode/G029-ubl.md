@@ -305,40 +305,48 @@ parameters:
 
 examples:
   -
-    pre: This is a minimal 'quick-start' sequence for set-up and initial probing of a UBL mesh on a machine that includes a display and z-probe
+    pre: This is a minimal sequence for set-up and initial probing of a UBL mesh on a machine that includes a display and z-probe
     code: |
-      M502          ; Reset settings to configuration defaults...
-      M500          ; ...and Save to EEPROM. Use this on a new install.
-      M501          ; Read back in the saved EEPROM.
-
-      M190 S65      ; Not required, but having the printer at temperature helps accuracy
-      M104 S210     ; Not required, but having the printer at temperature helps accuracy
-
       G28           ; Home XYZ.
       G29 P1        ; Do automated probing of the bed.
-      G29 P2 B T    ; Manual probing of locations. USUALLY NOT NEEDED!
-      G29 P3 T      ; Repeat until all mesh points are filled in.
-
-      G29 T         ; View the Z compensation values.
-      G29 S1        ; Save UBL mesh points to EEPROM.
+      G29 P3        ; Smart Fill Repeat until all mesh points are filled in, Used to fill unreachable points.
+      G29 S0        ; Save UBL mesh points to slot 0 (EEPROM).
       G29 F 10.0    ; Set Fade Height for correction at 10.0 mm.
       G29 A         ; Activate the UBL System.
       M500          ; Save current setup. WARNING - UBL will be active at power up, before any G28.
+  -    
+  pre: This is a minimal sequence for set-up and initial probing of a UBL mesh on a machine that includes a display and no z-probe
+    code: |
+      G28           ; Home XYZ.
+      G29 P4 R255   ; Do manual probing of the bed.
+      G29 S0        ; Save UBL mesh points to slot 0 (EEPROM).
+      G29 F 10.0    ; Set Fade Height for correction at 10.0 mm.
+      G29 A         ; Activate the UBL System.
+      M500          ; Save current setup. WARNING - UBL will be active at power up, before any G28.   
+  -
+   pre: Optional settings
+     code: |
+       M502          ; Load configuration defaults. 
+       M500          ; Save configuration to EEPROM. M502 followed by M500 is suggested post flash to wipe the eeprom of invalid old settings.
+
+       M190 S65      ; Heat Bed to 65C. Not required, but having the printer at temperature may help accuracy.
+       M104 S210     ; Heat Hotend to 210C. Not required, but having the printer at temperature may help accuracy.
+
+       G29 T         ; View the Z compensation values.
   -
     pre: Use [`G26`](/docs/gcode/G026.html) and [`G29`](/docs/gcode/G029.html) commands to fine-tune a measured mesh
     code: |
-      G26 C P T3.0  ; Produce mesh validation pattern with primed nozzle.
+      G26 C P T3.0  ; Produce mesh validation pattern with primed nozzle, G26 is optional any bed leveling stl would also work.
           ; NOTE - PLA temperatures are assumed unless you specify - e.g. - B 105 H 225 for ABS Plastic
       G29 P4 T      ; Move nozzle to 'bad' areas and fine tune the values if needed.
           ; Repeat G26 and G29 P4 T  commands as needed.
-      G29 S1        ; Save UBL mesh values to EEPROM.
+      G29 S0        ; Save UBL mesh values to EEPROM.
       M500          ; Resave UBL's state information.
   -
-    pre: Use 3-point probe to 'tilt' a stored mesh; e.g. in your startup script
+    pre:  Tilt a stored mesh; e.g. in your startup script
     code: |
-      G29 L1        ; Load the mesh stored in slot 1 (from G29 S1)
-      G29 J         ; No size specified on the J option tells G29 to probe the specified 3 points and tilt the mesh according to what it finds.
-
+      G29 L0        ; Load the mesh stored in slot 0 (from G29 S0)
+      G29 J2        ; Probe 4 corners and tilt the mesh according to what it finds, G29 J would do the same with only 3 points.
 ---
 
 The Unified Bed Leveling System (UBL) provides a comprehensive set of resources to produce the best bed leveling results possible.
