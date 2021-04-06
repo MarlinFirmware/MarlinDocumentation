@@ -333,7 +333,7 @@ examples:
        M104 S210     ; Heat Hotend to 210C. Not required, but having the printer at temperature may help accuracy.
 
        G29 T         ; View the Z compensation values.
-       G29 P2 B T    ; Manual probing of locations. USUALLY NOT NEEDED!
+       G29 P2 B T    ; Manual probes unreachable points, and it requires an LCD controller.
   -
     pre: Use [`G26`](/docs/gcode/G026.html) and [`G29`](/docs/gcode/G029.html) commands to fine-tune a measured mesh
     code: |
