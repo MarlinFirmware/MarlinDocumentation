@@ -41,7 +41,7 @@ If you've never configured and calibrated a 3D Printer before, here are some goo
 
 - [Calibration](//reprap.org/wiki/Calibration)
 - [Calibrating Steps-per-unit](//youtu.be/wAL9d7FgInk)
-- [Prusa's calculators](//calculator.josefprusa.cz)
+- [Prusa's calculators](//blog.prusaprinters.org/calculator_3416/)
 - [Triffid Hunter's Calibration Guide](//reprap.org/wiki/Triffid_Hunter%27s_Calibration_Guide)
 - [The Essential Calibration Set](//www.thingiverse.com/thing:5573)
 - [Calibration of your RepRap](//sites.google.com/site/repraplogphase/calibration-of-your-reprap)
