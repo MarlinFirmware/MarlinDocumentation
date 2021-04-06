@@ -337,7 +337,7 @@ examples:
   -
     pre: Use [`G26`](/docs/gcode/G026.html) and [`G29`](/docs/gcode/G029.html) commands to fine-tune a measured mesh
     code: |
-      G26 C P T3.0  ; Produce mesh validation pattern with primed nozzle, G26 is optional; any bed leveling stl would also work.
+      G26 C P T3.0  ; Produce mesh validation pattern with primed nozzle. G26 is optional; any bed leveling stl would also work.
           ; NOTE - PLA temperatures are assumed unless you specify - e.g. - B 105 H 225 for ABS Plastic
       G29 P4 T      ; Move nozzle to 'bad' areas and fine tune the values if needed.
           ; Repeat G26 and G29 P4 T  commands as needed.
