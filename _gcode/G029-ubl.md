@@ -1,6 +1,8 @@
 ---
 tag: g029m3
 title: Bed Leveling (Unified)
+author: Thinkyhead
+contrib: Vertabreak, shitcreek
 brief: Probe the bed and enable leveling compensation.
 
 requires: AUTO_BED_LEVELING_UBL
@@ -12,7 +14,7 @@ codes: [ G29 ]
 notes: |
   - Requires `AUTO_BED_LEVELING_UBL`.
   - [`G28`](/docs/gcode/G028.html) disables bed leveling. Follow with `G29 A` to turn leveling on, or use `RESTORE_LEVELING_AFTER_G28` to automatically keep leveling on after [`G28`](/docs/gcode/G028.html).
-  - `M420 S1` can be used to turn leveling on, but requires a valid (complete) mesh. See [M420](/docs/gcode/M420.html) for more details
+  - `M420 S1` can be used to turn leveling on, but requires a valid (complete) mesh. See [M420](/docs/gcode/M420.html) for more details.
 
   ### Release Notes:
 
@@ -333,7 +335,7 @@ examples:
        M104 S210     ; Heat Hotend to 210C. Not required, but having the printer at temperature may help accuracy.
 
        G29 T         ; View the Z compensation values.
-       G29 P2 B T    ; Manual probes unreachable points, and it requires an LCD controller.
+       G29 P2 B T    ; Manually probe unreachable points. Requires an LCD controller.
   -
     pre: Use [`G26`](/docs/gcode/G026.html) and [`G29`](/docs/gcode/G029.html) commands to fine-tune a measured mesh
     code: |
@@ -351,6 +353,5 @@ examples:
 ---
 
 The Unified Bed Leveling System (UBL) provides a comprehensive set of resources to produce the best bed leveling results possible.
-You can find more detail in the comment section of ubl_G29.cpp
 
-See the full [Unified Bed Leveling](/docs/features/unified_bed_leveling.html) documentation for more details. (Examples below.)
+See the full [Unified Bed Leveling](/docs/features/unified_bed_leveling.html) documentation for more details. Additional information are in the comment sections of `ubl_G29.cpp`.
