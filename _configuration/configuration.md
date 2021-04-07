@@ -3188,7 +3188,7 @@ Probe measurements are adjusted to compensate for temperature distortion. Use [`
 ```cpp
 //#define SAVED_POSITIONS 1         // Each saved position slot costs 12 bytes
 ```
-Enables [`G60`](/docs/gcode/G060.html) & [`G60`](/docs/gcode/G060.html) and specifies number of available slots.
+Enables [`G60`](/docs/gcode/G060.html) & [`G61`](/docs/gcode/G061.html) and specifies number of available slots.
 
 ### G2/G3 Arc Support
 ```cpp
