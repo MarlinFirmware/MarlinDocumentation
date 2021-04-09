@@ -326,16 +326,16 @@ examples:
       G29 A         ; Activate the UBL System.
       M500          ; Save current setup. WARNING - UBL will be active at power up, before any G28.   
   -
-     pre: Optional settings
-     code: |
-       M502          ; Load configuration defaults. 
-       M500          ; Save configuration to EEPROM. M502 followed by M500 is suggested post flash to wipe the eeprom of invalid old settings.
+   pre: Optional settings
+   code: |
+     M502          ; Load configuration defaults. 
+     M500          ; Save configuration to EEPROM. M502 followed by M500 is suggested post flash to wipe the eeprom of invalid old settings.
 
-       M190 S65      ; Heat Bed to 65C. Not required, but having the printer at temperature may help accuracy.
-       M104 S210     ; Heat Hotend to 210C. Not required, but having the printer at temperature may help accuracy.
+     M190 S65      ; Heat Bed to 65C. Not required, but having the printer at temperature may help accuracy.
+     M104 S210     ; Heat Hotend to 210C. Not required, but having the printer at temperature may help accuracy.
 
-       G29 T         ; View the Z compensation values.
-       G29 P2 B T    ; Manually probe unreachable points. Requires an LCD controller.
+     G29 T         ; View the Z compensation values.
+     G29 P2 B T    ; Manually probe unreachable points. Requires an LCD controller.
   -
     pre: Use [`G26`](/docs/gcode/G026.html) and [`G29`](/docs/gcode/G029.html) commands to fine-tune a measured mesh
     code: |
