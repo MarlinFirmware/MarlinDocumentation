@@ -12,7 +12,7 @@ codes: [ G29 ]
 
 notes:
 - Any arguments left out of [`G29`](/docs/gcode/G029.html) will use your configured defaults.
-- "By default [`G28`](/docs/gcode/G028.html) disables bed leveling. Follow with `M420 S` to turn leveling on, or use `RESTORE_LEVELING_AFTER_G28` to automatically keep leveling on after [`G28`](/docs/gcode/G028.html)."
+- By default [`G28`](/docs/gcode/G028.html) disables bed leveling. Follow with `M420 S` to turn leveling on, or use `RESTORE_LEVELING_AFTER_G28` to automatically keep leveling on after [`G28`](/docs/gcode/G028.html).
 - To save time and machine wear, save your matrix to EEPROM with [`M500`](/docs/gcode/M500.html) and in your slicer's "Starting G-code" replace [`G29`](/docs/gcode/G029.html) with `M420 S1` to enable your last-saved matrix.
 
 parameters:
