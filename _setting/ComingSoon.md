@@ -5,7 +5,7 @@ description: 'Coming Soon'
 tags: draft
 
 since: 1.1.0
-author: thinkhead
+author: thinkyhead
 category: [ needs-review ]
 
 requires: MY_PARENT
