@@ -30,7 +30,7 @@ notes: |
 
   - UBL gathers the points closest the nozzle unless you specify an (X,Y) coordinate pair.
 
-  - Use `G29 P3` to automatically fill in unpopulated mesh points. You can also use an LCD controller with `G29 P2` to move the nozzle to each unpopulated point and manually adjust the height. See the ‘P2’ and ‘P3’ parameters for usage info.
+  - Use `G29 P3` to automatically fill in unpopulated mesh points. You can also use an LCD controller with `G29 P2` to move the nozzle to each unpopulated point and manually adjust the height. See the `P2` and `P3` parameters for usage info.
 
   - We know it takes a lot of effort to create good working Mesh data, so UBL stores its mesh data in a separate location where it won't be affected by EEPROM errors or version changes.
 
@@ -195,7 +195,7 @@ parameters:
           - `P4` moves to the closest Mesh Point (and/or the given `X` `Y`), raises the nozzle above the mesh height by the given `H` offset (or default Z_CLEARANCE_BETWEEN_PROBES), and waits while the controller is used to adjust the nozzle height. On click the displayed height is saved in the mesh.
           - Start Phase 4 at a specific location with `X` and `Y`. Adjust a specific number of Mesh Points with the `R` (Repeat) parameter. (If `R` is left out, the whole matrix is assumed.) This command can be terminated early (e.g., after editing the area of interest) by pressing and holding the encoder button.
           - The general form is `G29 P4 [R points] [X position] [Y position]`.
-          - The `H[offset]`` parameter is useful if a shim is used to fine-tune the mesh. For a 0.4mm shim the command would be `G29 P4 H0.4`. The nozzle is moved to the shim height, you adjust height to the shim, and on click the height minus the shim thickness is saved in the mesh.
+          - The `H[offset]` parameter is useful if a shim is used to fine-tune the mesh. For a 0.4mm shim the command would be `G29 P4 H0.4`. The nozzle is moved to the shim height, you adjust height to the shim, and on click the height minus the shim thickness is saved in the mesh.
           - _USE WITH CAUTION, as a bad mesh can cause the nozzle to crash into the bed!_
       -
         tag: 5
@@ -316,8 +316,8 @@ examples:
       G29 F 10.0    ; Set Fade Height for correction at 10.0 mm.
       G29 A         ; Activate the UBL System.
       M500          ; Save current setup. WARNING - UBL will be active at power up, before any G28.
-  -    
-  pre: This is a minimal sequence for set-up and initial probing of a UBL mesh on a machine that includes a display and no z-probe
+  -   
+    pre: This is a minimal sequence for set-up and initial probing of a UBL mesh on a machine that includes a display and no z-probe
     code: |
       G28           ; Home XYZ.
       G29 P4 R255   ; Do manual probing of the bed.
@@ -326,7 +326,7 @@ examples:
       G29 A         ; Activate the UBL System.
       M500          ; Save current setup. WARNING - UBL will be active at power up, before any G28.   
   -
-   pre: Optional settings
+     pre: Optional settings
      code: |
        M502          ; Load configuration defaults. 
        M500          ; Save configuration to EEPROM. M502 followed by M500 is suggested post flash to wipe the eeprom of invalid old settings.
