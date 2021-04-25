@@ -7,16 +7,14 @@ name: Jekyll site CI
 on:
   pull_request:
     branches:
-    - ci-testing
+    - master
 
 jobs:
   build:
     runs-on: ubuntu-latest
     if: github.repository == 'MarlinFirmware/MarlinDocumentation'
     steps:
-    - uses: actions/checkout@v1
-    - name: Build the site in the jekyll/builder container
-      run: |
-        docker run \
-        -v ${{ github.workspace }}:/srv/jekyll -v ${{ github.workspace }}/build:/srv/jekyll/build \
-        jekyll/builder:latest /bin/bash -c "chmod 777 /srv/jekyll && jekyll build --future"
+    - uses: actions/checkout@v2
+    - name: Jekyll Test Build
+      uses: fabacab/jekyll-builder-for-github-pages-action@v1
+      #uses: PaulRosenthal/Jekyll-Deploy-Test-Action@v1
