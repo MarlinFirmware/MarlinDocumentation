@@ -3,7 +3,7 @@ title:        Troubleshooting Tips
 description:  Getting past common configuration problems
 
 author: thinkyhead
-contrib: LVD-AC
+contrib: LVD-AC, shitcreek
 category: [ articles, getting-started ]
 ---
 
@@ -100,3 +100,7 @@ These tips are collected from various reports we have received. See [Trinamic tr
 ### BLTouch Pin Drop / Blinking
 - Servo voltage / signals may be unstable due to heater signal lines being too close to servo traces.
 - **Solution**: Disconnect the servo signal line after the print starts.
+
+### Auto Build Marlin
+
+  See [Auto Build Troubleshooting Guide](auto_build_problems.html).
