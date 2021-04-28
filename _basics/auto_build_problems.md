@@ -3,9 +3,13 @@ title:        Auto Build Troubleshooting
 description:  Troubleshooting problems with Auto Build
 
 author: Bob-the-Kuhn
-contrib:
+contrib: shitcreek
 category: [ articles, getting-started ]
 ---
+
+{% alert info %}
+[Auto Build installation guide](auto_build_marlin.html)
+{% endalert %}
 
 # Autobuild Error Messages
 
