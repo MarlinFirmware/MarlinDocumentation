@@ -2,7 +2,7 @@
 # Test Jekyll syntax for issues
 #
 
-name: Jekyll site CI
+name: Jekyll CI
 
 on:
   pull_request:
@@ -14,7 +14,9 @@ jobs:
     runs-on: ubuntu-latest
     if: github.repository == 'MarlinFirmware/MarlinDocumentation'
     steps:
-    - uses: actions/checkout@v2
-    - name: Jekyll Test Build
-      uses: fabacab/jekyll-builder-for-github-pages-action@v1
-      #uses: PaulRosenthal/Jekyll-Deploy-Test-Action@v1
+    - name: PR Checkout
+      uses: actions/checkout@v2
+    - name: Install Bundles
+      run: bundle install
+    - name: Test Build
+      run: bundle exec jekyll build
