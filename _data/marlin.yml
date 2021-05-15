@@ -177,3 +177,7 @@
 - version: 2.0.8
   hash: d92decb77479822945e3a01b4a83ad377a004301
   date: 30/04/2021
+
+- version: 2.0.8.1
+  hash: c384c3debfc42dc615e44e4fa73cfb747cbdb5d1
+  date: 15/05/2021
