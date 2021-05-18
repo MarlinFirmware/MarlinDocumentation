@@ -185,7 +185,15 @@ This document has been marked `needs-review`. The following information may be o
                     -->{% endif %}<!--
                   -->{% endif %}<!--
                   -->{% if parm.optional %}&#x5D;{% endif %}
-                </code></td>
+                </code><!--
+                -->{% if parm.since %} <span class="label label-success"><span data-toggle="tooltip" data-placement="bottom" title="Available since"><i class="fa fa-code" aria-hidden="true"></i>{{ parm.since }}</span></span>{% endif %}<!--
+                -->{% if parm.requires %}{% assign list = (parm.requires | split: ',') %}<!--
+                  -->{% for item in list %}<!--
+                    --> <span class="label label-requires"><span data-toggle="tooltip" data-placement="bottom" title="Option required"><code>{{item}}</code></span></span><!--
+                  -->{% endfor %}<!--
+                -->{% endif %}<!--
+                -->{% if parm.experimental %} <span class="label label-warning"><span data-toggle="tooltip" data-placement="bottom" title="Experimental option"><i class="fa fa-flask" aria-hidden="true"></i></span></span>{% endif %}<!--
+                --></td>
                 <td>
                   {{ parm.description | markdownify }}
                   {% if parm.values.size > 0 %}
