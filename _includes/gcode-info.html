@@ -98,20 +98,22 @@ This document has been marked `needs-review`. The following information may be o
             -->{% if parm.values.size > 0 %}<!--
               -->{% if parm.values.size == 1 %}<!--
                 -->{% assign pv = parm.values[0] %}<!--
-                -->{% if pv.optional %}&#x5B;{% else %}&lt;{% endif %}<!--
-                -->{% if pv.tag %}<!--
-                  -->{{ pv.tag }}<!--
-                  -->{% if pv.unit %}<!--
-                    --> in {{ pv.unit }}<!--
+                -->{% if pv.type != 'flag' %}<!--
+                  -->{% if pv.optional %}&#x5B;{% else %}&lt;{% endif %}<!--
+                  -->{% if pv.tag %}<!--
+                    -->{{ pv.tag }}<!--
+                    -->{% if pv.unit %}<!--
+                      --> ({{ pv.unit }})<!--
+                    -->{% endif %}<!--
+                  -->{% elsif pv.unit %}<!--
+                    -->{{ pv.unit }}<!--
+                  -->{% elsif pv.type %}<!--
+                    -->{{ pv.type }}<!--
+                  -->{% else %}<!--
+                    -->Unknown<!--
                   -->{% endif %}<!--
-                -->{% elsif pv.unit %}<!--
-                  -->{{ pv.unit }}<!--
-                -->{% elsif pv.type %}<!--
-                  -->{{ pv.type }}<!--
-                -->{% else %}<!--
-                  -->Unknown<!--
+                  -->{% if pv.optional %}&#x5D;{% else %}&gt;{% endif %}<!--
                 -->{% endif %}<!--
-                -->{% if pv.optional %}&#x5D;{% else %}&gt;{% endif %}<!--
               -->{% else %}<!--
                 -->&lt;<!--
                 -->{% for pv in parm.values %}<!--
@@ -155,20 +157,22 @@ This document has been marked `needs-review`. The following information may be o
                   -->{% if parm.values.size > 0 %}<!--
                     -->{% if parm.values.size == 1 %}<!--
                       -->{% assign pv = parm.values[0] %}<!--
-                      -->{% if pv.optional %}&#x5B;{% else %}&lt;{% endif %}<!--
-                      -->{% if pv.tag %}<!--
-                        -->{{ pv.tag }}<!--
-                        -->{% if pv.unit %}<!--
-                          --> in {{ pv.unit }}<!--
+                      -->{% if pv.type != 'flag' %}<!--
+                        -->{% if pv.optional %}&#x5B;{% else %}&lt;{% endif %}<!--
+                        -->{% if pv.tag %}<!--
+                          -->{{ pv.tag }}<!--
+                          -->{% if pv.unit %}<!--
+                            --> ({{ pv.unit }})<!--
+                          -->{% endif %}<!--
+                        -->{% elsif pv.unit %}<!--
+                          -->{{ pv.unit }}<!--
+                        -->{% elsif pv.type %}<!--
+                          -->{{ pv.type }}<!--
+                        -->{% else %}<!--
+                          -->Unknown<!--
                         -->{% endif %}<!--
-                      -->{% elsif pv.unit %}<!--
-                        -->{{ pv.unit }}<!--
-                      -->{% elsif pv.type %}<!--
-                        -->{{ pv.type }}<!--
-                      -->{% else %}<!--
-                        -->Unknown<!--
+                        -->{% if pv.optional %}&#x5D;{% else %}&gt;{% endif %}<!--
                       -->{% endif %}<!--
-                      -->{% if pv.optional %}&#x5D;{% else %}&gt;{% endif %}<!--
                     -->{% else %}<!--
                       -->&lt;<!--
                       -->{% for pv in parm.values %}<!--

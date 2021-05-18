@@ -43,7 +43,7 @@ parameters:
       Unified Bed Leveling (i.e., `M420 S1`)
     values:
       -
-        type: bool
+        type: flag
   -
     tag: B
     optional: true
@@ -75,14 +75,14 @@ parameters:
     description: Disable Unified Bed Leveling (i.e., `M420 S0`).
     values:
       -
-        type: bool
+        type: flag
   -
     tag: E
     optional: true
     description: Stow probe after probing `E`ach point (`P1` only).
     values:
       -
-        type: bool
+        type: flag
   -
     tag: F
     optional: true
@@ -262,7 +262,7 @@ parameters:
       - Only used with `G29 P1 T U`. This speeds up the probing of the edge of the bed. This option is useful when the entire bed doesn't need to be probed because it will be physically adjusted (tramming).
     values:
       -
-        type: bool
+        type: flag
   -
     tag: V
     optional: true
@@ -285,7 +285,7 @@ parameters:
       **_What?_**: Display valuable UBL data. (Requires `UBL_DEVEL_DEBUGGING`)
     values:
       -
-        type: bool
+        type: flag
   -
     tag: X
     optional: true
