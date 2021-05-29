@@ -18,7 +18,7 @@ category: [ development ]
 {:.pretty-list.headless}
 File|Description
 ----|-----------
-`Configuration.h`| Contains 
+`Configuration.h`| Contains
 `Configuration_adv.h`  | Contains
 `Makefile`| Contains
 `Marlin.ino`| Contains
@@ -30,14 +30,14 @@ File|Description
 {:.pretty-list.headless}
 File|Description
 ----|-----------
-`libs`| Contains 
+`libs`| Contains
 
 ### src
 
 {:.pretty-list.headless}
 File|Description
 ----|-----------
-`MarlinCore.cpp`| Contains 
+`MarlinCore.cpp`| Contains
 `MarlinCore.h`  | Contains
 
 
@@ -46,25 +46,25 @@ File|Description
 {:.pretty-list.headless}
 File|Description
 ----|-----------
-`HAL.h`| Contains 
+`HAL.h`| Contains
 `platforms.h`  | Contains
 
- 	 
+
 #### core
- 	 
-#### feature 
-	 
-#### gcode 
-	
-#### inc 
-	
-#### lcd 
-	
-#### libs 
-	
-#### module 
-	
-#### pins 
-	
-#### sd 	
+
+#### feature
+
+#### gcode
+
+#### inc
+
+#### lcd
+
+#### libs
+
+#### module
+
+#### pins
+
+#### sd
 

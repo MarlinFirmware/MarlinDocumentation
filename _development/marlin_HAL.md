@@ -57,7 +57,7 @@ This way all the existing high-level Marlin code can work on any platform withou
   ----|---------|-----|-----|----|-----|---
   [Arduino STM32](//github.com/rogerclarkmelbourne/Arduino_STM32)|[STM32F1](//www.st.com/en/microcontrollers-microprocessors/stm32f103.html) ARM-Cortex M3|72MHz|256-512k|48-64k|3.3V|no
   [Geetech GTM32](//github.com/Geeetech3D/Diagram/blob/master/Rostock301/Hardware_GTM32_PRO_VB.pdf)|[STM32F1](//www.st.com/en/microcontrollers-microprocessors/stm32f103.html) ARM-Cortex M3|72MHz|256-512k|48-64k|3.3V|no
- 
+
 #### STM32F4
 
   boards|processor|speed|flash|sram|logic|fpu

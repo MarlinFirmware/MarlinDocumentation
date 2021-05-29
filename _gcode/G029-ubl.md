@@ -316,7 +316,7 @@ examples:
       G29 F 10.0    ; Set Fade Height for correction at 10.0 mm.
       G29 A         ; Activate the UBL System.
       M500          ; Save current setup. WARNING - UBL will be active at power up, before any G28.
-  -   
+  -
     pre: This is a minimal sequence for set-up and initial probing of a UBL mesh on a machine that includes a display and no z-probe
     code: |
       G28           ; Home XYZ.
@@ -324,11 +324,11 @@ examples:
       G29 S0        ; Save UBL mesh points to slot 0 (EEPROM).
       G29 F 10.0    ; Set Fade Height for correction at 10.0 mm.
       G29 A         ; Activate the UBL System.
-      M500          ; Save current setup. WARNING - UBL will be active at power up, before any G28.   
+      M500          ; Save current setup. WARNING - UBL will be active at power up, before any G28.
   -
    pre: Optional settings
    code: |
-     M502          ; Load configuration defaults. 
+     M502          ; Load configuration defaults.
      M500          ; Save configuration to EEPROM. M502 followed by M500 is suggested post flash to wipe the eeprom of invalid old settings.
 
      M190 S65      ; Heat Bed to 65C. Not required, but having the printer at temperature may help accuracy.

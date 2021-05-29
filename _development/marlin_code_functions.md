@@ -13,7 +13,7 @@ category: [ development ]
 
 ### FastIO and Pin Mapping
 
-FastIO is a set of macros that allows Marlin to read and write pins quickly, using the same code on all processors. Marlin uses FastIO macros whenever possible because [direct port manipulation](//www.arduino.cc/en/Reference/PortManipulation) is many times faster than the pin functions provided by `Arduino.h`. 
+FastIO is a set of macros that allows Marlin to read and write pins quickly, using the same code on all processors. Marlin uses FastIO macros whenever possible because [direct port manipulation](//www.arduino.cc/en/Reference/PortManipulation) is many times faster than the pin functions provided by `Arduino.h`.
 
 Pin Mapping refers to the relationship between assigned "pin numbers" and the actual hardware ports on the CPU. For example, pins might be mapped starting with 0 to represent **Port A Pin 0**, then numbered sequentially up to **Port L Pin 15**.
 
