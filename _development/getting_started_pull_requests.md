@@ -1,7 +1,7 @@
 ---
 title:        'Contributing Code with Pull Requests'
 description:  'How to submit changes to Marlin through Github'
-tag: coding
+tag: github
 
 author: Bob-the-Kuhn, thinkyhead
 category: [ development ]

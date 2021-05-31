@@ -1,19 +1,28 @@
 ---
-title:        'Marlin HAL'
-description:  'Overview of the Marlin HAL'
-tag: documentation
+title: Hardware Access Layer
+description: Overview of the Hardware Access Layer in Marlin
+tag: coding
 
 author: chepo92
+contrib: thinkyhead
 category: [ development ]
 ---
 
-## Hardware Abstraction Layer
+The Hardware Access Layer –"HAL" for short– allows Marlin to run on a wide variety of boards by providing a common interface for low-level resources like timers, serial ports, i2c and SPI buses, EEPROM, SDIO, and so on.
 
-A Hardware Abstraction Layer allows applications to discover and use the hardware of the host system through a simple, portable and abstract API, regardless of the type of the underlying hardware. ([Pennington H., 2003](//ometer.com/hardware.html))
+## HAL Rationale
 
-Marlin 1.0 was originally derived from [Sprinter](//github.com/kliment/Sprinter) and [GRBL](//github.com/gnea/grbl) which could only run on 8-bit AVR boards. With the proliferation of new boards based on a variety of processor architectures, for Marlin 2.0 we decided to keep the existing code, but add architecture-specific HALs (AVR, SAM, STM, ESP) as a bridge between Marlin's high-level code and the low-level functions that control the microcontroller's pins, ports, timers, etc.
+Marlin was originally derived in 2011 from [Sprinter](//github.com/kliment/Sprinter) and [GRBL](//github.com/gnea/grbl). Initially, Marlin could only run on Arduino's AVR boards, but it was quickly ported to DUE. Soon we saw boards based on the LPC1768/9 appearing, along with a Grbl-based firmware called [Smoothieware](https://reprap.org/wiki/Smoothieboard).
 
-This way all the existing high-level Marlin code can work on any platform without needing to be concerned about the details. Retaining AVR compatibility and a single codebase is important to us, because we want to make sure that features and patches get as much testing and attention as possible, and that all platforms always benefit from the latest improvements.
+Another ARM processor, the STM32, was poised to take over as the new frontrunner, so we put our heads together to pick a course for extended hardware support. We decided not to rebuild Marlin from the ground up, but to preserve the existing work by adding a layer to abstract away the platform.
+
+## HAL Alternatives
+
+We could have chosen to use an RTOS to build this abstraction, but there are just too many points against:
+
+- We want to stay compatible with AVR and small boards. That rules out RTOS.
+- While possible to make the AVR version separate it's much simpler to keep a single codebase so everyone gets the latest features, patches and all platforms can benefit from improvements. We also catch bugs much faster when we're running the same code on more architectures.
+- Marlin was designed to use direct interrupts, so it requires the least work to keep the same design. The extra benefit is that Marlin continues to run hardware-direct. The aim is for Marlin to obtain the best performance possible on the board using the least amount of power.
 
 ### Current Marlin HALs
 
@@ -51,17 +60,12 @@ This way all the existing high-level Marlin code can work on any platform withou
   ----|---------|-----|-----|----|-----|---
   [Adafruit Grand Central M4](//www.adafruit.com/product/4064)|[SAMD51P20A ARM-Cortex M4](//www.microchip.com/wwwproducts/en/ATSAMD51P20A)|120MHz|1M|256k|3.3V|yes
 
-#### STM32F1
+#### STM32
 
   boards|processor|speed|flash|sram|logic|fpu
   ----|---------|-----|-----|----|-----|---
   [Arduino STM32](//github.com/rogerclarkmelbourne/Arduino_STM32)|[STM32F1](//www.st.com/en/microcontrollers-microprocessors/stm32f103.html) ARM-Cortex M3|72MHz|256-512k|48-64k|3.3V|no
   [Geetech GTM32](//github.com/Geeetech3D/Diagram/blob/master/Rostock301/Hardware_GTM32_PRO_VB.pdf)|[STM32F1](//www.st.com/en/microcontrollers-microprocessors/stm32f103.html) ARM-Cortex M3|72MHz|256-512k|48-64k|3.3V|no
-
-#### STM32F4
-
-  boards|processor|speed|flash|sram|logic|fpu
-  ----|---------|-----|-----|----|-----|---
   [STEVAL-3DP001V1](//www.st.com/en/evaluation-tools/steval-3dp001v1.html)|[STM32F401VE Arm-Cortex M4](//www.st.com/en/microcontrollers/stm32f401ve.html)|84MHz|512k|64+32k|3.3-5V|yes
 
 #### Teensy++ 2.0

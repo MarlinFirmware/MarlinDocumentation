@@ -1,7 +1,7 @@
 ---
 title:        'Marlin Github Scripts'
 description:  'Helper scripts to ease and speed Marlin development.'
-tag: coding
+tag: github
 
 author: thinkyhead
 category: [ development ]
