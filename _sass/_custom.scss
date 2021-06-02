@@ -548,7 +548,7 @@ footer>.container { display: block; clear: both; margin: 1em auto; }
 @media (max-width: $screen-sm-min) {
   li#searchbox input[type="search"] { width: 10em !important; }
   .tocify.gcode, .custom-fixed-sidebar .tocify { width: 324px; }
-  footer>.container { width: ($screen-sm-min - 30 - 20); padding-left: 344px; }
+  footer>.container { width: 100%; padding-left: 0; }
 }
 
 // Fix headings in panels
