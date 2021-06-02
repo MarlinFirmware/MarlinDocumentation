@@ -337,7 +337,7 @@ examples:
      G29 T         ; View the Z compensation values.
      G29 P2 B T    ; Manually probe unreachable points. Requires an LCD controller.
   -
-    pre: Use [`G26`](/docs/gcode/G026.html) and [`G29`](/docs/gcode/G029.html) commands to fine-tune a measured mesh
+    pre: Use [`G26`](/docs/gcode/G026.html) and `G29` commands to fine-tune a measured mesh
     code: |
       G26 C P T3.0  ; Produce mesh validation pattern with primed nozzle. G26 is optional; any bed leveling stl would also work.
           ; NOTE - PLA temperatures are assumed unless you specify - e.g. - B 105 H 225 for ABS Plastic
