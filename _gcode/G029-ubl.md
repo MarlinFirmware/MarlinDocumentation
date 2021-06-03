@@ -14,7 +14,7 @@ codes: [ G29 ]
 notes: |
   - Requires `AUTO_BED_LEVELING_UBL`.
   - [`G28`](/docs/gcode/G028.html) disables bed leveling. Follow with `G29 A` to turn leveling on, or use `RESTORE_LEVELING_AFTER_G28` to automatically keep leveling on after [`G28`](/docs/gcode/G028.html).
-  - `M420 S1` can be used to turn leveling on, but requires a valid (complete) mesh. See [M420](/docs/gcode/M420.html) for more details.
+  - `M420 S1` can be used to turn leveling on, but requires a valid (complete) mesh. See [`M420`](/docs/gcode/M420.html) for more details.
 
   ### Release Notes:
 
@@ -49,13 +49,14 @@ parameters:
     optional: true
     description: |
       **Business Card** mode (`P2` only)
-      - Use the 'Business Card' mode of the Manual Probe subsystem with `P2`.
+      - Use the 'Business Card' mode of the Manual Probe subsystem with `P2`. A value may be given, or else it will be measured.
       - In this mode of `G29 P2`, use a shim that the nozzle can grab onto as it is lowered.
         In principle, the nozzle-bed distance is the same when the same resistance is felt in the shim. You can omit the numerical value on first invocation of `G29 P2 B` to measure shim thickness. Subsequent use of `B` will apply the previously-measured thickness by default.
       - Note: A non-compressible Spark Gap feeler gauge is recommended over a business card.
     values:
       -
-        type: bool
+        tag: mm/flag
+        type: float
   -
     tag: C
     optional: true
