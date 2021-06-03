@@ -47,9 +47,9 @@ This document has been marked `needs-review`. The following information may be o
 </div>
 
 {% if gcode.related %}
-  <div class="col-lg-12 row related"><h5>
+  <div class="col-lg-12 row related">
     Related codes: {% for item in gcode.related %}<a href="/docs/gcode/{{ item | linkify }}.html"><code>{{item}}</code></a> {% endfor %}
-  </h5></div>
+  </div>
 {% endif %}
 
 <div class="col-lg-12 row long">
@@ -74,7 +74,8 @@ This document has been marked `needs-review`. The following information may be o
 {% if gcode.pagetype != 'toc' %}
 <div class="col-lg-12 row usage" id="usage-{{ gcode.tag }}">
   <h3>Usage</h3>
-  <code>{{ gcode.codes[0] }}
+  {% for code in gcode.codes %}
+  <div><code>{{ code }}
     {% if gcode.parameters %}
       {% assign list = ('' | split: '|') %}
       {% for parm in gcode.parameters %}
@@ -86,7 +87,7 @@ This document has been marked `needs-review`. The following information may be o
       {% if list.size > 0 %}
         {% assign list = (list | sort: 'tag') %}
         {% for parm in list %}<!--
-        --><span data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="{{ parm.description | markdownify | strip_html }}"{% if pv.optional %} class="optional"{% endif %}><!--
+        --><span {% if parm.optional %}class="optional" {% endif %}data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="{{ parm.description | markdownify | strip_html }}"><!--
           -->{% if parm.optional %}&#x5B;{% endif %}<!--
             -->{{ parm.tag }}<!--
             -->{% if parm.values.size > 0 %}<!--
@@ -119,7 +120,8 @@ This document has been marked `needs-review`. The following information may be o
      -->{% endfor %}
       {% endif %}
     {% endif %}
-  </code>
+  </code></div>
+  {% endfor %}
 </div>
 {% endif %}
 

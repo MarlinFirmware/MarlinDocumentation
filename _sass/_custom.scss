@@ -214,13 +214,17 @@ div.container.gcode {
     margin-left: 16px;
     h3 { margin-left: -16px; }
     h4, h5, h6 { background: #200; color: white; margin-left: -0.5em; padding-left: 0.5em; }
-    h5 { background: #CCC; color: #000; }
-    h5 code { background: #AAA; color: #FF9; }
-    p, ul>li { font-size: 110% }
   }
   div.col-lg-12.row.examples .post {
     margin: -0.25em 0 1em;
     p { font-size: 85%; }
+  }
+  div.row.related {
+    margin: 0.5em 16px 0;
+    padding: 5px 0 6px 1em;
+    border-radius: 6px;
+    background: #DDD; color: #000;
+    code { background: #E8E8E8; color: #000; }
   }
 
   div.col-lg-12.row.meta { margin-left: 0; }
@@ -228,14 +232,18 @@ div.container.gcode {
   div.row.gallery p { font-size: normal; color: #601; }
   img { max-width: 100%; }
 
-  .row.usage>code {
-    background: transparent;
-    >span {
-      background: #FFFDBF;
-      white-space: nowrap;
+  .row.usage>div {
+    >code {
+      background: transparent;
+      >span {
+        white-space: nowrap;
+        background: #E0FDE0; &:hover { background: #C0FDC0; }
+        &.optional { background: #FFFDBF; &:hover { background: #FFFD90; } }
+      }
     }
-    >span:hover {
-      background: #FFFD90;
+    +div {
+      margin-top: 1px;
+      border-top: 1px #000 dotted;
     }
   }
 }
@@ -707,14 +715,14 @@ body.night {
   div.container.gcode {
     div.col-lg-12.row {
       h4, h5, h6 { background: black; color: #FFF; }
-      h5 {
-        background: #222;
-        code { background: #444; color: #FFC; }
-      }
     }
-    .row.usage>code {
-      >span { color: #ADF; background: #246; }
-      >span:hover { background: #358; }
+    div.row.related {
+      background: #000; color: #666;
+      code { background: #000; color: #666; }
+    }
+    .row.usage>div>code>span {
+      color: #AFA; background: #262; &:hover { color: #0F0; background: #585; }
+      &.optional { color: #FFC; background: #442; &:hover { color: #FFA; background: #664; } }
     }
     div.row.examples pre { background: #000; }
     div.row.gallery p { color: #904; }
