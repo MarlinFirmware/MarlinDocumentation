@@ -1,38 +1,88 @@
-#kfactor {
+:root {
+  --kf-header: #333;
+  --kf-header2: black;
 
+  --kf-k-bg: #222;
+  --kf-k-border: #222;
+  --kf-k-input: #001;
+  --kf-k-btn-bg: #BFA;
+  --kf-k-header: white;
+  --kf-k-label: #0088CC;
+  --kf-k-textarea: #EEE;
+
+  --kf-k-td-head-bg: #CCC;
+  --kf-k-td-section-bg: #EEE;
+
+  --kf-k-calibpat2-bg: #333;
+
+  --kf-k-invalid-border: #FFD800;
+  --kf-k-invalid-bg: yellow;
+  --kf-k-disbale: #F00;
+}
+[data-theme="dark"] {
+  --kf-header: #CCC;
+  --kf-header2: white;
+
+  --kf-k-bg: #222;
+  --kf-k-border: #222;
+  --kf-k-input: #001;
+  --kf-k-btn-bg: #BFA;
+  --kf-k-header: yellow;
+  --kf-k-label: #C7254E;
+  --kf-k-textarea: white;
+
+  --kf-k-td-head-bg: #222;
+  --kf-k-td-section: #C7254E;
+  --kf-k-td-section-bg: #333;
+
+  --kf-k-invalid-border: #FFD800;
+  --kf-k-invalid-bg: yellow;
+  --kf-k-disbale: #F00;
+}
+.calibpat {
+  img { width: 100%; }
+  h1 { color: var(--kf-header); }
+  h2, h3 { color: var(--kf-header); }
+}
+#kfactor {
+  textarea { background: var(--kf-k-textarea); }
   border-collapse: separate;
   border-spacing: 0px;
-  border: thin solid #848484;
+  border: thin solid var(--kf-k-border);
   height: 100%;
   width: 100%;
+  h1, h2, h3, h4, h5 { color: var(--kf-k--header); }
 
   tr {
     height: 100%;
-    border: thin solid #848484;
-    }
+    border: thin solid var(--kf-k-border);
+  }
 
   td {
     height: 100%;
     padding: 4px;
     vertical-align: middle;
-    border: thin solid #848484;
-    }
+    border: thin solid var(--kf-k-border);
+  }
 
   .txtareatd {
     width: 34% !important;
     min-width: 34% !important;
     max-width: 34% !important;
-    }
+  }
 
   td:nth-child(1) { width: 14%; }
+  td:nth-child(2) {
+    width: 7%;
+    min-width: 7%;
+  }
+  td:nth-child(3) {
+    width: 45%;
+    font-size: 80%;
+  }
 
-  td:nth-child(2) { width: 7%; min-width: 7%; }
-
-  td:nth-child(3) { width: 45%; font-size: 80%; }
-
-  .tdHead { background-color: #EDEDED; }
-
-  .tdSection { background-color: #F5F5F5; }
+  .tdHead { background-color: var(--kf-k-td-head-bg); }
+  .tdSection { background-color: var(--kf-k-td-section-bg); }
 
   textarea {
     font-family: $font-family-monospace;
@@ -44,77 +94,61 @@
     box-sizing: border-box;
     display: block;
     resize: none;
-    }
+  }
 
-  input[type=number] { width: 140px; }
+  input[type="number"] { width: 140px; }
 
-  select { width: 140px; color: #000; }
-  #button2 { background: #BFA; }
+  select {
+    width: 140px;
+    color: var(--kf-k--header);
+  }
+  #button2 { background: var(--kf-k-btn-bg); }
 
   label {
-    color: #c7254e;
+    color: var(--kf-k-label);
     font-weight: bold;
     display: block;
     width: 150px;
     float: left;
-    }
+  }
 
   .calibpat2 td {
     padding: 1em 0;
     vertical-align: middle;
-    background-color: #CCC;
+    background-color: var(--kf-k-td-head-bg);
   }
-
   .calibpat2 td:nth-child(2) { text-align: inherit; }
   .calibpat2 td:nth-child(3) { font-size: inherit; }
 
   .disabled {
-    color: #c7254e;
+    color: var(--kf-k-disbale);
     font-weight: bold;
     display: block;
     width: 150px;
     float: left;
     opacity: 0.5;
-    }
+  }
 
   .invalidDiv {
-    background-color: #FFFF00;
+    background-color: var(--kf-k-invalid-bg);
     font-weight: bold;
     display: block;
     float: left;
-    }
-
+  }
   .invalidSize {
-    background-color: #FFFF00;
+    background-color: var(--kf-k-invalid-bg);
     font-weight: bold;
     display: block;
     float: left;
-    }
-
+  }
   .invalidNumber {
-    background-color: #FFFF00;
+    background-color: var(--kf-k-invalid-bg);
     font-weight: bold;
     display: block;
     float: left;
-    }
-
+  }
   :invalid {
-    box-shadow: 0 0 3px red;
+    box-shadow: 0 0 3px var(--kf-k-invalid-border);
     outline: 0;
-    }
-}
-
-body.night #kfactor {
-  background: #222;
-  border-color: #222;
-  tr, td { border-color: #222; }
-  input, textarea { color: #001; }
-  .tdHead { background-color: #202; }
-  .tdSection { background-color: #333; }
-  label { color: #CCC; text-align: right; }
-  .calibpat2 td { background-color: #111; }
-  .disabled { color: #0F0; }
-  .invalidDiv, .invalidSize, .invalidNumber {
-    background-color: #990000;
   }
 }
