@@ -54,26 +54,20 @@ This document has been marked `needs-review`. The following information may be o
 
 <div class="col-lg-12 row long">
   <h3>Description</h3>
-  {% if page.content %}
-    {{ page.content | markdownify }}
-  {% endif %}
+  {% if page.content %}{{ page.content | markdownify }}{% endif %}
 </div>
 
 {% if gcode.notes %}
   <div class="col-lg-12 row notes">
     <h3>Notes</h3>
-      {% for line in gcode.notes %}
-        {{ line | markdownify }}
-      {% endfor %}
+      {% for line in gcode.notes %}{{ line | markdownify }}{% endfor %}
   </div>
 {% endif %}
 
 {% if gcode.devnotes %}
   <div class="col-lg-12 row devnotes">
     <h3>Developer Notes</h3>
-      {% for line in gcode.devnotes %}
-        {{ line | markdownify }}
-      {% endfor %}
+      {% for line in gcode.devnotes %}{{ line | markdownify }}{% endfor %}
   </div>
 {% endif %}
 
@@ -91,9 +85,9 @@ This document has been marked `needs-review`. The following information may be o
 
       {% if list.size > 0 %}
         {% assign list = (list | sort: 'tag') %}
-        {% for parm in list %}
-          <span data-toggle="tooltip" data-placement="top" data-original-title="{{ parm.description | markdownify | strip_html }}">
-            {% if parm.optional %}&#x5B;{% endif %}<!--
+        {% for parm in list %}<!--
+        --><span data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="{{ parm.description | markdownify | strip_html }}"{% if pv.optional %} class="optional"{% endif %}><!--
+          -->{% if parm.optional %}&#x5B;{% endif %}<!--
             -->{{ parm.tag }}<!--
             -->{% if parm.values.size > 0 %}<!--
               -->{% if parm.values.size == 1 %}<!--
@@ -101,10 +95,7 @@ This document has been marked `needs-review`. The following information may be o
                 -->{% if pv.type != 'flag' %}<!--
                   -->{% if pv.optional %}&#x5B;{% else %}&lt;{% endif %}<!--
                   -->{% if pv.tag %}<!--
-                    -->{{ pv.tag }}<!--
-                    -->{% if pv.unit %}<!--
-                      --> ({{ pv.unit }})<!--
-                    -->{% endif %}<!--
+                    -->{{ pv.tag }}{% if pv.unit %} ({{ pv.unit }}){% endif %}<!--
                   -->{% elsif pv.unit %}<!--
                     -->{{ pv.unit }}<!--
                   -->{% elsif pv.type %}<!--
@@ -118,15 +109,13 @@ This document has been marked `needs-review`. The following information may be o
                 -->&lt;<!--
                 -->{% for pv in parm.values %}<!--
                   -->{{ pv.tag }}<!--
-                  -->{% if forloop.last != true %}<!--
-                    -->&#x7C;<!--
-                  -->{% endif %}<!--
+                  -->{% if forloop.last != true %}&#x7C;{% endif %}<!--
                 -->{% endfor %}<!--
                 -->&gt;<!--
               -->{% endif %}<!--
             -->{% endif %}<!--
             -->{% if parm.optional %}&#x5D;{% endif %}<!--
-          --></span><!--
+          --></span> <!--
      -->{% endfor %}
       {% endif %}
     {% endif %}
@@ -136,11 +125,7 @@ This document has been marked `needs-review`. The following information may be o
 
 {% if gcode.parameters %}
   {% assign list = ('' | split: '|') %}
-  {% for parm in gcode.parameters %}
-    {% if parm.tag %}
-      {% assign list = list | push: parm %}
-    {% endif %}
-  {% endfor %}
+  {% for parm in gcode.parameters %}{% if parm.tag %}{% assign list = list | push: parm %}{% endif %}{% endfor %}
 
   {% if list.size > 0 %}
     <div class="col-lg-12 row params">
@@ -160,10 +145,7 @@ This document has been marked `needs-review`. The following information may be o
                       -->{% if pv.type != 'flag' %}<!--
                         -->{% if pv.optional %}&#x5B;{% else %}&lt;{% endif %}<!--
                         -->{% if pv.tag %}<!--
-                          -->{{ pv.tag }}<!--
-                          -->{% if pv.unit %}<!--
-                            --> ({{ pv.unit }})<!--
-                          -->{% endif %}<!--
+                          -->{{ pv.tag }}{% if pv.unit %}({{ pv.unit }}){% endif %}<!--
                         -->{% elsif pv.unit %}<!--
                           -->{{ pv.unit }}<!--
                         -->{% elsif pv.type %}<!--
@@ -177,9 +159,7 @@ This document has been marked `needs-review`. The following information may be o
                       -->&lt;<!--
                       -->{% for pv in parm.values %}<!--
                         -->{{ pv.tag }}<!--
-                        -->{% if forloop.last != true %}<!--
-                          -->&#x7C;<!--
-                        -->{% endif %}<!--
+                        -->{% if forloop.last != true %}&#x7C;{% endif %}<!--
                       -->{% endfor %}<!--
                       -->&gt;<!--
                     -->{% endif %}<!--
@@ -189,7 +169,7 @@ This document has been marked `needs-review`. The following information may be o
                 -->{% if parm.since %} <span class="label label-success"><span data-toggle="tooltip" data-placement="bottom" title="Available since"><i class="fa fa-code" aria-hidden="true"></i>{{ parm.since }}</span></span>{% endif %}<!--
                 -->{% if parm.requires %}{% assign list = (parm.requires | split: ',') %}<!--
                   -->{% for item in list %}<!--
-                    --> <span class="label label-requires"><span data-toggle="tooltip" data-placement="bottom" title="Option required"><code>{{item}}</code></span></span><!--
+                    --><span class="label label-requires"><span data-toggle="tooltip" data-placement="bottom" title="Option required"><code>{{item}}</code></span></span><!--
                   -->{% endfor %}<!--
                 -->{% endif %}<!--
                 -->{% if parm.experimental %} <span class="label label-warning"><span data-toggle="tooltip" data-placement="bottom" title="Experimental option"><i class="fa fa-flask" aria-hidden="true"></i></span></span>{% endif %}<!--
@@ -200,9 +180,7 @@ This document has been marked `needs-review`. The following information may be o
                     <ul class="param-desc-list">
                       {% for pv in parm.values %}
                         {% if pv.description %}
-                          <li>
-                            <code>{{ parm.tag }}{{ pv.tag }}</code>: {{ pv.description | markdownify }}
-                          </li>
+                          <li><code>{{ parm.tag }}{{ pv.tag }}</code>: {{ pv.description | markdownify }}</li>
                         {% endif %}
                       {% endfor %}
                     </ul>

@@ -76,7 +76,7 @@ $(function() {
   $('[data-toggle="tooltip"]').tooltip();
 
   // Hack tables, Jekyll's default table formating is awful
-  //$( 'table' ).addClass( 'table table-bordered table-hover' );
+  //$('table').addClass('table table-bordered table-hover');
 
   // Mark 'here' links in the navigation
   var url = window.location.pathname
