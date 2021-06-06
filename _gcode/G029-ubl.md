@@ -353,6 +353,4 @@ examples:
       G29 J         ; Probe 3 points and tilt the mesh according to what it finds, optionally G29 J2 would do 4 points.
 ---
 
-The Unified Bed Leveling System (UBL) provides a comprehensive set of resources to produce the best bed leveling results possible.
-
-See the full [Unified Bed Leveling](/docs/features/unified_bed_leveling.html) documentation for more details. Additional information are in the comment sections of `ubl_G29.cpp`.
+The Unified Bed Leveling System (UBL) provides a comprehensive set of resources to produce the best bed leveling results possible. See the full [Unified Bed Leveling](/docs/features/unified_bed_leveling.html) documentation for more details.
