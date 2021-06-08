@@ -34,7 +34,7 @@ Marlin includes Automatic Firmware Retraction (aka "Auto Retract") to convert sl
 
 Currently, the [`M209`](/docs/gcode/M209.html) state is persistent and the state is saved to EEPROM. The expectation has been that once you've settled on a preference for firmware retraction you'll set the machine and keep it on or off. This behavior may change so that auto-retract is disabled most often, as it is safer to always leave it off. For legacy G-code, just add `M209 S1` to the starting code and `M209 S0` to the end.
 
-Auto-retract has a `MIN_RETRACT` setting, but it has no `MAX_RETRACT` setting. So when Auto Retract is enabled, long [`G0`](/docs/gcode/G000-G001.html) moves (e.g., for a manual filament change) will be done as retract/recover moves. So it is very important to turn off automatic firmware retraction with `M209 S0` before doing any manual E moves.
+Auto-retract has a `MIN_AUTORETRACT` setting and a `MAX_AUTORETRACT` setting. When Auto Retract is enabled, long [`G0`](/docs/gcode/G000-G001.html) moves (e.g. for a manual filament change) will be done as retract/recover moves. Turn off automatic firmware retraction with `M209 S0` before doing any manual E moves.
 
 {% alert warning %}
 ** **Avoid using Automatic Firmware Retraction unless absolutely needed!** **
