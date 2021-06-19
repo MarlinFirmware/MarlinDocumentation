@@ -46,7 +46,6 @@ There are now many community resources for users of Marlin. If you're looking fo
 
 - [MarlinFirmware on Discord](//discord.gg/n5NJ59y) - Realtime chat with users and developers
 - [Marlin Firmware](//www.facebook.com/groups/1049718498464482/) and [Marlin Firmware for 3D Printers](//www.facebook.com/groups/3Dtechtalk/) Facebook Groups
-- [Tom's 3D Forums](//discuss.toms3d.org/) - Hosted by Tom Sanladerer
 - [Marlin Forum](//forums.reprap.org/list.php?415) at RepRap.org
 - [Marlin YouTube Videos](//www.youtube.com/results?search_query=marlin+firmware)
 
