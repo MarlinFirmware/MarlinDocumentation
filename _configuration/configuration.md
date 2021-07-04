@@ -18,7 +18,7 @@ These two files contain all of Marlin's build-time configuration options. Simply
 
 To use configurations from an earlier version of Marlin, try dropping them into the newer Marlin and building. As part of the build process, the `SanityCheck.h` will print helpful error messages explaining what needs to be changed.
 
-Also a tool like [Winmerge](//winmerge.org/) is usefull to compare the old file to the new one and you can copy over the settings.
+Also a tool like [Winmerge](//winmerge.org/) is useful to compare the old file to the new one and you can copy over the settings.
 
 ## Compiler Directives
 
