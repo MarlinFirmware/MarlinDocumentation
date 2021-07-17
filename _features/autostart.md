@@ -1,27 +1,30 @@
 ---
 title: Autostart
-description: Automatically execute gcodes at bootup
+description: Automatically execute G-code at startup
 tag: autostart
 
 author: shitcreek
-contrib: AnHardt
+contrib: AnHardt, thinkyhead
 category: [ features, autostart ]
 ---
 
 # Autostart
 
-`Autostart` is available on printers with an SD card reader. If `auto0.g` exists on the card, the printer will recognize and execute it on bootup. Thereafter, if there are files with incrementing numbers, e.g. `auto1.g`, they will be done in incrementing order.
+If the printer has an SD card inserted at startup or reset, Marlin will look for the file `auto0.g` and execute it, followed in sequence by any other files with the same pattern (`auto1.g`, `auto2.g`, etc.) all the way up to `auto9.g`.
 
-## Use cases
+By default, Autostart is included in the firmware whenever SD card support is enabled. It can be disabled to save a little flash and SRAM if the feature is not needed.
 
-- 'Autostart' can eliminate the need for any start.gcode in the slicer. Since the startup procedure depends mostly on the printer, the advantage is not having to manage individual start.gcode for every gcode file, and having it all in one convenient file. The disadvantage of that is that many slicers insist on having some heatup commands in their now superficial start.gcode. Additionally, some perfer to have the `e_steps_per_mm` as part of their gcode file - this causes to have different start.gcode for different printers.
-- `Autostart` is an alternative place to store/set printer settings, with the option of changing them using a keyboard. They can also be changed in real-time during printing.
-- Use printer in a kiosk mode, e.g. when its powered, start a print.
-- Set the printer to a fresh start state after a failed print.
+## Use-cases
 
-## LCD menu option
+- Provide alternative settings for all the files on an SD Card.
+- Use the printer in "kiosk mode" to start a print simply by rebooting.
+- Set the printer to a fresh state after a reboot.
+- Run from the menu to set a fresh state at any time.
 
-`MENU_ADDAUTOSTART` - add an option in the menu to run all auto#.g files
+## Configuration
+
+- `NO_SD_AUTOSTART` completely removes Autostart from the firmware.
+- `MENU_ADDAUTOSTART` adds a menu item that can be used to run all the `auto#.g` files at any time.
 
 ## Credits
-The feature was created by `bkubicek` in a pizza powered hacking session at Protospace/Utrecht with `Joris` and the Ultimaker guys. The initial intend was to have a print started, as soon the printer was plugged in - e.g. for coin-operated exhibitions.
+Originally created by `bkubicek`, `Joris`, and the Ultimaker guys in a pizza-powered hacking session at Protospace/Utrecht as a way to start a print as soon the printer is powered on.
