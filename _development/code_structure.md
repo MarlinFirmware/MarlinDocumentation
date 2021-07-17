@@ -193,7 +193,7 @@ All G-code handlers are encapsulated in the `GcodeSuite` class (e.g., `GcodeSuit
 
 For example, the handler uses `parser.seen('X')` to check if the `'X'` parameter exists, then calls `parser.value_float()` to get its numerical value in the form of a float. See `gcode/parser.h` for all the available methods.
 
-G-code handlers can do almost anything, so they are split up into individual files, with each one including only the headers it needs. All handlers must include `gcode.h` and that will include `parser.h`. 
+G-code handlers can do almost anything, so they are split up into individual files, with each one including only the headers it needs. All handlers must include `gcode.h` and that will include `parser.h`.
 
 #### 5. Command Blocking
 A `G1` command is considered completed as soon as its move is enqueued, so it can potentially return right away. In practice, and especially with bed leveling enabled, every linear move has the potential to fill up the planner queue and block for a long time waiting for space to open up.
