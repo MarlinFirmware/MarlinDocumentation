@@ -182,7 +182,7 @@ This value, from 1 to 6, defines the number of coordinated axes that are not use
 
 Also, the following arrays should contain exactly one element for each axis, including the Extruder: 
 - In file Configuration.h: `DEFAULT_AXIS_STEPS_PER_UNIT`, `DEFAULT_MAX_FEEDRATE`, `DEFAULT_MAX_ACCELERATION`, `HOMING_FEEDRATE_MM_M`,
-- In file Configuration.adv: `AXIS_RELATIVE_MODES`, `MICROSTEP_MODES`, `MANUAL_FEEDRATE` and possibly also values of `HOMING_BUMP_DIVISOR`, `HOMING_BACKOFF_POST_MM`, `BACKLASH_DISTANCE_MM`. 
+- In file Configuration_adv.h: `AXIS_RELATIVE_MODES`, `MICROSTEP_MODES`, `MANUAL_FEEDRATE` and possibly also values of `HOMING_BUMP_DIVISOR`, `HOMING_BACKOFF_POST_MM`, `BACKLASH_DISTANCE_MM`. 
 
 If the machine has a bed leveling probe, the array `NOZZLE_TO_PROBE_OFFSETS` has to be extended with elemets of value 0 until the number of elements is equal to the value of `LINEAR_AXES`.
 
