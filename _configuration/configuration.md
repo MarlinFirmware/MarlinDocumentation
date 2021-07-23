@@ -177,7 +177,7 @@ A unique ID for your 3D printer. A suitable unique ID can be generated randomly 
 #define LINEAR_AXES 3
 ```
 This value, from 1 to 6, defines the number of coordinated axes that are not used for extruders (axes that benefit from endstops and auto homing). Despite the name, each axis can be linear or rotational. Firmware-internal axis names are X, Y, Z, I, J, K (in that order). Each axis is configured individually with the following values: 
-- In the pins_YOUR_MOTHERBOARD.h file for your board: `*_STEP_PIN`, `*_ENABLE_PIN`, `*_DIR_PIN, `*_STOP_PIN` 
+- In the pins_YOUR_MOTHERBOARD.h file for your board: `*_STEP_PIN`, `*_ENABLE_PIN`, `*_DIR_PIN`, `*_STOP_PIN` 
 - In file Configuration.h: `USE_*[MIN || MAX]_PLUG`, `*_ENABLE_ON`, `DISABLE_*`, `*_MIN_POS`, `*_MAX_POS`, `*_HOME_DIR`, possibly `DEFAULT_*JERK`.
 
 Also, the following arrays should contain exactly one element for each axis, including the Extruder: 
