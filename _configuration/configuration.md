@@ -169,6 +169,44 @@ This is the name of your printer as displayed on the LCD and by [`M115`](/docs/g
 A unique ID for your 3D printer. A suitable unique ID can be generated randomly at [uuidtools.com](//www.uuidtools.com/generate/v4). Some host programs and slicers may use this identifier to differentiate between specific machines on your network.
 
 
+## Linear Axes Info
+
+### Linear Axes
+
+```cpp
+#define LINEAR_AXES 3
+```
+This value, from 1 to 6, defines the number of coordinated axes that are not used for extruders (axes that benefit from endstops and auto homing). Despite the name, each axis can be linear or rotational. Firmware-internal axis names are X, Y, Z, I, J, K (in that order). Each axis is configured individually with the following values: 
+- In the pins_YOUR_MOTHERBOARD.h file for your board: `*_STEP_PIN`, `*_ENABLE_PIN`, `*_DIR_PIN, `*_STOP_PIN` 
+- In file Configuration.h: `USE_*[MIN || MAX]_PLUG`, `*_ENABLE_ON`, `DISABLE_*`, `*_MIN_POS`, `*_MAX_POS`, `*_HOME_DIR`, possibly `DEFAULT_*JERK`.
+
+Also, the following arrays should contain exactly one element for each axis, including the Extruder: 
+- In file Configuration.h: `DEFAULT_AXIS_STEPS_PER_UNIT`, `DEFAULT_MAX_FEEDRATE`, `DEFAULT_MAX_ACCELERATION`, `HOMING_FEEDRATE_MM_M`,
+- In file Configuration.adv: `AXIS_RELATIVE_MODES`, `MICROSTEP_MODES`, `MANUAL_FEEDRATE` and possibly also values of `HOMING_BUMP_DIVISOR`, `HOMING_BACKOFF_POST_MM`, `BACKLASH_DISTANCE_MM`. 
+
+If the machine has a bed leveling probe, the array `NOZZLE_TO_PROBE_OFFSETS` has to be extended with elemets of value 0 until the number of elements is equal to the value of `LINEAR_AXES`.
+
+
+```cpp
+#if LINEAR_AXES >= 4
+  #define AXIS4_NAME 'A' // :['A', 'B', 'C', 'U', 'V', 'W']
+#endif
+#if LINEAR_AXES >= 5
+  #define AXIS5_NAME 'B' // :['A', 'B', 'C', 'U', 'V', 'W']
+#endif
+#if LINEAR_AXES >= 6
+  #define AXIS6_NAME 'C' // :['A', 'B', 'C', 'U', 'V', 'W']
+#endif
+```
+These are the user-facing names of the 4th axis (I axis), 5th axis (J axis) and 6th axis (K axis) respectively. The names must match the axis names used in G-code. Regardless of these settings, firmware-internal axis IDs are I (AXIS4), J (AXIS5), and K (AXIS6). 
+
+For RS274/NGC standard compliant G-code, use `'A'`, `'B'` and `'C'` for rotational axes parallel to X, Y and Z, respectively.
+
+A conventional nomenclature that is also used by LinuxCNC is: `'U'`, `'V'` and `'W'` for secondary linear axes parallel to X, Y and Z, respectively.
+
+Allowed values: `'A'`, `'B'`, `'C'`, `'U'`, `'V'`, or `'W'`.
+
+
 ## Extruder Info
 
 ![Extruders](/assets/images/config/extruders.png){: .floater.framed}
@@ -3350,25 +3388,84 @@ This option adds [`G10`](/docs/gcode/G010.html)/[`G11`](/docs/gcode/G011.html) c
 
 ### Universal Tool Change Settings
 ```cpp
-#if EXTRUDERS > 1
-  #define TOOLCHANGE_ZRAISE     2  // (mm)
-  //#define TOOLCHANGE_NO_RETURN   // Never return to the previous position on tool-change
+#if HAS_MULTI_EXTRUDER
+  // Z raise distance for tool-change, as needed for some extruders
+  #define TOOLCHANGE_ZRAISE                 2 // (mm)
+  //#define TOOLCHANGE_ZRAISE_BEFORE_RETRACT  // Apply raise before swap retraction (if enabled)
+  //#define TOOLCHANGE_NO_RETURN              // Never return to previous position on tool-change
   #if ENABLED(TOOLCHANGE_NO_RETURN)
-    //#define EVENT_GCODE_AFTER_TOOLCHANGE "G12X"   // G-code to run after tool-change is complete
+    //#define EVENT_GCODE_AFTER_TOOLCHANGE "G12X"   // Extra G-code to run after tool-change
   #endif
+
+  /**
+   * Extra G-code to run while executing tool-change commands. Can be used e.g. to drive the 
+   * tool-changer with an additional stepper motor (I axis, see option LINEAR_AXES in Configuration.h).
+   */
+  //#define EVENT_GCODE_TOOLCHANGE_T0 "G28 A\nG1 A0" // Extra G-code to run while executing tool-change command T0
+  //#define EVENT_GCODE_TOOLCHANGE_T1 "G1 A10"       // Extra G-code to run while executing tool-change command T1
+
+  /**
+   * Tool Sensors detect when tools have been picked up or dropped.
+   * Requires the pins TOOL_SENSOR1_PIN, TOOL_SENSOR2_PIN, etc.
+   */
+  //#define TOOL_SENSOR
+
+  /**
+   * Retract and prime filament on tool-change to reduce
+   * ooze and stringing and to get cleaner transitions.
+   */
   //#define TOOLCHANGE_FILAMENT_SWAP
   #if ENABLED(TOOLCHANGE_FILAMENT_SWAP)
-    #define TOOLCHANGE_FIL_SWAP_LENGTH          12  // (mm)
-    #define TOOLCHANGE_FIL_EXTRA_PRIME           2  // (mm)
-    #define TOOLCHANGE_FIL_SWAP_RETRACT_SPEED 3600  // (mm/m)
-    #define TOOLCHANGE_FIL_SWAP_PRIME_SPEED   3600  // (mm/m)
+    // Load / Unload
+    #define TOOLCHANGE_FS_LENGTH              12  // (mm) Load / Unload length
+    #define TOOLCHANGE_FS_EXTRA_RESUME_LENGTH  0  // (mm) Extra length for better restart, fine tune by LCD/Gcode)
+    #define TOOLCHANGE_FS_RETRACT_SPEED   (50*60) // (mm/min) (Unloading)
+    #define TOOLCHANGE_FS_UNRETRACT_SPEED (25*60) // (mm/min) (On SINGLENOZZLE or Bowden loading must be slowed down)
+
+    // Longer prime to clean out a SINGLENOZZLE
+    #define TOOLCHANGE_FS_EXTRA_PRIME          0  // (mm) Extra priming length
+    #define TOOLCHANGE_FS_PRIME_SPEED    (4.6*60) // (mm/min) Extra priming feedrate
+    #define TOOLCHANGE_FS_WIPE_RETRACT         0  // (mm/min) Retract before cooling for less stringing, better wipe, etc.
+
+    // Cool after prime to reduce stringing
+    #define TOOLCHANGE_FS_FAN                 -1  // Fan index or -1 to skip
+    #define TOOLCHANGE_FS_FAN_SPEED          255  // 0-255
+    #define TOOLCHANGE_FS_FAN_TIME            10  // (seconds)
+
+    // Swap uninitialized extruder with TOOLCHANGE_FS_PRIME_SPEED for all lengths (recover + prime)
+    // (May break filament if not retracted beforehand.)
+    //#define TOOLCHANGE_FS_INIT_BEFORE_SWAP
+
+    // Prime on the first T0 (If other, TOOLCHANGE_FS_INIT_BEFORE_SWAP applied)
+    // Enable it (M217 V[0/1]) before printing, to avoid unwanted priming on host connect
+    //#define TOOLCHANGE_FS_PRIME_FIRST_USED
+
+    /**
+     * Tool Change Migration
+     * This feature provides G-code and LCD options to switch tools mid-print.
+     * All applicable tool properties are migrated so the print can continue.
+     * Tools must be closely matching and other restrictions may apply.
+     * Useful to:
+     *   - Change filament color without interruption
+     *   - Switch spools automatically on filament runout
+     *   - Switch to a different nozzle on an extruder jam
+     */
+    #define TOOLCHANGE_MIGRATION_FEATURE
+
   #endif
+
+  /**
+   * Position to park head during tool change.
+   * Doesn't apply to SWITCHING_TOOLHEAD, DUAL_X_CARRIAGE, or PARKING_EXTRUDER
+   */
   //#define TOOLCHANGE_PARK
   #if ENABLED(TOOLCHANGE_PARK)
     #define TOOLCHANGE_PARK_XY    { X_MIN_POS + 10, Y_MIN_POS + 10 }
-    #define TOOLCHANGE_PARK_XY_FEEDRATE 6000  // (mm/m)
+    #define TOOLCHANGE_PARK_XY_FEEDRATE 6000  // (mm/min)
+    //#define TOOLCHANGE_PARK_X_ONLY          // X axis only move
+    //#define TOOLCHANGE_PARK_Y_ONLY          // Y axis only move
   #endif
-#endif
+#endif // HAS_MULTI_EXTRUDER
 ```
 
 ## Advanced Pause
@@ -3430,96 +3527,7 @@ Experimental feature for filament change support and parking the nozzle when pau
     #define X_SENSE_RESISTOR    91  // (mOhms)
     #define X_MICROSTEPS        16  // Number of microsteps
   #endif
-
-  #if AXIS_DRIVER_TYPE_X2(TMC26X)
-    #define X2_MAX_CURRENT    1000
-    #define X2_SENSE_RESISTOR   91
-    #define X2_MICROSTEPS       16
-  #endif
-
-  #if AXIS_DRIVER_TYPE_Y(TMC26X)
-    #define Y_MAX_CURRENT     1000
-    #define Y_SENSE_RESISTOR    91
-    #define Y_MICROSTEPS        16
-  #endif
-
-  #if AXIS_DRIVER_TYPE_Y2(TMC26X)
-    #define Y2_MAX_CURRENT    1000
-    #define Y2_SENSE_RESISTOR   91
-    #define Y2_MICROSTEPS       16
-  #endif
-
-  #if AXIS_DRIVER_TYPE_Z(TMC26X)
-    #define Z_MAX_CURRENT     1000
-    #define Z_SENSE_RESISTOR    91
-    #define Z_MICROSTEPS        16
-  #endif
-
-  #if AXIS_DRIVER_TYPE_Z2(TMC26X)
-    #define Z2_MAX_CURRENT    1000
-    #define Z2_SENSE_RESISTOR   91
-    #define Z2_MICROSTEPS       16
-  #endif
-
-  #if AXIS_DRIVER_TYPE_Z3(TMC26X)
-    #define Z3_MAX_CURRENT    1000
-    #define Z3_SENSE_RESISTOR   91
-    #define Z3_MICROSTEPS       16
-  #endif
-
-  #if AXIS_DRIVER_TYPE_Z4(TMC26X)
-    #define Z4_MAX_CURRENT    1000
-    #define Z4_SENSE_RESISTOR   91
-    #define Z4_MICROSTEPS       16
-  #endif
-
-  #if AXIS_DRIVER_TYPE_E0(TMC26X)
-    #define E0_MAX_CURRENT    1000
-    #define E0_SENSE_RESISTOR   91
-    #define E0_MICROSTEPS       16
-  #endif
-
-  #if AXIS_DRIVER_TYPE_E1(TMC26X)
-    #define E1_MAX_CURRENT    1000
-    #define E1_SENSE_RESISTOR   91
-    #define E1_MICROSTEPS       16
-  #endif
-
-  #if AXIS_DRIVER_TYPE_E2(TMC26X)
-    #define E2_MAX_CURRENT    1000
-    #define E2_SENSE_RESISTOR   91
-    #define E2_MICROSTEPS       16
-  #endif
-
-  #if AXIS_DRIVER_TYPE_E3(TMC26X)
-    #define E3_MAX_CURRENT    1000
-    #define E3_SENSE_RESISTOR   91
-    #define E3_MICROSTEPS       16
-  #endif
-
-  #if AXIS_DRIVER_TYPE_E4(TMC26X)
-    #define E4_MAX_CURRENT    1000
-    #define E4_SENSE_RESISTOR   91
-    #define E4_MICROSTEPS       16
-  #endif
-
-  #if AXIS_DRIVER_TYPE_E5(TMC26X)
-    #define E5_MAX_CURRENT    1000
-    #define E5_SENSE_RESISTOR   91
-    #define E5_MICROSTEPS       16
-  #endif
-
-  #if AXIS_DRIVER_TYPE_E6(TMC26X)
-    #define E6_MAX_CURRENT    1000
-    #define E6_SENSE_RESISTOR   91
-    #define E6_MICROSTEPS       16
-  #endif
-
-  #if AXIS_DRIVER_TYPE_E7(TMC26X)
-    #define E7_MAX_CURRENT    1000
-    #define E7_SENSE_RESISTOR   91
-    #define E7_MICROSTEPS       16
-  #endif
+  ...
 
 #endif
 ```
@@ -3535,122 +3543,91 @@ You'll need to import the [TMC26XStepper](//github.com/trinamic/TMC26XStepper.gi
   #if AXIS_IS_TMC(X)
     #define X_CURRENT       800        // (mA) RMS current. Multiply by 1.414 for peak current.
     #define X_CURRENT_HOME  X_CURRENT  // (mA) RMS current for sensorless homing
-    #define X_MICROSTEPS     16    // 0..256
+    #define X_MICROSTEPS     16        // 0..256
     #define X_RSENSE          0.11
-    #define X_CHAIN_POS      -1    // <=0 : Not chained. 1 : MCU MOSI connected. 2 : Next in chain, ...
+    #define X_CHAIN_POS      -1        // -1..0: Not chained. 1: MCU MOSI connected. 2: Next in chain, ...
+    //#define X_INTERPOLATE  true      // Enable to override 'INTERPOLATE' for the X axis
+  #endif
+  ...
+
+  //#define X_CS_PIN          -1
+  //#define Y_CS_PIN          -1
+  //#define Z_CS_PIN          -1
+  ...
+
+  //#define  X_SLAVE_ADDRESS 0
+  //#define  Y_SLAVE_ADDRESS 0
+  //#define  Z_SLAVE_ADDRESS 0
+  ...
+
+  //#define SOFTWARE_DRIVER_ENABLE
+
+  #define STEALTHCHOP_XY
+  #define STEALTHCHOP_Z
+  #define STEALTHCHOP_I
+  #define STEALTHCHOP_J
+  #define STEALTHCHOP_K
+  #define STEALTHCHOP_E
+
+  #define CHOPPER_TIMING CHOPPER_DEFAULT_12V        // All axes (override below)
+  //#define CHOPPER_TIMING_X  CHOPPER_TIMING        // For X Axes (override below)
+  //#define CHOPPER_TIMING_X2 CHOPPER_TIMING_X
+  //#define CHOPPER_TIMING_Y  CHOPPER_TIMING        // For Y Axes (override below)
+  //#define CHOPPER_TIMING_Y2 CHOPPER_TIMING_Y
+  //#define CHOPPER_TIMING_Z  CHOPPER_TIMING        // For Z Axes (override below)
+  //#define CHOPPER_TIMING_Z2 CHOPPER_TIMING_Z
+  //#define CHOPPER_TIMING_Z3 CHOPPER_TIMING_Z
+  //#define CHOPPER_TIMING_Z4 CHOPPER_TIMING_Z
+  //#define CHOPPER_TIMING_E  CHOPPER_TIMING        // For Extruders (override below)
+  //#define CHOPPER_TIMING_E1 CHOPPER_TIMING_E
+  //#define CHOPPER_TIMING_E2 CHOPPER_TIMING_E
+  //#define CHOPPER_TIMING_E3 CHOPPER_TIMING_E
+  //#define CHOPPER_TIMING_E4 CHOPPER_TIMING_E
+  //#define CHOPPER_TIMING_E5 CHOPPER_TIMING_E
+  //#define CHOPPER_TIMING_E6 CHOPPER_TIMING_E
+  //#define CHOPPER_TIMING_E7 CHOPPER_TIMING_E
+
+  //#define MONITOR_DRIVER_STATUS
+
+  #if ENABLED(MONITOR_DRIVER_STATUS)
+    #define CURRENT_STEP_DOWN     50  // [mA]
+    #define REPORT_CURRENT_CHANGE
+    #define STOP_ON_ERROR
   #endif
 
-  #if AXIS_IS_TMC(X2)
-    #define X2_CURRENT      800
-    #define X2_CURRENT_HOME X2_CURRENT
-    #define X2_MICROSTEPS    16
-    #define X2_RSENSE         0.11
-    #define X2_CHAIN_POS     -1
+  //#define HYBRID_THRESHOLD
+
+  #define X_HYBRID_THRESHOLD     100  // [mm/s]
+  ...
+
+  //#define SENSORLESS_HOMING // StallGuard capable drivers only
+
+  #if EITHER(SENSORLESS_HOMING, SENSORLESS_PROBING)
+    // TMC2209: 0...255. TMC2130: -64...63
+    #define X_STALL_SENSITIVITY  8
+    #define X2_STALL_SENSITIVITY X_STALL_SENSITIVITY
+    #define Y_STALL_SENSITIVITY  8
+    #define Y2_STALL_SENSITIVITY Y_STALL_SENSITIVITY
+    //#define Z_STALL_SENSITIVITY  8
+    //#define Z2_STALL_SENSITIVITY Z_STALL_SENSITIVITY
+    //#define Z3_STALL_SENSITIVITY Z_STALL_SENSITIVITY
+    //#define Z4_STALL_SENSITIVITY Z_STALL_SENSITIVITY
+    //#define I_STALL_SENSITIVITY  8
+    //#define J_STALL_SENSITIVITY  8
+    //#define K_STALL_SENSITIVITY  8
+    //#define SPI_ENDSTOPS              // TMC2130 only
+    //#define IMPROVE_HOMING_RELIABILITY
   #endif
 
-  #if AXIS_IS_TMC(Y)
-    #define Y_CURRENT       800
-    #define Y_CURRENT_HOME  Y_CURRENT
-    #define Y_MICROSTEPS     16
-    #define Y_RSENSE          0.11
-    #define Y_CHAIN_POS      -1
-  #endif
+   //#define TMC_HOME_PHASE { 896, 896, 896 }
 
-  #if AXIS_IS_TMC(Y2)
-    #define Y2_CURRENT      800
-    #define Y2_CURRENT_HOME Y2_CURRENT
-    #define Y2_MICROSTEPS    16
-    #define Y2_RSENSE         0.11
-    #define Y2_CHAIN_POS     -1
-  #endif
+  //#define SQUARE_WAVE_STEPPING
 
-  #if AXIS_IS_TMC(Z)
-    #define Z_CURRENT       800
-    #define Z_CURRENT_HOME  Z_CURRENT
-    #define Z_MICROSTEPS     16
-    #define Z_RSENSE          0.11
-    #define Z_CHAIN_POS      -1
-  #endif
+  //#define TMC_DEBUG
 
-  #if AXIS_IS_TMC(Z2)
-    #define Z2_CURRENT      800
-    #define Z2_CURRENT_HOME Z2_CURRENT
-    #define Z2_MICROSTEPS    16
-    #define Z2_RSENSE         0.11
-    #define Z2_CHAIN_POS     -1
-  #endif
+  #define TMC_ADV() {  }
 
-  #if AXIS_IS_TMC(Z3)
-    #define Z3_CURRENT      800
-    #define Z3_CURRENT_HOME Z3_CURRENT
-    #define Z3_MICROSTEPS    16
-    #define Z3_RSENSE         0.11
-    #define Z3_CHAIN_POS     -1
-  #endif
-
-  #if AXIS_IS_TMC(Z4)
-    #define Z4_CURRENT      800
-    #define Z4_CURRENT_HOME Z4_CURRENT
-    #define Z4_MICROSTEPS    16
-    #define Z4_RSENSE         0.11
-    #define Z4_CHAIN_POS     -1
-  #endif
-
-  #if AXIS_IS_TMC(E0)
-    #define E0_CURRENT      800
-    #define E0_MICROSTEPS    16
-    #define E0_RSENSE         0.11
-    #define E0_CHAIN_POS     -1
-  #endif
-
-  #if AXIS_IS_TMC(E1)
-    #define E1_CURRENT      800
-    #define E1_MICROSTEPS    16
-    #define E1_RSENSE         0.11
-    #define E1_CHAIN_POS     -1
-  #endif
-
-  #if AXIS_IS_TMC(E2)
-    #define E2_CURRENT      800
-    #define E2_MICROSTEPS    16
-    #define E2_RSENSE         0.11
-    #define E2_CHAIN_POS     -1
-  #endif
-
-  #if AXIS_IS_TMC(E3)
-    #define E3_CURRENT      800
-    #define E3_MICROSTEPS    16
-    #define E3_RSENSE         0.11
-    #define E3_CHAIN_POS     -1
-  #endif
-
-  #if AXIS_IS_TMC(E4)
-    #define E4_CURRENT      800
-    #define E4_MICROSTEPS    16
-    #define E4_RSENSE         0.11
-    #define E4_CHAIN_POS     -1
-  #endif
-
-  #if AXIS_IS_TMC(E5)
-    #define E5_CURRENT      800
-    #define E5_MICROSTEPS    16
-    #define E5_RSENSE         0.11
-    #define E5_CHAIN_POS     -1
-  #endif
-
-  #if AXIS_IS_TMC(E6)
-    #define E6_CURRENT      800
-    #define E6_MICROSTEPS    16
-    #define E6_RSENSE         0.11
-    #define E6_CHAIN_POS     -1
-  #endif
-
-  #if AXIS_IS_TMC(E7)
-    #define E7_CURRENT      800
-    #define E7_MICROSTEPS    16
-    #define E7_RSENSE         0.11
-    #define E7_CHAIN_POS     -1
-  #endif
+#endif // HAS_TRINAMIC_CONFIG
 ```
 You'll need the [TMC2130Stepper](//github.com/teemuatlut/TMC2130Stepper) Arduino library. See the `Configuration_adv.h` file for the full set of sub-options.
 
