@@ -22,7 +22,7 @@ The following options define the probing positions. These are good starting valu
 #define FRONT_PROBE_BED_POSITION 30
 ```
 
-X and Y axis travel speed between probes, in mm/m. Bear in mind that really fast moves may render step skipping. 6000mm/m (100mm/s) is a good value:
+X and Y axis travel speed between probes, in mm/min. Bear in mind that really fast moves may render step skipping. 6000 mm/min (100mm/s) is a good value:
 
 `#define XY_TRAVEL_SPEED 6000`
 
