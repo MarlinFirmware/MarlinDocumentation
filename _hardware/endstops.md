@@ -82,7 +82,7 @@ and build upwards from there. The result of homing the z-axis should thus place 
 build surface at the z=0 plane. After homing in z, the hardware
 z endstop is deactivated (unless you have set
 `ENDSTOPS_ALWAYS_ON_DEFAULT` in configuration_adv.h, which can be overridden by
-[M120](/docs/gcode/M120.html), [M121](/docs/gcode/M120.html)), but to protect the hardware a software endstop is
+[M120](/docs/gcode/M120.html), [M121](/docs/gcode/M121.html)), but to protect the hardware a software endstop is
 activated (which in turn can be overridden by
 [M211](/docs/gcode/M211.html) S0). This software
 endstop is located at `Z_MIN_POS` (defined in configuration.h) .
