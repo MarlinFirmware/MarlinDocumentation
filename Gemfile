@@ -14,3 +14,4 @@ gem 'kramdown', '>= 2.3.0'
 gem 'naturally', '>= 2.2.1'
 gem 'wdm', '>= 0.1.0' if Gem.win_platform?
 gem 'tzinfo-data', '>= 1.2020.1'
+gem "webrick", "~> 1.7"
