@@ -1223,21 +1223,28 @@ Enable/Disable software endstops from the LCD
   // (After 'M412 H' Marlin will ask the host to handle the process.)
   #define FILAMENT_RUNOUT_SCRIPT "M600"
 
-  // After a runout is detected, continue printing this length of filament
-  // before executing the runout script. Useful for a sensor at the end of
-  // a feed tube. Requires 4 bytes SRAM per sensor, plus 4 bytes overhead.
+  // When using a runout switch (no encoder), after a runout is detected, 
+  // continue printing this length of filament before executing the runout script. 
+  // Useful for a sensor at the end of a feed tube.
+  // If using an encoder disc, this is the lenth of filament that would print
+  // without any movement from the sensor before it triggers a runout.
+  // Requires 4 bytes SRAM per sensor, plus 4 bytes overhead.
   //#define FILAMENT_RUNOUT_DISTANCE_MM 25
 
   #ifdef FILAMENT_RUNOUT_DISTANCE_MM
-    // Enable this option to use an encoder disc that toggles the runout pin
-    // as the filament moves. (Be sure to set FILAMENT_RUNOUT_DISTANCE_MM
-    // large enough to avoid false positives.)
+    // Enable this option to use an encoder disc that toggles the runout pin as the filament moves. 
+    // Be sure to set FILAMENT_RUNOUT_DISTANCE_MM large enough to avoid false positives. 
+    // Start at the value of the sensor for one revolution and if you experience false positives, 
+    // increment the value by the same amount. 
+    // ie., 7mm is set, and you get false positives, set it to 14 and try it again.
     //#define FILAMENT_MOTION_SENSOR
   #endif
 #endif
 ```
 
-With this feature, a mechanical or opto endstop switch is used to check for the presence of filament in the feeder (usually the switch is closed when filament is present). If the filament runs out, Marlin will run the specified G-code script (by default [`M600`](/docs/gcode/M600.html)). RAMPS-based boards use `SERVO3_PIN`. For other boards you may need to define `FIL_RUNOUT_PIN`.
+With this feature, a mechanical or opto endstop switch is used to check for the presence of filament in the feeder (usually the switch is closed when filament is present). If the filament runs out, Marlin will run the specified G-code script (by default [`M600`](/docs/gcode/M600.html)). 
+
+RAMPS-based boards use `SERVO3_PIN`. For other boards you may need to define `FIL_RUNOUT_PIN`. Enable the [`M43`](/docs/gcode/M43.html) feature in your firmware (`PINS_DEBUGGING`) and load it to your printer. Assuming you already have a runout sensor (switch based) there, you can watch the pin states while toggling the runout sensor on an off to see which pin is changing. 
 
 ## Bed Leveling
 
