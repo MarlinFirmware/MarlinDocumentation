@@ -1,17 +1,20 @@
-- name: gcode
-  img: gcode.png
-  alt: G-code
-  title: Rich G-code Dialect
-  link: meta/gcode/
-
-- name: ctrlboard
-  img: boards.jpg
-  alt: Controller Board
-  title: Supports AVR and ARM
+- name: autobuild
+  img: autobuild-ss.png
+  alt: Auto Build Marlin - a Visual Studio Code extension
+  title: Auto Build Marlin
+  description: A VSCode extension for a one-click build and upload interface for Marlin.
   link: docs/hardware/boards.html
 
 - name: inductiveprobe
-  img: probe.jpg
+  img: bedleveling-mesh.png
   alt: Inductive Probe
   title: Automatic Bed Leveling
+  description: Improve the quality of printing and bed adhesion with Auto Bed Leveling.
   link: docs/features/auto_bed_leveling.html
+
+- name: ctrlboard
+  img: boards.png
+  alt: Controller Board - "For All the Boards"
+  title: Supports AVR and ARM
+  description: For All the Boards! - Marlin supports a wide variety of 3D printers, including all RAMPS variants, and more.
+  link: docs/hardware/boards.html

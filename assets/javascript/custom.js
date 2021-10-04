@@ -26,17 +26,16 @@ function getCookie(cname) {
 // Set Lighting according to cookie or time
 
 function setDarkMode(dark) {
-  console.log((dark ? "Setting" :  "Clearing") + " dark mode.");
-  var $b = $('body'), q = '/assets/images/', p = q + 'logo/marlin/';
-  if (dark) $b.addClass('night'); else $b.removeClass('night');
-  $('#mflogo').attr('src', p + 'text-' + (dark ? 'night' : 'day') + '.png');
+  //console.log((dark ? "Set" :  "Clear") + " dark mode.");
+  var $t = $('html'), q = '/assets/images/';
+  dark ? $t.attr('data-theme', 'dark') : $t.removeAttr('data-theme');
   $('#daynite')
     .attr('src', q + 'btn-' + (dark ? 'day' : 'night') + '.svg')
     .css('visibility', 'visible');
 }
 
 function toggleDarkMode() {
-  var dark = !$('body').hasClass('night');
+  var dark = !document.documentElement.hasAttribute("data-theme");
   setDarkMode(dark);
   return dark;
 }
@@ -50,6 +49,35 @@ else
   nightMode = (nightMode === 'true');
 
 setDarkMode(nightMode);
+
+
+// Scroll Position Detection
+
+var $animation_elements = $('.animation-element');
+var $window = $(window);
+
+function check_if_in_view() {
+  var window_height = $window.height();
+  var window_top_position = $window.scrollTop();
+  var window_bottom_position = (window_top_position + window_height);
+
+  $.each($animation_elements, function() {
+    var $element = $(this);
+    var element_height = $element.outerHeight();
+    var element_top_position = ($element.offset().top);
+    var element_bottom_position = (element_top_position + element_height);
+
+    //check to see if this current container is within viewport
+    if ((element_bottom_position >= window_top_position) &&
+        (element_top_position + 100 <= window_bottom_position)) {
+      $element.addClass('in-view');
+    } else {
+      // $element.removeClass('in-view');  // uncomment to animate out
+    }
+  });
+}
+check_if_in_view();
+$window.on('scroll', check_if_in_view);
 
 $(function() {
 
@@ -94,13 +122,24 @@ $(function() {
 
   // Resize image to fit panel
   function resizeImage() {
+    var w = $(window).width(), maxw = maxWindowWidth + 100;
     $('.custom-article img').each(function() {
       var $t = $(this);
       if ($t.width() >= 600) {
-        var w = $(window).width(), maxw = maxWindowWidth + 100;
         $(this).css('width', w >= maxw ? '840px' : w >= minWindowWidth ? '90%' : '690px');
       }
     });
+    if (w <= 991) {
+      $('.mfw-bg').css('position', 'absolute');
+      var rightShift = 520;
+      $('.mfw-bg').css('right', rightShift + 'px');
+      $('#mfw-logo').addClass('mfw-bg');
+    }
+    else {
+      $('.mfw-bg').css('position', 'relative');
+      $('#mfw-logo').removeClass('mfw-bg');
+      $('#mfw-logo').css('right', 0 );
+    }
   }
 
   function shiftSubMenu() {

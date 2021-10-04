@@ -11,7 +11,7 @@
 
 {% seo %}
 
-    <link rel="icon" href="{{ '/assets/favicon.ico' | prepend: site.baseurl }}" />
+    <link rel="icon" href="{{ '/assets/favicon_m.ico' | prepend: site.baseurl }}" />
     <link rel="stylesheet" href="{{ '/assets/stylesheets/main.css' | prepend: site.baseurl }}" />
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -106,16 +106,16 @@
 
 {% if page.show.footer %}
     <footer>
-      <div class="container">
+      <div class="container {% if page.url == '/' or page.collection == 'tools' or page.collection == 'meta' %} noShift-footer {% else %} shift-footer {% endif %}">
         <div class="row">
-          <div class="col-lg-8">
+          <div class="col-8">
             <p>Brought to you with <i class="fa fa-heart text-danger" aria-hidden="true"></i> lack of
               <i class="fa fa-bed" aria-hidden="true"></i> and lots of
               <i class="fa fa-coffee" aria-hidden="true"></i>. <br />
               The contents of this website are &copy; {{ site.time | date: '%Y' }} under the terms of the <a href="//www.gnu.org/licenses/gpl-3.0.txt">GPLv3</a> License.</p>
           </div>
-          <div class="col-lg-4">
-            <div class="pull-right">
+          <div class="col-4">
+            <div class="pull-right back-to-top">
               <a href="#top" data-proofer-ignore>
               Back to top <i class="fa fa-level-up" aria-hidden="true"></i></a>
             </div>
