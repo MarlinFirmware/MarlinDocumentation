@@ -4,86 +4,139 @@ title:        'Home'
 description:  'Marlin Firmware - A really good 3D printer driver.'
 category:     [ default ]
 ---
-
-<div class="custom-tagline">
-  <div class="container">
-    <div class="row">
-      <div class="col-sm-12 col-md-7">
+<div class="container custom-tagline">
+  <div class="row">
+    <div class="col-md-7" style="z-index: 10; padding-bottom: 5em;">
         <h1>Marlin Firmware</h1>
         <h2 id="tagline">Open Source 3D Printer Driver</h2>
         <p class="text-justify">First created in 2011 for RepRap and Ultimaker by <a href="//github.com/ErikZalm">Erik van der Zalm</a> et. al., today Marlin drives most of the world's 3D printers. Reliable and precise, Marlin delivers outstanding print quality while keeping you in full control of the process.</p>
-        <p>As an <a href="//opensource.org/">Open Source</a> project hosted on <a href="//github.com/">Github</a>, Marlin is owned and maintained by the maker community. <a href="/docs/development/contributing.html">Learn how you can contribute!</a></p>
-      </div>
-      <div class="col-sm-12 col-md-5 custom-tagline-btn">
-        <p><a class="btn btn-success btn-block btn-lg" href="{{ '/docs/basics/introduction.html' }}" role="button">
-          <em class="fa fa-book fa-1x" aria-hidden="true"></em>&nbsp; Learn more</a></p>
-        <p><a class="btn btn-primary btn-block btn-lg" href="{{ '/docs/development/contributing.html' }}" role="button">
-          <em class="fa fa-user fa-1x" aria-hidden="true"></em>&nbsp; Contribute</a></p>
-        <p><a class="btn btn-info btn-block btn-lg" href="{{ '/meta/download/' }}" role="button">
-          <em class="fa fa-download fa-1x" aria-hidden="true"></em>&nbsp; Download {{ site.data.marlin[0].version }}</a></p>
-      </div>
+        <p>As an <a href="//opensource.org/">Open Source</a> project hosted on <a href="//github.com/">Github</a>, Marlin is owned and maintained by the maker community. <a href="{{ '/docs/development/contributing.html' }}" >Learn how you can contribute!</a></p>
+        <a href="{{ '/meta/download' }}" class="btn btn-download btn-block btn-lg" style=" width: fit-content; margin: 0 auto;" role="button">Download Marlin {{ site.data.marlin[0].version }}</a>
+    </div>
+    <div class="col-md-5" id="mfw-logo">
+        <img id="svg-marlin-sun" src="{{ '/assets/images/marlin-outrun-sun.svg' }}" alt="Marlin Outrun" width="320" height="286" />
+        <img id="svg-marlin-tri" src="{{ '/assets/images/marlin-outrun-tri.svg' }}" alt="Marlin Outrun" width="320" height="286" />
+        <img id="svg-marlin-fishf" src="{{ '/assets/images/marlin-outrun-fishf.svg' }}" alt="Marlin Outrun" width="320" height="286" />
+        <img id="svg-marlin-fishol" src="{{ '/assets/images/marlin-outrun-fishol.svg' }}" alt="Marlin Outrun" width="320" height="286" />
+        <img id="svg-marlin-logo" src="{{ '/assets/images/marlin-outrun-logo.svg' }}" alt="Marlin Outrun" width="320" height="286" />
     </div>
   </div>
 </div>
 
-{% capture tiles %}
-  <div class="custom-tile">
-    <div class="container">
-      <div class="row">
-        {% for feature in site.data.features %}
-          <div class="col-sm-4">
-            <div class="custom-tile-image-wrapper">
-              <a href="{{ feature.link }}">
-              <div class="custom-tile-image-block" style="background: url({{ '/assets/images/features/' | append: feature.img }}) no-repeat center top; background-size: cover;">
-                <div class="custom-tile-image-legend">
-                  {{ feature.title }}
-                  <em class="fa fa-arrow-circle-right fa-1x" aria-hidden="true"></em>
-                </div>
-              </div>
-              </a>
-            </div>
+<div class="mid-section">
+
+  <div class="container highlight-panels">
+    <div class="row">
+
+      <a href="{{ '/meta/features' }}" alt="Advanced temperature & motion controls for high precision tuning" class="col-sm-4 panel-wrapper">
+        <div class="panel">
+          <div class="panel-heading"><h3>Precision & Accuracy</h3></div>
+          <div class="panel-body panel-svg"><div id="svg-precision"></div>
+          Advanced temperature & motion controls for high precision tuning
           </div>
-        {% endfor %}
-      </div>
-    </div>
-  </div>
-{% endcapture %}
+        </div>
+      </a>
 
-{% capture discord %}
-  <div class="home-discord">
-    <h3>A helpful user community!</h3>
-    <iframe src="https://discordapp.com/widget?id=461605380783472640&theme=light" width="350" height="340" allowtransparency="true" frameborder="0"></iframe>
-  </div>
-{% endcapture %}
+      <a href="{{ '/docs/basics/introduction.html#main-features' }}" alt="Operate with peace of mind with thermal-runaway, powerloss-recovery, filament-runout and more" class="col-sm-5 panel-wrapper" >
+        <div class="panel">
+          <div class="panel-heading"><h3>Safety & Protection</h3></div>
+          <div class="panel-body"><div id="svg-protection"></div>
+          Operate with peace of mind with thermal-runaway, powerloss-recovery, filament-runout and more
+          </div>
+        </div>
+      </a>
 
-<div id="marlin-carousel" class="carousel slide" data-ride="carousel">
-  <div class="carousel-inner">
-    <div class="item">
-      <img src="/assets/images/carousel/marlin-outrun-slide.jpg" alt="Marlin - Outrun" />
+      <a href="{{ '/docs/basics/introduction.html#slicing' }}" alt="Established industry standards with over 150 G-Code commands" class="col-sm-3 panel-wrapper" >
+        <div class="panel">
+          <div class="panel-heading"><h3>Used Globally</h3></div>
+          <div class="panel-body"><div id="svg-globally"></div>
+          Installed and regularly tested on thousands of machines worldwide.
+          </div>
+        </div>
+      </a>
+
+    </div> <!-- row -->
+  </div> <!-- container -->
+
+  <div class="container">
+    {% for feature in site.data.features %}
+    <div class="row features-tile-wrapper">
+      <a href="{{ feature.link }}" >
+        <div class="col-md-6 features-tile-image animation-element slide-left" style="background: url({{ '/assets/images/features/' | append: feature.img }}) no-repeat center top; background-size: cover;">
+          <div class="row features-tile-title">
+            {{ feature.title }}
+            <em class="fa fa-arrow-circle-right fa-1x" aria-hidden="true"></em>
+          </div>
+        </div>
+        <div class="col-md-6 animation-element fade-in">
+          <div class="features-tile-body ">
+            {{ feature.description }}
+          </div>
+        </div>
+      </a>
+      <hr class="custom-hr animation-element fade-in">
     </div>
-    <div class="item active">{{ tiles }}</div>
-    <div class="item">
-      <img src="/assets/images/carousel/what_is_marlin_slide.png" alt="What is Marlin?" />
-    </div>
-    <div class="item">
-      <img src="/assets/images/carousel/carousel-code.jpg" alt="The codes" />
-    </div>
-    <div class="item">{{ tiles }}</div>
-    <div class="item">
-      <img src="/assets/images/carousel/banner-01.jpg" alt="Marlin in action" />
-    </div>
-    <div class="item">
-      <img src="/assets/images/carousel/example-450.jpg" alt="Printing with Marlin" />
-    </div>
-    <div class="item">{{ tiles }}</div>
-    <div class="item">
-      <img src="/assets/images/carousel/controller.jpg" alt="LCD Menu Controls" />
-    </div>
+    {% endfor %}
+  </div>
+</div>
+<!-- end mid-section" -->
+
+<div class="container extra-panels">
+  <div class="row">
+      <a class="col-sm-4 animation-element slide-up panel-wrapper" href="{{ '/docs/basics/introduction.html' }}">
+        <div class="panel">
+          <div class="panel-heading panel-learn"><h4><em class="fa fa-book fa-1x" aria-hidden="true"></em> Learn More</h4></div>
+          <div class="panel-body">What is Marlin, and how does it work? <br/></div>
+        </div>
+      </a>
+      <a class="col-sm-4 animation-element slide-up panel-wrapper" href="//github.com/MarlinFirmware/Marlin">
+        <div class="panel">
+          <div class="panel-heading panel-github"><h4><em class="fa fa-github-square fa-1x" aria-hidden="true"></em> Marlin on Github</h4></div>
+          <div class="panel-body">Contribute to our ever expanding open source Marlin project on GitHub!</div>
+        </div>
+      </a>
+      <a class="col-sm-4 animation-element slide-up panel-wrapper" href="//discord.com/invite/8hpXCgYM">
+        <div class="panel">
+          <div class="panel-heading panel-discord"><h4><em class="fa fa-comments-o fa-1x" aria-hidden="true"></em> Join Our Discord</h4></div>
+          <div class="panel-body">Get help, chat, and share with other Marlin users on our Discord channel.</div>
+        </div>
+      </a>
   </div>
 </div>
 
-<script language="javascript"><!--
-  // <![CDATA[
+<script src="{{ '/assets/javascript/vivus.js'}}"></script>
+<script>
+  const vivusPrecision = new Vivus('svg-precision', {
+    duration: 250,
+    type: 'oneByOne',
+    file: "{{ '/assets/images/features/precision.svg' }}",
+    onReady: function () {
+      setTimeout(playVivus, 1000);
+      }
+  });
+  const vivusProtection = new Vivus('svg-protection', {
+    duration: 300,
+    type: 'oneByOne',
+    file: "{{ '/assets/images/features/protection.svg' }}"
+  });
+  const vivusGlobally = new Vivus('svg-globally', {
+    duration: 300,
+    type: 'oneByOne',
+    file: "{{ '/assets/images/features/globally.svg' }}"
+  });
+
+  function playVivus(){
+    document.getElementById('svg-precision').style.visibility = "visible";
+    vivusPrecision.reset().play(1);
+    document.getElementById('svg-protection').style.visibility = "visible";
+    vivusProtection.reset().play(1);
+    document.getElementById('svg-globally').style.visibility = "visible";
+    vivusGlobally.reset().play(1);
+  }
+</script>
+
+<script language="javascript">
+  // Custom Taglines
   var taglines = [
     "The code that makes the things",
     "Printing things since 2011",
@@ -102,5 +155,4 @@ category:     [ default ]
   ],
   tagline = taglines[Math.floor(Math.random()*taglines.length)];
   document.getElementById('tagline').innerText = tagline;
-  // ]]>
 </script>
