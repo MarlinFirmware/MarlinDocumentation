@@ -320,7 +320,7 @@ Git marks conflicts within the file and then writes the modified file to the dir
 
 Open the modified file (the file name didn't change but the timestamp did) and search for `<<<<<<< HEAD`. This marks the beginning of the code that could be newer than what you started with. The `=======` marks the boundary between the newer code and the original code in your file. The `>>>>>>>` line marks the end of the conflicting code. In this example, "`#endif in wrong place`" is the title of the commit that GIT couldn't automatically handle.
 
-Resolving conclicts is a bit of an art, and it may take some practice to start getting a feel for what's going on. Often it may be helpful to consult the copy you made just before opening the Git Shell. It may help to keep the latest `bugfix-2.0.x` on GitHub open in the browser as a reference on what to keep and what to change.
+Resolving conflicts is a bit of an art, and it may take some practice to start getting a feel for what's going on. Often it may be helpful to consult the copy you made just before opening the Git Shell. It may help to keep the latest `bugfix-2.0.x` on GitHub open in the browser as a reference on what to keep and what to change.
 
 ![image48]({{ 'pull_48.jpg' | prepend: site.pull_img }})
 
