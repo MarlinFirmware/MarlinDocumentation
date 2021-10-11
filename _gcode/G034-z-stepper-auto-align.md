@@ -9,7 +9,7 @@ experimental: true
 group: calibration
 
 codes: [ G34 ]
-related: [ M422 ]
+related: [ M422, M906, M907 ]
 
 notes:
   - Requires `Z_STEPPER_AUTO_ALIGN`.

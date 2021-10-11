@@ -8,7 +8,7 @@ requires: MECHANICAL_GANTRY_CALIBRATION
 group: calibration
 
 codes: [ G34 ]
-related: [ M422, M915 ]
+related: [ M422, M906, M907, M915 ]
 
 notes:
   - Requires `MECHANICAL_GANTRY_CALIBRATION`.
