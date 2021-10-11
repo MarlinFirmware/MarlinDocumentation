@@ -42,7 +42,7 @@ example:
       - G34
 ---
 
-The command aims to align the ends of the X gantry (for a Průša i3-style printer). Here's a [video demonstration](//www.youtube.com/watch?v=3jAFQdTk8iw&t=684s).
+The command aims to align the ends of the X gantry. Here's a [video demonstration](//www.youtube.com/watch?v=3jAFQdTk8iw&t=684s).
 
 Using the given current, Marlin will move the Z axis (at homing speed) to the top plus a given extra distance. _Since this intentionally stalls the Z steppers, you should use the minimum current required to move the axis._
 
