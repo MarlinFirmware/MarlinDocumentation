@@ -5,7 +5,6 @@ brief: Modern replacement for Průša's TMC_Z_CALIBRATION
 author: thisiskeithb
 
 requires: MECHANICAL_GANTRY_CALIBRATION
-experimental: true
 group: calibration
 
 codes: [ G34 ]
