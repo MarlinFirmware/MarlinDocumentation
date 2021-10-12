@@ -1,5 +1,5 @@
 ---
-title:       Laser/Spindle Configuration
+title:       Laser/Spindle Configuration v1.1.x
 description: Configuring a laser or spindle tool in Marlin.
 
 author: thinkyhead
