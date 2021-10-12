@@ -3,7 +3,7 @@ title:        'Configuring Marlin'
 description:  'Complete guide to Marlin configuration options.'
 
 author: Sarf2k4
-contrib: paulusjacobus, jbrazio, landodragon141, thinkyhead, shitcreek, LMF5000
+contrib: paulusjacobus, jbrazio, landodragon141, thinkyhead, shitcreek, LMF5000, descipher
 category: [ configuration ]
 ---
 
