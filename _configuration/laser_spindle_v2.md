@@ -85,8 +85,8 @@ Timer + Port|Digital Pin|Normal Assignment|System Use|Optional Clients
 TIMER3B|2|X_MAX||
 TIMER3C|3|X_MIN||
 TIMER0B|4|HEATER_4||
-TIMER3A|5|HEATER_5||*servo 0-11 ISR
-TIMER4A|6|HEATER_6||*servo 12-23 ISR
+TIMER3A|5|HEATER_5||servo 0-11 ISR
+TIMER4A|6|HEATER_6||servo 12-23 ISR
 TIMER4B|7|LCD||
 TIMER4C|8|HOTBED||
 TIMER2B|9|HEATER_1||
@@ -97,7 +97,7 @@ TIMER0A|13|LED|LED PWM|
 TIMER1C|13||*stepper ISR|
 TIMER5C|44|LCD||stepper motor current XY PWM
 TIMER5B|45|LCD||stepper motor current Z PWM
-TIMER5A|46|Z_STEP||stepper motor current E PWM or *servo 24-35 ISR
+TIMER5A|46|Z_STEP||stepper motor current E PWM or servo 24-35 ISR
 
 ```
 * These hardware PWMs are not available. The pin can still be used for general purpose digital I/O.
