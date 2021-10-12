@@ -120,6 +120,9 @@ In addition to the above, fans can be assigned to PWM pins. If you pick a pin th
 
 Serveral useful features are currently available for Lasers with 12864 LCDs and even 2004 LCDs:
 
+![Features](/assets/images/config/12864-All.jpg){: width="300" height="150"}
+
+#### Air Assist
 Air Assist pump relay output, enables Menu item and G-CODE `M8/M9` control. 
 
 ``` cpp
@@ -129,7 +132,7 @@ Air Assist pump relay output, enables Menu item and G-CODE `M8/M9` control.
     #define AIR_ASSIST_PIN              44     // Override the default Air Assist pin
   #endif
 ```
-
+#### Air Evacuation
 Air Evacuation motor relay output, enables Menu item and G-CODE `M10/M11` control.
 
 ``` cpp
@@ -139,12 +142,15 @@ Air Evacuation motor relay output, enables Menu item and G-CODE `M10/M11` contro
     #define AIR_EVACUATION_PIN          42     // Override the default Cutter Vacuum or Laser Blower pin
   #endif
 ```
-
+#### Ammeter
 Ammeter support, enables laser current monitoring on both 12864 & 2004 LCDs.
 This is a low side configuration (Ground) current IC that can be used for both CO2 and Diode based lasers.
 It's ideal with High Voltage CO2 laser tubes, it connects between chassis ground and the tube ground. 
 The current can be calibrated by measuring the current with an multimeter then adjusting 
-the `I2C_AMMETER_SHUNT_RESISTOR` slightly up or down to match the measured value. 
+the `I2C_AMMETER_SHUNT_RESISTOR` slightly up or down to match the measured value.
+
+![INA226 Board](/assets/images/config/INA226Board.jpg){: width="300" height="150"}
+![INA226 Wiring](/assets/images/config/INA226.png){: width="300" height="150"}
 
 ``` cpp
 // Laser I2C Ammeter (High precision INA226 low/high side module)
@@ -155,6 +161,7 @@ the `I2C_AMMETER_SHUNT_RESISTOR` slightly up or down to match the measured value
 #endif
 ```
 
+#### Flow Meter
 CO2 Coolant flow meter support, enables laser coolant monitoring on both 12864 & 2004 LCDs.
 Provides tube protection by detecting flow failures and controlling laser enable signals. 
 
@@ -172,6 +179,7 @@ Provides tube protection by detecting flow failures and controlling laser enable
 #endif
 ```
 
+#### Laser Cooler
 Laser cooling control, provides chiller control with temperature monitoring and safety.
 
 ``` cpp
@@ -193,6 +201,7 @@ Laser cooling control, provides chiller control with temperature monitoring and 
 #endif
 ```
 
+#### Spindle Coolant
 Spindle based coolant control, enables M7/M8/M9 G-CODEs.
 
 ``` cpp
