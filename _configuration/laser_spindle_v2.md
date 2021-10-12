@@ -17,7 +17,7 @@ When the `LASER_FEATURE` is enabled it's default operating state will start in S
 
 Two additional modes named Continuous and Dynamic Inline Mode are selectable via `M3/4` GCODEs that include an `I` parameter. Sending `M3I` will enter Continuos mode and `M4I` enters Dynamic Mode. Each mode will remain enabled until a GCODE of `M5I` is sent which returns us back to Standard Mode. S-Values can be included with the first mode M3I inline enable GCODE and will be processed on the next `G1/2/3/5` move.
 
-Dynamic mode is new to Marlin, it is currently developing and experimental. Dynamic mode provides laser power scaled to the  the stepper feedrate. It is simmilar to GRBL 1.1f in M4 dynaamic mode. Stay tuned. 
+Dynamic mode is new to Marlin, it is currently developing and experimental. Dynamic mode provides laser power scaled to the  the stepper feedrate. It is simmilar to GRBL 1.1f in M4 dynamic mode. Stay tuned. 
 
 As of Marlin 2.0.9.x Laser operation will produce the best results using inline planner power control. Inline mode applies power to a selected laser output pin defined by `SPINDLE_LASER_PWM_PIN`, this pin should be a hardware enabled PWM output for optimal results. If PWM hardware is available then it is activated by defining `SPINDLE_LASER_USE_PWM` otherwise it will be simply be on or off regardless of the set power value above 0. Power values are set when movement G-CODES `G1/2/3/5` are processed with an S-Value parameter such as `G1 X10 Y10 S100` The power value is included within planner calculated movement block data. Any subsequent stepper processing applies fully synced power values directly from planned moves. In most cases laser operations will need the G-CODE motion code feature which is enabled by defining `GCODE_MOTION_CODES`. Remember motion codes will provide compatibility with LaserGRBL and other inline based G-CODE generation software.
 
@@ -58,6 +58,7 @@ G1 X10 Y10     ; Move to X10 Y10 with S20 power
 G1 X20 S50     ; Move to X20 with S50 power
 M5             ; Kill the power and remain in Continous Inline Mode (M5 or M5I always waits for last move to complete)            
 ```
+
 Selecting the pin for `SPINDLE_LASER_ENA_PIN` is fairly easy. Just select any free digital pin with a 0 to 3.3V-5V logic level.
 
 It is _highly recommended_ that an external 1k-10k pullup resistor be connected to the `SPINDLE_LASER_ENA_PIN`. This will prevent the spindle/laser from powering on briefly during power up or when the controller is reset (which happens whenever you connect or disconnect from most controllers).
@@ -140,8 +141,8 @@ Air Evacuation motor relay output, enables Menu item and G-CODE `M10/M11` contro
 ```
 
 Ammeter support, enables laser current monitoring on both 12864 & 2004 LCDs.
-This is a low side (Ground) current IC that can be used for both CO2 and Diode based lasers.
-It's ideal with High Voltage CO2 laser tubes, connects between chassis ground and the tube ground. 
+This is a low side configuration (Ground) current IC that can be used for both CO2 and Diode based lasers.
+It's ideal with High Voltage CO2 laser tubes, it connects between chassis ground and the tube ground. 
 The current can be calibrated by measuring the current with an multimeter then adjusting 
 the `I2C_AMMETER_SHUNT_RESISTOR` slightly up or down to match the measured value. 
 
