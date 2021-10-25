@@ -1,6 +1,6 @@
 ---
-title:       Laser/Spindle Configuration v2.0.9.x
-description: Configuring a laser or spindle tool in Marlin.
+title:       Laser/Spindle Configuration (2.0.9.x)
+description: Configuring a laser or spindle in Marlin.
 
 author: descipher
 category: [ configuration, hardware ]
@@ -11,21 +11,37 @@ This document is based on Marlin 2.0.9.x
 {% endalert %}
 
 ---
-Laser features and other related options are enabled when `LASER_FEATURE` is defined via `Configuration_adv.h`
+Laser features and other related options are enabled when `LASER_FEATURE` is defined in `Configuration_adv.h`.
 
-When the `LASER_FEATURE` is enabled it's default operating state will start in Standard Mode. Standard Mode will process power from `M3`, `M4`, `M5` GCODES which always wait for the stepper to finish its last move before processing any subsequent `M3/4/5` power changes. This mode provides backward compatibility and also works with the `LASER_SYNCHRONOUS_M106_M107` feature described in the latter part of this page. Standard Mode can be used to cut or to provide Spindle Feature operations when it is enabled.
+If your spindle / laser accepts PWM signals for variable power levels enable the `SPINDLE_LASER_USE_PWM` option and define a `SPINDLE_LASER_PWM_PIN`. A hardware-enabled PWM pin will provide the best results. Otherwise the cutter will simply be turned on full for any non-zero value and off for zero.
 
-Two additional modes named Continuous and Dynamic Inline Mode are selectable via `M3/4` GCODEs that include an `I` parameter. Sending `M3I` will enter Continuous mode and `M4I` enters Dynamic Mode. Each mode will remain enabled until a GCODE of `M5I` is sent which returns us back to Standard Mode. S-Values can be included with the first mode M3I inline enable GCODE and will be processed on the next `G1/2/3/5` move.
+### Power Modes
 
-Dynamic mode is new to Marlin, it is currently developing and is experimental. Dynamic mode provides laser power scaled to the stepper feedrate. It is simmilar to GRBL 1.1f in M4 dynamic mode. Stay tuned. 
+The default operating state for `LASER_FEATURE` is **Standard Mode**. In Standard Mode the `M3`/`M4`/`M5` commands wait synchronize the planner (causing a momentary stop) before changing the power. This mode is good enough for a spindle and is provided for backward compatibility. Standard Mode can be used in combination with `LASER_SYNCHRONOUS_M106_M107` (described below), and can be used to cut or to provide Spindle Feature operations when it is active.
 
-As of Marlin 2.0.9.x Laser operation will produce the best results using inline planner power control. Inline mode applies power to a selected laser output pin defined by `SPINDLE_LASER_PWM_PIN`, this pin should be a hardware enabled PWM output for optimal results. If PWM hardware is available then it is activated by defining `SPINDLE_LASER_USE_PWM` otherwise it will be simply be on or off regardless of the set power value above 0. Power values are set when movement G-CODES `G1/2/3/5` are processed with an S-Value parameter such as `G1 X10 Y10 S100` The power value is included within planner calculated movement block data. Any subsequent stepper processing applies fully synced power values directly from planned moves. In most cases laser operations will need the G-CODE motion code feature which is enabled by defining `GCODE_MOTION_CODES`. Remember motion codes will provide compatibility with LaserGRBL and other inline based G-CODE generation software.
+There are two inline modes, selected using `M3/4` with the `I` parameter. `M3 I` enables **Continuous Inline Mode** and `M4 I` selects **Dynamic Inline Mode**. These modes remain set `M5 I` returns to Standard Mode. In these modes, power set with the `S` parameter doesn't take effect right away, but applies on the next `G1`/`G2`/`G3`/`G5` move.
 
-When in inline mode `M3/M4` and `M5` GCODEs are still processed and will wait for synchronization, they are then queued for the next move unless a `LASER_POWER_SYNC` feature is enabled. Defining `LASER_POWER_SYNC` allows any `M3/M4` GCODE S-Values to be planner queued, synced and then processed by the stepper without pausing. This means that if no move is in progress the power will be applied immediately when the GCODE is queued.   
+### Dynamic Inline Mode
 
-In addition to inline mode we support laser synchronous fan mode set by defining `LASER_SYNCHRONOUS_M106_M107`. Laser synchronous fan mode uses G-CODEs `M106/107` to set laser power on a fan output pin. This mode uses planner block update flags to be synced in stepper movement processing. This mode works well, however inline mode is faster when performing raster image based laser burns.  
+Since Dynamic Inline Mode is new to Marlin (Oct 2021) it should still be considered under development and experimental. Dynamic Inline Mode scales laser power to the stepper feedrate so that a consistent amount of laser energy is applied to the workpiece throughout moves, even as they accelerate and decelerate. (It is similar to GRBL 1.1f in `M4` dynamic mode.) Stay tuned.
 
-# Pins
+### Inline Mode
+
+Since Marlin 2.0.9.x you'll get the best results using **Inline Mode** power control. Inline Mode applies power to a selected laser output pin defined by `SPINDLE_LASER_PWM_PIN`. This pin should be a hardware-enabled PWM output for optimal performance. If PWM hardware is available it is activated by defining `SPINDLE_LASER_USE_PWM`, providing a range of power levels. Without a PWM pin the cutter is simply turned on full for any non-zero value and off for zero. Power values are set when movement G-codes `G1`/`G2`/`G3`/`G5` are processed with an S-Value parameter such as `G1 X10 Y10 S100`. The inline power value is stored in the planner blocks so that laser power can be perfectly synchronized with every move.
+
+### Motion Mode
+
+The `GCODE_MOTION_MODES` option must be enabled for full compatibility with G-code generated by LaserGRBL and other laser / CNC software. This feature allows Marlin to process shorthand G-code moves that don't start with a `G#` command.
+
+### Non-Inline Moves
+
+While inline mode is active the `M3`/`M4`/`M5` G-codes are still processed and will wait for planner synchronization; they are then queued for the next move unless `LASER_POWER_SYNC` is enabled. The `LASER_POWER_SYNC` option allows any `M3`/`M4` G-code `S`-values to be enqueued, synced, and processed by the stepper ISR without pausing. Thus if no move is in progress the power is applied immediately.
+
+### Laser on Fan Pin
+
+In addition to inline mode we support laser synchronous fan mode set by defining `LASER_SYNCHRONOUS_M106_M107`. Laser synchronous fan mode uses G-codes `M106`/`M107` to set laser power on a fan output pin. This feature sets the laser power using planner "sync" blocks, which allow power to be set in perfect sync with movement. This mode works well, however inline mode is faster when performing raster image-based laser burns.
+
+## Pins
 
 Fan pin example:
 
@@ -33,25 +49,24 @@ Define pin 5 as the second fan just add this line to `Configuration.h`:
 ```cpp
 #define FAN1_PIN 5 // 2nd fan output attached to laser TTL input
 ```
-Example of G-CODE using `M106 P1` 
+Example of G-code using `M106 P1` 
 ```gcode 
 M106 P1 S0   ; Laser off (P1 = 2nd fan output)
 M106 P1 S128 ; Laser at 50% 
 M106 P1 S255 ; Laser at 100%
 ```
 
-Inline pin example:
+#### Inline pin example:
 
-Define pin 6 as the PWM pin and 4 as the enable pin `Configuration_adv.h`
+Define pin 6 as the PWM pin and pin 4 as the ENABLE pin `Configuration_adv.h`.
 
-These are the defaults for any RAMPS board and are already defined in `pins_RAMPS.h`
-You can overide the default values by defining the desired values in `Configuration_adv.h`  
+These are the defaults for any RAMPS board and are already defined in `pins_RAMPS.h`. Override the default values by defining the desired values in `Configuration_adv.h`.
 ```cpp
 #define SPINDLE_LASER_PWM_PIN 6 // Hardware PWM laser TTL input
 #define SPINDLE_LASER_ENA_PIN 4 // CO2 PSU enable input
 ```
 
-Example of G-CODE using `M3I` 
+#### Example of G-code using `M3I`:
 ```gcode 
 M3 I S20       ; Enter Continuous Inline Mode and preload the next move power with S20 
 G1 X10 Y10     ; Move to X10 Y10 with S20 power
@@ -59,19 +74,17 @@ G1 X20 S50     ; Move to X20 with S50 power
 M5             ; Kill the power and remain in Continous Inline Mode (M5 or M5I always waits for last move to complete)            
 ```
 
-Selecting the pin for `SPINDLE_LASER_ENA_PIN` is fairly easy. Just select any free digital pin with a 0 to 3.3V-5V logic level.
+It's fairly easy to select a pin for `SPINDLE_LASER_ENA_PIN`. Any unused digital pin with a 0 to 3.3V-5V logic level is sufficient.
 
-It is _highly recommended_ that an external 1k-10k pullup resistor be connected to the `SPINDLE_LASER_ENA_PIN`. This will prevent the spindle/laser from powering on briefly during power up or when the controller is reset (which happens whenever you connect or disconnect from most controllers).
+It is _highly recommended_ to connect an external 1k-10k pullup resistor to the `SPINDLE_LASER_ENA_PIN`. This prevents the spindle/laser from powering on briefly during power-up or when the controller is reset (which happens whenever you connect or disconnect from most controllers).
 
-Picking the PWM pin can be tricky. There are only 15 hardware PWM pins on an ATMEGA2560. Some are used by the system interrupts so are unavailable. Others are usually hardwired in the controller to functions you can't do without. Fans, servos and some specialized functions all want to have a PWM pin. Usually you'll end up picking a function you can do without, commenting that function out (or not enabling it) and assigning its pin number to the speed pin.
+Picking the PWM pin can be tricky. There are only 15 hardware PWM pins on an ATmega2560. Some are used by the system interrupts so are unavailable. Others are usually hardwired in the controller to functions you can't do without. Fans, servos, and some specialized functions all want to have a PWM pin. Usually you'll end up picking a function you can do without, commenting that function out (or not enabling it) and assigning its pin number to the speed pin. `PINS_DEBUGGING` and `M43` can be helpful to locate the best candidates.
 
 For all CPUs the hardware PWMs on `TIMER1` are not available. Marlin uses `TIMER1` to generate interrupts and sets it up in such a way that the none of its PWMs can be used.
 
 Servos also make hardware PWM(s) unavailable. In this case it's only the "A" PWM that's unavailable. The other hardware PWM(s) on that timer are available for general use.
 
 ---
-
-
 
 ## ATmega2560 PWM Assignments and Clients
 
@@ -123,7 +136,7 @@ Serveral useful features are currently available for Lasers with 12864 LCDs and 
 ![Features](/assets/images/config/12864-All.jpg){: width="300" height="150"}
 
 #### Air Assist
-Air Assist pump relay output, enables Menu item and G-CODE `M8/M9` control. 
+Air Assist pump relay output, enables Menu item and G-code `M8/M9` control. 
 
 ``` cpp
   #define AIR_ASSIST                           // Air Assist control with G-codes M8-M9
@@ -133,7 +146,7 @@ Air Assist pump relay output, enables Menu item and G-CODE `M8/M9` control.
   #endif
 ```
 #### Air Evacuation
-Air Evacuation motor relay output, enables Menu item and G-CODE `M10/M11` control.
+Air Evacuation motor relay output, enables Menu item and G-code `M10/M11` control.
 
 ``` cpp
   #define AIR_EVACUATION                       // Cutter Vacuum / Laser Blower motor control with G-codes M10-M11
@@ -202,7 +215,7 @@ Laser cooling control, provides chiller control with temperature monitoring and 
 ```
 
 #### Spindle Coolant
-Spindle based coolant control, enables M7/M8/M9 G-CODEs.
+Spindle based coolant control, enables M7/M8/M9 G-codes.
 
 ``` cpp
 #define COOLANT_CONTROL
