@@ -135,8 +135,9 @@ parameters:
   -
     tag: K
     optional: true
+    requires: UBL_DEVEL_DEBUGGING
     description: |
-      **Kompare**: Subtract (diff) the stored mesh with the given index from the current mesh. This operates on the mesh in-memory, so it will probably make the active mesh unsuitable for printing.
+      **Kompare**: Subtract (diff) the stored mesh with this index from the current mesh. This destructively operates on the active mesh, and the result should not be used for printing. (Requires `UBL_DEVEL_DEBUGGING`)
     values:
       -
         unit: index
@@ -282,6 +283,7 @@ parameters:
   -
     tag: W
     optional: true
+    requires: UBL_DEVEL_DEBUGGING
     description: |
       **_What?_**: Display valuable UBL data. (Requires `UBL_DEVEL_DEBUGGING`)
     values:
