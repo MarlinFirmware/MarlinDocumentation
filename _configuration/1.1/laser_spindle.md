@@ -1,5 +1,5 @@
 ---
-title:       Laser/Spindle Configuration
+title:       Laser/Spindle Configuration (1.1.x)
 description: Configuring a laser or spindle tool in Marlin.
 
 author: thinkyhead
@@ -24,15 +24,13 @@ M106 P1 S128 ; Laser at 50%
 M106 P1 S255 ; Laser at 100%
 ```
 
-**NOTE**: You can use Fan0 if it is available, in which case you will not need to define the above. As of this edit, Marlin can control up to 3 fans via [`M106`](/docs/gcode/M106.html)/[`M107`](/docs/gcode/M107.html). To use more pins you may need to modify Marlin as described in [Issue #12961](//github.com/MarlinFirmware/Marlin/issues/12961).
-
+**NOTE**: You can use FAN0 if it is available, in which case you will not need to define the above. As of this edit, Marlin can control up to 3 fans via [`M106`](/docs/gcode/M106.html)/[`M107`](/docs/gcode/M107.html). To use more pins you may need to modify Marlin as described in [Issue #12961](//github.com/MarlinFirmware/Marlin/issues/12961).
 
 
 ---
 
-
 # Pins
-Alternatively, you could configure the following to use M3, M4 and M5.
+Alternatively, you could configure the following to use `M3`, `M4` and `M5`.
 
 In the `pins_MYBOARD.h` file for your board make sure the following pins are defined:
 ```cpp
