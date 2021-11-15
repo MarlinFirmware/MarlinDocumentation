@@ -3903,7 +3903,7 @@ You'll need to select a pin for the ON/OFF function and optionally choose a 0-5V
 See [Laser and Spindle (1.1.x)](/docs/configuration/1.1/laser_spindle.html) or [Laser and Spindle (2.0.9.x)](/docs/configuration/2.0.9/laser_spindle.html) and `Configuration_adv.h` for more details.
 
 ## Filament Width Sensor
-<iframe style="float:right;margin:0 0 1em 1em;" title="YouTube video player" width="240" height="195" src="http://www.youtube.com/embed/W93dFxF425s?autoplay=0" frameborder="0" allowfullscreen></iframe>
+<iframe style="float:right;margin:0 0 1em 1em;" title="Filament sensor video" width="240" height="195" src="//youtube.com/embed/W93dFxF425s?autoplay=0" frameborder="0" allowfullscreen></iframe>
 
 ```cpp
 //#define FILAMENT_WIDTH_SENSOR
