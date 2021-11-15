@@ -19,7 +19,7 @@ If your spindle / laser accepts PWM signals for variable power levels enable the
 
 The default operating state for `LASER_FEATURE` is **Standard Mode**. In Standard Mode the `M3`/`M4`/`M5` commands wait synchronize the planner (causing a momentary stop) before changing the power. This mode is good enough for a spindle and is provided for backward compatibility. Standard Mode can be used in combination with `LASER_SYNCHRONOUS_M106_M107` (described below), and can be used to cut or to provide Spindle Feature operations when it is active.
 
-There are two inline modes, selected using `M3/4` with the `I` parameter. `M3 I` enables **Continuous Inline Mode** and `M4 I` selects **Dynamic Inline Mode**. These modes remain set `M5 I` returns to Standard Mode. In these modes, power set with the `S` parameter doesn't take effect right away, but applies on the next `G1`/`G2`/`G3`/`G5` move.
+There are two inline modes, selected using `M3`/`M4` with the `I` parameter. `M3 I` enables **Continuous Inline Mode** and `M4 I` selects **Dynamic Inline Mode**. These modes remain set `M5 I` returns to Standard Mode. In these modes, power set with the `S` parameter doesn't take effect right away, but applies on the next `G1`/`G2`/`G3`/`G5` move.
 
 ### Dynamic Inline Mode
 

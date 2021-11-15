@@ -3900,7 +3900,7 @@ SuperPid is a router/spindle speed controller used in the CNC milling community.
 
 You'll need to select a pin for the ON/OFF function and optionally choose a 0-5V hardware PWM pin for the speed control and a pin for the rotation direction.
 
-See the [Laser and Spindle page](/docs/configuration/laser_spindle.html) and `Configuration_adv.h` for more details.
+See [Laser and Spindle (1.1.x)](/docs/configuration/1.1/laser_spindle.html) or [Laser and Spindle (2.0.9.x)](/docs/configuration/2.0.9/laser_spindle.html) and `Configuration_adv.h` for more details.
 
 ## Filament Width Sensor
 <iframe style="float:right;margin:0 0 1em 1em;" title="YouTube video player" width="240" height="195" src="http://www.youtube.com/embed/W93dFxF425s?autoplay=0" frameborder="0" allowfullscreen></iframe>
