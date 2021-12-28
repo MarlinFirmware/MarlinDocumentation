@@ -35,7 +35,10 @@
   --color-gcode-h5-code-bg: #444;
   --color-gcode-usage: #246;
   --color-gcode-usage-bg: #ADF;
-  --color-gcode-usage-hover-bg: #FFFD90;
+  --color-gcode-usage-hover: #BEF;
+  --color-gcode-usage-opt: #624;
+  --color-gcode-usage-opt-bg: #FAD;
+  --color-gcode-usage-opt-hover: #FBE;
   --color-gcode-examples-bg: #E9F5FF;
   --color-gcode-gallery: #601;
   --color-h1-gcode: #B88;
@@ -181,8 +184,8 @@
   --color-bitmap-selector-options-bg: #8888;
   --color-bitmap-selector-label: #FDD;
   --color-bitmap-err-box: red;
-  --color-code: #C7254E;
-  --color-code-bg: #FFE2EB;
+  --color-code: #FAA;
+  --color-code-bg: #411;
   --color-data-search: white;
   --color-data-search-bg: #BBB;
   --color-features: white;
@@ -191,7 +194,7 @@
   --color-features-hover-bg: rgba(255,255,255,0.8);
   --color-features-hover: grey;
   --color-features-body-hover: grey;
-  --color-features-image-bg: rgba(3,3,3,0.8); 
+  --color-features-image-bg: rgba(3,3,3,0.8);
   --color-gcode-header-bg: #EEE;
   --color-gcode-h5: white;
   --color-gcode-h5-bg: #444;
@@ -200,7 +203,10 @@
   --color-gcode-usage: #ADF;
   --color-gcode-usage-bg: #246;
   --color-gcode-usage-hover: #358;
-  --color-gcode-examples-bg: black;
+  --color-gcode-usage-opt: #FAD;
+  --color-gcode-usage-opt-bg: #624;
+  --color-gcode-usage-opt-hover: #835;
+  --color-gcode-examples-bg: #1D262D;
   --color-gcode-gallery: #904;
   --color-h1-gcode: #B88;
   --color-h1-basic: #8B8;
@@ -484,10 +490,6 @@ div.container.gcode {
       background: var(--color-gcode-h5-bg); color: var(--color-gcode-h5);
       code { background: var(--color-gcode-h5-code-bg); color: var(--color-gcode-h5-code); }
     }
-  }
-  .row.usage>code {
-    >span { color: var(--color-gcode-usage); background: var(--color-gcode-usage-bg); }
-    >span:hover { background: var(--color-gcode-usage-hover-bg); }
   }
   div.row.examples pre { background: var(--color-gcode-examples-bg); }
   div.row.gallery p { color: var(--color-gcode-gallery); }
@@ -1050,45 +1052,51 @@ div.container.gcode {
     p { font-size: 85%; }
   }
 
-  div.row.related {
-    margin: 0.5em 16px 0;
-    padding: 5px 0 6px 1em;
-    border-radius: 6px;
-    background: #DDD; color: #000;
-    code { background: #E8E8E8; color: #000; }
-  }
-
-  div.col-lg-12.row.meta { margin-left: 0; }
-  div.row.examples pre { background: #E9F5FF; }
-  div.row.gallery p { font-size: normal; }
-  img { max-width: 100%; }
-
-  .row.usage>div {
-    >code {
-      background: transparent;
-      >span {
-        padding: 0 1px;
-        white-space: nowrap;
-        background: #E0FDE0; &:hover { background: #C0FDC0; }
-        &.optional { background: #FFFDBF; &:hover { background: #FFFD90; } }
+  div.row {
+    &.related {
+      margin: 0.5em 16px 0;
+      padding: 5px 0 6px 1em;
+      border-radius: 6px;
+      background: #DDD; color: #000;
+      code { background: #E8E8E8; color: #000; }
+    }
+    &.col-lg-12.meta { margin-left: 0; }
+    &.examples pre { background: var(--color-gcode-examples-bg); }
+    &.gallery p { font-size: normal; }
+    &.usage {
+      >div {
+        >code {
+          background: transparent;
+          >span {
+            padding: 0 1px;
+            white-space: nowrap;
+            color: var(--color-gcode-usage);
+            background: var(--color-gcode-usage-bg); &:hover { background: var(--color-gcode-usage-hover); }
+            &.optional { color: var(--color-gcode-usage-opt); background: var(--color-gcode-usage-opt-bg); &:hover { background: var(--color-gcode-usage-opt-hover); } }
+          }
+        }
+        +div {
+          margin-top: 1px;
+          border-top: 1px #000 dotted;
+        }
+      }
+      >code {
+        background: transparent;
+        >span {
+          white-space: nowrap;
+        }
       }
     }
-    +div {
-      margin-top: 1px;
-      border-top: 1px #000 dotted;
-    }
+
+    &.gallery p { font-size: normal;}
   }
 
-  div.col-lg-12.row.meta { margin-left: 0; }
-  div.row.gallery p { font-size: normal;}
   img { max-width: 100%; }
-  .row.usage>code {
-    background: transparent;
-    >span {
-      white-space: nowrap;
-    }
-  }
+
+  div.col-lg-12.row.meta { margin-left: 0; }
+  img { max-width: 100%; }
 }
+
 .clear { clear: both; }
 .params .table>tbody>tr:first-child>td { border-top: 0; }
 .gcode.item, [data-search-results]>.item {
