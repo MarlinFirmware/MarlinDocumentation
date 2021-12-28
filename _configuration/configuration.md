@@ -1223,8 +1223,8 @@ Enable/Disable software endstops from the LCD
   // (After 'M412 H' Marlin will ask the host to handle the process.)
   #define FILAMENT_RUNOUT_SCRIPT "M600"
 
-  // When using a runout switch (no encoder), after a runout is detected, 
-  // continue printing this length of filament before executing the runout script. 
+  // When using a runout switch (no encoder), after a runout is detected,
+  // continue printing this length of filament before executing the runout script.
   // Useful for a sensor at the end of a feed tube.
   // If using an encoder disc, this is the lenth of filament that would print
   // without any movement from the sensor before it triggers a runout.
@@ -1232,19 +1232,19 @@ Enable/Disable software endstops from the LCD
   //#define FILAMENT_RUNOUT_DISTANCE_MM 25
 
   #ifdef FILAMENT_RUNOUT_DISTANCE_MM
-    // Enable this option to use an encoder disc that toggles the runout pin as the filament moves. 
-    // Be sure to set FILAMENT_RUNOUT_DISTANCE_MM large enough to avoid false positives. 
-    // Start at the value of the sensor for one revolution and if you experience false positives, 
-    // increment the value by the same amount. 
+    // Enable this option to use an encoder disc that toggles the runout pin as the filament moves.
+    // Be sure to set FILAMENT_RUNOUT_DISTANCE_MM large enough to avoid false positives.
+    // Start at the value of the sensor for one revolution and if you experience false positives,
+    // increment the value by the same amount.
     // ie., 7mm is set, and you get false positives, set it to 14 and try it again.
     //#define FILAMENT_MOTION_SENSOR
   #endif
 #endif
 ```
 
-With this feature, a mechanical or opto endstop switch is used to check for the presence of filament in the feeder (usually the switch is closed when filament is present). If the filament runs out, Marlin will run the specified G-code script (by default [`M600`](/docs/gcode/M600.html)). 
+With this feature, a mechanical or opto endstop switch is used to check for the presence of filament in the feeder (usually the switch is closed when filament is present). If the filament runs out, Marlin will run the specified G-code script (by default [`M600`](/docs/gcode/M600.html)).
 
-RAMPS-based boards use `SERVO3_PIN`. For other boards you may need to define `FIL_RUNOUT_PIN`. Enable the [`M43`](/docs/gcode/M43.html) feature in your firmware (`PINS_DEBUGGING`) and load it to your printer. Assuming you already have a runout sensor (switch based) there, you can watch the pin states while toggling the runout sensor on an off to see which pin is changing. 
+RAMPS-based boards use `SERVO3_PIN`. For other boards you may need to define `FIL_RUNOUT_PIN`. Enable the [`M43`](/docs/gcode/M43.html) feature in your firmware (`PINS_DEBUGGING`) and load it to your printer. Assuming you already have a runout sensor (switch based) there, you can watch the pin states while toggling the runout sensor on an off to see which pin is changing.
 
 ## Bed Leveling
 
@@ -3837,12 +3837,12 @@ Add the [`M240`](/docs/gcode/M240.html) to take a photo. The photo can be trigge
 
     /**
      * Enable M3 commands for laser mode inline power planner syncing.
-     * This feature enables any M3 S-value to be injected into the block buffers while in 
-     * CUTTER_MODE_CONTINUOUS. The option allows M3 laser power to be commited without waiting 
-     * for a planner syncronization    
-     */ 
+     * This feature enables any M3 S-value to be injected into the block buffers while in
+     * CUTTER_MODE_CONTINUOUS. The option allows M3 laser power to be commited without waiting
+     * for a planner syncronization
+     */
     //#define LASER_POWER_SYNC
-  
+
     /**
      * Scale the laser's power in proportion to the movement rate.
      *

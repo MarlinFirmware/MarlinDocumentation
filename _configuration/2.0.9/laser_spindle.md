@@ -39,7 +39,7 @@ While inline mode is active the `M3`/`M4`/`M5` G-codes are still processed and w
 
 ### Trapizoid Power
 
-While inline mode is active the trapizoid feature `LASER_POWER_TRAP` can be enabled. The `LASER_POWER_TRAP` option allows the laser power to be compensate during acceleration or deceleration of a move. It helps to reduce laser burning hot spots. It is important to note that if this feature is enabled on CO2 based lasers it may require that the `SPEED_POWER_MIN` option value is set. CO2 Lasers typically do not activate at very low PWM values. This feature will use the `SPEED_POWER_MIN` to ensure the laser power will not be below the minimum power activation value. The value is determined by testing incremental power values until the CO2 Laser fires.     
+While inline mode is active the trapizoid feature `LASER_POWER_TRAP` can be enabled. The `LASER_POWER_TRAP` option allows the laser power to be compensate during acceleration or deceleration of a move. It helps to reduce laser burning hot spots. It is important to note that if this feature is enabled on CO2 based lasers it may require that the `SPEED_POWER_MIN` option value is set. CO2 Lasers typically do not activate at very low PWM values. This feature will use the `SPEED_POWER_MIN` to ensure the laser power will not be below the minimum power activation value. The value is determined by testing incremental power values until the CO2 Laser fires.
 
 ### Laser on Fan Pin
 
@@ -53,10 +53,10 @@ Define pin 5 as the second fan just add this line to `Configuration.h`:
 ```cpp
 #define FAN1_PIN 5 // 2nd fan output attached to laser TTL input
 ```
-Example of G-code using `M106 P1` 
-```gcode 
+Example of G-code using `M106 P1`
+```gcode
 M106 P1 S0   ; Laser off (P1 = 2nd fan output)
-M106 P1 S128 ; Laser at 50% 
+M106 P1 S128 ; Laser at 50%
 M106 P1 S255 ; Laser at 100%
 ```
 
@@ -71,11 +71,11 @@ These are the defaults for any RAMPS board and are already defined in `pins_RAMP
 ```
 
 #### Example of G-code using `M3I`:
-```gcode 
-M3 I S20       ; Enter Continuous Inline Mode and preload the next move power with S20 
+```gcode
+M3 I S20       ; Enter Continuous Inline Mode and preload the next move power with S20
 G1 X10 Y10     ; Move to X10 Y10 with S20 power
 G1 X20 S50     ; Move to X20 with S50 power
-M5             ; Kill the power and remain in Continous Inline Mode (M5 or M5I always waits for last move to complete)            
+M5             ; Kill the power and remain in Continous Inline Mode (M5 or M5I always waits for last move to complete)
 ```
 
 It's fairly easy to select a pin for `SPINDLE_LASER_ENA_PIN`. Any unused digital pin with a 0 to 3.3V-5V logic level is sufficient.
@@ -140,7 +140,7 @@ Serveral useful features are currently available for Lasers with 12864 LCDs and 
 ![Features](/assets/images/config/12864-All.jpg){: width="300" height="150"}
 
 #### Air Assist
-Air Assist pump relay output, enables Menu item and G-code `M8/M9` control. 
+Air Assist pump relay output, enables Menu item and G-code `M8/M9` control.
 
 ``` cpp
   #define AIR_ASSIST                           // Air Assist control with G-codes M8-M9
@@ -162,8 +162,8 @@ Air Evacuation motor relay output, enables Menu item and G-code `M10/M11` contro
 #### Ammeter
 Ammeter support, enables laser current monitoring on both 12864 & 2004 LCDs.
 This is a low side configuration (Ground) current IC that can be used for both CO2 and Diode based lasers.
-It's ideal with High Voltage CO2 laser tubes, it connects between chassis ground and the tube ground. 
-The current can be calibrated by measuring the current with an multimeter then adjusting 
+It's ideal with High Voltage CO2 laser tubes, it connects between chassis ground and the tube ground.
+The current can be calibrated by measuring the current with an multimeter then adjusting
 the `I2C_AMMETER_SHUNT_RESISTOR` slightly up or down to match the measured value.
 
 ![INA226 Board](/assets/images/config/INA226Board.jpg){: width="320" height="160"}
@@ -180,7 +180,7 @@ the `I2C_AMMETER_SHUNT_RESISTOR` slightly up or down to match the measured value
 
 #### Flow Meter
 CO2 Coolant flow meter support, enables laser coolant monitoring on both 12864 & 2004 LCDs.
-Provides tube protection by detecting flow failures and controlling laser enable signals. 
+Provides tube protection by detecting flow failures and controlling laser enable signals.
 
 ``` cpp
 // Laser Coolant Flow Meter

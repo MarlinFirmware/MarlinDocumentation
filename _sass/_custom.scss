@@ -361,9 +361,9 @@ li#searchbox input[type="search"]{ background-color: var(--color-search-bg); col
 }
 .custom-tagline { color: var(--color-tagline); background-color: var(--color-tagline-bg);
   h1 { color: var(--color-tagline-header); }}
-#tagline { color: var(--color-tagline-id); }  
+#tagline { color: var(--color-tagline-id); }
 .custom-tagline-btn a { color: var(--color-tagline-btn); }
-hr.custom-hr{ color: var(--color-hr); 
+hr.custom-hr{ color: var(--color-hr);
   $color: #333;
   color: var(--color-hr);
   border-image: linear-gradient(
