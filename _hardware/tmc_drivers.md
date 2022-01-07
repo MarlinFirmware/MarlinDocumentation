@@ -201,6 +201,6 @@ Command | Configuration<br>required | Description
 
 [TMC2130 Hackaday article by Moritz Walter](//hackaday.com/2016/09/30/3d-printering-trinamic-tmc2130-stepper-motor-drivers-shifting-the-gears/)
 
-[Video guide by Thomas Sanladerer](//www.youtube.com/watch?v=sPvTB3irCxQ)
+[Video guide by Thomas Sanladerer](//youtube.com/watch?v=sPvTB3irCxQ)
 
-[TMC2208 Torque testing by Alex Kenis](//www.youtube.com/watch?v=GVs2d-TOims)
+[TMC2208 Torque testing by Alex Kenis](//youtube.com/watch?v=GVs2d-TOims)

@@ -108,7 +108,7 @@ var jekyllSearch = (function(){
     },
 
     searchPattern: function(str) {
-      const patt = str.replace(ignore_pattern, '').trim().replace(/\s+/g, '.+');
+      const patt = str.toLowerCase().replace(ignore_pattern, '').trim().replace(/\s+/g, '.+');
       return new RegExp(patt);
     },
 

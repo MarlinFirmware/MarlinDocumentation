@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 'use strict';
 
@@ -150,11 +150,11 @@ function genGcode() {
                   '; Origin Bed Center = ' + (NULL_CENTER ? 'true' : 'false') + '\n' +
                   ';\n' +
                   '; Settings Speed:\n' +
-                  '; Slow Printing Speed = ' + SPEED_SLOW + ' mm/m\n' +
-                  '; Fast Printing Speed = ' + SPEED_FAST + ' mm/m\n' +
-                  '; Movement Speed = ' + SPEED_MOVE + ' mm/m\n' +
-                  '; Retract Speed = ' + SPEED_RETRACT + ' mm/m\n' +
-                  '; Unretract Speed = ' + SPEED_UNRETRACT + ' mm/m\n' +
+                  '; Slow Printing Speed = ' + SPEED_SLOW + ' mm/min\n' +
+                  '; Fast Printing Speed = ' + SPEED_FAST + ' mm/min\n' +
+                  '; Movement Speed = ' + SPEED_MOVE + ' mm/min\n' +
+                  '; Retract Speed = ' + SPEED_RETRACT + ' mm/min\n' +
+                  '; Unretract Speed = ' + SPEED_UNRETRACT + ' mm/min\n' +
                   '; Printing Acceleration = ' + ACCELERATION + ' mm/s^2\n' +
                   '; Jerk X-axis = ' + (X_JERK !== -1 ? X_JERK + '\n': ' firmware default\n') +
                   '; Jerk Y-axis = ' + (Y_JERK !== -1 ? Y_JERK + '\n': ' firmware default\n') +
@@ -705,7 +705,7 @@ function setLocalStorage() {
   window.localStorage.setItem('LIN_SETTINGS', lsSettings);
 }
 
-// toggle between mm/s and mm/m speed settings
+// toggle between mm/s and mm/min speed settings
 function speedToggle() {
   var SPEED_SLOW = $('#SLOW_SPEED').val(),
       SPEED_FAST = $('#FAST_SPEED').val(),
@@ -816,53 +816,53 @@ function toggleRetract() {
 // sanity checks for pattern / bed size
 function validateInput() {
   var testNaN = {
-        // do not use parseInt or parseFloat for validating, since both
-        // functions will have special parsing characteristics leading to
-        // false numeric validation
-        BEDSIZE_X: $('#BEDSIZE_X').val(),
-        BEDSIZE_Y: $('#BEDSIZE_Y').val(),
-        K_START: $('#K_START').val(),
-        K_END: $('#K_END').val(),
-        K_STEP: $('#K_STEP').val(),
-        SPACE_LINE: $('#SPACE_LINE').val(),
-        SLOW_SPEED: $('#SLOW_SPEED').val(),
-        FAST_SPEED: $('#FAST_SPEED').val(),
-        SLOW_LENGTH: $('#SLOW_LENGTH').val(),
-        FAST_LENGTH: $('#FAST_LENGTH').val(),
-        FIL_DIA: $('#FIL_DIA').val(),
-        NOZ_DIA: $('#NOZ_DIA').val(),
-        NOZ_LIN_R: $('#NOZ_LIN_R').val(),
-        LAYER_HEIGHT: $('#LAYER_HEIGHT').val(),
-        FAN_SPEED: $('#FAN_SPEED').val(),
-        EXTRUSION_MULT: $('#EXTRUSION_MULT').val(),
-        PRIME_EXT: $('#PRIME_EXT').val(),
-        OFFSET_Z: $('#OFFSET_Z').val(),
-        X_JERK: $('#X_JERK').val(),
-        Y_JERK: $('#Y_JERK').val(),
-        Z_JERK: $('#Z_JERK').val(),
-        E_JERK: $('#E_JERK').val(),
-        NOZZLE_TEMP: $('#NOZZLE_TEMP').val(),
-        BED_TEMP: $('#BED_TEMP').val(),
-        MOVE_SPEED: $('#MOVE_SPEED').val(),
-        RETRACT_SPEED: $('#RETRACT_SPEED').val(),
-        PRINT_ACCL: $('#PRINT_ACCL').val(),
-        RETRACTION: $('#RETRACTION').val(),
-        PRIME_SPEED: $('#PRIME_SPEED').val(),
-        DWELL_PRIME: $('#DWELL_PRIME').val()
-      },
-      selectShape = $('#SHAPE_BED'),
-      bedShape = selectShape.val(),
-      selectDir = $('#DIR_PRINT'),
-      printDir = selectDir.val(),
-      usePrime = $('#PRIME').prop('checked'),
-      useLineNo = $('#LINE_NO').prop('checked'),
-      sizeY = ((parseFloat(testNaN['K_END']) - parseFloat(testNaN['K_START'])) / parseFloat(testNaN['K_STEP']) * parseFloat(testNaN['SPACE_LINE'])) + 25, // +25 with ref marking
-      sizeX = (2 * parseFloat(testNaN['SLOW_LENGTH'])) + parseFloat(testNaN['FAST_LENGTH']) + (usePrime ? 10 : 0) + (useLineNo ? 8 : 0),
-      printDirRad = printDir * Math.PI / 180,
-      fitWidth = Math.round10(Math.abs(sizeX * Math.cos(printDirRad)) + Math.abs(sizeY * Math.sin(printDirRad)), 0),
-      fitHeight = Math.round10(Math.abs(sizeX * Math.sin(printDirRad)) + Math.abs(sizeY * Math.cos(printDirRad)), 0),
-      decimals = getDecimals(parseFloat(testNaN['K_STEP'])),
-      invalidDiv = 0;
+      // do not use parseInt or parseFloat for validating, since both
+      // functions will have special parsing characteristics leading to
+      // false numeric validation
+      BEDSIZE_X: $('#BEDSIZE_X').val(),
+      BEDSIZE_Y: $('#BEDSIZE_Y').val(),
+      K_START: $('#K_START').val(),
+      K_END: $('#K_END').val(),
+      K_STEP: $('#K_STEP').val(),
+      SPACE_LINE: $('#SPACE_LINE').val(),
+      SLOW_SPEED: $('#SLOW_SPEED').val(),
+      FAST_SPEED: $('#FAST_SPEED').val(),
+      SLOW_LENGTH: $('#SLOW_LENGTH').val(),
+      FAST_LENGTH: $('#FAST_LENGTH').val(),
+      FIL_DIA: $('#FIL_DIA').val(),
+      NOZ_DIA: $('#NOZ_DIA').val(),
+      NOZ_LIN_R: $('#NOZ_LIN_R').val(),
+      LAYER_HEIGHT: $('#LAYER_HEIGHT').val(),
+      FAN_SPEED: $('#FAN_SPEED').val(),
+      EXTRUSION_MULT: $('#EXTRUSION_MULT').val(),
+      PRIME_EXT: $('#PRIME_EXT').val(),
+      OFFSET_Z: $('#OFFSET_Z').val(),
+      X_JERK: $('#X_JERK').val(),
+      Y_JERK: $('#Y_JERK').val(),
+      Z_JERK: $('#Z_JERK').val(),
+      E_JERK: $('#E_JERK').val(),
+      NOZZLE_TEMP: $('#NOZZLE_TEMP').val(),
+      BED_TEMP: $('#BED_TEMP').val(),
+      MOVE_SPEED: $('#MOVE_SPEED').val(),
+      RETRACT_SPEED: $('#RETRACT_SPEED').val(),
+      PRINT_ACCL: $('#PRINT_ACCL').val(),
+      RETRACTION: $('#RETRACTION').val(),
+      PRIME_SPEED: $('#PRIME_SPEED').val(),
+      DWELL_PRIME: $('#DWELL_PRIME').val()
+    },
+    selectShape = $('#SHAPE_BED'),
+    bedShape = selectShape.val(),
+    selectDir = $('#DIR_PRINT'),
+    printDir = selectDir.val(),
+    usePrime = $('#PRIME').prop('checked'),
+    useLineNo = $('#LINE_NO').prop('checked'),
+    sizeY = ((parseFloat(testNaN['K_END']) - parseFloat(testNaN['K_START'])) / parseFloat(testNaN['K_STEP']) * parseFloat(testNaN['SPACE_LINE'])) + 25, // +25 with ref marking
+    sizeX = (2 * parseFloat(testNaN['SLOW_LENGTH'])) + parseFloat(testNaN['FAST_LENGTH']) + (usePrime ? 10 : 0) + (useLineNo ? 8 : 0),
+    printDirRad = printDir * Math.PI / 180,
+    fitWidth = Math.round10(Math.abs(sizeX * Math.cos(printDirRad)) + Math.abs(sizeY * Math.sin(printDirRad)), 0),
+    fitHeight = Math.round10(Math.abs(sizeX * Math.sin(printDirRad)) + Math.abs(sizeY * Math.cos(printDirRad)), 0),
+    decimals = getDecimals(parseFloat(testNaN['K_STEP'])),
+    invalidDiv = 0;
 
   // Start clean
   $('#K_START,#K_END,#K_STEP,#SPACE_LINE,#SLOW_LENGTH,#FAST_LENGTH,#FIL_DIA,#NOZ_DIA,#LAYER_HEIGHT,#EXTRUSION_MULT,#PRIME_EXT,#OFFSET_Z,#NOZ_LIN_R,'
@@ -966,12 +966,13 @@ $(window).load(() => {
   // Get localStorage data
   var lsSettings = window.localStorage.getItem('LIN_SETTINGS');
 
-  if (lsSettings !== undefined) {
+  if (lsSettings) {
     var settings = jQuery.parseJSON(lsSettings);
     if (!settings['Version'] || settings['Version'] != SETTINGS_VERSION) {
       window.localStorage.removeItem('LIN_SETTINGS');
       alert('Script settings have been updated. Saved settings are reset to default values');
-    } else {
+    }
+    else {
       $('#FIL_DIA').val(settings['FILAMENT_DIAMETER']);
       $('#NOZ_DIA').val(settings['NOZZLE_DIAMETER']);
       $('#NOZZLE_TEMP').val(settings['NOZZLE_TEMP']);
@@ -1022,7 +1023,7 @@ $(window).load(() => {
     }
   }
 
-  // toggle between mm/s and mm/m speeds
+  // toggle between mm/s and mm/min speeds
   $('#MM_S').change(speedToggle);
 
   // Toggle Bed Shape

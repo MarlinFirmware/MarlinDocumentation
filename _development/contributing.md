@@ -47,7 +47,7 @@ There are now many community resources for users of Marlin. If you're looking fo
 - [MarlinFirmware on Discord](//discord.gg/n5NJ59y) - Realtime chat with users and developers
 - [Marlin Firmware](//www.facebook.com/groups/1049718498464482/) and [Marlin Firmware for 3D Printers](//www.facebook.com/groups/3Dtechtalk/) Facebook Groups
 - [Marlin Forum](//forums.reprap.org/list.php?415) at RepRap.org
-- [Marlin YouTube Videos](//www.youtube.com/results?search_query=marlin+firmware)
+- [Marlin YouTube Videos](//youtube.com/results?search_query=marlin+firmware)
 
 ### Promote Marlin
 Marlin needs evangelists, enthusiasts, fans, and everyday users to tell everyone just how awesome Marlin is. Users and vendors may be wary of installing Marlin 2.0 on their trusty old and reliable hardware. Let them know that Marlin continues to evolve! And be sure to engage with Marlin's Twitter feed at [@MarlinFirmware](//twitter.com/MarlinFirmware).

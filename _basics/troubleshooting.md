@@ -31,7 +31,7 @@ category: [ articles, getting-started ]
 Try doubling `BLOCK_BUFFER_SIZE` to see if the problem goes away.
 
 ### No LCD / SD on ReARM?
-As seen in this [Chris's Basement video](//www.youtube.com/watch?v=H-c8UTg-EMU), the RRD display doesn't always work on first install. It didn't even light up. A custom adapter is needed with the ReARM. See [this issue](//github.com/MarlinFirmware/Marlin/pull/7390#issuecomment-320371735), and [this issue](//github.com/MarlinFirmware/Marlin/issues/11927#issuecomment-441435170), and [this page](//github.com/wolfmanjm/universal-panel-adapter).
+As seen in this [Chris's Basement video](//youtube.com/watch?v=H-c8UTg-EMU), the RRD display doesn't always work on first install. It didn't even light up. A custom adapter is needed with the ReARM. See [this issue](//github.com/MarlinFirmware/Marlin/pull/7390#issuecomment-320371735), and [this issue](//github.com/MarlinFirmware/Marlin/issues/11927#issuecomment-441435170), and [this page](//github.com/wolfmanjm/universal-panel-adapter).
 
 ### FTDI USB Bandwidth
 At 115K baud use 167 latency, 192 USB block request. As one goes up the other goes down.

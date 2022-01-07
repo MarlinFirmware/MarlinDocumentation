@@ -1,12 +1,8 @@
 # Marlin Documentation Project
 
-[![Build Status](//travis-ci.org/MarlinFirmware/MarlinDocumentation.svg?branch=master)](//travis-ci.org/MarlinFirmware/MarlinDocumentation)
-
-The aim of this project is to provide clear and concise documentation for [Marlin 3D printer firmware](//github.com/MarlinFirmware/Marlin). This documentation is made open and available on Github so anyone is welcome to contribute by either completing, correcting or creating new articles. See the section below, "[What We Need Most](#what-we-need-most)," for a current list of... what we need most.
+This repository contains the raw documentation for [Marlin 3D printer firmware](//github.com/MarlinFirmware/Marlin) which is regularly deployed to [marlinfw.org](//marlinfw.org/). This documentation is open and available on Github so anyone may contribute by completing, correcting, or creating articles.
 
 ![Marlin logo](assets/images/logo/marlin/small.png)
-
-Be safe, have fun and build all the things!
 
 ## Technical details
 
@@ -18,7 +14,7 @@ The Marlin Documentation Project is built using the following technologies:
 
 ## How to contribute
 
-To work with the documentation, first you need to make a Fork of this repository in your own Github account, then locally clone **your MarlinDocumentation fork**. You should do all work within your own fork before submitting it to us. You can download the [GitHub Desktop app](//desktop.github.com/) and use Github's "Open in Desktop" option, or from your own desktop open a terminal/cmd window and do:
+To work with the documentation, first make a Fork of this repository in your own Github account, then locally clone **your MarlinDocumentation fork**. You should do all work within your own fork before submitting it as a Pull Request to the `master` branch. You can download the [GitHub Desktop app](//desktop.github.com/) and use Github's "Open in Desktop" option, or from your own desktop open a terminal/cmd window and do:
   - `cd C:\` (for example)
   - `git clone https://github.com/MarlinFirmware/MarlinDocumentation.git`
 
@@ -39,22 +35,15 @@ git push
 
 ## Coding style
 
-This Jekyll-based site is based on the Markdown language in delicious YAML wrapper. Be careful with this format because small typos can cause Jekyll to reject the page. If you've installed Jekyll as described below, your local auto-building Jekyll server will tell you where your errors are.
+This Jekyll-based site is based on the Markdown language in delicious YAML wrapper. Be careful with this format because even small typos can cause Jekyll to reject the page. If you've installed Jekyll as described below, you can use it to build and preview the documentation and this will tell you where your errors are.
 
 ## Editorial style
 
 Try to be neutral, concise, and straightforward. Avoid use of personal pronouns, unless avoiding them proves awkward. Provide images and give examples where needed. Check your spelling, grammar, and punctuation.
 
-## What we need most
-
-1. Transfer documents from the old Marlin wiki into the new site.
-1. Transfer descriptions of the options in `Configuration.h` and `Configuration_adv.h` to the new system.
-1. Create "Getting Started" guides to ease the Marlin learning curve for new users.
-1. Document all supported G-codes with notes specific to Marlin.
-
 ### Work in progress
 
-You can use the `_tmp` folder for files in progress, and they will not be included in the site deployment.
+You can use the `_tmp` folder for work-in-progress, and they will not be included in the site deployment.
 
 ## Local Jekyll Preview
 
@@ -98,7 +87,7 @@ Under Jekyll we use YAML, Markdown, Liquid, and HTML to fill out the site conten
 - `_layouts` contains the general layouts (aka page templates).
 - `_includes` has partial layouts included by others.
 - `_meta` is where we keep top-level page descriptions.
-- Site sub-pages: `_basics`, `_configuration`, `_development`, `_features`, `_gcode`, `_hardware`
+- Site sub-pages: `_basics`, `_configuration`, `_development`, `_features`, `_gcode`, `_hardware`.
 
 ### Previewing content
 
@@ -114,12 +103,12 @@ You'll only need to execute the `bundle install` command once to install all the
 
 With the `serve` option, Jekyll watches the local files and on every save triggers an automatic build of the site. It also runs a mini-webserver at [http://localhost:4000/](//localhost:4000/) so the documentation can be previewed in the browser right on [your own computer](//localhost:4000/).
 
+The main Marlin repository comes with the `mfdoc` script containing the commands above as a shortcut to preview the documentation.
+
 ## Publishing changes
 
-We now use GitHub Actions to publish to the `gh-pages` branch whenever the `master` branch is updated, so no extra steps are needed to publish the site.
+We've set up GitHub Actions to run Jekyll and publish to the `gh-pages` branch whenever the `deploy` branch is updated. The `deploy` branch is synchronized from the `master` branch by the project administrator on a semi-regular basis, often just after merging one or more PRs from contributors.
 
 ## License
 
-Marlin is published under the [GPL license](/LICENSE) because we believe in open development. The GPL comes with both rights and obligations. Whether you use Marlin firmware as the driver for your open or closed-source product, you must keep Marlin open, and you must provide your compatible Marlin source code to end users upon request. The most straightforward way to comply with the Marlin license is to make a fork of Marlin on Github, perform your modifications, and direct users to your modified fork.
-
-While we can't prevent the use of this code in products (3D printers, CNC, etc.) that are closed source or crippled by a patent, we would prefer that you choose another firmware or, better yet, make your own.
+This documentation is licensed under the [Creative Commons Attribution 4.0 International license](//creativecommons.org/licenses/by/4.0/).
