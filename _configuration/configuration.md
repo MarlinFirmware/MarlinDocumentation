@@ -168,6 +168,35 @@ This is the name of your printer as displayed on the LCD and by [`M115`](/docs/g
 ```
 A unique ID for your 3D printer. A suitable unique ID can be generated randomly at [uuidtools.com](//www.uuidtools.com/generate/v4). Some host programs and slicers may use this identifier to differentiate between specific machines on your network.
 
+## Linear Axes
+
+```cpp
+#define LINEAR_AXES 3
+```
+This value, from 1 to 6, defines the number of coordinated axes (other than extruders). The axes can be linear, rotational, etc., and they will start and arrive together linearly. Within Marlin the axes are named X, Y, Z, I, J, K (in that order).
+
+Each axis will need a `STEP`, `ENABLE`, `DIR`, and (optional) endstop pin. (Multiple axes can share a single `ENABLE` pin.) And each axis will require other settings as normally apply to XYZ. We won't list them all here and there will be no quiz later.
+
+Settings that apply to multiple axes must have the correct number of elements. The `SanityCheck.h` file will catch obvious mistakes, but be sure to verify `DEFAULT_AXIS_STEPS_PER_UNIT`, `DEFAULT_MAX_FEEDRATE`, `DEFAULT_MAX_ACCELERATION`, `HOMING_FEEDRATE_MM_M`, `AXIS_RELATIVE_MODES`, `MICROSTEP_MODES`, `MANUAL_FEEDRATE`, `HOMING_BUMP_DIVISOR`, `HOMING_BACKOFF_POST_MM`, `BACKLASH_DISTANCE_MM`, `NOZZLE_TO_PROBE_OFFSET`, etc.
+
+```cpp
+#if LINEAR_AXES >= 4
+  #define AXIS4_NAME 'A' // :['A', 'B', 'C', 'U', 'V', 'W']
+#endif
+#if LINEAR_AXES >= 5
+  #define AXIS5_NAME 'B' // :['A', 'B', 'C', 'U', 'V', 'W']
+#endif
+#if LINEAR_AXES >= 6
+  #define AXIS6_NAME 'C' // :['A', 'B', 'C', 'U', 'V', 'W']
+#endif
+```
+These are the user-facing names of the 4th (I) axis, 5th (J) axis, and 6th (K) axis. These are the axis names that will be used in G-code to refer to the extra axes. (Internally the axes are always referred to as `I`/`J`/`K`).
+
+For RS274/NGC standard compliant G-code, use `'A'`, `'B'` and `'C'` for rotational axes corresponding to X, Y and Z, respectively.
+
+A convention also used by LinuxCNC is: `'U'`, `'V'` and `'W'` for secondary linear axes corresponding to X, Y and Z, respectively.
+
+Allowed values: `'A'`, `'B'`, `'C'`, `'U'`, `'V'`, or `'W'`.
 
 ## Extruder Info
 
