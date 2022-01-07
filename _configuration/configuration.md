@@ -168,24 +168,16 @@ This is the name of your printer as displayed on the LCD and by [`M115`](/docs/g
 ```
 A unique ID for your 3D printer. A suitable unique ID can be generated randomly at [uuidtools.com](//www.uuidtools.com/generate/v4). Some host programs and slicers may use this identifier to differentiate between specific machines on your network.
 
-
-## Linear Axes Info
-
-### Linear Axes
+## Linear Axes
 
 ```cpp
 #define LINEAR_AXES 3
 ```
-This value, from 1 to 6, defines the number of coordinated axes that are not used for extruders (axes that benefit from endstops and auto homing). Despite the name, each axis can be linear or rotational. Firmware-internal axis names are X, Y, Z, I, J, K (in that order). Each axis is configured individually with the following values: 
-- In the pins_YOUR_MOTHERBOARD.h file for your board: `*_STEP_PIN`, `*_ENABLE_PIN`, `*_DIR_PIN`, `*_STOP_PIN` 
-- In file Configuration.h: `USE_*[MIN || MAX]_PLUG`, `*_ENABLE_ON`, `DISABLE_*`, `*_MIN_POS`, `*_MAX_POS`, `*_HOME_DIR`, possibly `DEFAULT_*JERK`.
+This value, from 1 to 6, defines the number of coordinated axes (other than extruders). The axes can be linear, rotational, etc., and they will start and arrive together linearly. Within Marlin the axes are named X, Y, Z, I, J, K (in that order).
 
-Also, the following arrays should contain exactly one element for each axis, including the Extruder: 
-- In file Configuration.h: `DEFAULT_AXIS_STEPS_PER_UNIT`, `DEFAULT_MAX_FEEDRATE`, `DEFAULT_MAX_ACCELERATION`, `HOMING_FEEDRATE_MM_M`,
-- In file Configuration_adv.h: `AXIS_RELATIVE_MODES`, `MICROSTEP_MODES`, `MANUAL_FEEDRATE` and possibly also values of `HOMING_BUMP_DIVISOR`, `HOMING_BACKOFF_POST_MM`, `BACKLASH_DISTANCE_MM`. 
+Each axis will need a `STEP`, `ENABLE`, `DIR`, and (optional) endstop pin. (Multiple axes can share a single `ENABLE` pin.) And each axis will require other settings as normally apply to XYZ. We won't list them all here and there will be no quiz later.
 
-If the machine has a bed leveling probe, the array `NOZZLE_TO_PROBE_OFFSETS` has to be extended with elemets of value 0 until the number of elements is equal to the value of `LINEAR_AXES`.
-
+Settings that apply to multiple axes must have the correct number of elements. The `SanityCheck.h` file will catch obvious mistakes, but be sure to verify `DEFAULT_AXIS_STEPS_PER_UNIT`, `DEFAULT_MAX_FEEDRATE`, `DEFAULT_MAX_ACCELERATION`, `HOMING_FEEDRATE_MM_M`, `AXIS_RELATIVE_MODES`, `MICROSTEP_MODES`, `MANUAL_FEEDRATE`, `HOMING_BUMP_DIVISOR`, `HOMING_BACKOFF_POST_MM`, `BACKLASH_DISTANCE_MM`, `NOZZLE_TO_PROBE_OFFSET`, etc.
 
 ```cpp
 #if LINEAR_AXES >= 4
@@ -198,14 +190,13 @@ If the machine has a bed leveling probe, the array `NOZZLE_TO_PROBE_OFFSETS` has
   #define AXIS6_NAME 'C' // :['A', 'B', 'C', 'U', 'V', 'W']
 #endif
 ```
-These are the user-facing names of the 4th axis (I axis), 5th axis (J axis) and 6th axis (K axis) respectively. The names must match the axis names used in G-code. Regardless of these settings, firmware-internal axis IDs are I (AXIS4), J (AXIS5), and K (AXIS6). 
+These are the user-facing names of the 4th (I) axis, 5th (J) axis, and 6th (K) axis. These are the axis names that will be used in G-code to refer to the extra axes. (Internally the axes are always referred to as `I`/`J`/`K`).
 
-For RS274/NGC standard compliant G-code, use `'A'`, `'B'` and `'C'` for rotational axes parallel to X, Y and Z, respectively.
+For RS274/NGC standard compliant G-code, use `'A'`, `'B'` and `'C'` for rotational axes corresponding to X, Y and Z, respectively.
 
-A conventional nomenclature that is also used by LinuxCNC is: `'U'`, `'V'` and `'W'` for secondary linear axes parallel to X, Y and Z, respectively.
+A convention also used by LinuxCNC is: `'U'`, `'V'` and `'W'` for secondary linear axes corresponding to X, Y and Z, respectively.
 
 Allowed values: `'A'`, `'B'`, `'C'`, `'U'`, `'V'`, or `'W'`.
-
 
 ## Extruder Info
 
