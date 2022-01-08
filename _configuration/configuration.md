@@ -2445,7 +2445,7 @@ Set `X_DUAL_STEPPER_DRIVERS` to use a second X motor. If the X motors need to sp
 If the two X axes aren't perfectly aligned, use `X_DUAL_ENDSTOP_ADJUSTMENT` to adjust for the difference. This offset is applied to the X2 motor after homing with [`G28`](/docs/gcode/G028.html). The dual endstop offsets can be set at runtime with `M666 X[offset] Y[offset] Z[offset]`.
 
 {% alert info %}
-Requires enabling the corresponding stepper driver ie `X2_DRIVER_TYPE` in `Configuration.h`. Do `NOT` enable `E2_DRIVER_TYPE` - this may produce undesireabe results that can harm your machine.
+Requires enabling the corresponding stepper driver ie `X2_DRIVER_TYPE` in `Configuration.h`. Do `NOT` enable `E2_DRIVER_TYPE` - this may produce undesirable results that can harm your machine.
 {% endalert %}
 
 ## Dual X Carriage
