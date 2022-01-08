@@ -188,24 +188,26 @@ Options 3 and 4 are discussed further below.
 ### Software Filtering
 The code to deal with endstop noise is improved and exposed as a setting beginning in Marlin v1.1.9 and v2.0. In previous versions filtering is always active. To aid precision this is now exposed as a user setting in `Configuration.h`, deactivated by default.
 
-    /**
-     * Endstop Noise Filter
-     *
-     * Enable this option if endstops falsely trigger due to noise.
-     * NOTE: Enabling this feature means adds an error of +/-0.2mm, so homing
-     * will end up at a slightly different position on each G28. This will also
-     * reduce accuracy of some bed probes.
-     * For mechanical switches, the better approach to reduce noise is to install
-     * a 100 nanofarads ceramic capacitor in parallel with the switch, making it
-     * essentially noise-proof without sacrificing accuracy.
-     * This option also increases MCU load when endstops or the probe are enabled.
-     * So this is not recommended. USE AT YOUR OWN RISK.
-     * (This feature is not required for common micro-switches mounted on PCBs
-     * based on the Makerbot design, since they already include the 100nF capacitor.)
-     */
-    //#define ENDSTOP_NOISE_FILTER
+```cpp
+/**
+ * Endstop Noise Filter
+ *
+ * Enable this option if endstops falsely trigger due to noise.
+ * NOTE: Enabling this feature means adds an error of +/-0.2mm, so homing
+ * will end up at a slightly different position on each G28. This will also
+ * reduce accuracy of some bed probes.
+ * For mechanical switches, the better approach to reduce noise is to install
+ * a 100 nanofarads ceramic capacitor in parallel with the switch, making it
+ * essentially noise-proof without sacrificing accuracy.
+ * This option also increases MCU load when endstops or the probe are enabled.
+ * So this is not recommended. USE AT YOUR OWN RISK.
+ * (This feature is not required for common micro-switches mounted on PCBs
+ * based on the Makerbot design, since they already include the 100nF capacitor.)
+ */
+//#define ENDSTOP_NOISE_FILTER
+```
 
-Activating this option will lead to following endstop characteristics:
+Activating this option produces the following endstop characteristics:
 
 ![software](/assets/images/docs/hardware/endstops/switch_software.png)
 {: style="text-align: center;"}
@@ -213,29 +215,25 @@ Activating this option will lead to following endstop characteristics:
 Figure 7: Endstop with software filtering
 {: style="color:gray; font-size: 80%; text-align: center;"}
 
-The yellow marked area in Figure 7 shows the area where the software compensation is active. The first yellow area is an effect due to noise and the algorithm decides that no endstop is triggered since the signal falls back to a LOW state.
+The area marked in yellow in Figure 7 shows where software compensation is active. The first yellow area is a noise effect where the algorithm decides no endstop is triggered since the signal falls back to a LOW state.
 
-The second yellow area marks the spot where a real and wanted endstop triggering has happened. Now the algorithm basically "watches" the situation for some milliseconds until deciding if the endstop really is triggered or if an EMI / Noise effect needs to be compensated. This will lead to delays and finally to a precision loss in the detection of the endstop.
+The second yellow area shows a real, desired endstop trigger. The algorithm "watches" the situation for a few milliseconds before deciding if the endstop is really triggered or if an EMI / Noise effect needs to be compensated. This leads to a delay and some loss of precision in endstop detection.
 
 {% panel danger Note %}
-Depending on the printer's geometry and affected endstop, this precision loss may result in issues especially concerning the bed leveling. Using this feature is not recommended. Implementing some type of hardware filtering is strongly preferred.
+Depending on the printer's geometry and the affected endstop, loss of precision may result in issues such as inconsistent bed leveling, so this feature is not recommended. Instead, try to apply some kind of hardware filtering.
 {% endpanel %}
 
 ### Hardware Filtering
-Hardware filtering can range from a simple capacitor in parallel to the switch over a resistor / capacitor combination (RC-unit) up to opto-couplers and flip-flops.
-
-<br>
+Hardware filtering can range from an RC-unit (a simple capacitor in parallel to the switch over a resistor / capacitor combination) to opto-couplers and flip-flops.
 
 #### Board
-Some printer controller boards already contain such filters located at the endstop connectors. Unfortunately the popular RAMPS v1.4 design does not. A deficit that has been corrected with the RAMPS v1.4.2 design:
+Some printer controller boards have built-in filters in the endstop connectors. Unfortunately the popular RAMPS v1.4 design does not, an oversight that's been corrected with RAMPS v1.4.2:
 
 ![ramps](/assets/images/docs/hardware/endstops/ramps_endstop_compare.png)
 {: style="text-align: center;"}
 
 Figure 8: RAMPS v1.4 vs v1.4.2
 {: style="color:gray; font-size: 80%; text-align: center;"}
-
-<br>
 
 #### Endstop PCB
 For 3D printing ready made filtered endstops are available, e.g. according to the Makerbot design:
@@ -246,10 +244,8 @@ For 3D printing ready made filtered endstops are available, e.g. according to th
 Figure 9: Endstop PCB with RC unit
 {: style="color:gray; font-size: 80%; text-align: center;"}
 
-<br>
-
 #### Endstop with capacitor
-A more simple variant, that can easily be fitted to existing endstops is a 100nF capacitor, soldered over the two endstop connector pins (in parallel):
+A simpler variant –easily fitted to endstops– is a 100nF capacitor, soldered over the two endstop connector pins (in parallel):
 
 ![filter](/assets/images/docs/hardware/endstops/switch_cap.png)
 {: style="text-align: center;"}
@@ -257,10 +253,8 @@ A more simple variant, that can easily be fitted to existing endstops is a 100nF
 Figure 10: Endstop with 100nF capacitor
 {: style="color:gray; font-size: 80%; text-align: center"}
 
-<br>
-
-#### Effect of the hardware filtering
-Figure 11 below shows the effect of such hardware filtering: The noise level is smoothed and peaks will be reduced so much that they no longer will cause false readings. Additionally the fast bouncing at the beginning of the triggering will also be dampened.
+#### The Effect of Hardware Filtering
+Figure 11 below shows the effect of hardware filtering: The noise level is smoothed and peaks are reduced so much that they no longer cause false readings. And the fast-bouncing signal at the initial trigger is dampened.
 
 ![filter](/assets/images/docs/hardware/endstops/switch_filter.png)
 {: style="text-align: center;"}
@@ -269,4 +263,4 @@ Figure 11: Endstop characteristic with hardware filter
 {: style="color:gray; font-size: 80%; text-align: center"}
 
 ## Conclusion
-Electrical Noise should not be underestimated. It is invisible but it may lead to strange effects that are very hard to diagnose due to its spurious nature. Simple measures like adding a capacitor will already improve the situation considerably, overall improving reliability of the machine.
+Never underestimate electrical noise. It may be invisible but it can lead to strange and spurious effects that are tricky to diagnose. Simple measures (like adding a capacitor) will improve the situation a lot, improving the overall reliability of the machine.
