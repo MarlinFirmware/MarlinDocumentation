@@ -1,5 +1,5 @@
 ---
-tag: g034
+tag: g034a
 title: Z Steppers Auto-Alignment
 brief: Align multiple Z steppers using a bed probe
 author: shitcreek
@@ -9,7 +9,7 @@ experimental: true
 group: calibration
 
 codes: [ G34 ]
-related: [ M422 ]
+related: [ M422, M906, M907 ]
 
 notes:
   - Requires `Z_STEPPER_AUTO_ALIGN`.
