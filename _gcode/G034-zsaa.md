@@ -1,5 +1,5 @@
 ---
-tag: g034g1
+tag: g034a
 title: Z Steppers Auto-Alignment
 brief: Align multiple Z steppers using a bed probe
 author: shitcreek

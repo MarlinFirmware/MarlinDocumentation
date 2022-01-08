@@ -2534,7 +2534,7 @@ The default BLTouch settings can be overriden with these options. `BLTOUCH_DELAY
   #define HOME_AFTER_G34
 #endif
 ```
-Add the [`G34`](/docs/gcode/G034-z-stepper-auto-align.html) command to align multiple Z steppers using a bed probe. See `configuration_adv.h` for more information.
+Add the [`G34`](/docs/gcode/G034-zsaa.html) command to align multiple Z steppers using a bed probe. See `configuration_adv.h` for more information.
 
 ## Motion
 ### Axis Relative/Absolute Mode
