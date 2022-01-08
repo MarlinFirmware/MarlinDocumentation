@@ -61,7 +61,7 @@ M500            ; Save current setup. WARNING: UBL will be active at power up, b
 ;--- Fine Tuning of the mesh happens below ---
 ;---------------------------------------------
 G26 C P5.0 F3.0 ; Produce mesh validation pattern with primed nozzle (5mm) and filament diameter 3mm
-                ; PLA temperatures are assumed unless you specify, _e.g.,_ B 105 H 225 for ABS Plastic
+                ; PLA temperatures are assumed unless you specify, e.g., B 105 H 225 for ABS Plastic
 G29 P4 T        ; Move nozzle to 'bad' areas and fine tune the values if needed
                 ; Repeat G26 and G29 P4 T  commands as needed.
 

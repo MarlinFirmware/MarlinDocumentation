@@ -3218,7 +3218,7 @@ Enables [`G60`](/docs/gcode/G060.html) & [`G61`](/docs/gcode/G061.html) and spec
 ```cpp
 //#define BEZIER_CURVE_SUPPORT
 ```
-Support for [`G5`](/docs/gcode/G005.html) with XYZE destination and IJPQ offsets. Requires ~2666 bytes.
+Support for [`G5`](/docs/gcode/G005.html) with XYZE destination and IJPQ offsets. Requires \~2666 bytes.
 
 ### G38.2/G38.3 Probe Target
 ```cpp

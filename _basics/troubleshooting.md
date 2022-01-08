@@ -86,7 +86,7 @@ These tips are collected from various reports we have received. See [Trinamic tr
 - **SPI conflict with the SD card?** Solutions vary.
 - **E Stepper won't move when using Linear Advance with TMC drivers?**
   - "I ended up using the drivers in legacy mode and setting them to SpreadCycle using the OTP (One Time Programmer). Unfortunately trying to set individual drivers to SpreadCycle via UART by enabling HybridThreshhold and setting the threshold to 0 for the respective axes did not work." See [#11825](//github.com/MarlinFirmware/Marlin/issues/11825).
-- **Loud / grinding TMC2208?** Increase the current to ~1500mA and lower the Hybrid Threshold.
+- **Loud / grinding TMC2208?** Increase the current to \~1500mA and lower the Hybrid Threshold.
 - **Unreliable printing, shifting layers?** Make sure the 'rsense' value is configured according to recommendations. See [#9368](//github.com/MarlinFirmware/Marlin/issues/9368).
 - **TMC2208** uses **SoftwareSerial**, and this conflicts with **Endstop Interrupts**. Disable Endstop Interrupts to proceed.
 - **Should I use `SOFTWARE_DRIVER_ENABLE`?** Not unless required by the hardware. See [#13326](//github.com/MarlinFirmware/Marlin/issues/13326).

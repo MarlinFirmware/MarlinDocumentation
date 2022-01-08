@@ -209,7 +209,7 @@ const char blue = TERN(FEATURE_ONE, '1', '0');
  - Use `#if ENABLED(FEATURE_NAME)` / `#endif` to compile code for an enabled feature. (Using these macros allows features to be set externally.)
  - Use `#if DISABLED(FEATURE_NAME)` / `#endif` to compile code for a disabled feature. See more macros below.
  - Use `#define` macros to avoid repeating boilerplate code.<br />Consider both readability and maintainability.
- - Label `#endif` with the opening `#if` condition(s) if the block is over ~15 lines. Make the label compact. For example, `#endif // SDSUPPORT || ULTRALCD`.
+ - Label `#endif` with the opening `#if` condition(s) if the block is over \~15 lines. Make the label compact. For example, `#endif // SDSUPPORT || ULTRALCD`.
 
 ## FastIO
 

@@ -47,7 +47,7 @@ If things get hairy and you don't know how to proceed, you can always abort and 
 git rebase --abort
 ```
 
-Conflict resolution is a bit of art and a bit of science, but not too hard to get the hang of. When massive conflicts arise it may be better to skip `git rebase` and use `git diff` instead. But in ordinary situations with under ~20 conflicts, it shouldn't be very hard to resolve them.
+Conflict resolution is a bit of art and a bit of science, but not too hard to get the hang of. When massive conflicts arise it may be better to skip `git rebase` and use `git diff` instead. But in ordinary situations with under \~20 conflicts, it shouldn't be very hard to resolve them.
 
 **When resolving conflicts:**
 - Usually you want some change from both sources. Consider all differences.

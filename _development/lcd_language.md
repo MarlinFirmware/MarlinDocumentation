@@ -31,7 +31,7 @@ On all these displays you can define 8 custom symbols to display at once. In Mar
 
 ## Full Graphical Displays
 
-Graphical displays provide complete freedom to display whatever we want, so long as we provide a program for it. Currently we deal with 128x64 Pixel Displays and divide this area into ~5 Lines with ~22 columns. So we need monospace fonts with a bounding box of about 6x10.
+Graphical displays provide complete freedom to display whatever we want, so long as we provide a program for it. Currently we deal with 128x64 Pixel Displays and divide this area into \~5 Lines with \~22 columns. So we need monospace fonts with a bounding box of about 6x10.
 
 - Until now we've been using a custom Marlin font similar to ISO10646-1 but with special symbols at the end, which made 'ü' and 'ä' inaccessible at 6x10 size.
 - Because these letters were too big for some positions on the Info Screen, we use a full ISO10646-1 font at 6x9 (3200 bytes).
@@ -73,7 +73,7 @@ This system was created to address these problems.
 
 # The (Partial) Solution
 
-On a full-featured desktop system like Windows or Linux we could install `unifont.ttf` and some library code and we'd be done. But embedded systems have very limited resources! So we must find ways to limit the space used (`unifont.ttf` alone is ~12MB!), requiring some compromise.
+On a full-featured desktop system like Windows or Linux we could install `unifont.ttf` and some library code and we'd be done. But embedded systems have very limited resources! So we must find ways to limit the space used (`unifont.ttf` alone is \~12MB!), requiring some compromise.
 
 ## Aims
 
@@ -136,7 +136,7 @@ If you get a lot of question marks on the Hitachi-based displays with your new t
 
 - As mentioned, `MAPPER_NON` is the fastest and least memory-hungry variant. While `MAPPER_NON` language files are ugly and tedious to maintain for non-Roman languages, for Roman languages it is trivial to make a `MAPPER_NON` file without any accents.
 - Mappers together with an `ISO10646_*` font are the second-best choice in terms of speed and memory consumption. Only a few more decisions are made per-character.
-- On top of space used for the font, mappers use an additional ~128 bytes for the `mapping_table`.
+- On top of space used for the font, mappers use an additional \~128 bytes for the `mapping_table`.
 - Creating a new language file is no big thing!
   - Make a new file with the format '`language_xx.h`' (or '`language.xx_utf8.h`')
   - In this file specify the mapper (_e.g.,_ `MAPPER_NON`) and font (_e.g.,_ `DISPLAY_CHARSET_ISO10646_1`) and translate some of the strings defined in `language_en.h`. (Remove `#ifndef` `#endif` from the defines.)

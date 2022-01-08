@@ -186,7 +186,7 @@ Provides tube protection by detecting flow failures and controlling laser enable
 // Laser Coolant Flow Meter
 #define LASER_COOLANT_FLOW_METER
 #if ENABLED(LASER_COOLANT_FLOW_METER)
-  #define FLOWMETER_PIN         20  // Requires an external interrupt-enabled pin (_e.g.,_ RAMPS 2,3,18,19,20,21)
+  #define FLOWMETER_PIN         20  // Requires an external interrupt-enabled pin (e.g., RAMPS 2,3,18,19,20,21)
   #define FLOWMETER_PPL       5880  // (pulses/liter) Flow meter pulses-per-liter on the input pin
   #define FLOWMETER_INTERVAL  1000  // (ms) Flow rate calculation interval in milliseconds
   #define FLOWMETER_SAFETY          // Prevent running the laser without the minimum flow rate set below
@@ -206,7 +206,7 @@ Laser cooling control, provides chiller control with temperature monitoring and 
   #define COOLER_MAXTEMP          26  // (°C)
   #define COOLER_DEFAULT_TEMP     16  // (°C)
   #define TEMP_COOLER_HYSTERESIS   1  // (°C) Temperature proximity considered "close enough" to the target
-  #define COOLER_PIN               8  // Laser cooler on/off pin used to control power to the cooling element (_e.g.,_ TEC, External chiller via relay)
+  #define COOLER_PIN               8  // Laser cooler on/off pin used to control power to the cooling element (e.g., TEC, External chiller via relay)
   #define COOLER_INVERTING     false
   #define TEMP_COOLER_PIN         15  // Laser/Cooler temperature sensor pin. ADC is required.
   #define COOLER_FAN                  // Enable a fan on the cooler, Fan# 0,1,2,3 etc.
