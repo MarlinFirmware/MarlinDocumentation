@@ -1906,7 +1906,7 @@ Files sliced with SkeinForge contain the wrong arc G-codes when using "Arc Point
 ```cpp
 //#define FAST_PWM_FAN
 ```
-`FAST_PWM_FAN` increases the FAN PWM frequency. The frequency and scaling can be adjusted in the `Configuration_adv.h` file.
+`FAST_PWM_FAN` increases the FAN PWM frequency. The frequency and scaling can be adjusted in `Configuration_adv.h`.
 
 ### Fan Software PWM
 ```cpp
@@ -3530,7 +3530,7 @@ Experimental feature for filament change support and parking the nozzle when pau
 
 #endif
 ```
-You'll need to import the [TMC26XStepper](//github.com/trinamic/TMC26XStepper.git) library into the Arduino IDE. See the `Configuration_adv.h` file for the full set of sub-options.
+You'll need to import the [TMC26XStepper](//github.com/trinamic/TMC26XStepper.git) library into the Arduino IDE. See `Configuration_adv.h` for the full set of sub-options.
 
 ### Trinamic Configuration
 ```cpp
@@ -3659,7 +3659,7 @@ You'll need to import the [TMC26XStepper](//github.com/trinamic/TMC26XStepper.gi
     #define E7_CHAIN_POS     -1
   #endif
 ```
-You'll need the [TMC2130Stepper](//github.com/teemuatlut/TMC2130Stepper) Arduino library. See the `Configuration_adv.h` file for the full set of sub-options.
+You'll need the [TMC2130Stepper](//github.com/teemuatlut/TMC2130Stepper) Arduino library. See `Configuration_adv.h` for the full set of sub-options.
 
 To use TMC2130 stepper drivers in SPI mode connect your SPI2130 pins to the hardware SPI interface on your board and define the required CS pins in your `pins_MYBOARD.h` file. (e.g., RAMPS 1.4 uses AUX3 pins `X_CS_PIN 53`, `Y_CS_PIN 49`, etc.).
 
@@ -3682,7 +3682,7 @@ To use TMC2130 stepper drivers in SPI mode connect your SPI2130 pins to the hard
   #endif
   ...
 ```
-You'll need to import the [L6470 library](//github.com/ameyer/Arduino-L6470) into the Arduino IDE for this. See the `Configuration_adv.h` file for the full set of sub-options.
+You'll need to import the [L6470 library](//github.com/ameyer/Arduino-L6470) into the Arduino IDE for this. See `Configuration_adv.h` for the full set of sub-options.
 
 ## Experimental i2c Bus
 ```cpp
