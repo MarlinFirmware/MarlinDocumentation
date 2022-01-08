@@ -63,7 +63,7 @@ zh_TW|Chinese (Taiwan)||vi|Vietnamese
 
 # The Problem
 
-All these languages (except English) normally use extended symbols not contained in US-ASCII. Even the English translation uses some Symbols not in US-ASCII (e.g., '`\002`' for Thermometer, `STR_h3` for '³'). In the code itself symbols may be used without taking into account the display they're written on.
+All these languages (except English) normally use extended symbols not contained in US-ASCII. Even the English translation uses some Symbols not in US-ASCII (_e.g.,_ '`\002`' for Thermometer, `STR_h3` for '³'). In the code itself symbols may be used without taking into account the display they're written on.
 
 The upshot of all this is that on Western displays you'll see a '`~`' while on Cyrillic an "arrow coming from top - pointing to left" (which is quite the opposite of what the programmer wanted). The Germans want to use "`ÄäÖöÜüß`", the Finnish at least "`äö`". Other European languages want to see their accents too. For other scripts like Cyrillic, Japanese, Greek, Hebrew, ... you have to find totally different symbol sets.
 
@@ -122,7 +122,7 @@ On a full-featured desktop system like Windows or Linux we could install `unifon
   - `MAPPER_E382E383` works with the Japanese Katakana script. See [this Katakana page](//en.wikipedia.org/wiki/Katakana_(Unicode_block)).
   - There a few other language-specific mappers, and more are being developed.
 
-Mapper functions will only catch the 'lead-in' described in the mapper's name (e.g., `C2C3`). If the input doesn't match, the mapper will output a '?' or garbage.
+Mapper functions will only catch the 'lead-in' described in the mapper's name (_e.g.,_ `C2C3`). If the input doesn't match, the mapper will output a '?' or garbage.
 
 The last byte in the sequence ether points directly into a matching ISO10646 font or (via a mapper_table) into one of the HD44780 fonts.
 
@@ -139,7 +139,7 @@ If you get a lot of question marks on the Hitachi-based displays with your new t
 - On top of space used for the font, mappers use an additional ~128 bytes for the `mapping_table`.
 - Creating a new language file is no big thing!
   - Make a new file with the format '`language_xx.h`' (or '`language.xx_utf8.h`')
-  - In this file specify the mapper (e.g., `MAPPER_NON`) and font (e.g., `DISPLAY_CHARSET_ISO10646_1`) and translate some of the strings defined in `language_en.h`. (Remove `#ifndef` `#endif` from the defines.)
+  - In this file specify the mapper (_e.g.,_ `MAPPER_NON`) and font (_e.g.,_ `DISPLAY_CHARSET_ISO10646_1`) and translate some of the strings defined in `language_en.h`. (Remove `#ifndef` `#endif` from the defines.)
   - You don't have to translate all strings. Omitted definitions will simply use the English strings in in `language_en.h`.
 - If there's no existing mapper for your language then things get a bit more complex. With the Hitachi-based displays you can't make something useful without a matching charset. For graphical display… let's take the example of Greek:
   - Find a matching charset. ([Greek and Coptic](//en.wikipedia.org/wiki/Greek_and_Coptic))

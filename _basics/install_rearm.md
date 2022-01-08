@@ -25,7 +25,7 @@ To increase your chances of success, start out with the default Marlin configura
 
 **Follow this procedure exactly!** An improperly-formatted card may seem to be working but the board will not be able to write the required `FIRMWARE.CUR` file. This can (and does) cause a lot of frustration.
 
-On LPC1768/1769-based boards the onboard SD card is used to store the board's operating system (in this case, Marlin Firmware) and data. It will also be used by default to store gcode files. Some boards also have the option of using an SD card connected to an LCD screen for gcode storage, however the onboard SD card will still be required for firmware storage.
+On LPC1768/1769-based boards the onboard SD card is used to store the board's operating system (in this case, Marlin Firmware) and data. It will also be used by default to store G-code files. Some boards also have the option of using an SD card connected to an LCD screen for G-code storage, however the onboard SD card will still be required for firmware storage.
 
 **Important:**  If your SD card is larger than 32GB, _it must be partitioned_ so that the first partion is no larger than 32GB. The other partitions don't matter. Please refer to your system's tools or do a web search for "partition SD card."
 
@@ -94,7 +94,7 @@ The "EFB" acronym in the board name refers to _Extruder_, _Fan_, and _Bed_. This
 
 1. Open the **boards.h** file. In Marlin 2 this file is located in **Marlin** > **src** > **core**.
 
-2. Scan the file or use **Find** to locate the identifier for your board. (e.g., `BOARD_AZTEEG_X5_GT`)
+2. Scan the file or use **Find** to locate the identifier for your board. (_e.g.,_ `BOARD_AZTEEG_X5_GT`)
 
 3. Open `Configuration.h` and set **MOTHERBOARD** to the name of your board.
 

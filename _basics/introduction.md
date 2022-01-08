@@ -13,7 +13,7 @@ category: [ articles, getting-started ]
 
 Marlin is an open source [firmware](//en.wikipedia.org/wiki/Firmware) for the [RepRap](//en.wikipedia.org/wiki/RepRap_project) family of replicating rapid prototypers — popularly known as "3D printers." It was derived from [Sprinter](//reprap.org/wiki/List_of_Firmware#Sprinter) and [grbl](//reprap.org/wiki/Grbl#Grbl), and became a standalone [open source](//en.wikipedia.org/wiki/Open-source_software) project on August 12, 2011 with its [Github release](//github.com/MarlinFirmware/Marlin/commit/f850af5c1ca343ed65b94c4b9da5dd1ab4c4a53c). Marlin is licensed under the GPLv3 and is free for all applications.
 
-From the start Marlin was built by and for [RepRap](//reprap.org/wiki/) enthusiasts to be a straightforward, reliable, and adaptable printer driver that "just works." As a testament to its quality, Marlin is used by several respected commercial 3D printers. [LulzBot](https://www.lulzbot.com/), [Prusa Research](https://www.prusa3d.com/), [Creality3D](https://creality3d.shop/), [BIQU](https://www.biqu.equipment/), [Geeetech](https://www.geeetech.com/), and [Ultimaker](https://ultimaker.com/) are just a few of the vendors who ship a variant of Marlin. Marlin is also capable of driving CNC machines and laser engravers.
+From the start Marlin was built by and for [RepRap](//reprap.org/wiki/) enthusiasts to be a straightforward, reliable, and adaptable printer driver that "just works." As a testament to its quality, Marlin is used by several respected commercial 3D printers. [LulzBot](https://www.lulzbot.com/), [Průša Research](https://www.prusa3d.com/), [Creality3D](https://creality3d.shop/), [BIQU](https://www.biqu.equipment/), [Geeetech](https://www.geeetech.com/), and [Ultimaker](https://ultimaker.com/) are just a few of the vendors who ship a variant of Marlin. Marlin is also capable of driving CNC machines and laser engravers.
 
 One key to Marlin's popularity is that it runs on inexpensive 8-bit [Atmel AVR](//www.atmel.com/products/microcontrollers/avr/) [micro-controllers](//en.wikipedia.org/wiki/Microcontroller) - Marlin 2.x has added support for 32-bit boards. These chips are at the center of the popular [open source](//en.wikipedia.org/wiki/Open-source_hardware) [Arduino/Genuino](//arduino.cc) platform. The reference platforms for Marlin is an Arduino Mega2560 with RAMPS 1.4 and Re-Arm with Ramps 1.4.
 
@@ -44,7 +44,7 @@ Marlin implements an additive manufacturing process called [Fused Deposition Mod
 
 The control-language for Marlin is a derivative of [G-code](//en.wikipedia.org/wiki/G-code). G-code commands tell a machine to do simple things like "set heater 1 to 180°," or "move to XY at speed F." To print a model with Marlin, it must be converted to G-code using a program called a "slicer." Since every printer is different, you won't find G-code files for download; you'll need to slice them yourself.
 
-As Marlin receives movement commands it adds them to a movement queue to be executed in the order received. The "stepper interrupt" processes the queue, converting linear movements into precisely-timed electronic pulses to the stepper motors. Even at modest speeds Marlin needs to generate thousands of stepper pulses every second. (e.g., 80 steps-per-mm * 50mm/s = 4000 steps-per-second!) Since CPU speed limits how fast the machine can move, we're always looking for new ways to optimize the stepper interrupt!
+As Marlin receives movement commands it adds them to a movement queue to be executed in the order received. The "stepper interrupt" processes the queue, converting linear movements into precisely-timed electronic pulses to the stepper motors. Even at modest speeds Marlin needs to generate thousands of stepper pulses every second. (_e.g.,_ 80 steps-per-mm * 50mm/s = 4000 steps-per-second!) Since CPU speed limits how fast the machine can move, we're always looking for new ways to optimize the stepper interrupt!
 
 Heaters and sensors are managed in a second interrupt that executes at much slower speed, while the main loop handles command processing, updating the display, and controller events. For safety reasons, Marlin will actually reboot if the CPU gets too overloaded to read the sensors.
 
@@ -66,7 +66,7 @@ Slicers prepare a solid 3D model by dividing it up into thin slices (layers). In
 
 - [Cura](//ultimaker.com/en/products/cura-software).
 - [Slic3r](//slic3r.org/).
-- [PrusaSlicer](//www.prusa3d.com/prusaslicer/) (_formerly Slic3r Prusa Edition_) The new Kid on the block based on Slic3r.
+- [PrůšaSlicer](//www.prusa3d.com/prusaslicer/) (_formerly Slic3r Průša Edition_) The new Kid on the block based on Slic3r.
 - [Simplify3D](//www.simplify3d.com/) is a commercial offering.
 
 ### Printing

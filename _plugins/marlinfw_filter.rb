@@ -7,6 +7,7 @@ module Jekyll
       some = some.gsub("’", "'")
       some = some.gsub("“", '"')
       some = some.gsub("-", ' ')
+      some = some.gsub('průša', 'prusa')
       some = some.gsub(/\b([a-z]{,2})\b/, '')
       some = some.gsub(/\b(a(ll|nd|re(n't)?)|(be)?cause|but|can('t|not)?|d(id|oes)(n't)?|end|for|from|ha(d|s|ve)(n't)?|it'?s|odd|use[ds]?|even|from|man?y|more|much|not|see|since|significant(ly)?|some|t?here|this|tha[nt]|th[eo]se|the([mny]|ir|re|y're)?|true|(was|were)(n't)?|wh(at|en|ere|ich|o|y)|will|with(out)?|won't|other|users|people|(al)?though|you'?r?e?|one|two)\b/, '')
       some = some.gsub(/!\[[^\]]+\]\([^\)]+\)\s*(\{[^\}]+\})?/, ' ')

@@ -45,7 +45,7 @@ In order to get the servo working, you need to enable the following options:
 #define SERVO_ENDSTOP_ANGLES {0,0, 0,0, 165,60} // X,Y,Z Axis Extend and Retract angles
 ```
 
-`NUM_SERVOS` tells the firmware how many servos are attached. `SERVO_ENDSTOPS` is a list that tells the firmware which axes (X, Y, Z) have servos attached. The default setting (shown above) is for a servo on the Z axis. `SERVO_ENDSTOP_ANGLES` provides two angles for each servo. The first is the deployed angle (e.g., 165º) and the second is the stowed angle (e.g., 60º). You can use [`M280`](/docs/gcode/M280.html) to figure out these angles (For example `M280 P0 S60` rotates the servo to 60º).
+`NUM_SERVOS` tells the firmware how many servos are attached. `SERVO_ENDSTOPS` is a list that tells the firmware which axes (X, Y, Z) have servos attached. The default setting (shown above) is for a servo on the Z axis. `SERVO_ENDSTOP_ANGLES` provides two angles for each servo. The first is the deployed angle (_e.g.,_ 165º) and the second is the stowed angle (_e.g.,_ 60º). You can use [`M280`](/docs/gcode/M280.html) to figure out these angles (For example `M280 P0 S60` rotates the servo to 60º).
 
 Next you need to define the Z endstop (probe) offset from hot-end. My preferred method:
 

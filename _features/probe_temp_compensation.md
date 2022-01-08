@@ -17,7 +17,7 @@ Temperature can significantly affect bed probing and as a consequence first laye
 
 Since the probe temperature is not the only factor affecting first layer quality, the current implementation can compensate for the bed, probe, and extruder, but only the first two can be calibrated automatically. The measured values are used during [`G29`](/docs/gcode/G029.html) mesh bed leveling to adjust the probe measurements at different temperature readings.
 
-During the calibration process it's important to keep other parts at a constant temperature to prevent them from affecting measurement. For the bed this is fairly easy since Marlin controls its temperature. And for the probe, Marlin can control its proximity to the bed. On some printers (_e.g.,_ Prusa MK3) it may be necessary to shield the probe from active fans or it won't heat up enough. Setting the extruder to something like 140°C can also help.
+During the calibration process it's important to keep other parts at a constant temperature to prevent them from affecting measurement. For the bed this is fairly easy since Marlin controls its temperature. And for the probe, Marlin can control its proximity to the bed. On some printers (_e.g.,_ Průša MK3) it may be necessary to shield the probe from active fans or it won't heat up enough. Setting the extruder to something like 140°C can also help.
 
 The probe calibration table starts at 30°C, the bed at 60°C, and the extruder at 180°C. In reality we might not reach maximum temperatures while calibrating, so linear regression and extrapolation are used to fill in the gaps. While this is hardly exact, it's still better than applying the last value for higher temperatures. The more measurements taken, the better the extrapolated values will be.
 
@@ -58,7 +58,7 @@ While probe calibration is active bed temperature is held constant (_e.g.,_ 110�
 ## Manual calibration process
 The extruder (and perhaps the bed) must be calibrated manually. Here is a potential process:
  - Record the Probe Z Offset (call it `V0`).
- - Set the extruder (or bed) temperature and wait for it to stabilise.
+ - Set the extruder (or bed) temperature and wait for it to stabilize.
  - Use the Z Probe Wizard to get a new value for the Probe Z Offset (call it `V1`).
  - Use [`M871`](/docs/gcode/M871.html) to set the value `V0 - V1`.
  - Repeat with the next temperature...
@@ -72,7 +72,7 @@ The feature can be enabled and configured in `Configuration_adv.h`. Most of the 
     - `PTC_*_START`, `PTC_*_RES` and `PTC_*_COUNT`
 1. If you already have Z offset measurements, populate them:
     - `PTC_*_ZOFFS`
-1. Set the behaviour for temperatures outside the calibrated range, extrapolation or (default) clamping to the min/max value:
+1. Set the behavior for temperatures outside the calibrated range, extrapolation or (default) clamping to the min/max value:
     - `PTC_LINEAR_EXTRAPOLATION`
 1. Set `BED_MAXTEMP` in `Configuration.h`.
 1. Set the park position for [`G76`](/docs/gcode/G076.html) to wait for probe to cool down:

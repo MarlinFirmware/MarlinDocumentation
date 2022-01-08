@@ -42,7 +42,7 @@ This is a hardware issue due to the connected beeper pin being HIGH when the boa
 ### Random Halting
 An under-powered PSU combined with heaters and high speed moves can lead to a frozen board. No kill, no watchdog, heaters stuck on. See [#17202](//github.com/MarlinFirmware/Marlin/issues/17202). To test for this:
 - To test for this, enable the bed and extruder heaters and print at high speed to see if a hard freeze occurs. Try disabling heaters and/or slower printing to see if the problem goes away.
-- Read the input voltage from PSU with a meter during fast moves. If you see a drop too far below your expected voltage (e.g., 12V or 24V) this indicates a problem.
+- Read the input voltage from PSU with a meter during fast moves. If you see a drop too far below your expected voltage (_e.g.,_ 12V or 24V) this indicates a problem.
 
 ### EEPROM Errors
 

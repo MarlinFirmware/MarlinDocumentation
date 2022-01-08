@@ -37,7 +37,7 @@ Git will tell you if there's a conflict and insert unresolved blocks beginning w
 git add .
 git rebase --continue
 ```
-If the resolution resulted in no changes (e.g., because already merged), then you will continue with:
+If the resolution resulted in no changes (_e.g.,_ because already merged), then you will continue with:
 ```
 git add .
 git rebase --skip

@@ -152,7 +152,7 @@ The **Auto Build** option and PlatformIO tasks/build menu will allow you to sele
 
 2. Scroll down or use the **Find** command to locate the **env_default** setting.
 
-3. Change the value to the appropriate **env** value for your board. (e.g., **megaatmeg2560** or **LPC1768**).
+3. Change the value to the appropriate **env** value for your board. (_e.g.,_ **megaatmeg2560** or **LPC1768**).
 
 All available build environment names are listed at the top of **platformio.ini**.
 
@@ -162,7 +162,7 @@ For a minimal build you just need to set the `MOTHERBOARD` value appropriate to 
 
 1. Open the **boards.h** file (located in the **Marlin/src/core** folder).
 
-2. Scroll down or use the **Find** command to locate the entry for your board. (e.g., **BOARD_AZTEEG_X5_GT**)
+2. Scroll down or use the **Find** command to locate the entry for your board. (_e.g.,_ **BOARD_AZTEEG_X5_GT**)
 
 3. Open your **Configuration.h** file (located in the **Marlin** folder).
 
@@ -270,7 +270,7 @@ SD cards over 32G in size must be partitioned so that the first partition is 32G
 
 ### PlatformIO Hidden Folders
 
-The folders described below are hidden in the File Explorer / Finder unless you change your OS (Windows, macOS, Linux) settings to reveal them. They may be visible within your project editor (e.g., ***Atom***, **Visual Studio Code**, etc.) depending on your workspace settings.
+The folders described below are hidden in the File Explorer / Finder unless you change your OS (Windows, macOS, Linux) settings to reveal them. They may be visible within your project editor (_e.g.,_ ***Atom***, **Visual Studio Code**, etc.) depending on your workspace settings.
 
 ##### `.pioenvs`
 
