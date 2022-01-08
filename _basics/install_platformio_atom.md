@@ -1,13 +1,13 @@
 ---
 title:        Installing Marlin (Atom)
-description:  Marlin Installation Quick Start Guide, PlatformIO with Atom
+description:  Install Marlin using PlatformIO in Atom
 
 author: shitcreek
 contrib: thinkyhead, Bob-the-Kuhn
 category: [ articles, getting-started ]
 ---
 {% alert warning %}
-**Atom** is no longer supported by **PlatformIO**. While it may partly work,  you should switch to **[Visual Studio Code](install_platformio_vscode.html)** for future installs.
+**Atom** is no longer supported by **PlatformIO**. While it may partly work, you should switch to **[Visual Studio Code](install_platformio_vscode.html)** for future installs.
 {% endalert %}
 
 Before reading this article, you should have already read [Installing Marlin with PlatformIO](install_platformio.html).
@@ -88,7 +88,7 @@ A sample customization process is described below to demonstrate how this method
 
 1. Install the PlatformIO plugin
 
-    Repeat the previous step but type **platformio** into the search box, press ENTER on the keyboard  and then click 'Install' in the **platformio-ide** box when it appears.
+    Repeat the previous step but type **platformio** into the search box, press ENTER on the keyboard and then click 'Install' in the **platformio-ide** box when it appears.
 
     ![PlatformIO IDE](/assets/images/basics/install_platformio/platformio_ide.png)
 
@@ -324,13 +324,13 @@ As before, start with the example configuration for your board if one is availab
 
 ### Manual Selection of PlatformIO Build and Upload Tasks
 
-1. Get the correct environment for the selected board
+1. Find the environment for your board
 
-  The PlatformIO environment needed for a motherboard is in the comments for the board in the **pins.h** file. In Marlin 2.0 it's located in  a subdirectory **Marlin/src/pins/pins.h**.
+  The PlatformIO environment needed for a motherboard is in the comments for the board in the **pins.h** file. In Marlin 2.0 it's located in a subdirectory **Marlin/src/pins/pins.h**.
 
   **Example:**
 
-  The configuration.h file says  `#define MOTHERBOARD BOARD_RAMPS_14_EFB`
+  In `Configuration.h` the board is defined by the line `#define MOTHERBOARD BOARD_RAMPS_14_EFB`
 
   Search the **pins.h** file for **RAMPS_14_EFB** until you come to the following:
 

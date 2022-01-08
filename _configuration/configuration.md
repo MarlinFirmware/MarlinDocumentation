@@ -1503,7 +1503,7 @@ Validate that endstops are triggered on homing moves.
   //#define SKEW_CORRECTION_GCODE
 #endif
 ```
-Correct for misalignment in the XYZ axes. See `configuration.h` for a thorough explanation.
+Correct for misalignment in the XYZ axes. See `Configuration.h` for a thorough explanation.
 
 ## Additonal Features
 
@@ -1906,7 +1906,7 @@ Files sliced with SkeinForge contain the wrong arc G-codes when using "Arc Point
 ```cpp
 //#define FAST_PWM_FAN
 ```
-`FAST_PWM_FAN` increases the FAN PWM frequency. The frequency and scaling can be adjusted in the `configuration_adv.h` file.
+`FAST_PWM_FAN` increases the FAN PWM frequency. The frequency and scaling can be adjusted in the `Configuration_adv.h` file.
 
 ### Fan Software PWM
 ```cpp
@@ -2329,7 +2329,7 @@ This option can be defined to set the minimum and maximum PWM speeds (1-255) req
 #endif
 ```
 
-The default frequency for `FAST_PWM_FAN` is F = F_CPU/(2*255*1). See `configuration_adv.h` for further information.
+The default frequency for `FAST_PWM_FAN` is F = F_CPU/(2*255*1). See `Configuration_adv.h` for further information.
 
 ### Extruder Auto-Cooling Fans
 ```cpp
@@ -2445,7 +2445,7 @@ Set `X_DUAL_STEPPER_DRIVERS` to use a second X motor. If the X motors need to sp
 If the two X axes aren't perfectly aligned, use `X_DUAL_ENDSTOP_ADJUSTMENT` to adjust for the difference. This offset is applied to the X2 motor after homing with [`G28`](/docs/gcode/G028.html). The dual endstop offsets can be set at runtime with `M666 X[offset] Y[offset] Z[offset]`.
 
 {% alert info %}
-Requires enabling the corresponding stepper driver ie `X2_DRIVER_TYPE` in `configuration.h`. Do `NOT` enable `E2_DRIVER_TYPE` - this may produce undesireabe results that can harm your machine.
+Requires enabling the corresponding stepper driver ie `X2_DRIVER_TYPE` in `Configuration.h`. Do `NOT` enable `E2_DRIVER_TYPE` - this may produce undesireabe results that can harm your machine.
 {% endalert %}
 
 ## Dual X Carriage
@@ -2510,7 +2510,7 @@ The slower homing speed for each axis is set by `HOMING_BUMP_DIVISOR`.
 //#define BLTOUCH_LCD_VOLTAGE_MENU
 #endif
 ```
-The default BLTouch settings can be overriden with these options. `BLTOUCH_DELAY` defaults to 500 if not defined. See `configuration_adv.h` for more information.
+The default BLTouch settings can be overriden with these options. `BLTOUCH_DELAY` defaults to 500 if not defined. See `Configuration_adv.h` for more information.
 
 ## Z Steppers Auto-Alignment
 ```cpp
@@ -2534,7 +2534,7 @@ The default BLTouch settings can be overriden with these options. `BLTOUCH_DELAY
   #define HOME_AFTER_G34
 #endif
 ```
-Add the [`G34`](/docs/gcode/G034-zsaa.html) command to align multiple Z steppers using a bed probe. See `configuration_adv.h` for more information.
+Add the [`G34`](/docs/gcode/G034-zsaa.html) command to align multiple Z steppers using a bed probe. See `Configuration_adv.h` for more information.
 
 ## Motion
 ### Axis Relative/Absolute Mode
@@ -2622,7 +2622,7 @@ Slows down the machine when the look ahead buffer is filled to the set `SLOWDOWN
   #endif
 #endif
 ```
-See `configuration_adv.h` for further information.
+See `Configuration_adv.h` for further information.
 
 ### Automatic Backlash Calibration
 ```cpp
@@ -2658,7 +2658,7 @@ See `configuration_adv.h` for further information.
   #endif
 #endif
 ```
-Adds [`G425`](/docs/gcode/G425.html) to run automatic calibration using an electrically-conductive cube, bolt, or washer mounted on the bed. See `configuration_adv.h` for further information.
+Adds [`G425`](/docs/gcode/G425.html) to run automatic calibration using an electrically-conductive cube, bolt, or washer mounted on the bed. See `Configuration_adv.h` for further information.
 
 ### Adaptive Step Smoothing
 ```cpp
@@ -2781,7 +2781,7 @@ Show the total filament used amount during printing.
   #endif
 #endif
 ```
-See `configuration_adv.h` for further information.
+See `Configuration_adv.h` for further information.
 
 ### Progress Bar (character LCD)
 ```cpp
@@ -2809,7 +2809,7 @@ Show a progress bar on HD44780 LCDs for SD printing. Sub-options determine how l
     #define PE_LEDS_COMPLETED_TIME  (30*60)
   #endif
 ```
-See `configuration_adv.h` for more details.
+See `Configuration_adv.h` for more details.
 
 ### Power Loss Recovery
 ```cpp
@@ -2826,7 +2826,7 @@ See `configuration_adv.h` for more details.
     #define POWER_LOSS_MIN_Z_CHANGE 0.05
   #endif
   ```
-  See `configuration_adv.h` for more details.
+  See `Configuration_adv.h` for more details.
 
 ### SD Card Sorting Options
 ```cpp
@@ -2841,7 +2841,7 @@ See `configuration_adv.h` for more details.
     #define SDSORT_DYNAMIC_RAM false
     #define SDSORT_CACHE_VFATS 2#endif
 ```
-  See `configuration_adv.h` for more details.
+  See `Configuration_adv.h` for more details.
 
 ### Long Filenames
 ```cpp
@@ -2885,7 +2885,7 @@ Auto-report SD card status with [`M27`](/docs/gcode/M027.html) S<seconds>
     //#define USE_UHS3_USB
   #endif
 ```
-See `configuration_adv.h` for more details.
+See `Configuration_adv.h` for more details.
 
 ### Firmware Update
 ```cpp
@@ -2896,13 +2896,13 @@ See `configuration_adv.h` for more details.
     #define SD_FIRMWARE_UPDATE_INACTIVE_VALUE 0xFF
   #endif
 ```
-See `configuration_adv.h` for more details.
+See `Configuration_adv.h` for more details.
 
 ### Binary File Transfer
 ```cpp
   //#define BINARY_FILE_TRANSFER
 ```
-See `configuration_adv.h` for more details.
+See `Configuration_adv.h` for more details.
 
 ### SD Card Connection
 ```cpp
@@ -2994,7 +2994,7 @@ Some of these options may result in the display lagging behind controller events
   #endif
 #endif // HAS_DGUS_LCD
 ```
-See `configuration_adv.h` for more details.
+See `Configuration_adv.h` for more details.
 
 ## FTDI Embedded Video Engine (EVE) Touch UI
 ```cpp
@@ -3053,7 +3053,7 @@ See `configuration_adv.h` for more details.
   //#define TOUCH_UI_DEVELOPER_MENU
 #endif
 ```
-See `configuration_adv.h` for more details.
+See `Configuration_adv.h` for more details.
 
 ## FSMC Graphical TFT
 ```cpp
@@ -3152,7 +3152,7 @@ These options specify the three points that will be probed during [`G29`](/docs/
   //#define PROBING_MARGIN_BACK PROBING_MARGIN
 #endif
 ```
-See `configuration_adv.h` for more details.
+See `Configuration_adv.h` for more details.
 
 ### Custom Mesh Area
 ```cpp
@@ -3188,7 +3188,7 @@ Repeatedly attempt [`G29`](/docs/gcode/G029.html) leveling until it succeeds. St
     //#define USE_TEMP_EXT_COMPENSATION
   #endif
 ```
-Probe measurements are adjusted to compensate for temperature distortion. Use [`G76`](/docs/gcode/G076.html) to calibrate this feature. Use [`M871`](/docs/gcode/M871.html) to set values manually. For a more detailed explanation of the process see `G76_M871.cpp` and `configuration_adv.h`.
+Probe measurements are adjusted to compensate for temperature distortion. Use [`G76`](/docs/gcode/G076.html) to calibrate this feature. Use [`M871`](/docs/gcode/M871.html) to set values manually. For a more detailed explanation of the process see `G76_M871.cpp` and `Configuration_adv.h`.
 
 ## Enhanced G-code
 ### G60/G61 Position Save and Return

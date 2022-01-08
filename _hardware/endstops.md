@@ -81,11 +81,11 @@ By default, slicers generate G-code that places the base of a printed model at z
 and build upwards from there. The result of homing the z-axis should thus place the
 build surface at the z=0 plane. After homing in z, the hardware
 z endstop is deactivated (unless you have set
-`ENDSTOPS_ALWAYS_ON_DEFAULT` in configuration_adv.h, which can be overridden by
+`ENDSTOPS_ALWAYS_ON_DEFAULT` in Configuration_adv.h, which can be overridden by
 [M120](/docs/gcode/M120.html), [M121](/docs/gcode/M121.html)), but to protect the hardware a software endstop is
 activated (which in turn can be overridden by
 [M211](/docs/gcode/M211.html) S0). This software
-endstop is located at `Z_MIN_POS` (defined in configuration.h) .
+endstop is located at `Z_MIN_POS` (defined in Configuration.h) .
 This is normally at z=0 at the nominal location of the bed. Note that
 when using bed-leveling, this software endstop is applied to the
 *uncorrected*  slicer generated z-values. This allows printing into the hollows of the bed, where z < 0.
