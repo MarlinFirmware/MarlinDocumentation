@@ -2450,12 +2450,12 @@ Requires enabling the corresponding stepper driver (_e.g.,_ `X2_DRIVER_TYPE` in 
 ```cpp
 //#define DUAL_X_CARRIAGE
 #if ENABLED(DUAL_X_CARRIAGE)
-  #define X1_MIN_POS X_MIN_POS   
-  #define X1_MAX_POS X_BED_SIZE  
-  #define X2_MIN_POS    80       
-  #define X2_MAX_POS   353       
-  #define X2_HOME_DIR    1       
-  #define X2_HOME_POS X2_MAX_POS 
+  #define X1_MIN_POS X_MIN_POS
+  #define X1_MAX_POS X_BED_SIZE
+  #define X2_MIN_POS    80
+  #define X2_MAX_POS   353
+  #define X2_HOME_DIR    1
+  #define X2_HOME_POS X2_MAX_POS
 
   // This is the default power-up mode which can be later using M605.
   #define DEFAULT_DUAL_X_CARRIAGE_MODE DXC_AUTO_PARK_MODE
