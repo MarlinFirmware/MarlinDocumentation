@@ -31,7 +31,7 @@ On all these displays you can define 8 custom symbols to display at once. In Mar
 
 ## Full Graphical Displays
 
-Graphical displays provide complete freedom to display whatever we want, so long as we provide a program for it. Currently we deal with 128x64 Pixel Displays and divide this area into ~5 Lines with ~22 columns. So we need monospace fonts with a bounding box of about 6x10.
+Graphical displays provide complete freedom to display whatever we want, so long as we provide a program for it. Currently we deal with 128x64 Pixel Displays and divide this area into \~5 Lines with \~22 columns. So we need monospace fonts with a bounding box of about 6x10.
 
 - Until now we've been using a custom Marlin font similar to ISO10646-1 but with special symbols at the end, which made 'ü' and 'ä' inaccessible at 6x10 size.
 - Because these letters were too big for some positions on the Info Screen, we use a full ISO10646-1 font at 6x9 (3200 bytes).
@@ -63,7 +63,7 @@ zh_TW|Chinese (Taiwan)||vi|Vietnamese
 
 # The Problem
 
-All these languages (except English) normally use extended symbols not contained in US-ASCII. Even the English translation uses some Symbols not in US-ASCII (e.g., '`\002`' for Thermometer, `STR_h3` for '³'). In the code itself symbols may be used without taking into account the display they're written on.
+All these languages (except English) normally use extended symbols not contained in US-ASCII. Even the English translation uses some Symbols not in US-ASCII (_e.g.,_ '`\002`' for Thermometer, `STR_h3` for '³'). In the code itself symbols may be used without taking into account the display they're written on.
 
 The upshot of all this is that on Western displays you'll see a '`~`' while on Cyrillic an "arrow coming from top - pointing to left" (which is quite the opposite of what the programmer wanted). The Germans want to use "`ÄäÖöÜüß`", the Finnish at least "`äö`". Other European languages want to see their accents too. For other scripts like Cyrillic, Japanese, Greek, Hebrew, ... you have to find totally different symbol sets.
 
@@ -73,7 +73,7 @@ This system was created to address these problems.
 
 # The (Partial) Solution
 
-On a full-featured desktop system like Windows or Linux we could install `unifont.ttf` and some library code and we'd be done. But embedded systems have very limited resources! So we must find ways to limit the space used (`unifont.ttf` alone is ~12MB!), requiring some compromise.
+On a full-featured desktop system like Windows or Linux we could install `unifont.ttf` and some library code and we'd be done. But embedded systems have very limited resources! So we must find ways to limit the space used (`unifont.ttf` alone is \~12MB!), requiring some compromise.
 
 ## Aims
 
@@ -122,7 +122,7 @@ On a full-featured desktop system like Windows or Linux we could install `unifon
   - `MAPPER_E382E383` works with the Japanese Katakana script. See [this Katakana page](//en.wikipedia.org/wiki/Katakana_(Unicode_block)).
   - There a few other language-specific mappers, and more are being developed.
 
-Mapper functions will only catch the 'lead-in' described in the mapper's name (e.g., `C2C3`). If the input doesn't match, the mapper will output a '?' or garbage.
+Mapper functions will only catch the 'lead-in' described in the mapper's name (_e.g.,_ `C2C3`). If the input doesn't match, the mapper will output a '?' or garbage.
 
 The last byte in the sequence ether points directly into a matching ISO10646 font or (via a mapper_table) into one of the HD44780 fonts.
 
@@ -136,10 +136,10 @@ If you get a lot of question marks on the Hitachi-based displays with your new t
 
 - As mentioned, `MAPPER_NON` is the fastest and least memory-hungry variant. While `MAPPER_NON` language files are ugly and tedious to maintain for non-Roman languages, for Roman languages it is trivial to make a `MAPPER_NON` file without any accents.
 - Mappers together with an `ISO10646_*` font are the second-best choice in terms of speed and memory consumption. Only a few more decisions are made per-character.
-- On top of space used for the font, mappers use an additional ~128 bytes for the `mapping_table`.
+- On top of space used for the font, mappers use an additional \~128 bytes for the `mapping_table`.
 - Creating a new language file is no big thing!
   - Make a new file with the format '`language_xx.h`' (or '`language.xx_utf8.h`')
-  - In this file specify the mapper (e.g., `MAPPER_NON`) and font (e.g., `DISPLAY_CHARSET_ISO10646_1`) and translate some of the strings defined in `language_en.h`. (Remove `#ifndef` `#endif` from the defines.)
+  - In this file specify the mapper (_e.g.,_ `MAPPER_NON`) and font (_e.g.,_ `DISPLAY_CHARSET_ISO10646_1`) and translate some of the strings defined in `language_en.h`. (Remove `#ifndef` `#endif` from the defines.)
   - You don't have to translate all strings. Omitted definitions will simply use the English strings in in `language_en.h`.
 - If there's no existing mapper for your language then things get a bit more complex. With the Hitachi-based displays you can't make something useful without a matching charset. For graphical display… let's take the example of Greek:
   - Find a matching charset. ([Greek and Coptic](//en.wikipedia.org/wiki/Greek_and_Coptic))

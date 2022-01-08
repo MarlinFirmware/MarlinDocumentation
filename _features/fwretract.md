@@ -28,13 +28,13 @@ See [`M207` Set Retract](/docs/gcode/M207.html) and [`M208` Set Recover](/docs/g
 
 # Automatic Firmware Retraction
 
-Marlin includes Automatic Firmware Retraction (aka "Auto Retract") to convert slicer-based retraction to Firmware-based Retraction on the fly. When Automatic Firmware Retraction is enabled (e.g., with [`M209` Auto Retract](/docs/gcode/M209.html)) Marlin converts all retract/recover moves (`G0 E` moves over a configured length) into firmware-based retract/recover moves, using the length and feedrate values set in the firmware instead of those specified by the G-code.
+Marlin includes Automatic Firmware Retraction (aka "Auto Retract") to convert slicer-based retraction to Firmware-based Retraction on the fly. When Automatic Firmware Retraction is enabled (_e.g.,_ with [`M209` Auto Retract](/docs/gcode/M209.html)) Marlin converts all retract/recover moves (`G0 E` moves over a configured length) into firmware-based retract/recover moves, using the length and feedrate values set in the firmware instead of those specified by the G-code.
 
 # AFR Caveats
 
 Currently, the [`M209`](/docs/gcode/M209.html) state is persistent and the state is saved to EEPROM. The expectation has been that once you've settled on a preference for firmware retraction you'll set the machine and keep it on or off. This behavior may change so that auto-retract is disabled most often, as it is safer to always leave it off. For legacy G-code, just add `M209 S1` to the starting code and `M209 S0` to the end.
 
-Auto-retract uses the settings `MIN_AUTORETRACT` and `MAX_AUTORETRACT` to determine the range of E moves that should be converted to firmware retract/recover moves. When Auto Retract is enabled, long [`G0`](/docs/gcode/G000-G001.html) moves (e.g., for a manual filament change) will be done as retract/recover moves. Turn off automatic firmware retraction with `M209 S0` before doing any manual E moves.
+Auto-retract uses the settings `MIN_AUTORETRACT` and `MAX_AUTORETRACT` to determine the range of E moves that should be converted to firmware retract/recover moves. When Auto Retract is enabled, long [`G0`](/docs/gcode/G000-G001.html) moves (_e.g.,_ for a manual filament change) will be done as retract/recover moves. Turn off automatic firmware retraction with `M209 S0` before doing any manual E moves.
 
 {% alert warning %}
 ** **Avoid using Automatic Firmware Retraction unless absolutely needed!** **

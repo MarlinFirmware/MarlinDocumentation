@@ -1,6 +1,6 @@
 ---
-title:        Installing Marlin (CLI)
-description:  Marlin Installation Quick Start Guide, PlatformIO CLI
+title:       Installing Marlin (CLI)
+description: Install Marlin using PlatformIO CLI
 
 author: Bob-the-Kuhn
 contrib: ChrisBountalis
@@ -23,21 +23,21 @@ Follow [these instructions](//docs.platformio.org/en/latest/installation.html) t
 
 NOTE: If a **PlatformIO** plugin/extension has previously been installed then **PlatformIO Core** is already installed.  You may still need to follow the [Install PlatformIO Core Shell Commands](//docs.platformio.org/en/latest/faq.html#faq-install-shell-commands) section in the above link.
 
-## Get the correct environment for the selected board
+## Find the environment for your board
 
 This step is the same as in [Installing Marlin with PlatformIO](install_platformio.html).
 
-The PlatformIO environment needed for a motherboard is in the comments for the board in the **pins.h** file. In Marlin 2.0 it's located in  a subdirectory **Marlin/src/pins/pins.h**.
+The PlatformIO environment needed for a motherboard is in the comments for the board in the **pins.h** file. In Marlin 2.0 it's located in a subdirectory **Marlin/src/pins/pins.h**.
 
 **Example:**
 
-  The configuration.h file says  `#define MOTHERBOARD BOARD_RAMPS_14_EFB`
+  In `Configuration.h` the board is defined by the line `#define MOTHERBOARD BOARD_RAMPS_14_EFB`
 
   Search the **pins.h** file for **RAMPS_14_EFB** until you come to the following:
 
   ```cpp
   #elif MB(RAMPS_14_EEB)
-     #include "pins_RAMPS.h"     // ATmega1280, ATmega2560                     env:megaatmega1280 env:megaatmega2560'
+     #include "pins_RAMPS.h"     // ATmega1280, ATmega2560                     env:megaatmega1280 env:megaatmega2560
   ```
 
   The first part of the comment lists the CPU(s) used in the board.

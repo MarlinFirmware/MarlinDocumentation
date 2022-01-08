@@ -51,7 +51,7 @@ If you don't want to set `default_envs`, select the environment for your board f
 
 #### Identifying your board's environment
 
-The PlatformIO environment needed for a motherboard is in the comments for the board in the **pins.h** file. In Marlin 2.0 it's located in  a subdirectory **Marlin/src/pins/pins.h**.
+The PlatformIO environment needed for a motherboard is in the comments for the board in the **pins.h** file. In Marlin 2.0 it's located in a subdirectory **Marlin/src/pins/pins.h**.
 
 **Example:**
 

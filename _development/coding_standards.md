@@ -11,7 +11,7 @@ Please follow the formatting guidelines and coding standards below when contribu
 
 # Coding Style
 ## Indentation
-Indentation is important for readability and maintainability of code, and provides guidance for naïve code editors (e.g., TextMate, Sublime, et. al.) to properly fold code blocks by level.
+Indentation is important for readability and maintainability of code, and provides guidance for naïve code editors (_e.g.,_ TextMate, Sublime, et. al.) to properly fold code blocks by level.
 
  - Entab lines with 2 spaces and don't use tabs. _Set your editor to use 2 Spaces! Tabs will bite you in the end._
  - All block elements should increase the indentation level, including `#if` blocks and other non-brace compiler blocks:
@@ -153,7 +153,7 @@ Going forward, Marlin does not need to be backward-compatible with older (pre-20
 
  - Dynamic allocation (`malloc()`, `free()`, `new`, `delete`) is ***verboten***!
    There may be some flexibility for certain 32-bit features.
- - Avoid unconstrained recursion (e.g., calling `idle()` from `idle()`) so the stack won't explode.
+ - Avoid unconstrained recursion (_e.g.,_ calling `idle()` from `idle()`) so the stack won't explode.
  - Avoid using globals and `static` locals because SRAM is a precious resource on many boards.
  - Use `PSTR` and `PROGMEM` macros to keep strings in Program Memory.
 
@@ -209,7 +209,7 @@ const char blue = TERN(FEATURE_ONE, '1', '0');
  - Use `#if ENABLED(FEATURE_NAME)` / `#endif` to compile code for an enabled feature. (Using these macros allows features to be set externally.)
  - Use `#if DISABLED(FEATURE_NAME)` / `#endif` to compile code for a disabled feature. See more macros below.
  - Use `#define` macros to avoid repeating boilerplate code.<br />Consider both readability and maintainability.
- - Label `#endif` with the opening `#if` condition(s) if the block is over ~15 lines. Make the label compact. For example, `#endif // SDSUPPORT || ULTRALCD`.
+ - Label `#endif` with the opening `#if` condition(s) if the block is over \~15 lines. Make the label compact. For example, `#endif // SDSUPPORT || ULTRALCD`.
 
 ## FastIO
 
@@ -236,7 +236,7 @@ Macro|Description
 `ALL(...)`| True only if all of the listed options are enabled.
 `NONE(...)`| True only if none of the listed options is enabled.
 `COUNT_ENABLED(OPT1, OPT2, ...)`| Count the number of options in the list that are enabled.
-`COUNT(array)`| Count the number of items in an array in-place. e.g., `for (i = 0; i < COUNT(my_arr); i++)`…
+`COUNT(array)`| Count the number of items in an array in-place. _e.g.,_ `for (i = 0; i < COUNT(my_arr); i++)`…
 `WITHIN(var,low,high)`| Check that a variable is within a given range, inclusive.
 `NUMERIC(c)`| True if a character is numeric: `0123456789`
 `DECIMAL(c)`| True if a character is decimal: `0123456789.`

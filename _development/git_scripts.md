@@ -37,7 +37,7 @@ Git will tell you if there's a conflict and insert unresolved blocks beginning w
 git add .
 git rebase --continue
 ```
-If the resolution resulted in no changes (e.g., because already merged), then you will continue with:
+If the resolution resulted in no changes (_e.g.,_ because already merged), then you will continue with:
 ```
 git add .
 git rebase --skip
@@ -47,7 +47,7 @@ If things get hairy and you don't know how to proceed, you can always abort and 
 git rebase --abort
 ```
 
-Conflict resolution is a bit of art and a bit of science, but not too hard to get the hang of. When massive conflicts arise it may be better to skip `git rebase` and use `git diff` instead. But in ordinary situations with under ~20 conflicts, it shouldn't be very hard to resolve them.
+Conflict resolution is a bit of art and a bit of science, but not too hard to get the hang of. When massive conflicts arise it may be better to skip `git rebase` and use `git diff` instead. But in ordinary situations with under \~20 conflicts, it shouldn't be very hard to resolve them.
 
 **When resolving conflicts:**
 - Usually you want some change from both sources. Consider all differences.

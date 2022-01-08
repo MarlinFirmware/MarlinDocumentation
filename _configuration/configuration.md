@@ -7,8 +7,6 @@ contrib: paulusjacobus, jbrazio, landodragon141, thinkyhead, shitcreek, LMF5000,
 category: [ configuration ]
 ---
 
-<!-- # Introduction -->
-
 Marlin is a huge C++ program composed of many files, but here we'll only be talking about the two files that contain all of Marlin's compile-time configuration options:
 
 - `Configuration.h` contains the core settings for the hardware, language and controller selection, and settings for the most common features and components.
@@ -41,7 +39,7 @@ If you've never configured and calibrated a 3D Printer before, here are some goo
 
 - [Calibration](//reprap.org/wiki/Calibration)
 - [Calibrating Steps-per-unit](//youtu.be/wAL9d7FgInk)
-- [Prusa's calculators](//blog.prusaprinters.org/calculator_3416/)
+- [Průša's calculators](//blog.prusaprinters.org/calculator_3416/)
 - [Triffid Hunter's Calibration Guide](//reprap.org/wiki/Triffid_Hunter%27s_Calibration_Guide)
 - [The Essential Calibration Set](//www.thingiverse.com/thing:5573)
 - [Calibration of your RepRap](//sites.google.com/site/repraplogphase/calibration-of-your-reprap)
@@ -95,12 +93,12 @@ Marlin now checks for a configuration version and won't compile without this set
 #define SHOW_BOOTSCREEN
 #define SHOW_CUSTOM_BOOTSCREEN
 #define CUSTOM_STATUS_SCREEN_IMAGE
-
 ```
-- `STRING_CONFIG_H_AUTHOR` is shown in the Marlin startup message, and is meant to identify the author (and optional variant) of the firmware. Use this setting as a way to uniquely identify all your custom configurations. The startup message is printed whenever the board reboots.
+
+- `STRING_CONFIG_H_AUTHOR` is shown in the Marlin startup message to identify the author (and optional variant) of the firmware. Use this setting as a way to uniquely identify your custom configurations. The startup message is printed whenever the board (re)boots.
 - `SHOW_BOOTSCREEN` enables the boot screen for LCD controllers.
-- `SHOW_CUSTOM_BOOTSCREEN` shows the bitmap in Marlin/_Bootscreen.h on startup.
-- `CUSTOM_STATUS_SCREEN_IMAGE` shows the bitmap in Marlin/_Statusscreen.h on the status screen.
+- `SHOW_CUSTOM_BOOTSCREEN` shows the bitmap in `Marlin/_Bootscreen.h` on startup.
+- `CUSTOM_STATUS_SCREEN_IMAGE` shows the bitmap in `Marlin/_Statusscreen.h` on the status screen.
 
 ## Hardware Info
 
@@ -130,7 +128,7 @@ Serial port -1 is the USB emulated serial port, if available.
 ```cpp
 #define BAUDRATE 115200
 ```
-The serial communication speed of the printer should be as fast as it can manage without generating errors. In most cases 115200 gives a good balance between speed and stability. Start with 250000 and only go lower if "line number" and "checksum" errors start to appear. Note that some boards (e.g., a temperamental Sanguinololu clone based on the ATMEGA1284P) may not be able to handle a baudrate over 57600. Allowed values: 2400, 9600, 19200, 38400, 57600, 115200, 250000.
+The serial communication speed of the printer should be as fast as it can manage without generating errors. In most cases 115200 gives a good balance between speed and stability. Start with 250000 and only go lower if "line number" and "checksum" errors start to appear. Note that some boards (_e.g.,_ a temperamental Sanguinololu clone based on the ATMEGA1284P) may not be able to handle a baud rate over 57600. Allowed values: 2400, 9600, 19200, 38400, 57600, 115200, 250000.
 
 ### Bluetooth
 
@@ -168,35 +166,6 @@ This is the name of your printer as displayed on the LCD and by [`M115`](/docs/g
 ```
 A unique ID for your 3D printer. A suitable unique ID can be generated randomly at [uuidtools.com](//www.uuidtools.com/generate/v4). Some host programs and slicers may use this identifier to differentiate between specific machines on your network.
 
-## Linear Axes
-
-```cpp
-#define LINEAR_AXES 3
-```
-This value, from 1 to 6, defines the number of coordinated axes (other than extruders). The axes can be linear, rotational, etc., and they will start and arrive together linearly. Within Marlin the axes are named X, Y, Z, I, J, K (in that order).
-
-Each axis will need a `STEP`, `ENABLE`, `DIR`, and (optional) endstop pin. (Multiple axes can share a single `ENABLE` pin.) And each axis will require other settings as normally apply to XYZ. We won't list them all here and there will be no quiz later.
-
-Settings that apply to multiple axes must have the correct number of elements. The `SanityCheck.h` file will catch obvious mistakes, but be sure to verify `DEFAULT_AXIS_STEPS_PER_UNIT`, `DEFAULT_MAX_FEEDRATE`, `DEFAULT_MAX_ACCELERATION`, `HOMING_FEEDRATE_MM_M`, `AXIS_RELATIVE_MODES`, `MICROSTEP_MODES`, `MANUAL_FEEDRATE`, `HOMING_BUMP_DIVISOR`, `HOMING_BACKOFF_POST_MM`, `BACKLASH_DISTANCE_MM`, `NOZZLE_TO_PROBE_OFFSET`, etc.
-
-```cpp
-#if LINEAR_AXES >= 4
-  #define AXIS4_NAME 'A' // :['A', 'B', 'C', 'U', 'V', 'W']
-#endif
-#if LINEAR_AXES >= 5
-  #define AXIS5_NAME 'B' // :['A', 'B', 'C', 'U', 'V', 'W']
-#endif
-#if LINEAR_AXES >= 6
-  #define AXIS6_NAME 'C' // :['A', 'B', 'C', 'U', 'V', 'W']
-#endif
-```
-These are the user-facing names of the 4th (I) axis, 5th (J) axis, and 6th (K) axis. These are the axis names that will be used in G-code to refer to the extra axes. (Internally the axes are always referred to as `I`/`J`/`K`).
-
-For RS274/NGC standard compliant G-code, use `'A'`, `'B'` and `'C'` for rotational axes corresponding to X, Y and Z, respectively.
-
-A convention also used by LinuxCNC is: `'U'`, `'V'` and `'W'` for secondary linear axes corresponding to X, Y and Z, respectively.
-
-Allowed values: `'A'`, `'B'`, `'C'`, `'U'`, `'V'`, or `'W'`.
 
 ## Extruder Info
 
@@ -227,7 +196,7 @@ You can override this value with [`M404 W`](/docs/gcode/M404.html).
 ```
 Enable `SINGLENOZZLE` if you have an E3D Cyclops or any other "multi-extruder" system that shares a single nozzle. In a single-nozzle setup, only one filament drive is engaged at a time, and each needs to retract before the next filament can be loaded and begin purging and extruding.
 
-###Průša MK2 Single Nozzle Multi-Material Multiplexer
+### Průša MK2 Single Nozzle Multi-Material Multiplexer
 ```cpp
 //#define MK2_MULTIPLEXER
 ```
@@ -241,12 +210,12 @@ Enabling `MK2_MULTIPLEXER` allows one stepper driver on a control board to drive
 
 Override the default DIO selector pins.
 
-### Prusa MMU2
+### Průša MMU2
 
 ```cpp
 #define PRUSA_MMU2
 ```
-Enable support for the Prusa Multi-material unit 2. This requires a free serial port on your printer board. To use the MMU2 you also have to
+Enable support for the Průša Multi-material unit 2. This requires a free serial port on your printer board. To use the MMU2 you also have to
 
  - enable [NOZZLE_PARK_FEATURE](#nozzle-park)
  - set [EXTRUDERS](#extruders) = 5
@@ -317,7 +286,7 @@ Two separate X-carriages with extruders that connect to a moving part via a magn
 
 #endif
 ```
-Adjust the relavant settings to your specifications for use with either `PARKING_EXTRUDER` or `MAGNETIC_PARKING_EXTRUDER`.
+Adjust the relevant settings to your specifications for use with either `PARKING_EXTRUDER` or `MAGNETIC_PARKING_EXTRUDER`.
 
 ### Switching Toolhead
 
@@ -338,7 +307,7 @@ Support swappable and dockable toolheads with a magnetic docking mechanism using
 ```cpp
 //#define ELECTROMAGNETIC_SWITCHING_TOOLHEAD
 ```
-For CoreXY / HBot kinematics, toolheads are parked at one edge and held with an electromagnet. Supports more than 2 Toolheads. See https://youtu.be/JolbsAKTKf4
+For CoreXY / HBot kinematics, toolheads are parked at one edge and held with an electromagnet. Supports more than 2 toolheads. See https://youtu.be/JolbsAKTKf4
 
 ```cpp
 #if ANY(SWITCHING_TOOLHEAD, MAGNETIC_SWITCHING_TOOLHEAD, ELECTROMAGNETIC_SWITCHING_TOOLHEAD)
@@ -364,7 +333,7 @@ For CoreXY / HBot kinematics, toolheads are parked at one edge and held with an 
   #endif
 #endif
 ```
-Adjust the relavant settings to your specifications for use with `SWITCHING_TOOLHEAD`, `PARKING_EXTRUDER` or `MAGNETIC_PARKING_EXTRUDER`.
+Adjust the relevant settings to your specifications for use with `SWITCHING_TOOLHEAD`, `PARKING_EXTRUDER` or `MAGNETIC_PARKING_EXTRUDER`.
 
 ### Mixing Extruder
 
@@ -598,14 +567,14 @@ The max power delivered to the bed. All forms of bed control obey this (PID, ban
 
   //#define PID_BED_DEBUG // Sends debug data to the serial port.
 
-  //120V 250W silicone heater into 4mm borosilicate (MendelMax 1.5+)
-  //from FOPDT model - kp=.39 Tp=405 Tdead=66, Tc set to 79.2, aggressive factor of .15 (vs .1, 1, 10)
+  // 120V 250W silicone heater into 4mm borosilicate (MendelMax 1.5+)
+  // from FOPDT model - kp=.39 Tp=405 Tdead=66, Tc set to 79.2, aggressive factor of .15 (vs .1, 1, 10)
   #define  DEFAULT_bedKp 10.00
   #define  DEFAULT_bedKi .023
   #define  DEFAULT_bedKd 305.4
 
-  //120V 250W silicone heater into 4mm borosilicate (MendelMax 1.5+)
-  //from pidautotune
+  // 120V 250W silicone heater into 4mm borosilicate (MendelMax 1.5+)
+  // from pidautotune
   //#define  DEFAULT_bedKp 97.1
   //#define  DEFAULT_bedKi 1.41
   //#define  DEFAULT_bedKd 1675.16
@@ -798,7 +767,7 @@ These are the most crucial settings for your printer, as they determine how accu
 Override with [`M92`](/docs/gcode/M092.html).
 
 {% panel info Step Calculator %}
-The [Prusa Calculator](//prusaprinters.org/calculator/) is a great tool to help find the right values for your specific printer configuration.
+The [Průša Calculator](//prusaprinters.org/calculator/) is a great tool to help find the right values for your specific printer configuration.
 {% endpanel %}
 
 #### Default Max Feed Rate <em class="fa fa-sticky-note-o" aria-hidden="true"></em> <em class="fa fa-desktop" aria-hidden="true"></em>
@@ -873,7 +842,7 @@ Don't set these too high. Larger acceleration values can lead to excessive vibra
 #define DEFAULT_EJERK    5.0  // May be used by Linear Advance
 ```
 {% panel info Configuration Update %}
-Junction Deviation is now the default mode. Enabling `CLASSIC JERK` will overide it.
+Junction Deviation is now the default mode. Enabling `CLASSIC JERK` will override it.
 {% endpanel %}
 
 Jerk works in conjunction with acceleration (see above). Jerk is the maximum change in velocity (in mm/sec) that can occur instantaneously. It can also be thought of as the minimum change in velocity that will be done as an accelerated (not instantaneous) move.
@@ -933,7 +902,7 @@ Marlin supports any kind of probe that can be made to work like a switch. Specif
 //#define MANUAL_PROBE_START_Z 0.2
 ```
 Even if you have no bed probe you can still use any of the core `AUTO_BED_LEVELING_*` options below by selecting this option. With `PROBE_MANUALLY` the [`G29`](/docs/gcode/G029-mbl.html) command only moves the nozzle to the next probe point where it pauses. You adjust the Z height with a piece of paper or feeler gauge, then send [`G29`](/docs/gcode/G029-mbl.html)  again to continue to the next point. You can also enable `LCD_BED_LEVELING` to add a "Level Bed" Menu item to the LCD for a fully interactive leveling process.
-`MANUAL_PROBE_START_Z` sets the z-height the printer initially moves to at each mesh point during manual probing. With this disabled, the printer will move to Z0 for the first probe point. Then each consecutive probe point uses the Z position of the probe point preceding it.
+`MANUAL_PROBE_START_Z` sets the Z-height the printer initially moves to at each mesh point during manual probing. With this disabled, the printer will move to Z0 for the first probe point. Then each consecutive probe point uses the Z position of the probe point preceding it.
 
 #### Fix Mounted Probe
 
@@ -952,7 +921,7 @@ This option is for any probe that's fixed in place, with no need to be deployed 
 //#define Z_PROBE_SERVO_NR 0       // Defaults to SERVO 0 connector.
 //#define Z_SERVO_ANGLES { 70, 0 } // Z Servo Deploy and Stow angles
 ```
-To indicate a Servo Z Probe (e.g., an endstop switch mounted on a rotating arm) just specify the servo index. Use the [`M280`](/docs/gcode/M280.html) command to find the best `Z_SERVO_ANGLES` values.
+To indicate a Servo Z Probe (_e.g.,_ an endstop switch mounted on a rotating arm) just specify the servo index. Use the [`M280`](/docs/gcode/M280.html) command to find the best `Z_SERVO_ANGLES` values.
 
 #### BLTouch
 
@@ -1003,14 +972,14 @@ This type of probe is mounted on a detachable "sled" that sits at the far end of
   #define Z_PROBE_RETRACT_X X_MAX_POS
 #endif
 ```
-A probe deployed by moving the x-axis, such as the Wilson II's rack-and-pinion probe designed by Marty Rice.
+A probe deployed by moving the X-axis (_e.g.,_ Wilson II's rack-and-pinion probe designed by Marty Rice.)
 
 #### Allen Key
 
 ```cpp
 //#define Z_PROBE_ALLEN_KEY
 ```
-A retractable z-probe for deltas that uses an Allen key as the probe. See "[Kossel automatic bed leveling probe](//reprap.org/wiki/Kossel#Automatic_bed_leveling_probe)" at the RepRap wiki. It deploys by leveraging against the z-axis belt, and retracts by pushing the probe down.
+A retractable Z-probe for deltas that uses an Allen key as the probe. See "[Kossel automatic bed leveling probe](//reprap.org/wiki/Kossel#Automatic_bed_leveling_probe)" at the RepRap wiki. It deploys by leveraging against the Z-axis belt, and retracts by pushing the probe down.
 
 More information will be included in an upcoming Delta configuration page.
 
@@ -1048,7 +1017,7 @@ Probing should be done quickly, but the Z speed should be tuned for best repeata
 //#define MULTIPLE_PROBING 2
 //#define EXTRA_PROBING    1
 ```
-Probing mutiple times yields better results. Set to 2 for a fast/slow probe - the second probe result will be used. Set to 3 or more for slow probes - the average result will be used.
+Probing multiple times yields better results. Set to 2 for a fast/slow probe - the second probe result will be used. Set to 3 or more for slow probes - the average result will be used.
 
 ### Probe Clearance
 
@@ -1134,7 +1103,7 @@ Disabling the steppers between moves gives the motors and drivers a chance to co
 
 Most 3D printers use an "open loop" control system, meaning the software can't ascertain the actual carriage position at a given time. It simply sends commands and assumes they have been obeyed. In practice with a well-calibrated machine this is not an issue and using open loop is a major cost saving with excellent quality.
 
-**We don't recommend this hack.** There are much better ways to address the problem of stepper/driver overheating. Some examples: stepper/driver heatsink, active cooling, dual motors on the axis, reduce microstepping, check belt for over tension, check components for smooth motion, etc.
+**We don't recommend this hack.** There are much better ways to address the problem of stepper/driver overheating. Some examples: stepper/driver heatsink, active cooling, dual motors on the axis, reduce micro-stepping, check belt for over tension, check components for smooth motion, etc.
 
 ```cpp
 //#define DISABLE_REDUCED_ACCURACY_WARNING
@@ -1161,7 +1130,7 @@ The E disable option works like `DISABLE_[XYZ]` but pertains to one or more extr
 #define INVERT_E3_DIR false
 #define INVERT_E4_DIR false
 ```
-These settings reverse the motor direction for each axis. Be careful when first setting these. Axes moving the wrong direction can cause damage. Get these right without belts attached first, if possible. Before testing, move the carriage and bed to the middle. Test each axis for proper movemnt using the host or LCD "Move Axis" menu. If an axis is inverted, either flip the plug around or change its invert setting.
+These settings reverse the motor direction for each axis. Be careful when first setting these. Axes moving the wrong direction can cause damage. Get these right without belts attached first, if possible. Before testing, move the carriage and bed to the middle. Test each axis for proper movement using the host or LCD "Move Axis" menu. If an axis is inverted, either flip the plug around or change its invert setting.
 
 ## Homing and Bounds
 
@@ -1186,7 +1155,7 @@ This value raises Z to the specified height above the bed before homing X or Y. 
 #define Y_HOME_DIR -1
 #define Z_HOME_DIR -1
 ```
-Homing direction for each axis: -1 = min, 1 = max. Most cartesian and core machines have three min endstops. Deltas have three max endstops. For other configurations set these values appropriately.
+Homing direction for each axis: -1 = min, 1 = max. Most Cartesian and core machines have three min endstops. Deltas have three max endstops. For other configurations set these values appropriately.
 
 ### Movement Bounds
 
@@ -1255,7 +1224,7 @@ Enable/Disable software endstops from the LCD
   // When using a runout switch (no encoder), after a runout is detected,
   // continue printing this length of filament before executing the runout script.
   // Useful for a sensor at the end of a feed tube.
-  // If using an encoder disc, this is the lenth of filament that would print
+  // If using an encoder disc, this is the length of filament that would print
   // without any movement from the sensor before it triggers a runout.
   // Requires 4 bytes SRAM per sensor, plus 4 bytes overhead.
   //#define FILAMENT_RUNOUT_DISTANCE_MM 25
@@ -1415,7 +1384,7 @@ These options specify the inset, grid, and 3-point triangle to use for UBL. Note
 
 //#define MESH_G28_REST_ORIGIN // After homing all axes ('G28' or 'G28 XYZ') rest Z at Z_MIN_POS
 ```
-These options specify the number of points that will always be probed in each dimension during [`G29`](/docs/gcode/G029.html). The mesh inset is used to automatically calculate the probe boundaries. These can be set explicitly in `Configuration_adv.h`. `MESH_G28_REST_ORIGIN` moves the nozzle to rest at `Z_MIN_POS` when mesh probing is done. If Z is offset (e.g., due to `home_offset` or some other cause) this is intended to move Z to a good starting point, usually Z=0.
+These options specify the number of points that will always be probed in each dimension during [`G29`](/docs/gcode/G029.html). The mesh inset is used to automatically calculate the probe boundaries. These can be set explicitly in `Configuration_adv.h`. `MESH_G28_REST_ORIGIN` moves the nozzle to rest at `Z_MIN_POS` when mesh probing is done. If Z is offset (_e.g.,_ due to `home_offset` or some other cause) this is intended to move Z to a good starting point, usually Z=0.
 
 ### LCD Bed Leveling
 
@@ -1532,7 +1501,7 @@ Validate that endstops are triggered on homing moves.
   //#define SKEW_CORRECTION_GCODE
 #endif
 ```
-Correct for misalignment in the XYZ axes. See `configuration.h` for a thorough explanation.
+Correct for misalignment in the XYZ axes. See `Configuration.h` for a thorough explanation.
 
 ## Additonal Features
 
@@ -1727,7 +1696,7 @@ See [LCD Language System](/docs/development/lcd_language.html) for in-depth info
 ```cpp
 #define LCD_INFO_SCREEN_STYLE 0
 ```
-0 for classic; 1 for Prusa info screen style.
+0 for classic; 1 for Průša info screen style.
 
 ## SD Card
 ```cpp
@@ -1861,7 +1830,7 @@ Option|Description
 
 Option|Description
 ------|-----------
-`REPRAPWORLD_KEYPAD`|[RepRapWorld Keypad v1.1](//reprapworld.com/?products_details&products_id=202&cPath=1591_1626) Use `REPRAPWORLD_KEYPAD_MOVE_STEP` to set how much the robot should move on each keypress (e.g., 10mm per click).
+`REPRAPWORLD_KEYPAD`|[RepRapWorld Keypad v1.1](//reprapworld.com/?products_details&products_id=202&cPath=1591_1626) Use `REPRAPWORLD_KEYPAD_MOVE_STEP` to set how much the robot should move on each keypress (_e.g.,_ 10mm per click).
 
 ### I2C Character LCDs
 
@@ -1913,7 +1882,7 @@ If `SOFT_PWM_SCALE` is set to a value higher than 0, dithering can be used to mi
 ```cpp
 //#define TEMP_STAT_LEDS
 ```
-Temperature status LEDs that display the hotend and bed temperature. If all hotend and bed temperature setpoint are < 54C then the BLUE led is on. Otherwise the RED led is on. There is 1C hysteresis.
+Temperature status LEDs that display the hotend and bed temperature. If all hotend and bed temperature set-point are < 54C then the BLUE led is on. Otherwise the RED led is on. There is 1C hysteresis.
 
 ### Photo Pin
 
@@ -1935,7 +1904,7 @@ Files sliced with SkeinForge contain the wrong arc G-codes when using "Arc Point
 ```cpp
 //#define FAST_PWM_FAN
 ```
-`FAST_PWM_FAN` increases the FAN PWM frequency. The frequency and scaling can be adjusted in the `configuration_adv.h` file.
+`FAST_PWM_FAN` increases the FAN PWM frequency. The frequency and scaling can be adjusted in `Configuration_adv.h`.
 
 ### Fan Software PWM
 ```cpp
@@ -2002,7 +1971,7 @@ The [Philips PCA9632](//www.digchip.com/datasheets/3286493-pca9632.html) is a co
 ```
 Enable support for an RGB(W) LED connected to 5 V digital pins, or an RGB(W) Strip connected to MOSFETs controlled by digital pins. An inexpensive RGB LED can be used simply by assigning digital pins for each component. If the pins are able to do hardware PWM then a wide range of colors will be available. With simple digital pins only 7 colors are possible.
 
-Adds the [`M150`](/docs/gcode/M150.html) command to set the LED (or LED strip) color. If pins are PWM capable (e.g., 4, 5, 6, 11) then a range of luminance values can be set from 0 to 255.
+Adds the [`M150`](/docs/gcode/M150.html) command to set the LED (or LED strip) color. If pins are PWM capable (_e.g.,_ 4, 5, 6, 11) then a range of luminance values can be set from 0 to 255.
 
 {% alert warning %}
 LED Strips require a MOFSET Chip between PWM lines and LEDs, as the Arduino cannot handle the current the LEDs will require. Failure to follow this precaution can destroy your Arduino!
@@ -2016,7 +1985,7 @@ LED Strips require a MOFSET Chip between PWM lines and LEDs, as the Arduino cann
   #define NEOPIXEL_PIN     4       // LED driving pin
   //#define NEOPIXEL2_TYPE NEOPIXEL_TYPE
   //#define NEOPIXEL2_PIN    5
-  #define NEOPIXEL_PIXELS 30       // Number of LEDs in the strip, larger of 2 strips if 2 neopixel strips are used
+  #define NEOPIXEL_PIXELS 30       // Number of LEDs in the strip, larger of 2 strips if 2 NeoPixel strips are used
   #define NEOPIXEL_IS_SEQUENTIAL   // Sequential display for temperature change - LED by LED. Disable to change all LEDs at once.
   #define NEOPIXEL_BRIGHTNESS 127  // Initial brightness (0-255)
   //#define NEOPIXEL_STARTUP_TEST  // Cycle through colors at startup
@@ -2257,7 +2226,7 @@ Experimental feature
   #endif
 #endif
 ```
-Scales heater power proportional to the part/layer fan speed which inturn reduces hotend temperature drop range.
+Scales heater power proportional to the part/layer fan speed which in turn reduces hotend temperature drop range.
 
 ### Automatic Temperature
 ```cpp
@@ -2266,9 +2235,9 @@ Scales heater power proportional to the part/layer fan speed which inturn reduce
   #define AUTOTEMP_OLDWEIGHT 0.98
 #endif
 ```
-With Automatic Temperature the hotend target temperature is calculated by all the buffered lines of gcode. The maximum buffered steps/sec of the extruder motor is called "`se`".
+With Automatic Temperature the hotend target temperature is calculated by all the buffered lines of G-code. The maximum buffered steps/sec of the extruder motor is called "`se`".
 Start autotemp mode with `M109 F<factor> S<mintemp> B<maxtemp>`, giving a range of temperatures. The target temperature is set to `mintemp + factor * se[steps/sec]` and is limited by
-`mintemp` and `maxtemp`. Turn this off by executing [`M109`](/docs/gcode/M109.html) without `F`. If the temperature is set to a value below `mintemp` (e.g., by [`M104`](/docs/gcode/M104.html)) autotemp will not be applied.
+`mintemp` and `maxtemp`. Turn this off by executing [`M109`](/docs/gcode/M109.html) without `F`. If the temperature is set to a value below `mintemp` (_e.g.,_ by [`M104`](/docs/gcode/M104.html)) autotemp will not be applied.
 
 Example: Try [`M109`](/docs/gcode/M109.html) `S215 B260 F1` in your `start.gcode` to set a minimum temperature of 215 when idle, which will boost up to 260 as extrusion increases in speed.
 
@@ -2358,7 +2327,7 @@ This option can be defined to set the minimum and maximum PWM speeds (1-255) req
 #endif
 ```
 
-The default frequency for `FAST_PWM_FAN` is F = F_CPU/(2*255*1). See `configuration_adv.h` for further information.
+The default frequency for `FAST_PWM_FAN` is F = F_CPU/(2*255*1). See `Configuration_adv.h` for further information.
 
 ### Extruder Auto-Cooling Fans
 ```cpp
@@ -2474,7 +2443,7 @@ Set `X_DUAL_STEPPER_DRIVERS` to use a second X motor. If the X motors need to sp
 If the two X axes aren't perfectly aligned, use `X_DUAL_ENDSTOP_ADJUSTMENT` to adjust for the difference. This offset is applied to the X2 motor after homing with [`G28`](/docs/gcode/G028.html). The dual endstop offsets can be set at runtime with `M666 X[offset] Y[offset] Z[offset]`.
 
 {% alert info %}
-Requires enabling the corresponding stepper driver ie `X2_DRIVER_TYPE` in `configuration.h`. Do `NOT` enable `E2_DRIVER_TYPE` - this may produce undesireabe results that can harm your machine.
+Requires enabling the corresponding stepper driver (_e.g.,_ `X2_DRIVER_TYPE` in `Configuration.h`). ***DO NOT** enable `E2_DRIVER_TYPE` - this may produce undesirable results that can harm your machine.*
 {% endalert %}
 
 ## Dual X Carriage
@@ -2487,13 +2456,20 @@ Requires enabling the corresponding stepper driver ie `X2_DRIVER_TYPE` in `confi
   #define X2_MAX_POS   353
   #define X2_HOME_DIR    1
   #define X2_HOME_POS X2_MAX_POS
+
+  // This is the default power-up mode which can be later using M605.
   #define DEFAULT_DUAL_X_CARRIAGE_MODE DXC_AUTO_PARK_MODE
+
+  // Default x offset in duplication mode (typically set to half print bed width)
   #define DEFAULT_DUPLICATION_X_OFFSET 100
+
+  // Default action to execute following M605 mode change commands. Typically G28X to apply new mode.
+  //#define EVENT_GCODE_IDEX_AFTER_MODECHANGE "G28X"
 #endif
 ```
-Enable this option if you have Dual X-Carriages that move independently. The Dual X-Carriage design allows the inactive extruder to be parked, which keeps ooze from contaminating the print, reduces the weight of each carriage, and enables faster printing speeds. With this option simply connect the X2 stepper to the first unused E plug.
+Enable this option if you have an "IDEX" printer with Dual X-Carriages that move independently. The Dual X-Carriage design allows the inactive extruder to be parked to keep oozing filament away from the print, reduces the weight of each carriage, and enables faster printing speeds. With this option simply connect the X2 stepper to the first unused E plug.
 
-In a Dual X-Carriage setup the first x-carriage (`T0`) homes to the minimum endstop, while the second x-carriage (`T1`) homes to the maximum endstop.
+In a Dual X-Carriage setup the first X-carriage (`T0`) homes to the minimum endstop, while the second X-carriage (`T1`) homes to the maximum endstop.
 
 With Dual X-Carriage the `HOTEND_OFFSET_X` setting for `T1` overrides `X2_HOME_POS`. Use `M218 T1 X[homepos]` to set a custom X2 home position, and [`M218`](/docs/gcode/M218.html) `T1 X0` to use `X2_HOME_POS`. This offset can be saved to EEPROM with [`M500`](/docs/gcode/M500.html).
 
@@ -2501,9 +2477,9 @@ With Dual X-Carriage the `HOTEND_OFFSET_X` setting for `T1` overrides `X2_HOME_P
 
 Dual X-Carriage has three different movement modes, set with [`M605`](/docs/gcode/M605.html) `S[mode]`:
 
-- Mode 0: Full Control Mode. ([`M605`](/docs/gcode/M605.html) `S1`) Slicers that fully support dual x-carriages can use this mode for optimal travel results.
+- Mode 0: Full Control Mode. ([`M605`](/docs/gcode/M605.html) `S1`) Slicers that fully support dual X-carriages can use this mode for optimal travel results.
 - Mode 1: Auto-park Mode. ([`M605`](/docs/gcode/M605.html) `S1`) The firmware automatically parks/unparks the carriages on tool-change. No slicer support is required. ([`M605`](/docs/gcode/M605.html) `S1`)
-- Mode 2: Duplication Mode. (`[`M605`](/docs/gcode/M605.html) S2 X[offs] R[temp]`) The firmware will transparently make the second x-carriage and extruder copy all actions of the first x-carriage. This allows the printer to print 2 arbitrary items at once. (The 2nd extruder's X and temp offsets are set using: `[`M605`](/docs/gcode/M605.html) S2 X[offs] R[offs]`.)
+- Mode 2: Duplication Mode. (`[`M605`](/docs/gcode/M605.html) S2 X[offs] R[temp]`) The firmware will transparently make the second X-carriage and extruder copy all actions of the first X-carriage. This allows the printer to print 2 arbitrary items at once. (The 2nd extruder's X and temp offsets are set using: `[`M605`](/docs/gcode/M605.html) S2 X[offs] R[offs]`.)
 
 ## Solenoid
 ```cpp
@@ -2539,7 +2515,7 @@ The slower homing speed for each axis is set by `HOMING_BUMP_DIVISOR`.
 //#define BLTOUCH_LCD_VOLTAGE_MENU
 #endif
 ```
-The default BLTouch settings can be overriden with these options. `BLTOUCH_DELAY` defaults to 500 if not defined. See `configuration_adv.h` for more information.
+The default BLTouch settings can be overriden with these options. `BLTOUCH_DELAY` defaults to 500 if not defined. See `Configuration_adv.h` for more information.
 
 ## Z Steppers Auto-Alignment
 ```cpp
@@ -2563,7 +2539,7 @@ The default BLTouch settings can be overriden with these options. `BLTOUCH_DELAY
   #define HOME_AFTER_G34
 #endif
 ```
-Add the [`G34`](/docs/gcode/G034.html) command to align multiple Z steppers using a bed probe. See `configuration_adv.h` for more information.
+Add the [`G34`](/docs/gcode/G034-zsaa.html) command to align multiple Z steppers using a bed probe. See `Configuration_adv.h` for more information.
 
 ## Motion
 ### Axis Relative/Absolute Mode
@@ -2651,7 +2627,7 @@ Slows down the machine when the look ahead buffer is filled to the set `SLOWDOWN
   #endif
 #endif
 ```
-See `configuration_adv.h` for further information.
+See `Configuration_adv.h` for further information.
 
 ### Automatic Backlash Calibration
 ```cpp
@@ -2687,7 +2663,7 @@ See `configuration_adv.h` for further information.
   #endif
 #endif
 ```
-Adds [`G425`](/docs/gcode/G425.html) to run automatic calibration using an electrically-conductive cube, bolt, or washer mounted on the bed. See `configuration_adv.h` for further information.
+Adds [`G425`](/docs/gcode/G425.html) to run automatic calibration using an electrically-conductive cube, bolt, or washer mounted on the bed. See `Configuration_adv.h` for further information.
 
 ### Adaptive Step Smoothing
 ```cpp
@@ -2810,7 +2786,7 @@ Show the total filament used amount during printing.
   #endif
 #endif
 ```
-See `configuration_adv.h` for further information.
+See `Configuration_adv.h` for further information.
 
 ### Progress Bar (character LCD)
 ```cpp
@@ -2838,7 +2814,7 @@ Show a progress bar on HD44780 LCDs for SD printing. Sub-options determine how l
     #define PE_LEDS_COMPLETED_TIME  (30*60)
   #endif
 ```
-See `configuration_adv.h` for more details.
+See `Configuration_adv.h` for more details.
 
 ### Power Loss Recovery
 ```cpp
@@ -2855,7 +2831,7 @@ See `configuration_adv.h` for more details.
     #define POWER_LOSS_MIN_Z_CHANGE 0.05
   #endif
   ```
-  See `configuration_adv.h` for more details.
+  See `Configuration_adv.h` for more details.
 
 ### SD Card Sorting Options
 ```cpp
@@ -2870,7 +2846,7 @@ See `configuration_adv.h` for more details.
     #define SDSORT_DYNAMIC_RAM false
     #define SDSORT_CACHE_VFATS 2#endif
 ```
-  See `configuration_adv.h` for more details.
+  See `Configuration_adv.h` for more details.
 
 ### Long Filenames
 ```cpp
@@ -2914,7 +2890,7 @@ Auto-report SD card status with [`M27`](/docs/gcode/M027.html) S<seconds>
     //#define USE_UHS3_USB
   #endif
 ```
-See `configuration_adv.h` for more details.
+See `Configuration_adv.h` for more details.
 
 ### Firmware Update
 ```cpp
@@ -2925,13 +2901,13 @@ See `configuration_adv.h` for more details.
     #define SD_FIRMWARE_UPDATE_INACTIVE_VALUE 0xFF
   #endif
 ```
-See `configuration_adv.h` for more details.
+See `Configuration_adv.h` for more details.
 
 ### Binary File Transfer
 ```cpp
   //#define BINARY_FILE_TRANSFER
 ```
-See `configuration_adv.h` for more details.
+See `Configuration_adv.h` for more details.
 
 ### SD Card Connection
 ```cpp
@@ -3023,7 +2999,7 @@ Some of these options may result in the display lagging behind controller events
   #endif
 #endif // HAS_DGUS_LCD
 ```
-See `configuration_adv.h` for more details.
+See `Configuration_adv.h` for more details.
 
 ## FTDI Embedded Video Engine (EVE) Touch UI
 ```cpp
@@ -3082,7 +3058,7 @@ See `configuration_adv.h` for more details.
   //#define TOUCH_UI_DEVELOPER_MENU
 #endif
 ```
-See `configuration_adv.h` for more details.
+See `Configuration_adv.h` for more details.
 
 ## FSMC Graphical TFT
 ```cpp
@@ -3107,7 +3083,7 @@ See `configuration_adv.h` for more details.
 ```cpp
 #define USE_WATCHDOG
 ```
-The hardware watchdog should reset the microcontroller, disabling all outputs, in case the firmware gets stuck and doesn't do temperature regulation.
+The hardware watchdog should reset the micro-controller, disabling all outputs, in case the firmware gets stuck and doesn't do temperature regulation.
 
 ### Watchdog Manual Reset
 ```cpp
@@ -3181,7 +3157,7 @@ These options specify the three points that will be probed during [`G29`](/docs/
   //#define PROBING_MARGIN_BACK PROBING_MARGIN
 #endif
 ```
-See `configuration_adv.h` for more details.
+See `Configuration_adv.h` for more details.
 
 ### Custom Mesh Area
 ```cpp
@@ -3217,7 +3193,7 @@ Repeatedly attempt [`G29`](/docs/gcode/G029.html) leveling until it succeeds. St
     //#define USE_TEMP_EXT_COMPENSATION
   #endif
 ```
-Probe measurements are adjusted to compensate for temperature distortion. Use [`G76`](/docs/gcode/G076.html) to calibrate this feature. Use [`M871`](/docs/gcode/M871.html) to set values manually. For a more detailed explanation of the process see `G76_M871.cpp` and `configuration_adv.h`.
+Probe measurements are adjusted to compensate for temperature distortion. Use [`G76`](/docs/gcode/G076.html) to calibrate this feature. Use [`M871`](/docs/gcode/M871.html) to set values manually. For a more detailed explanation of the process see `G76_M871.cpp` and `Configuration_adv.h`.
 
 ## Enhanced G-code
 ### G60/G61 Position Save and Return
@@ -3242,7 +3218,7 @@ Enables [`G60`](/docs/gcode/G060.html) & [`G61`](/docs/gcode/G061.html) and spec
 ```cpp
 //#define BEZIER_CURVE_SUPPORT
 ```
-Support for [`G5`](/docs/gcode/G005.html) with XYZE destination and IJPQ offsets. Requires ~2666 bytes.
+Support for [`G5`](/docs/gcode/G005.html) with XYZE destination and IJPQ offsets. Requires \~2666 bytes.
 
 ### G38.2/G38.3 Probe Target
 ```cpp
@@ -3559,7 +3535,7 @@ Experimental feature for filament change support and parking the nozzle when pau
 
 #endif
 ```
-You'll need to import the [TMC26XStepper](//github.com/trinamic/TMC26XStepper.git) library into the Arduino IDE. See the `Configuration_adv.h` file for the full set of sub-options.
+You'll need to import the [TMC26XStepper](//github.com/trinamic/TMC26XStepper.git) library into the Arduino IDE. See `Configuration_adv.h` for the full set of sub-options.
 
 ### Trinamic Configuration
 ```cpp
@@ -3688,9 +3664,9 @@ You'll need to import the [TMC26XStepper](//github.com/trinamic/TMC26XStepper.gi
     #define E7_CHAIN_POS     -1
   #endif
 ```
-You'll need the [TMC2130Stepper](//github.com/teemuatlut/TMC2130Stepper) Arduino library. See the `Configuration_adv.h` file for the full set of sub-options.
+You'll need the [TMC2130Stepper](//github.com/teemuatlut/TMC2130Stepper) Arduino library. See `Configuration_adv.h` for the full set of sub-options.
 
-To use TMC2130 stepper drivers in SPI mode connect your SPI2130 pins to the hardware SPI interface on your board and define the required CS pins in your `pins_MYBOARD.h` file. (e.g., RAMPS 1.4 uses AUX3 pins `X_CS_PIN 53`, `Y_CS_PIN 49`, etc.).
+To use TMC2130 stepper drivers in SPI mode connect your SPI2130 pins to the hardware SPI interface on your board and define the required CS pins in your `pins_MYBOARD.h` file. (_e.g.,_ RAMPS 1.4 uses AUX3 pins `X_CS_PIN 53`, `Y_CS_PIN 49`, etc.).
 
 ### L6470 Drivers
 ```cpp
@@ -3711,7 +3687,7 @@ To use TMC2130 stepper drivers in SPI mode connect your SPI2130 pins to the hard
   #endif
   ...
 ```
-You'll need to import the [L6470 library](//github.com/ameyer/Arduino-L6470) into the Arduino IDE for this. See the `Configuration_adv.h` file for the full set of sub-options.
+You'll need to import the [L6470 library](//github.com/ameyer/Arduino-L6470) into the Arduino IDE for this. See `Configuration_adv.h` for the full set of sub-options.
 
 ## Experimental i2c Bus
 ```cpp
@@ -4172,17 +4148,17 @@ Adds [`M486`](/docs/gcode/M486.html) to allow Marlin to skip objects.
 
 ## WiFi Support (Espressif ESP32 WiFi)
 ```cpp
-//#define WIFISUPPORT         // Marlin embedded WiFi managenent
+//#define WIFISUPPORT         // Marlin embedded WiFi management
 //#define ESP3D_WIFISUPPORT   // ESP3D Library WiFi management (https://github.com/luc-github/ESP3DLib)
 #if EITHER(WIFISUPPORT, ESP3D_WIFISUPPORT)
-  //#define WEBSUPPORT          // Start a webserver (which may include auto-discovery)
+  //#define WEBSUPPORT          // Start a web server (which may include auto-discovery)
   //#define OTASUPPORT          // Support over-the-air firmware updates
   //#define WIFI_CUSTOM_COMMAND // Accept feature config commands (e.g., WiFi ESP3D) from the host
   //#include "Configuration_Secure.h" // External file with WiFi SSID / Password
 #endif
 ```
 
-## Prusa MMU2 advanced settings
+## Průša MMU2 advanced settings
 ```cpp
 #if ENABLED(PRUSA_MMU2)
   #define INTERNAL_SERIAL_PORT 2
@@ -4193,13 +4169,13 @@ Adds [`M486`](/docs/gcode/M486.html) to allow Marlin to skip objects.
 ```
 
 - A serial connection is required for communication between the printer board and the MMU2. The configuration differs between 8- and 32-bit boards.
-- On a board with a ATmega2560/1280 microcontroller you have three potential serial ports to use for the MMU2: serial 1 (pins 18/19), serial 2 (pins 16/17), serial 3 (pins 14/15). Define the port your MMU2 is connected to - this activates an additional serial connection in Marlin named (in the example configuration) `internalSerial`.
+- On a board with a ATmega2560/1280 micro-controller you have three potential serial ports to use for the MMU2: serial 1 (pins 18/19), serial 2 (pins 16/17), serial 3 (pins 14/15). Define the port your MMU2 is connected to - this activates an additional serial connection in Marlin named (in the example configuration) `internalSerial`.
 - When using a 32-bit board you just have to define the name of the serial port which will be used for communication with the MMU2.
 - The MMU2 provides two options how the printer board can trigger a reset: software and hardware reset. By default software reset is enabled. Hardware reset requires a digital output pin wired to the reset pin on the MMU2. To activate hardware reset you define the pin (`MMU2_RST_PIN`) to use on the printer board
 - If your MMU2 is powered from 12V you can activate a special mode on the MMU2 (`MMU2_MODE_12V`). This should reduce the noise of the MMU2 but has no effect on the general operation.
 
 ### Filament runout handling
-Here you define the gcode script which will be executed when the so-called FINDA sensor on the MMU2 detects a filament runout.
+Here you define the G-code script which will be executed when the so-called FINDA sensor on the MMU2 detects a filament runout.
 ```cpp
   // G-code to execute when MMU2 F.I.N.D.A. probe detects filament runout
   #define MMU2_FILAMENT_RUNOUT_SCRIPT "M600"
@@ -4220,7 +4196,7 @@ Enable this option to activate an additional menu to operate the MMU2 from the L
 The MMU2 LCD menu allows you to load filament to the nozzle. The MMU2 will transport the filament all the way to the extruder gears. The required extruder steps to load it into the hotend have to be defined in Marlin.
 
 ```cpp
-    // This is for Prusa MK3-style extruders. Customize for your hardware.
+    // This is for Průša MK3-style extruders. Customize for your hardware.
     #define MMU2_LOAD_TO_NOZZLE_SEQUENCE \
       {  7.2,  562 }, \
       { 14.4,  871 }, \
@@ -4229,11 +4205,11 @@ The MMU2 LCD menu allows you to load filament to the nozzle. The MMU2 will trans
       { 50.0,  198 }
 
 ```
-The values are relative E distances and feed rates in mm/m. The defaults are based on the nozzle to extruder gear distance of a Prusa MK3 extruder, so if required you have to modifiy those to your extruder/hotend setup accordingly.
+The values are relative E distances and feed rates in mm/m. The defaults are based on the nozzle to extruder gear distance of a Průša MK3 extruder, so if required you have to modify those to your extruder/hotend setup accordingly.
 
 #### Unload filament
 
-To unload filament using the LCD menu a generic ramming sequence will be exectued before the MMU2 will retract the filament. The steps to do so are defined using
+To unload filament using the LCD menu a generic ramming sequence will be executed before the MMU2 will retract the filament. The steps to do so are defined using
 
 ```cpp
     #define MMU2_RAMMING_SEQUENCE \
@@ -4250,7 +4226,7 @@ To unload filament using the LCD menu a generic ramming sequence will be exectue
       { -50.0, 2000 }
 ```
 
-The values are relative E distances and feed rates in mm/m. The default values are based on a E3D V6 hotend and the nozzle to extruder gear distance of a Prusa MK3 extruder, so if required you have to modifiy those to your extruder/hotend setup accordingly.
+The values are relative E distances and feed rates in mm/m. The default values are based on a E3D V6 hotend and the nozzle to extruder gear distance of a Průša MK3 extruder, so if required you have to modify those to your extruder/hotend setup accordingly.
 
 #### Eject filament
 

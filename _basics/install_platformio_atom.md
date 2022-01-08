@@ -1,13 +1,13 @@
 ---
 title:        Installing Marlin (Atom)
-description:  Marlin Installation Quick Start Guide, PlatformIO with Atom
+description:  Install Marlin using PlatformIO in Atom
 
 author: shitcreek
 contrib: thinkyhead, Bob-the-Kuhn
 category: [ articles, getting-started ]
 ---
 {% alert warning %}
-**Atom** is no longer supported by **PlatformIO**. While it may partly work,  you should switch to **[Visual Studio Code](install_platformio_vscode.html)** for future installs.
+**Atom** is no longer supported by **PlatformIO**. While it may partly work, you should switch to **[Visual Studio Code](install_platformio_vscode.html)** for future installs.
 {% endalert %}
 
 Before reading this article, you should have already read [Installing Marlin with PlatformIO](install_platformio.html).
@@ -88,7 +88,7 @@ A sample customization process is described below to demonstrate how this method
 
 1. Install the PlatformIO plugin
 
-    Repeat the previous step but type **platformio** into the search box, press ENTER on the keyboard  and then click 'Install' in the **platformio-ide** box when it appears.
+    Repeat the previous step but type **platformio** into the search box, press ENTER on the keyboard and then click 'Install' in the **platformio-ide** box when it appears.
 
     ![PlatformIO IDE](/assets/images/basics/install_platformio/platformio_ide.png)
 
@@ -152,7 +152,7 @@ The **Auto Build** option and PlatformIO tasks/build menu will allow you to sele
 
 2. Scroll down or use the **Find** command to locate the **env_default** setting.
 
-3. Change the value to the appropriate **env** value for your board. (e.g., **megaatmeg2560** or **LPC1768**).
+3. Change the value to the appropriate **env** value for your board. (_e.g.,_ **megaatmeg2560** or **LPC1768**).
 
 All available build environment names are listed at the top of **platformio.ini**.
 
@@ -162,7 +162,7 @@ For a minimal build you just need to set the `MOTHERBOARD` value appropriate to 
 
 1. Open the **boards.h** file (located in the **Marlin/src/core** folder).
 
-2. Scroll down or use the **Find** command to locate the entry for your board. (e.g., **BOARD_AZTEEG_X5_GT**)
+2. Scroll down or use the **Find** command to locate the entry for your board. (_e.g.,_ **BOARD_AZTEEG_X5_GT**)
 
 3. Open your **Configuration.h** file (located in the **Marlin** folder).
 
@@ -270,7 +270,7 @@ SD cards over 32G in size must be partitioned so that the first partition is 32G
 
 ### PlatformIO Hidden Folders
 
-The folders described below are hidden in the File Explorer / Finder unless you change your OS (Windows, macOS, Linux) settings to reveal them. They may be visible within your project editor (e.g., ***Atom***, **Visual Studio Code**, etc.) depending on your workspace settings.
+The folders described below are hidden in the File Explorer / Finder unless you change your OS (Windows, macOS, Linux) settings to reveal them. They may be visible within your project editor (_e.g.,_ ***Atom***, **Visual Studio Code**, etc.) depending on your workspace settings.
 
 ##### `.pioenvs`
 
@@ -324,13 +324,13 @@ As before, start with the example configuration for your board if one is availab
 
 ### Manual Selection of PlatformIO Build and Upload Tasks
 
-1. Get the correct environment for the selected board
+1. Find the environment for your board
 
-  The PlatformIO environment needed for a motherboard is in the comments for the board in the **pins.h** file. In Marlin 2.0 it's located in  a subdirectory **Marlin/src/pins/pins.h**.
+  The PlatformIO environment needed for a motherboard is in the comments for the board in the **pins.h** file. In Marlin 2.0 it's located in a subdirectory **Marlin/src/pins/pins.h**.
 
   **Example:**
 
-  The configuration.h file says  `#define MOTHERBOARD BOARD_RAMPS_14_EFB`
+  In `Configuration.h` the board is defined by the line `#define MOTHERBOARD BOARD_RAMPS_14_EFB`
 
   Search the **pins.h** file for **RAMPS_14_EFB** until you come to the following:
 
