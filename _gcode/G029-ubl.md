@@ -334,7 +334,7 @@ examples:
      M502          ; Load configuration defaults.
      M500          ; Save configuration to EEPROM. M502 followed by M500 is suggested post flash to wipe the eeprom of invalid old settings.
 
-     M190 S65      ; Heat Bed to 65C. Not required, but having the printer at temperature may help accuracy.
+     M140 S65      ; Heat Bed to 65C. Not required, but having the printer at temperature may help accuracy.
      M104 S210     ; Heat Hotend to 210C. Not required, but having the printer at temperature may help accuracy.
 
      G29 T         ; View the Z compensation values.
