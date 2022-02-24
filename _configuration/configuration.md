@@ -38,7 +38,7 @@ The most authoritative source on configuration details will always be **the conf
 If you've never configured and calibrated a 3D Printer before, here are some good resources:
 
 - [Calibration](//reprap.org/wiki/Calibration)
-- [Calibrating Steps-per-unit](//youtu.be/wAL9d7FgInk)
+- [Calibrating Steps-per-unit (video)](//youtu.be/wAL9d7FgInk)
 - [Průša's calculators](//blog.prusaprinters.org/calculator_3416/)
 - [Triffid Hunter's Calibration Guide](//reprap.org/wiki/Triffid_Hunter%27s_Calibration_Guide)
 - [The Essential Calibration Set](//www.thingiverse.com/thing:5573)

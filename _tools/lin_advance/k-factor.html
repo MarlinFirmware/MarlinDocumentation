@@ -21,7 +21,7 @@ category:     [ tools ]
         </div>
       </div>
       <p>Use this form to generate G-code that you can use to calibrate your Linear Advance K-factor. Default values apply to standard PLA with a 0.4mm nozzle.</p>
-      <p>Press the <code class="highlighter-rouge">Generate G-code</code> button followed by <code class="highlighter-rouge">Download as file</code> to save the result.</p>
+      <p>Press the <strong>Generate G-code</strong> button followed by <strong>Download as file</strong> to save the result.</p>
       <table id="kfactor">
         <tbody>
           <tr>
@@ -309,14 +309,14 @@ category:     [ tools ]
       </table>
       <h3>Notes on the settings:</h3>
       <ul>
-        <li><code class="highlighter-rouge">Fast Printing Speed</code> and <code class="highlighter-rouge">Slow Printing Speed</code> should be significantly different or the K-factor effect will barely be visible.</li>
-        <li><code class="highlighter-rouge">Use Bed Leveling</code> requires a probe.</li>
-        <li>For round beds the option <code class="highlighter-rouge">Origin Bed Center</code> is automatically activated.</li>
-        <li>The overall width (X-direction) of the print depends on the <code class="highlighter-rouge">Fast Speed Length</code> and <code class="highlighter-rouge">Slow Speed Length</code> settings plus 5mm for the priming line. The length (Y-direction) depends on the K-factor Settings and <code class="highlighter-rouge">Line Spacing</code>.</li>
+        <li><strong>Fast Printing Speed</strong> and <strong>Slow Printing Speed</strong> should be significantly different or the K-factor effect will barely be visible.</li>
+        <li><strong>Use Bed Leveling</strong> requires a probe.</li>
+        <li>For round beds the option <strong>Origin Bed Center</strong> is automatically activated.</li>
+        <li>The overall width (X-direction) of the print depends on the <strong>Fast Speed Length</strong> and <strong>Slow Speed Length</strong> settings plus 5mm for the priming line. The length (Y-direction) depends on the K-factor Settings and <strong>Line Spacing</strong>.</li>
         <li>The script checks to make sure the print fits on the bed. Verify it using a host software like <a href="//www.pronterface.com/" target="new">Printrun</a> or <a href="//www.repetier.com/" target="new">Repetier Host</a>.</li>
-        <li><code class="highlighter-rouge">Start</code> and <code class="highlighter-rouge">End Value</code> for the K-factor determines the range that the test pattern will cover. For example a <code class="highlighter-rouge">Start Value</code> of 50 and an <code class="highlighter-rouge">End Value</code> of 150 will test a range of 100.</li>
-        <li>The <code class="highlighter-rouge">K-factor Stepping</code> determines how many test lines are printed for the above range. For example, a Stepping of 10 and a range of 100 results in 10 test lines. A stepping of 3 would not work in this example as 100 cannot be exactly divided by 3. The script will throw an error message if an exact division is not possible. In this case either the range or the stepping needs to be adjusted.</li>
-        <li>The <code class="highlighter-rouge">Alternate Pattern</code> has a second line of <code class="highlighter-rouge">Fast Printing Speed</code> to test 0 to <code class="highlighter-rouge">Fast Printing Speed</code> and back to 0 conditions. Best used with an increased <code class="highlighter-rouge">Test Line Spacing</code> and reduced K-factor range.</li>
+        <li><strong>Start</strong> and <strong>End Value</strong> for the K-factor determines the range that the test pattern will cover. For example a <strong>Start Value</strong> of 50 and an <strong>End Value</strong> of 150 will test a range of 100.</li>
+        <li>The <strong>K-factor Stepping</strong> determines how many test lines are printed for the above range. For example, a Stepping of 10 and a range of 100 results in 10 test lines. A stepping of 3 would not work in this example as 100 cannot be exactly divided by 3. The script will throw an error message if an exact division is not possible. In this case either the range or the stepping needs to be adjusted.</li>
+        <li>The <strong>Alternate Pattern</strong> has a second line of <strong>Fast Printing Speed</strong> to test 0 to <strong>Fast Printing Speed</strong> and back to 0 conditions. Best used with an increased <strong>Test Line Spacing</strong> and reduced K-factor range.</li>
         <li>The proper K-factor depends on the filament, nozzle size, nozzle geometry and printing temperature. If any of these values change, the calibration might need to be repeated.</li>
       </ul>
       <h2>Screen-shots</h2>

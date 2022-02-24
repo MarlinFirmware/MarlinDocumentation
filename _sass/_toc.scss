@@ -59,3 +59,42 @@ You can continue this pattern if you have more nested elements. */
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
   background-color: #0088CC;
 }
+
+// Table of content (toc) nav list
+.nav-list>.active>a, .nav-list>.active>a:hover, .nav-list>.active>a:focus {
+  background: var(--color-nav-active-bg);
+  color: var(--color-nav-active);
+}
+.nav-list>.active>a strong,
+.nav-list>.active>a:hover strong { color: var(--color-nav-active);  background: none; }
+
+.nav>li>a:hover, .nav>li>a:focus {
+  background: var(--color-toc-hover-bg);
+  color: var(--color-toc-hover);
+}
+
+.container.gcode div.tocify.gcode { border-bottom-color: var(--color-gcode-toc-border); }
+.tocify.gcode::-webkit-scrollbar { display: none; }
+.custom-fixed-sidebar .tocify::-webkit-scrollbar { display: none; }
+
+.tocify.gcode,
+.custom-fixed-sidebar .tocify { position: fixed; }
+
+.tocify.gcode,
+.custom-fixed-sidebar .tocify {
+  -webkit-scrollbar { display: none; }
+  font-size: 13px;
+  cursor: pointer;
+  li { line-height: 1em; margin: -1px 0 0; }
+}
+.custom-fixed-sidebar .tocify { position: fixed; }
+.custom-fixed-sidebar .tocify {
+  height: 100vh;
+  overflow: scroll;
+  >ul:last-child { margin-bottom: 80px; }
+}
+.tocify.gcode>ul {
+  height: 100vh;
+  overflow: scroll;
+  li:last-child { margin-bottom: 80px; }
+}

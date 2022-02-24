@@ -7,7 +7,7 @@ contrib: bob-the-kuhn
 category: [ articles, getting-started ]
 ---
 
-To install Marlin on your printer you'll first need to Download Marlin, then edit your Configuration files, and finally use an IDE to [Compile](//en.wikipedia.org/wiki/Compiler) the Marlin project into a binary form and [Upload](//www.arduino.cc/en/Guide/Environment#toc9) it to your board. The build process can seem daunting at first, but after you do it a few times you'll be a pro.
+To install Marlin on your printer you'll first need to Download Marlin, then edit your Configuration files, and finally use an IDE to [Compile](//en.wikipedia.org/wiki/Compiler){:target="_blank"} the Marlin project into a binary form and [Upload](//www.arduino.cc/en/Guide/Environment#toc9){:target="_blank"} it to your board. The build process can seem daunting at first, but after you do it a few times you'll be a pro.
 
 {% alert info %}
 Marlin only needs to be re-flashed when fixed settings are changed in the configuration files. Many settings are only defaults and can be changed (and saved to EEPROM) with G-codes. See each option's description in the configuration files to find out which G-codes apply.
@@ -32,7 +32,7 @@ Start by downloading the Marlin source code. There are a few [codebases](//en.wi
 
 ### Configure
 
-To configure Marlin you can use the Arduino IDE or your [favorite text editor](//www.sublimetext.com/) to edit the `Configuration.h` and `Configuration_adv.h` files. See [Configuring Marlin](/docs/configuration/configuration.html) for full details.
+To configure Marlin you can use the Arduino IDE or your [favorite text editor](//www.sublimetext.com/){:target="_blank"} to edit the `Configuration.h` and `Configuration_adv.h` files. See [Configuring Marlin](/docs/configuration/configuration.html) for full details.
 
 ### Build and Install
 
