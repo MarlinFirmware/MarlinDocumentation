@@ -2701,7 +2701,7 @@ If you have a board with pins named `X_MS1`, `X_MS2`, etc., then you can change 
 #define DIGIPOT_I2C_MOTOR_CURRENTS { 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0 }
 ```
 
-## LCD
+## LCD / Controller
 ```cpp
 #if EITHER(ULTIPANEL, EXTENSIBLE_UI)
   #define MANUAL_FEEDRATE { 50*60, 50*60, 4*60, 60 } // Feedrates for manual moves along X, Y, Z, E from panel
@@ -3229,26 +3229,28 @@ Support for [`G5`](/docs/gcode/G005.html) with XYZE destination and IJPQ offsets
 ```
 Add commands [`G38.2`](/docs/gcode/G038.html) and [`G38.3`](/docs/gcode/G038.html) to probe towards target. Enable `PROBE_DOUBLE_TOUCH` if you want [`G38`](/docs/gcode/G038.html) to double touch.
 
-## Minimum Steps Per Segment
+## Stepper Driver Tuning
+
+### Minimum Steps Per Segment
 ```cpp
 #define MIN_STEPS_PER_SEGMENT 6
 ```
 Moves (or segments) with fewer steps than this will be joined with the next move.
 
-## Minimum Stepper Delay
+### Minimum Stepper Delay
 ```cpp
 //#define MINIMUM_STEPPER_POST_DIR_DELAY 650
 //#define MINIMUM_STEPPER_PRE_DIR_DELAY 650
 ```
 Minimum delay before and after setting the stepper DIR (in ns). See `Configuration_adv.h` for more details.
 
-## Minimum Stepper Pulse
+### Minimum Stepper Pulse
 ```cpp
 #define MINIMUM_STEPPER_PULSE 2 // (µs) The smallest stepper pulse allowed
 ```
 The minimum pulse width (in µs) for stepping a stepper. Set this if you find stepping unreliable, or if using a very fast CPU.
 
-## Maximum Stepper Rate
+### Maximum Stepper Rate
 ```cpp
 //#define MAXIMUM_STEPPER_RATE 250000
 ```
@@ -3324,6 +3326,18 @@ Include extra information about the buffer in "ok" messages. Some hosts will hav
 #define SERIAL_OVERRUN_PROTECTION
 ```
 Printrun may have trouble receiving long strings all at once. This option inserts short delays between lines of serial output.
+
+### Serial Float Precision
+```cpp
+//#define SERIAL_FLOAT_PRECISION 4
+```
+For serial echo, the number of digits after the decimal point
+
+### Proportional Font Ratio
+```cpp
+#define PROPORTIONAL_FONT_RATIO 1.0
+```
+Some hosts use a proportional font in their output console. This makes it hard to read output from Marlin that relies on fixed-width for alignment. This option tells Marlin how many spaces are required to fill up a typical character space in the host font. For clients that use a fixed-width font (like OctoPrint), leave this set to 1.0. Otherwise, adjust according to your host.
 
 ## Extra Fan Speed
 ```cpp
@@ -3695,9 +3709,9 @@ You'll need to import the [L6470 library](//github.com/ameyer/Arduino-L6470) int
 #define I2C_SLAVE_ADDRESS  0 // Set a value from 8 to 127 to act as a slave
 ```
 This feature can be used to talk to slave devices on the i2c bus, passing data back to the host. With additional work the `TWIBus` class can be used to build a full protocol and add remote control features to Marlin, distributing load over two or more boards.
-```gcode
+```
 ; Example #1
-; This macro send the string "Marlin" to the slave device with address 0x63 (99)
+; This macro sends the string "Marlin" to the slave device with address 0x63 (99)
 ; It uses multiple [`M260`](/docs/gcode/M260.html) commands with one B[base 10] arg
 [`M260`](/docs/gcode/M260.html) A99  ; Target slave address
 M260 B77  ; M
@@ -3949,11 +3963,25 @@ Periodically display a message on the LCD showing the measured filament diameter
 ```
 Enables [`G53`](/docs/gcode/G053.html) and [`G54`-`G59.3`](/docs/gcode/G054-G059.html) commands to select coordinate systems, plus [`G92.1`](/docs/gcode/G010.html) to reset the current workspace to native machine space. Workspaces set with this feature are also saved to EEPROM.
 
-## Temperature Auto-Report
+## Auto-Report
+
+### Fans Auto-Report
+```cpp
+//#define AUTO_REPORT_FANS
+```
+Auto-report fan speed with M123 S<seconds>. Requires fans with tachometer pins.
+
+### Temperature Auto-Report
 ```cpp
 #define AUTO_REPORT_TEMPERATURES
 ```
 It is recommended to enable this feature (along with `EXTENDED_CAPABILITIES_REPORT`) to install the [`M155`](/docs/gcode/M115.html) Auto-Report Temperature command. [`M115`](/docs/gcode/M115.html) tells Marlin to send the current temperature to the host at regular intervals, instead of requiring the host software to send [`M105`](/docs/gcode/M105.html) repeatedly. This saves a space in the command buffer and reduces overhead.
+
+### Position Auto-Report
+```cpp
+//#define AUTO_REPORT_POSITION
+```
+Auto-report position with `M154 S<seconds>`.
 
 ## Extended Capabilities Report
 ```cpp
@@ -3973,32 +4001,28 @@ Activate this option to make volumetric extrusion the default method The last va
 ```
 Enable this option for a leaner build of Marlin that removes all workspace offsets. This simplifies all coordinate transformations, leveling, etc., and may allow for slightly faster printing. With this option, [`M206`](/docs/gcode/M206.html) and [`M428`](/docs/gcode/M428.html) are disabled, and [`G92`](/docs/gcode/G092.html) reverts to its old behavior, as it is in Marlin 1.0.
 
-## Proportional Font Ratio
-```cpp
-#define PROPORTIONAL_FONT_RATIO 1.0
-```
-Some hosts use a proportional font in their output console. This makes it hard to read output from Marlin that relies on fixed-width for alignment. This option tells Marlin how many spaces are required to fill up a typical character space in the host font. For clients that use a fixed-width font (like OctoPrint), leave this set to 1.0. Otherwise, adjust according to your host.
+## G-code Parser
 
-## Faster G-code Parser
+### Faster G-code Parser
 ```cpp
 #define FASTER_GCODE_PARSER
 ```
 This option uses a 28 byte SRAM buffer and an alternative method to get parameter values so the G-code parser can run a little faster. If possible, always leave this option enabled.
 
-## G-code Case Insensitive
+### G-code Case Insensitive
 ```cpp
 //#define GCODE_CASE_INSENSITIVE
 ```
 Accept G-code sent to the firmware in lowercase.
 
-## CNC G-code Options
+### CNC G-code Options
 ```cpp
 //#define PAREN_COMMENTS      // Support for parentheses-delimited comments
 //#define GCODE_MOTION_MODES  // Remember the motion mode (G0 G1 G2 G3 G5 G38.X) and apply for X Y Z E F, etc.
 ```
 Support CNC-style G-code dialects used by laser cutters, drawing machine cams, etc.
 
-## Default G0 Feedrate
+### Default G0 Feedrate
 ```cpp
 //#define G0_FEEDRATE 3000 // (mm/m)
 #ifdef G0_FEEDRATE
@@ -4007,13 +4031,13 @@ Support CNC-style G-code dialects used by laser cutters, drawing machine cams, e
 ```
 Enable and set a (default) feedrate for all G0 moves.
 
-## Startup Commands
+### Startup Commands
 ```cpp
 //#define STARTUP_COMMANDS "M17 Z"
 ```
 Execute specified G-code commands immediately after power-on.
 
-## G-code Macros
+### G-code Macros
 ```cpp
 //#define GCODE_MACROS
 #if ENABLED(GCODE_MACROS)
@@ -4022,40 +4046,88 @@ Execute specified G-code commands immediately after power-on.
 #endif
 ```
 
-## Customer User Menu Items
+## Custom User Menu Items
+
+User-defined menu items to run custom G-code. Up to 25 may be defined, but the actual number is LCD-dependent.
+
 ```cpp
-//#define CUSTOM_USER_MENUS
-#if ENABLED(CUSTOM_USER_MENUS)
-  //#define CUSTOM_USER_MENU_TITLE "Custom Commands"
-  #define USER_SCRIPT_DONE "M117 User Script Done"
-  #define USER_SCRIPT_AUDIBLE_FEEDBACK
-  //#define USER_SCRIPT_RETURN  // Return to status screen after a script
-  #define USER_DESC_1 "Home & UBL Info"
-  #define USER_GCODE_1 "G28\nG29 W"
-  #define USER_DESC_2 "Preheat for " PREHEAT_1_LABEL
-  #define USER_GCODE_2 "M140 S" STRINGIFY(PREHEAT_1_TEMP_BED) "\nM104 S" STRINGIFY(PREHEAT_1_TEMP_HOTEND)
-  #define USER_DESC_3 "Preheat for " PREHEAT_2_LABEL
-  #define USER_GCODE_3 "M140 S" STRINGIFY(PREHEAT_2_TEMP_BED) "\nM104 S" STRINGIFY(PREHEAT_2_TEMP_HOTEND)
-  #define USER_DESC_4 "Heat Bed/Home/Level"
-  #define USER_GCODE_4 "M140 S" STRINGIFY(PREHEAT_2_TEMP_BED) "\nG28\nG29"
-  #define USER_DESC_5 "Home & Info"
-  #define USER_GCODE_5 "G28\nM503"
+// Custom Menu: Main Menu
+//#define CUSTOM_MENU_MAIN
+#if ENABLED(CUSTOM_MENU_MAIN)
+  //#define CUSTOM_MENU_MAIN_TITLE "Custom Commands"
+  #define CUSTOM_MENU_MAIN_SCRIPT_DONE "M117 User Script Done"
+  #define CUSTOM_MENU_MAIN_SCRIPT_AUDIBLE_FEEDBACK
+  //#define CUSTOM_MENU_MAIN_SCRIPT_RETURN   // Return to status screen after a script
+  #define CUSTOM_MENU_MAIN_ONLY_IDLE         // Only show custom menu when the machine is idle
+
+  #define MAIN_MENU_ITEM_1_DESC "Home & UBL Info"
+  #define MAIN_MENU_ITEM_1_GCODE "G28\nG29 W"
+  //#define MAIN_MENU_ITEM_1_CONFIRM          // Show a confirmation dialog before this action
+
+  // . . .
+#endif
+
+// Custom Menu: Configuration Menu
+//#define CUSTOM_MENU_CONFIG
+#if ENABLED(CUSTOM_MENU_CONFIG)
+  //#define CUSTOM_MENU_CONFIG_TITLE "Custom Commands"
+  #define CUSTOM_MENU_CONFIG_SCRIPT_DONE "M117 Wireless Script Done"
+  #define CUSTOM_MENU_CONFIG_SCRIPT_AUDIBLE_FEEDBACK
+  //#define CUSTOM_MENU_CONFIG_SCRIPT_RETURN  // Return to status screen after a script
+  #define CUSTOM_MENU_CONFIG_ONLY_IDLE        // Only show custom menu when the machine is idle
+
+  #define CONFIG_MENU_ITEM_1_DESC "Wifi ON"
+  #define CONFIG_MENU_ITEM_1_GCODE "M118 [ESP110] WIFI-STA pwd=12345678"
+  //#define CONFIG_MENU_ITEM_1_CONFIRM        // Show a confirmation dialog before this action
+
+  // . . .
+#endif
+```
+
+## Custom User Menu Buttons
+
+User-defined buttons to run custom G-code. Up to 25 may be defined.
+
+```cpp
+//#define CUSTOM_USER_BUTTONS
+#if ENABLED(CUSTOM_USER_BUTTONS)
+  //#define BUTTON1_PIN -1
+  #if PIN_EXISTS(BUTTON1)
+    #define BUTTON1_HIT_STATE     LOW       // State of the triggered button. NC=LOW. NO=HIGH.
+    #define BUTTON1_WHEN_PRINTING false     // Button allowed to trigger during printing?
+    #define BUTTON1_GCODE         "G28"
+    #define BUTTON1_DESC          "Homing"  // Optional string to set the LCD status
+  #endif
+
+  // . . .
 #endif
 ```
 
 ## Host Action Commands
+
+Define host streamer action commands in compliance with the standard. See [this article](https://reprap.org/wiki/G-code#Action_commands){:target="_blank"} for a description of the standard.
+
 ```cpp
 //#define HOST_ACTION_COMMANDS
 #if ENABLED(HOST_ACTION_COMMANDS)
-  //#define HOST_PROMPT_SUPPORT
+  //#define HOST_PAUSE_M76                // Tell the host to pause in response to M76
+  //#define HOST_PROMPT_SUPPORT           // Initiate host prompts to get user feedback
+  #if ENABLED(HOST_PROMPT_SUPPORT)
+    //#define HOST_STATUS_NOTIFICATIONS   // Send some status messages to the host as notifications
+  #endif
+  //#define HOST_START_MENU_ITEM          // Add a menu item that tells the host to start
+  //#define HOST_SHUTDOWN_MENU_ITEM       // Add a menu item that tells the host to shut down
 #endif
 ```
 
 ## Cancel Objects
 ```cpp
 //#define CANCEL_OBJECTS
+#if ENABLED(CANCEL_OBJECTS)
+  #define CANCEL_OBJECTS_REPORTING // Emit the current object as a status message
+#endif
 ```
-Adds [`M486`](/docs/gcode/M486.html) to allow Marlin to skip objects.
+Adds [`M486`](/docs/gcode/M486.html) to allow Marlin to skip objects. Based on a proposal by Paul Paukstelis.
 
 ## I2C Position Encoders
 ```cpp

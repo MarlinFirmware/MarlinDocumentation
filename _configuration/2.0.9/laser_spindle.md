@@ -142,7 +142,7 @@ Serveral useful features are currently available for Lasers with 12864 LCDs and 
 #### Air Assist
 Air Assist pump relay output, enables Menu item and G-code `M8/M9` control.
 
-``` cpp
+```cpp
   #define AIR_ASSIST                           // Air Assist control with G-codes M8-M9
   #if ENABLED(AIR_ASSIST)
     #define AIR_ASSIST_ACTIVE           LOW    // Active state on air assist pin
@@ -152,7 +152,7 @@ Air Assist pump relay output, enables Menu item and G-code `M8/M9` control.
 #### Air Evacuation
 Air Evacuation motor relay output, enables Menu item and G-code `M10/M11` control.
 
-``` cpp
+```cpp
   #define AIR_EVACUATION                       // Cutter Vacuum / Laser Blower motor control with G-codes M10-M11
   #if ENABLED(AIR_EVACUATION)
     #define AIR_EVACUATION_ACTIVE       LOW    // Set to "HIGH" if the on/off function is active HIGH
@@ -169,7 +169,7 @@ the `I2C_AMMETER_SHUNT_RESISTOR` slightly up or down to match the measured value
 ![INA226 Board](/assets/images/config/INA226Board.jpg){: width="320" height="160"}
 ![INA226 Wiring](/assets/images/config/INA226.png){: width="320" height="160"}
 
-``` cpp
+```cpp
 // Laser I2C Ammeter (High precision INA226 low/high side module)
 #define I2C_AMMETER
 #if ENABLED(I2C_AMMETER)
@@ -182,7 +182,7 @@ the `I2C_AMMETER_SHUNT_RESISTOR` slightly up or down to match the measured value
 CO2 Coolant flow meter support, enables laser coolant monitoring on both 12864 & 2004 LCDs.
 Provides tube protection by detecting flow failures and controlling laser enable signals.
 
-``` cpp
+```cpp
 // Laser Coolant Flow Meter
 #define LASER_COOLANT_FLOW_METER
 #if ENABLED(LASER_COOLANT_FLOW_METER)
@@ -199,7 +199,7 @@ Provides tube protection by detecting flow failures and controlling laser enable
 #### Laser Cooler
 Laser cooling control, provides chiller control with temperature monitoring and safety.
 
-``` cpp
+```cpp
 // Laser Cooler options
 #if TEMP_SENSOR_COOLER
   #define COOLER_MINTEMP           8  // (°C)
@@ -221,7 +221,7 @@ Laser cooling control, provides chiller control with temperature monitoring and 
 #### Spindle Coolant
 Spindle based coolant control, enables M7/M8/M9 G-codes.
 
-``` cpp
+```cpp
 #define COOLANT_CONTROL
 #if ENABLED(COOLANT_CONTROL)
   #define COOLANT_MIST                // Enable if mist coolant is present (M7)
