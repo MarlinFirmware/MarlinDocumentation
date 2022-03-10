@@ -1,11 +1,10 @@
 /**
  * _custom.scss for marlinfw.org
  */
-:root  {
+:root {
   --bg-midsection: radial-gradient(circle, rgba(0,0,0, 1) 0%, rgba(0,0,0, 0) 60%, rgba(0,0,0, 0) 100%);
   --color-background: white;
   --color-color: black;
-  --color-article-header: black;
   --color-article-border: #888;
   --color-bitmap: #118;
   --color-bitmap-label-hover: #090;
@@ -50,8 +49,8 @@
   --color-h1-devel: #BB8;
   --color-h1-config: #B8B;
   --color-header: #AECAFA;
-  --color-header-bg: #0088CC;
-  --color-header-text: #0E218D;
+  --color-header-bg: #8CF;
+  --color-article-header: black;
   --color-hr: #333;
   --color-highlighter-rouge: #C99;
   --color-highlighter-rouge-bg: #300;
@@ -173,7 +172,6 @@
   --bg-midsection: radial-gradient(circle, rgba(255,255,255, 1) 0%, rgba(255,255,255, 0) 60%, rgba(255,255,255, 0) 100%);
   --color-background: black;
   --color-color: #B5B5B5;
-  --color-article-header: white;
   --color-article-border: #888;
   --color-bitmap: #CCF;
   --color-bitmap-label-hover: #9D9;
@@ -220,8 +218,9 @@
   --color-h1-devel: #BB8;
   --color-h1-config: #B8B;
   --color-hr: white;
-  --color-header: yellow;
   --color-header-bg: #004466;
+  --color-header: yellow;
+  --color-article-header: white;
   // Top nav
   --color-nav: #CCC;
   --color-nav-border: #333;
