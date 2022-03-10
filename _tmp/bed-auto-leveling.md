@@ -35,7 +35,7 @@ The Z axis is lifted when traveling to the first probe point by `Z_RAISE_BEFORE_
 
 ## Servo options
 
-You will probably need to attach a swivel Z-MIN endstop to the extruder (aka Allen key shaped swivel). An RC servo does a great job. Check the [system working here](//youtube.com/watch?v=xp46DTeC1ag).
+You will probably need to attach a swivel Z-MIN endstop to the extruder (aka Allen key shaped swivel). An RC servo does a great job. Check the [system working here](//youtu.be/xp46DTeC1ag).
 
 In order to get the servo working, you need to enable the following options:
 
