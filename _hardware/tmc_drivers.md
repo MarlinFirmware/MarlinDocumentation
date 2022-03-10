@@ -7,46 +7,51 @@ contrib: shitcreek
 category: [ features, hardware ]
 ---
 
-Trinamic stepper drivers allow you to have better control of your stepper motors and achieve extremely quiet motion. You can influence how the driver manages motor current as well as the manner of current delivery. The drivers can act as endstops allowing you to simplify wiring. Marlin also supports setting the driver current by using software commands, negating the need for adjusting trimpots.
+Stepper motors in a 3D printer are controlled by a variety of driver chips such as the common A4988 and DRV8825. These provide signals to the stepper motors to control the magnets and move them by micro-steps. Typically the motor is divided into 3200 steps per revolution, with 80 steps per millimeter of motion. At the movement rates of 3D printers, and due to the ringing produced by stepper motors, the vibrations from these steps can be very loud to the human ear.
 
-# Supported TMC drivers and features
+Trinamic stepper drivers control stepper motors with greater finesse and interpolate the micro-steps to produce extremely quiet motion. Through SPI or serial control, you can change how the drivers manage motor current as well as the manner of current delivery. These drivers can even detect when a motor hits an obstruction, so they can act as endstops for simplified wiring. You can also set the driver current with Marlin G-code commands, removing the need to adjust physical trimpots.
+
+## Supported TMC drivers and features
 
 Driver  | Control | StealthChop | Sensorless<br>homing/probing | Driver monitoring | Hybrid threshold | Notes
 :------:|:-------:|:-----------:|:----------------------------:|:-----------------:|:----------------:|:---------
-TMC2100 | none    | yes         | no                           | no                | no               | Standalone mode only
-TMC2130 | SPI     | yes         | yes                          | yes               | yes              |
-TMC2208 | UART    | yes         | no                           | yes               | yes              | UART RX line requires an interrupt capable pin.<br>Software UART not support on all platforms, such as DUE based boards.
-TMC2209 | UART    | yes         | yes                          | yes               | yes              |
-TMC2660 | SPI     | no          | not implemented              | yes               | no               |
+TMC2100 | none | yes | no | no | no | Standalone mode only
+TMC2130 | SPI | yes | yes | yes | yes |
+TMC2208<br/>TMC2225 | UART | yes | no | yes | yes | UART RX line requires an interrupt capable pin.<br>Software UART not support on all platforms, such as DUE based boards.
+TMC2209<br/>TMC2226 | UART | yes | yes | yes | yes |
+TMC2660 | SPI | no | not implemented | yes | no |
 
 All configurable drivers can also be operated in standalone mode if so configured in hardware.
 
-# Installing the library
+## Installing the library
 The TMC stepper drivers require an external library that allows Marlin to communicate with each driver.
 
-## Installing from Arduino IDE library manager
-* Open up the Arduino IDE
-* Go to Sketch -> Include Library -> Manage Libraries...
-* 1.1.9
-  * Search for **TMCStepper**
-* Older versions of Marlin
-  * Search for **TMC2130Stepper** or **TMC2208Stepper**
-* Click `Install`
+### For PlatformIO
+PlatformIO will automatically download all libraries it requires, so skip directly to **Wiring** below.
 
-## Installing from a zip file
-* 1.1.9
-  * Go to TMC library homepage at https://github.com/teemuatlut/TMCStepper
-* Older versions of Marlin
-  * TMC2130: Go to the library homepage at https://github.com/teemuatlut/TMC2130Stepper
-  * TMC2208: Go to the library homepage at https://github.com/teemuatlut/TMC2208Stepper
-* Click `Clone or download` and `Download ZIP`
-* In Arduino IDE and go to Sketch -> Include Library -> Add .ZIP Library...
-* Point to the downloaded file and click `Open`
+### Installing from Arduino IDE library manager
+- Open up the Arduino IDE
+- Go to Sketch -> Include Library -> Manage Libraries...
+- Marlin 1.1.9 and up:
+  - Search for **TMCStepper**
+- Older versions of Marlin
+  - Search for **TMC2130Stepper** or **TMC2208Stepper**
+- Click `Install`
 
-# Wiring
+### Installing from a zip file
+- Marlin 1.1.9 and up:
+  - Go to [TMC library homepage](//github.com/teemuatlut/TMCStepper)
+- Older versions of Marlin
+  - Go to the [TMC2130 library page](//github.com/teemuatlut/TMC2130Stepper)
+  - Go to the [TMC2208 library page](//github.com/teemuatlut/TMC2208Stepper)
+- Click **Clone or download** -> **Download ZIP**
+- In Arduino IDE and go to **Sketch** -> **Include Library** -> **Add .ZIP Library**…
+- Navigate to the downloaded file and click the **Open** button.
+
+## Wiring
 Because the TMC drivers require a way for communication and configuring the drivers (outside of standalone mode) they also require additional setup. TMC2130 and TMC2660 use SPI for communication and TMC2208 uses UART (Serial).
 
-## TMC2130
+### TMC2130
 
 Motherboard | Driver
 -----------:|:-------
@@ -55,7 +60,7 @@ MOSI        | SDI
 MISO        | SDO
 CS          | CS
 
-### Software SPI
+#### Software SPI
 
 You can use other than the HW SPI pins by enabling `TMC_USE_SW_SPI` and defining the required pins:
 ```cpp
@@ -64,44 +69,39 @@ TMC_SW_MISO
 TMC_SW_SCK
 ```
 
-## TMC2208
+### TMC2208
 
-A 1 kilo-ohm resistor is required between TX and PD_UART
+A 1K resistor is required between `TX` and `PD_UART`.
 
 Motherboard |         | Driver
 -----------:|---------|:--------
 RX          |         | PD_UART
 TX          | (1kohm) | PD_UART
 
-The serial port on master is selected in your `pins` file. Alternatively you can use the slower software serial by not selecting any of the hardware serial ports.
-Typically one port per one driver is needed.
+The serial port on master is selected in the pins file for your board. Alternatively you can use the slower software serial by not selecting any of the hardware serial ports. Typically one port per one driver is needed.
 
 ### Software UART
 
-You can use free pins as UART by disabling all of the hardware serial options in your `pins` file and by defining the `_SERIAL_TX_PIN` and `_SERIAL_RX_PIN` pins.
+You can use free pins for UART by disabling all of the hardware serial options in your board's pins file and by defining the `_SERIAL_TX_PIN` and `_SERIAL_RX_PIN` pins.
 
-**Note:** The receive (RX) pins are limited to only interrupt capable pins. Transmit (TX) pins do not have the same limitation.
+**Note:** The receive (RX) pins must be interrupt-capable pins. Transmit (TX) pins don't have this limitation.
 
-# FYSETC drivers
-We recommend getting the original Watterott drivers or the revised FYSETC v1.1 drivers to avoid additional headaches.
+## FYSETC drivers
+As of this writing, we recommend getting the original Watterott drivers or the revised FYSETC v1.1 drivers to avoid additional headaches.
 
-The FYSETC v1.0 drivers come pre-configured in standalone mode. This means that the drivers should work for moving the axis but you will not be able to configure them nor take advantage of the additional features of the drivers. To get the drivers working as intended you will need to modify three solder bridges on the driver PCB.
+The FYSETC v1.0 drivers come pre-configured in standalone mode. So the drivers should work for moving the axes but you won't be able to configure them or take advantage of their extra features. For full-featured drivers you'll need to modify three solder bridges on the driver PCB.
 
 ![FYSETC_TMC2130](/assets/images/features/FYSETC_tmc2130._SPI.jpg)
 
 Some versions of the FYSETC v1.0 drivers come with a solder bridge left of the chip, some come with a bridging resistor. This connection needs to be opened for SPI connection to work.
 The two smaller bridges need to be configured as shown.
 
-# Features and configuration options
-There are several technologies specific to Trinamic drivers that are supported by Marlin.
-* [stealthChop] is a technology that drives the motors using PWM voltage instead of current. The result is nearly inaudible stepping at low velocities. StealthChop has a lower stepping speed limit and if you need to move faster, for example travel moves, you may want to use spreadCycle or configure Hybrid Mode.
-* [spreadCycle] is an alternative stepping mode. The driver will use four stages to drive the desired current into the stepper motor. SpreadCycle provides greater torque which might be useful if you're experiencing skipped steps. The downside is slightly higher noise levels.
-* [stallGuard] measures the load that is applied to the motor. If the load is sufficiently high, Marlin can react to the event. Such an event can be when we drive an axis to its physical limit and the signal provided by the driver can be detected just like an endstop. That way you can use the driver itself as an axis sensor negating the need to an additional endstop and the wiring needed. StallGuard is only active when the driver is in spreadCycle mode.
+## Features and configuration options
+Several Trinamic-specific technologies are supported by Marlin.
+- [stealthChop](//www.trinamic.com/technology/adv-technologies/stealthchop/) is a technology that drives the motors using PWM voltage instead of current. The result is nearly inaudible stepping at low velocities. StealthChop has a lower stepping speed limit and if you need to move faster, for example travel moves, you may want to use spreadCycle or configure Hybrid Mode.
+- [spreadCycle](//www.trinamic.com/technology/adv-technologies/spreadcycle/) is an alternative stepping mode. The driver will use four stages to drive the desired current into the stepper motor. SpreadCycle provides greater torque which might be useful if you're experiencing skipped steps. The downside is slightly higher noise levels.
+- [stallGuard](//www.trinamic.com/technology/adv-technologies/stallguard/) measures the load that is applied to the motor. If the load is sufficiently high, Marlin can react to the event. Such an event can be when we drive an axis to its physical limit and the signal provided by the driver can be detected just like an endstop. That way you can use the driver itself as an axis sensor negating the need to an additional endstop and the wiring needed. StallGuard is only active when the driver is in spreadCycle mode.
 * Hybrid Mode: Marlin can configure the driver to automatically change between stepping modes using a user configured switching velocity. If the velocity is lower than the threshold the stepper is in quiet stealthChop mode. When the axis velocity increases the driver will automatically switch to spreadCycle.
-
-- [stealthChop](//www.trinamic.com/technology/adv-technologies/stealthchop/)
-- [spreadCycle](//www.trinamic.com/technology/adv-technologies/spreadcycle/)
-- [stallGuard](//www.trinamic.com/technology/adv-technologies/stallguard/)
 
 Option | Description
 ---:|:---
@@ -125,29 +125,20 @@ TMC_DEBUG                 | Extend the information [`M122`](/docs/gcode/M122.htm
 TMC_ADV                   | You can use this to add your own configuration settings. The requirement is that the command used must be part of the respective TMC stepper library. Remember to add a backslash after each command!
 AUTOMATIC_CURRENT_CONTROL | Replaced by `MONITOR_DRIVER_STATUS`.<br>Marlin will poll the driver twice a second to see if the driver is in an error state. Such an error can be overtemperature pre-warn condition (OTPW) or short to ground or open load. Marlin can react to the temperature warning and automatically reduce the driver current. Short to ground error will disable the driver and Marlin can terminate the print to save time and material.
 
-# G-codes
+## G-codes
 
 Command | Configuration<br>required | Description
 -------:|:-------------------------:|:-----------
-[M122]  | none                      | Test driver communication line and get debugging information of your drivers. `TMC_DEBUG` adds more reported information.
-[M569]  | `TMC2130` or `TMC2208`    | Toggle between stealthChop and spreadCycle on supporting drivers.
-[M906]  | none                      | Set the driver current using axis letters X/Y/Z/E.
-[M911]  | `MONITOR_DRIVER_STATUS`   | Report TMC prewarn triggered flags held by the library.
-[M912]  | `MONITOR_DRIVER_STATUS`   | Clear TMC prewarn triggered flags.
-[M913]  | `HYBRID_THRESHOLD`        | Set HYBRID_THRESHOLD speed.
-[M914]  | `SENSORLESS_HOMING`       | Set SENSORLESS_HOMING sensitivity.
-[M915]  | `TMC_Z_CALIBRATION`       | (Deprecated in Marlin 2.0.)<br>Level your X axis by trying to move the Z axis past its physical limit. The movement is done at a reduced motor current to prevent breaking parts and promote skipped steps. Marlin will then rehome Z axis and restore normal current setting.
+[`M122`](/docs/gcode/M122.html) | none                      | Test driver communication line and get debugging information of your drivers. `TMC_DEBUG` adds more reported information.
+[`M569`](/docs/gcode/M569.html) | `TMC2130` or `TMC2208`    | Toggle between stealthChop and spreadCycle on supporting drivers.
+[`M906`](/docs/gcode/M906.html) | none                      | Set the driver current using axis letters X/Y/Z/E.
+[`M911`](/docs/gcode/M911.html) | `MONITOR_DRIVER_STATUS`   | Report TMC prewarn triggered flags held by the library.
+[`M912`](/docs/gcode/M912.html) | `MONITOR_DRIVER_STATUS`   | Clear TMC prewarn triggered flags.
+[`M913`](/docs/gcode/M913.html) | `HYBRID_THRESHOLD`        | Set HYBRID_THRESHOLD speed.
+[`M914`](/docs/gcode/M914.html) | `SENSORLESS_HOMING`       | Set SENSORLESS_HOMING sensitivity.
+[`M915`](/docs/gcode/M915.html) | `TMC_Z_CALIBRATION`       | (Deprecated in Marlin 2.0.)<br>Level your X axis by trying to move the Z axis past its physical limit. The movement is done at a reduced motor current to prevent breaking parts and promote skipped steps. Marlin will then rehome Z axis and restore normal current setting.
 
-[M122]: /docs/gcode/M122.html
-[M569]: /docs/gcode/M569.html
-[M906]: /docs/gcode/M906.html
-[M911]: /docs/gcode/M911.html
-[M912]: /docs/gcode/M912.html
-[M913]: /docs/gcode/M913.html
-[M914]: /docs/gcode/M914.html
-[M915]: /docs/gcode/M915.html
-
-# Troubleshooting
+## Troubleshooting
 
 - Some SilentStepSticks with variable 3-5V logic voltage (VIO) [might get damaged](//github.com/MarlinFirmware/Marlin/issues/10162#issuecomment-397844847) if only powered over USB.
 - Test driver communication status with [`M122`](/docs/gcode/M122.html).
@@ -173,34 +164,23 @@ Command | Configuration<br>required | Description
   - Increase motor current
   - Disable `INTERPOLATE`
 
-# External resources
+## External resources
 
-[Arduino library for TMC drivers](//github.com/teemuatlut/TMCStepper) (Replaces the following two)
+- [Arduino library for TMC drivers](//github.com/teemuatlut/TMCStepper) (Replaces the following two)
+- For older Marlin you may need [TMC2130 Arduino library](//github.com/teemuatlut/TMC2130Stepper) or [TMC2208 Arduino library](//github.com/teemuatlut/TMC2208Stepper)
 
-[Arduino library for TMC2130](//github.com/teemuatlut/TMC2130Stepper)
+- [SilentStepStick TMC2130 schematic and pinout](//github.com/watterott/SilentStepStick/blob/master/hardware/
+SlentStepStick-TMC2130_v11.pdf)
+- [SilentStepStick TMC2208 schematic and pinout](//github.com/watterott/SilentStepStick/blob/master/hardware/SlentStepStick-TMC2208_v12.pdf)
 
-[Arduino library for TMC2208](//github.com/teemuatlut/TMC2208Stepper)
+- [Trinamic](//www.trinamic.com)
+- [Watterott documentation](//learn.watterott.com/silentstepstick/)
+- [stallGuard](//www.trinamic.com/technology/adv-technologies/stallguard/)
+- [stealthChop](//www.trinamic.com/technology/adv-technologies/stealthchop/)
+- [spreadCycle](//www.trinamic.com/technology/adv-technologies/spreadcycle/)
+- Datasheets for [TMC2130](//www.trinamic.com/fileadmin/assets/Products/ICs_Documents/TMC2130_datasheet.pdf) and [TMC2208](//www.trinamic.com/fileadmin/assets/Products/ICs_Documents/TC220x_TMC2224_Datasheet_Rev1.10.pdf)
 
-[SilentStepStick TMC2130 schematic and pinout](//github.com/watterott/SilentStepStick/blob/master/hardware/SilentStepStick-TMC2130_v11.pdf)
+- [TMC2130 Hackaday article by Moritz Walter](//hackaday.com/2016/09/30/3-printering-trinamic-tmc2130-stepper-motor-drivers-shifting-the-gears/)
 
-[SilentStepStick TMC2208 schematic and pinout](//github.com/watterott/SilentStepStick/blob/master/hardware/SilentStepStick-TMC2208_v12.pdf)
-
-[Trinamic.com](//www.trinamic.com)
-
-[Watterott documentation](//learn.watterott.com/silentstepstick/)
-
-[stallGuard](//www.trinamic.com/technology/adv-technologies/stallguard/)
-
-[stealthChop](//www.trinamic.com/technology/adv-technologies/stealthchop/)
-
-[spreadCycle](//www.trinamic.com/technology/adv-technologies/spreadcycle/)
-
-[TMC2130 datasheet](//www.trinamic.com/fileadmin/assets/Products/ICs_Documents/TMC2130_datasheet.pdf)
-
-[TMC2208 datasheet](//www.trinamic.com/fileadmin/assets/Products/ICs_Documents/TMC220x_TMC2224_Datasheet_Rev1.10.pdf)
-
-[TMC2130 Hackaday article by Moritz Walter](//hackaday.com/2016/09/30/3d-printering-trinamic-tmc2130-stepper-motor-drivers-shifting-the-gears/)
-
-[Video guide by Thomas Sanladerer](//youtube.com/watch?v=sPvTB3irCxQ)
-
-[TMC2208 Torque testing by Alex Kenis](//youtube.com/watch?v=GVs2d-TOims)
+- [Video guide by Thomas Sanladerer](//youtu.be/sPvTB3irCxQ)
+- [TMC2208 Torque testing by Alex Kenis](//youtu.be/GVs2d-TOims)
