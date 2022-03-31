@@ -9,7 +9,7 @@ category:     [ tools ]
 <script language="JavaScript" type="text/javascript" src="./k-factor.js"></script>
 <div class="container" role="main">
   <div class="row">
-    <div class="calibpat" id="calibpat">
+    <div id="calibpat">
       <h1>K-factor Calibration Pattern</h1>
       <div class="row alert alert-info custom-alert">
         <div class="col-lg-1 col-md-2 visible-lg-block visible-md-block custom-alert-icon"> <i class="fa fa-info-circle fa-4x" aria-hidden="true"></i> </div>
@@ -24,67 +24,67 @@ category:     [ tools ]
       <p>Press the <strong>Generate G-code</strong> button followed by <strong>Download as file</strong> to save the result.</p>
       <table id="kfactor">
         <tbody>
-          <tr>
-            <td colspan="3" class="tdHead"><h3>Settings</h3></td>
-            <td class="tdHead"><h3>G-code</h3></td>
+          <tr class="head">
+            <td colspan="3"><h3>Settings</h3></td>
+            <td><h3>G-code</h3></td>
           </tr>
           <tr>
-            <td colspan="3" class="tdSection"><h4>Printer:</h4></td>
-            <td rowspan="47" class="txtareatd"><textarea name="textarea" id="textarea"></textarea></td>
+            <td colspan="3" class="section"><h4>Printer Info</h4></td>
+            <td rowspan="50" class="td-output"><textarea name="gcode-out" id="gcode-out" style="height:100%"></textarea></td>
           </tr>
           <tr>
-            <td><label for="PRINTER">Printer:</label></td>
+            <th><label for="PRINTER">Printer Name</label></th>
             <td><input name="PRINTER" id="PRINTER" value="printer name" /></td>
           </tr>
           <tr>
-            <td><label for="FILAMENT">Filament:</label></td>
+            <th><label for="FILAMENT">Filament</label></th>
             <td><input name="FILAMENT" id="FILAMENT" value="filament name" /></td>
           </tr>
           <tr>
-            <td><label for="FIL_DIA">Filament Diameter:</label></td>
+            <th><label for="FIL_DIA">Filament Diameter</label></th>
             <td><input name="FIL_DIA" id="FIL_DIA" step="any" value="1.75" onblur="validateInput()" /></td>
             <td>Diameter of the used filament (mm)</td>
           </tr>
           <tr>
-            <td><label for="NOZ_DIA">Nozzle Diameter:</label></td>
+            <th><label for="NOZ_DIA">Nozzle Diameter</label></th>
             <td><input name="NOZ_DIA" id="NOZ_DIA" step="any" value="0.4" onblur="validateInput()" /></td>
             <td>Diameter of the nozzle (mm)</td>
           </tr>
           <tr>
-            <td><label for="NOZZLE_TEMP">Nozzle Temperature:</label></td>
+            <th><label for="NOZZLE_TEMP">Nozzle Temperature</label></th>
             <td><input name="NOZZLE_TEMP" id="NOZZLE_TEMP" step="any" value="205" onblur="validateInput()" /></td>
             <td>Nozzle Temperature (°C)</td>
           </tr>
           <tr>
-            <td><label for="BED_TEMP">Bed Temperature:</label></td>
+            <th><label for="BED_TEMP">Bed Temperature</label></th>
             <td><input name="BED_TEMP" id="BED_TEMP" step="any" value="60" onblur="validateInput()" /></td>
             <td>Bed Temperature (°C)</td>
           </tr>
           <tr>
-            <td><label for="RETRACTION">Retraction Distance:</label></td>
+            <th><label for="RETRACTION">Retraction Distance</label></th>
             <td><input name="RETRACTION" id="RETRACTION" step="any" value="1" onblur="validateInput()" /></td>
             <td>Retraction distance (mm)</td>
           </tr>
           <tr>
-            <td><label for="LAYER_HEIGHT">Layer Height:</label></td>
+            <th><label for="LAYER_HEIGHT">Layer Height</label></th>
             <td><input name="LAYER_HEIGHT" id="LAYER_HEIGHT" step="0.1" value="0.2" onblur="validateInput()" /></td>
             <td>Layer Height (mm)</td>
           </tr>
           <tr>
-            <td><label for="TOOL_INDEX">Extruder:</label></td>
+            <th><label for="TOOL_INDEX">Extruder</label></th>
             <td><input name="TOOL_INDEX" id="TOOL_INDEX" step="1" value="0" onblur="validateInput()" /></td>
-            <td>Extruder Index (0 to ?)</td>
+            <td>Extruder Index (0...)</td>
           </tr>
           <tr>
-            <td><label for="FAN_SPEED">Fan Speed:</label></td>
+            <th><label for="FAN_SPEED">Fan Speed</label></th>
             <td><input name="FAN_SPEED" id="FAN_SPEED" step="1" value="0" onblur="validateInput()" /></td>
             <td>Fan Speed (%)</td>
           </tr>
           <tr>
-            <td colspan="3" class="tdSection"><h4>Print Bed:</h4></td>
+            <td colspan="3" class="section"><h4>Print Bed</h4></td>
           </tr>
           <tr>
-            <td><label for="SHAPE_BED">Bed Shape:</label></td>
+            <th><label for="SHAPE_BED">Bed Shape</label></th>
             <td><select name="SHAPE_BED" id="SHAPE_BED">
               <option value="Rect">Rectangular</option>
               <option value="Round">Round</option>
@@ -92,83 +92,83 @@ category:     [ tools ]
             <td>Rectangular or round bed. Round beds will activate Origin Bed Center</td>
           </tr>
           <tr>
-            <td><label for="BEDSIZE_X">Bed Size X:</label></td>
+            <th><label for="BEDSIZE_X">Bed Size X</label></th>
             <td><input name="BEDSIZE_X" id="BEDSIZE_X" step="any" value="200" onblur="validateInput()" /></td>
             <td id="shape">Size (mm) of the bed in X</td>
           </tr>
           <tr>
-            <td><label for="BEDSIZE_Y">Bed Size Y:</label></td>
+            <th><label for="BEDSIZE_Y">Bed Size Y</label></th>
             <td><input name="BEDSIZE_Y" id="BEDSIZE_Y" step="any" value="200" onblur="validateInput()" /></td>
             <td>Size (mm) of the bed in Y</td>
           </tr>
           <tr>
-            <td><label for="CENTER_NULL">Origin Bed Center:</label></td>
+            <th><label for="CENTER_NULL">Origin Bed Center</label></th>
             <td><input name="CENTER_NULL" type="checkbox" id="CENTER_NULL" /></td>
             <td>Set the origin position (X0 Y0) to bed center instead of front-left corner</td>
           </tr>
           <tr>
-            <td colspan="3" class="tdSection"><h4>Speed:</h4></td>
+            <td colspan="3" class="section"><h4>Speed</h4></td>
           </tr>
           <tr>
-            <td><label for="MM_S">Use mm/s:</label></td>
+            <th><label for="MM_S">Use mm/s</label></th>
             <td><input name="MM_S" type="checkbox" id="MM_S" checked="checked" /></td>
             <td>Use mm/s instead of mm/min</td>
           </tr>
           <tr>
-            <td><label for="SLOW_SPEED">Slow Printing Speed:</label></td>
+            <th><label for="SLOW_SPEED">Slow Printing Speed</label></th>
             <td><input name="SLOW_SPEED" id="SLOW_SPEED" step="any" value="20" onblur="validateInput()" /></td>
             <td>Slow printing speed</td>
           </tr>
           <tr>
-            <td><label for="FAST_SPEED">Fast Printing Speed:</label></td>
+            <th><label for="FAST_SPEED">Fast Printing Speed</label></th>
             <td><input name="FAST_SPEED" id="FAST_SPEED" step="any" value="70" onblur="validateInput()" /></td>
             <td>Fast printing speed. This should differ noticeably from Slow Speed</td>
           </tr>
           <tr>
-            <td><label for="MOVE_SPEED">Movement Speed:</label></td>
+            <th><label for="MOVE_SPEED">Movement Speed</label></th>
             <td><input name="MOVE_SPEED" id="MOVE_SPEED" step="any" value="120" onblur="validateInput()" /></td>
             <td>Movement speed</td>
           </tr>
           <tr>
-            <td><label for="RETRACT_SPEED">Retract Speed:</label></td>
+            <th><label for="RETRACT_SPEED">Retract Speed</label></th>
             <td><input name="RETRACT_SPEED" id="RETRACT_SPEED" step="any" value="30" onblur="validateInput()" /></td>
             <td>Retract Speed of the extruder</td>
           </tr>
           <tr>
-            <td><label for="UNRETRACT_SPEED">Unretract Speed:</label></td>
+            <th><label for="UNRETRACT_SPEED">Unretract Speed</label></th>
             <td><input name="UNRETRACT_SPEED" id="UNRETRACT_SPEED" step="any" value="30" onblur="validateInput()" /></td>
             <td>Unretract Speed of the extruder</td>
           </tr>
           <tr>
-            <td><label for="PRINT_ACCL">Acceleration:</label></td>
+            <th><label for="PRINT_ACCL">Acceleration</label></th>
             <td><input name="PRINT_ACCL" id="PRINT_ACCL" step="any" value="500" onblur="validateInput()" /></td>
             <td>Set printing acceleration (mm/s^2)</td>
           </tr>
           <tr>
-            <td><label for="X_JERK">Jerk X:</label></td>
+            <th><label for="X_JERK">Jerk X</label></th>
             <td><input name="X_JERK" id="X_JERK" step="1" value="-1" onblur="validateInput()" /></td>
             <td>Set the Jerk for the X-axis. -1 to use firmware default</td>
           </tr>
           <tr>
-            <td><label for="Y_JERK">Jerk Y:</label></td>
+            <th><label for="Y_JERK">Jerk Y</label></th>
             <td><input name="Y_JERK" id="Y_JERK" step="1" value="-1" onblur="validateInput()" /></td>
             <td>Set the Jerk for the Y-axis. -1 to use firmware default</td>
           </tr>
           <tr>
-            <td><label for="Z_JERK">Jerk Z:</label></td>
+            <th><label for="Z_JERK">Jerk Z</label></th>
             <td><input name="Z_JERK" id="Z_JERK" step="1" value="-1" onblur="validateInput()" /></td>
             <td>Set the Jerk for the Z-axis. -1 to use firmware default</td>
           </tr>
           <tr>
-            <td><label for="E_JERK">Jerk E:</label></td>
+            <th><label for="E_JERK">Jerk E</label></th>
             <td><input name="E_JERK" id="E_JERK" step="1" value="-1" onblur="validateInput()" /></td>
             <td>Set the Jerk for the Extruder. -1 to use firmware default</td>
           </tr>
           <tr>
-            <td colspan="3" class="tdSection"><h4>Pattern:</h4></td>
+            <td colspan="3" class="section"><h4>Pattern</h4></td>
           </tr>
           <tr>
-            <td><label for="LIN_VERSION">Lin Advance Version:</label></td>
+            <th><label for="LIN_VERSION">Lin Advance Version</label></th>
             <td><select name="LIN_VERSION" id="LIN_VERSION">
               <option value="1.0">1.0</option>
               <option value="1.5" selected="selected">1.5</option>
@@ -176,7 +176,7 @@ category:     [ tools ]
             <td>Select version 1.0 for Marlin 1.1.8 and earlier. Select 1.5 for Marlin 1.1.9 / 2.0 and up</td>
           </tr>
           <tr>
-            <td><label for="TYPE_PATTERN">Pattern Type:</label></td>
+            <th><label for="TYPE_PATTERN">Pattern Type</label></th>
             <td><select name="TYPE_PATTERN" id="TYPE_PATTERN">
               <option value="std">Standard</option>
               <option value="alt">Alternate</option>
@@ -184,42 +184,42 @@ category:     [ tools ]
             <td>Select standard or alternate pattern</td>
           </tr>
           <tr>
-            <td><label for="K_START">Starting Value for K:</label></td>
+            <th><label for="K_START">Starting Value for K</label></th>
             <td><input name="K_START" id="K_START" step="any" value="0" onblur="validateInput()" /></td>
             <td id="start_factor">Starting value for the K-factor</td>
           </tr>
           <tr>
-            <td><label for="K_END">Ending Value for K:</label></td>
+            <th><label for="K_END">Ending Value for K</label></th>
             <td><input name="K_END" id="K_END" step="any" value="2" onblur="validateInput()" /></td>
             <td id="end_factor">Ending value of the K-factor</td>
           </tr>
           <tr>
-            <td><label for="K_STEP">K-factor Stepping:</label></td>
+            <th><label for="K_STEP">K-factor Stepping</label></th>
             <td><input name="K_STEP" id="K_STEP" step="any" value="0.2" onblur="validateInput()" /></td>
             <td id="step_factor">Stepping of the K-factor in the test pattern. Needs to be an exact divisor of the K-factor Range (End - Start)</td>
           </tr>
           <tr>
-            <td><label for="SLOW_LENGTH">Slow Speed Length:</label></td>
+            <th><label for="SLOW_LENGTH">Slow Speed Length</label></th>
             <td><input name="SLOW_LENGTH" id="SLOW_LENGTH" step="1" value="20" onblur="validateInput()" /></td>
             <td>Length of the Slow Speed test-line (mm)</td>
           </tr>
           <tr>
-            <td><label for="FAST_LENGTH">Fast Speed Length:</label></td>
+            <th><label for="FAST_LENGTH">Fast Speed Length</label></th>
             <td><input name="FAST_LENGTH" id="FAST_LENGTH" step="1" value="40" onblur="validateInput()" /></td>
             <td>Length of the Fast Speed test-line (mm)</td>
           </tr>
           <tr>
-            <td><label for="SPACE_LINE">Test Line Spacing:</label></td>
+            <th><label for="SPACE_LINE">Test Line Spacing</label></th>
             <td><input name="SPACE_LINE" id="SPACE_LINE" step="0.1" value="5" onblur="validateInput()" /></td>
             <td>Distance between the test lines. This will impact print size</td>
           </tr>
           <tr>
-            <td><label for="FRAME">Print Anchor Frame:</label></td>
+            <th><label for="FRAME">Print Anchor Frame</label></th>
             <td><input name="FRAME" type="checkbox" id="FRAME" /></td>
             <td>Adds a frame around the start and end points of the test lines. May improve adhesion</td>
           </tr>
           <tr>
-            <td><label for="DIR_PRINT">Printing Direction:</label></td>
+            <th><label for="DIR_PRINT">Printing Direction</label></th>
             <td><select name="DIR_PRINT" id="DIR_PRINT" onchange="validateInput()">
               <option value="0" selected="selected">Left to Right (0°)</option>
               <option value="45">45°</option>
@@ -233,25 +233,25 @@ category:     [ tools ]
             <td>Rotates the print in 45° steps</td>
           </tr>
           <tr>
-            <td><label for="LINE_NO">Line Numbering:</label></td>
+            <th><label for="LINE_NO">Line Numbering</label></th>
             <td><input name="LINE_NO" type="checkbox" id="LINE_NO" checked="checked" /></td>
             <td>Prints the K-value besides every second test line</td>
           </tr>
           <tr>
-            <td colspan="3" class="tdSection"><h4>Advanced:</h4></td>
+            <td colspan="3" class="section"><h4>Advanced</h4></td>
           </tr>
           <tr>
-            <td><label for="NOZ_LIN_R">Nozzle Line Ratio:</label></td>
+            <th><label for="NOZ_LIN_R">Nozzle Line Ratio</label></th>
             <td><input name="NOZ_LIN_R" id="NOZ_LIN_R" step="0.1" value="1.2" onblur="validateInput()" /></td>
             <td>Ratio between extruded line width and nozzle diameter. Should be between 1.05 and 1.2</td>
           </tr>
           <tr>
-            <td><label for="OFFSET_Z">Z-Offset:</label></td>
+            <th><label for="OFFSET_Z">Z-Offset</label></th>
             <td><input name="OFFSET_Z" id="OFFSET_Z" step="any" value="0" onblur="validateInput()" /></td>
             <td>Offset the Z-axis for manual Layer adjustment</td>
           </tr>
           <tr>
-            <td><label for="USE_BL">Use Bed Leveling:</label></td>
+            <th><label for="USE_BL">Use Bed Leveling</label></th>
             <td><select name="SELECT_BED_LEVELING" id="SELECT_BED_LEVELING" onchange="validateInput()">
               <option value="0" selected="selected">No</option>
               <option value="G29 ; Level bed">Level bed (G29)</option>
@@ -264,46 +264,46 @@ category:     [ tools ]
             <td>Level bed or load a saved mesh (i.e. for UBL) before printing. Bed leveling has to be activated in Configuration.h! Loading a mesh requires UBL to be activated!</td>
           </tr>
           <tr>
-            <td><label for="USE_FWR">Use FW Retract</label></td>
+            <th><label for="USE_FWR">Use FW Retract</label></th>
             <td><input type="checkbox" name="USE_FWR" id="USE_FWR" /></td>
             <td>Use Firmware Retract. Needs to be activated in Marlin</td>
           </tr>
           <tr>
-            <td><label for="EXTRUSION_MULT">Extrusion Multiplier:</label></td>
+            <th><label for="EXTRUSION_MULT">Extrusion Multiplier</label></th>
             <td><input name="EXTRUSION_MULT" id="EXTRUSION_MULT" step="0.1" value="1.0" onblur="validateInput()" /></td>
             <td>Usually 1.0</td>
           </tr>
           <tr>
-            <td><label for="PRIME">Prime Nozzle:</label></td>
+            <th><label for="PRIME">Prime Nozzle</label></th>
             <td><input name="PRIME" type="checkbox" id="PRIME" checked="checked" /></td>
             <td>Prime the nozzle before starting the test pattern</td>
           </tr>
           <tr>
-            <td><label for="PRIME_EXT">Prime Extrusion Multiplier:</label></td>
+            <th><label for="PRIME_EXT">Prime Extrusion Multiplier</label></th>
             <td><input name="PRIME_EXT" id="PRIME_EXT" step="0.1" value="2.5" onblur="validateInput()" /></td>
             <td>The default of 2.5 results in roughly 1mm of filament for 10mm line length</td>
           </tr>
           <tr>
-            <td height="24"><label for="PRIME_SPEED">Prime Printing Speed:</label></td>
+            <th height="24"><label for="PRIME_SPEED">Prime Printing Speed</label></th>
             <td><input name="PRIME_SPEED" id="PRIME_SPEED" step="any" value="30" onblur="validateInput()" /></td>
             <td>Speed of the prime move</td>
           </tr>
           <tr>
-            <td><label for="DWELL_PRIME">Dwell Time:</label></td>
+            <th><label for="DWELL_PRIME">Dwell Time</label></th>
             <td><input name="DWELL_PRIME" id="DWELL_PRIME" step="0.1" value="2" onblur="validateInput()" /></td>
             <td>Inserts a pause of x seconds before starting the test pattern to bleed off any residual nozzle pressure</td>
           </tr>
           <tr class="calibpat2">
-            <td><label for="FILENAME">Filename:</label></td>
+            <th><label for="FILENAME">Filename</label></th>
             <td colspan="2"><input name="FILENAME" id="FILENAME" value="filename" />
               <input name="button" type="button" id="button" onclick="genGcode()" value="Generate G-code" />
               <input name="button3" type="button" id="button3" onclick="setLocalStorage()" value="Save as default" title="Save settings in a cookie." />
             <p id="warning1" style="display: none;">warning</p>
             <p id="warning2" style="display: none;">warning</p>
             <p id="warning3" style="display: none;">warning</p></td>
-            <td><p>
-                <input name="button2" type="button" id="button2" onclick="saveTextAsFile()" value="Download as file" />
-              </p></td>
+            <td class="options"><p>
+              <input name="button2" type="button" id="button2" onclick="saveTextAsFile()" value="Download as file" />
+            </p></td>
           </tr>
         </tbody>
       </table>

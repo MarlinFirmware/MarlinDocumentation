@@ -96,7 +96,7 @@ function genGcode() {
       printDirRad = PRINT_DIR * Math.PI / 180,
       FIT_WIDTH = Math.abs(PRINT_SIZE_X * Math.cos(printDirRad)) + Math.abs(PRINT_SIZE_Y * Math.sin(printDirRad)),
       FIT_HEIGHT = Math.abs(PRINT_SIZE_X * Math.sin(printDirRad)) + Math.abs(PRINT_SIZE_Y * Math.cos(printDirRad)),
-      txtArea = document.getElementById('textarea');
+      gcodeOut = document.getElementById('gcode-out');
 
   var basicSettings = {
     'slow': SPEED_SLOW,
@@ -319,18 +319,18 @@ function genGcode() {
               'M501 ; Load settings from EEPROM\n' +
               ';';
 
-  txtArea.value = k_script;
+  gcodeOut.value = k_script;
 }
 
 // Save content of textarea to file using
 // https://github.com/eligrey/FileSaver.js
 function saveTextAsFile() {
-  var textToWrite = document.getElementById('textarea').value,
-      textFileAsBlob = new Blob([textToWrite], {type: 'text/plain'}),
+  var gcodeText = document.getElementById('gcode-out').value,
+      textFileAsBlob = new Blob([gcodeText], {type: 'text/plain'}),
       usersFilename = document.getElementById('FILENAME').value,
       filename = usersFilename || '',
       fileNameToSaveAs = filename + 'kfactor.gcode';
-  if (textToWrite) {
+  if (gcodeText) {
     saveAs(textFileAsBlob, fileNameToSaveAs);
   } else {
     alert('Generate G-code first');
@@ -954,10 +954,6 @@ function validateInput() {
 }
 
 $(window).load(() => {
-  // Adapt textarea to cell size
-  var TXTAREAHEIGHT = $('.txtareatd').height();
-  $('.calibpat textarea').css({'height': (TXTAREAHEIGHT) + 'px'});
-
   // create tab index dynamically
   $(':input:not(:hidden)').each(function(i) {
     $(this).attr('tabindex', i + 1);
@@ -1046,5 +1042,8 @@ $(window).load(() => {
 
   // Change retract type
   $('#USE_FWR').change(toggleRetract);
+
+  // Focus the first field
+  $('#kfactor input:first').focus();
 
 });
