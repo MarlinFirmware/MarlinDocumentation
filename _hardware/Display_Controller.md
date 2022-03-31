@@ -10,20 +10,20 @@ category: [ info, hardware, lcd  ]
 
 ### General information
 
-Marlin supports a wide variety of display controllers, from simple charater based displays, mono grpahics displays through to color displays.
+Marlin supports a wide variety of display controllers, from simple character based displays, mono graphics displays through to color displays.
 
 {:.pretty-list.headless}
-`Charater LCD`|The charater definitions are stored in ROM on the display controller. Some custom charaters are definable.
-`Mono graphics display`|Display is a bitmap. Pixels are indivitually set and cleared to form images and text.
-`Color graphical display`|Display is an array of data. Pixels are indivitually set and cleared to form images and text.
+`Character LCD`|The character definitions are stored in ROM on the display controller. Some custom characters are definable.
+`Mono graphics display`|Display is a bitmap. Pixels are individually set and cleared to form images and text.
+`Color graphical display`|Display is an array of data. Pixels are individually set and cleared to form images and text.
 `Smart display`|Displays that have their own controller and custom protocols.
-`Gcode hosts`|These are small computers with displays actinging as a host. These talk GCODE.
+`G-code hosts`|These are small computers with displays acting as a host. These talk GCODE.
 
 ### Character based LCDs
 
 
 ##### REPRAP_DISCOUNT_SMART_CONTROLLER
-One of the most common charater displays.
+One of the most common character displays.
 4×20 characters LCD panel
 SD Card reader
 Reset button
@@ -84,6 +84,6 @@ Displays like MKS_TS35_V2_0
 ### Smart display
 To come...
 Displays like E3V2
-### Gcode Hosts
+### G-code Hosts
 To come...
 Displays like BTT TFT
