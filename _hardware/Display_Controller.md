@@ -77,7 +77,14 @@ Combined rotary encoder and push button for menu control
 ##### RIGIDBOT_PANEL
 // http://www.inventapart.com/
 ##### MAKEBOARD_MINI_2_LINE_DISPLAY_1602
-// https://www.aliexpress.com/item/32765887917.html
+2×16 characters LCD panel
+Reset button
+SD Card reader
+Combined rotary encoder and push button for menu control
+
+<a href="/assets/images/hardware/Display_Controllers/MAKEBOARD_MINI_2_LINE_DISPLAY_front.jpg" ><img src="/assets/images/hardware/Display_Controllers/MAKEBOARD_MINI_2_LINE_DISPLAY_front_thumb.jpg"/></a>
+<a href="/assets/images/hardware/Display_Controllers/MAKEBOARD_MINI_2_LINE_DISPLAY_back.jpg" ><img src="/assets/images/hardware/Display_Controllers/MAKEBOARD_MINI_2_LINE_DISPLAY_back_thumb.jpg"/></a>
+
 ##### ZONESTAR_LCD
 ##### ULTRA_LCD
 ##### RA_CONTROL_PANEL
