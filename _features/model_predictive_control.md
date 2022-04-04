@@ -47,12 +47,12 @@ Configure with [`M306`](/docs/gcode/M306.html).
 
 1. Disable `PIDTEMP` and enable `MPCTEMP` in `Configuration.h`.
 1. Set your heater power(s) in `MPC_HEATER_POWER`.
-1. Install the firmware and run `M306 T` to tune the active hotend.
+1. Ensure `MPC_TUNING_POS` leaves space not to crash into the bed. (During tuning the printer will
+home and then position the hotend just above the bed.)
+1. Install the firmware and run `M306 T` to tune the active hotend. (Look out for cooled
+blobs on the nozzle to avoid a collision with the bed.)
 1. Save MPC constants with `M500` and/or set them in Configuration.h
 1. Set a hotend temperature to give it a test.
-
-Note that during `M306 T` the printer will home and then position the hotend just above the bed. Ensure
-`MPC_TUNING_POS` leaves space not to crash into the bed.
 
 Example output from `M306 T`:
 ```
