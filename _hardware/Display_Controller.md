@@ -59,7 +59,16 @@ Buzzer
 <a href="/assets/images/hardware/Display_Controllers/ULTIPANEL_back.jpg" ><img src="/assets/images/hardware/Display_Controllers/ULTIPANEL_back_thumb.jpg"/></a>
 
 ##### PANEL_ONE
-// https://reprap.org/wiki/PanelOne
+4×20 characters LCD panel
+SD Card reader
+Combined rotary encoder and push button for menu control
+Potentiometer for LCD contrast adjustment
+Potentiometer for LCD brightness adjustment
+
+<a href="/assets/images/hardware/Display_Controllers/PANELONE_front.jpg" ><img src="/assets/images/hardware/Display_Controllers/PANELONE_front_thumb.jpg"/></a>
+<a href="/assets/images/hardware/Display_Controllers/PANELONE_back.jpg" ><img src="/assets/images/hardware/Display_Controllers/PANELONE_back_thumb.jpg"/></a>
+
+
 ##### G3D_PANEL
 // https://reprap.org/wiki/RAMPS_1.3/1.4_GADGETS3D_Shield_with_Panel
 ##### RIGIDBOT_PANEL
