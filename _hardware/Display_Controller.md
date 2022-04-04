@@ -86,6 +86,12 @@ Combined rotary encoder and push button for menu control
 <a href="/assets/images/hardware/Display_Controllers/MAKEBOARD_MINI_2_LINE_DISPLAY_back.jpg" ><img src="/assets/images/hardware/Display_Controllers/MAKEBOARD_MINI_2_LINE_DISPLAY_back_thumb.jpg"/></a>
 
 ##### ZONESTAR_LCD
+4×20 characters LCD panel
+5 Menu buttons
+
+<a href="/assets/images/hardware/Display_Controllers/ZONESTAR_LCD_front.jpg" ><img src="/assets/images/hardware/Display_Controllers/ZONESTAR_LCD_front_thumb.jpg"/></a>
+<a href="/assets/images/hardware/Display_Controllers/ZONESTAR_LCD_back.jpg" ><img src="/assets/images/hardware/Display_Controllers/ZONESTAR_LCD_back_thumb.jpg"/></a>
+
 ##### ULTRA_LCD
 ##### RA_CONTROL_PANEL
 // http://www.elefu.com/index.php?route=product/product&product_id=53
