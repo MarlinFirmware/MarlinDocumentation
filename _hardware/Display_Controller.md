@@ -68,9 +68,12 @@ Potentiometer for LCD brightness adjustment
 <a href="/assets/images/hardware/Display_Controllers/PANELONE_front.jpg" ><img src="/assets/images/hardware/Display_Controllers/PANELONE_front_thumb.jpg"/></a>
 <a href="/assets/images/hardware/Display_Controllers/PANELONE_back.jpg" ><img src="/assets/images/hardware/Display_Controllers/PANELONE_back_thumb.jpg"/></a>
 
-
 ##### G3D_PANEL
-// https://reprap.org/wiki/RAMPS_1.3/1.4_GADGETS3D_Shield_with_Panel
+4×20 characters LCD panel
+Combined rotary encoder and push button for menu control
+
+<a href="/assets/images/hardware/Display_Controllers/G3DPANEL_front.jpg" ><img src="/assets/images/hardware/Display_Controllers/G3DPANEL_front_thumb.jpg"/></a>
+
 ##### RIGIDBOT_PANEL
 // http://www.inventapart.com/
 ##### MAKEBOARD_MINI_2_LINE_DISPLAY_1602
