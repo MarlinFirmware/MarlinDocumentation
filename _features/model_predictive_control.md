@@ -6,6 +6,13 @@ author: tombrazier
 category: [ features ]
 ---
 
+<script>
+MathJax = {
+  tex: {
+    tags: 'all'
+  },
+};
+</script>
 <script type="text/javascript" id="MathJax-script" async
   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
 </script>
@@ -20,9 +27,9 @@ from sensors which exhibit both latency and noise.
 Model predictive control takes a different approach to PID. Instead of trying to control against the sensor
 output, it maintains a simulation of the system and uses that to plan an optimal power output. The simulation
 has no noise and no latency, making near perfect control possible. To prevent the simulated sytem state diverging
-from the real life hotend state, the simulated state is continually gently dragged towards the temperature measure
-from the sensor. This does introduce a little noise and latency into the simulated system but the effect is
-far smaller than for PID.
+from the real life hotend state, the simulated temperature is continually gently dragged towards the temperature
+measure from the sensor. This does introduce a little noise and latency into the simulated system but the effect
+is far smaller than for PID.
 
 Configure with [`M306`](/docs/gcode/M306.html).
 
@@ -49,13 +56,11 @@ Note that during `M306 T` the printer will home and then position the hotend jus
 
 Example output from `M306 T`:
 ```
-Measuring MPC constants for E0
-Moving to tuning position
+MPC Autotune start for E0
 Cooling to ambient
-Heating to 200C
-Measuring ambient heatloss at target 209.64
-Measuring ambient heatloss with full fan
-Done
+Heating to over 200C
+Measuring ambient heatloss at 209.64
+MPC Autotune finished! Put the constants below into Configuration.h
 MPC_BLOCK_HEAT_CAPACITY 18.42
 MPC_SENSOR_RESPONSIVENESS 0.2176
 MPC_AMBIENT_XFER_COEFF 0.0664
@@ -70,14 +75,23 @@ MPC_AMBIENT_XFER_COEFF_FAN255 0.0998
 However some multi-hotend machines have only one fan. In these cases MPC needs to know whether the cooling fan
 cools all hotends simultatneously or whether it cools only the active hotend. Enable the appropriate option.
 
-`FILAMENT_HEAT_CAPACITY_PERMM`: MPC models heat loss from melting filament. Set the filament heat capcity here.
+`FILAMENT_HEAT_CAPACITY_PERMM`: MPC models heat loss from melting filament. Set the filament heat capacity here.
 
 `MPC_SMOOTHING_FACTOR`, `MPC_MIN_AMBIENT_CHANGE` and `MPC_STEADYSTATE`: These may be tweaked for stability. See
 the alogithm description for details.
 
+# Tweaking MPC
+
+The advanced configuration options may offer benefits to some users. However by far the most common reason
+for tweaking MPC is when there is a fixed offset between the set temperature and the actual temperature. The
+MPC algorithm will eliminate this offest over time, but the effect may return when parameters
+such as fan speed change. A fixed offset like this will be caused by `MPC_AMBIENT_XFER_COEFF`, `MPC_AMBIENT_XFER_COEFF_FAN255`
+and/or `FILAMENT_HEAT_CAPACITY_PERMM`. Slightly increasing these values will increase the temperature where MPC settles
+and slightly decreasing them will decrease the settling temperature.
+
 # The MPC algorithm used in Marlin
 
-MPC models the hotend system as four thermal masses: ambient air, filament, the heatblock and the sensor. Heater power
+MPC models the hotend system as four thermal masses: ambient air, the filament, the heatblock and the sensor. Heater power
 heats the modeled heatblock directly. Ambient air heats or cools the heatblock. Filament cools the heatblock. The heatblock
 heats or cools the sensor.
 
@@ -89,9 +103,9 @@ simulated hotend and sensor:
 - The effect of filament feedrate on heatloss to the filament. Filament is assumed to be at the same temperature
 as the ambient air.
 
-Once this calculation is complete the simulated sensor temperature is compared to the measured temperature and a
-fraction of the difference is applied to the modeled sensor and heatblock temperature. This drags the simulated
-system in the direction of the modeled system. Because only a fraction of the difference is applied, sensor noise
+Once this calculation is complete, the simulated sensor temperature is compared to the measured temperature and a
+fraction of the difference is added to the modeled sensor and heatblock temperatures. This drags the simulated
+system in the direction of the real system. Because only a fraction of the difference is applied, sensor noise
 is diminished and averages out to zero over time. Both the simulated and the real sensor exhibit the same (or very
 similar) latency. Consequently the effects of latency are eliminated when these values are compared to each other.
 So the simulated hotend is only minimally affected by sensor noise and latency. This is where the real magic of
@@ -108,10 +122,10 @@ is continually adjusted. Steady state is determined to be when the MPC algorithm
 (i.e. full or zero heater power) or when it is at its limit but temperatures are still not changing very much - which
 will occur at asymptotic temperature (usually when target temperature is zero and the hotend is at ambient).
 
-`MPC_STEADYSTATE` is used to recognise the asymptotic condition. If the simulated hotend temperature changes at an absolute
-rate less than `MPC_STEADYSTATE` over two successive runs of the algorithm, the steady state logic is applied. Since the
-algorithm runs frequently (6 times a second on an AVR mainboard), even a fairly smally amount of noise can make the short
-term rate of change in hotend temperature seem quite high. In practice 1°C/s seems to work well for `MPC_STEADYSTATE`.
+`MPC_STEADYSTATE` is used to recognise the asymptotic condition. Whenever the simulated hotend temperature changes at an absolute
+rate less than `MPC_STEADYSTATE` between two successive runs of the algorithm, the steady state logic is applied. Since the
+algorithm runs frequently (6 times a second on an AVR mainboard), even a smally amount of noise can result in a fairly high
+instantaneous rate of change of hotend temperature. In practice 1°C/s seems to work well for `MPC_STEADYSTATE`.
 
 When in steady state, the difference between real and simulated sensor temperatures is used to drive the changes
 to ambient temperature. However when the temperatures are really close `MPC_MIN_AMBIENT_CHANGE` ensures that the
@@ -120,14 +134,32 @@ in faster convergence but will also cause the simulated ambient temperature to f
 the ideal value. This is not a problem because the effect of ambient temperature is fairly small and short term
 variations of even 10°C or more will not have a noticeable effect.
 
-Finally, it is important to note that the simulated ambient temperature will only converge on real world ambient
+It is important to note that the simulated ambient temperature will only converge on real world ambient
 temperature if the ambient heat transfer coefficients are excactly accurate. In practice this will not be the case
 and the simulated ambient temperature therefore also acts a correction to these inaccuracies.
 
-# The MPC model in detail and tuning
+Finally, armed with a new set of temperatures, the MPC algorithm calculates how much power must be applied to
+get the hotend to target temperature in the next two seconds. This calulation takes into account the heat that
+is expected to be lost to ambient air and filament heating. This power value is then converted to a PWM output.
 
+# What `M306 T` does
+The tuning algorithm does the following with the active hotend:
+- Move to the center and close to bed: Printing occurs close to bed or printed model so tuning is done close
+a surface to best emulate the conditions whilts printing.
+- Cool to ambient: The tuning aglorithm needs to know the approximate abmient temperature. It switches part
+cooling fan on and waits until the temperature stops decreasing.
+- Heat past 200°C: Three temperature measurements are needed at a time after the initial latancies have taken
+effect. The tuning algorithm heats the hotend to over 200°C.
+- Hold temperature whilst measuring ambient heatloss: At this point enough is known for the MPC algorithm to
+engage. The tuning algorithm makes a best guess at the overshoot past 200°C which will occur and starts targets
+this temperature for about a minute whilst ambient heatloss is measured without (and optionally with) the fan.
+- Sets MPC up to use the measured constants and reports them for incorporation in `Configuration.h`.
 
-The model is not a physically accurate representation of the hotend system but it is good enough. Differences from
+If the algorithm fails or is interrupted with `M108` some or all of the MPC constants may be changed.
+
+# The model in detail and the tuning algorithm
+
+The simulated hotend model is not a physically accurate representation of the hotend system but it is good enough. Differences from
 real life include:
 - The real heating element is a separate thermal mass which is somewhat thermally insulated from the hearblock.
 - The real heatblock is cooled by the heatsink which slowly heats to some asymptotic temperature.
@@ -135,11 +167,11 @@ real life include:
 
 None of these effects is signficant enough to affect the fundtioning of MPC. So for the sake of simplicity and performance omitted.
 
-For those who like that sort of thing, the differential equations are:
+The model is governed by a very simple set of differential equations:
 
-$$ \dfrac{dT_b}{dt} = \dfrac{P + h_a (T_a - T_b)}{C_b} $$
+$$ \dfrac{dT_b}{dt} = \dfrac{P + h_a . (T_a - T_b)}{C_b} $$
 
-$$ \dfrac{dT_s}{dt} = \dfrac{h_a (T_b - T_s)}{C_s} $$
+$$ \dfrac{dT_s}{dt} = \dfrac{h_s . (T_b - T_s)}{C_s} $$
 
 where
 
@@ -147,28 +179,89 @@ $$T_b$$ = temperature of the heatblock.
 
 $$T_s$$ = temperature of the sensor.
 
-$$T_a$$ = temperature of the ambient air.
+$$T_a$$ = ambient temperature.
 
 $$t$$ = time.
 
 $$P$$ = heater power.
 
 $$h_a$$ = coefficient of heat transfer from heatblock to ambient. This one constant encapsulates the effect of
-fan speed and filament feedrate as both room air and filament are assumed to start at thea same ambient temperature.
+fan speed and filament feedrate and is calculated using `MPC_AMBIENT_XFER_COEFF`, `MPC_AMBIENT_XFER_COEFF_FAN255` and
+`FILAMENT_HEAT_CAPACITY_PERMM`. Both room air and unmelted filament are assumed to be at the same ambient temperature.
 
 $$h_s$$ = coefficient of heat transfer from heatblock to sensor.
 
-$$C_b$$ = heat capacity of the heatblock.
+$$C_b$$ = heat capacity of the heatblock (i.e. `MPC_BLOCK_HEAT_CAPACITY`).
 
 $$C_s$$ = heat capacity of the sensor.
 
-These differential equations are continually solved numerically by MPC. However they are also easy to solve
-analytically and the analytical solution is used by `M306 T`:
+Since $$h_s$$ and $$C_s$$ never appear independently, they are collapsed into a single the single constant represented by
+`MPC_SENSOR_RESPONSIVENESS` which has the value $$\dfrac{h_s}{C_s}$$.
 
-Tb = Tasymp + (Ta - Tasymp) . exp(
+These differential equations are continually solved numerically by MPC. There is also a simple analytical solution which
+is used by `M306 T`:
 
-# What `M306 T` does
-Move center and close to bed. Because printing occurs close to bed or model.
-Cool to ambient.
-Heat past 200C.
-Hold temperature whilst measuring ambient heatlos without (and optionally with) fan.
+$$ T_b = T_{asymp} + (T_a - T_{asymp}) . e ^ {(-\alpha_b . t)}$$
+
+$$ T_s = T_{asymp} + (T_a - T_{asymp}) . \dfrac{\alpha_s . e ^ {(-\alpha_b . t)} - \alpha_b . e ^ {(-\alpha_s . t)}}{\alpha_s - \alpha_b}$$
+
+where
+
+$$T_{asymp} = T_a + P / h_a$$ is the asymptotic temperature of the hotend.
+
+$$\alpha_b = h_a / C_b$$ is the "responsiveness" of the heatblock to ambient temperature.
+
+$$\alpha_s = h_s / C_s$$ is the "responsiveness" of the sensor to heatblock temperature (i.e. `MPC_SENSOR_RESPONSIVENESS`).
+
+and assuming $$T_s(0) = T_b(0) = T_a$$.
+
+In a real world system, $$\alpha_s \gg \alpha_b$$. So after the initial latency effects (which will generally
+be the case after $$T_s > 100$$) an excellent approximation of the second equation is
+
+$$ T_s \approx T_{asymp} + (T_a - T_{asymp}) . \dfrac{\alpha_s . e ^ {(-\alpha_b . t)}}{\alpha_s - \alpha_b} \label{approx} $$
+
+This makes it easy to measure $$T_{asymp}$$ and, consequently, $$\alpha_b$$ (leading to a measure of $$h_a$$ and $$C_b$$) and $$\alpha_s$$.
+
+For any $$\Delta t$$ the above equation gives
+
+$$\dfrac{T_s(t + \Delta t) - T_{asymp}}{T_s(t) - T_{asymp}} = e ^ {(-\alpha_b . \Delta t)} \label{eqdelta} $$
+
+By the same logic
+
+$$\dfrac{T_s(t + 2 \Delta t) - T_{asymp}}{T_s(t + \Delta t) - T_{asymp}} = e ^ {(-\alpha_b . \Delta t)} $$
+
+And so
+
+$$\dfrac{T_s(t + 2 \Delta t) - T_{asymp}}{T_s(t + \Delta t) - T_{asymp}} = \dfrac{T_s(t + \Delta t) - T_{asymp}}{T_s(t) - T_{asymp}}$$
+
+Rearranging:
+
+$$ T_s(t + 2 \Delta t) . T_s(t) - T_{asymp} . (T_s(t + 2 \Delta t) + T_s(t)) + T_{asymp}^2 = T_s(t + \Delta t) ^ 2 - T_{asymp} . 2 . T_s(t + \Delta t) + T_{asymp}^2 $$
+
+Or (subtracting $$T_{asymp}^2$$ from both sides):
+
+$$ T_s(t + 2 \Delta t) . T_s(t) - T_{asymp} . (T_s(t + 2 \Delta t) + T_s(t)) = T_s(t + \Delta t) ^ 2 - T_{asymp} . 2 . T_s(t + \Delta t) $$
+
+And:
+
+$$ T_{asymp} = \dfrac{T_s(t + \Delta t) ^ 2 - T_s(t + 2 \Delta t) . T_s(t)}{2 . T_s(t + \Delta t) - T_s(t + 2 \Delta t) - T_s(t)} $$
+
+Using the identity $$T_{asymp} = T_a + P / h_a$$:
+
+$$ h_a = \dfrac{P}{T_{asymp} - T_a} $$ 
+
+Equation $$\eqref{eqdelta}$$ also gives
+
+$$ \alpha_b = \dfrac{-ln(\dfrac{T_s(t + \Delta t) - T_{asymp}}{T_s(t) - T_{asymp}})}{\delta t} $$
+
+And using the identity $$\alpha_b = h_a / C_b$$:
+
+$$ C_b = \dfrac{h_a}{\alpha_b} $$
+
+And for any known $$T_s(t)$$ equation $$\eqref{approx}$$ can be solved to give
+
+$$ \alpha_s = \dfrac{\alpha_b . (T_s(t) - T_{asymp})}{T_s(t) - T_{asymp} - (T_a - T_{asymp}) . e^{-\alpha_b . t}} $$
+
+`M306 T` uses these equations to calculate values for `MPC_SENSOR_RESPONSIVENESS`, `MPC_AMBIENT_XFER_COEFF` and
+`MPC_BLOCK_HEAT_CAPACITY`. These values are then used to target a particular temperature whilst heat loss
+is measured to obtain `MPC_AMBIENT_XFER_COEFF_FAN255` and an even better estimate of `MPC_AMBIENT_XFER_COEFF`.
