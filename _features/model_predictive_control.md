@@ -73,16 +73,16 @@ MPC_AMBIENT_XFER_COEFF_FAN255 0.0998
 
 `MPC_FAN_0_ALL_HOTENDS` and `MPC_FAN_0_ACTIVE_HOTEND`: Marlin assumes fan _N_ cools parts printed by hotend _N_.
 However some multi-hotend machines have only one fan. In these cases MPC needs to know whether the cooling fan
-cools all hotends simultatneously or whether it cools only the active hotend. Enable the appropriate option.
+cools all hotends simultaneously or whether it cools only the active hotend. Enable the appropriate option.
 
 `FILAMENT_HEAT_CAPACITY_PERMM`: MPC models heat loss from melting filament. Set the filament heat capacity here.
 
 `MPC_SMOOTHING_FACTOR`, `MPC_MIN_AMBIENT_CHANGE` and `MPC_STEADYSTATE`: These may be tweaked for stability. See
-the alogithm description for details.
+the algorithm description for details.
 
 # Tweaking MPC
 
-The advanced configuration options may offer benefits to some users. However by far the most common reason
+The advanced configuration options may offer stability benefits to some users. However by far the most common reason
 for tweaking MPC is when there is a fixed offset between the set temperature and the actual temperature. The
 MPC algorithm will eliminate this offest over time, but the effect may return when parameters
 such as fan speed change. A fixed offset like this will be caused by `MPC_AMBIENT_XFER_COEFF`, `MPC_AMBIENT_XFER_COEFF_FAN255`
@@ -135,37 +135,39 @@ the ideal value. This is not a problem because the effect of ambient temperature
 variations of even 10°C or more will not have a noticeable effect.
 
 It is important to note that the simulated ambient temperature will only converge on real world ambient
-temperature if the ambient heat transfer coefficients are excactly accurate. In practice this will not be the case
+temperature if the ambient heat transfer coefficients are exactly accurate. In practice this will not be the case
 and the simulated ambient temperature therefore also acts a correction to these inaccuracies.
 
 Finally, armed with a new set of temperatures, the MPC algorithm calculates how much power must be applied to
-get the hotend to target temperature in the next two seconds. This calulation takes into account the heat that
+get the heatblock to target temperature in the next two seconds. This calulation takes into account the heat that
 is expected to be lost to ambient air and filament heating. This power value is then converted to a PWM output.
 
 # What `M306 T` does
 The tuning algorithm does the following with the active hotend:
-- Move to the center and close to bed: Printing occurs close to bed or printed model so tuning is done close
-a surface to best emulate the conditions whilts printing.
-- Cool to ambient: The tuning aglorithm needs to know the approximate abmient temperature. It switches part
+- Move to the center and close to bed: Printing occurs close to the bed or printed model so tuning is done close
+to a surface to best emulate the conditions whilst printing.
+- Cool to ambient: The tuning aglorithm needs to know the approximate ambient temperature. It switches the part
 cooling fan on and waits until the temperature stops decreasing.
 - Heat past 200°C: Three temperature measurements are needed at a time after the initial latancies have taken
 effect. The tuning algorithm heats the hotend to over 200°C.
 - Hold temperature whilst measuring ambient heatloss: At this point enough is known for the MPC algorithm to
-engage. The tuning algorithm makes a best guess at the overshoot past 200°C which will occur and starts targets
+engage. The tuning algorithm makes a best guess at the overshoot past 200°C which will occur and targets
 this temperature for about a minute whilst ambient heatloss is measured without (and optionally with) the fan.
-- Sets MPC up to use the measured constants and reports them for incorporation in `Configuration.h`.
+- Set MPC up to use the measured constants and report them for incorporation in `Configuration.h`.
 
-If the algorithm fails or is interrupted with `M108` some or all of the MPC constants may be changed.
+If the algorithm fails or is interrupted with `M108`, some or all of the MPC constants may be changed anyway and their values
+may not be reliable.
 
 # The model in detail and the tuning algorithm
 
 The simulated hotend model is not a physically accurate representation of the hotend system but it is good enough. Differences from
 real life include:
-- The real heating element is a separate thermal mass which is somewhat thermally insulated from the hearblock.
+- The real heating element is a separate thermal mass which is somewhat thermally insulated from the heatblock.
 - The real heatblock is cooled by the heatsink which slowly heats to some asymptotic temperature.
 - The real sensor heats/cools the heatblock to a tiny degree.
 
-None of these effects is signficant enough to affect the fundtioning of MPC. So for the sake of simplicity and performance omitted.
+None of these effects is signficant enough to affect the functioning of MPC. So for the sake of simplicity and
+performance they are ignored.
 
 The model is governed by a very simple set of differential equations:
 
@@ -262,6 +264,8 @@ And for any known $$T_s(t)$$ equation $$\eqref{approx}$$ can be solved to give
 
 $$ \alpha_s = \dfrac{\alpha_b . (T_s(t) - T_{asymp})}{T_s(t) - T_{asymp} - (T_a - T_{asymp}) . e^{-\alpha_b . t}} $$
 
-`M306 T` uses these equations to calculate values for `MPC_SENSOR_RESPONSIVENESS`, `MPC_AMBIENT_XFER_COEFF` and
+`M306 T` finds a $$t$$ and $$\Delta t$$ with known sensor values for $$T_s(t)$$, $$T_s(t + \Delta t)$$ and
+$$T_s(t + 2 \Delta t)$$. These are used with the equations above to calculate values for
+`MPC_SENSOR_RESPONSIVENESS`, `MPC_AMBIENT_XFER_COEFF` and
 `MPC_BLOCK_HEAT_CAPACITY`. These values are then used to target a particular temperature whilst heat loss
 is measured to obtain `MPC_AMBIENT_XFER_COEFF_FAN255` and an even better estimate of `MPC_AMBIENT_XFER_COEFF`.
