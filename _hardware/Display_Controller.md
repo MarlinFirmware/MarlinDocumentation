@@ -36,7 +36,6 @@ Buzzer
 
 ##### YHCB2004
 ##### RADDS_DISPLAY
-Display for a RADDS Controller.
 4×20 characters LCD panel
 SD Card reader
 Back button
@@ -50,6 +49,15 @@ Buzzer
 
 ##### ULTIMAKERCONTROLLER
 ##### ULTIPANEL
+4×20 characters LCD panel
+SD Card reader
+Combined rotary encoder and push button for menu control
+Potentiometer for LCD contrast adjustment
+Buzzer
+
+<a href="/assets/images/hardware/Display_Controllers/ULTIPANEL_front.jpg" ><img src="/assets/images/hardware/Display_Controllers/ULTIPANEL_front_thumb.jpg"/></a>
+<a href="/assets/images/hardware/Display_Controllers/ULTIPANEL_back.jpg" ><img src="/assets/images/hardware/Display_Controllers/ULTIPANEL_back_thumb.jpg"/></a>
+
 ##### PANEL_ONE
 // https://reprap.org/wiki/PanelOne
 ##### G3D_PANEL
