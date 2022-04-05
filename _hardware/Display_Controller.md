@@ -35,6 +35,14 @@ Buzzer
 
 
 ##### YHCB2004
+4×20 characters LCD panel
+Reset button
+Combined rotary encoder and push button for menu control
+Buzzer
+
+<a href="/assets/images/hardware/Display_Controllers/YHCB2004_front.jpg" ><img src="/assets/images/hardware/Display_Controllers/YHCB2004_front_thumb.jpg"/></a>
+<a href="/assets/images/hardware/Display_Controllers/YHCB2004_back.jpg" ><img src="/assets/images/hardware/Display_Controllers/YHCB2004_back_thumb.jpg"/></a>
+
 ##### RADDS_DISPLAY
 4×20 characters LCD panel
 SD Card reader
@@ -45,7 +53,6 @@ Potentiometer for LCD contrast adjustment
 Buzzer
 
 <a href="/assets/images/hardware/Display_Controllers/RADDS_front.jpg" ><img src="/assets/images/hardware/Display_Controllers/RADDS_front_thumb.jpg"/></a>
-
 
 ##### ULTIMAKERCONTROLLER
 ##### ULTIPANEL
