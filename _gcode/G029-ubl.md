@@ -34,6 +34,8 @@ notes: |
 
   - We know it takes a lot of effort to create good working Mesh data, so UBL stores its mesh data in a separate location where it won't be affected by EEPROM errors or version changes.
 
+  - For multi-axis machines (`NUM_AXES` greater than `3`) without implementation of inverse kinematics, bed leveling produces wrong results while the toolhead is not oriented vertical and perpendicular to the bed and must be turned off with `M420 S0`.
+
 parameters:
   -
     tag: A

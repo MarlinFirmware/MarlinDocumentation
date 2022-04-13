@@ -15,6 +15,7 @@ notes:
 - Similar to `AUTO_BED_LEVELING_BILINEAR` with `PROBE_MANUALLY` but uses less SRAM.
 - For automatic probe-based leveling enable one of the [`AUTO_BED_LEVELING_*`](/docs/configuration/configuration.html#bed-leveling) options instead.
 - "[`G28`](/docs/gcode/G028.html) disables bed leveling. Follow with `M420 S` to turn leveling on, or use `RESTORE_LEVELING_AFTER_G28` to automatically keep leveling on after [`G28`](/docs/gcode/G028.html)."
+- For multi-axis machines (`NUM_AXES` greater than `3`) without implementation of inverse kinematics, bed leveling produces wrong results while the toolhead is not oriented vertical and perpendicular to the bed and must be turned off with `M420 S0`.
 
 parameters:
 -
