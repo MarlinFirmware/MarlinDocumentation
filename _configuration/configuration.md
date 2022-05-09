@@ -166,72 +166,101 @@ This is the name of your printer as displayed on the LCD and by [`M115`](/docs/g
 ```
 A unique ID for your 3D printer. A suitable unique ID can be generated randomly at [uuidtools.com](//www.uuidtools.com/generate/v4). Some host programs and slicers may use this identifier to differentiate between specific machines on your network.
 
-### Axes
+### Stepper Drivers
 
 ```cpp
 /**
- * Define the number of coordinated axes.
- * See https://github.com/DerAndere1/Marlin/wiki
- * Each axis gets its own stepper control and endstop:
+ * Stepper Drivers
  *
- *   Steppers: *_STEP_PIN, *_ENABLE_PIN, *_DIR_PIN, *_ENABLE_ON
- *   Endstops: *_STOP_PIN, USE_*MIN_PLUG, USE_*MAX_PLUG
- *       Axes: *_MIN_POS, *_MAX_POS, INVERT_*_DIR
- *    Planner: DEFAULT_AXIS_STEPS_PER_UNIT, DEFAULT_MAX_FEEDRATE
- *             DEFAULT_MAX_ACCELERATION, AXIS_RELATIVE_MODES,
- *             MICROSTEP_MODES, MANUAL_FEEDRATE
+ * These settings allow Marlin to tune stepper driver timing and enable advanced options for
+ * stepper drivers that support them. You may also override timing options in Configuration_adv.h.
  *
- * :[3, 4, 5, 6, 7, 8, 9]
+ * Use TMC2208/TMC2208_STANDALONE for TMC2225 drivers and TMC2209/TMC2209_STANDALONE for TMC2226 drivers.
+ *
+ * Options: A4988, A5984, DRV8825, LV8729, L6470, L6474, POWERSTEP01,
+ *          TB6560, TB6600, TMC2100,
+ *          TMC2130, TMC2130_STANDALONE, TMC2160, TMC2160_STANDALONE,
+ *          TMC2208, TMC2208_STANDALONE, TMC2209, TMC2209_STANDALONE,
+ *          TMC26X,  TMC26X_STANDALONE,  TMC2660, TMC2660_STANDALONE,
+ *          TMC5130, TMC5130_STANDALONE, TMC5160, TMC5160_STANDALONE
+ * :['A4988', 'A5984', 'DRV8825', 'LV8729', 'L6470', 'L6474', 'POWERSTEP01', 'TB6560', 'TB6600', 'TMC2100', 'TMC2130', 'TMC2130_STANDALONE', 'TMC2160', 'TMC2160_STANDALONE', 'TMC2208', 'TMC2208_STANDALONE', 'TMC2209', 'TMC2209_STANDALONE', 'TMC26X', 'TMC26X_STANDALONE', 'TMC2660', 'TMC2660_STANDALONE', 'TMC5130', 'TMC5130_STANDALONE', 'TMC5160', 'TMC5160_STANDALONE']
  */
-//#define NUM_AXES 3
+#define X_DRIVER_TYPE  A4988
+#define Y_DRIVER_TYPE  A4988
+#define Z_DRIVER_TYPE  A4988
+//#define X2_DRIVER_TYPE A4988  // Requires X_DRIVER_TYPE
+//#define Y2_DRIVER_TYPE A4988  // Requires Y_DRIVER_TYPE
+//#define Z2_DRIVER_TYPE A4988  // Requires Z_DRIVER_TYPE
+//#define Z3_DRIVER_TYPE A4988  // Requires Z2_DRIVER_TYPE
+//#define Z4_DRIVER_TYPE A4988  // Requires Z3_DRIVER_TYPE
+//#define I_DRIVER_TYPE  A4988  // Requires Z_DRIVER_TYPE
+//#define J_DRIVER_TYPE  A4988  // Requires I_DRIVER_TYPE
+//#define K_DRIVER_TYPE  A4988  // Requires J_DRIVER_TYPE
+//#define U_DRIVER_TYPE  A4988  // Requires K_DRIVER_TYPE
+//#define V_DRIVER_TYPE  A4988  // Requires U_DRIVER_TYPE
+//#define W_DRIVER_TYPE  A4988  // Requires V_DRIVER_TYPE
+#define E0_DRIVER_TYPE A4988
+//#define E1_DRIVER_TYPE A4988  // Requires E0_DRIVER_TYPE
+//#define E2_DRIVER_TYPE A4988  // Requires E1_DRIVER_TYPE
+//#define E3_DRIVER_TYPE A4988  // Requires E2_DRIVER_TYPE
+//#define E4_DRIVER_TYPE A4988  // Requires E3_DRIVER_TYPE
+//#define E5_DRIVER_TYPE A4988  // Requires E4_DRIVER_TYPE
+//#define E6_DRIVER_TYPE A4988  // Requires E5_DRIVER_TYPE
+//#define E7_DRIVER_TYPE A4988  // Requires E6_DRIVER_TYPE
 ```
-This value, from 3 to 9, defines the number of axes (excluding extruders and duplicate axes X2, Y2, Z2, Z3, Z4)
+These settings allow Marlin to tune stepper driver timing and enable advanced options for stepper drivers that support them. 
+You may also override timing options in Configuration_adv.h. Each driver is associated with an axis (internal axis identifiers: 
+X, Y, Z, I, J, K, U, V, W) or an extruder (E0 to E7). 
+Each axis gets its own stepper control and endstops depending on the following settings:
+
+Steppers: *_STEP_PIN, *_ENABLE_PIN, *_DIR_PIN, *_ENABLE_ON
+Endstops: *_STOP_PIN, USE_*MIN_PLUG, USE_*MAX_PLUG
+Axes: *_MIN_POS, *_MAX_POS, INVERT_*_DIR
+Planner: DEFAULT_AXIS_STEPS_PER_UNIT, DEFAULT_MAX_FEEDRATE, DEFAULT_MAX_ACCELERATION, AXIS_RELATIVE_MODES, MICROSTEP_MODES, MANUAL_FEEDRATE
+For multi-axis-machines (option `I_DRIVER_TYPE` ... enabled), more information can be found at https://github.com/DerAndere1/Marlin/wiki.
+
+Use TMC2208/TMC2208_STANDALONE for TMC2225 drivers and TMC2209/TMC2209_STANDALONE for TMC2226 drivers.
 
 ### Additional Axis Settings
 
-```cpp
-/**
- * Define AXISn_ROTATES for all axes that rotate or pivot.
- * Rotational axis coordinates are expressed in degrees.
- *
- * AXISn_NAME defines the letter used to refer to the axis in (most) G-code commands.
- * By convention the names and roles are typically:
- *   'A' : Rotational axis parallel to X
- *   'B' : Rotational axis parallel to Y
- *   'C' : Rotational axis parallel to Z
- *   'U' : Secondary linear axis parallel to X
- *   'V' : Secondary linear axis parallel to Y
- *   'W' : Secondary linear axis parallel to Z
- *
- * Regardless of these settings the axes are internally named I, J, K, U, V, W.
- */
-#if NUM_AXES >= 4
+#ifdef I_DRIVER_TYPE
   #define AXIS4_NAME 'A' // :['A', 'B', 'C', 'U', 'V', 'W']
   #define AXIS4_ROTATES
 #endif
-#if NUM_AXES >= 5
+#ifdef J_DRIVER_TYPE
   #define AXIS5_NAME 'B' // :['B', 'C', 'U', 'V', 'W']
   #define AXIS5_ROTATES
 #endif
-#if NUM_AXES >= 6
+#ifdef K_DRIVER_TYPE
   #define AXIS6_NAME 'C' // :['C', 'U', 'V', 'W']
   #define AXIS6_ROTATES
 #endif
-#if NUM_AXES >= 7
+#ifdef U_DRIVER_TYPE
   #define AXIS7_NAME 'U' // :['U', 'V', 'W']
   //#define AXIS7_ROTATES
 #endif
-#if NUM_AXES >= 8
+#ifdef V_DRIVER_TYPE
   #define AXIS8_NAME 'V' // :['V', 'W']
   //#define AXIS8_ROTATES
 #endif
-#if NUM_AXES >= 9
+#ifdef W_DRIVER_TYPE
   #define AXIS9_NAME 'W' // :['W']
   //#define AXIS9_ROTATES
 #endif
 ```
-For axes with `AXISn_ROTATES` enabled, positions and displacememnts are given in units of angular degrees. Otherwise, positions and distances are given in length units (default: mm).
+Define `AXISn_ROTATES` for all axes that rotate or pivot.
+Rotational axis coordinates are expressed in degrees.
 
+`AXISn_NAME` defines the letter used to refer to the axis in (most) G-code commands.
+By convention the names and roles are typically:
+- 'A' : Rotational axis parallel to X
+- 'B' : Rotational axis parallel to Y
+- 'C' : Rotational axis parallel to Z
+- 'U' : Secondary linear axis parallel to X
+- 'V' : Secondary linear axis parallel to Y
+- 'W' : Secondary linear axis parallel to Z
+
+Regardless of these settings the axes are internally named I, J, K, U, V, W.
 
 ## Extruder Info
 
@@ -733,7 +762,7 @@ Enable for Polargraph Kinematics
 //#define FOAMCUTTER_XYUV
 ```
 Enable for a 4 axis hot wire foam cutter with paralell horizontal axes X, U where hights of the wire ends 
-are controlled by vertical axes Y, V. Requires `NUM_AXES 5`, `AXIS4_NAME 'U'` and `AXIS5_NAME 'V'`. The Z axis is unused.
+are controlled by vertical axes Y, V. Requires `I_DRIVER_TYPE`, J_DRIVER_TYPE, `AXIS4_NAME 'U'` and `AXIS5_NAME 'V'`. The Z axis is unused.
 The LASER features (see section "Spindle / Laser") can be used to control the heating element for the tool.
 
 ### Articulated robot
@@ -741,7 +770,7 @@ The LASER features (see section "Spindle / Laser") can be used to control the he
 ```cpp
 //#define ARTICULATED_ROBOT_ARM
 ```
-Enable for articulated robots or for machines with `NUM_AXES` greater than `3` where feed rate interpretation should be 
+Enable for articulated robots or for machines with `I_DRIVER_TYPE` defined, if feed rate interpretation should be 
 compatibile with firmwares (e.g. grblHAL/grblHAL, Duet-3D/RepRapFirmware, synthetos/g2) that behave different 
 from LinuxCNC. When enabled, feedrate `F` is defined as follows: Let `dX`, `dY`, ... be displacements along the 
 X, Y, ... axes. Let `T` be the time required for the move at the specified nominal feedrate. 
@@ -866,34 +895,6 @@ By default all endstops have pulldown resistors disabled.
 #define Z_MIN_PROBE_ENDSTOP_INVERTING false // set to true to invert the logic of the endstop.
 ```
 Use [`M119`](/docs/gcode/M119.html) to test if these are set correctly. If an endstop shows up as "TRIGGERED" when not pressed, and "open" when pressed, then it should be inverted here.
-
-### Stepper Drivers
-
-```cpp
-#define X_DRIVER_TYPE  A4988
-#define Y_DRIVER_TYPE  A4988
-#define Z_DRIVER_TYPE  A4988
-//#define X2_DRIVER_TYPE A4988
-//#define Y2_DRIVER_TYPE A4988
-//#define Z2_DRIVER_TYPE A4988
-//#define Z3_DRIVER_TYPE A4988
-//#define Z4_DRIVER_TYPE A4988
-//#define I_DRIVER_TYPE  A4988
-//#define J_DRIVER_TYPE  A4988
-//#define K_DRIVER_TYPE  A4988
-//#define U_DRIVER_TYPE  A4988
-//#define V_DRIVER_TYPE  A4988
-//#define W_DRIVER_TYPE  A4988
-#define E0_DRIVER_TYPE A4988
-//#define E1_DRIVER_TYPE A4988
-//#define E2_DRIVER_TYPE A4988
-//#define E3_DRIVER_TYPE A4988
-//#define E4_DRIVER_TYPE A4988
-//#define E5_DRIVER_TYPE A4988
-//#define E6_DRIVER_TYPE A4988
-//#define E7_DRIVER_TYPE A4988
-```
-These settings allow Marlin to tune stepper driver timing and enable advanced options for stepper drivers that support them. You may also override timing options in Configuration_adv.h.
 
 ### Endstop Interrupts
 
@@ -3663,7 +3664,7 @@ This option adds [`G10`](/docs/gcode/G010.html)/[`G11`](/docs/gcode/G011.html) c
 
   /**
    * Extra G-code to run while executing tool-change commands. Can be used to use an additional
-   * stepper motor (I axis, see option NUM_AXES in Configuration.h) to drive the tool-changer.
+   * stepper driver (I_DRIVER_TYPE) in Configuration.h) to drive the tool-changer.
    */
   //#define EVENT_GCODE_TOOLCHANGE_T0 "G28 A\nG1 A0" // Extra G-code to run while executing tool-change command T0
   //#define EVENT_GCODE_TOOLCHANGE_T1 "G1 A10"       // Extra G-code to run while executing tool-change command T1
