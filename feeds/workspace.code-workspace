@@ -1,0 +1,64 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "..\\assets"
+		},
+		{
+			"path": "..\\_tools"
+		},
+		{
+			"path": "..\\_tmp"
+		},
+		{
+			"path": "..\\_setting"
+		},
+		{
+			"path": "..\\_sass"
+		},
+		{
+			"path": "..\\_plugins"
+		},
+		{
+			"path": "..\\_meta"
+		},
+		{
+			"path": "..\\_layouts"
+		},
+		{
+			"path": "..\\_includes"
+		},
+		{
+			"path": "..\\_hardware"
+		},
+		{
+			"path": "..\\_gcode"
+		},
+		{
+			"path": "..\\_features"
+		},
+		{
+			"path": "..\\_development"
+		},
+		{
+			"path": "..\\_data"
+		},
+		{
+			"path": "..\\_configuration"
+		},
+		{
+			"path": "..\\_basics"
+		},
+		{
+			"path": "..\\.vscode"
+		},
+		{
+			"path": "..\\.github"
+		},
+		{
+			"path": "..\\.git"
+		}
+	]
+}
