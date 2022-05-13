@@ -3,7 +3,13 @@
     "ignorePaths": [],
     "dictionaryDefinitions": [],
     "dictionaries": [],
-    "words": [],
+    "words": [
+        "Plaform",
+        "platformio",
+        "shitcreek",
+        "thinkyhead",
+        "traceback"
+    ],
     "ignoreWords": [],
     "import": []
 }
