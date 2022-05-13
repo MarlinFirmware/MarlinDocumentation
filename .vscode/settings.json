@@ -3,6 +3,7 @@
         "Plaform",
         "platformio",
         "shitcreek",
-        "thinkyhead"
+        "thinkyhead",
+        "traceback",
     ]
 }
