@@ -25,7 +25,8 @@ information, it could, in principle, apply perfect control. However real life te
 from sensors which exhibit both latency and noise.
 
 Model predictive control takes a different approach to PID. Instead of trying to control against the sensor
-output, it maintains a simulation of the system and uses that to plan an optimal power output. The simulation
+output, it maintains a simulation of the system and uses the simulated hotend temperature to plan an optimal
+power output. The simulation
 has no noise and no latency, making near perfect control possible. To prevent the simulated sytem state diverging
 from the real life hotend state, the simulated temperature is continually gently dragged towards the temperature
 measure from the sensor. This does introduce a little noise and latency into the simulated system but the effect
@@ -39,6 +40,7 @@ Configure with [`M306`](/docs/gcode/M306.html).
 - Easy to configure.
 - Stable.
 - Responsive.
+- Controls the actual hotend temperaure, rather than the sensor temperature.
 - Easily models heat losses to part cooling fan and filament. No need for `PID_EXTRUSION_SCALING` and `PID_FAN_SCALING`.
 
 <br>
@@ -47,11 +49,11 @@ Configure with [`M306`](/docs/gcode/M306.html).
 
 1. Disable `PIDTEMP` and enable `MPCTEMP` in `Configuration.h`.
 1. Set your heater power(s) in `MPC_HEATER_POWER`.
-1. Ensure `MPC_TUNING_POS` leaves space not to crash into the bed. (During tuning the printer will
-home and then position the hotend just above the bed.)
+1. Ensure `MPC_TUNING_POS` leaves space not to crash into the bed. During tuning the printer will
+home and then position the hotend just above the bed. The ideal Z position is around first layer height.
 1. Install the firmware and run `M306 T` to tune the active hotend. (Look out for cooled
 blobs on the nozzle to avoid a collision with the bed.)
-1. Save MPC constants with `M500` and/or set them in Configuration.h
+1. Save MPC constants with `M500` and/or set them in Configuration.h.
 1. Set a hotend temperature to give it a test.
 
 Example output from `M306 T`:
@@ -84,7 +86,7 @@ the algorithm description for details.
 
 The advanced configuration options may offer stability benefits to some users. However by far the most common reason
 for tweaking MPC is when there is a fixed offset between the set temperature and the actual temperature. The
-MPC algorithm will eliminate this offest over time, but the effect may return when parameters
+MPC algorithm will eliminate this offset over time, but the effect may return when parameters
 such as fan speed change. A fixed offset like this will be caused by `MPC_AMBIENT_XFER_COEFF`, `MPC_AMBIENT_XFER_COEFF_FAN255`
 and/or `FILAMENT_HEAT_CAPACITY_PERMM`. Slightly increasing these values will increase the temperature where MPC settles
 and slightly decreasing them will decrease the settling temperature.
@@ -109,7 +111,7 @@ system in the direction of the real system. Because only a fraction of the diffe
 is diminished and averages out to zero over time. Both the simulated and the real sensor exhibit the same (or very
 similar) latency. Consequently the effects of latency are eliminated when these values are compared to each other.
 So the simulated hotend is only minimally affected by sensor noise and latency. This is where the real magic of
-the MPC algorithm lies.
+this MPC implementation lies.
 
 `MPC_SMOOTHING_FACTOR` is the factor applied to the difference between simulated and measured sensor temperature.
 At its maximum value of 1, the simulated sensor temperature is continually set equal to the measured sensor temperature.
@@ -124,7 +126,7 @@ will occur at asymptotic temperature (usually when target temperature is zero an
 
 `MPC_STEADYSTATE` is used to recognise the asymptotic condition. Whenever the simulated hotend temperature changes at an absolute
 rate less than `MPC_STEADYSTATE` between two successive runs of the algorithm, the steady state logic is applied. Since the
-algorithm runs frequently (6 times a second on an AVR mainboard), even a smally amount of noise can result in a fairly high
+algorithm runs frequently (6 times a second on an AVR mainboard), even a small amount of noise can result in a fairly high
 instantaneous rate of change of hotend temperature. In practice 1°C/s seems to work well for `MPC_STEADYSTATE`.
 
 When in steady state, the difference between real and simulated sensor temperatures is used to drive the changes
@@ -254,7 +256,7 @@ $$ h_a = \dfrac{P}{T_{asymp} - T_a} $$
 
 Equation $$\eqref{eqdelta}$$ also gives
 
-$$ \alpha_b = \dfrac{-ln(\dfrac{T_s(t + \Delta t) - T_{asymp}}{T_s(t) - T_{asymp}})}{\delta t} $$
+$$ \alpha_b = \dfrac{-ln(\dfrac{T_s(t + \Delta t) - T_{asymp}}{T_s(t) - T_{asymp}})}{\Delta t} $$
 
 And using the identity $$\alpha_b = h_a / C_b$$:
 
