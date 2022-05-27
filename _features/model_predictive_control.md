@@ -1,6 +1,6 @@
 ---
-title:        Model Predictive Temperature Control
-description:  Control temperatures using a physical model of the system
+title: Model Predictive Temperature Control
+description: Control temperatures using a physical model of the system
 
 author: tombrazier
 category: [ features ]
@@ -34,7 +34,7 @@ is far smaller than for PID.
 
 Configure with [`M306`](/docs/gcode/M306.html).
 
-<br>
+<br/>
 # Advantages
 
 - Easy to configure.
@@ -43,7 +43,7 @@ Configure with [`M306`](/docs/gcode/M306.html).
 - Controls the actual hotend temperaure, rather than the sensor temperature.
 - Easily models heat losses to part cooling fan and filament. No need for `PID_EXTRUSION_SCALING` and `PID_FAN_SCALING`.
 
-<br>
+<br/>
 
 # Configuration
 
@@ -225,7 +225,7 @@ be the case after $$T_s > 100$$) an excellent approximation of the second equati
 $$ T_s \approx T_{asymp} + (T_a - T_{asymp}) . \dfrac{\alpha_s . e ^ {(-\alpha_b . t)}}{\alpha_s - \alpha_b} \label{approx} $$
 
 This makes it easy to measure $$T_{asymp}$$ and, consequently, $$\alpha_b$$ (leading to a measure of $$h_a$$ and $$C_b$$) and $$\alpha_s$$.
-
+<br/>
 For any $$\Delta t$$ the above equation gives
 
 $$\dfrac{T_s(t + \Delta t) - T_{asymp}}{T_s(t) - T_{asymp}} = e ^ {(-\alpha_b . \Delta t)} \label{eqdelta} $$
