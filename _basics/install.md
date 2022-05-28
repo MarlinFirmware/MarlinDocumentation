@@ -18,11 +18,15 @@ Marlin only needs to be re-flashed when fixed settings are changed in the config
 Start by downloading the Marlin source code. There are a few [codebases](//en.wikipedia.org/wiki/Codebase) to choose from.
 
 ----|-----------
-[Download 2.0.x](//github.com/MarlinFirmware/Marlin/archive/2.0.x.zip)|Current release
-[Download 1.1.x](//github.com/MarlinFirmware/Marlin/archive/1.1.x.zip)|Previous release
-[Download 1.0.x](//github.com/MarlinFirmware/Marlin/archive/1.0.x.zip)|Older release
+[Download 2.1](//github.com/MarlinFirmware/Marlin/archive/2.1.zip)|Current release
+[Download 2.1.x](//github.com/MarlinFirmware/Marlin/archive/2.1.x.zip)|Current release, patched
+[Download bugfix-2.1.x](//github.com/MarlinFirmware/Marlin/archive/bugfix-2.1.x.zip)|"Nightly" build for Marlin 2.1.x _Proceed with Caution!_
+[Download 2.0.9.4](//github.com/MarlinFirmware/Marlin/archive/2.0.9.4.zip)|Previous release
+[Download 2.0.x](//github.com/MarlinFirmware/Marlin/archive/2.0.x.zip)|Previous release, patched
+[Download bugfix-2.0.x](//github.com/MarlinFirmware/Marlin/archive/bugfix-2.0.x.zip)|"Nightly" build for Marlin 2.0.x _Proceed with Caution!_
+[Download 1.1.x](//github.com/MarlinFirmware/Marlin/archive/1.1.x.zip)|Legacy Marlin 1.1
 [Download bugfix-1.1.x](//github.com/MarlinFirmware/Marlin/archive/bugfix-1.1.x.zip)|"Nightly" build. _Proceed with Caution!_
-[Download bugfix-2.0.x](//github.com/MarlinFirmware/Marlin/archive/bugfix-2.0.x.zip)|"Nightly" build. _Proceed with Caution!_
+[Download 1.0.x](//github.com/MarlinFirmware/Marlin/archive/1.0.x.zip)|Legacy Marlin 1.0
 
 {% alert warning %}
 - Marlin 1.0 **does not support PlatformIO**. For older versions of Marlin use Arduino IDE.
@@ -42,12 +46,12 @@ Marlin Version|Platform(s)|Instructions
 --------------|-----------|----
 1.1.x or 2.x|8-bit AVR|[Install Marlin with Arduino IDE](install_arduino.html)
 1.1.9 or 2.x|8-bit AVR, 32-bit ARM|[Install Marlin with PlatformIO](install_platformio.html)
-2.0|LPC1768 (Re-Arm)|[Install Marlin on Re-ARM](install_rearm.html)
+2.x|LPC1768 (Re-Arm)|[Install Marlin on Re-ARM](install_rearm.html)
 
 {% alert info %}
 Looking for Example Configurations for your machine?
 - Marlin 1.1.x : Included in the '`example_configurations`' folder.
-- Marlin 2.0.x : [Hosted separately](//github.com/MarlinFirmware/Configurations). Links on the [Downloads](/meta/download/) page.
+- Marlin 2.x.x : [Hosted separately](//github.com/MarlinFirmware/Configurations). Links on the [Downloads](/meta/download/) page.
 {% endalert %}
 
 ### Troubleshooting

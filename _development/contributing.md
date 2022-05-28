@@ -24,7 +24,7 @@ The core Marlin team consists of a few maintainers who review contributions, dis
 ### Submit code
 If you know C or C++ and can help to patch bugs, fix typos, or just add helpful comments, we welcome your expertise. See "[Contributing Code with Pull Requests](/docs/development/getting_started_pull_requests.html)" to find out how to submit code.
 
-- Submit **Bug Fixes** and **New Features** as Pull Requests to the ([bugfix-2.0.x](//github.com/MarlinFirmware/Marlin/tree/bugfix-2.0.x)) branch.
+- Submit **Bug Fixes** and **New Features** as Pull Requests to the ([bugfix-2.1.x](//github.com/MarlinFirmware/Marlin/tree/bugfix-2.1.x)) branch.
 - Follow the [Coding Standards](/docs/development/coding_standards.html) to gain points with the maintainers.
 
 ### Do Some Testing

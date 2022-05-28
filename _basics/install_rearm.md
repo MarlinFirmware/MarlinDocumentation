@@ -48,15 +48,15 @@ See [Installing Marlin (PlatformIO)](install_platformio.html)
 This method is recommended because it is relatively easy and closely parallels this document.
 
 
-## Download Marlin 2.0
+## Download Marlin 2.1
 
-1. Download [Marlin 2.0](//github.com/MarlinFirmware/Marlin/archive/2.0.x.zip) which includes support for ARM-based boards.
+1. Download [Marlin 2.1](//github.com/MarlinFirmware/Marlin/archive/2.1.x.zip) which includes support for ARM-based boards.
 
-2. Move the `2.0.x.zip` file to your "Documents" folder (or wherever you prefer) and expand the ZIP archive as you usually do.
+2. Move the `2.1.x.zip` file to your "Documents" folder (or wherever you prefer) and expand the ZIP archive as you usually do.
 
 3. Rename the folder to "`MarlinFirmware`" so we're all on the same page here.
 
-_Pro Tip: If you're using **GitHub Desktop** to manage your own Marlin fork, simply select the `2.0.x` branch to check it out._
+_Pro Tip: If you're using **GitHub Desktop** to manage your own Marlin fork, simply select the `2.1.x` branch to check it out._
 
 ## Open Marlin in PlatformIO IDE
 

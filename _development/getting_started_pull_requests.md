@@ -53,7 +53,7 @@ Type in the new title and click `Save`.
 
 ### Change the Default Branch
 
-At this time we're using the `bugfix-2.0.x` branch to patch bugs for the next minor release, and we'll create a new branch for the next major release as we develop a plan. We recommend you change the "Default Branch" in your fork to `bugfix-2.0.x` to make it easier to do Pull Requests later.
+At this time we're using the `bugfix-2.1.x` branch to patch bugs for the next minor release, and we'll create a new branch for the next major release as we develop a plan. We recommend you change the "Default Branch" in your fork to `bugfix-2.1.x` to make it easier to do Pull Requests later.
 
 Click on the **branches** tab to view all branches in your fork.
 
@@ -63,7 +63,7 @@ Click on the **Change default branch** button.
 
 ![image9]({{ 'pull_9.jpg' | prepend: site.pull_img }})
 
-Click on the branch dropdown button. Select `bugfix-2.0.x` and click **Update**.
+Click on the branch dropdown button. Select `bugfix-2.1.x` and click **Update**.
 
 ![image10]({{ 'pull_10.jpg' | prepend: site.pull_img }})
 
@@ -113,7 +113,7 @@ A Windows Explorer window appears. Open the `Marlin` directory and then open the
 
 ![image20]({{ 'pull_20.jpg' | prepend: site.pull_img }})
 
-Scroll down until the `#define SHORT_BUILD_VERSION` is visible. The text should be "`bugfix-2.0.x`."
+Scroll down until the `#define SHORT_BUILD_VERSION` is visible. The text should be "`bugfix-2.1.x`."
 
 ![image21]({{ 'pull_21.jpg' | prepend: site.pull_img }})
 
@@ -123,7 +123,7 @@ If you downloaded the wrong branch, go back to the GitHub website, select the co
 
 ### Make a feature branch
 
-It's a good idea to keep an unaltered copy of the `bugfix-2.0.x` branch that you keep in sync with the main repository. Before editing any code you should make a copy of `bugfix-2.0.x` and give the new branch a descriptive name.
+It's a good idea to keep an unaltered copy of the `bugfix-2.1.x` branch that you keep in sync with the main repository. Before editing any code you should make a copy of `bugfix-2.1.x` and give the new branch a descriptive name.
 
 ![image22]({{ 'pull_22.jpg' | prepend: site.pull_img }})
 
@@ -174,7 +174,7 @@ Before submitting the Pull Request:
 
 #### Submit from GitHub Desktop
 
-You can use GitHub Desktop to submit a Pull Request by using the **Pull Request** button, but you must be careful to _**specifically target the `MarlinFirmware/bugfix-2.0.x` branch!**_
+You can use GitHub Desktop to submit a Pull Request by using the **Pull Request** button, but you must be careful to _**specifically target the `MarlinFirmware/bugfix-2.1.x` branch!**_
 
 #### Submit from the GitHub website
 
@@ -182,11 +182,11 @@ Return to your fork's page on GitHub, select your updated branch, and click the 
 
 ![image29]({{ 'pull_29.jpg' | prepend: site.pull_img }})
 
-GitHub should automatically detect the target for the Pull Request as `bugfix-2.0.x` in the main `MarlinFirmware` project. However, you may instead see a page like the one below. In that case, click the **Compare across forks** button:
+GitHub should automatically detect the target for the Pull Request as `bugfix-2.1.x` in the main `MarlinFirmware` project. However, you may instead see a page like the one below. In that case, click the **Compare across forks** button:
 
 ![image30]({{ 'pull_30.jpg' | prepend: site.pull_img }})
 
-To target the `bugfix-2.0.x` branch in the main Marlin repository, click the **base** button and select `bugfix-2.0.x`. (For new features you should instead use `dev-2.1.x`.)
+To target the `bugfix-2.1.x` branch in the main Marlin repository, click the **base** button and select `bugfix-2.1.x`. (For new features you should instead use `dev-2.1.x`.)
 
 ![image31]({{ 'pull_31.jpg' | prepend: site.pull_img }})
 
@@ -306,7 +306,7 @@ Type `git remote –v` into the Git Shell and press return to execute the comman
 
 If the `upstream` remote is missing then type `git remote add upstream https://github.com/MarlinFirmware/Marlin.git` followed by return.
 
-Next type `git fetch upstream` followed by `git rebase upstream/bugfix-2.0.x`. If the rebase succeeds the output will look like this:
+Next type `git fetch upstream` followed by `git rebase upstream/bugfix-2.1.x`. If the rebase succeeds the output will look like this:
 
 ![image46]({{ 'pull_46.jpg' | prepend: site.pull_img }})
 
@@ -320,7 +320,7 @@ Git marks conflicts within the file and then writes the modified file to the dir
 
 Open the modified file (the file name didn't change but the timestamp did) and search for `<<<<<<< HEAD`. This marks the beginning of the code that could be newer than what you started with. The `=======` marks the boundary between the newer code and the original code in your file. The `>>>>>>>` line marks the end of the conflicting code. In this example, "`#endif in wrong place`" is the title of the commit that GIT couldn't automatically handle.
 
-Resolving conflicts is a bit of an art, and it may take some practice to start getting a feel for what's going on. Often it may be helpful to consult the copy you made just before opening the Git Shell. It may help to keep the latest `bugfix-2.0.x` on GitHub open in the browser as a reference on what to keep and what to change.
+Resolving conflicts is a bit of an art, and it may take some practice to start getting a feel for what's going on. Often it may be helpful to consult the copy you made just before opening the Git Shell. It may help to keep the latest `bugfix-2.1.x` on GitHub open in the browser as a reference on what to keep and what to change.
 
 ![image48]({{ 'pull_48.jpg' | prepend: site.pull_img }})
 
@@ -336,7 +336,7 @@ If you couldn't address all the files then you can abort the process with: `git 
 
 If all the files have been addressed then enter this into the Git Shell: `git rebase –continue`
 
-The next step is to "squash" the commits using an interactive rebase. This allows you to easily combine commits together. To start the process enter the command: `git rebase -i upstream/bugfix-2.0.x`.
+The next step is to "squash" the commits using an interactive rebase. This allows you to easily combine commits together. To start the process enter the command: `git rebase -i upstream/bugfix-2.1.x`.
 
 Assuming there are no conflicts, an editor window should open with a list of your commits. Each line begins with the action you want performed, which is `pick` by default. You may see extra commits if the main code base has been updated, so make sure the commits are all yours. Change the action to `drop` for any commits you don't want to keep. Your first commit should be left as `pick` (or `reword` if you want to change the commit message). Set the action to `fixup` (or just `f`) for any commits you want to combine with the `pick` commit that precedes it.
 
