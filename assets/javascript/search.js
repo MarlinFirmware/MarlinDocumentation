@@ -236,7 +236,7 @@ var jekyllSearch = (function(){
         extra_tags += '<span class="label label-default"><i class="fa fa-tags" aria-hidden="true"></i>' + item.group + '</span>';
       if (item.requires !== undefined)
         $.each(item.requires.split(","), function() {
-          extra_tags += '<span class="label label-requires"><code>' + this + '</code></span>';
+          extra_tags += '<span class="label label-requires">' + this + '</span>';
         });
       html = self.injectContent(html, extra_tags, '##CustomHTML##');
       var c = item.class ? item.class : '';
