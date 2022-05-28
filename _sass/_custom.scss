@@ -157,14 +157,14 @@
   --color-danger-code: #F00;
   --color-danger-code-bg: #C228;
   --color-required: #FF0;
-  --color-table-striped-bg: #CCC;
   --color-tagline: #111;
   --color-tagline-bg: #FFF;
   --color-tagline-header: #00F;
   --color-tagline-id: cadetblue;
   --color-tagline-btn: #FFF;
-  --color-table: #FFF;
-  --color-table-bg: #DDD;
+  --color-table-header: #FFF;
+  --color-table-header-bg: #000;
+  --color-table-striped-bg: #CCC;
 }
 
 /* Variable declaration for dark mode */
@@ -320,15 +320,14 @@
   --color-lcd-code-bg: #F9F2F4;
   --color-list-group-item-border: #222;
   --color-list-group-item-bg: #444;
-  --color-table-striped-bg: #333;
   --color-tagline: #EEE;
   --color-tagline-bg: #000;
   --color-tagline-header: #DDF;
   --color-tagline-id: cadetblue;
   --color-tagline-btn: #FFF;
-  --color-table: #FFF;
-  --color-table-bg: #DDD;
-  --color-table-border: #888;
+  --color-table-header: #000;
+  --color-table-header-bg: #CCC;
+  --color-table-striped-bg: #333;
 }
 body{ background: var(--color-background); color: var(--color-color); }
 h3, h4, h5, h6 { background: var(--color-header-bg); color: var(--color-header);}
@@ -756,7 +755,8 @@ img.floater.framed { border: 4px solid #000; }
   }
 
   .table>thead>tr>th {
-    background-color: #DDD;
+    color: var(--color-table-header);
+    background-color: var(--color-table-header-bg);
     border-bottom: 1px solid #888;
   }
   .row, .item { margin-bottom: 0.5em; }
