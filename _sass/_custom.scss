@@ -335,6 +335,7 @@ h1+h2 { color: #BBC; }
 a, a:hover { color: var(--color-link); }
 
 code { color: var(--color-code); background-color: var(--color-code-bg); }
+pre { background-color: var(--color-pre-bg); }
 pre, pre>code { color: var(--color-pre); }
 pre.highlight{ background-color: var(--color-highlight-bg); }
 
