@@ -1,5 +1,6 @@
 ---
 title:       Download
+regenerate: true
 description: Download the latest Marlin source code
 category:    [ default ]
 
@@ -51,7 +52,8 @@ footer: |
           <em>{{ release.tools }}<em>
         </td>
         <td><code>{{ release.version }}</code></td>
-        <td><a href="//github.com/MarlinFirmware/Marlin/archive/{{ release.file }}">{{ release.file }}</a></td>
+        <td><a href="//github.com/MarlinFirmware/Marlin/archive/{{ release.file }}">{{ release.file }}</a>
+            {% if release.patch %}<br/><a href="//github.com/MarlinFirmware/Marlin/archive/{{ release.patch }}">{{ release.patch }}</a>{% endif %}</td>
         <td>
           {% if release.config %}
             <a href="//github.com/MarlinFirmware/Configurations/tree/{{ release.config }}">View / Download</a>
