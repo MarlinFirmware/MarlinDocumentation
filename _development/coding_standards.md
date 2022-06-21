@@ -211,19 +211,11 @@ const char blue = TERN(FEATURE_ONE, '1', '0');
  - Use `#define` macros to avoid repeating boilerplate code.<br />Consider both readability and maintainability.
  - Label `#endif` with the opening `#if` condition(s) if the block is over \~15 lines. Make the label compact. For example, `#endif // SDSUPPORT || ULTRALCD`.
 
-## FastIO
-
-Marlin uses FastIO macros to read and write pins.
-
-{:.pretty-list.headless}
-Macro|Description
-----|-----------
-`READ(PIN)`|Read the state of a digital pin. Returns either `HIGH` or `LOW`.
-`WRITE(PIN, STATE)`|Set a digital pin's state to either `HIGH` or `LOW`.
-
 ## Macros
 
-Marlin provides several shorthand macros in the `macros.h` file. Get to know them and use them. Here are some of the most common:
+Marlin provides several shorthand macros - mostly in the `macros.h` file - that are used throughout the code. Get to know and use them. Here are some of the most common:
+
+### Configuration Tests
 
 {:.pretty-list.headless}
 Macro|Description
@@ -236,28 +228,10 @@ Macro|Description
 `ALL(...)`| True only if all of the listed options are enabled.
 `NONE(...)`| True only if none of the listed options is enabled.
 `COUNT_ENABLED(OPT1, OPT2, ...)`| Count the number of options in the list that are enabled.
-`COUNT(array)`| Count the number of items in an array in-place. _e.g.,_ `for (i = 0; i < COUNT(my_arr); i++)`…
-`WITHIN(var,low,high)`| Check that a variable is within a given range, inclusive.
-`NUMERIC(c)`| True if a character is numeric: `0123456789`
-`DECIMAL(c)`| True if a character is decimal: `0123456789.`
-`NUMERIC_SIGNED(c)`| True if a character is signed numeric: `0123456789+-`
-`DECIMAL_SIGNED(c)`| True if a character is signed decimal: `0123456789+-.`
-`NOLESS(var,min)`/`NOMORE(var,max)`| Constrain a variable to a minimum or maximum value.
-`FORCE_INLINE`| Force a function or method to be compiled inline.
-`STRINGIFY(DEFINE)`| Resolve a define to a quoted string. (If undefined, the name of the define.)
-`ARRAY_N(N,values)`| Expand into a prepopulated array of size N (based on an option like `EXTRUDERS`).
-`PIN_EXISTS(NAME)`| True if the pin is defined. **Precompiler only.** (Takes a pin name minus `_PIN`.)
-`PINS_EXISTS(...)`| True if all the listed pins are defined. **Precompiler only.** (Takes pin names minus `_PIN`.)
-`ANY_PIN(...)`| True if any of the listed pins is defined. **Precompiler only.** (Takes pin names minus `_PIN`.)
-`NEAR_ZERO(V)`/`UNEAR_ZERO(V)`/`NEAR(V1,V2)`| Check whether a float value is very near zero or another value.
-`RECIPROCAL(N)`| The reciprocal of a value, except return 0.0 (not infinity) for 0.0.
-`RADIANS(d)`/`DEGREES(r)`| Convert degrees to radians and back again.
-`FIXFLOAT(N)`| Add a tiny value to a float to compensate for rounding errors.
-`NOOP`| A do-nothing macro to use for empty macro functions.
 
-## Ternary Macros
+### Ternary Macros
 
-Since Marlin 2.0 all the macros above except the ones marked "**Precompiler only**" can be used anywhere in code where a value would be used. This is a really handy capability and allows the code to be a lot more concise. The `ENABLED` and related macros simply emit an integer 0 or 1. A more interesting macro is `TERN` and its relatives `TERN0`, `TERN1`, `TERN_`, `IF_ENABLED`, and `IF_DISABLED`.
+Since Marlin 2.0 all macros listed here (unless marked "**Precompiler only**") can be used anywhere in code where a value would be used. This is a really handy capability and allows the code to be a lot more concise. The `ENABLED` and related macros simply emit an integer 0 or 1. A more interesting macro is `TERN` and its relatives `TERN0`, `TERN1`, `TERN_`, `IF_ENABLED`, and `IF_DISABLED`.
 
 Macro|Description
 ----|-----------
@@ -267,6 +241,12 @@ Macro|Description
 `TERN_(OPTION, T)`| If `OPTION` is enabled emit T otherwise emit nothing.
 `IF_ENABLED(OPTION, T)`| Alias for `TERN_`.
 `IF_DISABLED(OPTION, F)`| If `OPTION` is disabled emit F otherwise emit nothing.
+`SUM_TERN(OPTION, F)`| If `OPTION` is disabled emit F otherwise emit nothing.
+
+`PLUS_TERN0(O,A)`| Emit +(A) for enabled option O, otherwise nothing.
+`MINUS_TERN0(O,A)`| Emit -(A) for enabled option O, otherwise nothing.
+`SUM_TERN(O,B,A)`| Emit (B)+(A) for enabled option, otherwise just (B).
+`DIFF_TERN(O,B,A)`| Emit (B)-(A) for enabled option, otherwise just (B).
 
 Here are some ternary macro examples:
 ```cpp
@@ -275,7 +255,114 @@ bool is_ready = TERN1(HAS_READY_STATE, get_ready_state()); // Get state (or assu
 TERN_(EEPROM_SETTINGS, settings.read()); // Read settings (or not)
 ```
 
-## Time Comparison
+### Check Defined Pins
+
+{:.pretty-list.headless}
+Macro|Description
+----|-----------
+`PIN_EXISTS(NAME)`| True if the pin is defined. **Precompiler only.** (Takes a pin name minus `_PIN`.)
+`PINS_EXISTS(...)`| True if all the listed pins are defined. **Precompiler only.** (Takes pin names minus `_PIN`.)
+`ANY_PIN(...)`| True if any of the listed pins is defined. **Precompiler only.** (Takes pin names minus `_PIN`.)
+
+### FastIO
+
+Marlin uses FastIO macros to interface with pins that are known and fixed at compile-time. This results in much faster I/O, especially on AVR boards where every cycle counts. For more details about Marlin's use of FastIO see [this page](fastio.html).
+
+{:.pretty-list.headless}
+Macro|Description
+----|-----------
+`SET_INPUT(PIN)`| Set a digital pin to `INPUT` mode.
+`SET_INPUT_PULLUP(PIN)`| Set a digital pin to `INPUT_PULLUP` mode.
+`SET_INPUT_PULLDOWN(PIN)`| Set a digital pin to `INPUT_PULLDOWN` mode (if supported, else `INPUT`).
+`SET_OUTPUT(PIN)`| Set a digital pin to `OUTPUT` mode.
+`SET_PWM(PIN)`| Set a digital pin to `PWM` mode (if supported, else `OUTPUT`).
+`SET_PWM_OD(PIN)`| Set a digital pin to `PWM` open-drain mode (if supported, else `PWM` or `OUTPUT`).
+`READ(PIN)`| Read the state of a digital pin. Returns either `HIGH` or `LOW`.
+`WRITE(PIN, STATE)`| Set a digital pin's state to either `HIGH` or `LOW`.
+`OUT_WRITE(PIN, STATE)`| Set a digital pin's state to either `HIGH` or `LOW`.
+
+### Loops Shorthand
+
+{:.pretty-list.headless}
+Macro|Description
+----|-----------
+`LOOP_L_N(VAR, N)` | Zero-based loop, given a size. `for (uint8_t VAR=0; VAR<(N); VAR++)`
+`LOOP_LE_N(VAR, N)` | Zero-based loop, given a last index. `for (uint8_t VAR=0; VAR<=(N); VAR++)`
+`LOOP_S_L_N(VAR, S, N)` | Loop over range, excluding end index. `for (uint8_t VAR=(S); VAR<(N); VAR++)`
+`LOOP_S_LE_N(VAR, S, N)` | Loop over range, including end index. `for (uint8_t VAR=(S); VAR<=(N); VAR++)`
+`LOOP_ABC(VAR)` | Loop over the first (up to) three axes
+`LOOP_NUM_AXES(VAR)` | Loop over all axes except for E
+`LOOP_LOGICAL_AXES(VAR)` | Loop over all axes including E as a single axis
+`LOOP_DISTINCT_AXES(VAR)` | Loop over all axes, including multiple E (for settings, saved tool state, etc.)
+`LOOP_DISTINCT_E(VAR)` | Loop over all E (tool) indexes
+`EXTRUDER_LOOP()`| Loop integer var '`e`' over all extruder indexes.
+`HOTEND_LOOP()`| Loop integer var '`e`' over all hotend indexes.
+
+### REPEAT
+
+The `REPEAT` macros are used to emit another macro repeatedly, passing an index and optional arguments. In this example, `REPEAT` emits a whole line of code for each serial port:
+
+```cpp
+  #define _S_FLUSH(N) if (portMask.enabled(output[N])) serial##N.flush();
+  REPEAT(NUM_SERIAL, _S_FLUSH);
+```
+
+{:.pretty-list.headless}
+Macro|Description
+----|-----------
+`REPEAT(N,OP)` | Emit the `OP` macro `N` times with zero-based index.
+`REPEAT_1(N,OP)` | Emit the `OP` macro `N` times with one-based index.
+`REPEAT_S(S,N,OP)` | Do a zero-based `REPEAT`, skipping `S` elements.
+`REPEAT2(N,OP,V...)` | Emit the `OP` macro `N` times with zero-based index and arguments.
+`REPEAT2_S(S,N,OP,V...)` | Do a zero-based `REPEAT2`, skipping `S` elements.
+`RREPEAT(N,OP)` | `REPEAT` for usage within another `REPEAT*`.
+`RREPEAT_S(S,N,OP)` | `REPEAT_S` for usage within another `REPEAT*`.
+`RREPEAT2(N,OP,V...)` | `REPEAT2` for usage within another `REPEAT*`.
+`RREPEAT2_S(S,N,OP,V...)` | `REPEAT2_S` for usage within another `REPEAT*`.
+
+### MAP
+
+The `MAP` macro works like `REPEAT`, but takes a list of things to pass to the emitted macro instead of a number. In this example, `MAPLIST` emits a comma-separated list of items for the axes listed in `ALL_AXIS_NAMES`:
+
+```cpp
+  #define TMC_SW_DETAIL(A) { TMC_SW_DETAIL_ARGS(A) }
+  constexpr SanitySwSerialDetails sanity_tmc_sw_details[] = {
+    MAPLIST(TMC_SW_DETAIL, ALL_AXIS_NAMES)
+  };
+```
+
+{:.pretty-list.headless}
+Macro|Description
+----|-----------
+`MAP(OP,VALS...)` | Emit the `OP` macro with each of the given `VALS`.
+`MAPLIST(OP,VALS...)` | Emit `OP` with each of the given `VALS`, comma-separated.
+
+### Character Test
+
+{:.pretty-list.headless}
+Macro|Description
+----|-----------
+`NUMERIC(c)`| True if a character is numeric: `0123456789`
+`DECIMAL(c)`| True if a character is decimal: `0123456789.`
+`NUMERIC_SIGNED(c)`| True if a character is signed numeric: `0123456789+-`
+`DECIMAL_SIGNED(c)`| True if a character is signed decimal: `0123456789+-.`
+
+### Lists and Arrays
+
+{:.pretty-list.headless}
+Macro|Description
+----|-----------
+`COUNT(array)`| The number of items in a defined array.
+`LIST_N(N,VALS...)`| Reduce a prepopulated list to size `N` (based on an integer option like `EXTRUDERS`).
+`LIST_N_1(N,VAL)`| Generate a list of size `N` filled with a single value.
+`ARRAY_N(N,VALS...)`| Generate a C style array of size `N` from a prepopulated list.
+`ARRAY_N_1(N,VAL)`| Generate a C style array of size `N` filled with a single value.
+`ARRAY_BY_EXTRUDERS(V...)`| Reduce a prepopulated list to `EXTRUDERS` items.
+`ARRAY_BY_EXTRUDERS1(v1)`| Generate a list of `EXTRUDERS` items filled with a single value.
+`ARRAY_BY_HOTENDS(V...)`| Reduce a prepopulated list to `HOTENDS` items.
+`ARRAY_BY_HOTENDS1(v1)`| Generate a list of `HOTENDS` items filled with a single value.
+
+### Time Comparison
 
 Use the following macros when comparing two millis count values:
 
@@ -299,7 +386,7 @@ if (ELAPSED(ms, last_event_ms + TIME_INTERVAL)) {
 }
 ```
 
-## Serial Macros
+### Serial Macros
 
 The `serial.h` file also includes several macros to make it easier to create PROGMEM strings and print them to the serial output. Below are a few of them. See the `serial.h` file for others.
 
@@ -314,20 +401,40 @@ Macro|Description
 `SERIAL_ECHOLNPGM("hello")`| Wrap the given ASCII string in `PSTR` and print it to serial out, appending a newline.
 `SERIAL_ECHOPAIR("Hello:",val)`| Wrap an ASCII string in `PSTR`; print it and a value to serial out.
 `SERIAL_ECHOLNPAIR("Hello:",val)`| Wrap an ASCII string in `PSTR`; print it, a value, and a newline to serial out.
+`STRINGIFY(DEFINE)`| Resolve a define to a quoted string. (If undefined, the name of the define.)
 
-## Maths macros
+### Maths macros
 
 Use the following macros in place of their normal lower-case versions. These ensure the smaller 32-bit `float` on all architectures. The initial 32-bit targets for Marlin, while significantly faster, do not have a floating-point unit either, so `float` maths is more compatible while not sacrificing performance.
 
-- `ATAN2(y, x)`
-- `FABS(x)`
-- `POW(x, y)`
-- `SQRT(x)`
-- `CEIL(x)`
-- `FLOOR(x)`
-- `LROUND(x)`
-- `FMOD(x, y)`
-- `HYPOT(x,y)`
+{:.pretty-list.headless}
+Macro|Description
+----|-----------
+`FIXFLOAT(N)`| Add a tiny value to a `float` to fix rounding errors (e.g., for display).
+`NEAR_ZERO(V)`/`UNEAR_ZERO(V)`/`NEAR(V1,V2)`| True if a float value is near zero or another value.
+`RECIPROCAL(N)`| The reciprocal of a value, but return 0.0 (not infinity) for 0.0.
+`RADIANS(d)`/`DEGREES(r)`| Convert degrees to radians and _vice-versa_.
+`HYPOT2(x,y)`| The hypotenuse-squared of a right triangle with legs x,y.
+`HYPOT(x,y)`| The hypotenuse of a right triangle with legs x,y.
+`ATAN2(y, x)`| `atan2f`
+`FABS(x)`| `fabsf`
+`POW(x, y)`| `powf`
+`SQRT(x)`| `sqrtf`
+`CEIL(x)`| `ceilf`
+`FLOOR(x)`| `floorf`
+`LROUND(x)`| `lroundf`
+`FMOD(x, y)`| `fmodf`
+
+### Other Shorthand
+
+{:.pretty-list.headless}
+Macro|Description
+----|-----------
+`WITHIN(val,low,high)`| Check that a value is within a given range, inclusive.
+`NOLESS(var,min)`| Change a variable, if needed, so it is not smaller than the given value.
+`NOMORE(var,max)`| Change a variable, if needed, so it is not larger than the given value.
+`FORCE_INLINE`| Force a function or method to be compiled inline.
+`NOOP`| A do-nothing macro to use for empty macro functions.
 
 ## Adding a New Feature
 
