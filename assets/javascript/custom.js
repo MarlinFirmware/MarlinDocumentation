@@ -84,7 +84,8 @@ $(function() {
   /**
    * Dynamically build the table of contents
    */
-  $("#toc").tocify({
+  $toc = $("#toc");
+  if ($toc !== undefined) $toc.tocify({
     selectors: (typeof toc_selectors != 'undefined') ? toc_selectors : 'h1,h2,h3',
     scrollTo: 65,
     extendPage: false,

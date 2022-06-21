@@ -2477,7 +2477,7 @@ With Dual X-Carriage the `HOTEND_OFFSET_X` setting for `T1` overrides `X2_HOME_P
 
 Dual X-Carriage has three different movement modes, set with [`M605`](/docs/gcode/M605.html) `S[mode]`:
 
-- Mode 0: Full Control Mode. ([`M605`](/docs/gcode/M605.html) `S1`) Slicers that fully support dual X-carriages can use this mode for optimal travel results.
+- Mode 0: Full Control Mode. ([`M605`](/docs/gcode/M605.html) `S0`) Slicers that fully support dual X-carriages can use this mode for optimal travel results.
 - Mode 1: Auto-park Mode. ([`M605`](/docs/gcode/M605.html) `S1`) The firmware automatically parks/unparks the carriages on tool-change. No slicer support is required. ([`M605`](/docs/gcode/M605.html) `S1`)
 - Mode 2: Duplication Mode. (`[`M605`](/docs/gcode/M605.html) S2 X[offs] R[temp]`) The firmware will transparently make the second X-carriage and extruder copy all actions of the first X-carriage. This allows the printer to print 2 arbitrary items at once. (The 2nd extruder's X and temp offsets are set using: `[`M605`](/docs/gcode/M605.html) S2 X[offs] R[offs]`.)
 
