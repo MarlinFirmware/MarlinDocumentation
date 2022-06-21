@@ -92,6 +92,8 @@
   --color-list-group-item-bg: #000;
   --color-list-group-item-a: #CCC;
   --color-link: #8492FD;
+  --color-logo-fill: #000;
+  --color-logo-fill-hover: #606;
   --color-nav: #AA0;
   --color-nav-bg: #F8F8F8;
   --color-nav-list: #09B;
@@ -238,6 +240,8 @@
   --color-dropdown-bg: #555;
   --color-gcode-toc-border: #EEE;
   --color-link: #F88;
+  --color-logo-fill: #FFF;
+  --color-logo-fill-hover: #FCF;
   --color-search-bg: #333;
   --color-search: #EEE;
   // Side nav
@@ -339,8 +343,11 @@ pre { background-color: var(--color-pre-bg); }
 pre, pre>code { color: var(--color-pre); }
 pre.highlight{ background-color: var(--color-highlight-bg); }
 
-#mflogo > g > path {fill:var(--color-color);}
-#mflogo:hover > g > path {fill:var(--color-nav-hover-bg);}
+// Marlin logo SVG
+#mflogo {
+  > g > path { fill: var(--color-logo-fill); }
+  &:hover > g > path { fill: var(--color-logo-fill-hover); }
+}
 
 // Top nav bar
 .navbar { background-color: var(--color-nav-bg); border-color: var(--color-nav-border); }
@@ -604,11 +611,13 @@ td.arg code { white-space: nowrap; }
 /*
  * Follow Button
  */
-.btn-follow:hover, .btn-follow:active {
-  color: white !important;
-  background: rgb(0, 172, 237) !important;
+.navbar-nav>li>a.btn-follow {
+  color: rgb(0, 132, 180);
+  &:hover, &:active {
+    color: white;
+    background: rgb(0, 172, 237);
+  }
 }
-.navbar .btn-follow { color: rgb(0, 132, 180) !important; }
 
 /*
  * Contribute Button
