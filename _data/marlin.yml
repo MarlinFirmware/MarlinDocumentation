@@ -1,17 +1,26 @@
 -
-  version: 2.0.9.3
-  description: Latest release
+  version: 2.1
+  description: Current Marlin Release
   tools: Supports AVR and ARM<br/>Arduino and PlatformIO
-  file: 2.0.x.zip
-  config: release-2.0.9.3
+  file: 2.1.zip
+  patch: 2.1.x.zip
+  config: release-2.1
+-
+  version: 2.0.9.4
+  description: Marlin 2.0 LTS
+  tools: Supports AVR and ARM<br/>Arduino and PlatformIO
+  file: 2.0.9.4.zip
+  patch: 2.0.x.zip
+  config: release-2.0.9.4
 -
   version: 1.1.9.1
-  description: Previous release
+  description: Marlin 1.1 LTS
   tools: Supports AVR<br/>Arduino and PlatformIO
-  file: 1.1.x.zip
+  file: 1.1.9.1.zip
+  patch: 1.1.x.zip
   config: release-1.1.9
 -
-  version: 1.0.2-2
-  description: Older release
+  version: 1.0.2-3
+  description: Marlin 1.0 LTS
   tools: Supports Arduino 1.6.8 and up
-  file: 1.0.x.zip
+  file: 1.0.2-3.zip

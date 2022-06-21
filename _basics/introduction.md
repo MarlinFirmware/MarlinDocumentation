@@ -54,11 +54,11 @@ Heaters and sensors are managed in a second interrupt that executes at much slow
 
 While Marlin only prints G-code, most slicers only slice STL files.
 
-Whatever you use for your [CAD](//en.wikipedia.org/wiki/Computer-aided_design) toolchain, as long you can export a solid model, a slicer can "slice" it into G-code, and Marlin firmware will do its best to print the final result.
+Whatever you use for your [CAD](//en.wikipedia.org/wiki/Computer-aided_design) toolchain, as long as you can export a solid model, a slicer can "slice" it into G-code, and Marlin firmware will do its best to print the final result.
 
 Before Marlin can dream of printing, first you'll need a [3D model](//www.thingiverse.com/thing:7900). You can either [download](//www.thingiverse.com/thing:7900/zip) models or make your own with one of many free CAD programs, such as [FreeCAD](//www.freecadweb.org/), [OpenSCAD](//www.openscad.org/), [Tinkercad](//www.tinkercad.com/), [Autodesk Fusion 360](//www.autodesk.com/products/fusion-360/overview), [SketchUp](//www.sketchup.com/), etc.
 
-A high degree of knowledge is needed to model complex objects like a [T-Rex Skull](//www.thingiverse.com/thing:308335), but other objects can be quite [simple to model](//www.thingiverse.com/thing:172175). To get ideas and test things out, explore sites like [Thingiverse](//www.thingiverse.com/explore/popular) and [YouMagine](//www.youmagine.com/) and print things for fun.
+A high degree of knowledge is needed to model complex objects like a [T-Rex Skull](//www.thingiverse.com/thing:308335), but other objects can be quite [simple to model](//www.thingiverse.com/thing:172175). To get ideas and test things out, explore sites like [Thingiverse](//www.thingiverse.com/explore/popular), [YouMagine](//www.youmagine.com/) and [Printables](//www.printables.com/) and print things for fun.
 
 ### Slicing
 

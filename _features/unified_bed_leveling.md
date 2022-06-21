@@ -152,7 +152,7 @@ Ideally the mesh bounds will match your printable area perfectly. In practice it
 3 x 3 through 15 x 15 meshes are supported. X & Y dimensions do NOT need to be the same. First time users should start out with a small mesh until they are familiar with the tools. Once you’re proficient then move to larger meshes. 7 x 7 seems to be a popular size for a first attempt at a final mesh.
 
 ```cpp
-#define UBL_MESH_INSET 10         // Mesh inset margin on print area
+#define MESH_INSET 10             // Mesh inset margin on print area
 #define GRID_MAX_POINTS_X 3       // Don't use more than 15 points per axis, implementation limited.
 #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
 ```

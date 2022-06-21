@@ -15,7 +15,7 @@ These scripts aim to improve, most especially, the process of managing, patching
 
 Theoretically, a Pull Request should have a very short lifespan. It should be created, polished, and completed before anything else threatens to stomp on the same code lines. But in practice, some PRs take longer than others to develop and the Marlin policy has been to keep them open till they're ready. This opens up conflict and stale code issues. The longer a PR sits the harder it is to integrate and the less applicable its changes will be. A Marlin PR can sit for weeks or months.
 
-By also paying careful attention to conflict resolution, these scripts can help keep a feature or patch branch (i.e., based on `bugfix-2.0.x` and forming the basis for a PR) fresh for as long as needed.
+By also paying careful attention to conflict resolution, these scripts can help keep a feature or patch branch (i.e., based on `bugfix-2.1.x` and forming the basis for a PR) fresh for as long as needed.
 
 # Merge vs. Rebase
 
@@ -97,7 +97,7 @@ Use this script to set the "GitHub Transport Protocol" for your remotes to eithe
 Run this script to get a line of information about your current working copy, branch, and upstream. When working on Marlin the output will look something like this:
 
 **Project**|**Your Account**|**Repository**|**Dev Branch**|**Working Branch**
-`MarlinFirmware`|`joehitgub`|`Marlin`|`bugfix-2.0.x`|`fix_something_june_1`
+`MarlinFirmware`|`joehitgub`|`Marlin`|`bugfix-2.1.x`|`fix_something_june_1`
 
 When working with this website's repository, the output will will read:
 
@@ -152,7 +152,7 @@ Rebase the code on the latest Dev Branch and (optionally) rewrite commits.
 - Rebase the current branch on the Dev Branch. (Conflicts may arise here.)
 - Do an **interactive rebase** to fixup, squash, drop, rewrite, etc.
 
-For the 2.0.x development tree that last step will run `git rebase -i upstream/bugfix-2.0.x`. After using `mfrb` to rewrite your commit log you must use `git push -f` to update your fork. The `-f` flag cannot be omitted.
+For the 2.0.x development tree that last step will run `git rebase -i upstream/bugfix-2.1.x`. After using `mfrb` to rewrite your commit log you must use `git push -f` to update your fork. The `-f` flag cannot be omitted.
 
 Use `mfrb` whenever an open Pull Request is reporting conflicts (thus preventing the PR from being merged), or anytime you want to refresh a branch or Pull Request. Ideally, all open Pull Request should be periodically rebased so that they can be evaluated in relation to the current codebase. This command makes rebasing much easier to do while requiring much less typing.
 

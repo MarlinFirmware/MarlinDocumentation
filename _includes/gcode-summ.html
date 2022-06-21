@@ -15,7 +15,7 @@
 {% if gcode.requires %}
   {% assign list = (gcode.requires | split: ',') %}
   {% for item in list %}
-    <span class="label label-requires"><code>{{item}}</code></span>
+    <span class="label label-requires">{{item}}</span>
   {% endfor %}
 {% endif %}
 
