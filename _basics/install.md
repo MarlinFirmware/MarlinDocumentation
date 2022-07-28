@@ -21,7 +21,7 @@ Start by downloading the Marlin source code. There are a few [codebases](//en.wi
 [Download 2.1](//github.com/MarlinFirmware/Marlin/archive/2.1.zip)|Current release
 [Download 2.1.x](//github.com/MarlinFirmware/Marlin/archive/2.1.x.zip)|Current release, patched
 [Download bugfix-2.1.x](//github.com/MarlinFirmware/Marlin/archive/bugfix-2.1.x.zip)|"Nightly" build for Marlin 2.1.x _Proceed with Caution!_
-[Download 2.0.9.4](//github.com/MarlinFirmware/Marlin/archive/2.0.9.4.zip)|Previous release
+[Download 2.0.9.5](//github.com/MarlinFirmware/Marlin/archive/2.0.9.5.zip)|Previous release
 [Download 2.0.x](//github.com/MarlinFirmware/Marlin/archive/2.0.x.zip)|Previous release, patched
 [Download bugfix-2.0.x](//github.com/MarlinFirmware/Marlin/archive/bugfix-2.0.x.zip)|"Nightly" build for Marlin 2.0.x _Proceed with Caution!_
 [Download 1.1.x](//github.com/MarlinFirmware/Marlin/archive/1.1.x.zip)|Legacy Marlin 1.1
