@@ -18,7 +18,7 @@ Marlin only needs to be re-flashed when fixed settings are changed in the config
 Start by downloading the Marlin source code. There are a few [codebases](//en.wikipedia.org/wiki/Codebase) to choose from.
 
 ----|-----------
-[Download 2.1](//github.com/MarlinFirmware/Marlin/archive/2.1.zip)|Current release
+[Download 2.1.1](//github.com/MarlinFirmware/Marlin/archive/2.1.1.zip)|Current release
 [Download 2.1.x](//github.com/MarlinFirmware/Marlin/archive/2.1.x.zip)|Current release, patched
 [Download bugfix-2.1.x](//github.com/MarlinFirmware/Marlin/archive/bugfix-2.1.x.zip)|"Nightly" build for Marlin 2.1.x _Proceed with Caution!_
 [Download 2.0.9.5](//github.com/MarlinFirmware/Marlin/archive/2.0.9.5.zip)|Previous release
