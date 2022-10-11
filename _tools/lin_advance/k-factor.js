@@ -191,11 +191,11 @@ function genGcode() {
                   'G21 ; Millimeter units\n' +
                   'G90 ; Absolute XYZ\n' +
                   'M83 ; Relative E\n' +
+                  'G28 ; Home all axes\n' +
                   'T' + TOOL_INDEX + ' ; Switch to tool ' + TOOL_INDEX + '\n' +
+                  'G1 Z10 F100 ; Z raise\n' +
                   'M104 S' + NOZZLE_TEMP + ' ; Set nozzle temperature (no wait)\n' +
                   'M190 S' + BED_TEMP + ' ; Set bed temperature (wait)\n' +
-                  'G28 ; Home all axes\n' +
-                  'G1 Z5 F100 ; Z raise\n' +
                   'M109 S' + NOZZLE_TEMP + ' ; Wait for nozzle temp\n' +
                   (BED_LEVELING !== '0' ? BED_LEVELING + '; Activate bed leveling compensation\n' : '') +
                   'M204 P' + ACCELERATION + ' ; Acceleration\n' +
