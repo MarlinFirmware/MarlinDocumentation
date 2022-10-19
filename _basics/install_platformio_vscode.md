@@ -3,7 +3,7 @@ title:        Installing Marlin (PlatformIO with VSCode)
 description:  How to install Marlin using PlatformIO in VSCode
 
 author: Bob-the-Kuhn
-contrib: shitcreek, ivankravets, thinkyhead
+contrib: shitcreek, ivankravets, thinkyhead, EvilGremlin
 category: [ articles, getting-started ]
 ---
 
@@ -38,11 +38,11 @@ You can open Marlin in *Visual Studio Code* in one of several ways:
 
 ### 5. Get example configurations
 
-Go to [example configurations repository](https://github.com/MarlinFirmware/Configurations/), select branch corresponding to your Marlin source code version and download archive.
+Go to [example configurations repository](https://github.com/MarlinFirmware/Configurations/), select branch corresponding to your Marlin source code version and download archive. Pay extra attention to versions, i.e. '2.1.x' branch of Marlin is not '2.1.1' release and won't accept '2.1.1' configirations.
 
 ![Download configs](/assets/images/basics/install_platformio_vscode/download_configs.png)
 
-Unzip archive, find configuration files for your printer (or closest ones) and copy them to **Marlin/** folder.
+Unzip archive, find configuration files for your printer (or closest ones) and copy them to **Marlin/** folder. Don't forget **_Bootscreen.h** and **_Statusscreen.h** if any present.
 
 Many example configurations contain 'readme' file with useful notes and instructions, make sure to read it.
 
@@ -60,6 +60,7 @@ Then you might need to change stepper drivers (`_DRIVER_TYPE`) and serial ports 
 
 To manually set the environment for your board:<br/>
 Open the file `platformio.ini` and change `default_envs` to the environment that your board uses. Look through this file for your chip's environment name. For example, the environment name for the **LPC1768** chip appears as `[env:LPC1768]`. Omit the outer wrapper: `[env:____]`.
+**__maple** environments are deprecated and should only used as last resort, if regular ones don't work.
 
 ![Multi Environments](/assets/images/basics/install_platformio_vscode/platformio_ini.png)
 
@@ -102,7 +103,7 @@ First build try more or less expected to fail with some random error due to back
 
 Terminal tab provide log of the build process with errors (red) and informational warnings (yellow).
 - The panel can be re-sized.
-- The console can be scrolled via the mouse scroll wheel *or with the scroll bar*.
+- The console can be scrolled via the mouse scroll wheel or with the scroll bar*.
 - Text can be highlighted and copied to the clipboard.
 
 Errors usually tell exactly what's wrong in configuration and often provide instructions to fix. First error is most relevant, others might be just result of first one and don't provide any useful info. When asking communtity for support please provide full build log or screenshot with first errors.
