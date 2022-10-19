@@ -60,7 +60,7 @@ Then you might need to change stepper drivers (`_DRIVER_TYPE`) and serial ports 
 
 To manually set the environment for your board:<br/>
 Open the file `platformio.ini` and change `default_envs` to the environment that your board uses. Look through this file for your chip's environment name. For example, the environment name for the **LPC1768** chip appears as `[env:LPC1768]`. Omit the outer wrapper: `[env:____]`.
-**__maple** environments are deprecated and should only used as last resort, if regular ones don't work.
+`_maple` environments are deprecated and should only used as last resort, if regular ones don't work.
 
 ![Multi Environments](/assets/images/basics/install_platformio_vscode/platformio_ini.png)
 
@@ -103,7 +103,7 @@ First build try more or less expected to fail with some random error due to back
 
 Terminal tab provide log of the build process with errors (red) and informational warnings (yellow).
 - The panel can be re-sized.
-- The console can be scrolled via the mouse scroll wheel or with the scroll bar*.
+- The console can be scrolled via the mouse scroll wheel or with the scroll bar.
 - Text can be highlighted and copied to the clipboard.
 
 Errors usually tell exactly what's wrong in configuration and often provide instructions to fix. First error is most relevant, others might be just result of first one and don't provide any useful info. When asking communtity for support please provide full build log or screenshot with first errors.
@@ -120,4 +120,4 @@ With few exceptions, most newer boards require the `firmware.bin` file to be cop
 ![Bin file location](/assets/images/basics/install_platformio_vscode/firmware_bin.png)
 
 In these cases, you'll need to locate the `firmware.bin` file and copy it over to the SD card manually. 
-Most borads/printers need exact filename (i.e. `firmware.bin`, `elegoo.bin`), Creality boards require `.bin` with name different from previously installed one. 
+Most borads/printers need exact filename (i.e. `firmware.bin`, `elegoo.bin`), Creality boards require `.bin` with name different from previously installed one.
