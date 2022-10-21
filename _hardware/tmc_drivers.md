@@ -17,6 +17,9 @@ Driver  | Control | StealthChop | Sensorless<br>homing/probing | Driver monitori
 :------:|:-------:|:-----------:|:----------------------------:|:-----------------:|:----------------:|:---------
 TMC2100 | none | yes | no | no | no | Standalone mode only
 TMC2130 | SPI | yes | yes | yes | yes |
+TMC2160 | SPI | ??? | ??? | ??? | ??? |
+TMC5130 | SPI | ??? | ??? | ??? | ??? |
+TMC5160 | SPI |yes | yes | yes | yes |
 TMC2208<br/>TMC2225 | UART | yes | no | yes | yes | UART RX line requires an interrupt capable pin.<br>Software UART not support on all platforms, such as DUE based boards.
 TMC2209<br/>TMC2226 | UART | yes | yes | yes | yes |
 TMC2660 | SPI | no | not implemented | yes | no |
