@@ -8,11 +8,7 @@ since: 2.0.9.4
 ---
 
 <script>
-MathJax = {
-  tex: {
-    tags: 'all'
-  },
-};
+MathJax = { tex: { tags: 'all' } };
 </script>
 <script type="text/javascript" id="MathJax-script" async
   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
@@ -21,6 +17,7 @@ MathJax = {
 ## Background
 
 Temperature is commonly controlled with a PID algorithm. The basic premise of PID is that the further the temperature is from the set-point, the more power is applied. If you could supply PID with perfect temperature information, it could, in principle, apply perfect control. However real life temperature information comes from sensors which exhibit both latency and noise.
+
 Model predictive control takes a different approach to PID. Instead of trying to control against the sensor output, it maintains a simulation of the system and uses the simulated hotend temperature to plan an optimal power output. The simulation has no noise and no latency, making near perfect control possible. To prevent the simulated system state diverging from the real life hotend state, the simulated temperature is continually gently dragged towards the temperature measure from the sensor. This does introduce a little noise and latency into the simulated system but the effect is far smaller than for PID.
 
 Configure with [`M306`](/docs/gcode/M306.html).
@@ -37,10 +34,8 @@ Configure with [`M306`](/docs/gcode/M306.html).
 
 1. Disable `PIDTEMP` and enable `MPCTEMP` in `Configuration.h`.
 1. Set your heater power(s) in `MPC_HEATER_POWER`.
-1. Ensure `MPC_TUNING_POS` leaves space not to crash into the bed. During tuning the printer will
-home and then position the hotend just above the bed. The ideal Z position is around first layer height.
-1. Install the firmware and run `M306 T` to tune the active hotend. (Look out for cooled
-blobs on the nozzle to avoid a collision with the bed.)
+1. Ensure `MPC_TUNING_POS` leaves space not to crash into the bed. During tuning the printer will home and then position the hotend just above the bed. The ideal Z position is around first layer height.
+1. Install the firmware and run `M306 T` to tune the active hotend. (Look out for cooled blobs on the nozzle to avoid a collision with the bed.)
 1. Save MPC constants with `M500` and/or set them in Configuration.h.
 1. Set a hotend temperature to give it a test.
 
@@ -59,13 +54,53 @@ MPC_AMBIENT_XFER_COEFF_FAN255 0.0998
 
 [`M306`](/docs/gcode/M306.html) can also be used to change constants at runtime.
 
-## Advanced configuration
+### Manual Tuning
+
+If `M306 T` doesn't work –e.g., with positive temperature coefficient (PTC) hotends– MPC can be configured manually.
+
+1. Start with the part cooling fan off and hotend cold. Record the starting temperature Ts. e.g., Ts = 20°C.
+1. Set the temperature to 200°C and then back to 0°C once it reaches around 200°C. Measure the curve of temperature
+vs time while the hotend is heating, starting at time = 0s.
+1. Measure the fastest rate Rf at which temperature increases in °C/s. e.g., Rf = 3°C/s.
+1. Divide the heater power by Rf to get `MPC_BLOCK_HEAT_CAPACITY` in J/K. e.g., 40W / 3°C/s = 13.33 J/K.
+1. Measure the temperature Tf and time tf of the point where temperature was increasing fastest.
+1. `MPC_SENSOR_RESPONSIVENESS` is Rf / (Rf x tf + Ts - Tf). e.g., for tf = 10s and Tf = 35°C, this is 3°C/s / ( 3°C/s x 10s + 20°C - 35°C) = 0.2 K/s/K.
+1. Set these values with `M306` and set the temperature to 200°C.
+1. MPC should eventually settle at a stable temperature around 200°C.
+1. Use `M105` to find the PWM output required to maintain 200°C. e.g., if `M105` returns `T:200.12 /200.00 B:18.38 /0.00 P:18.24 /0.00 @:41 B@:0` it is the value `41` after the first `@` so PWM = 41.
+1. `MPC_AMBIENT_XFER_COEFF` is PWM / 127 * heater power / (200°C - Ts). e.g., 41 / 127 * 40 W / (200°C - 20°C) = 0.072 W/K.
+1. Find `MPC_AMBIENT_XFER_COEFF_FAN255` by repeating the last three steps with the fan on full.
+
+## Advanced Configuration
 
 `MPC_FAN_0_ALL_HOTENDS` and `MPC_FAN_0_ACTIVE_HOTEND`: Marlin assumes fan _N_ cools parts printed by hotend _N_. However some multi-hotend machines have only one fan. In these cases MPC needs to know whether the cooling fan cools all hotends simultaneously or whether it cools only the active hotend. Enable the appropriate option.
 
 `FILAMENT_HEAT_CAPACITY_PERMM`: MPC models heat loss from melting filament. Set the filament heat capacity here.
 
 `MPC_SMOOTHING_FACTOR`, `MPC_MIN_AMBIENT_CHANGE` and `MPC_STEADYSTATE`: These may be tweaked for stability. See the algorithm description for details.
+
+### Filament Heat Capacity
+
+Marlin needs to know how much energy (in Joules) it takes to heat 1mm of filament by 1°C (or 1 Kelvin, which is the same thing).
+This can be calculated from the specific heat capacity and the density of the material. As an example, consider ABS. A web search gives the following approximate values:
+
+| Specific heat capacity | 2 J/g/K |
+| Density | 1.07 g/ml |
+
+(Note: the way the units are presented for specific heat capacity vary widely but usually mean the same thing. K is the same as °C. And kJ/kg is the same as J/g or 1000 J/g.)
+
+For 1.75mm filament, 1mm of filament has a volume of 0.1 cm x π x (0.175 cm)<sup>2</sup> / 4 = 0.00241 ml.<br>
+Multiply 0.00241 ml/mm by the density of 1.07 g/ml to get 0.00257 g/mm.<br>
+Multiply 0.00257 g/mm by the specific heat capacity of 2 J/g/K to get 0.00515 J/K/mm.
+
+The approximate heat capacities per mm of several popular filaments are:
+
+| Material | Value for 1.75mm filament | Value for 2.85mm filament |
+| - | - | - |
+| ABS | 0.00515 J/K/mm | 0.0137 J/K/mm |
+| Nylon | 0.00522 J/K/mm | 0.0138 J/K/mm |
+| PETG | 0.0036 J/K/mm | 0.0094 J/K/mm |
+| PLA | 0.0056 J/K/mm | 0.0149 J/K/mm |
 
 ## Tweaking MPC
 
@@ -97,10 +132,10 @@ Finally, armed with a new set of temperatures, the MPC algorithm calculates how 
 
 ## `M306 T` Details
 The tuning algorithm does the following with the target hotend:
-- Move to the center and close to bed: Printing occurs close to the bed or printed model so tuning is done close to a surface to best emulate the conditions whilst printing.
+- Move to the center and close to bed: Printing occurs close to the bed or printed model so tuning is done close to a surface to best emulate the conditions while printing.
 - Cool to ambient: The tuning algorithm needs to know the approximate ambient temperature. It switches the part cooling fan on and waits until the temperature stops decreasing.
 - Heat past 200°C: Three temperature measurements are needed at some point after the initial latency has taken effect. The tuning algorithm heats the hotend to over 200°C.
-- Hold temperature whilst measuring ambient heat-loss: At this point enough is known for the MPC algorithm to engage. The tuning algorithm makes a best guess at the overshoot past 200°C which will occur and targets this temperature for about a minute whilst ambient heat-loss is measured without (and optionally with) the fan.
+- Hold temperature while measuring ambient heat-loss: At this point enough is known for the MPC algorithm to engage. The tuning algorithm makes a best guess at the overshoot past 200°C which will occur and targets this temperature for about a minute while ambient heat-loss is measured without (and optionally with) the fan.
 - Set MPC up to use the measured constants and report them for use in `Configuration.h`.
 
 If the algorithm fails or is interrupted with `M108`, some or all of the MPC constants may be changed anyway and their values may not be reliable.
@@ -206,4 +241,4 @@ And for any known $$T_s(t)$$ equation $$\eqref{approx}$$ can be solved to give
 
 $$ \alpha_s = \dfrac{\alpha_b . (T_s(t) - T_{asymp})}{T_s(t) - T_{asymp} - (T_a - T_{asymp}) . e^{-\alpha_b . t}} $$
 
-`M306 T` finds a $$t$$ and $$\Delta t$$ with known sensor values for $$T_s(t)$$, $$T_s(t + \Delta t)$$ and $$T_s(t + 2 \Delta t)$$. These are used with the equations above to calculate values for `MPC_SENSOR_RESPONSIVENESS`, `MPC_AMBIENT_XFER_COEFF` and `MPC_BLOCK_HEAT_CAPACITY`. These values are then used to target a particular temperature whilst heat loss is measured to obtain `MPC_AMBIENT_XFER_COEFF_FAN255` and an even better estimate of `MPC_AMBIENT_XFER_COEFF`.
+`M306 T` finds a $$t$$ and $$\Delta t$$ with known sensor values for $$T_s(t)$$, $$T_s(t + \Delta t)$$ and $$T_s(t + 2 \Delta t)$$. These are used with the equations above to calculate values for `MPC_SENSOR_RESPONSIVENESS`, `MPC_AMBIENT_XFER_COEFF` and `MPC_BLOCK_HEAT_CAPACITY`. These values are then used to target a particular temperature while heat loss is measured to obtain `MPC_AMBIENT_XFER_COEFF_FAN255` and an even better estimate of `MPC_AMBIENT_XFER_COEFF`.
