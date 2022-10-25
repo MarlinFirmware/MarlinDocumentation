@@ -15,109 +15,112 @@ category: [ articles, getting-started ]
 
 Visit the [Setting up Visual Studio Code](//code.visualstudio.com/docs/setup/setup-overview) page to download and install the latest VSCode for your particular platform.
 
-### 2. Install the PlatformIO IDE
+### 2. Download Marlin Source Code
 
-Head over to the "[Get PlatformIO IDE](//platformio.org/install/ide?install=vscode)" page to learn how to install PlatformIO IDE in VSCode.
+You can download the latest Marlin source code from the [Downloads](/meta/download/) page. Older versions and detailed Release Notes can be downloaded from the [Marlin Releases](//github.com/MarlinFirmware/Marlin/releases) page on GitHub.
+
+The 'latest' version might not always be the 'greatest' version for your setup. Be sure to ask around in our [Discord community](//discord.gg/n5NJ59y) if you need assistance with any version of Marlin Firmware.
+
+### 3. Install PlatformIO IDE
+
+The first time you open Marlin source code in VSCode it will recommend you install the extensions **Auto Build Marlin** and **PlatformIO IDE**. Simply answer "Yes" to install the extensions, or follow the instructions below.
+
+See "[Get PlatformIO IDE](//platformio.org/install/ide?install=vscode)" for instructions on installing the **PlatformIO IDE** extension in VSCode.
 
 ![Install PlatformIO IDE](/assets/images/basics/install_platformio_vscode/install_platformio_vscode.png)
 
-### 3. Download Marlin source code
-
-You can get it from this site [Downloads](/meta/download/) page or, for more revisions, directly from [Github "releases" page](https://github.com/MarlinFirmware/Marlin/releases)
-
-Note that 'latest' doesn't always mean 'greatest', you can consult with people in [Discord community](https://discord.gg/n5NJ59y) about current best version for your hardware and needs.
-
 ### 4. Open Marlin in VSCode / PlatformIO
 
-Unzip your downloaded archive. It's less critical than with Arduino IDE, but it's still advisable to keep file path as short as possible and avoid non-latin letters, spaces and other special characters.
+Unzip the downloaded archive to your preferred location. Although modern systems handle complex paths well, it may still help to keep the filepath short and avoid non-Latin letters, spaces, and other special characters in the complete filepath.
 
 You can open Marlin in *Visual Studio Code* in one of several ways:
 - Drag your downloaded Marlin Firmware folder onto the *Visual Studio Code* application icon, or
 - Use the **Open…** command in the *VSCode* **File** menu, or
 - Open the PIO Home tab and click the "**Open Project**" button.
 
-### 5. Get example configurations
+### 5. Example Configurations
 
-Go to [example configurations repository](https://github.com/MarlinFirmware/Configurations/), select branch corresponding to your Marlin source code version and download archive. Pay extra attention to versions, i.e. '2.1.x' branch of Marlin is not '2.1.1' release and won't accept '2.1.1' configirations.
+Go to the [Marlin Configurations](//github.com/MarlinFirmware/Configurations/) repository and use the drop-down menu to select the branch corresponding to the Marlin version you previously downloaded. (Configurations links can also be found on the [Downloads](/meta/download/) page.) Make sure the Configuration version number exactly matches your Marlin version. For example, if you downloaded Marlin version 2.1.1 you should use the `Configurations` branch named "`release-2.1.1`." (For the patched `2.1.x` version of Marlin use the latest branch starting with "`release-2.1...`.")
 
 ![Download configs](/assets/images/basics/install_platformio_vscode/download_configs.png)
 
-Unzip archive, find configuration files for your printer (or closest ones) and copy them to **Marlin/** folder. Don't forget **_Bootscreen.h** and **_Statusscreen.h** if any present.
+Unzip the archive, find the configuration files for your printer (or the closest match) and copy them to the `Marlin/` folder. Don't forget `_Bootscreen.h` and `_Statusscreen.h`, if present.
 
-Many example configurations contain 'readme' file with useful notes and instructions, make sure to read it.
+If any "README" file is included with the configurations be sure to review it for helpful notes and instructions.
 
-Some examples might contain outdated definitions that could produce build errors, please submit bugreport if you find any.
-
+If you find any errors or outdated descriptions in any configurations please submit a [bug report or patch](//github.com/MarlinFirmware/MarlinDocumentation/issues) to fix the issue.
 
 #### Optional: Change your board
 
-Open **Marlin/Configuration.h** and set `#define MOTHERBOARD NAME_OF_YOUR_BOARD`, you can find all current correct names in **Marlin/src/core/boards.h**
+Edit `Marlin/Configuration.h` and set your board using `#define MOTHERBOARD BOARD_MYBOARDNAME`. All available board names are listed in `Marlin/src/core/boards.h`. Don't forget to include "`BOARD_`" when 
 
-Then you might need to change stepper drivers (`_DRIVER_TYPE`) and serial ports (`SERIAL_PORT`). Easiest way to find correct serial port values is to peek at other example configurations using same board.
+You may need to change the stepper drivers (`_DRIVER_TYPE`) and serial ports (`SERIAL_PORT`). The easiest way to find correct serial port values is to look at other example configurations that use an identical or similar board.
 
+### 6. Set Build Environment
 
-### 6. Set your environment
+To manually set the environment for your board:
 
-To manually set the environment for your board:<br/>
-Open the file `platformio.ini` and change `default_envs` to the environment that your board uses. Look through this file for your chip's environment name. For example, the environment name for the **LPC1768** chip appears as `[env:LPC1768]`. Omit the outer wrapper: `[env:____]`.
-`_maple` environments are deprecated and should only used as last resort, if regular ones don't work.
+- Open the file `platformio.ini` and change `default_envs` to the environment that your board uses.
+- Determining the correct environment for the board is not trivial. See "**Board Environments**" below.
 
 ![Multi Environments](/assets/images/basics/install_platformio_vscode/platformio_ini.png)
 
-When you click the **PlatformIO** button, you will see the **PROJECT TASKS** including **Build** and **Upload**. These buttons will build and upload your default environment.
+Clicking the **PlatformIO** button reveals the **PROJECT TASKS** panel. The panel contains a tree view listing the many environments that you can build Marlin for. The "Default" environment is the one you set in the `platformio.ini` file.
 
 ![Select PIO Environment](/assets/images/basics/install_platformio_vscode/select_environment.png)
 
-If you don't want to set `default_envs`, select the environment for your board from the **PlatformIO Project Tasks list**.
+Whether you set `default_envs` or not, you can always locate the environment for your board in the PlatformIO **Project Tasks** list and initiate the task from there.
 
-#### Identifying your board's environment
+#### Find Board Environments
 
-The PlatformIO environment needed for a motherboard is in the comments for the board in the **pins.h** file. In Marlin 2.0 it's located in a subdirectory **Marlin/src/pins/pins.h**.
+For each `MOTHERBOARD` there are one or more PlatformIO environments that tell PlatformIO how to build the firmware for it. In Marlin we keep track of these environments using comments in the file `pins.h` (located at `Marlin/src/pins/pins.h` since Marlin 2.0).
 
 **Example:**
 
-  The Configuration.h file says `#define MOTHERBOARD BOARD_RAMPS_14_EFB`
+  - The `Configuration.h` file says `#define MOTHERBOARD BOARD_RAMPS_14_EFB`.
 
-  Search the **pins.h** file for **RAMPS_14_EFB** until you come to the following:
+  - Search the `pins.h` file for `RAMPS_14_EFB` until you find a block to include the correct pins file:
+    ```cpp
+    #elif MB(RAMPS_14_EFB, RAMPS_14_EEB, RAMPS_14_EFF, RAMPS_14_EEF, RAMPS_14_SF)
+      #include "ramps/pins_RAMPS.h"  // ATmega2560, ATmega1280     env:mega2560 env:mega1280
+    ```
 
-  ```cpp
-  #elif MB(RAMPS_14_EEB)
-     #include "pins_RAMPS.h"     // ATmega1280, ATmega2560  env:megaatmega1280 env:megaatmega2560
-  ```
+  - The first part of the comment lists possible MCUs for the board (as plain text for display).
 
-  The first part of the comment lists the CPU(s) used in the board.
+  - The next part lists all the "`env:xxxx`" entries (found in the PlatformIO `.ini` files) that apply to this board.
 
-  The env:xxxx section(s) are the PlatformIO environment(s) that are used for this board.
+Some boards have more than one build environment (such as one for a 512K MCU or another for Native USB). Refer to the `.ini` files in the `ini` folder for the complete build details.
 
-Some boards give you a selection of build environments, you can look at files in **ini/** folder for their descriptions.
+### 7. Build, Clean, and Upload
 
-### 7. Initiate Build, Clean or Upload task
+A PlatformIO task can be initiated via the PlatformIO IDE **Project Tasks**, the PlatformIO IDE **Status Bar** icons at the bottom of the window, the VSCode Command Palette, or the Build/Upload/Clean buttons in **Auto Build Marlin**.
 
-Initiating a task is done via **PlatformIO's Project Tasks** or the bottom **Status Bar** icons.
-
-First build try more or less expected to fail with some random error due to background processings done by platformio and VSCode, just wait a minute and hit **Build** again.
+Sometimes a first build will fail due to random cryptic errors, possibly due to a "race condition" in the compiler. Just wait a moment and hit **Build** again.
 
 ![PIO Command Icons](/assets/images/basics/install_platformio_vscode/pio_command_icons_call_outs.png)
 
 ![Terminal Window](/assets/images/basics/install_platformio_vscode/terminal_window.png)
 
-Terminal tab provide log of the build process with errors (red) and informational warnings (yellow).
+The Terminal tab provides a build log with errors (red) and informational warnings (yellow).
 - The panel can be re-sized.
 - The console can be scrolled via the mouse scroll wheel or with the scroll bar.
 - Text can be highlighted and copied to the clipboard.
 
-Errors usually tell exactly what's wrong in configuration and often provide instructions to fix. First error is most relevant, others might be just result of first one and don't provide any useful info. When asking communtity for support please provide full build log or screenshot with first errors.
+Errors emitted in a Marlin build will usually explain exactly what's wrong in configuration and provide instructions on how to fix them and how to update older settings. The first error reported is the most relevant; others might just be the result of the first, and are less useful. When asking for support it will help to provide a full build log or a screenshot that includes the first error.
 
-Warnings can be mostly ignored.
+The `Warnings.cpp` file will emit any important warnings about the build. Warnings about code can usually be ignored.
 
-- If you observe strange errors you should first try to run 'Clean' task that deletes all intermediary files, so next build will compile everything anew. 
-- Sometimes very last changes to configuration gets ignored by platformio. To avoid this, make sure you saved files (`Ctrl+S`) before hitting 'Build'
+- If the build fails or you encounter strange errors, first do a 'Clean' task to delete all intermediate build files. The next build will compile everything anew.
+- Sometimes a change to the configuration is not noticed by the PlatformIO compiler. For best results, always do a Save All before starting the Build.
 
-### 8. 'firmware.bin' file
+### 8. The 'firmware.bin' File
 
-With few exceptions, most newer boards require the `firmware.bin` file to be copied onto the onboard SD card, and then you must reboot the printer to complete the install. PlatformIO will try to copy the file automatically if the board is connected and your PC can see the SD card, but this may not always work.
+*This section pertains only to 32-bit ARM builds. An AVR build produces a HEX file that must be uploaded to the board over USB.*
+
+With some exceptions, boards with an onboard SD card require the `firmware.bin` file to be copied onto the onboard SD card, and then you must reboot the printer to complete the install. PlatformIO will try to copy the file automatically if the board is connected and your PC can see the SD card, but this may not always work.
 
 ![Bin file location](/assets/images/basics/install_platformio_vscode/firmware_bin.png)
 
-In these cases, you'll need to locate the `firmware.bin` file and copy it over to the SD card manually. 
-Most borads/printers need exact filename (i.e. `firmware.bin`, `elegoo.bin`), Creality boards require `.bin` with name different from previously installed one.
+In these cases, locate the `firmware.bin` file and copy it to the SD card manually. Most bootloaders require a specific filename (i.e., `firmware.bin`, `elegoo.bin`, etc.). Some Creality boards require the `.bin` file to have a name different from the previously installed one.
+
+Once a firmware file has been installed, it may be renamed to `FIRMWARE.CUR` on the SD card. This file can be deleted.
