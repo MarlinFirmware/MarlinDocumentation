@@ -21,7 +21,7 @@
 /**
  * By : @dust
  *
- * Hevly based on orriginal u8glib converter.js
+ * heavily based on original u8glib converter.js
  * By : @jbrazio
  *      @thinkyhead
  *      @shitcreek
