@@ -21,11 +21,10 @@
 /**
  * By : @dust
  *
- * heavily based on original u8glib converter.js
+ * Heavily based on original u8glib converter.js
  * By : @jbrazio
- *      @thinkyhead
- *      @shitcreek
- *
+ *    : @thinkyhead
+ *    : @shitcreek
  */
 
 var bitmap_converter = function() {
@@ -66,7 +65,7 @@ var bitmap_converter = function() {
         $pasted.val(paste_message).css('color', '');
       },
 
-      /**
+     /**
       * Set the image src to some new data.
       * On $img.load it will call generate_cpp.
       */
@@ -80,7 +79,7 @@ var bitmap_converter = function() {
             .attr('src', data_url);         // Start loading image data
       },
 
-      /**
+     /**
       * Read a Blob of image data given a file reference
       *
       * Called by:
@@ -96,7 +95,7 @@ var bitmap_converter = function() {
         reader.readAsDataURL(fileref);
       },
 
-      /**
+     /**
       * Draw the given image into one or both canvases.
       */
       render_image_into_canvases = function($i, notlarge) {
@@ -116,7 +115,7 @@ var bitmap_converter = function() {
         }
       },
 
-      /**
+     /**
       * When anything changes the C++ is regenerated here.
       * Use no_render to indicate the preview won't change.
       *
@@ -170,12 +169,12 @@ var bitmap_converter = function() {
 
         cpp += 'extern const uint16_t image_data_' + iw + 'x' + ih + 'x16[' + iw * ih + '] = {\n';
 
-        /**
+       /**
         * Print the data as hex.
         */
 
-        for (var y = 0; y < ih; y++) {              // loop Y
-          for (var x = 0; x < iw * 4; x += 4) {         // loop the width
+        for (var y = 0; y < ih; y++) {            // loop Y
+          for (var x = 0; x < iw * 4; x += 4) {   // loop the width
             var i = y * iw * 4  + x;
             var r_data = data[i] >> 3;
             var g_data = data[i+1] >> 2;
@@ -189,7 +188,7 @@ var bitmap_converter = function() {
 
         cpp += '};\n\n#endif // HAS_GRAPHICAL_TFT\n';
 
-        /**
+       /**
         * Set the output value.
         * Make the field tall enough to show all lines.
         * Show the preview image and output fields.
@@ -202,13 +201,13 @@ var bitmap_converter = function() {
         return false;
       },
 
-      /**
+     /**
       * Get ready to evaluate incoming data
       */
       prepare_for_new_image = function() {
         $err.hide();
 
-        /**
+       /**
         * Kill most form actions until an image exists.
         *
         * Since the previous image isn't cleared until
@@ -218,7 +217,7 @@ var bitmap_converter = function() {
         $img.off();
       },
 
-      /**
+     /**
       * Convert C++ text representation back into an image.
       *
       * Finds the correct line-length before scanning for data.
@@ -299,7 +298,7 @@ var bitmap_converter = function() {
         $filein.val('');
       },
 
-      /**
+     /**
       * Prep the form for a pasted image.
       * Call to load and process the image data.
       */
@@ -312,7 +311,7 @@ var bitmap_converter = function() {
         load_file_into_image(fileref);
       },
 
-      /**
+     /**
       * Handle a paste into the code/image input field.
       * May be C++ code or a pasted image.
       * For image data call process_pasted_image to process it.
@@ -369,7 +368,7 @@ var bitmap_converter = function() {
         }
       };
 
-  /**
+ /**
   * File Input Change Event
   *
   * If the file input value changes try to read the data from the file.
