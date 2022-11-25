@@ -1,0 +1,27 @@
+---
+title:        'RGB565 to C/C++ Converter'
+description:  'Convert a JPEG or PNG file to a C/C++ byte array.'
+category:     [ tools ]
+---
+
+<script type="text/javascript" src="./converter.js"></script>
+
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-12" id="bitmap-converter">
+      <h1>RGB565 Converter</h1>
+      <p>Convert image files and data into Marlin Screens for RGB565 Color Displays.</p>
+      <p>Output resolution is the same as input resolution, so scale the image to fit the display first.</p>
+      <div class="file-selector">
+        <canvas id="preview-lg" width="32" height="32"></canvas>
+        <div id="err-box"></div>
+        <input type="text" id="pasted" size="30" autocomplete="off" />
+        <input type="file" id="file-input" accept="image/*" />
+      </div>
+      <div id="cpp-container">
+        <p>Copy the following code into your <span id="where">program</span>:</p>
+        <textarea id="output" cols="80" rows="4" editable="false" wrap="off" readonly="readonly">Select or drop an image above.</textarea>
+      </div>
+    </div>
+  </div>
+</div>
