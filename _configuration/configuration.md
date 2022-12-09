@@ -4049,6 +4049,7 @@ Execute specified G-code commands immediately after power-on.
 ## Custom User Menu Items
 
 User-defined menu items to run custom G-code. Up to 25 may be defined, but the actual number is LCD-dependent.
+Only works with DWIN_MARLINUI_PORTRAIT or DWIN_MARLINUI_LANDSCAPE.
 
 ```cpp
 // Custom Menu: Main Menu
