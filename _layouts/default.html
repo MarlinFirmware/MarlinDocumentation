@@ -44,7 +44,9 @@
        * with the main page.
        */
       head.load(
-          "{{ '/assets/stylesheets/font-awesome.min.css' | prepend: site.baseurl }}",
+          "{{ '/assets/stylesheets/fontawesome.min.css' | prepend: site.baseurl }}",
+          "{{ '/assets/stylesheets/solid.min.css' | prepend: site.baseurl }}",
+          "{{ '/assets/stylesheets/brands.min.css' | prepend: site.baseurl }}",
 
           "{{ 'jquery-2.2.1.min.js' | prepend: site.js }}",
           "{{ 'jquery-ui.min.js' | prepend: site.js }}",

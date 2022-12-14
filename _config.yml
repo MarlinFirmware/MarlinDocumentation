@@ -21,6 +21,7 @@ twitter:
 social:
   name: Marlin Firmware
   links:
+    - https://fosstodon.org/@marlinfirmware
     - https://www.facebook.com/groups/1049718498464482/
     - http://forums.reprap.org/list.php?415
     - https://discord.gg/n5NJ59y
@@ -28,6 +29,7 @@ social:
 repository:
   main: 'https://github.com/MarlinFirmware/Marlin'
   doc: 'https://github.com/MarlinFirmware/MarlinDocumentation'
+  config: 'https://github.com/MarlinFirmware/Configurations'
 
 analytics:
   id: 'UA-76230130-1'

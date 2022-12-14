@@ -50,7 +50,7 @@ There are now many community resources for users of Marlin. If you're looking fo
 - [Marlin YouTube Videos](//youtube.com/results?search_query=marlin+firmware)
 
 ### Promote Marlin
-Marlin needs evangelists, enthusiasts, fans, and everyday users to tell everyone just how awesome Marlin is. Users and vendors may be wary of installing Marlin 2.0 on their trusty old and reliable hardware. Let them know that Marlin continues to evolve! And be sure to engage with Marlin's Twitter feed at [@MarlinFirmware](//twitter.com/MarlinFirmware).
+Marlin needs evangelists, enthusiasts, fans, and everyday users to tell everyone just how awesome Marlin is. Users and vendors may be wary of installing Marlin 2.0 on their trusty old and reliable hardware. Let them know that Marlin continues to evolve! And be sure to engage with Marlin's Mastodon feed at [@MarlinFirmware@fosstodon.org](//fosstodon.org/@marlinfirmware).
 
 ### Nag Your Vendor
 Some companies do a very poor job of deploying Marlin on their hardware. And a dark side of open source is that some vendors fail to honor the terms of our license which requires them to give you the exact Marlin source code for the firmware on your machine. We understand that companies want to be protective of their trade secrets, but our license terms are clear, and the years of work we have put into Marlin is a major foundation of these businesses. If your vendor is misbehaving, send them a polite message to remind them of your rights under the GPL and their obligation as beneficiaries of Open Source software.
