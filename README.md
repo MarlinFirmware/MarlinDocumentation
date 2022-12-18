@@ -2,7 +2,7 @@
 
 This repository contains the raw documentation for [Marlin 3D printer firmware](//github.com/MarlinFirmware/Marlin) which is regularly deployed to [marlinfw.org](//marlinfw.org/). This documentation is open and available on Github so anyone may contribute by completing, correcting, or creating articles.
 
-![Marlin logo](assets/images/logo/marlin/small.png)
+<div align="center"><img width="300" src="https://raw.githubusercontent.com/MarlinFirmware/Marlin/bugfix-2.1.x/buildroot/share/pixmaps/logo/marlin-outrun-nf-500.png" /></div>
 
 ## Technical details
 
