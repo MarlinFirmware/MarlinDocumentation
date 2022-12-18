@@ -41,7 +41,3 @@ category: [ articles, getting-started ]
   - Click the "Build" button to test your Marlin build.
   - Click the "Upload" or "Debug" button to install Marlin onto your board.
   - Click the "Clean" button to delete old build files.
-
-### Troubleshooting
-
-Please check out our [Auto Build Troubleshooting Guide](auto_build_problems.html) for help.

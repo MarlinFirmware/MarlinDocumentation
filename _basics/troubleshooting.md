@@ -36,6 +36,10 @@ As seen in this [Chris's Basement video](//youtu.be/H-c8UTg-EMU), the RRD displa
 ### G29 Probing Failed!
 Marlin uses the `Z_PROBE_LOW_POINT` value to prevent the probe from pressing too hard against the bed and getting damaged. A value of -2 works well for a flat and level bed, but if the bed isn't trammed yet, the probe may exceed the low point and trigger a "Probing Failed" error. To prevent this from happening, change the setting to something like -10 during initial setup, and then you can change it back after the bed is perfectly trammed.
 
+### One Side High, One Side Low
+- **Problem**: Bed probe done, leveling compensation enabled, and the first layer comes out out too squished on the right side, or too high on the left side, or *vice-versa*.
+- **Solution**: Make sure the probe is always perpendicular to the bed as the carriage moves. If the wires or Bowden tube are pulling on the carriage, or if the X gantry is even slightly twisted, the probe will not remain perpendicular and its readings will be garbaggio. There is a feature called `MECHANICAL_GANTRY_CALIBRATION` that can be used to compensate, but it is always best to tackle any mechanical issues first.
+
 ### Heating Failed!
 Thermal Runaway is a constant concern with heaters, so Marlin watches heaters for some common runaway conditions:
 
@@ -73,12 +77,14 @@ EEPROM CRC mismatch - (stored) 4235 != 6244 (calculated)!
 **Troubleshooting Procedure**
 
 - If using Octoprint, turn off the option to disconnect on "Error" messages before proceeding.
+
 - Do [`M502`](/docs/gcode/M502.html) and [`M500`](/docs/gcode/M500.html) and then reboot the machine. This procedure will initialize the EEPROM to your configured "factory" settings.
-- If you still see checksum or data-size errors, add the following option to your `Configuration.h`, flash, and reboot.
+
+- If you continue to get error messages, use `DEBUG_EEPROM_READWRITE` to run a check for mismatched fields during [`M501`](/docs/gcode/M501.html) (read) and [`M500`](/docs/gcode/M500.html) (write). A mismatched field is a bug, so please report these errors to the Marlin project. To do this check, add the following option to your `Configuration.h`, flash, and reboot:
   ```cpp
   #define DEBUG_EEPROM_READWRITE
   ```
-  This option makes Marlin check the EEPROM data during [`M501`](/docs/gcode/M501.html) (read) and [`M500`](/docs/gcode/M500.html) (write) and report mismatched fields. Please report these errors to the Marlin project, because a mismatched field may indicate a bug in the code.
+
 - You can also enable the `EEPROM_AUTO_INIT` option to automatically reset the EEPROM when the data structure changes or the data gets corrupted.
 
 ### Sanity Check Errors
@@ -115,7 +121,3 @@ These tips are collected from various reports we have received. See [Trinamic tr
 ### BLTouch Pin Drop / Blinking
 - Servo voltage / signals may be unstable due to heater signal lines being too close to servo traces.
 - **Solution**: Disconnect the servo signal line after the print starts.
-
-### Auto Build Marlin
-
-  See [Auto Build Troubleshooting Guide](auto_build_problems.html).

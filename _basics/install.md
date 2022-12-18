@@ -40,13 +40,12 @@ To configure Marlin you can use the Arduino IDE or your [favorite text editor](/
 
 ### Build and Install
 
-Marlin installation procedure can vary depending on which version of Marlin you want to install and which board you're installing onto. Once your Marlin build environment is set up installing updates can be a one-click operation.
+Marlin installation can vary depending on which version of Marlin you want to install and which board you're installing onto. Once your Marlin build environment is set up installing updates can be a one-click operation.
 
 Marlin Version|Platform(s)|Instructions
 --------------|-----------|----
-1.1.x or 2.x|8-bit AVR|[Install Marlin with Arduino IDE](install_arduino.html)
 1.1.9 or 2.x|8-bit AVR, 32-bit ARM|[Install Marlin with PlatformIO](install_platformio.html)
-2.x|LPC1768 (Re-Arm)|[Install Marlin on Re-ARM](install_rearm.html)
+1.1.x or 2.x|8-bit AVR|[Install Marlin with Arduino IDE](install_arduino.html)
 
 {% alert info %}
 Looking for Example Configurations for your machine?
