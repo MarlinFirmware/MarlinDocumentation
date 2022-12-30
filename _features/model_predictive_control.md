@@ -227,7 +227,7 @@ $$ T_{asymp} = \dfrac{T_s(t + \Delta t) ^ 2 - T_s(t + 2 \Delta t) . T_s(t)}{2 . 
 
 Using the identity $$T_{asymp} = T_a + P / h_a$$:
 
-$$ h_a = \dfrac{P}{T_{asymp} - T_a} $$ 
+$$ h_a = \dfrac{P}{T_{asymp} - T_a} $$
 
 Equation $$\eqref{eqdelta}$$ also gives
 
