@@ -16,7 +16,7 @@ The first thing you'll need to do is [download Arduino IDE](//www.arduino.cc/en/
 {% alert warning %}
 - Your printer may require you to install [additional libraries](//www.arduino.cc/en/Guide/Libraries) or a [non-standard Arduino core](//www.arduino.cc/en/Guide/Cores) (_e.g.,_ *Sanguino*, *Teensy++*). See [Configuring Marlin](/docs/configuration/configuration.html) and comments in `Configuration.h`, `Configuration_adv.h`, and `pins_YOUR_BOARD.h` pertaining to your hardware and add-ons. In many cases, instructions and links to resources are included.
 
-- Arduino IDE can only build Marlin for AVR, Due, and Teensy++ 2.0. If you need to install Marlin 2.0 on an ARM Cortex-4 board, see [Installing Marlin (Re-ARM)](install_rearm.html) or [Installing Marlin (PlatformIO)](install_platformio.html) for instructions on building Marlin with PlatformIO.
+- Arduino IDE can only build Marlin for AVR, Due, and Teensy++ 2.0. If you need to install Marlin 2.0 on another board, see [Installing Marlin (PlatformIO)](install_platformio.html) for instructions on building Marlin with PlatformIO.
 {% endalert %}
 
 ### Preparation
