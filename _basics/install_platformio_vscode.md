@@ -56,9 +56,7 @@ You may need to change the stepper drivers (`_DRIVER_TYPE`) and serial ports (`S
 
 ### 6. Find and Set Build Environment
 
-To manually set the environment for your board:
-
-- Open the file `platformio.ini` and change `default_envs` to the environment that your board uses.
+To set the build environment for your board, open the file `platformio.ini` and change `default_envs` to the environment that your board uses.
 
 ![Multi Environments](/assets/images/basics/install_platformio_vscode/platformio_ini.png)
 
