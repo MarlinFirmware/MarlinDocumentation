@@ -38,7 +38,7 @@ You can open Marlin in *Visual Studio Code* in one of several ways:
 
 ### 5. Example Configurations
 
-Go to the [Marlin Configurations](//github.com/MarlinFirmware/Configurations/) repository and use the drop-down menu to select the branch corresponding to the Marlin version you previously downloaded. (Configurations links can also be found on the [Downloads](/meta/download/) page.) Make sure the Configuration version number exactly matches your Marlin version. For example, if you downloaded Marlin version 2.1.1 you should use the `Configurations` branch named "`release-2.1.1`." (For the patched `2.1.x` version of Marlin use the latest branch starting with "`release-2.1...`.")
+Go to the [Marlin Configurations](//github.com/MarlinFirmware/Configurations/) repository and use the drop-down menu to select the branch corresponding to the Marlin version you previously downloaded. (Configurations links can also be found on the [Downloads](/meta/download/) page.) Make sure the Configuration version number exactly matches your Marlin version. For example, if you downloaded Marlin version 2.1.1 you should use the `Configurations` branch named "`release-2.1.2`" or tag "`2.1.2`" (For the patched `2.1.x` version of Marlin use the latest branch starting with "`release-2.1...`.")
 
 ![Download configs](/assets/images/basics/install_platformio_vscode/download_configs.png)
 
