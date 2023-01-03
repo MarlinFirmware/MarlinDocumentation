@@ -81,6 +81,8 @@ For each `MOTHERBOARD` there are one or more PlatformIO environments that tell P
   - The next part lists all the "`env:xxxx`" entries (found in the PlatformIO `.ini` files) that apply to this board.
 
 Some boards have more than one build environment (such as one for a 512K MCU or another for Native USB). Refer to the `.ini` files in the `ini` folder for the complete build details.
+  - `_maple` environments use old LibMaple framework, recommended to use only if regular environment pruduce bugged builds.
+  - `_bft` (former `_xfer`) environments do upload using Marlin's `BINARY_FILE_TRANSFER` feature.
 
 ### 7. Build, Clean, and Upload
 
