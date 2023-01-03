@@ -56,22 +56,13 @@ Edit `Marlin/Configuration.h` and set your board using `#define MOTHERBOARD BOAR
 
 You may need to change the stepper drivers (`_DRIVER_TYPE`) and serial ports (`SERIAL_PORT`). The easiest way to find correct serial port values is to look at other example configurations that use an identical or similar board.
 
-### 6. Set Build Environment
+### 6. Find and Set Build Environment
 
 To manually set the environment for your board:
 
 - Open the file `platformio.ini` and change `default_envs` to the environment that your board uses.
-- Determining the correct environment for the board is not trivial. See "**Board Environments**" below.
 
 ![Multi Environments](/assets/images/basics/install_platformio_vscode/platformio_ini.png)
-
-Clicking the **PlatformIO** button reveals the **PROJECT TASKS** panel. The panel contains a tree view listing the many environments that you can build Marlin for. The "Default" environment is the one you set in the `platformio.ini` file.
-
-![Select PIO Environment](/assets/images/basics/install_platformio_vscode/select_environment.png)
-
-Whether you set `default_envs` or not, you can always locate the environment for your board in the PlatformIO **Project Tasks** list and initiate the task from there.
-
-#### Find Board Environments
 
 For each `MOTHERBOARD` there are one or more PlatformIO environments that tell PlatformIO how to build the firmware for it. In Marlin we keep track of these environments using comments in the file `pins.h` (located at `Marlin/src/pins/pins.h` since Marlin 2.0).
 
