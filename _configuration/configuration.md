@@ -4105,7 +4105,7 @@ User-defined buttons to run custom G-code. Up to 25 may be defined.
 
 ## Host Action Commands
 
-Define host streamer action commands in compliance with the standard. See [this article](https://reprap.org/wiki/G-code#Action_commands){:target="_blank"} for a description of the standard.
+Define host streamer action commands in compliance with the standard. See [this article](//reprap.org/wiki/G-code#Action_commands){:target="_blank"} for a description of the standard.
 
 ```cpp
 //#define HOST_ACTION_COMMANDS
