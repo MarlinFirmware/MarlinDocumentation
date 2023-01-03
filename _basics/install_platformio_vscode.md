@@ -23,9 +23,7 @@ The 'latest' version might not always be the 'greatest' version for your setup. 
 
 ### 3. Install PlatformIO IDE
 
-The first time you open Marlin source code in VSCode it will recommend you install the extensions **Auto Build Marlin** and **PlatformIO IDE**. Simply answer "Yes" to install the extensions, or follow the instructions below.
-
-See "[Get PlatformIO IDE](//platformio.org/install/ide?install=vscode)" for instructions on installing the **PlatformIO IDE** extension in VSCode.
+The first time you open Marlin source code in VSCode it will recommend you install the extensions **PlatformIO IDE** and  **Auto Build Marlin**. Simply answer "Yes" to install the extensions, or follow the instructions below.
 
 ![Install PlatformIO IDE](/assets/images/basics/install_platformio_vscode/install_platformio_vscode.png)
 
