@@ -11,12 +11,9 @@ Marlin is a huge C++ program composed of many files, but here we'll only be talk
 
 - `Configuration.h` contains the core settings for the hardware, language and controller selection, and settings for the most common features and components.
 - `Configuration_adv.h` serves up more detailed customization options, add-ons, experimental features, and other esoterica.
+- `config.ini` may be included to modify the configuration at the start of a build. See the [Configuration with INI](config-ini.html) page for more information.
 
-These two files contain all of Marlin's build-time configuration options. Simply edit or replace these files before building and uploading Marlin to the board. A variety of pre-built configurations are included in the [Configurations repository](//github.com/MarlinFirmware/Configurations) to get you started.
-
-To use configurations from an earlier version of Marlin, try dropping them into the newer Marlin and building. As part of the build process, the `SanityCheck.h` will print helpful error messages explaining what needs to be changed.
-
-Tools like [Winmerge](//winmerge.org/) make it much easier to compare configurations and copy settings into a new configuration.
+The two `.h` files contain all of Marlin's build-time configuration options. Simply edit or replace these files, then build and upload Marlin to the board. Hundreds of user-donated configurations are posted at the [Configurations repository](//github.com/MarlinFirmware/Configurations) to get you started.
 
 ## Compiler Directives
 
@@ -30,10 +27,15 @@ Settings can be enabled, disabled, and assigned values using C preprocessor synt
 #define OPTION_VALUE 22    // this setting is "22"
 ```
 
+## Migration
+
+To use configurations from an earlier version of Marlin, first try dropping them into the newer Marlin, updating `CONFIGURATION_H_VERSION` and `CONFIGURATION_ADV_H_VERSION`, and building the firmware. As part of the build process, Marlin's sanity-checking prints out helpful error messages explaining what needs to change.
+
+For migrating settings to a new Configuration file you can use tools like Notepad++ or [Winmerge](//winmerge.org/) to compare old configurations with the newer (default) configurations and copy settings over on a change-by-change basis. Most settings will come over without changes, then you can review any tricky changes that remain.
 
 ## Sources of Documentation
 
-The most authoritative source on configuration details will always be **the configuration files themselves**. They provide good descriptions of each option, and are themselves the source for most of the information presented here.
+The most authoritative source on configuration details will always be **the configuration files themselves**. They provide pretty complete descriptions of each option, and are themselves the source for most of the information presented here.
 
 If you've never configured and calibrated a 3D Printer before, here are some good resources:
 
@@ -3701,7 +3703,7 @@ To use TMC2130 stepper drivers in SPI mode connect your SPI2130 pins to the hard
   #endif
   ...
 ```
-You'll need to import the [L6470 library](//github.com/ameyer/Arduino-L6470) into the Arduino IDE for this. See `Configuration_adv.h` for the full set of sub-options.
+You'll need to import the [L6470 library](//github.com/ameyer/Arduino-L6470) into the Arduino IDE for this. See `Configuration_adv.h` for the full set of sub-options. NOTE: Support for L6470 was removed from Marlin in version 2.1, but may be restored in a future version if there is some demand.
 
 ## Experimental i2c Bus
 ```cpp
