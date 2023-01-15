@@ -590,6 +590,9 @@ div.highlight { margin-bottom: 25px; }
   display: table-cell;
   vertical-align: middle;
   float: none;
+  .fa-1x { padding-top: 1em; }
+  .fa-2x { padding-top: 0.5em; }
+  .fa-4x { padding-top: 0.25em; }
 }
 .custom-alert-text {
   display: table-cell;

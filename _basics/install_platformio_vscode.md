@@ -23,55 +23,42 @@ The 'latest' version might not always be the 'greatest' version for your setup. 
 
 ### 3. Install PlatformIO IDE
 
-The first time you open Marlin source code in VSCode it will recommend you install the extensions **Auto Build Marlin** and **PlatformIO IDE**. Simply answer "Yes" to install the extensions, or follow the instructions below.
-
-See "[Get PlatformIO IDE](//platformio.org/install/ide?install=vscode)" for instructions on installing the **PlatformIO IDE** extension in VSCode.
+The first time you open the Marlin project in VSCode it will recommend you install the **Auto Build Marlin** extension, which will also install **PlatformIO IDE**. Simply answer "Yes" to install the extensions, or follow the instructions below.
 
 ![Install PlatformIO IDE](/assets/images/basics/install_platformio_vscode/install_platformio_vscode.png)
 
 ### 4. Open Marlin in VSCode / PlatformIO
 
-Unzip the downloaded archive to your preferred location. Although modern systems handle complex paths well, it may still help to keep the filepath short and avoid non-Latin letters, spaces, and other special characters in the complete filepath.
+Unzip the downloaded archive to your preferred location. (Although modern systems can handle very long paths, it may still help with the build process if the filepath is short without any special characters.)
 
 You can open Marlin in *Visual Studio Code* in one of several ways:
-- Drag your downloaded Marlin Firmware folder onto the *Visual Studio Code* application icon, or
-- Use the **Open…** command in the *VSCode* **File** menu, or
+- Drag your downloaded Marlin Firmware folder onto the *Visual Studio Code* application icon.
+- Use the **Open…** command in the *VSCode* **File** menu.
 - Open the PIO Home tab and click the "**Open Project**" button.
 
 ### 5. Example Configurations
 
-Go to the [Marlin Configurations](//github.com/MarlinFirmware/Configurations/) repository and use the drop-down menu to select the branch corresponding to the Marlin version you previously downloaded. (Configurations links can also be found on the [Downloads](/meta/download/) page.) Make sure the Configuration version number exactly matches your Marlin version. For example, if you downloaded Marlin version 2.1.1 you should use the `Configurations` branch named "`release-2.1.1`." (For the patched `2.1.x` version of Marlin use the latest branch starting with "`release-2.1...`.")
+Go to the [Marlin Configurations](//github.com/MarlinFirmware/Configurations/) repository and use the drop-down menu to select the branch corresponding to your downloaded Marlin version. Make sure the Configuration version number exactly matches your Marlin version. For example, if you downloaded Marlin version 2.1.1 you should use the `Configurations` branch named "`release-2.1.1`" (or tag "`2.1.1`"). For the HEAD of `2.1.x` use the latest "release" configurations. Convenient links for current versions are posted on the [Downloads](/meta/download/) page.
 
 ![Download configs](/assets/images/basics/install_platformio_vscode/download_configs.png)
 
 Unzip the archive, find the configuration files for your printer (or the closest match) and copy them to the `Marlin/` folder. Don't forget `_Bootscreen.h` and `_Statusscreen.h`, if present.
 
-If any "README" file is included with the configurations be sure to review it for helpful notes and instructions.
+If a "README" file is included with the configurations be sure to review it for helpful notes and instructions.
 
 If you find any errors or outdated descriptions in any configurations please submit a [bug report or patch](//github.com/MarlinFirmware/MarlinDocumentation/issues) to fix the issue.
 
 #### Optional: Change your board
 
-Edit `Marlin/Configuration.h` and set your board using `#define MOTHERBOARD BOARD_MYBOARDNAME`. All available board names are listed in `Marlin/src/core/boards.h`. Don't forget to include "`BOARD_`" when 
+Edit `Marlin/Configuration.h` and set your board using `#define MOTHERBOARD BOARD_MYBOARDNAME`. All available board names are listed in `Marlin/src/core/boards.h`. All board identifiers begin with `BOARD_` so don't forget to include "`BOARD_`" in the name.
 
 You may need to change the stepper drivers (`_DRIVER_TYPE`) and serial ports (`SERIAL_PORT`). The easiest way to find correct serial port values is to look at other example configurations that use an identical or similar board.
 
-### 6. Set Build Environment
+### 6. Find and Set Build Environment
 
-To manually set the environment for your board:
-
-- Open the file `platformio.ini` and change `default_envs` to the environment that your board uses.
-- Determining the correct environment for the board is not trivial. See "**Board Environments**" below.
+To set the build environment for your board, open the file `platformio.ini` and change `default_envs` to the environment that your board uses.
 
 ![Multi Environments](/assets/images/basics/install_platformio_vscode/platformio_ini.png)
-
-Clicking the **PlatformIO** button reveals the **PROJECT TASKS** panel. The panel contains a tree view listing the many environments that you can build Marlin for. The "Default" environment is the one you set in the `platformio.ini` file.
-
-![Select PIO Environment](/assets/images/basics/install_platformio_vscode/select_environment.png)
-
-Whether you set `default_envs` or not, you can always locate the environment for your board in the PlatformIO **Project Tasks** list and initiate the task from there.
-
-#### Find Board Environments
 
 For each `MOTHERBOARD` there are one or more PlatformIO environments that tell PlatformIO how to build the firmware for it. In Marlin we keep track of these environments using comments in the file `pins.h` (located at `Marlin/src/pins/pins.h` since Marlin 2.0).
 
@@ -90,6 +77,8 @@ For each `MOTHERBOARD` there are one or more PlatformIO environments that tell P
   - The next part lists all the "`env:xxxx`" entries (found in the PlatformIO `.ini` files) that apply to this board.
 
 Some boards have more than one build environment (such as one for a 512K MCU or another for Native USB). Refer to the `.ini` files in the `ini` folder for the complete build details.
+  - `_maple` environments use old LibMaple framework, recommended to use only if regular environment produce bugged builds.
+  - `_bft` (former `_xfer`) environments do upload using Marlin's `BINARY_FILE_TRANSFER` feature.
 
 ### 7. Build, Clean, and Upload
 
