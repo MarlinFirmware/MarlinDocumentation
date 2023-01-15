@@ -15,18 +15,7 @@ Marlin only needs to be re-flashed when fixed settings are changed in the config
 
 ### Download
 
-Start by downloading the Marlin source code. There are a few [codebases](//en.wikipedia.org/wiki/Codebase) to choose from.
-
-----|-----------
-[Download 2.1.2](//github.com/MarlinFirmware/Marlin/archive/2.1.2.zip)|Current release
-[Download 2.1.x](//github.com/MarlinFirmware/Marlin/archive/2.1.x.zip)|Current release, patched
-[Download bugfix-2.1.x](//github.com/MarlinFirmware/Marlin/archive/bugfix-2.1.x.zip)|"Nightly" build for Marlin 2.1.x _Proceed with Caution!_
-[Download 2.0.9.5](//github.com/MarlinFirmware/Marlin/archive/2.0.9.5.zip)|Previous release
-[Download 2.0.x](//github.com/MarlinFirmware/Marlin/archive/2.0.x.zip)|Previous release, patched
-[Download bugfix-2.0.x](//github.com/MarlinFirmware/Marlin/archive/bugfix-2.0.x.zip)|"Nightly" build for Marlin 2.0.x _Proceed with Caution!_
-[Download 1.1.x](//github.com/MarlinFirmware/Marlin/archive/1.1.x.zip)|Legacy Marlin 1.1
-[Download bugfix-1.1.x](//github.com/MarlinFirmware/Marlin/archive/bugfix-1.1.x.zip)|"Nightly" build. _Proceed with Caution!_
-[Download 1.0.x](//github.com/MarlinFirmware/Marlin/archive/1.0.x.zip)|Legacy Marlin 1.0
+Links for current and previous versions can be found on the [Download Marlin](/meta/download.html) page. If you need an older or specific version go to the [Marlin Releases](//github.com/MarlinFirmware/Marlin/releases){:target="_blank"} page on GitHub.
 
 {% alert warning %}
 - Marlin 1.0 **does not support PlatformIO**. For older versions of Marlin use Arduino IDE.
@@ -50,7 +39,7 @@ Marlin Version|Platform(s)|Instructions
 {% alert info %}
 Looking for Example Configurations for your machine?
 - Marlin 1.1.x : Included in the '`example_configurations`' folder.
-- Marlin 2.x.x : [Hosted separately](//github.com/MarlinFirmware/Configurations). Links on the [Downloads](/meta/download/) page.
+- Marlin 2.x.x : [Hosted separately](//github.com/MarlinFirmware/Configurations){:target="_blank"}. Links on the [Downloads](/meta/download/) page.
 {% endalert %}
 
 ### Troubleshooting
