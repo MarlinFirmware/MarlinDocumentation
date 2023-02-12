@@ -15,7 +15,7 @@ Marlin only needs to be re-flashed when fixed settings are changed in the config
 
 ### Download
 
-Links for current and previous versions can be found on the [Download Marlin](/meta/download.html) page. If you need an older or specific version go to the [Marlin Releases](//github.com/MarlinFirmware/Marlin/releases){:target="_blank"} page on GitHub.
+Links for current and previous versions can be found on the [Download Marlin](/meta/download) page. If you need an older or specific version go to the [Marlin Releases](//github.com/MarlinFirmware/Marlin/releases){:target="_blank"} page on GitHub.
 
 {% alert warning %}
 - Marlin 1.0 **does not support PlatformIO**. For older versions of Marlin use Arduino IDE.
