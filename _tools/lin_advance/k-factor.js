@@ -192,6 +192,7 @@ function genGcode() {
                   'G90 ; Absolute XYZ\n' +
                   'M83 ; Relative E\n' +
                   'G28 ; Home all axes\n' +
+                  'G34 ; Align Z\n' +
                   'T' + TOOL_INDEX + ' ; Switch to tool ' + TOOL_INDEX + '\n' +
                   'G1 Z10 F100 ; Z raise\n' +
                   'M104 S' + NOZZLE_TEMP + ' ; Set nozzle temperature (no wait)\n' +
