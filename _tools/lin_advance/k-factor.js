@@ -69,7 +69,8 @@ function genGcode() {
       LENGTH_SLOW = parseFloat($('#SLOW_LENGTH').val()),
       LENGTH_FAST = parseFloat($('#FAST_LENGTH').val()),
       Z_OFFSET = parseFloat($('#OFFSET_Z').val()),
-      USE_LINENO = $('#LINE_NO').prop('checked');
+      USE_LINENO = $('#LINE_NO').prop('checked'),
+      DO_Z_ALIGNMENT = $('#Z_ALIGNMENT').prop('checked');
 
   if (BED_SHAPE === 'Round') {
     BED_Y = BED_X;
@@ -192,6 +193,7 @@ function genGcode() {
                   'G90 ; Absolute XYZ\n' +
                   'M83 ; Relative E\n' +
                   'G28 ; Home all axes\n' +
+                  (DO_Z_ALIGNMENT ? 'G34 ; Align Z\n' : '') +
                   'T' + TOOL_INDEX + ' ; Switch to tool ' + TOOL_INDEX + '\n' +
                   'G1 Z10 F100 ; Z raise\n' +
                   'M104 S' + NOZZLE_TEMP + ' ; Set nozzle temperature (no wait)\n' +

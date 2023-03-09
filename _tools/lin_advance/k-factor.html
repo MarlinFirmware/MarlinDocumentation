@@ -291,7 +291,12 @@ category:     [ tools ]
           <tr>
             <th><label for="DWELL_PRIME">Dwell Time</label></th>
             <td><input name="DWELL_PRIME" id="DWELL_PRIME" step="0.1" value="2" onblur="validateInput()" /></td>
-            <td>Inserts a pause of x seconds before starting the test pattern to bleed off any residual nozzle pressure</td>
+            <td>Insert a pause of x seconds before starting the test pattern to bleed off any residual nozzle pressure</td>
+          </tr>
+          <tr>
+            <th><label for="Z_ALIGNMENT">Align Z</label></th>
+            <td><input name="Z_ALIGNMENT" type="checkbox" id="Z_ALIGNMENT" /></td>
+            <td>Align the Z gantry by running the G34 command</td>
           </tr>
           <tr class="calibpat2">
             <th><label for="FILENAME">Filename</label></th>
