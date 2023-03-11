@@ -58,7 +58,7 @@ MPC_AMBIENT_XFER_COEFF_FAN255 0.0998
 
 If `M306 T` doesn't work –e.g., with positive temperature coefficient (PTC) hotends– MPC can be configured manually.
 
-1. Start with the part cooling fan off and hotend cold. Record the ambient starting  temperature Ta. e.g., Ta = 20°C.
+1. Start with the part cooling fan off and hotend cold. Record the ambient starting temperature Ta. e.g., Ta = 20°C.
 1. Set the temperature to 200°C and then back to 0°C once it reaches around 200°C. Measure the curve of temperature
 vs time while the hotend is heating, starting at time = 0s.
 1. Measure the fastest rate Rf at which temperature increases in °C/s. e.g., Rf = 3°C/s.
