@@ -242,3 +242,22 @@ And for any known $$T_s(t)$$ equation $$\eqref{approx}$$ can be solved to give
 $$ \alpha_s = \dfrac{\alpha_b . (T_s(t) - T_{asymp})}{T_s(t) - T_{asymp} - (T_a - T_{asymp}) . e^{-\alpha_b . t}} $$
 
 `M306 T` finds a $$t$$ and $$\Delta t$$ with known sensor values for $$T_s(t)$$, $$T_s(t + \Delta t)$$ and $$T_s(t + 2 \Delta t)$$. These are used with the equations above to calculate values for `MPC_SENSOR_RESPONSIVENESS`, `MPC_AMBIENT_XFER_COEFF` and `MPC_BLOCK_HEAT_CAPACITY`. These values are then used to target a particular temperature while heat loss is measured to obtain `MPC_AMBIENT_XFER_COEFF_FAN255` and an even better estimate of `MPC_AMBIENT_XFER_COEFF`.
+### Automatic Differential Tuning
+
+If asymptotic tuning (above) fails, or Differential Tuning is forced with `M306 TD` then automatic tuning uses the following algorithm.
+
+As the block is heated from ambient, the maximum rate of heating, $R_f$, can be used to establish `MPC_BLOCK_HEAT_CAPACITY` in J/K, using:
+
+$$ C_b = \dfrac{P}{R_f} $$
+
+Furthermore, the temperature, $T_f$, and time, $t_f$, at which the rate of heating is fastest can be used to get `MPC_SENSOR_RESPONSIVENESS` in K/s/K using:
+
+$$ \alpha_s = \dfrac{R_f}{R_f.t_f + T_{s0} - T_f} $$
+
+Where $ T_{s0} = T_a = $ starting ambient temperature
+
+Finally, to calculate the ambient tranfer coefficients, the hotend is heated to a steady state sensor temperature, $ T_s $ and the ambient transfer coefficient is given by (from eq. 12):
+
+$$ h_a = \dfrac{P}{T_s - T_{s0}} $$
+
+The heat transfer coefficients for both zero and full part cooling are used in the model.
