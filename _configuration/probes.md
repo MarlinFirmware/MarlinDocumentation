@@ -60,7 +60,7 @@ What kind of probe do you have?
 
 - `FIX_MOUNTED_PROBE`
 ![Fixed Probe - EZABL](/assets/images/config/fixed_probe_EZABL.png){: .floater.framed}
-  Use this option for a fixed switch or inductive probe. This is the option to select if the nozzle itself is used as the probe.
+  Use this option for a fixed switch or inductive probe. This is also the option to select if the nozzle itself is used as the probe.
 
 - `Z_ENDSTOP_SERVO_NR`
 ![Probe](/assets/images/config/probe.png){: .floater.framed}
