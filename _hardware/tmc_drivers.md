@@ -52,9 +52,9 @@ PlatformIO will automatically download all libraries it requires, so skip direct
 - Navigate to the downloaded file and click the **Open** button.
 
 ## Wiring
-Because the TMC drivers require a way for communication and configuring the drivers (outside of standalone mode) they also require additional setup. TMC2130 and TMC2660 use SPI for communication and TMC2208 uses UART (Serial).
+Because the TMC drivers require a way for communication and configuring the drivers (outside of standalone mode) they also require additional wiring (This may be integrated into the Motherboard .eg SKR. See above table for Driver Control type.
 
-### TMC2130
+### SPI CONTROL
 
 Motherboard | Driver
 -----------:|:-------
@@ -65,14 +65,14 @@ CS          | CS
 
 #### Software SPI
 
-You can use other than the HW SPI pins by enabling `TMC_USE_SW_SPI` and defining the required pins:
+You can use other pins than the HW SPI pins by enabling `TMC_USE_SW_SPI` and defining the required pins:
 ```cpp
 TMC_SW_MOSI
 TMC_SW_MISO
 TMC_SW_SCK
 ```
 
-### TMC2208
+### UART (Serial) CONTROL
 
 A 1K resistor is required between `TX` and `PD_UART`.
 
@@ -125,7 +125,7 @@ SENSORLESS_HOMING         | Use the TMC drivers that support this feature to act
 SENSORLESS_PROBING        | Use stallGuard on supporting TMC drivers to replace a bed probe.<br>Recommended to be used on delta printers only.
 HOMING_SENSITIVITY        | The Sensorless Homing sensitivity can be tuned to suit the specific machine.<br>A **higher** value will make homing **less** sensitive.<br>A **lower** value will make homing **more** sensitive.
 TMC_DEBUG                 | Extend the information [`M122`](/docs/gcode/M122.html) reports. This will give you _a lot_ of additional information about the status of your TMC drivers.
-TMC_ADV                   | You can use this to add your own configuration settings. The requirement is that the command used must be part of the respective TMC stepper library. Remember to add a backslash after each command!
+TMC_ADV                   | You can use this to add your own configuration settings. The requirement is that the command used must be part of the respective TMC stepper library. Remember to add a backslash (\) after each command!
 AUTOMATIC_CURRENT_CONTROL | Replaced by `MONITOR_DRIVER_STATUS`.<br>Marlin will poll the driver twice a second to see if the driver is in an error state. Such an error can be overtemperature pre-warn condition (OTPW) or short to ground or open load. Marlin can react to the temperature warning and automatically reduce the driver current. Short to ground error will disable the driver and Marlin can terminate the print to save time and material.
 
 ## G-codes
