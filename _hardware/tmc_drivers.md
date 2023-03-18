@@ -24,7 +24,7 @@ TMC2208<br/>TMC2225 | UART | yes | no | yes | yes | UART RX line requires an int
 TMC2209<br/>TMC2226 | UART | yes | yes | yes | yes |
 TMC2660 | SPI | no | not implemented | yes | no |
 
-All configurable drivers can also be operated in standalone mode if so configured in hardware.
+All configurable Trinamic stepper drivers can also be operated in standalone mode if they are pre-configured in hardware, either by hard connections or jumpers.
 
 ## Installing the library
 The TMC stepper drivers require an external library that allows Marlin to communicate with each driver.
@@ -52,9 +52,10 @@ PlatformIO will automatically download all libraries it requires, so skip direct
 - Navigate to the downloaded file and click the **Open** button.
 
 ## Wiring
-Because the TMC drivers require a way for communication and configuring the drivers (outside of standalone mode) they also require additional setup. TMC2130 and TMC2660 use SPI for communication and TMC2208 uses UART (Serial).
+TMC drivers (except in standalone mode) require some extra wiring (Serial or SPI) to communicate with and configure the drivers. Boards like the SKR from BigTreeTech actually integrate this wiring directly into the motherboard.
 
-### TMC2130
+### SPI Control
+The SPI bus requires 4 wires for communication. The `SCK`, `MOSI`, and `MISO` wires can be shared across all the drivers, while `CK` must be wired to a separate pin for each driver. These pins are labeled differently on the motherboard versus the driver:
 
 Motherboard | Driver
 -----------:|:-------
@@ -64,16 +65,14 @@ MISO        | SDO
 CS          | CS
 
 #### Software SPI
-
-You can use other than the HW SPI pins by enabling `TMC_USE_SW_SPI` and defining the required pins:
+You can use pins other than the HW SPI pins by enabling `TMC_USE_SW_SPI` and defining the required pins:
 ```cpp
 TMC_SW_MOSI
 TMC_SW_MISO
 TMC_SW_SCK
 ```
 
-### TMC2208
-
+### UART (Serial) CONTROL
 A 1K resistor is required between `TX` and `PD_UART`.
 
 Motherboard |         | Driver
@@ -84,7 +83,6 @@ TX          | (1kohm) | PD_UART
 The serial port on master is selected in the pins file for your board. Alternatively you can use the slower software serial by not selecting any of the hardware serial ports. Typically one port per one driver is needed.
 
 ### Software UART
-
 You can use free pins for UART by disabling all of the hardware serial options in your board's pins file and by defining the `_SERIAL_TX_PIN` and `_SERIAL_RX_PIN` pins.
 
 **Note:** The receive (RX) pins must be interrupt-capable pins. Transmit (TX) pins don't have this limitation.
@@ -125,7 +123,7 @@ SENSORLESS_HOMING         | Use the TMC drivers that support this feature to act
 SENSORLESS_PROBING        | Use stallGuard on supporting TMC drivers to replace a bed probe.<br>Recommended to be used on delta printers only.
 HOMING_SENSITIVITY        | The Sensorless Homing sensitivity can be tuned to suit the specific machine.<br>A **higher** value will make homing **less** sensitive.<br>A **lower** value will make homing **more** sensitive.
 TMC_DEBUG                 | Extend the information [`M122`](/docs/gcode/M122.html) reports. This will give you _a lot_ of additional information about the status of your TMC drivers.
-TMC_ADV                   | You can use this to add your own configuration settings. The requirement is that the command used must be part of the respective TMC stepper library. Remember to add a backslash after each command!
+TMC_ADV                   | You can use this to add your own configuration settings. The requirement is that the command used must be part of the respective TMC stepper library. Remember to add a backslash (\) after each command!
 AUTOMATIC_CURRENT_CONTROL | Replaced by `MONITOR_DRIVER_STATUS`.<br>Marlin will poll the driver twice a second to see if the driver is in an error state. Such an error can be overtemperature pre-warn condition (OTPW) or short to ground or open load. Marlin can react to the temperature warning and automatically reduce the driver current. Short to ground error will disable the driver and Marlin can terminate the print to save time and material.
 
 ## G-codes
