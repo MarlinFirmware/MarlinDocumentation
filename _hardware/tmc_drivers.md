@@ -24,7 +24,7 @@ TMC2208<br/>TMC2225 | UART | yes | no | yes | yes | UART RX line requires an int
 TMC2209<br/>TMC2226 | UART | yes | yes | yes | yes |
 TMC2660 | SPI | no | not implemented | yes | no |
 
-All configurable drivers can also be operated in standalone mode if so configured in hardware.
+All configurable Trinamic stepper drivers can also be operated in standalone mode if they are pre-configured in hardware, either by hard connections or jumpers.
 
 ## Installing the library
 The TMC stepper drivers require an external library that allows Marlin to communicate with each driver.
@@ -52,9 +52,10 @@ PlatformIO will automatically download all libraries it requires, so skip direct
 - Navigate to the downloaded file and click the **Open** button.
 
 ## Wiring
-Because the TMC drivers require a way for communication and configuring the drivers (outside of standalone mode) they also require additional wiring (This may be integrated into the Motherboard .eg SKR. See above table for Driver Control type.
+TMC drivers (except in standalone mode) require some extra wiring (Serial or SPI) to communicate with and configure the drivers. Boards like the SKR from BigTreeTech actually integrate this wiring directly into the motherboard.
 
-### SPI CONTROL
+### SPI Control
+The SPI bus requires 4 wires for communication. The `SCK`, `MOSI`, and `MISO` wires can be shared across all the drivers, while `CK` must be wired to a separate pin for each driver. These pins are labeled differently on the motherboard versus the driver:
 
 Motherboard | Driver
 -----------:|:-------
@@ -64,8 +65,7 @@ MISO        | SDO
 CS          | CS
 
 #### Software SPI
-
-You can use other pins than the HW SPI pins by enabling `TMC_USE_SW_SPI` and defining the required pins:
+You can use pins other than the HW SPI pins by enabling `TMC_USE_SW_SPI` and defining the required pins:
 ```cpp
 TMC_SW_MOSI
 TMC_SW_MISO
@@ -73,7 +73,6 @@ TMC_SW_SCK
 ```
 
 ### UART (Serial) CONTROL
-
 A 1K resistor is required between `TX` and `PD_UART`.
 
 Motherboard |         | Driver
@@ -84,7 +83,6 @@ TX          | (1kohm) | PD_UART
 The serial port on master is selected in the pins file for your board. Alternatively you can use the slower software serial by not selecting any of the hardware serial ports. Typically one port per one driver is needed.
 
 ### Software UART
-
 You can use free pins for UART by disabling all of the hardware serial options in your board's pins file and by defining the `_SERIAL_TX_PIN` and `_SERIAL_RX_PIN` pins.
 
 **Note:** The receive (RX) pins must be interrupt-capable pins. Transmit (TX) pins don't have this limitation.
