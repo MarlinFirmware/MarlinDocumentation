@@ -333,8 +333,12 @@
   --color-table-header-bg: #CCC;
   --color-table-striped-bg: #333;
 }
-body{ background: var(--color-background); color: var(--color-color); }
-h3, h4, h5, h6 { background: var(--color-header-bg); color: var(--color-header);}
+body { background: var(--color-background); color: var(--color-color); }
+h1, h2, h3, h4, h5, h6 {
+  clear: both;
+  code { background-color: inherit; }
+}
+h3, h4, h5, h6 { background: var(--color-header-bg); color: var(--color-header); }
 h1+h2 { color: #BBC; }
 a, a:hover { color: var(--color-link); }
 
