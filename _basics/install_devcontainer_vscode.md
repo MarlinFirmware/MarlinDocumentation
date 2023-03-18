@@ -7,8 +7,6 @@ contrib: thinkyhead
 category: [ articles, getting-started ]
 ---
 
-# Installing Marlin (VSCode devcontainer)
-
 ## Introduction
 
 A dev container is a pre-built Docker environment that is preinstalled with all the dependencies needed to build Marlin with VSCode. The devcontainer not only creates the code compilation environment but it also configures your VSCode with all the extensions needed. The end result is a completely configured VSCode ready to compile and upload Marlin.
@@ -22,7 +20,7 @@ The dev container official documentation can be found [here](https://code.visual
 - **Windows:** [Docker Desktop](https://www.docker.com/products/docker-desktop) 2.0+ on Windows 10 Pro/Enterprise. Windows 10 Home (2004+) requires Docker Desktop 2.3+ and the [WSL 2 back-end](https://aka.ms/vscode-remote/containers/docker-wsl2). (Docker Toolbox is not supported. Windows container images are not supported.)
 - **macOS**: [Docker Desktop](https://www.docker.com/products/docker-desktop) 2.0+.
 - **Linux**: [Docker CE/EE](https://docs.docker.com/install/#supported-platforms) 18.06+ and [Docker Compose](https://docs.docker.com/compose/install) 1.21+. (The Ubuntu snap package is not supported.)
-- **VSCode**: https://code.visualstudio.com/docs/setup/setup-overview
+- [VSCode](https://code.visualstudio.com/docs/setup/setup-overview)
 
 ## Getting started...
 
