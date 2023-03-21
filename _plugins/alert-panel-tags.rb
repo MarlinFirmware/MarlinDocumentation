@@ -81,7 +81,7 @@ module Jekyll
 
       source  = "<div class='container-fluid'>"
       source += "  <div class='row alert alert-#{@type} custom-alert'>"
-      source += "    <div class='col-lg-1 col-md-2 visible-lg-block visible-md-block custom-alert-icon'>"
+      source += "    <div class='col-lg-1 col-md-2 visible-md-block custom-alert-icon'>"
       source += "      <i class='fa #{@icon} fa-4x' aria-hidden='true'></i>"
       source += "    </div>"
       source += "    <div class='col-lg-11 col-md-10 custom-alert-text'>"
