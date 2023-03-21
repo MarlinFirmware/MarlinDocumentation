@@ -35,7 +35,7 @@ Marlin includes various methods of probing and leveling:
 - **Linear Grid** probes a square grid (as much as possible on `DELTA`) to determine the height and tilt of the bed. After that it works just the same way as 3-point leveling.
 - **Bilinear Grid** probes a grid in the same manner as Linear Grid, but during printing the Z axis is adjusted according to bilinear interpolation between the measured points. This allows the printer to compensate for an uneven surface,
 - **Mesh Bed Leveling** works in the same manner as **Bilinear Grid** but takes different [`G29`](/docs/gcode/G029.html) parameters. (This feature is superseded by combining the manual probe option with bilinear leveling,  and will not be included in future versions of Marlin.)
-- **Unified Bed Leveling** combines elements of bilinear and planar leveling and includes extra utilities to help improve measurement accuracy, especially for deltas. See (link) for an article specifically about this feature.
+- **Unified Bed Leveling** combines elements of bilinear and planar leveling and includes extra utilities to help improve measurement accuracy, especially for deltas. See [this page](/docs/features/unified_bed_leveling.html) for an article specifically about this feature.
 
 ## Configuration
 

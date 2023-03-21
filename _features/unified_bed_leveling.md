@@ -7,15 +7,6 @@ author: Bob-the-Kuhn, thinkyhead, Roxy-3D, bjarchi
 category: [ features, leveling ]
 ---
 
-{% alert info %}
-This page is a work in progress, based on Marlin 1.1.x. Corrections/improvements are welcome.
-{% endalert %}
-
- - A comprehensive LCD menu system for UBL is coming soon.
- - See also [G26 Mesh Validation](/docs/gcode/G026.html) and [G29 for UBL](/docs/gcode/G029-ubl.html).
-
-# UBL Startup Guide
-
 The **Unified Bed Leveling (UBL)** system is a superset of the previous leveling systems.
 
 The main improvements over the previous systems are:
@@ -359,7 +350,7 @@ G29 S1      ; Save to slot 1, return to G26 for further refinement
 
 1. Uses the Z heights at the 4 corners of the current XY position's grid box.
 2. Performs a bilinear interpolation of the Z heights:
-  - Calculates Z height (z1) at the left&nbsp; edge of the box for the current Y by linear interpolation.
+  - Calculates Z height (z1) at the left edge of the box for the current Y by linear interpolation.
   - Calculates Z height (z2) at the right edge of the box for the current Y by linear interpolation.
   - Calculates Z height at the current X by linear interpolation between z1 and z2. This is the Z offset used for the move.
 
@@ -384,3 +375,6 @@ At the same time, we also realize that for mesh-based bed leveling, splitting up
 
 [noZ]: #ubl-without-a-z-probe
 [noLcd]: #ubl-without-an-lcd
+
+### More Information
+ - See also [G26 Mesh Validation](/docs/gcode/G026.html) and [G29 for UBL](/docs/gcode/G029-ubl.html).
