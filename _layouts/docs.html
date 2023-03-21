@@ -10,7 +10,7 @@ layout: default
 <!-- content -->
 <div class="container" role="main">
   <div class="row">
-    <div class="col-lg-3 col-md-4 visible-md-block custom-no-padding">
+    <div class="col-lg-3 col-md-4 visible-lg-block visible-md-block custom-no-padding">
       <div class="custom-fixed-sidebar">
         <div id="toc"></div>
       </div>
@@ -18,7 +18,7 @@ layout: default
     <div class="col-lg-9 col-md-8 custom-bg-white">
       <div class="row">
         <div class="col-md-12 custom-article">
-          <p id="authors" class="text-right pull-right hidden-print small custom-pt25">
+          <p id="authors" class="text-right pull-right visible-lg-block hidden-print small custom-pt25">
             {% assign authors = page.author | append: ',' | append: page.contrib | replace: " ","" | split: ',' %}
             {% if authors %}
               {% for author in authors %}
