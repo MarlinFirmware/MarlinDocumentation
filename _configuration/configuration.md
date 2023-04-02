@@ -700,19 +700,19 @@ By default all endstops have pullup resistors enabled. This is best for NC switc
 ```
 By default all endstops have pulldown resistors disabled.
 
-### Endstop Inverting
+### Endstop Hit State
 
+Use these options to set to the state (HIGH or LOW) that applies to each endstop and the Z probe, if enabled.
 ```cpp
-// Mechanical endstop with COM to ground and NC to Signal uses "false" here (most common setup).
-#define X_MIN_ENDSTOP_INVERTING false // set to true to invert the logic of the endstop.
-#define Y_MIN_ENDSTOP_INVERTING false // set to true to invert the logic of the endstop.
-#define Z_MIN_ENDSTOP_INVERTING false // set to true to invert the logic of the endstop.
-#define X_MAX_ENDSTOP_INVERTING false // set to true to invert the logic of the endstop.
-#define Y_MAX_ENDSTOP_INVERTING false // set to true to invert the logic of the endstop.
-#define Z_MAX_ENDSTOP_INVERTING false // set to true to invert the logic of the endstop.
-#define Z_MIN_PROBE_ENDSTOP_INVERTING false // set to true to invert the logic of the endstop.
+#define X_MIN_ENDSTOP_HIT_STATE HIGH
+#define X_MAX_ENDSTOP_HIT_STATE HIGH
+#define Y_MIN_ENDSTOP_HIT_STATE HIGH
+#define Y_MAX_ENDSTOP_HIT_STATE HIGH
+#define Z_MIN_ENDSTOP_HIT_STATE HIGH
+#define Z_MAX_ENDSTOP_HIT_STATE HIGH
+#define Z_MIN_PROBE_ENDSTOP_HIT_STATE HIGH
 ```
-Use [`M119`](/docs/gcode/M119.html) to test if these are set correctly. If an endstop shows up as "TRIGGERED" when not pressed, and "open" when pressed, then it should be inverted here.
+You can use [`M119`](/docs/gcode/M119.html) to test if these are set correctly. If an endstop shows up as "TRIGGERED" when not pressed, and "open" when pressed, then it should be inverted here.
 
 ### Stepper Drivers
 
@@ -1334,10 +1334,10 @@ When using any of the mesh-based leveling systems (1.1.7) you can activate `G26_
 These options specify the default number of points to probe in each dimension during [`G29`](/docs/gcode/G029.html).
 
 ```cpp
-  //#define PROBING_MARGIN_LEFT PROBING_MARGIN
-  //#define PROBING_MARGIN_RIGHT PROBING_MARGIN
-  //#define PROBING_MARGIN_FRONT PROBING_MARGIN
-  //#define PROBING_MARGIN_BACK PROBING_MARGIN
+//#define PROBING_MARGIN_LEFT PROBING_MARGIN
+//#define PROBING_MARGIN_RIGHT PROBING_MARGIN
+//#define PROBING_MARGIN_FRONT PROBING_MARGIN
+//#define PROBING_MARGIN_BACK PROBING_MARGIN
 ```
 These settings specify the boundaries for probing with [`G29`](/docs/gcode/G029-mbl.html). This will most likely be a sub-section of the bed because probes are not usually able to reach every point that the nozzle can. Take account of the probe's XY offsets when setting these boundaries.
 
@@ -2519,7 +2519,9 @@ The slower homing speed for each axis is set by `HOMING_BUMP_DIVISOR`.
 ```
 The default BLTouch settings can be overriden with these options. `BLTOUCH_DELAY` defaults to 500 if not defined. See `Configuration_adv.h` for more information.
 
-## Z Steppers Auto-Alignment
+## Calibration
+
+### Z Steppers Auto-Alignment
 ```cpp
 //#define Z_STEPPER_AUTO_ALIGN
 #if ENABLED(Z_STEPPER_AUTO_ALIGN)
@@ -2542,6 +2544,110 @@ The default BLTouch settings can be overriden with these options. `BLTOUCH_DELAY
 #endif
 ```
 Add the [`G34`](/docs/gcode/G034-zsaa.html) command to align multiple Z steppers using a bed probe. See `Configuration_adv.h` for more information.
+
+### Assisted Tramming
+Add the [`G35`](/docs/gcode/G035.html) command to read bed corners to help adjust screws. Requires a bed probe.
+
+```cpp
+//#define ASSISTED_TRAMMING
+#if ENABLED(ASSISTED_TRAMMING)
+
+  // Define from 3 to 9 points to probe.
+  #define TRAMMING_POINT_XY { {  20, 20 }, { 180,  20 }, { 180, 180 }, { 20, 180 } }
+
+  // Define position names for probe points.
+  #define TRAMMING_POINT_NAME_1 "Front-Left"
+  #define TRAMMING_POINT_NAME_2 "Front-Right"
+  #define TRAMMING_POINT_NAME_3 "Back-Right"
+  #define TRAMMING_POINT_NAME_4 "Back-Left"
+
+  #define RESTORE_LEVELING_AFTER_G35    // Enable to restore leveling setup after operation
+  //#define REPORT_TRAMMING_MM          // Report Z deviation (mm) for each point relative to the first
+
+  //#define ASSISTED_TRAMMING_WIZARD    // Add a Tramming Wizard to the LCD menu
+
+  //#define ASSISTED_TRAMMING_WAIT_POSITION { X_CENTER, Y_CENTER, 30 } // Move the nozzle out of the way for adjustment
+
+  /**
+   * Screw thread:
+   *   M3: 30 = Clockwise, 31 = Counter-Clockwise
+   *   M4: 40 = Clockwise, 41 = Counter-Clockwise
+   *   M5: 50 = Clockwise, 51 = Counter-Clockwise
+   */
+  #define TRAMMING_SCREW_THREAD 30
+
+#endif
+```
+
+## Motion Control
+### Fixed-Time Motion Control
+Fixed-time-based Motion Control. Enable/disable and set parameters with G-code [`M493`](/docs/gcode/M493.html).
+```cpp
+#define FT_MOTION
+#if ENABLED(FT_MOTION)
+  #define FTM_DEFAULT_MODE         ftMotionMode_ENABLED // Default mode of fixed time control. (Enums in ft_types.h)
+  #define FTM_DEFAULT_DYNFREQ_MODE dynFreqMode_DISABLED // Default mode of dynamic frequency calculation. (Enums in ft_types.h)
+  #define FTM_SHAPING_DEFAULT_X_FREQ 37.0f              // (Hz) Default peak frequency used by input shapers.
+  #define FTM_SHAPING_DEFAULT_Y_FREQ 37.0f              // (Hz) Default peak frequency used by input shapers.
+  #define FTM_LINEAR_ADV_DEFAULT_ENA false              // Default linear advance enable (true) or disable (false).
+  #define FTM_LINEAR_ADV_DEFAULT_K    0.0f              // Default linear advance gain.
+  #define FTM_SHAPING_ZETA            0.1f              // Zeta used by input shapers.
+  #define FTM_SHAPING_V_TOL           0.05f             // Vibration tolerance used by EI input shapers.
+
+  /**
+   * Advanced configuration
+   */
+  #define FTM_BATCH_SIZE 100                            // Batch size for trajectory generation;
+                                                        // half the window size for Ulendo FBS.
+  #define FTM_FS           1000                         // (Hz) Frequency for trajectory generation. (1 / FTM_TS)
+  #define FTM_TS              0.001f                    // (s) Time step for trajectory generation. (1 / FTM_FS)
+  #define FTM_STEPPER_FS  20000                         // (Hz) Frequency for stepper I/O update.
+  #define FTM_MIN_TICKS ((STEPPER_TIMER_RATE) / (FTM_STEPPER_FS)) // Minimum stepper ticks between steps.
+  #define FTM_MIN_SHAPE_FREQ 10                         // Minimum shaping frequency.
+  #define FTM_ZMAX          100                         // Maximum delays for shaping functions (even numbers only!).
+                                                        // Calculate as:
+                                                        //    1/2 * (FTM_FS / FTM_MIN_SHAPE_FREQ) for ZV.
+                                                        //    (FTM_FS / FTM_MIN_SHAPE_FREQ) for ZVD, MZV.
+                                                        //    3/2 * (FTM_FS / FTM_MIN_SHAPE_FREQ) for 2HEI.
+                                                        //    2 * (FTM_FS / FTM_MIN_SHAPE_FREQ) for 3HEI.
+  #define FTM_STEPS_PER_UNIT_TIME 20                    // Interpolated stepper commands per unit time.
+                                                        // Calculate as (FTM_STEPPER_FS / FTM_FS).
+  #define FTM_CTS_COMPARE_VAL 10                        // Comparison value used in interpolation algorithm.
+                                                        // Calculate as (FTM_STEPS_PER_UNIT_TIME / 2).
+  // These values may be configured to adjust duration of loop().
+  #define FTM_STEPS_PER_LOOP 60                         // Number of stepper commands to generate each loop().
+  #define FTM_POINTS_PER_LOOP 100                       // Number of trajectory points to generate each loop().
+
+  // This value may be configured to adjust duration to consume the command buffer.
+  // Try increasing this value if stepper motion is not smooth.
+  #define FTM_STEPPERCMD_BUFF_SIZE 1000                 // Size of the stepper command buffers.
+#endif
+```
+
+### ZV Input Shaping
+Zero Vibration (ZV) Input Shaping for X and/or Y movements.
+
+This option uses a lot of SRAM for the step buffer. The buffer size is calculated automatically from `SHAPING_FREQ_[XY]`, `DEFAULT_AXIS_STEPS_PER_UNIT`, `DEFAULT_MAX_FEEDRATE` and `ADAPTIVE_STEP_SMOOTHING`. The default calculation can be overridden by setting `SHAPING_MIN_FREQ` and/or `SHAPING_MAX_FEEDRATE`. The higher the frequency and the lower the feedrate, the smaller the buffer. If the buffer is too small at runtime, input shaping will have reduced effectiveness during high speed movements.
+
+For configuration options see G-code [`M593`](/docs/gcode/M593.html).
+
+```cpp
+//#define INPUT_SHAPING_X
+//#define INPUT_SHAPING_Y
+#if EITHER(INPUT_SHAPING_X, INPUT_SHAPING_Y)
+  #if ENABLED(INPUT_SHAPING_X)
+    #define SHAPING_FREQ_X  40          // (Hz) The default dominant resonant frequency on the X axis.
+    #define SHAPING_ZETA_X  0.15f       // Damping ratio of the X axis (range: 0.0 = no damping to 1.0 = critical damping).
+  #endif
+  #if ENABLED(INPUT_SHAPING_Y)
+    #define SHAPING_FREQ_Y  40          // (Hz) The default dominant resonant frequency on the Y axis.
+    #define SHAPING_ZETA_Y  0.15f       // Damping ratio of the Y axis (range: 0.0 = no damping to 1.0 = critical damping).
+  #endif
+  //#define SHAPING_MIN_FREQ  20        // By default the minimum of the shaping frequencies. Override to affect SRAM usage.
+  //#define SHAPING_MAX_STEPRATE 10000  // By default the maximum total step rate of the shaped axes. Override to affect SRAM usage.
+  //#define SHAPING_MENU                // Add a menu to the LCD to set shaping parameters.
+#endif
+```
 
 ## Motion
 ### Axis Relative/Absolute Mode
@@ -2806,62 +2912,63 @@ Show a progress bar on HD44780 LCDs for SD printing. Sub-options determine how l
 ## SD Card Support
 ```cpp
 //#define SD_DETECT_STATE HIGH
-  #define SD_FINISHED_STEPPERRELEASE true
-  #define SD_FINISHED_RELEASECOMMAND "M84 X Y Z E"
-  #define SDCARD_RATHERRECENTFIRST
-  #define SD_MENU_CONFIRM_START
-  //#define MENU_ADDAUTOSTART
-  #define EVENT_GCODE_SD_STOP "G28XY"
-  #if ENABLED(PRINTER_EVENT_LEDS)
-    #define PE_LEDS_COMPLETED_TIME  (30*60)
-  #endif
+#define SD_FINISHED_STEPPERRELEASE true
+#define SD_FINISHED_RELEASECOMMAND "M84 X Y Z E"
+#define SDCARD_RATHERRECENTFIRST
+#define SD_MENU_CONFIRM_START
+//#define MENU_ADDAUTOSTART
+#define EVENT_GCODE_SD_STOP "G28XY"
+#if ENABLED(PRINTER_EVENT_LEDS)
+  #define PE_LEDS_COMPLETED_TIME  (30*60)
+#endif
 ```
 See `Configuration_adv.h` for more details.
 
 ### Power Loss Recovery
 ```cpp
 //#define POWER_LOSS_RECOVERY
-  #if ENABLED(POWER_LOSS_RECOVERY)
-    #define PLR_ENABLED_DEFAULT   false
-    //#define BACKUP_POWER_SUPPLY
-    //#define POWER_LOSS_ZRAISE       2
-    //#define POWER_LOSS_PIN         44
-    //#define POWER_LOSS_STATE     HIGH
-    //#define POWER_LOSS_PULL
-    //#define POWER_LOSS_PURGE_LEN   20
-    //#define POWER_LOSS_RETRACT_LEN 10
-    #define POWER_LOSS_MIN_Z_CHANGE 0.05
-  #endif
-  ```
-  See `Configuration_adv.h` for more details.
+#if ENABLED(POWER_LOSS_RECOVERY)
+  #define PLR_ENABLED_DEFAULT   false
+  //#define BACKUP_POWER_SUPPLY
+  //#define POWER_LOSS_ZRAISE       2
+  //#define POWER_LOSS_PIN         44
+  //#define POWER_LOSS_STATE     HIGH
+  //#define POWER_LOSS_PULL
+  //#define POWER_LOSS_PURGE_LEN   20
+  //#define POWER_LOSS_RETRACT_LEN 10
+  #define POWER_LOSS_MIN_Z_CHANGE 0.05
+#endif
+```
+See `Configuration_adv.h` for more details.
 
 ### SD Card Sorting Options
 ```cpp
 //#define SDCARD_SORT_ALPHA
-  #if ENABLED(SDCARD_SORT_ALPHA)
-    #define SDSORT_LIMIT       40
-    #define FOLDER_SORTING     -1
-    #define SDSORT_GCODE       false
-    #define SDSORT_USES_RAM    false
-    #define SDSORT_USES_STACK  false
-    #define SDSORT_CACHE_NAMES false
-    #define SDSORT_DYNAMIC_RAM false
-    #define SDSORT_CACHE_VFATS 2#endif
+#if ENABLED(SDCARD_SORT_ALPHA)
+  #define SDSORT_LIMIT       40
+  #define FOLDER_SORTING     -1
+  #define SDSORT_GCODE       false
+  #define SDSORT_USES_RAM    false
+  #define SDSORT_USES_STACK  false
+  #define SDSORT_CACHE_NAMES false
+  #define SDSORT_DYNAMIC_RAM false
+  #define SDSORT_CACHE_VFATS 2
+#endif
 ```
-  See `Configuration_adv.h` for more details.
+See `Configuration_adv.h` for more details.
 
 ### Long Filenames
 ```cpp
-  //#define LONG_FILENAME_HOST_SUPPORT
+//#define LONG_FILENAME_HOST_SUPPORT
 ```
 This allows hosts to request long names for files and folders with [`M33`](/docs/gcode/M033.html)
 
 ```cpp
-  //#define SCROLL_LONG_FILENAMES
+//#define SCROLL_LONG_FILENAMES
 ```
 Enable this option to scroll long filenames in the SD card menu
 ```cpp
-  //#define SD_ABORT_NO_COOLDOWN
+//#define SD_ABORT_NO_COOLDOWN
 ```
 Leave the heaters on after Stop Print (not recommended!)
 
@@ -2879,7 +2986,7 @@ This option makes it easier to print the same SD Card file again. Whenever an SD
 
 ### Auto Report SD Status
 ```cpp
-  //#define AUTO_REPORT_SD_STATUS
+//#define AUTO_REPORT_SD_STATUS
 ```
 Auto-report SD card status with [`M27`](/docs/gcode/M027.html) S<seconds>
 
@@ -2907,13 +3014,13 @@ See `Configuration_adv.h` for more details.
 
 ### Binary File Transfer
 ```cpp
-  //#define BINARY_FILE_TRANSFER
+//#define BINARY_FILE_TRANSFER
 ```
 See `Configuration_adv.h` for more details.
 
 ### SD Card Connection
 ```cpp
-  //#define SDCARD_CONNECTION LCD
+//#define SDCARD_CONNECTION LCD
 ```
 Choose between `LCD`,  `ONBOARD` or `CUSTOM_CABLE` or use the board's default.
 
@@ -4250,15 +4357,15 @@ Adds [`M486`](/docs/gcode/M486.html) to allow Marlin to skip objects. Based on a
 ### Filament runout handling
 Here you define the G-code script which will be executed when the so-called FINDA sensor on the MMU2 detects a filament runout.
 ```cpp
-  // G-code to execute when MMU2 F.I.N.D.A. probe detects filament runout
-  #define MMU2_FILAMENT_RUNOUT_SCRIPT "M600"
+// G-code to execute when MMU2 F.I.N.D.A. probe detects filament runout
+#define MMU2_FILAMENT_RUNOUT_SCRIPT "M600"
 ```
 The default is [`M600`](/docs/gcode/M600.html) which requires [ADVANCED_PAUSE_FEATURE](#advanced_pause).
 
 ### LCD Menu
 ```cpp
-  // Add MMU2 controls to the LCD menu
-  #define MMU2_MENUS
+// Add MMU2 controls to the LCD menu
+#define MMU2_MENUS
 ```
 Enable this option to activate an additional menu to operate the MMU2 from the LCD.
 
