@@ -2885,23 +2885,23 @@ Auto-report SD card status with [`M27`](/docs/gcode/M027.html) S<seconds>
 
 ### USB Flash Drive Support
 ```cpp
- //#define USB_FLASH_DRIVE_SUPPORT
-  #if ENABLED(USB_FLASH_DRIVE_SUPPORT)
-    #define USB_CS_PIN    SDSS
-    #define USB_INTR_PIN  SD_DETECT_PIN
-    //#define USE_UHS3_USB
-  #endif
+//#define USB_FLASH_DRIVE_SUPPORT
+#if ENABLED(USB_FLASH_DRIVE_SUPPORT)
+  #define USB_CS_PIN    SDSS
+  #define USB_INTR_PIN  SD_DETECT_PIN
+  //#define USE_UHS3_USB
+#endif
 ```
 See `Configuration_adv.h` for more details.
 
 ### Firmware Update
 ```cpp
 //#define SD_FIRMWARE_UPDATE
-  #if ENABLED(SD_FIRMWARE_UPDATE)
-    #define SD_FIRMWARE_UPDATE_EEPROM_ADDR    0x1FF
-    #define SD_FIRMWARE_UPDATE_ACTIVE_VALUE   0xF0
-    #define SD_FIRMWARE_UPDATE_INACTIVE_VALUE 0xFF
-  #endif
+#if ENABLED(SD_FIRMWARE_UPDATE)
+  #define SD_FIRMWARE_UPDATE_EEPROM_ADDR    0x1FF
+  #define SD_FIRMWARE_UPDATE_ACTIVE_VALUE   0xF0
+  #define SD_FIRMWARE_UPDATE_INACTIVE_VALUE 0xFF
+#endif
 ```
 See `Configuration_adv.h` for more details.
 
@@ -2948,27 +2948,26 @@ Some of these options may result in the display lagging behind controller events
 ### Status (Info) Screen Customizations
 ```cpp
 //#define STATUS_COMBINE_HEATERS
-  //#define STATUS_HOTEND_NUMBERLESS
-  #define STATUS_HOTEND_INVERTED
-  #define STATUS_HOTEND_ANIM
-  #define STATUS_BED_ANIM
-  #define STATUS_CHAMBER_ANIM
-  //#define STATUS_CUTTER_ANIM
-  //#define STATUS_ALT_BED_BITMAP
-  //#define STATUS_ALT_FAN_BITMAP
-  //#define STATUS_FAN_FRAMES 3
-  //#define STATUS_HEAT_PERCENT
-  //#define BOOT_MARLIN_LOGO_SMALL
-  //#define BOOT_MARLIN_LOGO_ANIMATED
+//#define STATUS_HOTEND_NUMBERLESS
+#define STATUS_HOTEND_INVERTED
+#define STATUS_HOTEND_ANIM
+#define STATUS_BED_ANIM
+#define STATUS_CHAMBER_ANIM
+//#define STATUS_CUTTER_ANIM
+//#define STATUS_ALT_BED_BITMAP
+//#define STATUS_ALT_FAN_BITMAP
+//#define STATUS_FAN_FRAMES 3
+//#define STATUS_HEAT_PERCENT
+//#define BOOT_MARLIN_LOGO_SMALL
+//#define BOOT_MARLIN_LOGO_ANIMATED
 ```
 
 ### Frivolous Game Options
 ```cpp
-
-  //#define MARLIN_BRICKOUT
-  //#define MARLIN_INVADERS
-  //#define MARLIN_SNAKE
-  //#define GAMES_EASTER_EGG
+//#define MARLIN_BRICKOUT
+//#define MARLIN_INVADERS
+//#define MARLIN_SNAKE
+//#define GAMES_EASTER_EGG
 ```
 ## DGUS / DWIN Displays Options
 ```cpp
