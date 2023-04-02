@@ -6,9 +6,7 @@ author: descipher
 category: [ configuration, hardware ]
 ---
 
-{% alert info %}
-This document is based on Marlin 2.0.9.x
-{% endalert %}
+{% alert info %}This document is based on Marlin 2.0.9.x{% endalert %}
 
 ---
 Laser features and other related options are enabled when `LASER_FEATURE` is defined in `Configuration_adv.h`.

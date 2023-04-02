@@ -28,6 +28,29 @@ layout: null
   {% endif %}
 {% endfor %}
 
+{% for conf in site.setting %}{% if conf.label %}{% assign title = conf.label %}{% else %}{% assign title = conf.name %}{% endif %}
+  {% unless first %},{% endunless %}{
+    "title":{{ title | jsonify }},
+    "content":{{ conf.content | indexify | jsonify }},
+    "excerpt":"{{ conf.brief }}",
+    "link":"{{ site.baseurl }}{{ conf.url }}",
+    {% if conf.experimental %}
+      "exp":true,
+    {% endif %}
+    {% if conf.since %}
+      "since":{{ gcode.since | jsonify }},
+    {% endif %}
+    {% if conf.until %}
+      "until":{{ gcode.until | jsonify }},
+    {% endif %}
+    {% if conf.tags %}
+      "tags": [ {{ conf.tags | join: ", " | jsonify }} ],
+    {% endif %}
+    "class":"setting"
+  }
+  {% assign first = false %}
+{% endfor %}
+
 {% for feature in site.features %}
   {% if feature.title != null and feature.title != empty and item.search_omit != empty %}
   {% unless first %},{% endunless %}{

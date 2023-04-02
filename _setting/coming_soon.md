@@ -1,12 +1,14 @@
 ---
-name: 'COMING_SOON'
-title: 'COMING_SOON'
-description: 'Coming Soon'
-tags: draft
+name: COMING_SOON
+type: bool
+label: Coming Soon!
+brief: This option is coming soon
+author: thinkyhead
+category: [ wip ]
+tags: [ draft ]
 
 since: 1.1.0
-author: thinkyhead
-category: [ needs-review ]
+until: 2.0.9
 
 requires: MY_PARENT
 child: []
@@ -20,10 +22,7 @@ options:
     value: 2
     title: two
 
-long: '***This is a placeholder page. Full details about `COMING_SOON` will be added later.***'
-
 preview: |
-  ```cpp
   /**
    * COMING_SOON - Coming Soon
    *
@@ -33,6 +32,7 @@ preview: |
   #if ENABLED(COMING_SOON)
     #define SETTING_SUBOPTION // This makes COMING_SOON better
   #endif
-  ```
+  if (var == 123) { printf("It equals: %d", var); }
 
 ---
+Marlin Settings pages are under construction. It's a lot of work to convert Marlin configurations into web pages, but we'll get there!
