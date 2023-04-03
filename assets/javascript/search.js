@@ -186,7 +186,7 @@ var jekyllSearch = (function(){
 
         $.each(data, function(index, item) {
           // check if search term is in content or title
-          const comp = (item.title + ' ' + item.content).toLowerCase();
+          const comp = (item.name + " " + item.title + ' ' + item.content + item.excerpt).toLowerCase();
           if (comp.match(qmatch)) {
             if (item.class != lastclass) {
               lastclass = item.class;
