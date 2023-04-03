@@ -25,20 +25,16 @@ layout: default
       </div>
     </div>
     <div class="col-lg-9 col-md-8 main">
-      <div class="row">
-        <div class="col-md-12">
-          {%- if page.collection == 'setting' %}
-            {%- assign conf = page %}
-            {%- include setting-info.html %}
-          {%- else %}
-            <h1>Marlin Settings</h1>
-            {%- for conf in site.setting %}
-              {%- assign odd = forloop.index | modulo: 2 %}
-              <div class="settings item{% if odd == 0 %} odd{% endif %}">{% include setting-summ.html %}</div>
-            {% endfor -%}
-          {% endif -%}
-        </div>
-      </div>
+      {%- if page.collection == 'setting' %}
+        {%- assign conf = page %}
+        {%- include setting-info.html %}
+      {%- else %}
+        <h1>Marlin Settings</h1>
+        {%- for conf in site.setting %}
+          {%- assign odd = forloop.index | modulo: 2 %}
+          <div class="settings item{% if odd == 0 %} odd{% endif %}">{% include setting-summ.html %}</div>
+        {% endfor -%}
+      {% endif -%}
     </div>
   </div>
 </div>

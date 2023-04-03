@@ -6,6 +6,7 @@ brief: This option is coming soon
 author: thinkyhead
 category: [ wip ]
 tags: [ draft ]
+eeprom: true
 
 since: 1.1.0
 until: 2.0.9
@@ -13,7 +14,7 @@ until: 2.0.9
 requires: MY_PARENT
 child: []
 type: switch
-gcode: []
+gcodes: []
 options:
   -
     value: 1

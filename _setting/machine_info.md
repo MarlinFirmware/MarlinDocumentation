@@ -7,16 +7,15 @@ pagetype: toc
 
 subopts:
 -
-  name: STRING_CONFIG_H_AUTHOR
+  name: CUSTOM_MACHINE_NAME
   type: string
   since: 1.0.0
   until:
 
-  brief: The author of the configuration file.
-  description: This option exists to provide information about who last modified the configuration. It is displayed in the identifier string sent to the host when Marlin first boots up, and it may also be displayed on the LCD Info Screen.
-  tags: [ info, in-review ]
+  brief: Machine name and/or model.
+  description: Use this option to provide the name or model of the machine. This is displayed in the message sent to the host when Marlin first boots up, and it may also be displayed on the LCD Info Screen.
   example:
   -
-    value: '"(Sam Smith, My Prusa i3)"'
+    value: '"3D Printer"'
 ---
 Use these options to set Human-readable information about the machine, which may also be displayed on the host or LCD.

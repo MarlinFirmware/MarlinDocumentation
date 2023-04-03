@@ -1,10 +1,10 @@
 {% if page.name == conf.name %}
+  {% assign ispage = true %}
   {% if page.category contains 'in-review' %}
     {% alert info %}This page is marked for review. The following information may be outdated or may no longer apply to the latest Marlin.{% endalert %}
   {% elsif page.category contains 'wip' %}
     {% alert info %}This page is under construction and may not have complete or up-to-date information.{% endalert %}
   {% endif %}
-  {% assign ispage = true %}
   {% assign h1 = "h1" %}{% assign h3 = "h3" %}
   {% if conf.label %}{% assign title = conf.label %}{% else %}{% assign title = conf.name %}{% endif %}
   {% if conf.since %}{% assign since = conf.since %}{% endif %}
@@ -110,24 +110,25 @@
 </div>
 {% endif %}
 
-{% if conf.examples %}{% assign ex = conf.examples %}
-{% elsif conf.example %}{% assign ex = conf.example %}
-{% else %}{% assign ex = false %}{% endif %}
-{% if ex %}
+{% if conf.example %}{% assign example = conf.example %}
+{% elsif conf.examples %}{% assign example = conf.examples %}
+{% else %}{% assign example = false %}{% endif %}
+{% if example %}
   <div class="examples">
-    <{{ h3 }}>Example{% if ex[1] %}s{% endif %}</{{ h3 }}>
-    {% for example in ex %}
-      {% if example.pre %}
-        {% for line in example.pre %}
+    <{{ h3 }}>Example{% if example[1] %}s{% endif %}</{{ h3 }}>
+    {% for ex in example %}
+      {% if ex.pre %}
+        {% for line in ex.pre %}
           {{ line | markdownify }}
         {% endfor %}
       {% endif %}
-      {% highlight cpp %}{% for val in example.value %}#define {{ conf.name }} {{ val }}
-{% endfor %}{% for line in example.code %}{{ line }}
-{% endfor %}{% endhighlight %}
-      {% if example.post %}
+      {% if ex.value or ex.code %}
+        {% highlight cpp %}{% if ex.value %}#define {{ conf.name }} {{ ex.value }}{% if ex.comment %} // {{ ex.comment }}{% endif %}{% endif %}
+        {%- for line in ex.code %}{{ line }}{% endfor %}{% endhighlight %}
+      {% endif %}
+      {% if ex.post %}
         <div class="post">
-          {% for line in example.post %}
+          {% for line in ex.post %}
             {{ line | markdownify }}
           {% endfor %}
         </div>
@@ -141,8 +142,6 @@
 {% elsif conf.settings %}{% assign sub = conf.settings %}{% assign label = "Settings" %}
 {% else %}{% assign sub = false %}{% endif %}
 {% if sub %}
-  <div class="subopt">
-    {% assign oldsince = since %}{% assign oldtags = tags %}
-    {% for conf in sub %}{% include setting-info.html %}{% endfor %}
-  </div>
+  {% assign oldsince = since %}{% assign oldtags = tags %}
+  {% for conf in sub %}<div class="subopt">{% include setting-info.html %}</div>{% endfor %}
 {% endif %}
