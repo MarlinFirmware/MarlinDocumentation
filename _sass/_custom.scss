@@ -1136,10 +1136,11 @@ div.panel.panel-info, div.panel.panel-warning {
 /* Configuration Options Pages */
 div.subopt {
   clear: both;
-  padding: 0.5em 0 1em 0.5em;
+  padding: 1em 0 0 0.5em;
   margin-bottom: 1.5em;
   background: var(--color-nesting);
   .long { margin-top: 0.75em; }
   pre { margin: 0 1px 1em 0; }
 }
+.main > div.subopt { background: none; }
 .container div.subopt { h3, h4, h5, h6 { margin: 0.5em 0 0.5em 0; padding: 0; background: none; } }

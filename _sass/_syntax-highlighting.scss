@@ -23,7 +23,7 @@
   .k     { font-weight: bold } // Keyword
   .o     { font-weight: bold } // Operator
   .cm    { color: var(--color-hl-c); font-style: italic } // Comment.Multiline
-  .cp    { color: var(--color-hl-cp); font-weight: bold } // Comment.Preproc
+  .cp    { color: var(--color-hl-cp); } // Comment.Preproc
   .c1    { color: var(--color-hl-c); font-style: italic } // Comment.Single
   .cs    { color: #999; font-weight: bold; font-style: italic } // Comment.Special
   .gd    { color: #000; background-color: #FDD } // Generic.Deleted
