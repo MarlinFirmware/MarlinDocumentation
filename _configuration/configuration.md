@@ -825,7 +825,7 @@ You can use this option to configure a machine with no Z endstops. In that case 
 ```cpp
 //#define Z_MIN_PROBE_PIN 32
 ```
-Use this option if you've connected the probe to a pin other than the Z MIN endstop pin. With this option enabled, by default Marlin will use the `Z_MIN_PROBE_PIN` specified in your board's pins file (usually the X or Z MAX endstop pin since these are the most likely to be unused). If you need to use a different pin, define your custom pin number for `Z_MIN_PROBE_PIN` in `Configuration.h`.
+With `Z_MIN_PROBE_USES_Z_MIN_ENDSTOP_PIN` enabled, by default Marlin will use the `Z_MIN_PROBE_PIN` specified in your board's pins file (usually the X or Z MAX endstop pin since these are the most likely to be unused). If you need to use a different pin, define it here in `Configuration.h`.
 
 ### Probe Type
 Marlin supports any kind of probe that can be made to work like a switch. Specific types of probes have different needs.

@@ -807,12 +807,23 @@ div.custom-article, div.col-md-12>.row.long, div.col-md-12>.row.notes {
   padding: 0.5em 0.5em 0.25em;
 }
 .detail-header h1 { margin-bottom: 4px; }
-#authors { height: 0; margin-top: 0; margin-bottom: 0; padding-top: 0; padding-bottom: 0; a>img { margin-top: 8px; background: white; } }
+#authors {
+  height: 0; margin-top: 0; margin-bottom: 0; padding-top: 0; padding-bottom: 0;
+  img.avatar { float: right; margin: 8px 0 0 2px; background: white; }
+}
+
 div.custom-article {
-  p, ul>li { font-size: 110%; }
-  ul>li p { font-size: 100%; }
+  p, ul>li {
+    font-size: 110%; clear: both;
+    ul>li p { font-size: 100%; }
+    img {
+      display: block;
+      &.inline { display: inline; }
+    }
   }
-div.custom-article>table { margin: 0 auto 1em; }
+  >table { margin: 0 auto 1em; }
+}
+
 div.container.detail {
   div.row {
     margin-left: 16px;
