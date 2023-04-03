@@ -1403,7 +1403,7 @@ Validate that endstops are triggered on homing moves.
 ```
 Correct for misalignment in the XYZ axes. See `Configuration.h` for a thorough explanation.
 
-## Additonal Features
+## Additional Features
 ### EEPROM
 ```cpp
 //#define EEPROM_SETTINGS

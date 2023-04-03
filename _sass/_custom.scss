@@ -503,8 +503,9 @@ div.alert-danger {
   }
   div#err-box { color: var(--color-bitmap-err-box); }
 }
+
 div.container.detail, div.container.config {
-  div.col-lg-12.row {
+  div.row {
     h4, h5, h6 { background: var(--color-code-bg); color: var(--color-code); }
     h5 {
       background: var(--color-gcode-h5-bg); color: var(--color-gcode-h5);
@@ -514,6 +515,7 @@ div.container.detail, div.container.config {
   div.row.examples pre { background: var(--color-gcode-examples-bg); }
   div.row.gallery p { color: var(--color-gcode-gallery); }
 }
+
 .jumbotron {
   background-color: var(--color-jumbo-bg);
   color: var(--color-jumbo);
@@ -812,13 +814,13 @@ div.custom-article {
   }
 div.custom-article>table { margin: 0 auto 1em; }
 div.container.detail {
-  div.col-lg-12.row {
+  div.row {
     margin-left: 16px;
-    h3, h4 { margin-left: -16px; }
+    h3, h4 { margin-left: -0.5em; }
     h4, h5, h6 { margin-left: -0.5em; padding-left: 0.5em; }
     font-size: 110%;
   }
-  div.col-lg-12.row.examples .post {
+  div.row.examples .post {
     margin: -0.25em 0 1em;
     p { font-size: 85%; }
   }
@@ -832,7 +834,7 @@ div.container.detail {
       background: var(--color-gcode-related-bg);
       code { background: #FFFA; color: #000; }
     }
-    &.col-lg-12.meta { margin-left: 0; }
+    &.meta { margin-left: 0; }
     &.examples pre { background: var(--color-gcode-examples-bg); }
     &.gallery p { font-size: normal; }
     &.usage {
@@ -863,7 +865,7 @@ div.container.detail {
 
   img { max-width: 100%; }
 
-  div.col-lg-12.row.meta { margin-left: 0; }
+  div.row.meta { margin-left: 0; }
   img { max-width: 100%; }
 }
 
@@ -1045,7 +1047,7 @@ summary h3 { display: inline; }
   }
   p.excerpt {
     font-size: 120%; padding: 0; margin: 0;
-    a { display: block; padding: 20px; }
+    a { display: block; padding: 0.5em 0 0.5em 1em; }
   }
 }
 #install_platformio-page .custom-article ol ol,
