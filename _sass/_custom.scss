@@ -1145,4 +1145,7 @@ div.subopt {
   pre { margin: 0 1px 1em 0; }
 }
 .main > div.subopt { background: none; }
-.container div.subopt { h3, h4, h5, h6 { margin: 0.5em 0 0.5em 0; padding: 0; background: none; } }
+div.container.detail div.row div.subopt {
+  h3, h4, h5, h6 { margin: 0.5em 0 0.5em 0; padding: 0; background: none; }
+  div.subopt { h3, h4, h5, h6 { margin-top: 0; } }
+}

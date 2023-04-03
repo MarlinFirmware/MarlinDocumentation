@@ -11,7 +11,7 @@ subopts:
   since: 1.1.0
 
   brief: Configuration version.
-  description: This option is used to check that the correct Configurations files match the version of Marlin being built.
+  long: This option is used to check that the correct Configurations files match the version of Marlin being built.
   example:
   -
     value: '02010200'
@@ -20,7 +20,7 @@ subopts:
   type: string
 
   brief: Author of the configuration file.
-  description: This option exists to provide information about who last modified the configuration. It is displayed in the identifier string sent to the host when Marlin first boots up, and it may also be displayed on the LCD Info Screen.
+  long: This option exists to provide information about who last modified the configuration. It is displayed in the identifier string sent to the host when Marlin first boots up, and it may also be displayed on the LCD Info Screen.
   tags: [ info ]
   example:
   -
@@ -33,7 +33,7 @@ subopts:
   since: 2.0.0
 
   brief: Customized versioning.
-  description: The full path from the root directory (no quotes) to a custom version file to override Marlin's base version info.
+  long: The full path from the root directory (no quotes) to a custom version file to override Marlin's base version info.
   example:
   -
     value: 'Version.h'

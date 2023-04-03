@@ -13,7 +13,7 @@ subopts:
   until:
 
   brief: Machine name and/or model.
-  description: Use this option to provide the name or model of the machine. This is displayed in the message sent to the host when Marlin first boots up, and it may also be displayed on the LCD Info Screen.
+  long: Use this option to provide the name or model of the machine. This is displayed in the message sent to the host when Marlin first boots up, and it may also be displayed on the LCD Info Screen.
   example:
   -
     value: '"3D Printer"'

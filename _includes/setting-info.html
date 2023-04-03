@@ -63,7 +63,7 @@
   {% if ispage %}
     {% if page.content %}<{{ h3 }}>Description</{{ h3 }}>{{ page.content | markdownify }}{% endif %}
   {% else %}
-    {% if conf.description %}{{ conf.description | markdownify }}{% endif %}
+    {% if conf.long %}{{ conf.long | markdownify }}{% endif %}
   {% endif %}
 </div>
 

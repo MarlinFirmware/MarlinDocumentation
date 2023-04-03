@@ -28,10 +28,28 @@ layout: null
   {%- endif %}
 {%- endfor %}
 
-{% for conf in site.setting %}{% if conf.label %}{% assign title = conf.label %}{% else %}{% assign title = conf.name %}{% endif %}
-  {% unless first %},{% endunless %}{
+{%- for conf in site.setting -%}
+  {%- if conf.label %}{% assign title = conf.label %}{% else %}{% assign title = conf.name %}{% endif %}
+  {%- capture subtext -%}
+    {% if conf.settings %}{% assign subs = conf.settings %}{% elsif conf.subopts %}{% assign subs = conf.subopts %}{% endif %}
+    {{ conf.name }} {{ conf.content }}
+    {% for sub1 in subs %}
+      {{ sub1.name }} {{ sub1.brief }} {{ sub1.long }}
+      {% for sub2 in sub1.subopts %}
+        {{ sub2.name }} {{ sub2.brief }} {{ sub2.long }}
+        {% for sub3 in sub2.subopts %}
+          {{ sub3.name }} {{ sub3.brief }} {{ sub3.long }}
+          {% for sub4 in sub3.subopts %}
+            {{ sub4.name }} {{ sub4.brief }} {{ sub4.long }}
+          {% endfor %}
+        {% endfor %}
+      {% endfor %}
+    {% endfor %}
+  {%- endcapture -%}
+  {%- if conf.settings %}{% assign subs = conf.settings %}{% elsif conf.subopts %}{% assign subs = conf.subopts %}{% endif -%}
+  {%- unless first %},{% endunless %}{
     "title":{{ title | jsonify }},
-    "content":{{ conf.content | indexify | jsonify }},
+    "content":{{ subtext | indexify | jsonify }},
     "excerpt":"{{ conf.brief }}",
     "link":"{{ site.baseurl }}{{ conf.url }}",
     {%- if conf.experimental -%}
