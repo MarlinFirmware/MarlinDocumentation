@@ -122,56 +122,56 @@ defaults:
         footer: true
         breadcrumbs: false
 
-  - # Basics collection settings
+  - # Basics collection
     scope:
       type: 'basics'
     values:
       layout: 'docs'
       category: [ 'Basics' ]
 
-  - # Configuration collection settings
+  - # Configuration collection
     scope:
       type: 'configuration'
     values:
       layout: 'docs'
       category: [ 'configuration' ]
 
-  - # Settings collection settings
+  - # Settings collection
     scope:
       type: 'setting'
     values:
       layout: 'setting'
       category: [ 'setting' ]
 
-  - # Development collection settings
+  - # Development collection
     scope:
       type: 'development'
     values:
       layout: 'docs'
       category: [ 'development' ]
 
-  - # Features collection settings
+  - # Features collection
     scope:
       type: 'features'
     values:
       layout: 'docs'
       category: [ 'features' ]
 
-  - # G-code collection settings
+  - # G-code collection
     scope:
       type: 'gcode'
     values:
       layout: 'gcode'
       category: [ 'gcode' ]
 
-  - # Hardware collection settings
+  - # Hardware collection
     scope:
       type: 'hardware'
     values:
       layout: 'docs'
       category: [ 'hardware' ]
 
-  - # Meta collection settings
+  - # Meta collection
     scope:
       type: 'meta'
     values:

@@ -72,39 +72,35 @@
 {% if page.show.navbar %}{% include navbar.html %}{% endif %}
 
 {% if page.show.breadcrumbs %}
-    <!-- breadcrumbs -->
-    <nav>
-      <div class="container custom-no-padding">
-        <div class="row">
-          <div class="col-lg-12 visible-lg-block visible-md-block custom-no-margin">
-            <ol class="breadcrumb custom-no-margin">
-              <li>
-                <a href="{{ '/' | prepend: site.baseurl }}">
-                <i class="glyphicon glyphicon-home"></i></a> </li>
-{% assign crumbs = page.url | replace: '.html','' | split: '/' %}
-{% for crumb in crumbs offset: 1 %}
-  {% assign next = forloop.index  | plus: 1 %}
-  {% if forloop.last %}
-    {% if page.title %}
-                <li class="active">{{ page.title }}</li>
-    {% endif %}
-  {% else %}
-    {% if crumbs[next] == 'index' %}
-                <li class="active">{{ crumb | replace:'-',' ' | capitalize }}</li>
-    {% else %}
-                <li><a href="{% assign crumb_limit = forloop.index | plus: 1 %}{% for crumb in crumbs limit: crumb_limit %}{{ crumb | append: '/' }}{% endfor %}">{{ crumb | replace:'-',' ' | capitalize }}</a></li>
-    {% endif %}
-  {% endif %}
-{% endfor %}
-            </ol>
-          </div>
+  <!-- breadcrumbs -->
+  <nav>
+    <div class="container custom-no-padding">
+      <div class="row">
+        <div class="col-lg-12 visible-lg-block visible-md-block custom-no-margin">
+          <ol class="breadcrumb custom-no-margin">
+            <li><a href="{{ '/' | prepend: site.baseurl }}"><i class="glyphicon glyphicon-home"></i></a> </li>
+              {%- assign crumbs = page.url | replace: '.html','' | split: '/' -%}
+              {%- for crumb in crumbs offset: 1 -%}
+                {%- assign next = forloop.index  | plus: 1 -%}
+                {%- if forloop.last -%}
+                  {%- if page.title -%}
+                    <li class="active">{{ page.title }}</li>
+                  {%- endif -%}
+                {%- elsif crumbs[next] == 'index' -%}
+                  <li class="active">{{ crumb | replace:'-',' ' | capitalize }}</li>
+                {%- else -%}
+                  <li><a href="{% assign crumb_limit = forloop.index | plus: 1 %}{% for crumb in crumbs limit: crumb_limit %}{{ crumb | append: '/' }}{% endfor %}">{{ crumb | replace:'-',' ' | capitalize }}</a></li>
+                {%- endif -%}
+              {%- endfor -%}
+          </ol>
         </div>
       </div>
-    </nav>
-    <!-- /breadcrumbs -->
+    </div>
+  </nav>
+  <!-- /breadcrumbs -->
 {% endif %}
 
-    {{ content }}
+{{ content }}
 
 {% if page.show.footer %}
     <footer>

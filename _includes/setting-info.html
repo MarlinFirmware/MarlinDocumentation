@@ -1,117 +1,147 @@
-{% for cat in page.category %}
-  {% if cat == 'needs-review' %}
-    <div class="row">
-      <div class="col-lg-12">
-        {% alert info %}
-This document has been marked `needs-review`. The following information may be outdated or may no longer apply to the latest Marlin.
-        {% endalert %}
-      </div>
-    </div>
+{% if page.name == conf.name %}
+  {% assign ispage = true %}
+  {% if page.category contains 'in-review' %}
+    {% alert info %}This page is marked for review. The following information may be outdated or may no longer apply to the latest Marlin.{% endalert %}
+  {% elsif page.category contains 'wip' %}
+    {% alert info %}This page is under construction and may not have complete or up-to-date information.{% endalert %}
   {% endif %}
-{% endfor %}
-
-<div id="setting-header" class="row meta">
-  <div class="col-lg-12">
-    <p id="authors" class="text-right pull-right visible-lg-block hidden-print small custom-pt25">
-      {% assign authors = setting.author | append: ',' | append: setting.contrib | replace: " ","" | split: ',' %}
-      {% if authors %}
-        {% for author in authors %}
-          <a href="//github.com/{{ author }}" data-toggle="tooltip" data-placement="bottom" title="Visit {{ author }}'s profile on Github">{% avatar user=author size=30 %}</a>
-        {% endfor %}
-      {% endif %}
-    </p>
-
-    <h1>{{ setting.title }}</h1>
-
-    {% if setting.experimental %}
-      <span class="label label-warning"><span data-toggle="tooltip" data-placement="bottom" title="Experimental feature"><i class="fa fa-flask" aria-hidden="true"></i></span></span>
-    {% endif %}
-
-    {% if setting.since %}
-      <span class="label label-success"><span data-toggle="tooltip" data-placement="bottom" title="Available since"><i class="fa fa-code" aria-hidden="true"></i>
-      {{ setting.since }}</span></span>
-    {% endif %}
-
-    {% if setting.tags %}
-      <span class="label label-default"><i class="fa fa-tags" aria-hidden="true"></i>
-      {{ setting.tags }}</span>
-    {% endif %}
-
-    {% if setting.requires %}
-      {% assign list = (setting.requires | split: ',') %}
-      {% for item in list %}
-        <span class="label label-requires">{{item}}</span>
+  {% assign h1 = "h1" %}{% assign h3 = "h3" %}
+  {% if conf.label %}{% assign title = conf.label %}{% else %}{% assign title = conf.name %}{% endif %}
+  {% if conf.since %}{% assign since = conf.since %}{% endif %}
+  {% if conf.tags %}{% assign tags = conf.tags | join: ", " %}{% endif %}
+  <p id="authors" class="text-right pull-right visible-lg-block hidden-print small custom-pt25">
+    {% assign authors = conf.author | append: ',' | append: conf.contrib | replace: " ","" | split: ',' %}
+    {% if authors %}
+      {% for author in authors %}
+        <a href="//github.com/{{ author }}" data-toggle="tooltip" data-placement="bottom" title="Visit {{ author }}'s profile on Github">{% avatar user=author size=30 %}</a>
       {% endfor %}
     {% endif %}
-  </div>
+  </p>
+{% else %}
+  {% assign ispage = false %}
+  {% assign h1 = "h4" %}{% assign h3 = "h5" %}
+  {% assign title = "#define " | append: conf.name | append: " <em>" | append: conf.type | append: "</em>" %}
+  {% if conf.since and conf.since != oldsince %}{% assign since = conf.since %}{% else %}{% assign since = false %}{% endif %}
+  {% if conf.tags %}{% assign newtags = conf.tags | join: ", " %}{% if newtags != oldtags %}{% assign tags = newtags %}{% else %}{% assign tags = false %}{% endif %}{% endif %}
+{% endif %}
+
+<div class="meta detail-header">
+  <{{ h1 }}>{{ title }}</{{ h1 }}>
+
+  {% if conf.experimental %}
+    <span class="label label-warning"><span data-toggle="tooltip" data-placement="bottom" title="Experimental"><i class="fa fa-flask" aria-hidden="true"></i></span></span>
+  {% endif %}
+
+  {% if since %}
+    <span class="label label-success"><span data-toggle="tooltip" data-placement="bottom" title="{% if conf.until %}Availability{% else %}Available since{% endif %}"><i class="fa fa-code" aria-hidden="true"></i>
+    {{ since }}{% if conf.until %} - {{ conf.until }}{% endif %}</span></span>
+  {% endif %}
+
+  {% if conf.brief %}
+    <span class="label label-primary"><i class="fa fa-pencil-square" aria-hidden="true"></i> {{conf.brief}}</span>
+  {% endif %}
+
+  {% if tags %}
+    <span class="label label-default"><i class="fa fa-tags" aria-hidden="true"></i> {{ tags }}</span>
+  {% endif %}
+
+  {% if conf.requires %}
+    {% assign list = (conf.requires | split: ',') %}
+    {% for item in list %}
+      <span class="label label-requires" data-toggle="tooltip" data-placement="bottom" title="Requires">{{item}}</span>
+    {% endfor %}
+  {% endif %}
 </div>
 
-<div class="row long">
-  <div class="col-lg-12">
-    <h3>Description</h3>
-    {% if setting.long %}
-      {% for line in setting.long %}
-        {{ line | markdownify }}
-      {% endfor %}
-    {% endif %}
+{% if conf.related %}
+  <div class="related">
+    Related codes: {% for item in conf.related %}<a href="/docs/gcode/{{ item | linkify }}.html"><code>{{item}}</code></a> {% endfor %}
   </div>
+{% endif %}
+
+<div class="long">
+  {% if ispage %}
+    {% if page.content %}<{{ h3 }}>Description</{{ h3 }}>{{ page.content | markdownify }}{% endif %}
+  {% else %}
+    {% if conf.long %}{{ conf.long | markdownify }}{% endif %}
+  {% endif %}
 </div>
 
-{% if setting.notes %}
-  <div class="row notes">
-    <div class="col-lg-12">
-      <h3>Notes</h3>
-        {% for line in setting.notes %}
+{% if conf.preview %}
+  <div class="preview">
+    <{{ h3 }}>Notes</{{ h3 }}>
+    {% highlight c %}{% for line in conf.preview %}{{ line }}{% endfor %}{% endhighlight %}
+  </div>
+{% endif %}
+
+{% if conf.notes %}
+  <div class="notes">
+    <{{ h3 }}>Notes</{{ h3 }}>
+    {% for line in conf.notes %}{{ line | markdownify }}{% endfor %}
+  </div>
+{% endif %}
+
+{% if conf.devnotes %}
+  <div class="devnotes">
+    <{{ h3 }}>Developer Notes</{{ h3 }}>
+    {% for line in conf.devnotes %}{{ line | markdownify }}{% endfor %}
+  </div>
+{% endif %}
+
+{% if conf.images %}
+<div class="gallery" id="gallery-{{ conf.tag }}">
+  <{{ h3 }}>Gallery</{{ h3 }}>
+  {% for img in conf.images %}
+    {% assign cap = img.caption | markdownify %}
+    {% assign ttl = img.title | markdownify | strip_html %}
+    <h4>{{ ttl }}</h4>
+    {{ cap }}
+    <img src="{{ img.path | prepend: '/assets/images/config/' }}" alt="{{ ttl | xml_escape }}" title="{{ ttl | xml_escape }}" />
+  {% endfor %}
+</div>
+{% endif %}
+
+{% if conf.videos %}
+<div class="videos" id="videos-{{ conf.tag }}">
+  <{{ h3 }}>Related Media</{{ h3 }}>
+  {% for videoid in conf.videos %}
+    <iframe class="youtube" width="300" height="225" src="https://youtube.com/embed/{{ videoid }}"></iframe>
+  {% endfor %}
+</div>
+{% endif %}
+
+{% if conf.example %}{% assign example = conf.example %}
+{% elsif conf.examples %}{% assign example = conf.examples %}
+{% else %}{% assign example = false %}{% endif %}
+{% if example %}
+  <div class="examples">
+    <{{ h3 }}>Example{% if example[1] %}s{% endif %}</{{ h3 }}>
+    {% for ex in example %}
+      {% if ex.pre %}
+        {% for line in ex.pre %}
           {{ line | markdownify }}
         {% endfor %}
-    </div>
-  </div>
-{% endif %}
-
-{% if setting.preview %}
-  <div class="row preview">
-    <div class="col-lg-12">
-      <h3>Config Source</h3>
-      {% for line in setting.preview %}
-        {{ line | markdownify }}
-      {% endfor %}
-    </div>
-  </div>
-{% endif %}
-
-{% if setting.options %}
-
-  {% assign list = ('' | split: '|') %}
-  {% for opt in setting.options %}
-    {% if opt.tag %}
-      {% assign list = list | push: opt %}
-    {% endif %}
-  {% endfor %}
-
-  {% if list.size > 0 %}
-    {% assign list = (list | sort: 'value') %}
-    <div class="row params">
-      <div class="col-lg-12">
-        <h3>Options</h3>
-        <ul>
-          {% for opt in list %}
-            <li>{{ opt.value }} - {{ opt.title | markdownify }}</li>
+      {% endif %}
+      {% if ex.value or ex.code %}
+        {% highlight cpp %}{% if ex.value %}#define {{ conf.name }} {{ ex.value }}{% if ex.comment %} // {{ ex.comment }}{% endif %}{% endif %}
+        {%- for line in ex.code %}{{ line }}{% endfor %}{% endhighlight %}
+      {% endif %}
+      {% if ex.post %}
+        <div class="post">
+          {% for line in ex.post %}
+            {{ line | markdownify }}
           {% endfor %}
-        </ul>
-      </div>
-    </div>
-  {% endif %}
-
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
 {% endif %}
 
-{% if setting.videos %}
-<div class="row videos" id="videos-{{ setting.tag }}">
-  <div class="col-lg-12">
-    <h3>Related Media</h3>
-    {% for videoid in setting.videos %}
-      <iframe class="youtube" width="300" height="225" src="https://youtube.com/embed/{{ videoid }}"></iframe>
-    {% endfor %}
-    </details>
-  </div>
-</div>
+<!-- Recursively display sub-options by re-including this template -->
+{% if conf.subopts %}{% assign sub = conf.subopts %}{% assign label = "Sub-Options" %}
+{% elsif conf.settings %}{% assign sub = conf.settings %}{% assign label = "Settings" %}
+{% else %}{% assign sub = false %}{% endif %}
+{% if sub %}
+  {% assign oldsince = since %}{% assign oldtags = tags %}
+  {% for conf in sub %}<div class="subopt">{% include setting-info.html %}</div>{% endfor %}
 {% endif %}

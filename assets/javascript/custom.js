@@ -165,7 +165,7 @@ $(function() {
     setCookie('nightMode', dark);
   });
 
-  var $here_ul = $('.container.gcode ul.nav.nav-list');
+  var $here_ul = $('.container.detail ul.nav.nav-list');
   if ($here_ul.length) {
     var $here_link = $here_ul.children('li.tocify-item.active');
     $.fn.visibleHeight = function() {

@@ -7,9 +7,7 @@ author: thinkyhead
 category: [ features, lcd ]
 ---
 
-{% alert info %}
-This page is a work in progress, based on Marlin 1.1.2.
-{% endalert %}
+{% alert info %}This page is a work in progress, based on Marlin 1.1.2.{% endalert %}
 
 In addition to a serial/usb/host interface, Marlin also includes a menu-based user interface for inexpensive character and graphical LCD controllers. Rotate a knob or use buttons to navigate menu items, edit values, and make other adjustments. Click the knob or press a button to choose menu items, exit adjustment screens, and perform other actions.
 

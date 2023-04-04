@@ -6,9 +6,7 @@ author: thinkyhead
 category: [ configuration, hardware ]
 ---
 
-{% alert info %}
-This document is based on Marlin 1.1.9
-{% endalert %}
+{% alert info %}This document is based on Marlin 1.1.9{% endalert %}
 
 ---
 Note: For best results with Marlin 1.1.9, we recommend ([#11576](//github.com/MarlinFirmware/Marlin/issues/11576)) using a fan PWM pin and the [`M106`](/docs/gcode/M106.html) command instead of [`M3`](/docs/gcode/M003.html)-[`M5`](/docs/gcode/M005.html). The simplest way to do this is to define `FAN1_PIN` as one of the available PWM pins on your board. Ignore this recommendation for **Marlin 2.x**.
@@ -26,10 +24,9 @@ M106 P1 S255 ; Laser at 100%
 
 **NOTE**: You can use FAN0 if it is available, in which case you will not need to define the above. As of this edit, Marlin can control up to 3 fans via [`M106`](/docs/gcode/M106.html)/[`M107`](/docs/gcode/M107.html). To use more pins you may need to modify Marlin as described in [Issue #12961](//github.com/MarlinFirmware/Marlin/issues/12961).
 
-
 ---
 
-# Pins
+### Pins
 Alternatively, you could configure the following to use `M3`, `M4` and `M5`.
 
 In the `pins_MYBOARD.h` file for your board make sure the following pins are defined:
@@ -48,7 +45,7 @@ For all CPUs the hardware PWMs on `TIMER1` are not available. Marlin uses `TIMER
 
 Servos also make hardware PWM(s) unavailable. In this case it's only the "A" PWM that's unavailable. The other hardware PWM(s) on that timer are available for general use.
 
-## ATmega2560 PWM Assignments and Clients
+#### ATmega2560 PWM Assignments and Clients
 
 Below is a table that can be used when selecting the speed pin on a 2560. (Other CPUs include a subset of the 2560 pins.)
 
@@ -81,12 +78,12 @@ In addition to the above, fans can be assigned to PWM pins. If you pick a pin th
 
 **NOTE**: Most pins hardwired to a heater or fan are usually driven by a MOSFET with a pullup on its output through an LED to +12V/+24V. This will probably damage your spindle controller unless you add a protection circuit. If there isn't a +12V/+24V pullup you'll need an external 1k-10k pullup resistor to the pin.
 
-# AT90USB646, 647, 1286 & 1287 PWM assignments
+### AT90USB646, 647, 1286 & 1287 PWM assignments
 
  - As with the atmega2560, the PWMs on Timer1 are not available.
  - These chips have 10 PWMs assigned to 9 pins. `TIMER0A` and `TIMER1C` are tied to the same pin. Most Arduino IDE extensions only make `TIMER1C` available (Teensyduino included).
 
-# ATmega644 & 1284 PWM assignments
+### ATmega644 & 1284 PWM assignments
 
  - As with the 2560, the PWMs on Timer1 are not available.
  - All PWMs have their own pins.

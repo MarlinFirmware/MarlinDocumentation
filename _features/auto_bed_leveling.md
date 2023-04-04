@@ -8,13 +8,9 @@ contrib: shitcreek
 category: [ features, leveling ]
 ---
 
-{% alert info %}
-This article pertains to Marlin 1.1.6 and some earlier versions. Corrections/improvements are welcome.
-{% endalert %}
+{% alert info %}This article pertains to Marlin 1.1.6 and some earlier versions. Corrections/improvements are welcome.{% endalert %}
 
-{% alert info %}
-Marlin also includes [Unified Bed Leveling](unified_bed_leveling.html) and [Mesh Bed Leveling](/docs/gcode/G029-mbl.html) which have their own unique options. The information on this page only fully applies to ABL.
-{% endalert %}
+{% alert info %}Marlin also includes [Unified Bed Leveling](unified_bed_leveling.html) and [Mesh Bed Leveling](/docs/gcode/G029-mbl.html) which have their own unique options. The information on this page only fully applies to ABL.{% endalert %}
 
 <!-- # Introduction -->
 
@@ -45,9 +41,7 @@ Unless you know you have a very flat bed, you should always use `AUTO_BED_LEVELI
 
 # First-Time Bed Leveling
 
-{% alert info %}
-For cartesian printers, level the bed corners using the 'paper method' before begining. With `LEVEL_BED_CORNERS` enabled you can do so via the LCD menu.
-{% endalert %}
+{% alert info %}For cartesian printers, level the bed corners using the 'paper method' before begining. With `LEVEL_BED_CORNERS` enabled you can do so via the LCD menu.{% endalert %}
 
 Begin with `M111 S247` for maximum logging. Before leveling the bed the machine must be homed with [`G28`](/docs/gcode/G028.html). This establishes the current position and makes sure that the carriage won't try to move outside the physical limits.
 
