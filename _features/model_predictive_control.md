@@ -234,7 +234,7 @@ $$ \alpha_s = \dfrac{R_f}{R_f.t_f + T_{s0} - T_f} $$
 
 Where $ T_{s0} = T_a = $ starting ambient temperature
 
-Finally, to calculate the ambient tranfer coefficients, the hotend is heated to a steady state sensor temperature, $ T_s $ and the ambient transfer coefficient is given by (from eq. 12):
+Finally, to calculate the ambient transfer coefficients, the hotend is heated to a steady state sensor temperature, $ T_s $ and the ambient transfer coefficient is given by (from eq. 12):
 
 $$ h_a = \dfrac{P}{T_s - T_{s0}} $$
 
@@ -242,7 +242,7 @@ The heat transfer coefficients for both zero and full part cooling are used in t
 
 ### Heat Transfer Coefficients
 
-After Asymptotic or Differential Tuning has estrablished $$C_b$$ and $$\alpha_s$$, `M306 T` finds a $$t$$ and $$\Delta t$$ with known sensor values for $$T_s(t)$$, $$T_s(t + \Delta t)$$ and $$T_s(t + 2 \Delta t)$$. These are used with the equations above to calculate values for `MPC_SENSOR_RESPONSIVENESS`, `MPC_AMBIENT_XFER_COEFF` and `MPC_BLOCK_HEAT_CAPACITY`. These values are then used to target a particular temperature while heat loss is measured to obtain `MPC_AMBIENT_XFER_COEFF_FAN255` and an even better estimate of `MPC_AMBIENT_XFER_COEFF`.
+After Asymptotic or Differential Tuning has established $$C_b$$ and $$\alpha_s$$, `M306 T` finds a $$t$$ and $$\Delta t$$ with known sensor values for $$T_s(t)$$, $$T_s(t + \Delta t)$$ and $$T_s(t + 2 \Delta t)$$. These are used with the equations above to calculate values for `MPC_SENSOR_RESPONSIVENESS`, `MPC_AMBIENT_XFER_COEFF` and `MPC_BLOCK_HEAT_CAPACITY`. These values are then used to target a particular temperature while heat loss is measured to obtain `MPC_AMBIENT_XFER_COEFF_FAN255` and an even better estimate of `MPC_AMBIENT_XFER_COEFF`.
 
 ## `M306 T` Details
 The tuning algorithm does the following with the target hotend:
