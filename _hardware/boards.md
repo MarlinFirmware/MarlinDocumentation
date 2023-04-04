@@ -62,8 +62,8 @@ If you're developing a custom Arduino-based board, try to use standard RAMPS 1.4
   head.ready("sheetrock.min.js", function() {
     $('#board_list').sheetrock({
       url: "https://docs.google.com/spreadsheets/d/" +
-        "1K4e1GaA4xuNfUGyIw57vxPGuUzQSv5wktTQBHdCVCKU#gid=0",
-      query: "SELECT A, C, D, E WHERE C <> '' ORDER BY C ASC, A ASC"
+        "1K4e1GaA4xuNfUGyIw57vxPGuUzQSv5wktTQBHdCVCKU#gid=525308416",
+      query: "SELECT A, B, C, D, E"
     });
   });
 </script>

@@ -1,18 +1,30 @@
 ---
 layout: default
 ---
-
-<!-- content -->
-<div class="container setting" role="main">
+{% assign list = '' | split: '|' %}
+{% for conf in site.setting %}
+  {% assign list = list | push: conf %}
+{% endfor %}
+<div class="container detail" role="main">
   <div class="row">
-    <div class="col-lg-9 col-md-8 custom-bg-white">
-      <div class="row">
-        <div class="col-md-12">
-          {% assign setting = page %}
-          {% include setting-info.html %}
-        </div>
+    <div class="col-lg-3 col-md-4 visible-lg-block visible-md-block custom-no-padding">
+      <div>
+        {%- if list.size > 0 -%}
+          <div class="tocify bigtoc">
+            <ul class="tocify-header nav nav-list">
+              {%- assign list = list | sort: 'tag' %}
+              {%- for conf in list %}
+                {% assign active = false %}
+                {% if page.codes[0] == conf.codes[0] and page.title == conf.title %}{% assign active = true %}{% endif %}
+                <li class="tocify-item{% if active %} active{% endif %}"><a href="{{ conf.url | prepend: site.baseurl }}">{% if conf.label %}{{ conf.label }}{% else %}<strong>{{ conf.name }}</strong>{% endif %}</a></li>
+              {% endfor -%}
+            </ul>
+          </div>
+        {%- endif -%}
       </div>
+    </div>
+    <div class="col-lg-9 col-md-8 main">
+      {%- assign conf = page %}{% include setting-info.html -%}
     </div>
   </div>
 </div>
-<!-- /content -->

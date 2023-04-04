@@ -23,7 +23,7 @@ category: [ articles, getting-started ]
 - With Marlin open in *VSCode*, the "File Explorer" should be firmly rooted in your Marlin Firmware folder:
   ![AutoBuild Icon](/assets/images/basics/abm/explorer.png)
 
-- Click the *Auto Build Marlin* icon ![AutoBuild Icon](/assets/images/basics/abm/icon.png) in the Activities Bar to bring up the *Auto Build Marlin* options bar.
+- Click the *Auto Build Marlin* icon ![AutoBuild Icon](/assets/images/basics/abm/icon.png){: .inline} in the Activities Bar to bring up the *Auto Build Marlin* options bar.
   ![AutoBuild Menu](/assets/images/basics/abm/menu.png)
 
 - Click the "Show ABM Panel" button or one of the tool icons to open the *Auto Build Marlin* panel and initiate a build, upload, etc. If there are multiple environments for your `MOTHERBOARD` you will need to choose one first.

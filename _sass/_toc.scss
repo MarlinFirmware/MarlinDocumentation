@@ -73,14 +73,14 @@ You can continue this pattern if you have more nested elements. */
   color: var(--color-toc-hover);
 }
 
-.container.gcode div.tocify.gcode { border-bottom-color: var(--color-gcode-toc-border); }
-.tocify.gcode::-webkit-scrollbar { display: none; }
+.container.detail div.tocify.bigtoc { border-bottom-color: var(--color-gcode-toc-border); }
+.tocify.bigtoc::-webkit-scrollbar { display: none; }
 .custom-fixed-sidebar .tocify::-webkit-scrollbar { display: none; }
 
-.tocify.gcode,
+.tocify.bigtoc,
 .custom-fixed-sidebar .tocify { position: fixed; }
 
-.tocify.gcode,
+.tocify.bigtoc,
 .custom-fixed-sidebar .tocify {
   -webkit-scrollbar { display: none; }
   font-size: 13px;
@@ -93,7 +93,7 @@ You can continue this pattern if you have more nested elements. */
   overflow: scroll;
   >ul:last-child { margin-bottom: 80px; }
 }
-.tocify.gcode>ul {
+.tocify.bigtoc>ul {
   height: 100vh;
   overflow: scroll;
   li:last-child { margin-bottom: 80px; }

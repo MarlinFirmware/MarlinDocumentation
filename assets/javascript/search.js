@@ -21,7 +21,7 @@ var jekyllSearch = (function(){
     allowEmpty = false, showLoader = false,
     loadingClass = 'is--loading',
     self, searchTimer, odd = false,
-    section_head = { gcode:"G-code", basics:"Getting Started", config:"Configuration", feat:"Features", devel:"Development" };
+    section_head = { gcode:"G-code", basics:"Getting Started", config:"Configuration", feat:"Features", devel:"Development", setting:"Settings" };
 
   const ignore_pattern = /\b(a(ll|nd|re(n't)?)|but|can('t|not)?|d(id|oes)(n't)?|end|for|ha(d|s|ve)(n't)?|it'?s|odd|use[ds]?|even|from|man?y|more|much|some|this|tha[nt]|th[eo]se|the([mny]|ir|re|y're)?|(was|were)(n't)?|wh(at|en|ere|ich|o|y)|will|won't|other|people|(al)?though|users|your?|one|two)\b/g;
 
@@ -186,7 +186,7 @@ var jekyllSearch = (function(){
 
         $.each(data, function(index, item) {
           // check if search term is in content or title
-          const comp = (item.title + ' ' + item.content).toLowerCase();
+          const comp = (item.name + " " + item.title + ' ' + item.content + item.excerpt).toLowerCase();
           if (comp.match(qmatch)) {
             if (item.class != lastclass) {
               lastclass = item.class;

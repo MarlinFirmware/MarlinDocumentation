@@ -1,21 +1,22 @@
 module Jekyll
   module MarlinSiteFilter
     def indexify(input)
-      # This will be returned
+      # Reduce text down to searchable terms
       some = input.downcase
-      some = some.gsub(/<[^>]*>/, '')
-      some = some.gsub("’", "'")
-      some = some.gsub("“", '"')
-      some = some.gsub("-", ' ')
       some = some.gsub('průša', 'prusa')
-      some = some.gsub(/\b([a-z]{,2})\b/, '')
-      some = some.gsub(/\b(a(ll|nd|re(n't)?)|(be)?cause|but|can('t|not)?|d(id|oes)(n't)?|end|for|from|ha(d|s|ve)(n't)?|it'?s|odd|use[ds]?|even|from|man?y|more|much|not|see|since|significant(ly)?|some|t?here|this|tha[nt]|th[eo]se|the([mny]|ir|re|y're)?|true|(was|were)(n't)?|wh(at|en|ere|ich|o|y)|will|with(out)?|won't|other|users|people|(al)?though|you'?r?e?|one|two)\b/, '')
-      some = some.gsub(/!\[[^\]]+\]\([^\)]+\)\s*(\{[^\}]+\})?/, ' ')
-      some = some.gsub(/\[([^\]]+)\]\([^\)]+\)\s*(\{[^\}]+\})?/, '\1')
-      some = some.gsub(/\\q/, '\1')
-      some = some.gsub(/(EN|DIS)ABLED\(([^\)]+)\)/i, '\2')
+      some = some.gsub(/(<[^>]*>|$$.+$$)/, '')
+      some = some.gsub(/(en|dis)abled\(([^\)]+)\)/i, '\2')
+      some = some.gsub(/!\[[^\]]+\]\([^\)]+\)(\s*\{[^\}]+\})?/, ' ')
+      some = some.gsub(/\[([^\]]+)\]\([^\)]+\)(\s*\{[^\}]+\})?/, '\1')
+      some = some.gsub(/(#define|alert (info|warning)|endalert)/, '')
+      some = some.gsub(/[^0-9a-z'_ ]/, ' ')
+      some = some.gsub(/((ca|is|wo)?n't|'re|'s)/, '')
+      some = some.gsub(/\b[a-z]{,2}\b/, '')
+      some = some.gsub(/\b(a(ll|nd|re)|also|(be)?cause|b.t|cannot|d(id|oes)|end|even|for|from|g[eiou]t|ha(d|s|ve)?|how|[iou]nto|its|odd|out|use[ds]?|life|may(be)?|man?y|more|much|not|pre|see|since|sign(ificant(ly)?)?|some(what)?|such|t?here|this|tha[nt]|th[eo]se|the([mny]|ir|re|y)?|too|true|(was|were)|wh(at|en|ere|ich|o|y)|will|with(out)?|other|users|people|(al)?though|your?|n?one|two|via)\b/, '')
+      some = some.gsub(/( '|' )/, '')
+      #some = some.gsub(/\b(([a-z]{,3})?_[a-z0-9]{,3})\b/, '')
+      some = some.gsub(/\b(\d+(kb?)?|0x\h+)\b/, '')
       some = some.gsub(/([[:punct:]]|:| [a-z])[ \t\n]+|[\n\r]+|\\[nr]/, ' ')
-      some = some.gsub(/[`\(\)\[\]:]+/, '')
       some = some.split(' ').compact.uniq.join(' ')
       some
     end
@@ -27,15 +28,17 @@ module Jekyll
     end
 
     def codes_desc(input)
-      out = input[0]
-      if input.size > 1
-        re1 = /([GM])(\d+).*$/
-        doc1 = out.gsub(re1, '\2')
-        doc2 = input.last.gsub(re1, '\2')
-        out += doc2.to_i - doc1.to_i < 10 ? '-' : ', '
-        out += input.last
+      if input != nil
+        out = input[0]
+        if input.size > 1
+          re1 = /([GM])(\d+).*$/
+          doc1 = out.gsub(re1, '\2')
+          doc2 = input.last.gsub(re1, '\2')
+          out += doc2.to_i - doc1.to_i < 10 ? '-' : ', '
+          out += input.last
+        end
+        out
       end
-      out
     end
 
   end

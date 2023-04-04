@@ -1,15 +1,10 @@
-{% for cat in page.category %}
-  {% if cat == 'needs-review' %}
-    <div class="col-lg-12 row">
-      {% alert info %}
-This document has been marked `needs-review`. The following information may be outdated or may no longer apply to the latest Marlin.
-      {% endalert %}
-    </div>
-  {% endif %}
-{% endfor %}
-
-<div class="col-lg-12 row meta" id="gcode-header">
-  <p class="text-right pull-right visible-lg-block hidden-print small custom-pt25">
+{% if gcode.category contains 'in-review' %}
+  {% alert info %}This page is marked for review. The following information may be outdated or incorrect.{% endalert %}
+{% elsif gcode.category contains 'wip' %}
+  {% alert info %}This page is under construction and may not have complete or up-to-date information.{% endalert %}
+{% endif %}
+<div class="col-lg-12 row meta detail-header">
+  <p id="authors" class="text-right pull-right visible-lg-block hidden-print small custom-pt25">
     {% assign authors = gcode.author | append: ',' | append: gcode.contrib | replace: " ","" | split: ',' %}
     {% if authors %}
       {% for author in authors %}
@@ -21,17 +16,15 @@ This document has been marked `needs-review`. The following information may be o
   <h1>{{ gcode.codes | codes_desc }} - {{ gcode.title }}</h1>
 
   {% if gcode.experimental %}
-    <span class="label label-warning"><span data-toggle="tooltip" data-placement="bottom" title="Experimental feature"><i class="fa fa-flask" aria-hidden="true"></i></span></span>
+    <span class="label label-warning"><span data-toggle="tooltip" data-placement="bottom" title="Experimental"><i class="fa fa-flask" aria-hidden="true"></i></span></span>
   {% endif %}
 
   {% if gcode.since %}
-    <span class="label label-success"><span data-toggle="tooltip" data-placement="bottom" title="Available since"><i class="fa fa-code" aria-hidden="true"></i>
-    {{ gcode.since }}</span></span>
+    <span class="label label-success"><span data-toggle="tooltip" data-placement="bottom" title="{% if conf.until %}Availability{% else %}Available since{% endif %}"><i class="fa fa-code" aria-hidden="true"></i> {{ gcode.since }}</span></span>
   {% endif %}
 
   {% if gcode.group %}
-    <span class="label label-default"><i class="fa fa-tags" aria-hidden="true"></i>
-    {{ gcode.group }}</span>
+    <span class="label label-default"><i class="fa fa-tags" aria-hidden="true"></i> {{ gcode.group }}</span>
   {% endif %}
 
   {% if gcode.brief %}
@@ -41,7 +34,7 @@ This document has been marked `needs-review`. The following information may be o
   {% if gcode.requires %}
     {% assign list = (gcode.requires | split: ',') %}
     {% for item in list %}
-      <span class="label label-requires">{{item}}</span>
+      <span class="label label-requires" data-toggle="tooltip" data-placement="bottom" title="Requires">{{item}}</span>
     {% endfor %}
   {% endif %}
 </div>
@@ -60,14 +53,14 @@ This document has been marked `needs-review`. The following information may be o
 {% if gcode.notes %}
   <div class="col-lg-12 row notes">
     <h3>Notes</h3>
-      {% for line in gcode.notes %}{{ line | markdownify }}{% endfor %}
+    {% for line in gcode.notes %}{{ line | markdownify }}{% endfor %}
   </div>
 {% endif %}
 
 {% if gcode.devnotes %}
   <div class="col-lg-12 row devnotes">
     <h3>Developer Notes</h3>
-      {% for line in gcode.devnotes %}{{ line | markdownify }}{% endfor %}
+    {% for line in gcode.devnotes %}{{ line | markdownify }}{% endfor %}
   </div>
 {% endif %}
 
@@ -75,7 +68,7 @@ This document has been marked `needs-review`. The following information may be o
 <div class="col-lg-12 row usage" id="usage-{{ gcode.tag }}">
   <h3>Usage</h3>
   {% for code in gcode.codes %}
-  <div><code>{{ code }}
+    <div><code>{{ code }}
     {% if gcode.parameters %}
       {% assign list = ('' | split: '|') %}
       {% for parm in gcode.parameters %}
@@ -168,10 +161,10 @@ This document has been marked `needs-review`. The following information may be o
                   -->{% endif %}<!--
                   -->{% if parm.optional %}&#x5D;{% endif %}
                 </code><!--
-                -->{% if parm.since %} <span class="label label-success"><span data-toggle="tooltip" data-placement="bottom" title="Available since"><i class="fa fa-code" aria-hidden="true"></i>{{ parm.since }}</span></span>{% endif %}<!--
+                -->{% if parm.since %} <span class="label label-success"><span data-toggle="tooltip" data-placement="bottom" title="Available since"><i class="fa fa-code" aria-hidden="true"></i> {{ parm.since }}</span></span>{% endif %}<!--
                 -->{% if parm.requires %}{% assign list = (parm.requires | split: ',') %}<!--
                   -->{% for item in list %}<!--
-                    --><span class="label label-requires"><span data-toggle="tooltip" data-placement="bottom" title="Option required">{{item}}</span></span><!--
+                    --> <span class="label label-requires"><span data-toggle="tooltip" data-placement="bottom" title="Option required">{{item}}</span></span><!--
                   -->{% endfor %}<!--
                 -->{% endif %}<!--
                 -->{% if parm.experimental %} <span class="label label-warning"><span data-toggle="tooltip" data-placement="bottom" title="Experimental option"><i class="fa fa-flask" aria-hidden="true"></i></span></span>{% endif %}<!--
@@ -219,21 +212,12 @@ This document has been marked `needs-review`. The following information may be o
 </div>
 {% endif %}
 
-{% if gcode.examples %}
-  {% assign ex = gcode.examples %}
-  {% assign plural = "s" %}
-{% else %}
-  {% if gcode.example %}
-    {% assign ex = gcode.example %}
-    {% assign plural = "" %}
-  {% else %}
-    {% assign ex = [] %}
-  {% endif %}
-{% endif %}
-
+{% if conf.examples %}{% assign ex = conf.examples %}
+{% elsif conf.example %}{% assign ex = conf.example %}
+{% else %}{% assign ex = false %}{% endif %}
 {% if ex %}
   <div class="col-lg-12 row examples">
-    <h3>Example{{ plural }}</h3>
+    <h3>Example{% if ex[1] %}s{% endif %}</h3>
     {% for example in ex %}
       {% if example.pre %}
         {% for line in example.pre %}

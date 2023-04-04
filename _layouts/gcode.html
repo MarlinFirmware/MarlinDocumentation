@@ -3,36 +3,42 @@ layout: default
 ---
 
 <!-- content -->
-<div class="container gcode" role="main">
+<div class="container detail" role="main">
   <div class="row">
     <div class="col-lg-3 col-md-4 visible-lg-block visible-md-block custom-no-padding">
-      <div class="">
-        {% assign list = '' | split: '|' %}
-        {% for gcode in site.gcode %}
-          {% if gcode.codes[0] %}
-            {% assign list = list | push: gcode %}
-          {% endif %}
-        {% endfor %}
+      <div>
+        <!-- Get all G-codes with a 'codes' field into a list -->
+        {%- assign list = '' | split: '|' %}
+        {%- for gcode in site.gcode %}
+          {%- if gcode.codes[0] %}
+            {%- assign list = list | push: gcode %}
+          {%- endif %}
+        {%- endfor %}
 
-        {% if list.size > 0 %}
-          <div class="tocify gcode">
+        <!-- Emit the list as side navigation -->
+        {%- if list.size > 0 -%}
+          <div class="tocify bigtoc">
             <ul class="tocify-header nav nav-list">
-              {% assign list = list | sort: 'tag' %}
-              {% for gcode in list %}
+              {%- assign list = list | sort: 'tag' %}
+              {%- for gcode in list %}
                 <li class="tocify-item{% if page.codes[0] == gcode.codes[0] and page.title == gcode.title %} active{% endif %}"><a href="{{ gcode.url | prepend: site.baseurl }}"><strong>{{ gcode.codes | codes_desc }}</strong>: {{ gcode.title }}</a></li>
-              {% endfor %}
+              {%- endfor -%}
             </ul>
           </div>
-        {% endif %}
+        {%- endif -%}
       </div>
     </div>
-    <div class="col-lg-9 col-md-8 custom-bg-white">
+    <!-- Get the specific G-code info from this _gcode .md -->
+    <div class="col-lg-9 col-md-8 main">
       <div class="row">
         <div class="col-md-12">
+          <!-- Is this a G-code page or the summary? -->
           {% if page.collection == 'gcode' and page.codes %}
+            <!-- Emit the page -->
             {% assign gcode = page %}
             {% include gcode-info.html %}
           {% else %}
+            <!-- Emit the summary -->
             <h1>G-code Index</h1>
             {% for gcode in site.gcode %}
               {% if gcode.codes %}

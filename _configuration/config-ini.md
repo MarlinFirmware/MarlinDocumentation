@@ -6,7 +6,7 @@ author: thinkyhead
 category: [ configuration ]
 ---
 
-# On Configuration
+## On Configuration
 
 Over Marlin's lifetime we've considered many alternatives to the current system of two configuration header files, but there have always been trade-offs, especially in terms of maintaining hundreds of examples. Marlin also maintains support for Arduino IDE and small build sizes, and that requires us to use C++ headers at some level.
 
@@ -14,21 +14,21 @@ All the concepts we've explored that include splitting up configs (e.g., by feat
 
 Marlin configurations include `#if` blocks to group dependent options, although this is not strictly necessary. This is done partly to make the build more efficient, but we also want to capture the dependencies between options so scripts and tools can (mostly) derive them directly from the Configurations.
 
-# On Migration
+## On Migration
 
 It can be tricky to migrate from older versions of Marlin as settings change. Marlin checks for old settings and tells you what to change during the build, but the final result is never fully up to date. Wouldn't it be nice if Marlin would automatically migrate old settings to a new configuration for you?
 
 We're currently working on tools to improve the situation, with the goal to build a schema and a database of configurations across all Marlin versions so we can generate complete configuration headers, perform migrations, and even generate searchable documentation for this website. That is a big project unto itself, so feel free to [get involved on Discord](https://discord.gg/n5NJ59y)!
 
-# Meta Configuration
+## Meta Configuration
 
 Since Marlin now supports PlatformIO we can do custom pre-processing as part of the build. PlatformIO loves INI files, which are very simple and commonly used for 3D printer firmware configuration. So, we now include a [`config.ini` configuration file](https://github.com/MarlinFirmware/Marlin/blob/2.1.2/Marlin/config.ini) that can do a lot of useful tricks.
 
-# config.ini
+## config.ini
 
 Note that the behavior of this feature is likely to change as we continue to experiment and find new ways to use it, so consult the codebase for the most up to date information.
 
-## Overview
+### Overview
 
 The default `config.ini` from Marlin 2.1.2 looks something like this:
 
@@ -73,7 +73,7 @@ At the start of a build / upload PlatformIO runs the script `buildroot/share/Pla
 
 The `config.ini` file follows regular conventions. Names in braces are used to start a section. (We use section names beginning with `config:` to avoid conflicts with any other INI files in the project that may already be loaded by PlatformIO.) Lines that include an equals sign are option/value pairs, with everything after the equals sign taken literally. The names of options are case-insensitive, so we stick to lowercase.
 
-## Base INI Options
+### Base INI Options
 
 The section named `config:base` is always processed first. Any options within any section that start with `ini_` only apply to `config.ini` processing itself and won't be used to modify configurations.
 
@@ -95,11 +95,11 @@ Values can also be combined in any order, separated by commas. For example:
 ini_use_config = base@myprinter.ini, bltouch, test
 ```
 
-# Exporting `config.ini`
+## Exporting `config.ini`
 
 Marlin can generate a `config.ini` file as part of any build. Set the `CONFIG_EXPORT` option to 2. This will export a file with sections named `config:basic` and `config:advanced` that only includes enabled options.
 
-# Suggested Uses
+## Suggested Uses
 
 - Any automated build system that currently uses `Configuration.h` and `Configuration_adv.h` files could switch to INI files, which should be easier to maintain and apply and compare changes going forward. The INI system is meant to allow for you to create a base configuration section for a particular machine and then apply just the differences in additional sections.
 

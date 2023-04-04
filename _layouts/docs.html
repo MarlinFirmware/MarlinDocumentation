@@ -5,7 +5,7 @@ layout: default
   <script language="javascript">
     toc_selectors = '{{ page.toc.selectors }}';
   </script>
-{% endif %}
+{%- endif %}
 
 <!-- content -->
 <div class="container" role="main">
@@ -15,26 +15,24 @@ layout: default
         <div id="toc"></div>
       </div>
     </div>
-    <div class="col-lg-9 col-md-8 custom-bg-white">
+    <div class="col-lg-9 col-md-8">
       <div class="row">
         <div class="col-md-12 custom-article">
-          <p class="text-right pull-right visible-lg-block hidden-print small custom-pt25">
-            {% assign authors = page.author | append: ',' | append: page.contrib | replace: " ","" | split: ',' %}
-            {% if authors %}
-              {% for author in authors %}
+          <p id="authors" class="text-right pull-right visible-lg-block hidden-print small custom-pt25">
+            {%- assign authors = page.author | append: ',' | append: page.contrib | replace: " ","" | split: ',' %}
+            {%- if authors %}
+              {%- for author in authors %}
                 <a href="//github.com/{{ author }}" data-toggle="tooltip" data-placement="bottom" title="Visit {{ author }}'s profile on Github">{% avatar user=author size=30 %}</a>
-              {% endfor %}
-            {% endif %}
+              {%- endfor %}
+            {%- endif %}
           </p>
           <h1 class="custom-article-header">{{ page.title }}</h1>
 
-          {% for cat in page.category %}
-            {% if cat == 'needs-review' %}
-              {% alert info %}
-                This document has been marked `needs-review`. The following information may be incomplete or not fully applicable to current Marlin versions.
-              {% endalert %}
-            {% endif %}
-          {% endfor %}
+          {%- if page.category contains 'in-review' %}
+            {%- alert info %}This page is marked for review. The following information may be outdated or may no longer apply to the latest Marlin.{% endalert %}
+          {%- elsif page.category contains 'wip' %}
+            {%- alert info %}This page is under construction and may not have complete or up-to-date information.{% endalert %}
+          {%- endif %}
 
           {{ content }}
         </div>
