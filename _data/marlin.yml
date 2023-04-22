@@ -6,11 +6,11 @@ downloads:
     file: 2.1.2.zip
     config: release-2.1.2
   -
-    version: 2.0.9.5
+    version: 2.0.9.6
     description: Marlin 2.0 LTS
     tools: Supports AVR and ARM<br/>Arduino and PlatformIO
-    file: 2.0.9.5.zip
-    config: release-2.0.9.5
+    file: 2.0.9.6.zip
+    config: release-2.0.9.6
   -
     version: 1.1.9.1
     description: Marlin 1.1 LTS
@@ -60,7 +60,7 @@ patched:
     extra: Latest 2.0.x with Hotfixes
     tools: Supports AVR and ARM<br/>Arduino and PlatformIO
     file: 2.0.x.zip
-    config: release-2.0.9.5
+    config: release-2.0.9.6
   -
     version: 1.1.x
     description: Marlin 1.1 with bug fixes
