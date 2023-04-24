@@ -5,7 +5,7 @@ category: [ wip ]
 tags: [ info ]
 pagetype: toc
 
-subopts:
+settings:
 -
   name: CUSTOM_MACHINE_NAME
   type: string

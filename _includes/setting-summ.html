@@ -7,8 +7,8 @@
   {{ conf.since }}{% if conf.until %}-{{ conf.until }}{% endif %}</span></span>
 {% endif %}
 
-{% if conf.tags %}
-  <span class="label label-default"><i class="fa fa-tags" aria-hidden="true"></i>
+{% if conf.tags and false %}
+  <span class="conf-summ-tag label label-default"><i class="fa fa-tags" aria-hidden="true"></i>
   {{ conf.tags | join: ", " }}</span>
 {% endif %}
 
@@ -24,3 +24,12 @@
 {% if conf.brief %}
   <p>{{conf.brief}}</p>
 {% endif %}
+
+{% if conf.settings %}
+  <div class="summ-opts">
+  {% for opt in conf.settings %}
+    <a class="opt" href="{{ conf.url | prepend: site.baseurl }}#{{opt.name}}">{{opt.name}}</a>
+  {% endfor %}
+  </div>
+{% endif %}
+

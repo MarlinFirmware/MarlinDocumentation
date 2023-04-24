@@ -4,7 +4,7 @@ brief: Information about the configuration itself.
 category: [ wip ]
 tags: [ info ]
 
-subopts:
+settings:
 -
   name: CONFIGURATION_H_VERSION
   type: hexver

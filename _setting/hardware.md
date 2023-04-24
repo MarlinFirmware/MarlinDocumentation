@@ -72,4 +72,4 @@ settings:
   brief: Bluetooth wireless interface.
   long: Enable the Bluetooth serial interface on AT90USB devices.
 ---
-Use these options to define the machine hardware, including the mainboard, serial ports, etc.
+Use these options to define the machine hardware, including the mainboard, serial ports, etc. These are the most basic settings for every type of machine that Marlin supports.

@@ -4,7 +4,9 @@ layout: default
 
 {%- assign list = '' | split: '|' %}
 {%- for conf in site.setting %}
-  {%- assign list = list | push: conf %}
+  {%- if conf.tags contains 'draft' %}{% else %}
+    {%- assign list = list | push: conf %}
+  {%- endif %}
 {%- endfor %}
 
 <!-- content -->
@@ -24,13 +26,15 @@ layout: default
         {%- endif -%}
       </div>
     </div>
+    {%- if list.size > 0 -%}
     <div class="col-lg-9 col-md-8 main">
       <h1>Marlin Settings</h1>
-      {%- for conf in site.setting %}
+      {%- for conf in list %}
         {%- assign odd = forloop.index | modulo: 2 %}
         <div class="settings item{% if odd == 0 %} odd{% endif %}">{% include setting-summ.html %}</div>
       {% endfor -%}
     </div>
+    {% endif -%}
   </div>
 </div>
 <!-- /content -->
