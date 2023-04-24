@@ -86,7 +86,7 @@ $(function() {
    */
   $toc = $("#toc");
   if ($toc !== undefined) $toc.tocify({
-    selectors: (typeof toc_selectors != 'undefined') ? toc_selectors : 'h1,h2,h3',
+    selectors: (typeof toc_selectors != 'undefined') ? toc_selectors : 'h1,h2,h3,h4',
     scrollTo: 65,
     extendPage: false,
     hashGenerator: 'pretty',

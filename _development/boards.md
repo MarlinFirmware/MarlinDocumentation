@@ -11,7 +11,7 @@ category: [ development, hardware ]
 ### General information
 
 Marlin supports a wide variety of 3D printers, including all RAMPS variants, and is adaptable to virtually any Arduino/Genuino-based electronics through pin-mapping - associating pins with their functions.
-Originally Marlin was designed to run on low-powered 8-bit AVR boards, but starting with Marlin 1.1.9 it has been gaining support for more and more ARM-based boards. The Hardware Abstraction Layer created for Marlin 2.0 provides a consistent set of interfaces, making it much easier to add support for new platforms.
+Originally Marlin was designed to run on low-powered 8-bit AVR boards, but starting with Marlin 1.1.9 it has gained support for dozens of ARM-based boards. The Hardware Abstraction Layer created for Marlin 2.0 provides a consistent set of interfaces, making it much easier to add support for new platforms.
 
 Several files in the Marlin source code provide hardware support, but the files supporting the core electronics are:
 
@@ -59,13 +59,15 @@ If you're developing a custom board, try to use common pinouts as much as possib
 
 ### Board list
 
-<table id="board_list" class="table table-condensed table-striped"></table>
-<script type="text/javascript">
-  head.ready("sheetrock.min.js", function() {
-    $('#board_list').sheetrock({
-      url: "https://docs.google.com/spreadsheets/d/" +
-        "1K4e1GaA4xuNfUGyIw57vxPGuUzQSv5wktTQBHdCVCKU#gid=0",
-      query: "SELECT A, C, D, E WHERE C <> '' ORDER BY C ASC, A ASC"
-    });
-  });
-</script>
+<div id="board-list">
+{% for item in site.data.boards %}
+<h4>{{ item.group }}</h4>
+{% if item.long %}<p>{{ item.long | markdownify }}</p>{% endif %}
+<table class="table table-condensed table-striped">
+<tr><th>Name</th><th>Description</th></tr>
+{% for board in item.boards %}
+<tr><td>BOARD_{{ board.name }}</td><td>{{ board.brief }}</td></tr>
+{% endfor %}
+</table>
+{% endfor %}
+</div>
