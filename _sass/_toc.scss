@@ -26,8 +26,11 @@ These are the first nested items underneath a header element. */
 ul.tocify-subheader {
   text-indent: 0;
   padding-left: 1em;
-  display: none;
   font-size: 95%;
+}
+
+#toc ul.tocify-subheader {
+  display: none;
 }
 
 /* Makes the font smaller for all subheader elements. */
@@ -86,5 +89,5 @@ ul.tocify-subheader {
 .tocify.bigtoc>ul {
   height: 100vh;
   overflow: scroll;
-  li:last-child { margin-bottom: 80px; }
+  >li:last-child { margin-bottom: 80px; }
 }

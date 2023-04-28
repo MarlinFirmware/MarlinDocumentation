@@ -7,11 +7,11 @@ contrib: paulusjacobus, jbrazio, landodragon141, thinkyhead, shitcreek, LMF5000,
 category: [ configuration ]
 ---
 
-Marlin is a huge C++ program composed of many files, but here we'll only be talking about the two files that contain all of Marlin's compile-time configuration options:
+Marlin is a huge C++ program composed of many files, but among the most important are the files that contain all of Marlin's compile-time configuration options:
 
 - `Configuration.h` contains the core settings for the hardware, language and controller selection, and settings for the most common features and components.
 - `Configuration_adv.h` contains more detailed customization options, add-ons, experimental features, and other esoteric settings.
-- `config.ini` may be included to modify the configuration at the start of a build. See the [Configuration with INI](config-ini.html) page for more information.
+- `config.ini` may be included to modify the configuration at the start of a PlatformIO build. See the [Configuration with INI](config-ini.html) page for more information.
 
 The two `.h` files contain all of Marlin's build-time configuration options. Simply edit or replace these files, then build and upload Marlin to the board. Hundreds of user-donated configurations are posted at the [Configurations repository](//github.com/MarlinFirmware/Configurations) to get you started.
 
@@ -27,7 +27,7 @@ Settings can be enabled, disabled, and assigned values using C preprocessor synt
 ```
 
 ## Migration
-To use configurations from an earlier version of Marlin, first try dropping them into the newer Marlin, updating `CONFIGURATION_H_VERSION` and `CONFIGURATION_ADV_H_VERSION`, and building the firmware. As part of the build process, Marlin's sanity-checking prints out helpful error messages explaining what needs to change.
+To use configurations from an earlier version of Marlin, first try dropping them into the newer Marlin, updating `CONFIGURATION_H_VERSION` and `CONFIGURATION_ADV_H_VERSION`, and building the firmware. As part of the build process, Marlin will check for outdated options and show error messages that explain exactly what needs to be changed.
 
 To migrate your settings to a new Configuration you can use tools like Notepad++ or [Winmerge](//winmerge.org/) to compare old configurations with the newer (default) configurations and copy settings over on a change-by-change basis. Most settings will come over without changes, then you can review any tricky changes that remain.
 

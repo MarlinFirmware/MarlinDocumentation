@@ -115,7 +115,7 @@ $(function() {
   });
 
   // Expand first item of tocify (table of content) by default
-  $('.tocify-subheader').first().css('display','block');
+  $('#toc .tocify-subheader').first().css('display','block');
 
   // Responsive submenu - shifts to left on smaller window
   // Bootstrap's pull-left is right and vice versa

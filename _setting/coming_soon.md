@@ -18,10 +18,13 @@ gcodes: []
 options:
   -
     value: 1
-    title: one
+    brief: one
   -
     value: 2
-    title: two
+    brief: two
+  -
+    value: 3
+    brief: three
 
 preview: |
   /**

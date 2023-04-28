@@ -1178,3 +1178,11 @@ div.summ-opts {
     }
   }
 }
+div.options table {
+  margin-left: 1em;
+  th, td { padding: 0 0.5em; }
+  th { font-family: monospace; }
+  td { font-size: 90% }
+}
+
+.detail-header { position: relative; a[name] { position: absolute; top: -5em; } }

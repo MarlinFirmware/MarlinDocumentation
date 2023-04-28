@@ -133,7 +133,9 @@
                         <li class="divider"></li>
                         {%- assign docs = col.docs %}
                         {%- for doc in docs %}
-                          <li><a href="{{ doc.url }}">{% if doc.label %}{{ doc.label }}{% else %}<strong>{{ doc.name }}</strong>{% endif %}</a></li>
+                          {%- if doc.tags contains 'draft' %}{% else %}
+                            <li><a href="{{ doc.url }}">{% if doc.label %}{{ doc.label }}{% else %}<strong>{{ doc.name }}</strong>{% endif %}</a></li>
+                          {%- endif %}
                         {%- endfor %}
                       {%- else %}
                         {%- assign docs = (col.docs | group_by: 'tag' | sort: 'title') %}

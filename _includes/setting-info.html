@@ -8,7 +8,7 @@
   {% assign h1 = "h1" %}{% assign h3 = "h3" %}
   {% if conf.label %}{% assign title = conf.label %}{% else %}{% assign title = conf.name %}{% endif %}
   {% if conf.since %}{% assign since = conf.since %}{% endif %}
-  {% if conf.tags %}{% assign tags = conf.tags | join: ", " %}{% endif %}
+  {% if conf.tags %}{% assign tags = conf.tags | join: ", " %}{% else %}{% assign tags = false %}{% endif %}
   <p id="authors" class="text-right pull-right visible-lg-block hidden-print small custom-pt25">
     {% assign authors = conf.author | append: ',' | append: conf.contrib | replace: " ","" | split: ',' %}
     {% if authors %}
@@ -20,13 +20,23 @@
 {% else %}
   {% assign ispage = false %}
   {% assign h1 = "h4" %}{% assign h3 = "h5" %}
-  {% assign title = "#define " | append: conf.name | append: " <em>" | append: conf.type | append: "</em>" %}
+  {% assign title = "#define <span>" | append: conf.name | append: "</span> <em>" | append: conf.type | append: "</em>" %}
+  {% if conf.disabled %}{% assign title = "//" | append: title %}{% endif %}
   {% if conf.since and conf.since != oldsince %}{% assign since = conf.since %}{% else %}{% assign since = false %}{% endif %}
-  {% if conf.tags %}{% assign newtags = conf.tags | join: ", " %}{% if newtags != oldtags %}{% assign tags = newtags %}{% else %}{% assign tags = false %}{% endif %}{% endif %}
-{% endif %}
+  {% if conf.tags %}
+    {% assign newtags = conf.tags | join: ", " %}
+    {% if newtags != oldtags %}
+      {% assign tags = newtags %}
+    {% else %}
+      {% assign tags = false %}
+    {% endif %}
+  {% else %}
+    {% assign tags = false %}
+  {% endif %}
+{%- endif -%}
 
-<div class="meta detail-header">
-  <a name="{{ conf.name }}"></a><{{ h1 }}>{{ title }}</{{ h1 }}>
+<div class="detail-header">
+  <a name="{{ conf.name }}"></a><{{ h1 }}{% if conf.disabled %} class="dis"{% endif %}>{{ title }}</{{ h1 }}>
 
   {% if conf.experimental %}
     <span class="label label-warning"><span data-toggle="tooltip" data-placement="bottom" title="Experimental"><i class="fa fa-flask" aria-hidden="true"></i></span></span>
@@ -67,24 +77,54 @@
   {% endif %}
 </div>
 
-{% if conf.preview %}
-  <div class="preview">
-    <{{ h3 }}>Notes</{{ h3 }}>
-    {% highlight c %}{% for line in conf.preview %}{{ line }}{% endfor %}{% endhighlight %}
+{% if conf.options %}
+  {% if conf.options >= 0 and page.shared[conf.options] %}
+    {% assign options = page.shared[conf.options].options %}
+  {% else %}
+    {% assign options = conf.options %}
+  {% endif %}
+{% else %}
+  {% assign options = false %}
+{% endif %}
+{%- if options %}
+  <div class="options">
+    <{{ h3 }}>Options</{{ h3 }}>
+    {% if options[0].value %}
+      <table{% if options.size > 4 %} class="table-striped"{% endif %}>
+        {%- for op in options -%}
+          <tr><th>{{ op.value }}</th><td>{% if op.brief %}{{ op.brief }}{% endif %}</td></tr>
+        {%- endfor -%}
+      </table>
+    {% else %}
+      {{ options | join: ", " }}
+    {% endif %}
   </div>
 {% endif %}
 
-{% if conf.notes %}
-  <div class="notes">
-    <{{ h3 }}>Notes</{{ h3 }}>
-    {% for line in conf.notes %}{{ line | markdownify }}{% endfor %}
-  </div>
-{% endif %}
-
-{% if conf.devnotes %}
-  <div class="devnotes">
-    <{{ h3 }}>Developer Notes</{{ h3 }}>
-    {% for line in conf.devnotes %}{{ line | markdownify }}{% endfor %}
+{% if conf.example %}{% assign example = conf.example %}
+{% elsif conf.examples %}{% assign example = conf.examples %}
+{% else %}{% assign example = false %}{% endif %}
+{%- if example %}
+  <div class="examples">
+    <{{ h3 }}>Example{% if example[1] %}s{% endif %}</{{ h3 }}>
+    {% for ex in example %}
+      {% if ex.pre %}
+        {% for line in ex.pre %}
+          {{ line | markdownify }}
+        {% endfor %}
+      {% endif %}
+      {% if ex.value or ex.code %}
+        {% highlight cpp %}{% if ex.value %}#define {{ conf.name }} {{ ex.value }}{% if ex.comment %} // {{ ex.comment }}{% endif %}{% endif %}
+        {%- for line in ex.code %}{{ line }}{% endfor %}{% endhighlight %}
+      {% endif %}
+      {% if ex.post %}
+        <div class="post">
+          {% for line in ex.post %}
+            {{ line | markdownify }}
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endfor %}
   </div>
 {% endif %}
 
@@ -108,33 +148,6 @@
     <iframe class="youtube" width="300" height="225" src="https://youtube.com/embed/{{ videoid }}"></iframe>
   {% endfor %}
 </div>
-{% endif %}
-
-{% if conf.example %}{% assign example = conf.example %}
-{% elsif conf.examples %}{% assign example = conf.examples %}
-{% else %}{% assign example = false %}{% endif %}
-{% if example %}
-  <div class="examples">
-    <{{ h3 }}>Example{% if example[1] %}s{% endif %}</{{ h3 }}>
-    {% for ex in example %}
-      {% if ex.pre %}
-        {% for line in ex.pre %}
-          {{ line | markdownify }}
-        {% endfor %}
-      {% endif %}
-      {% if ex.value or ex.code %}
-        {% highlight cpp %}{% if ex.value %}#define {{ conf.name }} {{ ex.value }}{% if ex.comment %} // {{ ex.comment }}{% endif %}{% endif %}
-        {%- for line in ex.code %}{{ line }}{% endfor %}{% endhighlight %}
-      {% endif %}
-      {% if ex.post %}
-        <div class="post">
-          {% for line in ex.post %}
-            {{ line | markdownify }}
-          {% endfor %}
-        </div>
-      {% endif %}
-    {% endfor %}
-  </div>
 {% endif %}
 
 <!-- Recursively display sub-options by re-including this template -->
