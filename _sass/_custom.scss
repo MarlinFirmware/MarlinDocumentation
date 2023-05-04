@@ -1153,13 +1153,14 @@ div.panel.panel-info, div.panel.panel-warning {
 /* Configuration Options Pages */
 div.subopt {
   clear: both;
-  padding: 1em 0 0 0.5em;
-  margin-bottom: 1.5em;
+  padding: 1em 0 0.75em 0.5em;
+  margin-bottom: 0.5em;
   background: var(--color-nesting);
   .long { margin-top: 0.75em; }
   pre { margin: 0 1px 1em 0; }
+  .detail-header { h3, h4 { clear: none; } }
 }
-.main > div.subopt { background: none; }
+.main > div.subopt { background: none; border-top: 1px solid var(--color-color); }
 div.container.detail div.row div.subopt {
   h3, h4, h5, h6 { margin: 0.5em 0 0.5em 0; padding: 0; background: none; }
   div.subopt { h3, h4, h5, h6 { margin-top: 0; } }
@@ -1186,3 +1187,7 @@ div.options table {
 }
 
 .detail-header { position: relative; a[name] { position: absolute; top: -5em; } }
+
+div.brief { font-weight: bolder; }
+div.since { float: right; margin-right: 0.25em; }
+div.tags { display: inline-block; float: right; margin: 0.5em; }

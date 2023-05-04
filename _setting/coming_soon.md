@@ -16,14 +16,11 @@ child: []
 type: switch
 gcodes: []
 options:
-  -
-    value: 1
+  - value: 1
     brief: one
-  -
-    value: 2
+  - value: 2
     brief: two
-  -
-    value: 3
+  - value: 3
     brief: three
 
 preview: |
