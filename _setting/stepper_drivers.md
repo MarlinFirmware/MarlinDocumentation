@@ -64,50 +64,57 @@ settings:
   brief: Stepper Driver for the X axis.
   options: 0
   example:
-  -
-    value: TMC2209
+  - value: TMC2209
+
 - name: Y_DRIVER_TYPE
   type: name
   default: A4988
   since: 2.0.0
   brief: Stepper Driver for the Y axis.
   options: 0
+
 - name: Z_DRIVER_TYPE
   type: name
   default: A4988
   since: 2.0.0
   brief: Stepper Driver for the Z axis.
   options: 0
+
 - name: X2_DRIVER_TYPE
   type: name
   default: A4988
   since: 2.0.0
   brief: Stepper Driver for the X2 axis.
   options: 0
+
 - name: Y2_DRIVER_TYPE
   type: name
   default: A4988
   since: 2.0.0
   brief: Stepper Driver for the Y2 axis.
   options: 0
+
 - name: Z2_DRIVER_TYPE
   type: name
   default: A4988
   since: 2.0.0
   brief: Stepper Driver for the Z2 axis.
   options: 0
+
 - name: Z3_DRIVER_TYPE
   type: name
   default: A4988
   since: 2.0.0
   brief: Stepper Driver for the Z3 axis.
   options: 0
+
 - name: Z4_DRIVER_TYPE
   type: name
   default: A4988
   since: 2.0.0
   brief: Stepper Driver for the Z4 axis.
   options: 0
+
 - name: I_DRIVER_TYPE
   type: name
   default: A4988
@@ -121,6 +128,7 @@ settings:
     options: [ "'A'", "'B'", "'C'", "'U'", "'V'", "'W'" ]
   - name: AXIS4_ROTATES
     brief: Specify whether this axis is rotational.
+
 - name: J_DRIVER_TYPE
   type: name
   default: A4988
@@ -134,6 +142,7 @@ settings:
     options: [ "'B'", "'C'", "'U'", "'V'", "'W'" ]
   - name: AXIS5_ROTATES
     brief: Specify whether this axis is rotational.
+
 - name: K_DRIVER_TYPE
   type: name
   default: A4988
@@ -147,6 +156,7 @@ settings:
     options: [ "'C'", "'U'", "'V'", "'W'" ]
   - name: AXIS6_ROTATES
     brief: Specify whether this axis is rotational.
+
 - name: U_DRIVER_TYPE
   type: name
   default: A4988
@@ -161,6 +171,7 @@ settings:
     options: [ "'U'", "'V'", "'W'" ]
   - name: AXIS7_ROTATES
     brief: Specify whether this axis is rotational.
+
 - name: V_DRIVER_TYPE
   type: name
   default: A4988
@@ -175,6 +186,7 @@ settings:
     options: [ "'V'", "'W'" ]
   - name: AXIS8_ROTATES
     brief: Specify whether this axis is rotational.
+
 - name: W_DRIVER_TYPE
   type: name
   default: A4988
@@ -189,48 +201,56 @@ settings:
     options: [ "'W'" ]
   - name: AXIS9_ROTATES
     brief: Specify whether this axis is rotational.
+
 - name: E0_DRIVER_TYPE
   type: name
   default: A4988
   since: 2.0.0
   brief: Stepper Driver for the E0 axis.
   options: 0
+
 - name: E1_DRIVER_TYPE
   type: name
   default: A4988
   since: 2.0.0
   brief: Stepper Driver for the E1 axis.
   options: 0
+
 - name: E2_DRIVER_TYPE
   type: name
   default: A4988
   since: 2.0.0
   brief: Stepper Driver for the E2 axis.
   options: 0
+
 - name: E3_DRIVER_TYPE
   type: name
   default: A4988
   since: 2.0.0
   brief: Stepper Driver for the E3 axis.
   options: 0
+
 - name: E4_DRIVER_TYPE
   type: name
   default: A4988
   since: 2.0.0
   brief: Stepper Driver for the E4 axis.
   options: 0
+
 - name: E5_DRIVER_TYPE
   type: name
   default: A4988
   since: 2.0.0
   brief: Stepper Driver for the E5 axis.
   options: 0
+
 - name: E6_DRIVER_TYPE
   type: name
   default: A4988
   since: 2.0.0
   brief: Stepper Driver for the E6 axis.
   options: 0
+
 - name: E7_DRIVER_TYPE
   type: name
   default: A4988
