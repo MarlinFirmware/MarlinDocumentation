@@ -34,7 +34,12 @@ Try doubling `BLOCK_BUFFER_SIZE` to see if the problem goes away.
 As seen in this [Chris's Basement video](//youtu.be/H-c8UTg-EMU), the RRD display doesn't always work on first install. It didn't even light up. A custom adapter is needed with the ReARM. See [this issue](//github.com/MarlinFirmware/Marlin/pull/7390#issuecomment-320371735), and [this issue](//github.com/MarlinFirmware/Marlin/issues/11927#issuecomment-441435170), and [this page](//github.com/wolfmanjm/universal-panel-adapter).
 
 ### G29 Probing Failed!
-Marlin uses the `Z_PROBE_LOW_POINT` value to prevent the probe from pressing too hard against the bed and getting damaged. A value of -2 works well for a flat and level bed, but if the bed isn't trammed yet, the probe may exceed the low point and trigger a "Probing Failed" error. To prevent this from happening, change the setting to something like -10 during initial setup, and then you can change it back after the bed is perfectly trammed.
+- Marlin uses the `Z_PROBE_LOW_POINT` value to prevent the probe from pressing too hard against the bed and getting damaged. A value of -2 works well for a flat and level bed, but if the bed isn't trammed yet, the probe may exceed the low point and trigger a "Probing Failed" error. To prevent this from happening, change the setting to something like -10 during initial setup, and then you can change it back after the bed is perfectly trammed.
+- If the probe offset (`M851 Z`) is incorrect –especially if you are homing with endstops rather than the probe– then the probe may trigger earlier than expected during `G29`. Make sure that your Z Probe Offset is properly set using the Probe Offset Wizard or by moving the nozzle down until it touches the bed, then adding the reported Z height to your current Z Probe Offset.
+
+### Printing Starts Too High
+- **Problem**: After probing the bed with `G29` the print job starts "up in the air" with the nozzle too far from the bed. The mesh reported by `M420 V` may also contain unusually large or inconsistent values.
+- **Solution**: Make sure your Z Acceleration (and Jerk, if using `CLASSIC_JERK`) are not set too high and that the `Z_PROBE_SPEED_FAST` is not too fast. Many printers have a heavy or cantilevered Z axis that requires a lot of torque, so a low Z acceleration is required. It may also help to mechanically adjust the gantry so that it moves more freely without twerking or binding.
 
 ### One Side High, One Side Low
 - **Problem**: Bed probe done, leveling compensation enabled, and the first layer comes out out too squished on the right side, or too high on the left side, or *vice-versa*.
