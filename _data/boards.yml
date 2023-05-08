@@ -282,6 +282,8 @@
     brief: "Melzi with ATmega1284 (MaKr3d version)"
   - name: MELZI_CREALITY
     brief: "Melzi Creality3D (for CR-10 etc)"
+  - name: MELZI_CREALITY_ENDER2
+    brief: "Melzi Creality3D (for Ender-2)"
   - name: MELZI_MALYAN
     brief: "Melzi Malyan M150"
   - name: MELZI_TRONXY
@@ -697,7 +699,7 @@
   - name: FLYF407ZG
     brief: "FLYmaker FLYF407ZG (STM32F407ZG)"
   - name: MKS_ROBIN2
-    brief: "MKS_ROBIN2 (STM32F407ZE)"
+    brief: "MKS Robin2 V1.0 (STM32F407ZE)"
   - name: MKS_ROBIN_PRO_V2
     brief: "MKS Robin Pro V2 (STM32F407VE)"
   - name: MKS_ROBIN_NANO_V3
@@ -736,6 +738,8 @@
     brief: "MKS SKIPR v1.0 all-in-one board (STM32F407VE)"
   - name: TRONXY_V10
     brief: "TRONXY V10 (STM32F446ZE)"
+  - name: CREALITY_F401RE
+    brief: "Creality CR4NS200141C13 (STM32F401RE) as found in the Ender-5 S1"
 
 - group: "ARM Cortex-M7"
   long:
