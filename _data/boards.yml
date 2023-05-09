@@ -634,6 +634,8 @@
     brief: "Sovol V1.3.1 (GD32F103RET6)"
   - name: TRIGORILLA_V006
     brief: "Trigorilla V0.0.6 (GD32F103RE)"
+  - name: KEDI_CONTROLLER_V1_2
+    brief: "EDUTRONICS Kedi Controller V1.2 (STM32F103RC)"
 
 - group: "ARM Cortex-M4F"
   long:
@@ -783,9 +785,11 @@
   - name: PANDA_M4
     brief: "Panda_M4"
   - name: MKS_TINYBEE
-    brief: "MKS TinyBee based on ESP32 (with I2S stepper stream)"
+    brief: "MKS TinyBee (with I2S stepper stream)"
   - name: ENWI_ESPNP
-    brief: "enwi ESPNP based on ESP32 (with I2S stepper stream)"
+    brief: "enwi ESPNP (with I2S stepper stream)"
+  - name: GODI_CONTROLLER_V1_0
+    brief: "EDUTRONICS Godi Controller V1.0 based on ESP32"
 
 - group: "SAMD51 ARM Cortex-M4"
   long:
