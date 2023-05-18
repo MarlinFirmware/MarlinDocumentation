@@ -1168,10 +1168,15 @@ div.container.detail div.row div.subopt {
 
 div.settings.item {
   padding: 0.25em;
+  margin-bottom: 1em;
+  h2 { margin-bottom: 0; padding-bottom: 0; }
+  p { margin-left: 1em; }
 }
 div.summ-opts {
   a.opt {
-    padding: 4px 8px;
+    padding: 3px 1em;
+    display: inline-block;
+    width: 45%;
     &:hover, &:active {
       background: var(--color-link-hover-bg);
       color: var(--color-link-hover);
