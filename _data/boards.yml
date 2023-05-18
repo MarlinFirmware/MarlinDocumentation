@@ -1,0 +1,822 @@
+- group: "RAMPS 1.3 / 1.4 - ATmega1280, ATmega2560"
+  long: |
+    RAMPS boards and derivatives can have a variety of layouts depending on where Heaters and Fans are connected.
+    You can set `FET_ORDER_EEB` directly or let `pins.h` figure it out for you. These suffixed board names determine
+    the Extruder / Bed / Fan assignments if `FET_ORDER_EEB` is not defined in the configuration.
+  boards:
+  - name: RAMPS_OLD
+    brief: "MEGA/RAMPS up to 1.2"
+  - name: RAMPS_13_EFB
+    brief: "RAMPS 1.3 (Power outputs: Hotend, Fan, Bed)"
+  - name: RAMPS_13_EEB
+    brief: "RAMPS 1.3 (Power outputs: Hotend0, Hotend1, Bed)"
+  - name: RAMPS_13_EFF
+    brief: "RAMPS 1.3 (Power outputs: Hotend, Fan0, Fan1)"
+  - name: RAMPS_13_EEF
+    brief: "RAMPS 1.3 (Power outputs: Hotend0, Hotend1, Fan)"
+  - name: RAMPS_13_SF
+    brief: "RAMPS 1.3 (Power outputs: Spindle, Controller Fan)"
+  - name: RAMPS_14_EFB
+    brief: "RAMPS 1.4 (Power outputs: Hotend, Fan, Bed)"
+  - name: RAMPS_14_EEB
+    brief: "RAMPS 1.4 (Power outputs: Hotend0, Hotend1, Bed)"
+  - name: RAMPS_14_EFF
+    brief: "RAMPS 1.4 (Power outputs: Hotend, Fan0, Fan1)"
+  - name: RAMPS_14_EEF
+    brief: "RAMPS 1.4 (Power outputs: Hotend0, Hotend1, Fan)"
+  - name: RAMPS_14_SF
+    brief: "RAMPS 1.4 (Power outputs: Spindle, Controller Fan)"
+  - name: RAMPS_PLUS_EFB
+    brief: "RAMPS Plus 3DYMY (Power outputs: Hotend, Fan, Bed)"
+  - name: RAMPS_PLUS_EEB
+    brief: "RAMPS Plus 3DYMY (Power outputs: Hotend0, Hotend1, Bed)"
+  - name: RAMPS_PLUS_EFF
+    brief: "RAMPS Plus 3DYMY (Power outputs: Hotend, Fan0, Fan1)"
+  - name: RAMPS_PLUS_EEF
+    brief: "RAMPS Plus 3DYMY (Power outputs: Hotend0, Hotend1, Fan)"
+  - name: RAMPS_PLUS_SF
+    brief: "RAMPS Plus 3DYMY (Power outputs: Spindle, Controller Fan)"
+
+- group: "RAMPS Derivatives - ATmega1280, ATmega2560"
+  long:
+  boards:
+  - name: 3DRAG
+    brief: "3Drag Controller"
+  - name: K8200
+    brief: "Velleman K8200 Controller (derived from 3Drag Controller)"
+  - name: K8400
+    brief: "Velleman K8400 Controller (derived from 3Drag Controller)"
+  - name: K8600
+    brief: "Velleman K8600 Controller (Vertex Nano)"
+  - name: K8800
+    brief: "Velleman K8800 Controller (Vertex Delta)"
+  - name: BAM_DICE
+    brief: "2PrintBeta BAM&DICE with STK drivers"
+  - name: BAM_DICE_DUE
+    brief: "2PrintBeta BAM&DICE Due with STK drivers"
+  - name: MKS_BASE
+    brief: "MKS BASE v1.0"
+  - name: MKS_BASE_14
+    brief: "MKS BASE v1.4 with Allegro A4982 stepper drivers"
+  - name: MKS_BASE_15
+    brief: "MKS BASE v1.5 with Allegro A4982 stepper drivers"
+  - name: MKS_BASE_16
+    brief: "MKS BASE v1.6 with Allegro A4982 stepper drivers"
+  - name: MKS_BASE_HEROIC
+    brief: "MKS BASE 1.0 with Heroic HR4982 stepper drivers"
+  - name: MKS_GEN_13
+    brief: "MKS GEN v1.3 or 1.4"
+  - name: MKS_GEN_L
+    brief: "MKS GEN L"
+  - name: KFB_2
+    brief: "BigTreeTech or BIQU KFB2.0"
+  - name: ZRIB_V20
+    brief: "zrib V2.0 (Chinese RAMPS replica)"
+  - name: ZRIB_V52
+    brief: "zrib V5.2 (Chinese RAMPS replica)"
+  - name: FELIX2
+    brief: "Felix 2.0+ Electronics Board (RAMPS like)"
+  - name: RIGIDBOARD
+    brief: "Invent-A-Part RigidBoard"
+  - name: RIGIDBOARD_V2
+    brief: "Invent-A-Part RigidBoard V2"
+  - name: SAINSMART_2IN1
+    brief: "Sainsmart 2-in-1 board"
+  - name: ULTIMAKER
+    brief: "Ultimaker"
+  - name: ULTIMAKER_OLD
+    brief: "Ultimaker (Older electronics. Pre 1.5.4. This is rare)"
+  - name: AZTEEG_X3
+    brief: "Azteeg X3"
+  - name: AZTEEG_X3_PRO
+    brief: "Azteeg X3 Pro"
+  - name: ULTIMAIN_2
+    brief: "Ultimainboard 2.x (Uses TEMP_SENSOR 20)"
+  - name: RUMBA
+    brief: "Rumba"
+  - name: RUMBA_RAISE3D
+    brief: "Raise3D N series Rumba derivative"
+  - name: RL200
+    brief: "Rapide Lite 200 (v1, low-cost RUMBA clone with drv)"
+  - name: FORMBOT_TREX2PLUS
+    brief: "Formbot T-Rex 2 Plus"
+  - name: FORMBOT_TREX3
+    brief: "Formbot T-Rex 3"
+  - name: FORMBOT_RAPTOR
+    brief: "Formbot Raptor"
+  - name: FORMBOT_RAPTOR2
+    brief: "Formbot Raptor 2"
+  - name: BQ_ZUM_MEGA_3D
+    brief: "bq ZUM Mega 3D"
+  - name: MAKEBOARD_MINI
+    brief: "MakeBoard Mini v2.1.2 by MicroMake"
+  - name: TRIGORILLA_13
+    brief: "TriGorilla Anycubic version 1.3-based on RAMPS EFB"
+  - name: TRIGORILLA_14
+    brief: "... Ver 1.4"
+  - name: TRIGORILLA_14_11
+    brief: "... Rev 1.1 (new servo pin order)"
+  - name: RAMPS_ENDER_4
+    brief: "Creality: Ender-4, CR-8"
+  - name: RAMPS_CREALITY
+    brief: "Creality: CR10S, CR20, CR-X"
+  - name: DAGOMA_F5
+    brief: "Dagoma F5"
+  - name: FYSETC_F6_13
+    brief: "FYSETC F6 1.3"
+  - name: FYSETC_F6_14
+    brief: "FYSETC F6 1.4"
+  - name: DUPLICATOR_I3_PLUS
+    brief: "Wanhao Duplicator i3 Plus"
+  - name: VORON
+    brief: "VORON Design"
+  - name: TRONXY_V3_1_0
+    brief: "Tronxy TRONXY-V3-1.0"
+  - name: Z_BOLT_X_SERIES
+    brief: "Z-Bolt X Series"
+  - name: TT_OSCAR
+    brief: "TT OSCAR"
+  - name: OVERLORD
+    brief: "Overlord/Overlord Pro"
+  - name: HJC2560C_REV1
+    brief: "ADIMLab Gantry v1"
+  - name: HJC2560C_REV2
+    brief: "ADIMLab Gantry v2"
+  - name: TANGO
+    brief: "BIQU Tango V1"
+  - name: MKS_GEN_L_V2
+    brief: "MKS GEN L V2"
+  - name: MKS_GEN_L_V21
+    brief: "MKS GEN L V2.1"
+  - name: COPYMASTER_3D
+    brief: "Copymaster 3D"
+  - name: ORTUR_4
+    brief: "Ortur 4"
+  - name: TENLOG_D3_HERO
+    brief: "Tenlog D3 Hero IDEX printer"
+  - name: TENLOG_MB1_V23
+    brief: "Tenlog D3, D5, D6 IDEX Printer"
+  - name: RAMPS_S_12_EEFB
+    brief: "Ramps S 1.2 by Sakul.cz (Power outputs: Hotend0, Hotend1, Fan, Bed)"
+  - name: RAMPS_S_12_EEEB
+    brief: "Ramps S 1.2 by Sakul.cz (Power outputs: Hotend0, Hotend1, Hotend2, Bed)"
+  - name: RAMPS_S_12_EFFB
+    brief: "Ramps S 1.2 by Sakul.cz (Power outputs: Hotend, Fan0, Fan1, Bed)"
+  - name: LONGER3D_LK1_PRO
+    brief: "Longer LK1 PRO / Alfawise U20 Pro (PRO version)"
+  - name: LONGER3D_LKx_PRO
+    brief: "Longer LKx PRO / Alfawise Uxx Pro (PRO version)"
+  - name: ZRIB_V53
+    brief: "Zonestar zrib V5.3 (Chinese RAMPS replica)"
+  - name: PXMALION_CORE_I3
+    brief: "Pxmalion Core I3"
+  - name: PANOWIN_CUTLASS
+    brief: "Panowin Cutlass (as found in the Panowin F1)"
+  - name: KODAMA_BARDO
+    brief: "Kodama Bardo V1.x (as found in the Kodama Trinus)"
+
+- group: "RAMBo and derivatives"
+  long:
+  boards:
+  - name: RAMBO
+    brief: "Rambo"
+  - name: MINIRAMBO
+    brief: "Mini-Rambo"
+  - name: MINIRAMBO_10A
+    brief: "Mini-Rambo 1.0a"
+  - name: EINSY_RAMBO
+    brief: "Einsy Rambo"
+  - name: EINSY_RETRO
+    brief: "Einsy Retro"
+  - name: SCOOVO_X9H
+    brief: "abee Scoovo X9H"
+  - name: RAMBO_THINKERV2
+    brief: "ThinkerV2"
+
+- group: "Other ATmega1280, ATmega2560"
+  long:
+  boards:
+  - name: CNCONTROLS_11
+    brief: "Cartesio CN Controls V11"
+  - name: CNCONTROLS_12
+    brief: "Cartesio CN Controls V12"
+  - name: CNCONTROLS_15
+    brief: "Cartesio CN Controls V15"
+  - name: CHEAPTRONIC
+    brief: "Cheaptronic v1.0"
+  - name: CHEAPTRONIC_V2
+    brief: "Cheaptronic v2.0"
+  - name: MIGHTYBOARD_REVE
+    brief: "Makerbot Mightyboard Revision E"
+  - name: MEGATRONICS
+    brief: "Megatronics"
+  - name: MEGATRONICS_2
+    brief: "Megatronics v2.0"
+  - name: MEGATRONICS_3
+    brief: "Megatronics v3.0"
+  - name: MEGATRONICS_31
+    brief: "Megatronics v3.1"
+  - name: MEGATRONICS_32
+    brief: "Megatronics v3.2"
+  - name: ELEFU_3
+    brief: "Elefu Ra Board (v3)"
+  - name: LEAPFROG
+    brief: "Leapfrog"
+  - name: MEGACONTROLLER
+    brief: "Mega controller"
+  - name: GT2560_REV_A
+    brief: "Geeetech GT2560 Rev A"
+  - name: GT2560_REV_A_PLUS
+    brief: "Geeetech GT2560 Rev A+ (with auto level probe)"
+  - name: GT2560_REV_B
+    brief: "Geeetech GT2560 Rev B"
+  - name: GT2560_V3
+    brief: "Geeetech GT2560 Rev B for A10(M/T/D)"
+  - name: GT2560_V4
+    brief: "Geeetech GT2560 Rev B for A10(M/T/D)"
+  - name: GT2560_V3_MC2
+    brief: "Geeetech GT2560 Rev B for Mecreator2"
+  - name: GT2560_V3_A20
+    brief: "Geeetech GT2560 Rev B for A20(M/T/D)"
+  - name: EINSTART_S
+    brief: "Einstart retrofit"
+  - name: WANHAO_ONEPLUS
+    brief: "Wanhao 0ne+ i3 Mini"
+  - name: LEAPFROG_XEED2015
+    brief: "Leapfrog Xeed 2015"
+  - name: PICA_REVB
+    brief: "PICA Shield (original version)"
+  - name: PICA
+    brief: "PICA Shield (rev C or later)"
+  - name: INTAMSYS40
+    brief: "Intamsys 4.0 (Funmat HT)"
+  - name: MALYAN_M180
+    brief: "Malyan M180 Mainboard Version 2 (no display function, direct G-code only)"
+  - name: GT2560_V4_A20
+    brief: "Geeetech GT2560 Rev B for A20(M/T/D)"
+  - name: PROTONEER_CNC_SHIELD_V3
+    brief: "Mega controller & Protoneer CNC Shield V3.00"
+  - name: WEEDO_62A
+    brief: "WEEDO 62A board (TINA2, Monoprice Cadet, etc.)"
+
+- group: "ATmega1281, ATmega2561"
+  long:
+  boards:
+  - name: MINITRONICS
+    brief: "Minitronics v1.0/1.1"
+  - name: SILVER_GATE
+    brief: "Silvergate v1.0"
+
+- group: "Sanguinololu and Derivatives - ATmega644P, ATmega1284P"
+  long:
+  boards:
+  - name: SANGUINOLOLU_11
+    brief: "Sanguinololu < 1.2"
+  - name: SANGUINOLOLU_12
+    brief: "Sanguinololu 1.2 and above"
+  - name: MELZI
+    brief: "Melzi"
+  - name: MELZI_V2
+    brief: "Melzi V2"
+  - name: MELZI_MAKR3D
+    brief: "Melzi with ATmega1284 (MaKr3d version)"
+  - name: MELZI_CREALITY
+    brief: "Melzi Creality3D (for CR-10 etc)"
+  - name: MELZI_CREALITY_ENDER2
+    brief: "Melzi Creality3D (for Ender-2)"
+  - name: MELZI_MALYAN
+    brief: "Melzi Malyan M150"
+  - name: MELZI_TRONXY
+    brief: "Tronxy X5S"
+  - name: STB_11
+    brief: "STB V1.1"
+  - name: AZTEEG_X1
+    brief: "Azteeg X1"
+  - name: ANET_10
+    brief: "Anet 1.0 (Melzi clone)"
+  - name: ZMIB_V2
+    brief: "ZoneStar ZMIB V2"
+
+- group: "Other ATmega644P, ATmega644, ATmega1284P"
+  long:
+  boards:
+  - name: GEN3_MONOLITHIC
+    brief: "Gen3 Monolithic Electronics"
+  - name: GEN3_PLUS
+    brief: "Gen3+"
+  - name: GEN6
+    brief: "Gen6"
+  - name: GEN6_DELUXE
+    brief: "Gen6 deluxe"
+  - name: GEN7_CUSTOM
+    brief: "Gen7 custom (Alfons3 Version) https://github.com/Alfons3/Generation_7_Electronics"
+  - name: GEN7_12
+    brief: "Gen7 v1.1, v1.2"
+  - name: GEN7_13
+    brief: "Gen7 v1.3"
+  - name: GEN7_14
+    brief: "Gen7 v1.4"
+  - name: OMCA_A
+    brief: "Alpha OMCA"
+  - name: OMCA
+    brief: "Final OMCA"
+  - name: SETHI
+    brief: "Sethi 3D_1"
+
+- group: "Teensyduino - AT90USB1286, AT90USB1286P"
+  long:
+  boards:
+  - name: TEENSYLU
+    brief: "Teensylu"
+  - name: PRINTRBOARD
+    brief: "Printrboard (AT90USB1286)"
+  - name: PRINTRBOARD_REVF
+    brief: "Printrboard Revision F (AT90USB1286)"
+  - name: BRAINWAVE
+    brief: "Brainwave (AT90USB646)"
+  - name: BRAINWAVE_PRO
+    brief: "Brainwave Pro (AT90USB1286)"
+  - name: SAV_MKI
+    brief: "SAV Mk-I (AT90USB1286)"
+  - name: TEENSY2
+    brief: "Teensy++2.0 (AT90USB1286)"
+  - name: 5DPRINT
+    brief: "5DPrint D8 Driver Board"
+
+- group: "LPC1768 ARM Cortex-M3"
+  long:
+  boards:
+  - name: RAMPS_14_RE_ARM_EFB
+    brief: "Re-ARM with RAMPS 1.4 (Power outputs: Hotend, Fan, Bed)"
+  - name: RAMPS_14_RE_ARM_EEB
+    brief: "Re-ARM with RAMPS 1.4 (Power outputs: Hotend0, Hotend1, Bed)"
+  - name: RAMPS_14_RE_ARM_EFF
+    brief: "Re-ARM with RAMPS 1.4 (Power outputs: Hotend, Fan0, Fan1)"
+  - name: RAMPS_14_RE_ARM_EEF
+    brief: "Re-ARM with RAMPS 1.4 (Power outputs: Hotend0, Hotend1, Fan)"
+  - name: RAMPS_14_RE_ARM_SF
+    brief: "Re-ARM with RAMPS 1.4 (Power outputs: Spindle, Controller Fan)"
+  - name: MKS_SBASE
+    brief: "MKS-Sbase"
+  - name: AZSMZ_MINI
+    brief: "AZSMZ Mini"
+  - name: BIQU_BQ111_A4
+    brief: "BIQU BQ111-A4"
+  - name: SELENA_COMPACT
+    brief: "Selena Compact"
+  - name: BIQU_B300_V1_0
+    brief: "BIQU B300_V1.0"
+  - name: MKS_SGEN_L
+    brief: "MKS-SGen-L"
+  - name: GMARSH_X6_REV1
+    brief: "GMARSH X6, revision 1 prototype"
+  - name: BTT_SKR_V1_1
+    brief: "BigTreeTech SKR v1.1"
+  - name: BTT_SKR_V1_3
+    brief: "BigTreeTech SKR v1.3"
+  - name: BTT_SKR_V1_4
+    brief: "BigTreeTech SKR v1.4"
+  - name: EMOTRONIC
+    brief: "eMotion-Tech eMotronic"
+
+- group: "LPC1769 ARM Cortex-M3"
+  long:
+  boards:
+  - name: MKS_SGEN
+    brief: "MKS-SGen"
+  - name: AZTEEG_X5_GT
+    brief: "Azteeg X5 GT"
+  - name: AZTEEG_X5_MINI
+    brief: "Azteeg X5 Mini"
+  - name: AZTEEG_X5_MINI_WIFI
+    brief: "Azteeg X5 Mini Wifi"
+  - name: COHESION3D_REMIX
+    brief: "Cohesion3D ReMix"
+  - name: COHESION3D_MINI
+    brief: "Cohesion3D Mini"
+  - name: SMOOTHIEBOARD
+    brief: "Smoothieboard"
+  - name: TH3D_EZBOARD
+    brief: "TH3D EZBoard v1.0"
+  - name: BTT_SKR_V1_4_TURBO
+    brief: "BigTreeTech SKR v1.4 TURBO"
+  - name: MKS_SGEN_L_V2
+    brief: "MKS SGEN_L V2"
+  - name: BTT_SKR_E3_TURBO
+    brief: "BigTreeTech SKR E3 Turbo"
+  - name: FLY_CDY
+    brief: "FLYmaker FLY CDY"
+
+- group: "SAM3X8E ARM Cortex-M3"
+  long:
+  boards:
+  - name: DUE3DOM
+    brief: "DUE3DOM for Arduino DUE"
+  - name: DUE3DOM_MINI
+    brief: "DUE3DOM MINI for Arduino DUE"
+  - name: RADDS
+    brief: "RADDS"
+  - name: RAMPS_FD_V1
+    brief: "RAMPS-FD v1"
+  - name: RAMPS_FD_V2
+    brief: "RAMPS-FD v2"
+  - name: RAMPS_SMART_EFB
+    brief: "RAMPS-SMART (Power outputs: Hotend, Fan, Bed)"
+  - name: RAMPS_SMART_EEB
+    brief: "RAMPS-SMART (Power outputs: Hotend0, Hotend1, Bed)"
+  - name: RAMPS_SMART_EFF
+    brief: "RAMPS-SMART (Power outputs: Hotend, Fan0, Fan1)"
+  - name: RAMPS_SMART_EEF
+    brief: "RAMPS-SMART (Power outputs: Hotend0, Hotend1, Fan)"
+  - name: RAMPS_SMART_SF
+    brief: "RAMPS-SMART (Power outputs: Spindle, Controller Fan)"
+  - name: RAMPS_DUO_EFB
+    brief: "RAMPS Duo (Power outputs: Hotend, Fan, Bed)"
+  - name: RAMPS_DUO_EEB
+    brief: "RAMPS Duo (Power outputs: Hotend0, Hotend1, Bed)"
+  - name: RAMPS_DUO_EFF
+    brief: "RAMPS Duo (Power outputs: Hotend, Fan0, Fan1)"
+  - name: RAMPS_DUO_EEF
+    brief: "RAMPS Duo (Power outputs: Hotend0, Hotend1, Fan)"
+  - name: RAMPS_DUO_SF
+    brief: "RAMPS Duo (Power outputs: Spindle, Controller Fan)"
+  - name: RAMPS4DUE_EFB
+    brief: "RAMPS4DUE (Power outputs: Hotend, Fan, Bed)"
+  - name: RAMPS4DUE_EEB
+    brief: "RAMPS4DUE (Power outputs: Hotend0, Hotend1, Bed)"
+  - name: RAMPS4DUE_EFF
+    brief: "RAMPS4DUE (Power outputs: Hotend, Fan0, Fan1)"
+  - name: RAMPS4DUE_EEF
+    brief: "RAMPS4DUE (Power outputs: Hotend0, Hotend1, Fan)"
+  - name: RAMPS4DUE_SF
+    brief: "RAMPS4DUE (Power outputs: Spindle, Controller Fan)"
+  - name: RURAMPS4D_11
+    brief: "RuRAMPS4Duo v1.1"
+  - name: RURAMPS4D_13
+    brief: "RuRAMPS4Duo v1.3"
+  - name: ULTRATRONICS_PRO
+    brief: "ReprapWorld Ultratronics Pro V1.0"
+  - name: ARCHIM1
+    brief: "UltiMachine Archim1 (with DRV8825 drivers)"
+  - name: ARCHIM2
+    brief: "UltiMachine Archim2 (with TMC2130 drivers)"
+  - name: ALLIGATOR
+    brief: "Alligator Board R2"
+  - name: CNCONTROLS_15D
+    brief: "Cartesio CN Controls V15 on DUE"
+  - name: KRATOS32
+    brief: "K.3D Kratos32 (Arduino Due Shield)"
+
+- group: "SAM3X8C ARM Cortex-M3"
+  long:
+  boards:
+  - name: PRINTRBOARD_G2
+    brief: "Printrboard G2"
+  - name: ADSK
+    brief: "Arduino DUE Shield Kit (ADSK)"
+
+- group: "STM32 ARM Cortex-M0+"
+  long:
+  boards:
+  - name: BTT_EBB42_V1_1
+    brief: "BigTreeTech EBB42 V1.1 (STM32G0B1CB)"
+  - name: BTT_SKR_MINI_E3_V3_0
+    brief: "BigTreeTech SKR Mini E3 V3.0 (STM32G0B1RE)"
+  - name: BTT_MANTA_E3_EZ_V1_0
+    brief: "BigTreeTech Manta E3 EZ V1.0 (STM32G0B1RE)"
+  - name: BTT_MANTA_M4P_V1_0
+    brief: "BigTreeTech Manta M4P V1.0 (STM32G0B1RE)"
+  - name: BTT_MANTA_M5P_V1_0
+    brief: "BigTreeTech Manta M5P V1.0 (STM32G0B1RE)"
+  - name: BTT_MANTA_M8P_V1_0
+    brief: "BigTreeTech Manta M8P V1.0 (STM32G0B1VE)"
+  - name: BTT_MANTA_M8P_V1_1
+    brief: "BigTreeTech Manta M8P V1.1 (STM32G0B1VE)"
+
+- group: "STM32 ARM Cortex-M3"
+  long:
+  boards:
+  - name: MALYAN_M200_V2
+    brief: "STM32F070CB controller"
+  - name: MALYAN_M300
+    brief: "STM32F070-based delta"
+  - name: STM32F103RE
+    brief: "STM32F103RE Libmaple-based STM32F1 controller"
+  - name: MALYAN_M200
+    brief: "STM32C8 Libmaple-based STM32F1 controller"
+  - name: STM3R_MINI
+    brief: "STM32F103RE Libmaple-based STM32F1 controller"
+  - name: GTM32_PRO_VB
+    brief: "STM32F103VE controller"
+  - name: GTM32_MINI
+    brief: "STM32F103VE controller"
+  - name: GTM32_MINI_A30
+    brief: "STM32F103VE controller"
+  - name: GTM32_REV_B
+    brief: "STM32F103VE controller"
+  - name: MORPHEUS
+    brief: "STM32F103C8 / STM32F103CB  Libmaple-based STM32F1 controller"
+  - name: CHITU3D
+    brief: "Chitu3D (STM32F103RE)"
+  - name: MKS_ROBIN
+    brief: "MKS Robin (STM32F103ZE)"
+  - name: MKS_ROBIN_MINI
+    brief: "MKS Robin Mini (STM32F103VE)"
+  - name: MKS_ROBIN_NANO
+    brief: "MKS Robin Nano (STM32F103VE)"
+  - name: MKS_ROBIN_NANO_V2
+    brief: "MKS Robin Nano V2 (STM32F103VE)"
+  - name: MKS_ROBIN_LITE
+    brief: "MKS Robin Lite/Lite2 (STM32F103RC)"
+  - name: MKS_ROBIN_LITE3
+    brief: "MKS Robin Lite3 (STM32F103RC)"
+  - name: MKS_ROBIN_PRO
+    brief: "MKS Robin Pro (STM32F103ZE)"
+  - name: MKS_ROBIN_E3
+    brief: "MKS Robin E3 (STM32F103RC)"
+  - name: MKS_ROBIN_E3_V1_1
+    brief: "MKS Robin E3 V1.1 (STM32F103RC)"
+  - name: MKS_ROBIN_E3D
+    brief: "MKS Robin E3D (STM32F103RC)"
+  - name: MKS_ROBIN_E3D_V1_1
+    brief: "MKS Robin E3D V1.1 (STM32F103RC)"
+  - name: MKS_ROBIN_E3P
+    brief: "MKS Robin E3P (STM32F103VE)"
+  - name: BTT_SKR_MINI_V1_1
+    brief: "BigTreeTech SKR Mini v1.1 (STM32F103RC)"
+  - name: BTT_SKR_MINI_E3_V1_0
+    brief: "BigTreeTech SKR Mini E3 (STM32F103RC)"
+  - name: BTT_SKR_MINI_E3_V1_2
+    brief: "BigTreeTech SKR Mini E3 V1.2 (STM32F103RC)"
+  - name: BTT_SKR_MINI_E3_V2_0
+    brief: "BigTreeTech SKR Mini E3 V2.0 (STM32F103RC / STM32F103RE)"
+  - name: BTT_SKR_MINI_MZ_V1_0
+    brief: "BigTreeTech SKR Mini MZ V1.0 (STM32F103RC)"
+  - name: BTT_SKR_E3_DIP
+    brief: "BigTreeTech SKR E3 DIP V1.0 (STM32F103RC / STM32F103RE)"
+  - name: BTT_SKR_CR6
+    brief: "BigTreeTech SKR CR6 v1.0 (STM32F103RE)"
+  - name: JGAURORA_A5S_A1
+    brief: "JGAurora A5S A1 (STM32F103ZE)"
+  - name: FYSETC_AIO_II
+    brief: "FYSETC AIO_II (STM32F103RC)"
+  - name: FYSETC_CHEETAH
+    brief: "FYSETC Cheetah (STM32F103RC)"
+  - name: FYSETC_CHEETAH_V12
+    brief: "FYSETC Cheetah V1.2 (STM32F103RC)"
+  - name: LONGER3D_LK
+    brief: "Longer3D LK1/2 - Alfawise U20/U20+/U30 (STM32F103VE)"
+  - name: CCROBOT_MEEB_3DP
+    brief: "ccrobot-online.com MEEB_3DP (STM32F103RC)"
+  - name: CHITU3D_V5
+    brief: "Chitu3D TronXY X5SA V5 Board (STM32F103ZE)"
+  - name: CHITU3D_V6
+    brief: "Chitu3D TronXY X5SA V6 Board (STM32F103ZE)"
+  - name: CHITU3D_V9
+    brief: "Chitu3D TronXY X5SA V9 Board (STM32F103ZE)"
+  - name: CREALITY_V4
+    brief: "Creality v4.x (STM32F103RC / STM32F103RE)"
+  - name: CREALITY_V422
+    brief: "Creality v4.2.2 (STM32F103RC / STM32F103RE)"
+  - name: CREALITY_V423
+    brief: "Creality v4.2.3 (STM32F103RC / STM32F103RE)"
+  - name: CREALITY_V425
+    brief: "Creality v4.2.5 (STM32F103RC / STM32F103RE)"
+  - name: CREALITY_V427
+    brief: "Creality v4.2.7 (STM32F103RC / STM32F103RE)"
+  - name: CREALITY_V4210
+    brief: "Creality v4.2.10 (STM32F103RC / STM32F103RE) as found in the CR-30"
+  - name: CREALITY_V431
+    brief: "Creality v4.3.1 (STM32F103RC / STM32F103RE)"
+  - name: CREALITY_V431_A
+    brief: "Creality v4.3.1a (STM32F103RC / STM32F103RE)"
+  - name: CREALITY_V431_B
+    brief: "Creality v4.3.1b (STM32F103RC / STM32F103RE)"
+  - name: CREALITY_V431_C
+    brief: "Creality v4.3.1c (STM32F103RC / STM32F103RE)"
+  - name: CREALITY_V431_D
+    brief: "Creality v4.3.1d (STM32F103RC / STM32F103RE)"
+  - name: CREALITY_V452
+    brief: "Creality v4.5.2 (STM32F103RC / STM32F103RE)"
+  - name: CREALITY_V453
+    brief: "Creality v4.5.3 (STM32F103RC / STM32F103RE)"
+  - name: CREALITY_V521
+    brief: "Creality v5.2.1 (STM32F103VE) as found in the SV04"
+  - name: CREALITY_V24S1
+    brief: "Creality v2.4.S1 (STM32F103RC / STM32F103RE) v101 as found in the Ender-7"
+  - name: CREALITY_V24S1_301
+    brief: "Creality v2.4.S1_301 (STM32F103RC / STM32F103RE) v301 as found in the Ender-3 S1"
+  - name: CREALITY_V25S1
+    brief: "Creality v2.5.S1 (STM32F103RE) as found in the CR-10 Smart Pro"
+  - name: TRIGORILLA_PRO
+    brief: "Trigorilla Pro (STM32F103ZE)"
+  - name: FLY_MINI
+    brief: "FLYmaker FLY MINI (STM32F103RC)"
+  - name: FLSUN_HISPEED
+    brief: "FLSUN HiSpeedV1 (STM32F103VE)"
+  - name: BEAST
+    brief: "STM32F103RE Libmaple-based controller"
+  - name: MINGDA_MPX_ARM_MINI
+    brief: "STM32F103ZE Mingda MD-16"
+  - name: GTM32_PRO_VD
+    brief: "STM32F103VE controller"
+  - name: ZONESTAR_ZM3E2
+    brief: "Zonestar ZM3E2    (STM32F103RC)"
+  - name: ZONESTAR_ZM3E4
+    brief: "Zonestar ZM3E4 V1 (STM32F103VC)"
+  - name: ZONESTAR_ZM3E4V2
+    brief: "Zonestar ZM3E4 V2 (STM32F103VC)"
+  - name: ERYONE_ERY32_MINI
+    brief: "Eryone Ery32 mini (STM32F103VE)"
+  - name: PANDA_PI_V29
+    brief: "Panda Pi V2.9 - Standalone (STM32F103RC)"
+  - name: SOVOL_V131
+    brief: "Sovol V1.3.1 (GD32F103RET6)"
+  - name: TRIGORILLA_V006
+    brief: "Trigorilla V0.0.6 (GD32F103RE)"
+  - name: KEDI_CONTROLLER_V1_2
+    brief: "EDUTRONICS Kedi Controller V1.2 (STM32F103RC)"
+
+- group: "ARM Cortex-M4F"
+  long:
+  boards:
+  - name: TEENSY31_32
+    brief: "Teensy3.1 and Teensy3.2"
+  - name: TEENSY35_36
+    brief: "Teensy3.5 and Teensy3.6"
+
+- group: "STM32 ARM Cortex-M4F"
+  long:
+  boards:
+  - name: ARMED
+    brief: "Arm'ed STM32F4-based controller"
+  - name: RUMBA32_V1_0
+    brief: "RUMBA32 STM32F446VE based controller from Aus3D"
+  - name: RUMBA32_V1_1
+    brief: "RUMBA32 STM32F446VE based controller from Aus3D"
+  - name: RUMBA32_MKS
+    brief: "RUMBA32 STM32F446VE based controller from Makerbase"
+  - name: RUMBA32_BTT
+    brief: "RUMBA32 STM32F446VE based controller from BIGTREETECH"
+  - name: BLACK_STM32F407VE
+    brief: "BLACK_STM32F407VE"
+  - name: BLACK_STM32F407ZE
+    brief: "BLACK_STM32F407ZE"
+  - name: BTT_SKR_MINI_E3_V3_0_1
+    brief: "BigTreeTech SKR Mini E3 V3.0.1 (STM32F401RC)"
+  - name: BTT_SKR_PRO_V1_1
+    brief: "BigTreeTech SKR Pro v1.1 (STM32F407ZG)"
+  - name: BTT_SKR_PRO_V1_2
+    brief: "BigTreeTech SKR Pro v1.2 (STM32F407ZG)"
+  - name: BTT_BTT002_V1_0
+    brief: "BigTreeTech BTT002 v1.0 (STM32F407VG)"
+  - name: BTT_E3_RRF
+    brief: "BigTreeTech E3 RRF (STM32F407VG)"
+  - name: BTT_SKR_V2_0_REV_A
+    brief: "BigTreeTech SKR v2.0 Rev A (STM32F407VG)"
+  - name: BTT_SKR_V2_0_REV_B
+    brief: "BigTreeTech SKR v2.0 Rev B (STM32F407VG/STM32F429VG)"
+  - name: BTT_GTR_V1_0
+    brief: "BigTreeTech GTR v1.0 (STM32F407IGT)"
+  - name: BTT_OCTOPUS_V1_0
+    brief: "BigTreeTech Octopus v1.0 (STM32F446ZE)"
+  - name: BTT_OCTOPUS_V1_1
+    brief: "BigTreeTech Octopus v1.1 (STM32F446ZE)"
+  - name: BTT_OCTOPUS_PRO_V1_0
+    brief: "BigTreeTech Octopus Pro v1.0 (STM32F446ZE / STM32F429ZG)"
+  - name: LERDGE_K
+    brief: "Lerdge K (STM32F407ZG)"
+  - name: LERDGE_S
+    brief: "Lerdge S (STM32F407VE)"
+  - name: LERDGE_X
+    brief: "Lerdge X (STM32F407VE)"
+  - name: VAKE403D
+    brief: "VAkE 403D (STM32F446VE)"
+  - name: FYSETC_S6
+    brief: "FYSETC S6 (STM32F446VE)"
+  - name: FYSETC_S6_V2_0
+    brief: "FYSETC S6 v2.0 (STM32F446VE)"
+  - name: FYSETC_SPIDER
+    brief: "FYSETC Spider (STM32F446VE)"
+  - name: FLYF407ZG
+    brief: "FLYmaker FLYF407ZG (STM32F407ZG)"
+  - name: MKS_ROBIN2
+    brief: "MKS Robin2 V1.0 (STM32F407ZE)"
+  - name: MKS_ROBIN_PRO_V2
+    brief: "MKS Robin Pro V2 (STM32F407VE)"
+  - name: MKS_ROBIN_NANO_V3
+    brief: "MKS Robin Nano V3 (STM32F407VG)"
+  - name: MKS_ROBIN_NANO_V3_1
+    brief: "MKS Robin Nano V3.1 (STM32F407VE)"
+  - name: MKS_MONSTER8_V1
+    brief: "MKS Monster8 V1 (STM32F407VE)"
+  - name: MKS_MONSTER8_V2
+    brief: "MKS Monster8 V2 (STM32F407VE)"
+  - name: ANET_ET4
+    brief: "ANET ET4 V1.x (STM32F407VG)"
+  - name: ANET_ET4P
+    brief: "ANET ET4P V1.x (STM32F407VG)"
+  - name: FYSETC_CHEETAH_V20
+    brief: "FYSETC Cheetah V2.0 (STM32F401RC)"
+  - name: TH3D_EZBOARD_V2
+    brief: "TH3D EZBoard v2.0 (STM32F405RG)"
+  - name: OPULO_LUMEN_REV3
+    brief: "Opulo Lumen PnP Controller REV3 (STM32F407VE / STM32F407VG)"
+  - name: MKS_ROBIN_NANO_V1_3_F4
+    brief: "MKS Robin Nano V1.3 and MKS Robin Nano-S V1.3 (STM32F407VE)"
+  - name: MKS_EAGLE
+    brief: "MKS Eagle (STM32F407VE)"
+  - name: ARTILLERY_RUBY
+    brief: "Artillery Ruby (STM32F401RC)"
+  - name: FYSETC_SPIDER_V2_2
+    brief: "FYSETC Spider V2.2 (STM32F446VE)"
+  - name: CREALITY_V24S1_301F4
+    brief: "Creality v2.4.S1_301F4 (STM32F401RC) as found in the Ender-3 S1 F4"
+  - name: OPULO_LUMEN_REV4
+    brief: "Opulo Lumen PnP Controller REV4 (STM32F407VE / STM32F407VG)"
+  - name: FYSETC_SPIDER_KING407
+    brief: "FYSETC Spider King407 (STM32F407ZG)"
+  - name: MKS_SKIPR_V1
+    brief: "MKS SKIPR v1.0 all-in-one board (STM32F407VE)"
+  - name: TRONXY_V10
+    brief: "TRONXY V10 (STM32F446ZE)"
+  - name: CREALITY_F401RE
+    brief: "Creality CR4NS200141C13 (STM32F401RE) as found in the Ender-5 S1"
+
+- group: "ARM Cortex-M7"
+  long:
+  boards:
+  - name: REMRAM_V1
+    brief: "RemRam v1"
+  - name: TEENSY41
+    brief: "Teensy 4.1"
+  - name: T41U5XBB
+    brief: "T41U5XBB Teensy 4.1 breakout board"
+  - name: NUCLEO_F767ZI
+    brief: "ST NUCLEO-F767ZI Dev Board"
+  - name: BTT_SKR_SE_BX_V2
+    brief: "BigTreeTech SKR SE BX V2.0 (STM32H743II)"
+  - name: BTT_SKR_SE_BX_V3
+    brief: "BigTreeTech SKR SE BX V3.0 (STM32H743II)"
+  - name: BTT_SKR_V3_0
+    brief: "BigTreeTech SKR V3.0 (STM32H743VG)"
+  - name: BTT_SKR_V3_0_EZ
+    brief: "BigTreeTech SKR V3.0 EZ (STM32H743VG)"
+  - name: BTT_OCTOPUS_MAX_EZ_V1_0
+    brief: "BigTreeTech Octopus Max EZ V1.0 (STM32H723VE / STM32H723ZE)"
+
+- group: "Espressif ESP32 WiFi"
+  long:
+  boards:
+  - name: ESPRESSIF_ESP32
+    brief: "Generic ESP32"
+  - name: MRR_ESPA
+    brief: "MRR ESPA based on ESP32 (native pins only)"
+  - name: MRR_ESPE
+    brief: "MRR ESPE based on ESP32 (with I2S stepper stream)"
+  - name: E4D_BOX
+    brief: "E4d@BOX"
+  - name: RESP32_CUSTOM
+    brief: "Rutilea ESP32 custom board"
+  - name: FYSETC_E4
+    brief: "FYSETC E4"
+  - name: PANDA_ZHU
+    brief: "Panda_ZHU"
+  - name: PANDA_M4
+    brief: "Panda_M4"
+  - name: MKS_TINYBEE
+    brief: "MKS TinyBee (with I2S stepper stream)"
+  - name: ENWI_ESPNP
+    brief: "enwi ESPNP (with I2S stepper stream)"
+  - name: GODI_CONTROLLER_V1_0
+    brief: "EDUTRONICS Godi Controller V1.0 based on ESP32"
+
+- group: "SAMD51 ARM Cortex-M4"
+  long:
+  boards:
+  - name: AGCM4_RAMPS_144
+    brief: "RAMPS 1.4.4"
+  - name: BRICOLEMON_V1_0
+    brief: "Bricolemon"
+  - name: BRICOLEMON_LITE_V1_0
+    brief: "Bricolemon Lite"
+
+- group: "SAMD21 ARM Cortex-M4"
+  long:
+  boards:
+  - name: MINITRONICS20
+    brief: "Minitronics v2.0"
+
+- group: "Custom board"
+  long:
+  boards:
+  - name: CUSTOM
+    brief: "Custom pins definition for development and/or rare boards"
+
+- group: "Marlin Simulator"
+  long: |
+    Marlin includes a built-in Simulator HAL (`NATIVE_SIM`) that runs on Windows, macOS, or Linux for debugging and experimentation.
+    It can simulate a standard Graphical LCD or a TFT Color display.
+  boards:
+  - name: SIMULATED
+    brief: "Simulated cartesian printer using ."

@@ -22,7 +22,7 @@ We're currently working on tools to improve the situation, with the goal to buil
 
 ## Meta Configuration
 
-Since Marlin now supports PlatformIO we can do custom pre-processing as part of the build. PlatformIO loves INI files, which are very simple and commonly used for 3D printer firmware configuration. So, we now include a [`config.ini` configuration file](https://github.com/MarlinFirmware/Marlin/blob/2.1.2/Marlin/config.ini) that can do a lot of useful tricks.
+Since Marlin now supports PlatformIO we can do custom pre-processing as part of the build. PlatformIO loves INI files, which are very simple and commonly used for 3D printer firmware configuration. So, we now include a [`config.ini` configuration file](https://github.com/MarlinFirmware/Marlin/blob/2.1.2.1/Marlin/config.ini) that can do a lot of useful tricks.
 
 ## config.ini
 
@@ -30,7 +30,7 @@ Note that the behavior of this feature is likely to change as we continue to exp
 
 ### Overview
 
-The default `config.ini` from Marlin 2.1.2 looks something like this:
+The default `config.ini` from Marlin 2.1.2.1 looks something like this:
 
 ```ini
 #
