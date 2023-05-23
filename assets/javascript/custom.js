@@ -67,9 +67,8 @@ function check_if_in_view() {
     var element_top_position = ($element.offset().top);
     var element_bottom_position = (element_top_position + element_height);
 
-    //check to see if this current container is within viewport
-    if ((element_bottom_position >= window_top_position) &&
-        (element_top_position + 100 <= window_bottom_position)) {
+    // Check whether this current container is within viewport
+    if (element_bottom_position >= window_top_position && element_top_position <= window_bottom_position - 100) {
       $element.addClass('in-view');
     } else {
       // $element.removeClass('in-view');  // uncomment to animate out
@@ -87,9 +86,10 @@ $(function() {
   $toc = $("#toc");
   if ($toc !== undefined) $toc.tocify({
     selectors: (typeof toc_selectors != 'undefined') ? toc_selectors : 'h1,h2,h3,h4',
-    scrollTo: 65,
+    scrollTo: 60,
+    smoothScroll: false,
     extendPage: false,
-    hashGenerator: 'pretty',
+    hashGenerator: 'pretty'
   });
 
   /**
