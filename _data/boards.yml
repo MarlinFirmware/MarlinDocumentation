@@ -742,6 +742,10 @@
     brief: "TRONXY V10 (STM32F446ZE)"
   - name: CREALITY_F401RE
     brief: "Creality CR4NS200141C13 (STM32F401RE) as found in the Ender-5 S1"
+  - name: BLACKPILL_CUSTOM
+    brief: "Custom board based on STM32F401CDU6"
+  - name: I3DBEEZ9_V1
+    brief: "I3DBEEZ9 V1 (STM32F407ZG)"
 
 - group: "ARM Cortex-M7"
   long:
