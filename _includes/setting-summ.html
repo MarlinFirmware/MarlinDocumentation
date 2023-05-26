@@ -28,7 +28,30 @@
 {% if conf.settings %}
   <div class="summ-opts">
   {% for opt in conf.settings %}
-    <a class="opt" href="{{ conf.url | prepend: site.baseurl }}#{{opt.name}}">{{opt.name}}</a>
+    <div class="group">
+      <a class="opt" href="{{ conf.url | prepend: site.baseurl }}#{{opt.name}}">{{opt.name}}</a>
+      {% if opt contains 'subopts' %}
+        <div class="sub">
+          {% for sub1 in opt.subopts %}
+            <a class="opt" href="{{ conf.url | prepend: site.baseurl }}#{{opt.name}}-{{sub1.name}}">{{sub1.name}}</a>
+            {% if sub1 contains 'subopts' %}
+              <div class="sub">
+                {% for sub2 in sub1.subopts %}
+                  <a class="opt" href="{{ conf.url | prepend: site.baseurl }}#{{opt.name}}-{{sub1.name}}-{{sub2.name}}">{{sub2.name}}</a>
+                  {% if sub2 contains 'subopts' %}
+                    <div class="sub">
+                      {% for sub3 in sub2.subopts %}
+                        <a class="opt" href="{{ conf.url | prepend: site.baseurl }}#{{opt.name}}-{{sub1.name}}-{{sub2.name}}-{{sub3.name}}">{{sub3.name}}</a>
+                      {% endfor %}
+                    </div>
+                  {% endif %}
+                {% endfor %}
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
   {% endfor %}
   </div>
 {% endif %}

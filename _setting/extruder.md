@@ -130,10 +130,9 @@ settings:
   links:
   - label: Project
     url: https://www.thingiverse.com/thing:3080893
-  - label: Movements Video 1
-    url: https://youtu.be/0xCEiG9VS3k
-  - label: Movements Video 2
-    url: https://youtu.be/Bqbcs0CU2FE
+  videos:
+  - 0xCEiG9VS3k
+  - Bqbcs0CU2FE
   subopts:
   - name: PARKING_EXTRUDER_PARKING_X
     type: '{ mm, mm … }'
@@ -243,7 +242,9 @@ settings:
 - name: ELECTROMAGNETIC_SWITCHING_TOOLHEAD
   disabled: true
   brief: Electromagnetic Switching Toolhead
-  long: Parking for CoreXY / HBot kinematics. Toolheads are parked at one edge and held with an electromagnet. Supports more than 2 Toolheads. ([Video Demonstration](https://youtu.be/JolbsAKTKf4)).
+  long: Parking for CoreXY / HBot kinematics. Toolheads are parked at one edge and held with an electromagnet. Supports more than 2 Toolheads.
+  videos:
+    - JolbsAKTKf4
   subopts:
   - name: SWITCHING_TOOLHEAD_Z_HOP
     type: mm

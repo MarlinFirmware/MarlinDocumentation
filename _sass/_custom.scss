@@ -1173,10 +1173,16 @@ div.settings.item {
   p { margin-left: 1em; }
 }
 div.summ-opts {
+  div.group {
+    margin-bottom: 0.5em;
+    .sub {
+      font-size: 90%;
+      padding-left: 2em;
+    }
+  }
   a.opt {
     padding: 3px 1em;
-    display: inline-block;
-    width: 45%;
+    display: block;
     &:hover, &:active {
       background: var(--color-link-hover-bg);
       color: var(--color-link-hover);
