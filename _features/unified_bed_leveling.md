@@ -28,15 +28,18 @@ You should be able to successfully print a small object at the center of the bed
 The following command sequence can then be used as a quick-start guide to home, level, and then fine-tune the results. These commands are for a 'normal' setup; see the relevant [addenda](#addenda) for concerns and G-code sequences related to setups without an lcd or z-probe.:
 
 ```gcode
+;-------------------------------------
+;--- Fresh firmware best practices ---
+;-------------------------------------
+M502            ; Restore all settings to factory defaults.
+M500            ; Save settings to EEPROM.
+M501            ; Restore settings from EEPROM.
+
 ;------------------------------------------
 ;--- Setup and initial probing commands ---
 ;------------------------------------------
-M502            ; Reset settings to configuration defaults...
-M500            ; ...and Save to EEPROM. Use this on a new install.
-M501            ; Read back in the saved EEPROM.
-
-M190 S65        ; Not required, but having the printer at temperature helps accuracy
-M104 S210       ; Not required, but having the printer at temperature helps accuracy
+M190 S65        ; Set bed temp to 65C (S65) recommended for accuracy when using a heated bed
+M104 S210       ; Set nozzle temp to 210C (S210) recommended for accuracy when using nozzle to probe
 
 G28             ; Home XYZ.
 G29 P1          ; Do automated probing of the bed.
@@ -44,26 +47,27 @@ G29 P2 B T      ; Manual probing of locations USUALLY NOT NEEDED!!!!
 G29 P3 T        ; Repeat until all mesh points are filled in.
 
 G29 T           ; View the Z compensation values.
-G29 S1          ; Save UBL mesh points to EEPROM.
+G29 S0          ; Save UBL mesh points to slot 0.
 G29 F 10.0      ; Set Fade Height for correction at 10.0 mm.
 G29 A           ; Activate the UBL System.
-M500            ; Save current setup. WARNING: UBL will be active at power up, before any [`G28`](/docs/gcode/G028.html).
-;---------------------------------------------
-;--- Fine Tuning of the mesh happens below ---
-;---------------------------------------------
-G26 C P5.0 F3.0 ; Produce mesh validation pattern with primed nozzle (5mm) and filament diameter 3mm
+M500            ; Save settings to EEPROM. 
+                ; WARNING: UBL will be active at power up, before any [`G28`](/docs/gcode/G028.html).
+;-------------------------------
+;--- Fine Tuning of the mesh ---
+;-------------------------------
+G26 C P5.0 F3.0 ; Produce mesh validation pattern (G26), contiunue with closest point (C), prime nozzle by extruding 5mm (P5.0), and set filament diameter 3mm (F3.0)
                 ; PLA temperatures are assumed unless you specify, e.g., B 105 H 225 for ABS Plastic
 G29 P4 T        ; Move nozzle to 'bad' areas and fine tune the values if needed
                 ; Repeat G26 and G29 P4 T  commands as needed.
 
-G29 S1          ; Save UBL mesh values to EEPROM.
-M500            ; Resave UBL's state information.
+G29 S0          ; Save UBL mesh values to slot 0.
+M500            ; Save settings to EEPROM.
 ;----------------------------------------------------
 ;--- Use 3-point probe to transform a stored mesh ---
 ;----------------------------------------------------
-G29 L1          ; Load the mesh stored in slot 1 (from G29 S1)
-G29 J           ; No size specified on the J option tells G29 to probe the specified 3 points
-                ; and tilt the mesh according to what it finds.
+G29 L0          ; Load UBL mesh values from slot 0.
+G29 J           ; Probe 3 points and tilt mesh to plane.
+                ; This can be useful in the starting gcode of your prefered slicer
 ```
 
 ## Scope
