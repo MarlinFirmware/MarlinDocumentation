@@ -765,7 +765,7 @@
   - name: BTT_SKR_V3_0_EZ
     brief: "BigTreeTech SKR V3.0 EZ (STM32H743VG)"
   - name: BTT_OCTOPUS_MAX_EZ_V1_0
-    brief: "BigTreeTech Octopus Max EZ V1.0 (STM32H723VE / STM32H723ZE)"
+    brief: "BigTreeTech Octopus Max EZ V1.0 (STM32H723ZE)"
 
 - group: "Espressif ESP32 WiFi"
   long:
