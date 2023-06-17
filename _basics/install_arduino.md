@@ -52,7 +52,7 @@ If you get a warning that Marlin requires too much Program Memory or SRAM to fit
 - Put your board into *Program Mode* if required. _(Most boards don't require it.)_
 - Click **Upload** to flash your board. A blue or green LED on the board will blink rapidly during the upload.
 
-That’s it! With Marlin installed you can now enjoy silky smooth printing!
+That's it! With Marlin installed you can now enjoy silky smooth printing!
 
 #### Generate 'firmware.bin' file
 

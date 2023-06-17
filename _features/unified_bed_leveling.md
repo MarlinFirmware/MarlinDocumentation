@@ -3,7 +3,8 @@ title:        'Unified Bed Leveling'
 description:  'The Unified Auto Bed Leveling system (UBL) provides automated procedures to probe the bed and compensate for an irregular or tilted bed'
 tag: leveling
 
-author: Bob-the-Kuhn, thinkyhead, Roxy-3D, bjarchi
+author: Bob-the-Kuhn, thinkyhead, Roxy-3D
+contrib: landodragon141, bjarchi
 category: [ features, leveling ]
 ---
 
@@ -12,12 +13,12 @@ The **Unified Bed Leveling (UBL)** system is a superset of the previous leveling
 The main improvements over the previous systems are:
  - Optimized line-splitting algorithm. For all mesh-based leveling methods, on Cartesians each linear move is split on grid line boundaries, respecting the best-known measured heights on the bed. UBL highly optimizes this boundary-splitting with pre-calculation, optimized handling of special cases, and avoiding recursion.
  - It is possible to probe and store a high-resolution rectangular mesh in nonvolatile storage, load this mesh, and use either 3-point or grid based probing to 'tilt' the mesh and compensate for slight changes in bed orientation.
- - The user is able to fill in the portions of the mesh that can’t be reached by automated probing. This allows the entire bed to be compensated.
+ - The user is able to fill in the portions of the mesh that can't be reached by automated probing. This allows the entire bed to be compensated.
  - It allows the user to fine tune the system. The user is able to modify the mesh based on print results. Really good first layer adhesion and height can be achieved over the entire bed.
 
 ## Synopsis
 
-Currently an LCD display with a rotary encoder is recommended. Note that the MKS TFT 2.8 and 3.2 *do not* actually fulfill the LCD requirements. The main documentation below assumes that a conforming LCD and a z-probe are present. See [the no-lcd addendum](#ubl-without-an-lcd) for information on using UBL without a display, and [the no-z-probe addendum](#ubl-without-a-z-probe) to get UBL working without a z-probe installed. Note that operation without an LCD is still work-in-progress, and subject to change.
+Currently an LCD display with a rotary encoder is recommended. Note that the MKS TFT 2.8 and 3.2 *do not* actually fulfill the LCD requirements. The main documentation below assumes that a conforming LCD and a Z-probe are present. See [the no-lcd addendum](#ubl-without-an-lcd) for information on using UBL without a display, and [the no-Z-probe addendum](#ubl-without-a-z-probe) to get UBL working without a Z-probe installed. Note that operation without an LCD is still work-in-progress, and subject to change.
 
 UBL is a superset of previous automatic leveling systems, but it does not necessarily supersede them in all cases. Its goal is to allow the best features of the previous leveling schemes to be used together and combined, as well as providing a richer set of commands and feedback for the user. However, this functionality comes at a cost of program space. Compared to bilinear leveling, for example, the difference might be 50 kB for UBL vs. 5 kB for bilinear -- and for an equally precise mesh the printed results could be quite similar. With that said, the cost in program space is likely only a concern for more resource constrained parts like the 128k ATMegas.
 
@@ -25,45 +26,42 @@ The printer must be already fully functional and tested, with a well-constrained
 
 You should be able to successfully print a small object at the center of the bed with bed leveling turned off. It's very important to verify that your `Configuration.h` settings make this possible before trying to bring up UBL. Most problems bringing up the UBL Bed Leveling system occur when this step has been ignored. Please pay particular attention to your `Z_PROBE_OFFSET_FROM_EXTRUDER` value. Usually it's best to home the Z-Axis in the center of the bed. But wherever you decide to home, the Z value reported on the LCD (or with [`M114`](/docs/gcode/M114.html)) should be _very_ close to 0.0 mm when the nozzle is just touching the bed. Failure to calibrate `Z_PROBE_OFFSET_FROM_EXTRUDER` properly will result in dimensional errors in your printed parts.
 
-The following command sequence can then be used as a quick-start guide to home, level, and then fine-tune the results. These commands are for a 'normal' setup; see the relevant [addenda](#addenda) for concerns and G-code sequences related to setups without an lcd or z-probe.:
+The following command sequences can then be used as a quick-start guide to home, level, and fine-tune the results. These commands are for a 'normal' setup; see the relevant [addenda](#addenda) for concerns and G-code sequences related to setups without an LCD or Z-probe.
 
+### Setup and Initial Probing
 ```gcode
-;------------------------------------------
-;--- Setup and initial probing commands ---
-;------------------------------------------
-M502            ; Reset settings to configuration defaults...
-M500            ; ...and Save to EEPROM. Use this on a new install.
-M501            ; Read back in the saved EEPROM.
-
-M190 S65        ; Not required, but having the printer at temperature helps accuracy
-M104 S210       ; Not required, but having the printer at temperature helps accuracy
+M190 S65        ; Set bed temp to 65C (S65) recommended for accuracy when using a heated bed
+M104 S210       ; Set nozzle temp to 210C (S210) recommended for accuracy when using nozzle to probe
 
 G28             ; Home XYZ.
 G29 P1          ; Do automated probing of the bed.
-G29 P2 B T      ; Manual probing of locations USUALLY NOT NEEDED!!!!
+G29 P2 B T      ; Manual probing of locations. (USUALLY NOT NEEDED!)
 G29 P3 T        ; Repeat until all mesh points are filled in.
 
 G29 T           ; View the Z compensation values.
-G29 S1          ; Save UBL mesh points to EEPROM.
+G29 S0          ; Save UBL mesh points to slot 0.
 G29 F 10.0      ; Set Fade Height for correction at 10.0 mm.
 G29 A           ; Activate the UBL System.
-M500            ; Save current setup. WARNING: UBL will be active at power up, before any [`G28`](/docs/gcode/G028.html).
-;---------------------------------------------
-;--- Fine Tuning of the mesh happens below ---
-;---------------------------------------------
-G26 C P5.0 F3.0 ; Produce mesh validation pattern with primed nozzle (5mm) and filament diameter 3mm
-                ; PLA temperatures are assumed unless you specify, e.g., B 105 H 225 for ABS Plastic
-G29 P4 T        ; Move nozzle to 'bad' areas and fine tune the values if needed
-                ; Repeat G26 and G29 P4 T  commands as needed.
+M500            ; Save settings to EEPROM. 
+                ; WARNING: Causes UBL to be active at power-up, before any G28.
+```
 
-G29 S1          ; Save UBL mesh values to EEPROM.
-M500            ; Resave UBL's state information.
-;----------------------------------------------------
-;--- Use 3-point probe to transform a stored mesh ---
-;----------------------------------------------------
-G29 L1          ; Load the mesh stored in slot 1 (from G29 S1)
-G29 J           ; No size specified on the J option tells G29 to probe the specified 3 points
-                ; and tilt the mesh according to what it finds.
+### Mesh Fine-Tuning
+```gcode
+G26 C P5.0 F3.0 ; Produce mesh validation pattern (G26), continue with closest point (C), prime nozzle by extruding 5mm (P5.0), and set filament diameter 3mm (F3.0)
+                ; PLA temperatures are assumed unless you specify, e.g., B105 H225 for ABS Plastic
+G29 P4 T        ; Move nozzle to 'bad' areas and fine tune the values if needed
+                ; Repeat G26 and 'G29 P4 T' commands as needed.
+
+G29 S0          ; Save UBL mesh values to slot 0.
+M500            ; Save settings to EEPROM.
+```
+
+### Transform Mesh with 3-Point Probing
+```gcode
+G29 L0          ; Load UBL mesh values from slot 0.
+G29 J           ; Probe 3 points and tilt the mesh to the plane.
+                ; This can be useful in the starting G-code of your preferred slicer.
 ```
 
 ## Scope
@@ -138,9 +136,9 @@ All printers require these settings, which specify the physical movement limits 
 
 **Mesh size and density** – These define the default boundaries of the UBL mesh - the region of the bed the nozzle(s) can reach, and therefore needs to be compensated - and the mesh density. These settings can be found in `Configuration.h`.
 
-Ideally the mesh bounds will match your printable area perfectly. In practice it’s a good idea to pull these in a bit with `MESH_INSET` if the printable area goes right up to the edge of the bed. This helps keep the probe from missing the bed.
+Ideally the mesh bounds will match your printable area perfectly. In practice it's a good idea to pull these in a bit with `MESH_INSET` if the printable area goes right up to the edge of the bed. This helps keep the probe from missing the bed.
 
-3 x 3 through 15 x 15 meshes are supported. X & Y dimensions do NOT need to be the same. First time users should start out with a small mesh until they are familiar with the tools. Once you’re proficient then move to larger meshes. 7 x 7 seems to be a popular size for a first attempt at a final mesh.
+3 x 3 through 15 x 15 meshes are supported. X & Y dimensions do NOT need to be the same. First time users should start out with a small mesh until they are familiar with the tools. Once you're proficient then move to larger meshes. 7 x 7 seems to be a popular size for a first attempt at a final mesh.
 
 ```cpp
 #define MESH_INSET 10             // Mesh inset margin on print area
@@ -148,7 +146,7 @@ Ideally the mesh bounds will match your printable area perfectly. In practice it
 #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
 ```
 
-The automated mesh boundary settings assume that the printable area is centered in the physical bed area (as specified below), and just applies an inset to all sides. If your configuration is different then you may need to modify the min/max settings, found in `Configuration_adv.h`, to fit your situation. Note though that (unlike bilinear leveling) the MESH_MIN and MESH_MAX positions refer to where the *nozzle* can reach, not the *probe*.:
+The automated mesh boundary settings assume that the printable area is centered in the physical bed area (as specified below), and just applies an inset to all sides. If your configuration is different then you may need to modify the min/max settings, found in `Configuration_adv.h`, to fit your situation. Note though that (unlike bilinear leveling) the `MESH_MIN_*` and `MESH_MAX_*` positions refer to where the *nozzle* can reach, not the *probe*.:
 
 ```cpp
 #define MESH_MIN_X UBL_MESH_INSET
@@ -185,24 +183,25 @@ So however bed size and printable radius are defined, make sure that your mesh g
 
 ### Commands
 
-UBL has a series of “phase” commands that roughly follow the mesh building process. Some are heavily used, some aren’t.
+UBL has a series of “phase” commands that roughly follow the mesh building process. Some are heavily used, some aren't.
 
 There are several options that can be applied to each of the phase commands. These are the most common:
 
 Command|Description
 -------|-----------
 `G29 P1`|Phase 1 – Automatically probe the bed.
-`G29 P2`|Phase 2 – Manually probe points that automated probing couldn’t reach.
-`G29 P3`|Phase 3 – Assign values to points that still need values.
-`G29 P4`|Phase 4 – Fine tune the mesh.
+`G29 P2`|Phase 2 – Manually probe points that automated probing couldn't reach.
+`G29 P3`|Phase 3 – Extrapolate values for points that automated probing couldn't reach.
+`G29 P4`|Phase 4 – Manually fine tune the mesh.
 `G29 Snn`|Store the mesh in EEPROM slot `nn`.
 `G29 Lnn` or `M420 Lnn`|Load a mesh from EEPROM slot `nn`. (Other leveling systems use [`M501`](/docs/gcode/M501.html).)
-`G29 A` or `M420 S1`|Activate the Z compensation bed leveling.
-`G29 D` or `M420 S0`|Disable the Z compensation bed leveling.
-`G29 T` or `M420 V`|Print a map of the mesh.
+`G29 A` or `M420 S1`|Activate UBL Z compensation bed leveling.
+`G29 D` or `M420 S0`|Disable UBL Z compensation bed leveling.
+`G29 T` or `M420 V`|Print a map of the mesh to console.
 [`G26`](/docs/gcode/G026.html)|Print a pattern to test mesh accuracy.
 [`M421`](/docs/gcode/M421.html)|Touch up mesh points by specifying a value (`Z`) or offset (`Q`).
-[`M502`](/docs/gcode/M502.html), [`M500`](/docs/gcode/M500.html)|Reset settings to defaults, save to EEPROM.
+[`M502`](/docs/gcode/M502.html)|Restore all settings to factory defaults.
+[`M500`](/docs/gcode/M500.html)|Save settings to EEPROM.
 
 ### Automated probing
 
@@ -210,21 +209,21 @@ The first step in the process is to use the Z probe to populate as much of the m
 
 To start the process issue `G29 P1` or, if you want to see the values as they are measured, `G29 P1 T`
 
-If the EEPROM hasn’t been initialized then it’ll tell you to issue the `M502, M500, M501` sequence. If that happens then you’ll need to re-issue the `G29 P1` command.
+If the EEPROM hasn't been initialized then it'll tell you to issue the `M502, M500, M501` sequence. If that happens then you'll need to re-issue the `G29 P1` command.
 
-If a [`G28`](/docs/gcode/G028.html) hasn’t already been done then the [`G28`](/docs/gcode/G028.html) sequence will automatically be done followed by the` G29 P1` probing.
+If a [`G28`](/docs/gcode/G028.html) hasn't already been done then the [`G28`](/docs/gcode/G028.html) sequence will automatically be done followed by the` G29 P1` probing.
 
 No further action is required of the user for this phase.
 
-If you do a `G29 T` or `M420 V` command you’ll most likely see areas that do not have Z compensation values. See the addendum [Mesh area](#mesh-areas) for details.
+If you do a `G29 T` or `M420 V` command you'll most likely see areas that do not have Z compensation values. See the addendum [Mesh area](#mesh-areas) for details.
 
 ### Manual probing
 
 This optional step uses the encoder wheel to move the nozzle up and down in 0.01mm steps. BE VERY CAREFUL when doing this. Nasty things can happen if too much force is applied to the bed by the nozzle.
 
-Most systems will have areas that the Z probe can’t reach. These points can be manually probed using `G29 P2`, but the 'smart' mesh filling of `G29 P3` is often good enough to make manual probing unnecessary.
+Most systems will have areas that the Z probe can't reach. These points can be manually probed using `G29 P2`, but the 'smart' mesh filling of `G29 P3` is often good enough to make manual probing unnecessary.
 
-Manual probing consists of lowering the nozzle until the nozzle comes in contact with a feeler gauge. Usually the feeler gauge is a piece of paper or a business card. It’s better if the gauge is a piece of plastic that’s hard but still has some flex. Even better is a mechanic’s metal feeler gauge but those are usually too short to be convenient.
+Manual probing consists of lowering the nozzle until the nozzle comes in contact with a feeler gauge. Usually the feeler gauge is a piece of paper or a business card. It's better if the gauge is a piece of plastic that's hard but still has some flex. Even better is a mechanic's metal feeler gauge but those are usually too short to be convenient.
 
 The idea is to stop lowering when there is the first sign of resistance to moving the gauge. It is _very important_ to be consistent in the amount of force/resistance from point to point.
 
@@ -234,7 +233,7 @@ The first step is to measure the thickness of the feeler gauge:
 
 - The nozzle will move to the center of the bed.
 
-- Use the encoder wheel to move the nozzle until you feel a small amount of resistance. This is the resistance level you’ll want to aim for when manually probing.
+- Use the encoder wheel to move the nozzle until you feel a small amount of resistance. This is the resistance level you'll want to aim for when manually probing.
 
 - Click the encoder button.
 
@@ -262,7 +261,7 @@ Again, `G29 S[n]` will save the mesh to EEPROM.
 
 ### Test print
 
-Once you have a reasonable looking mesh then it’s time to do a test print.
+Once you have a reasonable looking mesh then it's time to do a test print.
 
 The easiest way to do this is to use the [`G26`](/docs/gcode/G026.html) command. There are several options for the [`G26`](/docs/gcode/G026.html) command. (See [`G26`](/docs/gcode/G026.html) for full details.)
 
@@ -273,7 +272,7 @@ The easiest way to do this is to use the [`G26`](/docs/gcode/G026.html) command.
 - `L0.2` – layer height of 0.2mm (default)
 - `S0.4` – nozzle diameter of 0.4mm (default)
 
-### Fine-tuning of the matrix
+### Mesh Fine-tuning
 
 Look over the results of the [`G26`](/docs/gcode/G026.html) print and note where adjustments are needed.
 
@@ -291,7 +290,7 @@ Press and hold the encoder button/wheel when you are finished.
 
 There are options (`G29 P4 X... Y...`) to make it easier to move to the desired probe locations. For example `G29 P4 X110 Y110` will move to the grid point closest to the center of a 220x220mm bed.
 
-It’s probably a good idea to issue a `G29 S` command to save the mesh to EEPROM at this stage.
+It's probably a good idea to issue a `G29 S` command to save the mesh to EEPROM at this stage.
 
 Repeat the [`G26`](/docs/gcode/G026.html), `G29 P4 T` sequence until you have the desired first layer height quality.
 
@@ -323,9 +322,9 @@ M421 ... Qx.xx  ; Direct edit mesh point, using offset
 G29 S1          ; Save to slot 1, return to G26 for further refinement.
 ```
 
-### UBL without a z-probe
+### UBL without a Z-probe
 
-UBL also includes the features previously provided by `MESH_BED_LEVELING` and `PROBE_MANUALLY`, allowing the user to take advantage of the system without having a z-probe at all. Again, the initialization and start-up process needs to be varied a bit.
+UBL also includes the features previously provided by `MESH_BED_LEVELING` and `PROBE_MANUALLY`, allowing the user to take advantage of the system without having a Z-probe at all. Again, the initialization and start-up process needs to be varied a bit.
 
 As in the case of no LCD, it is important to have good physical leveling of the bed before you start here - **especially** if you try to skip the manual probing step.
 
@@ -356,7 +355,7 @@ G29 S1      ; Save to slot 1, return to G26 for further refinement
 
 ### MESH areas
 
-After `G29 P1` your matrix will probably have areas that do not have Z compensation values.  This is because the probe can’t be positioned in these areas.  The only ways to avoid this are:
+After `G29 P1` your matrix will probably have areas that do not have Z compensation values.  This is because the probe can't be positioned in these areas.  The only ways to avoid this are:
 - Use the nozzle as the probe (no offsets).
 - Build your system so that the nozzle can travel outside the bed.
 
@@ -365,7 +364,7 @@ If your probe is in front and to the right of your nozzle then the matrix will l
 ![image1]({{ '/assets/images/features/bed_probe_areas.jpg' | prepend: site.baseurl }})
 
 - GREEN: Probing is possible
-- BLUE: Probe can’t reach
+- BLUE: Probe can't reach
 
 ### Further Optimization
 

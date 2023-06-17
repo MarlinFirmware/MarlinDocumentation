@@ -54,7 +54,7 @@ If you'd like to be able to preview your contributions before submitting them, y
 ### Installing buildroot on Windows
 
  1. Get Ruby for Windows ([32 bit](//dl.bintray.com/oneclick/rubyinstaller/rubyinstaller-2.3.3.exe), [64bit](//dl.bintray.com/oneclick/rubyinstaller/rubyinstaller-2.3.3-x64.exe)), execute the installer and go through the steps of the installation, make sure to check the “Add Ruby executables to your PATH” box.
- 2. Get Ruby Devkit ([32 bit](//dl.bintray.com/oneclick/rubyinstaller/DevKit-mingw64-32-4.7.2-20130224-1151-sfx.exe), [64bit](//dl.bintray.com/oneclick/rubyinstaller/DevKit-mingw64-64-4.7.2-20130224-1432-sfx.exe)), the download is a self-extracting archive. When you execute the file, it’ll ask you for a destination for the files. Enter a path that has no spaces in it. We recommend something simple, like ` C:\RubyDevKit\` . Click Extract and wait until the process is finished.
+ 2. Get Ruby Devkit ([32 bit](//dl.bintray.com/oneclick/rubyinstaller/DevKit-mingw64-32-4.7.2-20130224-1151-sfx.exe), [64bit](//dl.bintray.com/oneclick/rubyinstaller/DevKit-mingw64-64-4.7.2-20130224-1432-sfx.exe)), the download is a self-extracting archive. When you execute the file, it'll ask you for a destination for the files. Enter a path that has no spaces in it. We recommend something simple, like ` C:\RubyDevKit\` . Click Extract and wait until the process is finished.
  3. Open your favorite command line tool and do:
   - `cd C:\RubyDevKit`
   - `ruby dk.rb init`
