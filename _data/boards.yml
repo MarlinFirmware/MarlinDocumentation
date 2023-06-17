@@ -690,8 +690,6 @@
     brief: "Lerdge S (STM32F407VE)"
   - name: LERDGE_X
     brief: "Lerdge X (STM32F407VE)"
-  - name: VAKE403D
-    brief: "VAkE 403D (STM32F446VE)"
   - name: FYSETC_S6
     brief: "FYSETC S6 (STM32F446VE)"
   - name: FYSETC_S6_V2_0
