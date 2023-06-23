@@ -14,6 +14,18 @@ The core Marlin team consists of a few maintainers who review contributions, dis
 
 ## Ways to contribute
 
+### Donate
+The current maintainer of Marlin is [Scott Lahteine](//www.thinkyhead.com/donate-to-marlin) aka [@thinkyhead](https://github.com/thinkyhead/). Scott has been writing software since 1977 mostly focusing on shareware and open source. He reviews every contribution before it goes into Marlin, maintains documentation, hosts the [Facebook](https://www.facebook.com/groups/marlinfirmware) and [Marlin Discord](https://discord.gg/n5NJ59y), and maintains a test lab in Austin, TX.
+
+Your sponsorship accelerates development, testing, and advancement of the most ambitious open source multi-platform 3D printing firmware in the world. Several support options are available:
+
+- <span class="fa-brands fa-github"></span> [Github Sponsors](https://github.com/sponsors/thinkyhead)
+- <span class="fa-brands fa-patreon"></span> [Patreon](https://www.patreon.com/thinkyhead)
+- <span class="fa-brands fa-paypal"></span> [PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=KMTV4WEYBEMWU&source=url)
+- ☕️ [Buy Me a Coffee!](https://buymeacoff.ee/thinkyhead)
+- $$ [GoFundMe](https://www.gofundme.com/marlin-firmware)
+- 💸 [Flattr](https://www.flattr.com/@thinkyhead)
+
 ### Report bugs
 - Use the community links below for help with configuration and troubleshooting.
 - Submit your **Confirmed Bugs** to the [Issue Queue](//github.com/MarlinFirmware/Marlin/issues/new/choose). Search the Issue Queue first!
@@ -32,11 +44,6 @@ Marlin posts "nightly" builds that contain the most up-to-date code. While they 
 
 ### Contribute Documentation
 Are you skilled in information design? This website is far from complete, and it's a bit text-heavy. We need more photos, diagrams, and YouTube videos to embed on these pages. A well-chosen image or well-produced video can have more impact than many pages of written documentation. Visit the [MarlinDocumentation Project](//github.com/MarlinFirmware/MarlinDocumentation) for more information.
-
-### Fund Development
-The current maintainer of Marlin is [Scott Lahteine](//www.thinkyhead.com/donate-to-marlin) aka @thinkyhead. Scott has been writing software for a few decades, with a focus on shareware and open source. He reviews every contribution before it goes into Marlin, maintains documentation, hosts Facebook and Discord groups, and maintains a little test lab in Austin, TX.
-
-Your donation accelerates development, testing, and advancement of the most ambitious open source multi-platform 3D printing firmware in the world. See "[Donate to Marlin](//www.thinkyhead.com/donate-to-marlin)" for funding options. The newest way to provide support is through [GitHub Sponsors](//github.com/sponsors/thinkyhead).
 
 ### Join the Community
 

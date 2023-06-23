@@ -1550,17 +1550,17 @@ Choose your preferred language for the LCD controller here. Supported languages 
 Code|Language||Code|Language||Code|Language
 ----|--------||----|--------||----|--------
 en|English (Default)||an|Aragonese||bg|Bulgarian
-ca|Catalan||cn|Chinese||cz|Czech
-da|Danish||de|German||el|Greek
-el-gr|Greek (Greece)||es|Spanish||eu|Basque-Euskera
-fi|Finnish||fr|French||gl|Galician
-hr|Croatian||it|Italian||kana|Japanese
-kana_utf8|Japanese (UTF8)||ko_KR|Korean (South Korea)||nl|Dutch
-pl|Polish||pt|Portuguese||pt-br|Portuguese (Brazilian)
-pt-|Portuguese (Brazilian UTF8)||pt_utf8|Portuguese (UTF8)||ru|Russian
-sk_utf8|Slovak (UTF8)||tr|Turkish||uk|Ukrainian
-vi|Vietnamese||zh_CN|Chinese (Simplified)||zh_TW|Chinese (Traditional)
-||||||
+ca|Catalan||cz|Czech||da|Danish
+de|German||el|Greek||el_CY|Greek (Cyprus)
+el_gr|Greek (Greece)||es|Spanish||eu|Basque-Euskera
+fi|Finnish||fr|French||fr_na|French (no accent)
+gl|Galician||hr|Croatian (Hrvatski)||hu|Hungarian / Magyar
+it|Italian||jp_kana|Japanese (Kana)||ko_KR|Korean
+nl|Dutch||pl|Polish||pt|Portuguese
+pt_br|Portuguese (Brazil)||ro|Romanian||ru|Russian
+sk|Slovak||sv|Swedish||tr|Turkish
+uk|Ukrainian||vi|Vietnamese||zh_CN|Simplified Chinese
+zh_TW|Traditional Chinese||||
 
 See `language.h` for the latest list of supported languages and their international language codes.
 
