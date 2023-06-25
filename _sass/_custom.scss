@@ -563,7 +563,7 @@ h1+h2 { margin-top: -0.4em; color: #BBC; }
 
 #daynite { visibility: hidden; margin: 6px 0 0 4px; padding-left: 4px; }
 
-#discord-frame { float: right; margin-left: 1em; }
+#discord-frame { float: right; margin-left: 1em; padding-bottom: 1em; +p { clear: none; +ul { clear: none; >li { clear: none; } } } }
 .home-discord { width: 350px; margin: 0 auto; text-align: center; }
 
 #carouselmarlin { background-color: #F8F8F9; .item { height: 320px; img { padding: -50px 0; } } }
