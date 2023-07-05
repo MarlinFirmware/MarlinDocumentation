@@ -20,7 +20,7 @@
   {% endif %}
 
   {% if gcode.since %}
-    <span class="label label-success"><span data-toggle="tooltip" data-placement="bottom" title="{% if conf.until %}Availability{% else %}Available since{% endif %}"><i class="fa fa-code" aria-hidden="true"></i> {{ gcode.since }}</span></span>
+    <span class="label label-success"><span data-toggle="tooltip" data-placement="bottom" title="{% if gcode.until %}Availability{% else %}Available since{% endif %}"><i class="fa fa-code" aria-hidden="true"></i> {{ gcode.since }}</span></span>
   {% endif %}
 
   {% if gcode.group %}
@@ -212,23 +212,23 @@
 </div>
 {% endif %}
 
-{% if conf.examples %}{% assign ex = conf.examples %}
-{% elsif conf.example %}{% assign ex = conf.example %}
+{% if gcode.examples %}{% assign ex = gcode.examples %}
+{% elsif gcode.example %}{% assign ex = gcode.example %}
 {% else %}{% assign ex = false %}{% endif %}
 {% if ex %}
   <div class="col-lg-12 row examples">
     <h3>Example{% if ex[1] %}s{% endif %}</h3>
-    {% for example in ex %}
-      {% if example.pre %}
-        {% for line in example.pre %}
+    {% for item in ex %}
+      {% if item.pre %}
+        {% for line in item.pre %}
           {{ line | markdownify }}
         {% endfor %}
       {% endif %}
-      {% highlight gcode %}{% for line in example.code %}{{ line }}
+      {% highlight gcode %}{% for line in item.code %}{{ line }}
 {% endfor %}{% endhighlight %}
-      {% if example.post %}
+      {% if item.post %}
         <div class="post">
-          {% for line in example.post %}
+          {% for line in item.post %}
             {{ line | markdownify }}
           {% endfor %}
         </div>
