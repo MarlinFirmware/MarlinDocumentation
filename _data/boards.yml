@@ -36,6 +36,16 @@
     brief: "RAMPS Plus 3DYMY (Power outputs: Hotend0, Hotend1, Fan)"
   - name: RAMPS_PLUS_SF
     brief: "RAMPS Plus 3DYMY (Power outputs: Spindle, Controller Fan)"
+  - name: RAMPS_BTT_16_PLUS_EFB
+    brief: "RAMPS 1.6+ (Power outputs: Hotend, Fan, Bed)"
+  - name: RAMPS_BTT_16_PLUS_EEB
+    brief: "RAMPS 1.6+ (Power outputs: Hotend0, Hotend1, Bed)"
+  - name: RAMPS_BTT_16_PLUS_EFF
+    brief: "RAMPS 1.6+ (Power outputs: Hotend, Fan0, Fan1)"
+  - name: RAMPS_BTT_16_PLUS_EEF
+    brief: "RAMPS 1.6+ (Power outputs: Hotend0, Hotend1, Fan)"
+  - name: RAMPS_BTT_16_PLUS_SF
+    brief: "RAMPS 1.6+ (Power outputs: Spindle, Controller Fan)"
 
 - group: "RAMPS Derivatives - ATmega1280, ATmega2560"
   long:
