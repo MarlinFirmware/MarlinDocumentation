@@ -37,14 +37,14 @@ The PlatformIO environment needed for a motherboard is in the comments for the b
 
   ```cpp
   #elif MB(RAMPS_14_EEB)
-     #include "pins_RAMPS.h"     // ATmega1280, ATmega2560                     env:megaatmega1280 env:megaatmega2560
+     #include "pins_RAMPS.h"     // ATmega1280, ATmega2560                     env:mega1280 env:mega2560
   ```
 
   The first part of the comment lists the CPU(s) used in the board.
 
   The env:xxxx section(s) are the PlatformIO environment(s) that are used for this board.
 
-  In this case **megaatmega2560** is the one used 99.9% of the time.
+  In this case **mega2560** is the one used 99.9% of the time.
 
 ## Run PlatformIO from the command line
 
