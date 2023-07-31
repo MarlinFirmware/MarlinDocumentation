@@ -452,20 +452,20 @@ var bitmap_converter = function() {
           else
             return true; // Skip this item
 
-          var r_data = (b & 0xF800) >> 6 + 5 - 3;
-          var g_data = (b & 0x07E0) >> 5 - 2;
-          var b_data = (b & 0x001F) << 3;
+          if (!contains_rle16) {
+            var r_data = (b & 0xF800) >> 6 + 5 - 3;
+            var g_data = (b & 0x07E0) >> 5 - 2;
+            var b_data = (b & 0x001F) << 3;
 
-          Array.prototype.push.apply(wordline, [r_data, g_data, b_data, 0xFF]);
-          len += 1;
+            Array.prototype.push.apply(wordline, [r_data, g_data, b_data, 0xFF]);
+            len += 1;
+          }
         });
-        if (len == wide) {
+        if (len == wide && !contains_rle16) {
           Array.prototype.push.apply(bitmap, wordline);
           high++;
         }
       });
-
-      if (high < 4) return true;
 
       if (contains_rle16) {
         var sizeEnd = pasted_tablename.lastIndexOf('x');
@@ -477,6 +477,8 @@ var bitmap_converter = function() {
 
         bitmap = splitRGB(rle_decode(rledata));
       }
+
+      if (high < 4) return true;
 
       // Make a shiny new imagedata for the pasted CPP
       ctx.canvas.width = wide;
