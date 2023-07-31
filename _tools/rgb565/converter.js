@@ -176,6 +176,49 @@ var bitmap_converter = function() {
       return rledata;
     },
 
+    rle_decode = function(rle_data) {
+      var decoded = [];
+      var color = 0;
+      var done = false;
+      var offset = 0;
+      while (!done) {
+        var count = rle_data[0 + offset];
+        var uniq = Boolean(count & 0x80);
+        count = (count & 0x7F) + 1;
+        var getcol = true;
+        while (count--) {
+          if (getcol) {
+            getcol = uniq;
+            var msb = rle_data[1 + offset];
+            var lsb = rle_data[2 + offset];
+            color = (msb << 8) | lsb;
+            offset += 2;
+            //if (color === 0x0001) color = COLOR_BACKGROUND;
+          }
+          decoded.push(color);
+        }
+        offset += 1;
+        if (offset >= rle_data.length) done = true;
+      }
+      return decoded;
+    },
+
+    splitRGB = function(raw565_data) {
+
+      var arrayLength = raw565_data.length;
+      var bitmap = [];
+      for (var i = 0; i < arrayLength; i++) {
+        var wordline = [];
+        var r_data = (raw565_data[i] & 0xF800) >> 6 + 5 - 3;
+        var g_data = (raw565_data[i] & 0x07E0) >> 5 - 2;
+        var b_data = (raw565_data[i] & 0x001F) << 3;
+
+        Array.prototype.push.apply(wordline, [r_data, g_data, b_data, 0xFF]);
+        Array.prototype.push.apply(bitmap, wordline);
+      }
+      return bitmap
+    },
+
     /**
      * When anything changes the C++ is regenerated here.
      * Use no_render to indicate the preview won't change.
@@ -357,10 +400,16 @@ var bitmap_converter = function() {
 
       // Get the split up bytes on all lines
       var lens = [],
-        mostlens = [];
+        mostlens = [],
+        contains_rle16 = false,
+        pasted_tablename;
       $.each(cpp.split('\n'), function(i, s) {
         var pw = 0;
         $.each(s.replace(/[ \t]/g, '').split(','), function(i, s) {
+          if (s.match("_rle16")) {
+            contains_rle16 = true;
+            pasted_tablename = s.slice(s.search("uint8_t") + 7, s.search("\\["));
+          }
           if (s.match(/0x[0-9a-f]+/i) || s.match(/[0-9]+/))
             ++pw;
         });
@@ -385,6 +434,7 @@ var bitmap_converter = function() {
 
       // Split up lines and iterate
       var bitmap = [],
+        rledata = [],
         bitstr = '';
       $.each(cpp.split('\n'), function(i, s) {
         s = s.replace(/[ \t]/g, '');
@@ -394,9 +444,10 @@ var bitmap_converter = function() {
         $.each(s.split(','), function(i, s) {
           //console.log("s value:",s);
           var b;
-          if (s.match(/0x[0-9a-f]+/i)) // Hex
+          if (s.match(/0x[0-9a-f]+/i)) { // Hex
             b = parseInt(s.substring(2), 16);
-          else if (s.match(/[0-9]+/)) // Decimal
+            if (contains_rle16) rledata.push(b);
+          } else if (s.match(/[0-9]+/)) // Decimal
             b = s * 1;
           else
             return true; // Skip this item
@@ -415,6 +466,17 @@ var bitmap_converter = function() {
       });
 
       if (high < 4) return true;
+
+      if (contains_rle16) {
+        var sizeEnd = pasted_tablename.lastIndexOf('x');
+        var sizeMid = pasted_tablename.lastIndexOf('x', pasted_tablename.lastIndexOf('x') - 1);
+        var sizeStart = pasted_tablename.lastIndexOf('_', pasted_tablename.lastIndexOf('_') - 1);
+
+        wide = parseInt(pasted_tablename.substring(sizeStart + 1, sizeMid));
+        high = parseInt(pasted_tablename.substring(sizeMid + 1, sizeEnd));
+
+        bitmap = splitRGB(rle_decode(rledata));
+      }
 
       // Make a shiny new imagedata for the pasted CPP
       ctx.canvas.width = wide;
