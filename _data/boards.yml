@@ -268,6 +268,8 @@
     brief: "Mega controller & Protoneer CNC Shield V3.00"
   - name: WEEDO_62A
     brief: "WEEDO 62A board (TINA2, Monoprice Cadet, etc.)"
+  - name: GT2560_V41B
+    brief: "Geeetech GT2560 V4.1B for A10(M/T/D)"
 
 - group: "ATmega1281, ATmega2561"
   long:
