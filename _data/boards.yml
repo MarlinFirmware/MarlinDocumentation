@@ -806,6 +806,8 @@
     brief: "enwi ESPNP (with I2S stepper stream)"
   - name: GODI_CONTROLLER_V1_0
     brief: "EDUTRONICS Godi Controller V1.0 based on ESP32"
+  - name: MM_JOKER
+    brief: "MagicMaker JOKER based on ESP32 (with I2S stepper stream)"
 
 - group: "SAMD51 ARM Cortex-M4"
   long:
