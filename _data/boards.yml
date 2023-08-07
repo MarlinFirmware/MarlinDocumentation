@@ -493,7 +493,7 @@
   - name: BTT_EBB42_V1_1
     brief: "BigTreeTech EBB42 V1.1 (STM32G0B1CB)"
   - name: BTT_SKR_MINI_E3_V3_0
-    brief: "BigTreeTech SKR Mini E3 V3.0 (STM32G0B0RE)"
+    brief: "BigTreeTech SKR Mini E3 V3.0 (STM32G0B0RE / STM32G0B1RE)"
   - name: BTT_MANTA_E3_EZ_V1_0
     brief: "BigTreeTech Manta E3 EZ V1.0 (STM32G0B1RE)"
   - name: BTT_MANTA_M4P_V1_0
@@ -780,6 +780,8 @@
     brief: "BigTreeTech SKR V3.0 EZ (STM32H743VI / STM32H723VG)"
   - name: BTT_OCTOPUS_MAX_EZ_V1_0
     brief: "BigTreeTech Octopus Max EZ V1.0 (STM32H723ZE)"
+  - name: BTT_OCTOPUS_PRO_V1_0_1
+    brief: "BigTreeTech Octopus Pro v1.0.1 (STM32H723ZE)"
   - name: BTT_OCTOPUS_PRO_V1_1
     brief: "BigTreeTech Octopus Pro v1.1 (STM32H723ZE)"
 
