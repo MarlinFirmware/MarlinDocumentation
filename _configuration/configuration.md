@@ -802,7 +802,7 @@ Junction Deviation determins the cornering speed. The smaller the value the slow
 
 Use the above formula to calculate the Junction Deviation amount.
 
-See the following sources for detailed explainations on Junction Deviation:
+See the following sources for detailed explanations of Junction Deviation:
 - [JD Explained and Visualized, by Paul Wanamaker](//reprap.org/forum/read.php?1,739819)
 - [Computing JD for Marlin Firmware](//blog.kyneticcnc.com/2018/10/computing-junction-deviation-for-marlin.html)
 - [Improving GRBL: Cornering Algorithm](//onehossshay.wordpress.com/2011/09/24/improving_grbl_cornering_algorithm/)
