@@ -42,7 +42,7 @@ example:
       - G34
 ---
 
-This command is used to align the ends of the X gantry. See the [video demonstration](//youtu.be/3jAFQdTk8iw?t=684) above.
+This command is used to align the ends of the X gantry. See the [video demonstration](//youtu.be/3jAFQdTk8iw?t=684) below.
 
 - The carriage moves to `GANTRY_CALIBRATION_SAFE_POSITION`, also called the "pounce" position.
 - If possible, the Z stepper current is reduced to the value specified by `S` (or `GANTRY_CALIBRATION_CURRENT`) to prevent damage to steppers and other parts. *The reduced current should be just high enough to move the Z axis when not blocked.*
