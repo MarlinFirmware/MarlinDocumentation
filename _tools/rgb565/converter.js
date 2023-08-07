@@ -444,7 +444,7 @@ var bitmap_converter = function() {
         $.each(s.split(','), function(i, s) {
           //console.log("s value:",s);
           var b;
-          if (s.match(/0x[0-9a-f]+(?![0-9x_])/i)) { // Hex
+          if (s.match(/\b0x[0-9a-f]+/i)) { // Hex
             b = parseInt(s.substring(2), 16);
             if (contains_rle16) rledata.push(b);
           } else if (s.match(/[0-9]+/)) // Decimal
