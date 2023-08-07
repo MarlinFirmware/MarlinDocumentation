@@ -17,7 +17,10 @@ category:     [ tools ]
         <div id="err-box"></div>
         <input type="text" id="pasted" size="30" autocomplete="off" />
         <input type="file" id="file-input" accept="image/*" />
-      </div>
+          <div class="options">
+            <label title="Append RLE16 data.">&nbsp;&nbsp;<input type="checkbox" id="rle16-on" />&nbsp;Add RLE16 compressed data</label>
+          </div>
+        </div>
       <div id="cpp-container">
         <p>Copy the following code into your <span id="where">program</span>:</p>
         <textarea id="output" cols="80" rows="4" editable="false" wrap="off" readonly="readonly">Select or drop an image above.</textarea>
