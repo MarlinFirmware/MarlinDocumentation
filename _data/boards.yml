@@ -36,6 +36,16 @@
     brief: "RAMPS Plus 3DYMY (Power outputs: Hotend0, Hotend1, Fan)"
   - name: RAMPS_PLUS_SF
     brief: "RAMPS Plus 3DYMY (Power outputs: Spindle, Controller Fan)"
+  - name: RAMPS_BTT_16_PLUS_EFB
+    brief: "RAMPS 1.6+ (Power outputs: Hotend, Fan, Bed)"
+  - name: RAMPS_BTT_16_PLUS_EEB
+    brief: "RAMPS 1.6+ (Power outputs: Hotend0, Hotend1, Bed)"
+  - name: RAMPS_BTT_16_PLUS_EFF
+    brief: "RAMPS 1.6+ (Power outputs: Hotend, Fan0, Fan1)"
+  - name: RAMPS_BTT_16_PLUS_EEF
+    brief: "RAMPS 1.6+ (Power outputs: Hotend0, Hotend1, Fan)"
+  - name: RAMPS_BTT_16_PLUS_SF
+    brief: "RAMPS 1.6+ (Power outputs: Spindle, Controller Fan)"
 
 - group: "RAMPS Derivatives - ATmega1280, ATmega2560"
   long:
@@ -258,6 +268,8 @@
     brief: "Mega controller & Protoneer CNC Shield V3.00"
   - name: WEEDO_62A
     brief: "WEEDO 62A board (TINA2, Monoprice Cadet, etc.)"
+  - name: GT2560_V41B
+    brief: "Geeetech GT2560 V4.1B for A10(M/T/D)"
 
 - group: "ATmega1281, ATmega2561"
   long:
@@ -481,11 +493,11 @@
   - name: BTT_EBB42_V1_1
     brief: "BigTreeTech EBB42 V1.1 (STM32G0B1CB)"
   - name: BTT_SKR_MINI_E3_V3_0
-    brief: "BigTreeTech SKR Mini E3 V3.0 (STM32G0B1RE)"
+    brief: "BigTreeTech SKR Mini E3 V3.0 (STM32G0B0RE)"
   - name: BTT_MANTA_E3_EZ_V1_0
     brief: "BigTreeTech Manta E3 EZ V1.0 (STM32G0B1RE)"
   - name: BTT_MANTA_M4P_V1_0
-    brief: "BigTreeTech Manta M4P V1.0 (STM32G0B1RE)"
+    brief: "BigTreeTech Manta M4P V1.0 (STM32G0B0RE)"
   - name: BTT_MANTA_M5P_V1_0
     brief: "BigTreeTech Manta M5P V1.0 (STM32G0B1RE)"
   - name: BTT_MANTA_M8P_V1_0
@@ -744,6 +756,8 @@
     brief: "Custom board based on STM32F401CDU6"
   - name: I3DBEEZ9_V1
     brief: "I3DBEEZ9 V1 (STM32F407ZG)"
+  - name: MELLOW_FLY_E3_V2
+    brief: "Mellow Fly E3 V2 (STM32F407VG)"
 
 - group: "ARM Cortex-M7"
   long:
@@ -761,11 +775,13 @@
   - name: BTT_SKR_SE_BX_V3
     brief: "BigTreeTech SKR SE BX V3.0 (STM32H743II)"
   - name: BTT_SKR_V3_0
-    brief: "BigTreeTech SKR V3.0 (STM32H743VG)"
+    brief: "BigTreeTech SKR V3.0 (STM32H743VI / STM32H723VG)"
   - name: BTT_SKR_V3_0_EZ
-    brief: "BigTreeTech SKR V3.0 EZ (STM32H743VG)"
+    brief: "BigTreeTech SKR V3.0 EZ (STM32H743VI / STM32H723VG)"
   - name: BTT_OCTOPUS_MAX_EZ_V1_0
     brief: "BigTreeTech Octopus Max EZ V1.0 (STM32H723ZE)"
+  - name: BTT_OCTOPUS_PRO_V1_1
+    brief: "BigTreeTech Octopus Pro v1.1 (STM32H723ZE)"
 
 - group: "Espressif ESP32 WiFi"
   long:
@@ -792,6 +808,8 @@
     brief: "enwi ESPNP (with I2S stepper stream)"
   - name: GODI_CONTROLLER_V1_0
     brief: "EDUTRONICS Godi Controller V1.0 based on ESP32"
+  - name: MM_JOKER
+    brief: "MagicMaker JOKER based on ESP32 (with I2S stepper stream)"
 
 - group: "SAMD51 ARM Cortex-M4"
   long:
