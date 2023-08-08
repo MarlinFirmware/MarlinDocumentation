@@ -230,7 +230,17 @@ groups:
       description:
 
     - name: CR10_STOCKDISPLAY
-      description:
+      description: |
+        One of the most common Creality mono bitmap displays.
+        - 128x64 pixel LCD panel
+        - Reset button
+        - Combined rotary encoder and push button for menu control
+        - Buzzer
+        - Cen Be configuraed as a REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER
+      images:
+        - alt: CR10_STOCK
+          front: CR10_STOCK
+          back: CR10_STOCK
 
     - name: ENDER2_STOCKDISPLAY
       description:
