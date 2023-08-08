@@ -481,10 +481,10 @@ groups:
         Usually paired with Creality Ender-3 V2
         - 480x272
         - 4.3"
-        - Serial (DWIN T5U)
+        - Serial (DWIN T5UIC1)
         - Combined rotary encoder and push button
         - Buzzer
-        - There are many clone of the board.
+        - There are many clones of the board.
 
       images:
         - alt: T5UIC1
