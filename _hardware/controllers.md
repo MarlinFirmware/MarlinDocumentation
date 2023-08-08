@@ -221,13 +221,32 @@ groups:
       description:
 
     - name: FYSETC_MINI_12864_2_1
-      description:
+      description: |
+        - 128x64 pixel LCD panel
+        - Reset button
+        - Combined rotary encoder and push button for menu control
+        - Buzzer
+        - Neopixel backlight
+      images:
+        - alt: FYSETC_MINI_12864_2_1
+          front: FYSETC_MINI_12864_2_1
+          back: FYSETC_MINI_12864_2_1
 
     - name: FYSETC_GENERIC_12864_1_1
       description:
 
     - name: BTT_MINI_12864_V1
-      description:
+      description: |
+        Clone of FYSETC_MINI_12864_2_1
+        - 128x64 pixel LCD panel
+        - Reset button
+        - Combined rotary encoder and push button for menu control
+        - Buzzer
+        - Neopixel backlight
+      images:
+        - alt: BTT_MINI_12864_V1
+          front: BTT_MINI_12864_V1
+          back: BTT_MINI_12864_V1
 
     - name: CR10_STOCKDISPLAY
       description: |
