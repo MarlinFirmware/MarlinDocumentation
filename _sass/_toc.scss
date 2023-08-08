@@ -13,7 +13,7 @@ These styles remove the default styling of an unordered list because it is ugly.
   padding: 0px;
   border: none;
   list-style: none;
-  line-height: 30px;
+  line-height: 1em;
 }
 
 /* Top level header elements */
@@ -23,26 +23,18 @@ These styles remove the default styling of an unordered list because it is ugly.
 
 /* Top level subheader elements.
 These are the first nested items underneath a header element. */
-.tocify-subheader {
-  text-indent: 20px;
+ul.tocify-subheader {
+  text-indent: 0;
+  padding-left: 1em;
+  font-size: 95%;
+}
+
+#toc ul.tocify-subheader {
   display: none;
 }
 
 /* Makes the font smaller for all subheader elements. */
-.tocify-subheader li {
-  font-size: 0.90em;
-}
-
-/* Further indents second level subheader elements. */
-.tocify-subheader .tocify-subheader {
-  text-indent: 30px;
-}
-
-/* Further indents third level subheader elements.
-You can continue this pattern if you have more nested elements. */
-.tocify-subheader .tocify-subheader .tocify-subheader {
-  text-indent: 40px;
-}
+.tocify-subheader li { font-size: 95%; }
 
 /* Twitter Bootstrap Override Style */
 .nav-list > li > a, .nav-list .nav-header {
@@ -51,7 +43,8 @@ You can continue this pattern if you have more nested elements. */
 
 /* Twitter Bootstrap Override Style */
 .nav-list > li > a {
-  padding: 5px 0px 5px 5px;
+  padding: 2px 0px 2px 5px;
+  line-height: 1.5;
 }
 
 .nav-list > .active > a, .nav-list > .active > a:hover, .nav-list > .active > a:focus {
@@ -73,19 +66,19 @@ You can continue this pattern if you have more nested elements. */
   color: var(--color-toc-hover);
 }
 
-.container.gcode div.tocify.gcode { border-bottom-color: var(--color-gcode-toc-border); }
-.tocify.gcode::-webkit-scrollbar { display: none; }
+.container.detail div.tocify.bigtoc { border-bottom-color: var(--color-gcode-toc-border); }
+.tocify.bigtoc::-webkit-scrollbar { display: none; }
 .custom-fixed-sidebar .tocify::-webkit-scrollbar { display: none; }
 
-.tocify.gcode,
+.tocify.bigtoc,
 .custom-fixed-sidebar .tocify { position: fixed; }
 
-.tocify.gcode,
+.tocify.bigtoc,
 .custom-fixed-sidebar .tocify {
   -webkit-scrollbar { display: none; }
   font-size: 13px;
   cursor: pointer;
-  li { line-height: 1em; margin: -1px 0 0; }
+  // li { line-height: 1em; margin: -1px 0 0; }
 }
 .custom-fixed-sidebar .tocify { position: fixed; }
 .custom-fixed-sidebar .tocify {
@@ -93,8 +86,8 @@ You can continue this pattern if you have more nested elements. */
   overflow: scroll;
   >ul:last-child { margin-bottom: 80px; }
 }
-.tocify.gcode>ul {
+.tocify.bigtoc>ul {
   height: 100vh;
   overflow: scroll;
-  li:last-child { margin-bottom: 80px; }
+  >li:last-child { margin-bottom: 80px; }
 }

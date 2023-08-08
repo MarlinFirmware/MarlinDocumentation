@@ -11,7 +11,7 @@ category: [ development, hardware ]
 ### General information
 
 Marlin supports a wide variety of 3D printers, including all RAMPS variants, and is adaptable to virtually any Arduino/Genuino-based electronics through pin-mapping - associating pins with their functions.
-Originally Marlin was designed to run on low-powered 8-bit AVR boards, but starting with Marlin 1.1.9 it has been gaining support for more and more ARM-based boards. The Hardware Abstraction Layer created for Marlin 2.0 provides a consistent set of interfaces, making it much easier to add support for new platforms.
+Originally Marlin was designed to run on low-powered 8-bit AVR boards, but starting with Marlin 1.1.9 it has gained support for dozens of ARM-based boards. The Hardware Abstraction Layer created for Marlin 2.0 provides a consistent set of interfaces, making it much easier to add support for new platforms.
 
 Several files in the Marlin source code provide hardware support, but the files supporting the core electronics are:
 
@@ -19,8 +19,9 @@ Several files in the Marlin source code provide hardware support, but the files 
 File|Description
 ----|-----------
 `boards.h`|Contains the full list of boards supported by Marlin. Set `MOTHERBOARD` to one of the boards listed here.
-`pins.h`|Manages pin definitions, including the appropriate `pins_BOARD.h` file for the specified `MOTHERBOARD`.
-`pins_BOARDNAME.h`|Pins files define which Marlin functions use which board pins. Most pins files stand alone, but some form the basis for related pins files.
+`pins.h`|Includes the appropriate `pins_BOARD.h` file for the specified `MOTHERBOARD`. See [`Board Pins`](/docs/hardware/pins.html) for more details.
+`pins_BOARDNAME.h`|Each of these files assigns pins to Marlin functions. Some of these files are shared by related boards.
+`pins_postprocess.h`|Auto-assign stepper and endstop pins for extra axes. Define pins as -1 where needed. Undefine pins that are not needed.
 `platformio.ini`|Some boards will need a new [PlatformIO environment](//docs.platformio.org/en/latest/projectconf/) with custom build settings.
 
 To build Marlin for a specific board, set the `MOTHERBOARD` option in `Configuration.h`. This example selects a RAMPS 1.4 board with the 12V power MOSFET connectors arranged in Extruder, Fan, Bed (EFB) order:
@@ -29,7 +30,7 @@ To build Marlin for a specific board, set the `MOTHERBOARD` option in `Configura
 #define MOTHERBOARD BOARD_RAMPS_EFB
 ```
 
-See the [boards list](#board_list) at the bottom of this page for a complete list of boards supported in the latest release of Marlin.
+See the [boards list](#board_list) below for a complete list of boards supported in the latest release of Marlin.
 
 ### FastIO and Pin Mapping
 
@@ -59,13 +60,15 @@ If you're developing a custom board, try to use common pinouts as much as possib
 
 ### Board list
 
-<table id="board_list" class="table table-condensed table-striped"></table>
-<script type="text/javascript">
-  head.ready("sheetrock.min.js", function() {
-    $('#board_list').sheetrock({
-      url: "https://docs.google.com/spreadsheets/d/" +
-        "1K4e1GaA4xuNfUGyIw57vxPGuUzQSv5wktTQBHdCVCKU#gid=0",
-      query: "SELECT A, C, D, E WHERE C <> '' ORDER BY C ASC, A ASC"
-    });
-  });
-</script>
+<div id="board-list">
+{% for item in site.data.boards %}
+<h4>{{ item.group }}</h4>
+{% if item.long %}<p>{{ item.long | markdownify }}</p>{% endif %}
+<table class="table table-condensed table-striped">
+<tr><th>Name</th><th>Description</th></tr>
+{% for board in item.boards %}
+<tr><td>BOARD_{{ board.name }}</td><td>{{ board.brief }}</td></tr>
+{% endfor %}
+</table>
+{% endfor %}
+</div>

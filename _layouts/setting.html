@@ -1,18 +1,48 @@
 ---
 layout: default
 ---
-
-<!-- content -->
-<div class="container setting" role="main">
+{% assign list = '' | split: '|' %}
+{% for conf in site.setting %}
+  {% if conf.tags contains 'draft' %}{% else %}
+    {% assign list = list | push: conf %}
+  {% endif %}
+{% endfor %}
+<div class="container detail" role="main">
   <div class="row">
-    <div class="col-lg-9 col-md-8 custom-bg-white">
-      <div class="row">
-        <div class="col-md-12">
-          {% assign setting = page %}
-          {% include setting-info.html %}
-        </div>
+    <div class="col-lg-3 col-md-4 visible-lg-block visible-md-block custom-no-padding">
+      <div class="custom-fixed-sidebar">
+        {%- if list.size > 0 -%}
+          <div class="tocify bigtoc">
+            <ul class="tocify-header nav nav-list">
+              {%- assign list = list | sort: 'tag' %}<!-- use a sorting tag -->
+              {%- for conf in list %}
+                {% assign active = false %}
+                {% if page.codes[0] == conf.codes[0] and page.title == conf.title %}{% assign active = true %}{% endif %}
+                <li class="tocify-item{% if active %} active{% endif %}"><a href="{% if active %}#top{% else %}{{ conf.url | prepend: site.baseurl }}{% endif %}">{% if conf.label %}{{ conf.label }}{% else %}<strong>{{ conf.name }}</strong>{% endif %}</a></li>
+                {%- if active -%}
+                  <!-- div id="toc-prefab"></div -->
+                  <ul class="tocify-subheader nav nav-list">
+                    {% for opt in conf.settings %}
+                      <li class="tocify-item"><a href="#{{ opt.name }}">{{ opt.name }}</a>
+                        {%- if opt.subopts -%}
+                          <ul class="tocify-subheader nav nav-list">
+                            {% for sub in opt.subopts %}
+                              <li class="tocify-item"><a href="#{{ sub.name }}">{{ sub.name }}</a></li>
+                            {%- endfor %}
+                          </ul>
+                        {%- endif %}
+                      </li>
+                    {%- endfor %}
+                  </ul>
+                {% endif %}
+              {%- endfor -%}
+            </ul>
+          </div>
+        {%- endif -%}
       </div>
+    </div>
+    <div class="col-lg-9 col-md-8 main">
+      {%- assign conf = page %}{% include setting-info.html -%}
     </div>
   </div>
 </div>
-<!-- /content -->

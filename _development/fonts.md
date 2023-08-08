@@ -72,9 +72,7 @@ Now add the new font to Marlin…
   #else // fall-back
   ```
 
-{% alert info %}
-Marlin comes with the `genallfonts.sh` script to automate *most* of the steps to generate font data from Marlin's included fonts. When using this script no followup editing of the header files is needed, and the resulting fontdata headers will be automatically optimized to include only the minimum font data required.
-{% endalert %}
+{% alert info %}Marlin comes with the `genallfonts.sh` script to automate *most* of the steps to generate font data from Marlin's included fonts. When using this script no followup editing of the header files is needed, and the resulting fontdata headers will be automatically optimized to include only the minimum font data required.{% endalert %}
 
 # Implementation and limits
 The current symbol limit per font is 256.

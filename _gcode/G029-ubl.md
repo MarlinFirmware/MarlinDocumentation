@@ -38,9 +38,7 @@ parameters:
   -
     tag: A
     optional: true
-    description: |
-      **Activate**
-      Unified Bed Leveling (i.e., `M420 S1`)
+    description: '**Activate** Unified Bed Leveling (i.e., `M420 S1`)'
     values:
       -
         type: flag
@@ -136,8 +134,7 @@ parameters:
     tag: K
     optional: true
     requires: UBL_DEVEL_DEBUGGING
-    description: |
-      **Kompare**: Subtract (diff) the stored mesh with this index from the current mesh. This destructively operates on the active mesh, and the result should not be used for printing. (Requires `UBL_DEVEL_DEBUGGING`)
+    description: '**Kompare**: Subtract (diff) the stored mesh with this index from the current mesh. This destructively operates on the active mesh, and the result should not be used for printing. (Requires `UBL_DEVEL_DEBUGGING`)'
     values:
       -
         unit: index
@@ -155,13 +152,11 @@ parameters:
   -
     tag: P
     optional: true
-    description: |
-      **Phase**: The `P`hase commands are used for the bulk of the work to setup a Mesh. In general, you'll start by initializing with a `G29 P0` or a `G29 P1` then do further refinement with additional Phases.
+    description: "**Phase**: The `P`hase commands are used for the bulk of the work to setup a Mesh. In general, you'll start by initializing with a `G29 P0` or a `G29 P1` then do further refinement with additional Phases."
     values:
       -
         tag: 0
-        description: |
-          **Zero Mesh Data** and turn off the Mesh Compensation System. This reverts the machine to the same state it was in before UBL Compensation was enabled. Setting the entire Mesh to Zero is a special case to allow a subsequent `G` or `T` leveling operation for backward-compatibility.
+        description: '**Zero Mesh Data** and turn off the Mesh Compensation System. This reverts the machine to the same state it was in before UBL Compensation was enabled. Setting the entire Mesh to Zero is a special case to allow a subsequent `G` or `T` leveling operation for backward-compatibility.'
       -
         tag: 1
         description: |
@@ -212,8 +207,7 @@ parameters:
   -
     tag: Q
     optional: true
-    description: |
-      Test Pattern. Load the specified Test Pattern to check for correct operation. This command is intended for developers and is not required for everyday bed leveling.
+    description: 'Test Pattern. Load the specified Test Pattern to check for correct operation. This command is intended for developers and is not required for everyday bed leveling.'
     values:
       -
         unit: index
@@ -284,16 +278,14 @@ parameters:
     tag: W
     optional: true
     requires: UBL_DEVEL_DEBUGGING
-    description: |
-      **_What?_**: Display valuable UBL data. (Requires `UBL_DEVEL_DEBUGGING`)
+    description: '**_What?_**: Display valuable UBL data. (Requires `UBL_DEVEL_DEBUGGING`)'
     values:
       -
         type: flag
   -
     tag: X
     optional: true
-    description: |
-      **X position** for all phases and commands (Default: current X)
+    description: '**X position** for all phases and commands (Default: current X)'
     values:
       -
         type: float
@@ -301,8 +293,7 @@ parameters:
   -
     tag: Y
     optional: true
-    description: |
-      **Y position** for all phases and commands (Default: current Y)
+    description: '**Y position** for all phases and commands (Default: current Y)'
     values:
       -
         type: float

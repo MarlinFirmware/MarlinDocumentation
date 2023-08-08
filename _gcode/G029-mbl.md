@@ -127,7 +127,7 @@ Mesh Bed Leveling (MBL) allows interactively measuring a Z height mesh without a
 
 **Mesh Bed Leveling from the host:**
 
-1. Use `G29 S0` to get the current status and mesh. If there’s an existing mesh, you can send M420 S1 to use it.
+1. Use `G29 S0` to get the current status and mesh. If there's an existing mesh, you can send M420 S1 to use it.
 2. Use `G29 S1` to move to the first point for Z adjustment.
 3. Adjust Z so a piece of paper can just pass under the nozzle.
 4. Use `G29 S2` to save the Z value and move to the next point.
