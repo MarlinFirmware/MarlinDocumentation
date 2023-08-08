@@ -14,7 +14,7 @@ groups:
 
     - name: REPRAP_DISCOUNT_SMART_CONTROLLER
       description: |
-        One of the most common character displays.
+        One of the most common character displays. Comes in white and red PCBs
         - 4×20 character LCD panel
         - SD Card reader
         - Reset button
@@ -149,6 +149,133 @@ groups:
       Displays like `REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER`
       More to come...
     controllers:
+
+    - name: REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER
+      description: |
+        One of the most common mono bitmap displays. Comes in white and red PCBs
+        - 128x64 pixel LCD panel
+        - SD Card reader
+        - Reset button
+        - Combined rotary encoder and push button for menu control
+        - Buzzer
+      images:
+        - alt: RDFGSC
+          front: RDFGSC
+          back: RDFGSC
+
+    - name: K3D_FULL_GRAPHIC_SMART_CONTROLLER
+      description:
+
+    - name: REPRAPWORLD_GRAPHICAL_LCD
+      description:
+
+    - name: VIKI2
+      description:
+
+    - name: miniVIKI
+      description:
+
+    - name: WYH_L12864
+      description:
+
+    - name: MINIPANEL
+      description:
+
+    - name: MAKRPANEL
+      description:
+
+    - name: ELB_FULL_GRAPHIC_CONTROLLER
+      description:
+
+    - name: BQ_LCD_SMART_CONTROLLER
+      description:
+
+    - name: CARTESIO_UI
+      description:
+
+    - name: LCD_FOR_MELZI
+      description:
+
+    - name: ULTI_CONTROLLER
+      description:
+
+    - name: MKS_MINI_12864
+      description:
+
+    - name: MKS_MINI_12864_V3
+      description:
+
+    - name: MKS_LCD12864A/MKS_LCD12864B
+      description:
+
+    - name: FYSETC_MINI_12864_X_X
+      description:
+
+    - name: FYSETC_MINI_12864_1_2
+      description:
+
+    - name: FYSETC_MINI_12864_2_0
+      description:
+
+    - name: FYSETC_MINI_12864_2_1
+      description:
+
+    - name: FYSETC_GENERIC_12864_1_1
+      description:
+
+    - name: BTT_MINI_12864_V1
+      description:
+
+    - name: CR10_STOCKDISPLAY
+      description:
+
+    - name: ENDER2_STOCKDISPLAY
+      description:
+
+    - name: ANET_FULL_GRAPHICS_LCD
+      description:
+
+    - name: AZSMZ_12864
+      description:
+
+    - name: SILVER_GATE_GLCD_CONTROLLER
+      description:
+
+    - name: EMOTION_TECH_LCD
+      description:
+
+    - name: U8GLIB_SSD1306
+      description:
+
+    - name: OLED_PANEL_TINYBOY2
+      description:
+
+    - name: MKS_12864OLED
+      description:
+
+    - name: MKS_12864OLED_SSD1306
+      description:
+
+    - name: ZONESTAR_12864LCD
+      description:
+
+    - name: ZONESTAR_12864OLED
+      description:
+
+    - name: ZONESTAR_12864OLED_SSD1306
+      description:
+
+    - name: U8GLIB_SH1106_EINSTART
+      description:
+
+    - name: OVERLORD_OLED
+      description:
+
+    - name: FYSETC_242_OLED_12864
+      description:
+
+    - name: K3D_242_OLED_CONTROLLER
+      description:
 
   - name: Color Graphical Displays
     summary: Color images and text can be displayed. Typically based on DWIN / DGUS.
