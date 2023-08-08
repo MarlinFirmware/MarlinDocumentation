@@ -205,7 +205,10 @@ groups:
     - name: MKS_MINI_12864_V3
       description:
 
-    - name: MKS_LCD12864A/MKS_LCD12864B
+    - name: MKS_LCD12864A
+      description:
+
+    - name: MKS_LCD12864B
       description:
 
     - name: FYSETC_MINI_12864_X_X
@@ -285,12 +288,126 @@ groups:
       More to come...
     controllers:
 
+    - name: MKS_TS35_V2_0
+      description:
+
+    - name: MKS_ROBIN_TFT24
+      description:
+
+    - name: MKS_ROBIN_TFT28
+      description:
+
+    - name: MKS_ROBIN_TFT32
+      description:
+
+    - name: MKS_ROBIN_TFT35
+      description:
+
+    - name: MKS_ROBIN_TFT43
+      description:
+
+    - name: MKS_ROBIN_TFT_V1_1R
+      description:
+
+    - name: TFT_TRONXY_X5SA
+      description:
+
+    - name: ANYCUBIC_TFT35
+      description:
+
+    - name: LONGER_LK_TFT28
+      description:
+
+    - name: ANET_ET4_TFT28
+      description:
+
+    - name: ANET_ET5_TFT35
+      description:
+
+    - name: BIQU_BX_TFT70
+      description:
+
+    - name: BTT_TFT35_SPI_V1_0
+      description:
+
   - name: Smart Displays
     summary: A display with its own controller and custom protocol.
     description: |
       Displays like E3V2
       More to come...
     controllers:
+
+    - name: DGUS_LCD_UI ORIGIN
+      description:
+
+    - name: DGUS_LCD_UI FYSETC
+      description:
+
+    - name: DGUS_LCD_UI HIPRECY
+      description:
+
+    - name: DGUS_LCD_UI ORIGIN
+      description:
+
+    - name: DGUS_LCD_UI MKS
+      description:
+
+    - name: DGUS_LCD_UI RELOADED
+      description:
+
+    - name: DGUS_LCD_UI IA_CREALITY
+      description:
+
+    - name: DGUS_LCD_UI HIPRECY
+      description:
+
+    - name: DGUS_LCD_UI E3S1PRO
+      description:
+
+    - name: DGUS_LCD_UI CREALITY_TOUCH
+      description:
+
+    - name: MALYAN_LCD
+      description:
+
+    - name: TOUCH_UI_FTDI_EVE
+      description:
+
+    - name: DGUS_LCD_UI E3S1PRO
+      description:
+
+    - name: ANYCUBIC_LCD_CHIRON
+      description:
+
+    - name: ANYCUBIC_LCD_I3MEGA
+      description:
+
+    - name: ANYCUBIC_LCD_VYPER
+      description:
+
+    - name: NEXTION_TFT
+      description:
+
+    - name: PANELDUE
+      description:
+
+    - name: EXTENSIBLE_UI
+      description:
+
+    - name: DWIN_CREALITY_LCD
+      description:
+
+    - name: DWIN_LCD_PROUI
+      description:
+
+    - name: DWIN_CREALITY_LCD_JYERSUI
+      description:
+
+    - name: DWIN_MARLINUI_PORTRAIT
+      description:
+
+    - name: DWIN_MARLINUI_LANDSCAPE
+      description:
 
   - name: G-code Hosts
     summary: Serial-connected controllers can work like a host and command Marlin using G-code.
