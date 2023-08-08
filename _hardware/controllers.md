@@ -416,7 +416,7 @@ groups:
     summary: A display with its own controller and custom protocol.       Typically based on DWIN / DGUS.
     controllers:
 
-    - name: DGUS_LCD_UI ORIGIN, DGUS_LCD_UI RELOADED, DGUS_LCD_UI IA_CREALITY
+    - name: DGUS_LCD_UI (ORIGIN|RELOADED|IA_CREALITY)
       description: |
         Touch screen found in Ender 5+
         - 480x272
