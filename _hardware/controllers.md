@@ -236,14 +236,20 @@ groups:
         - Reset button
         - Combined rotary encoder and push button for menu control
         - Buzzer
-        - Cen Be configuraed as a REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER
+        - Cen be configuraed as a REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER
       images:
         - alt: CR10_STOCK
           front: CR10_STOCK
           back: CR10_STOCK
 
     - name: ENDER2_STOCKDISPLAY
-      description:
+      description: |
+        - 128x64 pixel LCD panel
+        - Combined rotary encoder and push button for menu control
+      images:
+        - alt: ENDER2_STOCK
+          front: ENDER2_STOCK
+          back: ENDER2_STOCK
 
     - name: ANET_FULL_GRAPHICS_LCD
       description:
