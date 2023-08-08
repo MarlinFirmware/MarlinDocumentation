@@ -335,7 +335,19 @@ groups:
     controllers:
 
     - name: MKS_TS35_V2_0
-      description:
+      description: |
+        Usually paired with MKS Robin Nano V2 & V3
+        - 480x320
+        - 3.5"
+        - SPI
+        - Reset* (* some are not populated)
+        - Combined rotary encoder and push button
+        - Buzzer
+      images:
+        - alt: MKS_TS35_V2_0
+          front: MKS_TS35_V2_0
+          back: MKS_TS35_V2_0
+
 
     - name: MKS_ROBIN_TFT24
       description: |
@@ -344,7 +356,6 @@ groups:
         - 2.4"
         - FSMC
         - Buzzer
-
 
     - name: MKS_ROBIN_TFT28
       description: |
