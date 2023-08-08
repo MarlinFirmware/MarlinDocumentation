@@ -418,7 +418,7 @@ groups:
 
     - name: DGUS_LCD_UI (ORIGIN|RELOADED|IA_CREALITY)
       description: |
-        Touch screen found in Ender 5+
+        Touch screen found in Ender-5+ and Ender-6
         - 480x272
         - 4.3"
         - serial (DWIN T5UID1)
@@ -478,7 +478,7 @@ groups:
     - name: DWIN_CREALITY_LCD, DWIN_LCD_PROUI, DWIN_CREALITY_LCD_JYERSUI, DWIN_MARLINUI_PORTRAIT, DWIN_MARLINUI_LANDSCAPE
 
       description: |
-        Usually paired with Creality Ender-3 V2. There are many clones of the board.
+        Usually paired with Creality Ender-3 V2. There are many clones of this board.
         - 480x272
         - 4.3"
         - Serial (DWIN T5UIC1)
