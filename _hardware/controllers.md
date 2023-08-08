@@ -457,9 +457,6 @@ groups:
     - name: TOUCH_UI_FTDI_EVE
       description:
 
-    - name: DGUS_LCD_UI E3S1PRO
-      description:
-
     - name: ANYCUBIC_LCD_CHIRON
       description:
 
@@ -478,20 +475,26 @@ groups:
     - name: EXTENSIBLE_UI
       description:
 
-    - name: DWIN_CREALITY_LCD
-      description:
+    - name: DWIN_CREALITY_LCD, DWIN_LCD_PROUI, DWIN_CREALITY_LCD_JYERSUI, DWIN_MARLINUI_PORTRAIT, DWIN_MARLINUI_LANDSCAPE
 
-    - name: DWIN_LCD_PROUI
-      description:
+      description: |
+        Usually paired with Creality Ender-3 V2
+        - 480x272
+        - 4.3"
+        - Serial (DWIN T5U)
+        - Combined rotary encoder and push button
+        - Buzzer
+        - There a
 
-    - name: DWIN_CREALITY_LCD_JYERSUI
-      description:
+        <a href="/assets/images/hardware/controllers/T5UIC1_DWIN_back.jpg" target="_blank" title="T5UIC1_DWIN back"><img src="/assets/images/hardware/controllers/T5UIC1_DWIN_back_thumb.jpg" alt="T5UIC1_DWIN Back"></a>
 
-    - name: DWIN_MARLINUI_PORTRAIT
-      description:
+        <a href="/assets/images/hardware/controllers/T5UIC1_DACAI_back.jpg" target="_blank" title="T5UIC1_DACAI back"><img src="/assets/images/hardware/controllers/T5UIC1_DACAI_back_thumb.jpg" alt="T5UIC1_DACAI Back"></a>
 
-    - name: DWIN_MARLINUI_LANDSCAPE
-      description:
+        <a href="/assets/images/hardware/controllers/T5UIC1_SYNWIT1_back.jpg" target="_blank" title="T5UIC1_SYNWIT1 back"><img src="/assets/images/hardware/controllers/T5UIC1_SYNWIT1_back_thumb.jpg" alt="T5UIC1_SYNWIT1 Back"></a>
+
+        <a href="/assets/images/hardware/controllers/T5UIC1_SYNWIT2_back.jpg" target="_blank" title="T5UIC1_SYNWIT2 back"><img src="/assets/images/hardware/controllers/T5UIC1_SYNWIT2_back_thumb.jpg" alt="T5UIC1_SYNWIT2 Back"></a>
+
+        <a href="/assets/images/hardware/controllers/T5UIC1_TJC_back.jpg" target="_blank" title="T5UIC1_TJC back"><img src="/assets/images/hardware/controllers/T5UIC1_TJC_back_thumb.jpg" alt="T5UIC1_TJC Back"></a>
 
   - name: G-code Hosts
     summary: Serial-connected controllers can work like a host and command Marlin using G-code.
