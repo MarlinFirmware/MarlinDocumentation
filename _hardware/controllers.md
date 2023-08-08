@@ -478,13 +478,12 @@ groups:
     - name: DWIN_CREALITY_LCD, DWIN_LCD_PROUI, DWIN_CREALITY_LCD_JYERSUI, DWIN_MARLINUI_PORTRAIT, DWIN_MARLINUI_LANDSCAPE
 
       description: |
-        Usually paired with Creality Ender-3 V2
+        Usually paired with Creality Ender-3 V2. There are many clones of the board.
         - 480x272
         - 4.3"
         - Serial (DWIN T5UIC1)
         - Combined rotary encoder and push button
         - Buzzer
-        - There are many clones of the board.
 
       images:
         - alt: T5UIC1
