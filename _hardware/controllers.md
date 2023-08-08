@@ -433,7 +433,13 @@ groups:
       description:
 
     - name: DGUS_LCD_UI MKS
-      description:
+      description: |
+        - 480*800
+        - 4.3"
+        - serial (DWIN T5LC18)
+      images:
+        - alt: T5LC18
+          back: T5LC18
 
     - name: DGUS_LCD_UI HIPRECY
       description:
@@ -443,10 +449,10 @@ groups:
         Touch screen found in E3S1PRO
         - 480x800
         - 4.3"
-        - serial (DWIN T5L)
+        - serial (DWIN T5LC1)
       images:
-        - alt: T5L
-          back: T5L
+        - alt: T5LC1
+          back: T5LC1
 
     - name: DGUS_LCD_UI CREALITY_TOUCH
       description:
