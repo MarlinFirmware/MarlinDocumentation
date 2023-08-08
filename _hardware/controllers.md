@@ -338,16 +338,41 @@ groups:
       description:
 
     - name: MKS_ROBIN_TFT24
-      description:
+      description: |
+        Usually paired with MKS Robin Nano V1.2
+        - 320x240
+        - 2.4"
+        - FSMC
+        - Buzzer
+
 
     - name: MKS_ROBIN_TFT28
-      description:
+      description: |
+        Usually paired with MKS Robin Nano V1.2
+        - 320x240
+        - 2.8"
+        - FSMC
+        - Buzzer
 
     - name: MKS_ROBIN_TFT32
-      description:
+      description: |
+        Usually paired with MKS Robin Nano V1.2
+        - 320x240
+        - 3.2"
+        - FSMC
+        - Buzzer
 
     - name: MKS_ROBIN_TFT35
-      description:
+      description: |
+        Usually paired with MKS Robin Nano V1.2
+        - 480x320
+        - 3.5"
+        - FSMC
+        - Buzzer
+      images:
+        - alt: MKS_ROBIN_TFT35
+          front: MKS_ROBIN_TFT35
+          back: MKS_ROBIN_TFT35
 
     - name: MKS_ROBIN_TFT43
       description:
