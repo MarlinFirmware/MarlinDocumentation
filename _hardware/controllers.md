@@ -1,6 +1,6 @@
 ---
-title: Controllers and LCDs
-description: Controllers and LCDs supported by Marlin
+title: Controllers and displays
+description: Controllers and displays supported by Marlin
 tag: info
 
 author: ellensp
@@ -215,10 +215,20 @@ groups:
       description:
 
     - name: FYSETC_MINI_12864_1_2
-      description:
+      description: |
+        - 128x64 pixel LCD panel
+        - Reset button
+        - Combined rotary encoder and push button for menu control
+        - Buzzer
+        - RGB backlight (no PWM)
 
     - name: FYSETC_MINI_12864_2_0
-      description:
+      description: |
+        - 128x64 pixel LCD panel
+        - Reset button
+        - Combined rotary encoder and push button for menu control
+        - Buzzer
+        - RGB LEDs backlight
 
     - name: FYSETC_MINI_12864_2_1
       description: |
@@ -233,7 +243,12 @@ groups:
           back: FYSETC_MINI_12864_2_1
 
     - name: FYSETC_GENERIC_12864_1_1
-      description:
+      description: |
+        Larger display with basic ON/OFF backlight.
+        - 128x64 pixel LCD panel
+        - Reset button
+        - Combined rotary encoder and push button for menu control
+        - Buzzer
 
     - name: BTT_MINI_12864_V1
       description: |
@@ -316,11 +331,7 @@ groups:
       description:
 
   - name: Color Graphical Displays
-    summary: Color images and text can be displayed. Typically based on DWIN / DGUS.
-    description: |
-      Color images and text can be displayed. Typically based on DWIN / DGUS.
-      Displays like `MKS_TS35_V2_0`
-      More to come...
+    summary: Color images and text can be displayed.
     controllers:
 
     - name: MKS_TS35_V2_0
@@ -366,10 +377,7 @@ groups:
       description:
 
   - name: Smart Displays
-    summary: A display with its own controller and custom protocol.
-    description: |
-      Displays like E3V2
-      More to come...
+    summary: A display with its own controller and custom protocol.       Typically based on DWIN / DGUS.
     controllers:
 
     - name: DGUS_LCD_UI ORIGIN
