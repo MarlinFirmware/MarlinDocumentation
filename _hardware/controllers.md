@@ -439,7 +439,14 @@ groups:
       description:
 
     - name: DGUS_LCD_UI E3S1PRO
-      description:
+      description: |
+        Touch screen found in E3S1PRO
+        - 480x800
+        - 4.3"
+        - serial (DWIN T5L)
+      images:
+        - alt: T5L
+          back: T5L
 
     - name: DGUS_LCD_UI CREALITY_TOUCH
       description:
