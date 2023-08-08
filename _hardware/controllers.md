@@ -484,7 +484,7 @@ groups:
         - Serial (DWIN T5U)
         - Combined rotary encoder and push button
         - Buzzer
-        - There a
+        - There are manu clone of the board.
 
         <a href="/assets/images/hardware/controllers/T5UIC1_DWIN_back.jpg" target="_blank" title="T5UIC1_DWIN back"><img src="/assets/images/hardware/controllers/T5UIC1_DWIN_back_thumb.jpg" alt="T5UIC1_DWIN Back"></a>
 
