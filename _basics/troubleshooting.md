@@ -1,6 +1,6 @@
 ---
 title:        Troubleshooting Tips
-description:  Getting past common configuration problems
+description:  Common problems and potential solutions
 
 author: thinkyhead
 contrib: LVD-AC, shitcreek, thisiskeithb
@@ -133,9 +133,10 @@ These tips are collected from various reports we have received. See [Trinamic tr
 
 ### PlatformIO Errors
 
-Sometimes PlatformIO can act up and requires a full reinstall:
+If you encounter strange build errors it could indicate a problem with PlatformIO. The only solution might be to reinstall PlatformIO. Try one or more of the following actions:
+
 1. Delete the hidden `.pio` folder at the root of your Marlin project.
 2. Delete the hidden `.platformio` folder from your User directory:
    - Windows: `%USERPROFILE%\.platformio\`
-   - macOS, Unix, Unix-like: `~/.platformio/`
-3. Reinstall PlatformIO.
+   - macOS / Linux: `~/.platformio/`
+3. [Reinstall PlatformIO](install_platformio.html).
