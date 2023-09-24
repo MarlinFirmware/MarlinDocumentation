@@ -481,7 +481,7 @@ groups:
     - name: EXTENSIBLE_UI
       description:
 
-    - name: DWIN_CREALITY_LCD, DWIN_LCD_PROUI, DWIN_CREALITY_LCD_JYERSUI, DWIN_MARLINUI_PORTRAIT, DWIN_MARLINUI_LANDSCAPE
+    - name: DWIN_CREALITY_LCD
 
       description: |
         Usually paired with Creality Ender-3 V2. There are many clones of this board.
@@ -494,6 +494,18 @@ groups:
       images:
         - alt: T5UIC1
           back: [ T5UIC1_DWIN, T5UIC1_DACAI, T5UIC1_SYNWIT1, T5UIC1_SYNWIT2, T5UIC1_TJC ]
+
+    - name: DWIN_LCD_PROUI
+      description: The same hardware as `DWIN_CREALITY_LCD` with the ProUI user interface.
+
+    - name: DWIN_CREALITY_LCD_JYERSUI
+      description: The same hardware as `DWIN_CREALITY_LCD` with the JyersUI user interface.
+
+    - name: DWIN_MARLINUI_PORTRAIT
+      description: The same hardware as `DWIN_CREALITY_LCD` with the MarlinUI user interface in portrait orientation.
+
+    - name: DWIN_MARLINUI_LANDSCAPE
+      description: The same hardware as `DWIN_CREALITY_LCD` with the MarlinUI user interface in landscape orientation.
 
   - name: G-code Hosts
     summary: Serial-connected controllers can work like a host and command Marlin using G-code.
