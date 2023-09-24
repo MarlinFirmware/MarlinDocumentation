@@ -5,7 +5,7 @@ tag: info
 
 author: ellensp
 contrib: thinkyhead
-category: [ info, hardware, lcd  ]
+category: [ info, hardware, lcd, wip ]
 
 groups:
   - name: Character-based LCDs
