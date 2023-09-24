@@ -1,9 +1,9 @@
 ---
 title:        Troubleshooting Tips
-description:  Getting past common configuration problems
+description:  Common problems and potential solutions
 
 author: thinkyhead
-contrib: LVD-AC, shitcreek
+contrib: LVD-AC, shitcreek, thisiskeithb
 category: [ articles, getting-started ]
 ---
 
@@ -130,3 +130,13 @@ These tips are collected from various reports we have received. See [Trinamic tr
 ### BLTouch Pin Drop / Blinking
 - Servo voltage / signals may be unstable due to heater signal lines being too close to servo traces.
 - **Solution**: Disconnect the servo signal line after the print starts.
+
+### PlatformIO Errors
+
+If you encounter strange build errors it could indicate a problem with PlatformIO. The only solution might be to reinstall PlatformIO. Try one or more of the following actions:
+
+1. Delete the hidden `.pio` folder at the root of your Marlin project.
+2. Delete the hidden `.platformio` folder from your User directory:
+   - Windows: `%USERPROFILE%\.platformio\`
+   - macOS / Linux: `~/.platformio/`
+3. [Reinstall PlatformIO](install_platformio.html).
