@@ -493,11 +493,7 @@ groups:
 
       images:
         - alt: T5UIC1
-          back: T5UIC1_DWIN
-          back1: T5UIC1_DACAI
-          back2: T5UIC1_SYNWIT1
-          back3: T5UIC1_SYNWIT2
-          back4: T5UIC1_TJC
+          back: [ T5UIC1_DWIN, T5UIC1_DACAI, T5UIC1_SYNWIT1, T5UIC1_SYNWIT2, T5UIC1_TJC ]
 
   - name: G-code Hosts
     summary: Serial-connected controllers can work like a host and command Marlin using G-code.
@@ -527,11 +523,15 @@ Marlin supports a wide variety of display controllers, from simple character-bas
 <div class="gallery">
   {% for img in cont.images %}
     {% if img.front %}<a href="{{ fldr }}{{ img.front }}_front.jpg" target="_blank" title="{{ img.alt }} Front"><img src="{{ fldr }}{{ img.front }}_front_thumb.jpg" alt="{{ img.alt }} Front"></a>{% endif %}
-    {% if img.back %}<a href="{{ fldr }}{{ img.back }}_back.jpg" target="_blank" title="{{ img.alt }} Back"><img src="{{ fldr }}{{ img.back }}_back_thumb.jpg" alt="{{ img.alt }} Back"></a>{% endif %}
-    {% if img.back1 %}<a href="{{ fldr }}{{ img.back1 }}_back.jpg" target="_blank" title="{{ img.alt }} Back"><img src="{{ fldr }}{{ img.back1 }}_back_thumb.jpg" alt="{{ img.alt }} Back"></a>{% endif %}
-    {% if img.back2 %}<a href="{{ fldr }}{{ img.back2 }}_back.jpg" target="_blank" title="{{ img.alt }} Back"><img src="{{ fldr }}{{ img.back2 }}_back_thumb.jpg" alt="{{ img.alt }} Back"></a>{% endif %}
-    {% if img.back3 %}<a href="{{ fldr }}{{ img.back3 }}_back.jpg" target="_blank" title="{{ img.alt }} Back"><img src="{{ fldr }}{{ img.back3 }}_back_thumb.jpg" alt="{{ img.alt }} Back"></a>{% endif %}
-    {% if img.back4 %}<a href="{{ fldr }}{{ img.back4 }}_back.jpg" target="_blank" title="{{ img.alt }} Back"><img src="{{ fldr }}{{ img.back4 }}_back_thumb.jpg" alt="{{ img.alt }} Back"></a>{% endif %}
+    {% if img.back -%}
+      {% if img.back.size > 1 %}
+        {% for bimg in img.back %}
+          <a href="{{ fldr }}{{ bimg }}_back.jpg" target="_blank" title="{{ img.alt }} Back"><img src="{{ fldr }}{{ bimg }}_back_thumb.jpg" alt="{{ img.alt }} Back"></a>
+        {% endfor %}
+      {% else %}
+        <a href="{{ fldr }}{{ img.back }}_back.jpg" target="_blank" title="{{ img.alt }} Back"><img src="{{ fldr }}{{ img.back }}_back_thumb.jpg" alt="{{ img.alt }} Back"></a>
+      {% endif %}
+    {%- endif %}
   {% endfor %}
 </div>
 {% endif %}
