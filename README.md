@@ -72,7 +72,7 @@ To install [rbenv](//github.com/rbenv/rbenv) and [ruby-build](//github.com/rbenv
 Once you have `rbenv` and `ruby-build` installed, follow the instructions on the [rbenv](//github.com/rbenv/rbenv) project page to:
 
 - install a local version of Ruby (2.3 or newer),
-- modify your `.bash_profile` with code to set your Ruby environment, and
+- modify your `.bash_profile` and `.zprofile` to set your Ruby environment, and
 - create a local `shims` folder with `$PATH` pointing to your Ruby.
 
 It sounds ugly, but hopefully the instructions on the [rbenv](//github.com/rbenv/rbenv) project page are clear enough to get you that far. You'll be using `rbenv` from now on to install and manage local Ruby environments.
