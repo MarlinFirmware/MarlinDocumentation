@@ -1202,3 +1202,10 @@ div.options table {
 div.brief { font-weight: bolder; }
 div.since { float: right; margin-right: 0.25em; }
 div.tags { display: inline-block; float: right; margin: 0.5em; }
+
+#controllers-page {
+  .lcd div { padding-bottom: 0.9em; }
+  .lcd .desc { float: left; width: 60%; margin-right: -60%; padding-left: 1em; }
+  .lcd .gallery { float: right; width: 40%; margin-left: -40%; padding: 0 1em 0.9em 0; }
+  .lcd .gallery img { float: right; margin-bottom: 1px; }
+}
