@@ -1166,7 +1166,10 @@ For all the in-depth details please read the [Auto Bed Leveling](/docs/features/
 
 With Bed Leveling enabled:
 
-- [`G28`](/docs/gcode/G028.html) will disable bed leveling (but preserves your leveling data). You can enable `RESTORE_LEVELING_AFTER_G28` to keep leveling in its previous state.
+- |
+  By default `G28` disables bed leveling. Follow `G28` with `M420 S` to turn leveling on.
+    - With `ENABLE_LEVELING_AFTER_G28` leveling will always be enabled after `G28`.
+    - With `RESTORE_LEVELING_AFTER_G28` leveling is restored to whatever state it was in before `G28`.
 - [`G29`](/docs/gcode/G029.html) will automatically probe the bed or guide you to do a paper-test at various points. After measurement it calculates a correction grid or matrix and enables leveling compensation. The specific behavior depends on configuration and type of bed leveling.
 - [`M500`](/docs/gcode/M500.html) will save the bed leveling data to EEPROM. [`M501`](/docs/gcode/M501.html) will load it. [`M502`](/docs/gcode/M502.html) will erase it. And [`M503`](/docs/gcode/M503.html) will report it.
 - `M420 S<bool>` can be used to enable/disable bed leveling. For example, [`M420 S1`](/docs/gcode/M420.html) must be used after [`M501`](/docs/gcode/M501.html) to enable the loaded mesh or matrix, and to re-enable leveling after [`G28`](/docs/gcode/G028.html), which disables leveling compensation.
