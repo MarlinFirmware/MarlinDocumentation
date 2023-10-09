@@ -758,6 +758,8 @@
     brief: "I3DBEEZ9 V1 (STM32F407ZG)"
   - name: MELLOW_FLY_E3_V2
     brief: "Mellow Fly E3 V2 (STM32F407VG)"
+  - name: FYSETC_CHEETAH_V30
+    brief: "FYSETC Cheetah V3.0 (STM32F446RC)"
 
 - group: "ARM Cortex-M7"
   long:
