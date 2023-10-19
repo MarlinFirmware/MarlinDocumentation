@@ -643,7 +643,7 @@
   - name: PANDA_PI_V29
     brief: "Panda Pi V2.9 - Standalone (STM32F103RC)"
   - name: SOVOL_V131
-    brief: "Sovol V1.3.1 (GD32F103RET6)"
+    brief: "Sovol V1.3.1 (GD32F103RE)"
   - name: TRIGORILLA_V006
     brief: "Trigorilla V0.0.6 (GD32F103RE)"
   - name: KEDI_CONTROLLER_V1_2
