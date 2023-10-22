@@ -648,6 +648,8 @@
     brief: "Trigorilla V0.0.6 (GD32F103RE)"
   - name: KEDI_CONTROLLER_V1_2
     brief: "EDUTRONICS Kedi Controller V1.2 (STM32F103RC)"
+  - name: MD_D301
+    brief: "Mingda D2 DZ301 V1.0 (STM32F103ZE)"
 
 - group: "ARM Cortex-M4F"
   long:
