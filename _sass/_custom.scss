@@ -628,7 +628,17 @@ div.highlight { margin-bottom: 25px; }
   padding: 1em;
   > p { margin: 0; }
 }
-.param-desc-list p { display: inline; }
+.param-desc-list {
+  p { display: inline; }
+  li {
+    position: relative;
+    span.label-success {
+      position: absolute;
+      left: -7em;
+      top: 2px;
+    }
+  }
+}
 td.arg code { white-space: nowrap; }
 #search-block-form .button { margin-right: 0.25em; }
 
