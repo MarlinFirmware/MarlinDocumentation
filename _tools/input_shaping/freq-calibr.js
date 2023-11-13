@@ -1,6 +1,6 @@
 /**
  * IS Damping Frequency and Zeta/Damping Factor Calibration Pattern
- * Copyright (C) 2023 tombrazier [https://github.com/tombrazier] and Kimmo Toivanen [https://github.com/KimmoHop]
+ * Copyright (C) 2023 @tombrazier [https://github.com/tombrazier] and Kimmo Toivanen [https://github.com/KimmoHop]
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
