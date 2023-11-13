@@ -1,6 +1,6 @@
 /**
- * K-Factor Calibration Pattern
- * Copyright (C) 2019 Sineos [https://github.com/Sineos]
+ * IS Damping Frequency and Zeta/Damping Factor Calibration Pattern
+ * Copyright (C) 2023 tombrazier [https://github.com/tombrazier] and Kimmo Toivanen [https://github.com/KimmoHop]
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,13 +26,16 @@ function genGcode() {
   // get the values from the HTML elements
   var PRINTER = $('#PRINTER').val(),
       FILAMENT_DIAMETER = parseFloat($('#FILAMENT_DIAMETER').val()),
-      NOZZLE_DIAMETER = parseFloat($('#NOZZLE_DIAMETER').val()),
       NOZZLE_TEMP = parseInt($('#NOZZLE_TEMP').val()),
       BED_TEMP = parseInt($('#BED_TEMP').val()),
+      LINE_WIDTH = parseFloat($('#LINE_WIDTH').val()),
       LAYER_HEIGHT = parseFloat($('#LAYER_HEIGHT').val()),
       FAN_SPEED = parseFloat($('#FAN_SPEED').val()),
       PRINT_SPEED = parseInt($('#PRINT_SPEED').val()),
       TRAVEL_SPEED = parseInt($('#TRAVEL_SPEED').val()),
+      DECEL = parseInt($('#DECEL').val()),
+      JERK = parseInt($('#JERK').val()),
+      JUNCTION = parseFloat($('#JUNCTION').val()),
       BEDSIZE_X = parseInt($('#BEDSIZE_X').val()),
       BEDSIZE_Y = parseInt($('#BEDSIZE_Y').val()),
       MAX_FREQ_X = parseInt($('#MAX_FREQ_X').val()),
@@ -42,12 +45,9 @@ function genGcode() {
       EXTRUSION_MULT = parseFloat($('#EXTRUSION_MULT').val()),
       Z_ALIGNMENT = $('#Z_ALIGNMENT').prop('checked');
 
-  var LINE_WIDTH = 0.5,            // (mm)
-      Z_SPEED = 10.0,              // (mm/s) Z movement speed
-      
+  var Z_SPEED = 10.0,              // (mm/s) Z movement speed
       WAVELENGTH = 2.0,            // (mm) the width of one ful zig-zag
-      AMPLITUDE = 0.5,             // (mm) the peak to peak size of the zig-zag pattern
-      DECEL = 1000;                // (mm/s^2) rate of deceleration at the end of the pattern
+      AMPLITUDE = 0.5;             // (mm) the peak to peak size of the zig-zag pattern
       
   var gcodeOut = document.getElementById('freq-gcode-out');
   var zeta_x_gcodeOut = document.getElementById('zeta-x-gcode-out');
@@ -55,7 +55,7 @@ function genGcode() {
 
   var settings = {
     'filament_diameter': FILAMENT_DIAMETER,
-    'nozzle_diameter': NOZZLE_DIAMETER,
+    'line_width': LINE_WIDTH,
     'height_layer': LAYER_HEIGHT,
     'bed_x': BEDSIZE_X,
     'bed_y': BEDSIZE_Y,
@@ -63,14 +63,15 @@ function genGcode() {
     'top_freq_x': MAX_FREQ_X,
     'top_freq_y': MAX_FREQ_Y,
     'z_offset': Z_OFFSET,
-    'line_width': LINE_WIDTH,
     'z_speed': Z_SPEED,
     'travel_speed': TRAVEL_SPEED,
     'anchor_line_speed': PRINT_SPEED,
     'wavelength': WAVELENGTH,
     'amplitude': AMPLITUDE,
-    'decel': DECEL
-  }
+    'decel': DECEL,
+    'jerk': JERK,
+    'junction': JUNCTION
+  };
 
   // Start G-code for pattern
   var start_script =  '; -------------------------------------------\n' +
@@ -80,9 +81,9 @@ function genGcode() {
                   ';\n' +
                   '; Settings Printer:\n' +
                   '; Filament Diameter = ' + FILAMENT_DIAMETER + ' mm\n' +
-                  '; Nozzle Diameter = ' + NOZZLE_DIAMETER + ' mm\n' +
                   '; Nozzle Temperature = ' + NOZZLE_TEMP + ' °C\n' +
                   '; Bed Temperature = ' + BED_TEMP + ' °C\n' +
+                  '; Nozzle Diameter = ' + LINE_WIDTH + ' mm\n' +
                   '; Layer Height = ' + LAYER_HEIGHT + ' mm\n' +
                   '; Fan Speed = ' + FAN_SPEED + ' %\n' +
                   '; Z-axis Offset = ' + Z_OFFSET + ' mm\n' +
@@ -94,6 +95,9 @@ function genGcode() {
                   '; Settings Speed:\n' +
                   '; Printing Speed = ' + PRINT_SPEED+ ' mm/s\n' +
                   '; Movement Speed = ' + TRAVEL_SPEED + ' mm/s\n' +
+                  '; Printing Deceleration = ' + DECEL + ' mm/s^2\n' +
+                  '; Jerk = ' + (JERK !== -1 ? JERK + '\n': ' pattern default\n') +
+                  '; Junction Deviation = ' + (JUNCTION !== -1 ? JUNCTION + '\n': ' pattern default\n') +
                   ';\n' +
                   '; Settings Pattern:\n' +
                   '; Max X Frequency = ' + MAX_FREQ_X + ' Hz\n' +
@@ -106,7 +110,7 @@ function genGcode() {
                   '; prepare printing\n' +
                   ';\n' +
                   'M501 ; Load settings from EEPROM\n' +
-                  'M205 S0 T0           ; minimum extruding and travel feed rate\n' +
+                  'M205 S0 T0 ; minimum extruding and travel feed rate\n' +
                   'G21 ; Millimeter units\n' +
                   'G90 ; Absolute XYZ\n' +
                   'G28 ; Home all axes\n' +
@@ -127,11 +131,16 @@ function genGcode() {
                   'M400 ; Finish moving\n' +
                   'M104 S0 ; Turn off hotend\n' +
                   'M140 S0 ; Turn off bed\n' +
-                  'G1 Z30 X0 Y' + BEDSIZE_Y + ' F' + TRAVEL_SPEED + ' ; Move away from the print\n' +
+                  'G1 Z30 X0 Y' + BEDSIZE_Y + ' F' + TRAVEL_SPEED * 60 + ' ; Move away from the print\n' +
                   'M84 ; Disable motors\n' +
                   'G92 E0 ; Reset extruder distance\n' +
                   'M501 ; Load settings from EEPROM\n' +
                   ';';
+  
+  // Clear output
+  gcodeOut.value = '';
+  zeta_x_gcodeOut.value = '';
+  zeta_y_gcodeOut.value = '';
 
   try {
     let lines = generatePattern(settings);
@@ -151,8 +160,6 @@ function genGcode() {
 
   } catch (error) {
     console.error(error);
-    // Expected output: ReferenceError: nonExistentFunction is not defined
-    // (Note: the exact output may be browser-dependent)
   }
 }
 
@@ -164,12 +171,12 @@ function generatePattern(settings) {
   var seg_length = Math.sqrt(Math.pow(settings['amplitude'], 2) + Math.pow(settings['wavelength'], 2) / 4.0);
   var idx = 0;
   for (i = 0; i < settings['top_freq_x']; i++) {
-    zigzags_x[idx] = []
+    zigzags_x[idx] = [];
     zigzags_x[idx][0] = settings['wavelength'] * (i + 0.5);
     zigzags_x[idx][1] = settings['amplitude']
     zigzags_x[idx][2] = seg_length * 2 * (i + 0.5);
     idx++;
-    zigzags_x[idx] = []
+    zigzags_x[idx] = [];
     zigzags_x[idx][0] = settings['wavelength'] * (i + 1.0);
     zigzags_x[idx][1] = 0
     zigzags_x[idx][2] = seg_length * 2 * (i + 1.0);
@@ -177,16 +184,16 @@ function generatePattern(settings) {
   }
   let max_x_speed = settings['wavelength'] * settings['top_freq_x'];
   let coast_dist_x = Math.pow(max_x_speed, 2) / 2 / settings['decel'];
-  let max_y_size = settings['top_freq_x'] * settings['wavelength'] + coast_dist_x + 5;
+  let max_y_size = settings['top_freq_x'] * settings['wavelength'] + coast_dist_x + 8;
 
   idx = 0;
   for (i = 0; i < settings['top_freq_y']; i++) {
-    zigzags_y[idx] = []
+    zigzags_y[idx] = [];
     zigzags_y[idx][0] = settings['wavelength'] * (i + 0.5);
     zigzags_y[idx][1] = settings['amplitude']
     zigzags_y[idx][2] = seg_length * 2 * (i + 0.5);
     idx++;
-    zigzags_y[idx] = []
+    zigzags_y[idx] = [];
     zigzags_y[idx][0] = settings['wavelength'] * (i + 1.0);
     zigzags_y[idx][1] = 0
     zigzags_y[idx][2] = seg_length * 2 * (i + 1.0);
@@ -194,7 +201,7 @@ function generatePattern(settings) {
   }
   let max_y_speed = settings['wavelength'] * settings['top_freq_y'];
   let coast_dist_y = Math.pow(max_y_speed, 2) / 2 / settings['decel'];
-  let max_x_size = settings['top_freq_y'] * settings['wavelength'] + coast_dist_y + 5;
+  let max_x_size = settings['top_freq_y'] * settings['wavelength'] + coast_dist_y + 8;
 
   let min_x = (settings['bed_x'] - max_x_size) / 2;
   let max_x = (settings['bed_x'] + max_x_size) / 2;
@@ -202,6 +209,7 @@ function generatePattern(settings) {
   let min_y = (settings['bed_y'] - max_y_size) / 2;
   let max_y = (settings['bed_y'] + max_y_size) / 2;
 
+  // bed size validation
   if (max_x_size > settings['bed_x'] && max_y_size > settings['bed_y']) {
     alert('Pattern does not fit to bed. Reduce Max X and Max Y Frequency');
     return;
@@ -212,6 +220,18 @@ function generatePattern(settings) {
     alert('Pattern does not fit to bed. Reduce Max X Frequency');
     return;
   }
+
+  // high limits for pattern
+  var unlimits = 'M203 X500 Y500 ; maximum feedrates\n' +
+                'M204 P10000 ; print acceleration\n' +
+                'M201 X10000 Y10000 ; max acceleration\n' +
+                'M205 X500.00 Y500.00 ; jerk limits very high\n' +
+                'M205 J0.3 ; junction deviation maximum\n\n';
+
+  // low limits for non-pattern
+  var limits = `M201 X${settings['decel']} Y${settings['decel']}\n`;
+  if (settings['jerk'] > -1) limits += `M205 X${settings['jerk']} Y${settings['jerk']}\n`;
+  if (settings['junction'] > -1) limits += `M205 J${settings['junction']}\n`;
 
   // initial positions
   var x = 0.0,
@@ -240,12 +260,13 @@ function line_to(new_x, new_y, new_z, f = null) {
     return gcode;
   }
 
+  // zip - combine 2d array from several 1d arrays. Kindly provided by ChatGPT
   function zip(arr1, arr2, arr3) {
     return arr1.map((element, index) => [element, arr2[index], arr3[index]]);
   }
 
   function draw_y_zigzags(zigzags, coast_dist) {
-    var gcode = 'M201 X10000 Y10000\n';
+    var gcode = unlimits;
 
     let start_x = x;
     let start_y = y;
@@ -253,11 +274,11 @@ function line_to(new_x, new_y, new_z, f = null) {
       let x_offs = zigzags[i][0];
       let y_offs = zigzags[i][1];
       let f = zigzags[i][2];
-      gcode += line_to(start_x + x_offs, start_y + y_offs, z, f)
+      gcode += line_to(start_x + x_offs, start_y + y_offs, z, f);
     }
 
     // go back to resonable acceleration limits
-    gcode += `M201 X${settings['decel']} Y${settings['decel']}\n`
+    gcode += limits;
 
     // coast down to stop
     gcode += line_to(x + coast_dist, y, z);
@@ -269,12 +290,13 @@ function line_to(new_x, new_y, new_z, f = null) {
     // ramp up to speed
     var gcode = line_to(x - coast_dist, y, z, zigzags[zigzags.length-1][2]);
 
-    gcode += 'M201 X10000 Y10000\n';
+    gcode += unlimits;
 
     let start_x = x - zigzags[zigzags.length-1][0];
     let start_y = y - zigzags[zigzags.length-1][1];
     let x_offsets = [], y_offsets = [], fs = [];
 
+    // unzip 2d array to several 1d arrays and shift X and Y. Kindly provided by ChatGPT
     for (let i = 0; i < zigzags.length; i++) {
       x_offsets.push(zigzags[i][0]);
       y_offsets.push(zigzags[i][1]);
@@ -290,17 +312,17 @@ function line_to(new_x, new_y, new_z, f = null) {
       let x_offs = zigzags[i][0];
       let y_offs = zigzags[i][1];
       let f = zigzags[i][2];
-      gcode += line_to(start_x + x_offs, start_y + y_offs, z, f)
+      gcode += line_to(start_x + x_offs, start_y + y_offs, z, f);
     }
 
     // go back to resonable acceleration limits
-    gcode += `M201 X${settings['decel']} Y${settings['decel']}\n\n`;
+    gcode += limits;
 
     return gcode;
   }
 
   function draw_x_zigzags(zigzags, coast_dist) {
-    var gcode = 'M201 X10000 Y10000\n';
+    var gcode = unlimits;
 
     let start_x = x;
     let start_y = y;
@@ -312,7 +334,7 @@ function line_to(new_x, new_y, new_z, f = null) {
     }
 
     // go back to resonable acceleration limits
-    gcode += `M201 X${settings['decel']} Y${settings['decel']}\n`
+    gcode += limits;
 
     // coast down to stop
     gcode += line_to(x, y + coast_dist, z);
@@ -322,14 +344,15 @@ function line_to(new_x, new_y, new_z, f = null) {
 
   function draw_x_zigzags_rev(zigzags, coast_dist) {
     // ramp up to speed
-    var gcode = line_to(x, y - coast_dist, z, zigzags[zigzags.length-1][2])
+    var gcode = line_to(x, y - coast_dist, z, zigzags[zigzags.length-1][2]);
 
-    gcode += 'M201 X10000 Y10000\n'
+    gcode += unlimits
 
-    let start_x = x - zigzags[zigzags.length-1][1]
-    let start_y = y - zigzags[zigzags.length-1][0]
+    let start_x = x - zigzags[zigzags.length-1][1];
+    let start_y = y - zigzags[zigzags.length-1][0];
     let x_offsets = [], y_offsets = [], fs = [];
 
+    // unzip 2d array to several 1d arrays and shift X and Y. Kindly provided by ChatGPT
     for (let i = 0; i < zigzags.length; i++) {
       x_offsets.push(zigzags[i][1]);
       y_offsets.push(zigzags[i][0]);
@@ -349,12 +372,10 @@ function line_to(new_x, new_y, new_z, f = null) {
     }
 
     // go back to resonable acceleration limits
-    gcode +=  `M201 X${settings['decel']} Y${settings['decel']}\n\n`
+    gcode +=  limits;
 
     return gcode;
   }
-
-  
 
   function draw_anchor_line() {
     var gcode =  '; draw anchor lines\n';
@@ -366,31 +387,26 @@ function line_to(new_x, new_y, new_z, f = null) {
     return gcode + '\n';
   }
 
-  var unlimits = 'M203 X500 Y500 ; maximum feedrates\n' +
-                'M204 P10000 ; print acceleration\n' +
-                'M205 X500.00 Y500.00 ; jerk limits very high\n' +
-                'M205 J0.3 ; junction deviation maximum\n\n';
-
   var freq_script = '';
   var zeta_x_script = '';
   var zeta_y_script = '';
 
   // Damping frequency pattern --------------------------
   x = 0.0, y = 0.0, z = 0.0, e = 0.0;
-  freq_script += draw_anchor_line() + unlimits;
+  freq_script += draw_anchor_line();
   freq_script += draw_y_zigzags(zigzags_y, coast_dist_y);
   freq_script += draw_x_zigzags(zigzags_x, coast_dist_x);
 
 
   // Zeta/Damping factor X pattern ----------------------
   x = 0.0, y = 0.0, z = 0.0, e = 0.0;
-  zeta_x_script += draw_anchor_line() + unlimits;
+  zeta_x_script += draw_anchor_line();
 
   // move a little away from the anchor line
-  zeta_x_script += line_to(x + 5, y, z)
+  zeta_x_script += line_to(x + 5, y, z);
 
   // draw alternating X zigzags at constant Y acceleration
-  var zeta = 0.0
+  var zeta = 0.0;
   for (var i = 0; i < 10; i++) {
     zeta += 0.05;
     zeta_x_script += `M593 X D${zeta.toFixed(2)}\n`;
@@ -404,13 +420,13 @@ function line_to(new_x, new_y, new_z, f = null) {
 
   // Zeta/Damping factor Y pattern ----------------------
   x = 0.0, y = 0.0, z = 0.0, e = 0.0;
-  zeta_y_script += draw_anchor_line() + unlimits;
+  zeta_y_script += draw_anchor_line();
 
   // move a little away from the anchor line
-  zeta_y_script += line_to(x + 5, y, z)
+  zeta_y_script += line_to(x + 5, y, z);
 
   // draw alternating Y zigzags at constant X acceleration
-  zeta = 0.0
+  zeta = 0.0;
   for (var i = 0; i < 10; i++) {
     zeta += 0.05;
     zeta_y_script += `M593 Y D${zeta.toFixed(2)}\n`;
@@ -422,7 +438,7 @@ function line_to(new_x, new_y, new_z, f = null) {
     zeta_y_script += go_to(x, y + 5, z, settings['travel_speed']);
   }
 
-  return {'freq': freq_script, 'zeta_x': zeta_x_script, 'zeta_y': zeta_y_script}
+  return {'freq': freq_script, 'zeta_x': zeta_x_script, 'zeta_y': zeta_y_script};
 
 }
 
@@ -487,8 +503,11 @@ function validateInput() {
       MAX_FREQ_Y: $('#MAX_FREQ_Y').val(),
       PRINT_SPEED: $('#PRINT_SPEED').val(),
       TRAVEL_SPEED: $('#TRAVEL_SPEED').val(),
+      DECEL: $('#DECEL').val(),
+      JERK: $('#JERK').val(),
+      JUNCTION: $('#JUNCTION').val(),
       FILAMENT_DIAMETER: $('#FILAMENT_DIAMETER').val(),
-      NOZZLE_DIAMETER: $('#NOZZLE_DIAMETER').val(),
+      LINE_WIDTH: $('#LINE_WIDTH').val(),
       LAYER_HEIGHT: $('#LAYER_HEIGHT').val(),
       FAN_SPEED: $('#FAN_SPEED').val(),
       EXTRUSION_MULT: $('#EXTRUSION_MULT').val(),
@@ -500,7 +519,8 @@ function validateInput() {
 
   // Start clean
   $('#BEDSIZE_X,#BEDSIZE_Y,#MAX_FREQ_X,#MAX_FREQ_Y,#PRINT_SPEED,#TRAVEL_SPEED,#FILAMENT_DIAMETER,' + 
-  '#NOZZLE_DIAMETER,#LAYER_HEIGHT,#FAN_SPEED,#EXTRUSION_MULT,#Z_OFFSET,#NOZZLE_TEMP,#BED_TEMP').each((i,t) => {
+  '#LINE_WIDTH,#LAYER_HEIGHT,#FAN_SPEED,#EXTRUSION_MULT,#Z_OFFSET,#NOZZLE_TEMP,#BED_TEMP,' +
+  '#DECEL,#JERK,#JUNCTION').each((i,t) => {
     t.setCustomValidity('');
     const tid = $(t).attr('id');
     $(`label[for=${tid}]`).removeClass();
@@ -527,13 +547,16 @@ function validateInput() {
 function setLocalStorage() {
   var PRINTER = $('#PRINTER').val(),
     FILAMENT_DIAMETER = parseFloat($('#FILAMENT_DIAMETER').val()),
-    NOZZLE_DIAMETER = parseFloat($('#NOZZLE_DIAMETER').val()),
+    LINE_WIDTH = parseFloat($('#LINE_WIDTH').val()),
     NOZZLE_TEMP = parseInt($('#NOZZLE_TEMP').val()),
     BED_TEMP = parseInt($('#BED_TEMP').val()),
     LAYER_HEIGHT = parseFloat($('#LAYER_HEIGHT').val()),
     FAN_SPEED = parseFloat($('#FAN_SPEED').val()),
     PRINT_SPEED = parseInt($('#PRINT_SPEED').val()),
     TRAVEL_SPEED = parseInt($('#TRAVEL_SPEED').val()),
+    DECEL = parseInt($('#DECEL').val()),
+    JERK = parseInt($('#JERK').val()),
+    JUNCTION = parseInt($('#JUNCTION').val()),
     BEDSIZE_X = parseInt($('#BEDSIZE_X').val()),
     BEDSIZE_Y = parseInt($('#BEDSIZE_Y').val()),
     MAX_FREQ_X = parseInt($('#MAX_FREQ_X').val()),
@@ -546,13 +569,16 @@ function setLocalStorage() {
   var settings = {
     'Version' : SETTINGS_VERSION,
     'FILAMENT_DIAMETER': FILAMENT_DIAMETER,
-    'NOZZLE_DIAMETER': NOZZLE_DIAMETER,
+    'LINE_WIDTH': LINE_WIDTH,
     'NOZZLE_TEMP': NOZZLE_TEMP,
     'BED_TEMP': BED_TEMP,
     'LAYER_HEIGHT': LAYER_HEIGHT,
     'FAN_SPEED': FAN_SPEED,
     'PRINT_SPEED': PRINT_SPEED,
     'TRAVEL_SPEED': TRAVEL_SPEED,
+    'DECEL': DECEL,
+    'JERK': JERK,
+    'JUNCTION': JUNCTION,
     'BEDSIZE_X': BEDSIZE_X,
     'BEDSIZE_Y': BEDSIZE_Y,
     'MAX_FREQ_X': MAX_FREQ_X,
@@ -585,12 +611,15 @@ $(window).load(() => {
     else {
 
       $('#FILAMENT_DIAMETER').val(settings['FILAMENT_DIAMETER']);
-      $('#NOZZLE_DIAMETER').val(settings['NOZZLE_DIAMETER']);
+      $('#LINE_WIDTH').val(settings['LINE_WIDTH']);
       $('#NOZZLE_TEMP').val(settings['NOZZLE_TEMP']);
       $('#BED_TEMP').val(settings['BED_TEMP']);
       $('#LAYER_HEIGHT').val(settings['LAYER_HEIGHT']);
       $('#FAN_SPEED').val(settings['FAN_SPEED']);
       $('#PRINT_SPEED').val(settings['PRINT_SPEED']);
+      $('#TRAVEL_SPEED').val(settings['TRAVEL_SPEED']);
+      $('#DECEL').val(settings['DECEL']);
+      $('#JERK').val(settings['JERK']);
       $('#TRAVEL_SPEED').val(settings['TRAVEL_SPEED']);
       $('#BEDSIZE_X').val(settings['BEDSIZE_X']);
       $('#BEDSIZE_Y').val(settings['BEDSIZE_Y']);

@@ -19,11 +19,11 @@ category:     [ tools ]
         </div>
       </div>
       <p>Use this form to generate G-code that you can use to calibrate your Input Shaping Damping Frequency and Zeta/Damping factor. Default values apply to standard PLA with a 0.4mm nozzle.</p>
-      <p>G-code sweeps zig zag patterns with increasing speeds, or increasing frequencies.</p>
-      <p>Generates 3 separate files:</p>
-      <ul>Damping Frequency to find resonant frequency for X and Y, shown on right side</ul>
-      <ul>Zeta/damping factor for X, not shown</ul>
-      <ul>Zeta/damping factor for Y, not shown</ul>
+      <p>The generated G-code files print frequency sweeps (zigzag patterns with increasing speeds) to find resonant frequencies (frequencies to dampen) and zeta/damping factors for X-axis and Y-axis.</p>
+      <p>3 separate files are generated for download:</p>
+      <ul>Damping Frequency to find resonant frequency for X-axis and Y-axis (shown on right side)</ul>
+      <ul>Zeta/damping factor for X-axis (not shown)</ul>
+      <ul>Zeta/damping factor for Y-axis (not shown)</ul>
       <p>Press the <strong>Generate G-code</strong> button followed by each <strong>Download .. as file</strong> to save the results.</p>
       <table id="kfactor">
         <tbody>
@@ -33,7 +33,7 @@ category:     [ tools ]
           </tr>
           <tr>
             <td colspan="3" class="section"><h4>Printer Info</h4></td>
-            <td rowspan="21">
+            <td rowspan="24">
               <textarea name="freq-gcode-out" id="freq-gcode-out" style="height:100%"></textarea>
             </td>
             <td class="td-hidden">
@@ -54,11 +54,6 @@ category:     [ tools ]
             <td>Diameter of the used filament (mm)</td>
           </tr>
           <tr>
-            <th><label for="NOZZLE_DIAMETER">Nozzle Diameter</label></th>
-            <td><input name="NOZZLE_DIAMETER" id="NOZZLE_DIAMETER" step="any" value="0.4" onblur="validateInput()" /></td>
-            <td>Diameter of the nozzle (mm)</td>
-          </tr>
-          <tr>
             <th><label for="NOZZLE_TEMP">Nozzle Temperature</label></th>
             <td><input name="NOZZLE_TEMP" id="NOZZLE_TEMP" step="any" value="205" onblur="validateInput()" /></td>
             <td>Nozzle Temperature (°C)</td>
@@ -69,9 +64,14 @@ category:     [ tools ]
             <td>Bed Temperature (°C)</td>
           </tr>
           <tr>
+            <th><label for="LINE_WIDTH">Line Width</label></th>
+            <td><input name="LINE_WIDTH" id="LINE_WIDTH" step="any" value="0.5" onblur="validateInput()" /></td>
+            <td>Line width (mm)</td>
+          </tr>
+          <tr>
             <th><label for="LAYER_HEIGHT">Layer Height</label></th>
-            <td><input name="LAYER_HEIGHT" id="LAYER_HEIGHT" step="0.1" value="0.2" onblur="validateInput()" /></td>
-            <td>Layer Height (mm)</td>
+            <td><input name="LAYER_HEIGHT" id="LAYER_HEIGHT" step="0.05" value="0.2" onblur="validateInput()" /></td>
+            <td>Layer Height (mm). If pattern is not clear, try to increase Layer Height</td>
           </tr>
           <tr>
             <th><label for="FAN_SPEED">Fan Speed</label></th>
@@ -82,14 +82,29 @@ category:     [ tools ]
             <td colspan="3" class="section"><h4>Speed</h4></td>
           </tr>
           <tr>
-            <th><label for="PRINT_SPEED">Printing Speed</label></th>
+            <th><label for="PRINT_SPEED">Frame Printing Speed</label></th>
             <td><input name="PRINT_SPEED" id="PRINT_SPEED" step="any" value="40" onblur="validateInput()" /></td>
-            <td>Printing speed for 1st Layer </td>
+            <td>Printing speed when not in pattern</td>
           </tr>
           <tr>
             <th><label for="TRAVEL_SPEED">Travel Speed</label></th>
             <td><input name="TRAVEL_SPEED" id="TRAVEL_SPEED" step="any" value="100" onblur="validateInput()" /></td>
-            <td>Travel speed for 1st Layer </td>
+            <td>Travel Speed </td>
+          </tr>
+          <tr>
+            <th><label for="DECEL">Frame Acceleration</label></th>
+            <td><input name="DECEL" id="DECEL" step="any" value="500" onblur="validateInput()" /></td>
+            <td>Printing and transition acceleration/deceleration (mm/s^2)</td>
+          </tr>
+          <tr>
+            <th><label for="JERK">Jerk</label></th>
+            <td><input name="JERK" id="JERK" step="1" value="-1" onblur="validateInput()" /></td>
+            <td>Jerk for X-axis and Y-axis when not in pattern. -1 to use pattern default</td>
+          </tr>
+          <tr>
+            <th><label for="JUNCTION">Junction Deviation</label></th>
+            <td><input name="JUNCTION" id="JUNCTION" step="any" value="-1.0" onblur="validateInput()" /></td>
+            <td>Junction Deviation when not in pattern. -1.0 to use pattern default</td>
           </tr>
           <tr>
             <td colspan="3" class="section"><h4>Print Bed</h4></td>
@@ -163,20 +178,29 @@ category:     [ tools ]
       </table>
       <h3>Notes on the settings:</h3>
       <ul>
-        <li><strong>Max X Frequency</strong> and <strong>Max Y Frequency</strong> should be high enough to reach resonant frequency. 60 should be enough, but can be increased if resonance is not seen</li>
+        <li><strong>Max X Frequency</strong> and <strong>Max Y Frequency</strong> should be high enough to reach resonant frequency. A printer with horizontally moving bed (aka. bedslinger) usually has lower resonant frequency on Y-axis due to higher moving mass. Alter values after first test print as needed to match the printer.</li>
         <li><strong>Use Bed Leveling</strong> requires a probe.</li>
+        <li><strong>Printer and other parts (e.g. filament spool) may resonate at several frequencies.</strong></li>
+        <li><strong>Printer may skip layers at or above resonant frequency. It is normal behaviour.</strong></li>
+        <li>60Hz frequency equals 120 mm/s print speed. With default 0.5 mm line width and 0.2 mm layer height, that equals to 12 mm^3/s extrusion flow. Nozzle Temperature can be raised to increase extrusion flow.</li>
       </ul>
       <h2>Images</h2>
-      <p>TODO: The following screen-shots show some examples of the test patterns</p>
-      <ul>
-        <li>Blue Lines are Slow Printing Speeds</li>
-        <li>Red Lines are Fast Printing Speed</li>
-        <li>Light blue lines are movements</li>
-      </ul>
+      <p>TODO: The following images show some examples of the test patterns</p>
       <div class="row">
         <div class="col-sm-6">
           <h3>Damping Frequency Pattern</h3>
+          <ul>
+            <li>Measure distance (mm) from left to right to the position where pattern loses it's shape. Damping frequency for <strong>Y-axis</strong> is distance (mm) divided by 2.</li>
+            <li>Measure distance (mm) along right side from bottom to top to the position where pattern loses it's shape. Damping frequency for <strong>X-axis</strong> is distance (mm) divided by 2.</li>
+          </ul>
           <img src="/assets/images/features/freq-calibr/freq-pattern.jpg" alt="DampingFrequencyPattern" />
+        </div>
+        <div class="col-sm-6">
+          <h3>Zeta/Damping Factor Pattern</h3>
+          <ul>
+            <li>Select most uniform pattern from the print. Damping factor increases by 0.05 for each pattern.</li>
+          </ul>
+          <img src="/assets/images/features/freq-calibr/zeta-pattern.jpg" alt="ZetaDampingFactorPattern" />
         </div>
       </div>
   </div>
