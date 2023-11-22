@@ -65,6 +65,11 @@ category:     [ tools ]
             <td>Bed Temperature (°C)</td>
           </tr>
           <tr>
+            <th><label for="RETRACTION">Retraction Distance</label></th>
+            <td><input name="RETRACTION" id="RETRACTION" step="any" value="1" onblur="validateInput()" /></td>
+            <td>Retraction distance after pattern (mm)</td>
+          </tr>
+          <tr>
             <th><label for="LINE_WIDTH">Line Width</label></th>
             <td><input name="LINE_WIDTH" id="LINE_WIDTH" step="any" value="0.5" onblur="validateInput()" /></td>
             <td>Line width (mm)</td>
@@ -91,6 +96,11 @@ category:     [ tools ]
             <th><label for="TRAVEL_SPEED">Travel Speed</label></th>
             <td><input name="TRAVEL_SPEED" id="TRAVEL_SPEED" step="any" value="100" onblur="validateInput()" /></td>
             <td>Travel Speed </td>
+          </tr>
+          <tr>
+            <th><label for="RETRACT_SPEED">Retract Speed</label></th>
+            <td><input name="RETRACT_SPEED" id="RETRACT_SPEED" step="1" value="30" onblur="validateInput()" /></td>
+            <td>Retract Speed of the extruder</td>
           </tr>
           <tr>
             <th><label for="DECEL">Frame Acceleration</label></th>
@@ -186,22 +196,49 @@ category:     [ tools ]
         <li>60Hz frequency equals 120 mm/s print speed. With default 0.5 mm line width and 0.2 mm layer height, that equals to 12 mm^3/s extrusion flow. Nozzle Temperature can be raised to increase extrusion flow.</li>
       </ul>
       <h2>Images</h2>
-      <p>TODO: The following images show some examples of the test patterns</p>
+      <p>The following images show some examples of the test patterns</p>
       <div class="row">
         <div class="col-sm-6">
-          <h3>Damping Frequency Pattern</h3>
+          <h3>Damping Frequency Pattern example 1</h3>
           <ul>
-            <li>Measure distance (mm) from left to right to the position where pattern loses it's shape. Damping frequency for <strong>Y-axis</strong> is distance (mm) divided by 2.</li>
-            <li>Measure distance (mm) along right side from bottom to top to the position where pattern loses it's shape. Damping frequency for <strong>X-axis</strong> is distance (mm) divided by 2.</li>
+            <li>Measure distance (mm) from left to right to the position where amplitude increases or pattern loses it's shape. Damping frequency for <strong>Y-axis</strong> is distance (mm) divided by 2.</li>
+            <li>Measure distance (mm) along right side from front to back to the position where amplitude increases or pattern loses it's shape. Damping frequency for <strong>X-axis</strong> is distance (mm) divided by 2.</li>
+          </ul>
+          <img src="/assets/images/features/freq-calibr/freq-pattern-1.jpg" alt="DampingFrequencyPattern" />
+        </div>
+        <div class="col-sm-6">
+          <h3>Damping Frequency Pattern example 2</h3>
+          <ul>
+            <li>Red: anchor frame</li>
+            <li>Pink: increasing speed / increasing frequency</li>
+            <li>Green: direction of vibration</li>
+            <li>Blue: deceleration to normal speed</li>
           </ul>
           <img src="/assets/images/features/freq-calibr/freq-pattern.jpg" alt="DampingFrequencyPattern" />
         </div>
+      </div>
+      <div class="row">
         <div class="col-sm-6">
-          <h3>Zeta/Damping Factor Pattern</h3>
+          <h3>Zeta/Damping Factor Pattern example 1</h3>
+          <ul>
+            <li>Select most uniform pattern from the print. Damping factor increases by 0.05 for each pattern.</li>
+          </ul>
+          <img src="/assets/images/features/freq-calibr/zeta-pattern-y-1.jpg" alt="ZetaDampingFactorPattern" />
+        </div>
+        <div class="col-sm-6">
+          <h3>Zeta/Damping Factor Pattern example 2</h3>
           <ul>
             <li>Select most uniform pattern from the print. Damping factor increases by 0.05 for each pattern.</li>
           </ul>
           <img src="/assets/images/features/freq-calibr/zeta-pattern.jpg" alt="ZetaDampingFactorPattern" />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <h3>What to look in Frequency Pattern</h3>
+          <img src="/assets/images/features/freq-calibr/freq-pattern-magnified.jpg" alt="DampingFrequencyPattern" />
+        </div>
+        <div class="col-sm-6">
         </div>
       </div>
   </div>

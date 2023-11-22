@@ -19,7 +19,7 @@
 
 // Settings version of localStorage
 // Increase if default settings are changed / amended
-const SETTINGS_VERSION = '1.0';
+const SETTINGS_VERSION = '1.1';
 
 function genGcode() {
 
@@ -28,11 +28,13 @@ function genGcode() {
       FILAMENT_DIAMETER = parseFloat($('#FILAMENT_DIAMETER').val()),
       NOZZLE_TEMP = parseInt($('#NOZZLE_TEMP').val()),
       BED_TEMP = parseInt($('#BED_TEMP').val()),
+      RETRACTION = parseFloat($('#RETRACTION').val()),
       LINE_WIDTH = parseFloat($('#LINE_WIDTH').val()),
       LAYER_HEIGHT = parseFloat($('#LAYER_HEIGHT').val()),
       FAN_SPEED = parseFloat($('#FAN_SPEED').val()),
       PRINT_SPEED = parseInt($('#PRINT_SPEED').val()),
       TRAVEL_SPEED = parseInt($('#TRAVEL_SPEED').val()),
+      RETRACT_SPEED = parseInt($('#RETRACT_SPEED').val()),
       DECEL = parseInt($('#DECEL').val()),
       JERK = parseInt($('#JERK').val()),
       JUNCTION = parseFloat($('#JUNCTION').val()),
@@ -55,6 +57,7 @@ function genGcode() {
 
   var settings = {
     'filament_diameter': FILAMENT_DIAMETER,
+    'retraction': RETRACTION,
     'line_width': LINE_WIDTH,
     'height_layer': LAYER_HEIGHT,
     'bed_x': BEDSIZE_X,
@@ -65,6 +68,7 @@ function genGcode() {
     'z_offset': Z_OFFSET,
     'z_speed': Z_SPEED,
     'travel_speed': TRAVEL_SPEED,
+    'retract_speed': RETRACT_SPEED,
     'anchor_line_speed': PRINT_SPEED,
     'wavelength': WAVELENGTH,
     'amplitude': AMPLITUDE,
@@ -87,6 +91,7 @@ function genGcode() {
                   '; Layer Height = ' + LAYER_HEIGHT + ' mm\n' +
                   '; Fan Speed = ' + FAN_SPEED + ' %\n' +
                   '; Z-axis Offset = ' + Z_OFFSET + ' mm\n' +
+                  '; Retraction = ' + RETRACTION + ' mm\n' +
                   ';\n' +
                   '; Settings Print Bed:\n' +
                   '; Bed Size X = ' + BEDSIZE_X + ' mm\n' +
@@ -95,6 +100,7 @@ function genGcode() {
                   '; Settings Speed:\n' +
                   '; Printing Speed = ' + PRINT_SPEED+ ' mm/s\n' +
                   '; Movement Speed = ' + TRAVEL_SPEED + ' mm/s\n' +
+                  '; Retraction Speed = ' + RETRACT_SPEED + ' mm/s\n' +
                   '; Printing Deceleration = ' + DECEL + ' mm/s^2\n' +
                   '; Jerk = ' + (JERK !== -1 ? JERK + '\n': ' pattern default\n') +
                   '; Junction Deviation = ' + (JUNCTION !== -1 ? JUNCTION + '\n': ' pattern default\n') +
@@ -160,6 +166,7 @@ function genGcode() {
 
   } catch (error) {
     console.error(error);
+    alert(`Error generating pattern:\n${error}`);
   }
 }
 
@@ -255,6 +262,15 @@ function line_to(new_x, new_y, new_z, f = null) {
     y = new_y;
     z = new_z;
     var gcode = `G1 X${x.toFixed(2)} Y${y.toFixed(2)} Z${z.toFixed(2)} E${e.toFixed(2)}`;
+    if (f != null) gcode += ` F${(f * 60).toFixed(1)}`;
+    gcode += '\n';
+    return gcode;
+  }
+
+  // positive amount feeds, negative amount retracts filament
+  function extrude(amount, f = null) {
+    e += amount
+    var gcode = `G1 E${e.toFixed(2)}`;
     if (f != null) gcode += ` F${(f * 60).toFixed(1)}`;
     gcode += '\n';
     return gcode;
@@ -381,6 +397,8 @@ function line_to(new_x, new_y, new_z, f = null) {
     var gcode =  '; draw anchor lines\n';
     gcode += go_to(max_x, max_y, 2.0, settings['travel_speed']);
     gcode += go_to(x, y, settings['height_layer'] + settings['z_offset'], settings['z_speed']);
+    gcode += '; unretract\n'
+    gcode += extrude(settings['retraction'], settings['retract_speed'])
     gcode += line_to(min_x, max_y, z, settings['anchor_line_speed']);
     gcode += line_to(min_x, min_y, z, settings['anchor_line_speed']);
 
@@ -396,6 +414,8 @@ function line_to(new_x, new_y, new_z, f = null) {
   freq_script += draw_anchor_line();
   freq_script += draw_y_zigzags(zigzags_y, coast_dist_y);
   freq_script += draw_x_zigzags(zigzags_x, coast_dist_x);
+  freq_script += '; retract\n'
+  freq_script += extrude(-settings['retraction'], settings['retrac_speed'])
 
 
   // Zeta/Damping factor X pattern ----------------------
@@ -417,6 +437,8 @@ function line_to(new_x, new_y, new_z, f = null) {
     zeta_x_script += draw_x_zigzags_rev(zigzags_x, coast_dist_y);
     zeta_x_script += go_to(x + 5, y, z, settings['travel_speed']);
   }
+  zeta_x_script += '; retract\n'
+  zeta_x_script += extrude(-settings['retraction'], settings['retrac_speed'])
 
   // Zeta/Damping factor Y pattern ----------------------
   x = 0.0, y = 0.0, z = 0.0, e = 0.0;
@@ -437,6 +459,8 @@ function line_to(new_x, new_y, new_z, f = null) {
     zeta_y_script += draw_y_zigzags_rev(zigzags_y, coast_dist_y);
     zeta_y_script += go_to(x, y + 5, z, settings['travel_speed']);
   }
+  zeta_y_script += '; retract\n'
+  zeta_y_script += extrude(settings['retraction'], settings['retrac_speed'])
 
   return {'freq': freq_script, 'zeta_x': zeta_x_script, 'zeta_y': zeta_y_script};
 
@@ -514,13 +538,15 @@ function validateInput() {
       Z_OFFSET: $('#Z_OFFSET').val(),
       NOZZLE_TEMP: $('#NOZZLE_TEMP').val(),
       BED_TEMP: $('#BED_TEMP').val(),
+      RETRACTION: $('#RETRACTION').val(),
+      RETRACT_SPEED: $('#RETRACT_SPEED').val(),
     },
     invalidDiv = 0;
 
   // Start clean
   $('#BEDSIZE_X,#BEDSIZE_Y,#MAX_FREQ_X,#MAX_FREQ_Y,#PRINT_SPEED,#TRAVEL_SPEED,#FILAMENT_DIAMETER,' + 
   '#LINE_WIDTH,#LAYER_HEIGHT,#FAN_SPEED,#EXTRUSION_MULT,#Z_OFFSET,#NOZZLE_TEMP,#BED_TEMP,' +
-  '#DECEL,#JERK,#JUNCTION').each((i,t) => {
+  '#DECEL,#JERK,#JUNCTION,#RETRACTION,#RETRACT_SPEED').each((i,t) => {
     t.setCustomValidity('');
     const tid = $(t).attr('id');
     $(`label[for=${tid}]`).removeClass();
@@ -564,7 +590,9 @@ function setLocalStorage() {
     Z_OFFSET = parseFloat($('#Z_OFFSET').val()),
     BED_LEVELING = $('#BED_LEVELING').val(),
     EXTRUSION_MULT = parseFloat($('#EXTRUSION_MULT').val()),
-    Z_ALIGNMENT = $('#Z_ALIGNMENT').prop('checked');
+    Z_ALIGNMENT = $('#Z_ALIGNMENT').prop('checked'),
+    RETRACTION = parseInt($('#RETRACTION').val()),
+    RETRACT_SPEED = parseInt($('#RETRACT_SPEED').val());
 
   var settings = {
     'Version' : SETTINGS_VERSION,
@@ -586,7 +614,9 @@ function setLocalStorage() {
     'Z_OFFSET': Z_OFFSET,
     'BED_LEVELING': BED_LEVELING,
     'EXTRUSION_MULT': EXTRUSION_MULT,
-    'Z_ALIGNMENT': Z_ALIGNMENT
+    'Z_ALIGNMENT': Z_ALIGNMENT,
+    'RETRACTION': RETRACTION,
+    'RETRACT_SPEED': RETRACT_SPEED
   };
 
   const lsSettings = JSON.stringify(settings);
@@ -629,6 +659,8 @@ $(window).load(() => {
       $('#BED_LEVELING').val(settings['BED_LEVELING']);
       $('#EXTRUSION_MULT').val(settings['EXTRUSION_MULT']);
       $('#Z_ALIGNMENT').prop('checked', settings['Z_ALIGNMENT']);
+      $('#RETRACTION').val(settings['RETRACTION']);
+      $('#RETRACT_SPEED').val(settings['RETRACT_SPEED']);
     }
   }
 
