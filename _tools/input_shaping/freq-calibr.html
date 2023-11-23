@@ -187,55 +187,71 @@ Caution! Only for Cartesian printers. CoreXY kinematics are not yet tested.
       <ul>
         <li><strong>Max X Frequency</strong> and <strong>Max Y Frequency</strong> should be high enough to reach resonant frequency. The moving bed of a "bedslinger" printer usually has a lower resonant frequency corresponding to its greater mass. Adjust values after your first test print and as-needed to match the printer.</li>
         <li><strong>Use Bed Leveling</strong> requires a probe.</li>
-        <li><strong>Printer and other parts (e.g., filament spool) may resonate at several frequencies.</strong></li>
-        <li><strong>Printer may skip layers at or above the resonant frequency. This is normal behaviour.</strong></li>
+        <li><strong>Printer and other parts (e.g., filament spool) may resonate and emit sounds during frequency sweeps.</strong></li>
+        <li><strong>Printer may skip steps</strong> (print head or bed may jump in X or Y direction) <strong>at or above the resonant frequency.</strong> This is normal behaviour.</li>
         <li>60Hz frequency equals 120mm/s print speed. With default 0.5mm line width and 0.2mm layer height, that equals to 12mm^3/s extrusion flow. Nozzle Temperature can be raised to increase extrusion flow.</li>
+        <li>If patterns show asymmetry or vibration in Z direction, linear motion might have slack or flex (e.g. loose POM wheels). See image below.</li>
       </ul>
       <h2>Images</h2>
       <p>The following images show some examples of the test patterns</p>
       <div class="row">
         <div class="col-sm-6">
-          <h3>Damping Frequency Pattern example 1</h3>
+          <h3>Damping Frequency Pattern theory</h3>
           <ul>
-            <li>Measure the distance (mm) on the X axis to the position where amplitude increases or the pattern loses its shape. The damping frequency for <strong>Y</strong> is this distance divided by 2.</li>
-            <li>Measure the distance (mm) on the Y axis along the right side to the position where the amplitude increases or the pattern loses its shape. The damping frequency for <strong>X</strong> is this distance divided by 2.</li>
+            <li>Frequency sweep patterns is printed for both axes.</li>
+            <li>As frequency approaches resonant frequency, vibration amplitude increases.</li>
+            <li>At resonant frequency amplitude reaches it's peak.</li>
+            <li>Beyond resonant frequency amplitude may remain high or decrease.</li>
+            <li>Measuring the distance (mm) from the beginning of the pattern to the point of amplitude peak reveals resonant frequency, where frequency is this distance divided by 2.</li>
+            <li>To reduce ringing, Input Shaping tries to dampen resonant frequency, aka. Damping Frequency.</li>
           </ul>
-          <img src="/assets/images/features/freq-calibr/freq-pattern-1.jpg" alt="DampingFrequencyPattern" />
+          <p>TODO: Frequency Sweep image</p>
+          <!-- <img src="/assets/images/features/freq-calibr/freq-pattern-1.jpg" alt="DampingFrequencyPattern" /> -->
         </div>
         <div class="col-sm-6">
-          <h3>Damping Frequency Pattern example 2</h3>
+          <h3>Zeta/Damping Factor theory</h3>
           <ul>
-            <li>Red: anchor frame</li>
-            <li>Pink: increasing speed / increasing frequency</li>
-            <li>Green: direction of vibration</li>
-            <li>Blue: deceleration to normal speed</li>
+            <li>Damping Factor sweep patterns are printed for both axes.</li>
+            <li>Damping Factor controls damping:</li>
+            <ul>
+              <li>Too low Damping Factor: vibration is not cancelled at Damping Frequency.</li>
+              <li>Correct (critical) Damping Factor: vibration is cancelled at Damping Frequency.</li>
+              <li>Too high Damping Factor: vibration is reduced too aggressively also below Damping Frequency.</li>
+            </ul>
+            <li>Best value can be found by looking for zigzag pattern with most uniform amplitude at and below Damping Frequency and decreased amplitude above Damping Frequency.</li>
           </ul>
-          <img src="/assets/images/features/freq-calibr/freq-pattern.jpg" alt="DampingFrequencyPattern" />
+          <p>TODO: Damping Sweep image</p>
         </div>
       </div>
       <div class="row">
         <div class="col-sm-6">
+          <h3>Damping Frequency Pattern example 1</h3>
+          <img src="/assets/images/features/freq-calibr/freq-pattern-1.jpg" alt="DampingFrequencyPattern" />
+        </div>
+        <div class="col-sm-6">
           <h3>Zeta/Damping Factor Pattern example 1</h3>
-          <ul>
-            <li>Select the most uniform pattern from the print. The damping factor increases by 0.05 on each successive pattern.</li>
-          </ul>
           <img src="/assets/images/features/freq-calibr/zeta-pattern-y-1.jpg" alt="ZetaDampingFactorPattern" />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <h3>Damping Frequency Pattern example 2</h3>
+          <p>TODO: Better Frequency Sweep image</p>
+          <img src="/assets/images/features/freq-calibr/freq-pattern.jpg" alt="DampingFrequencyPattern" />
         </div>
         <div class="col-sm-6">
           <h3>Zeta/Damping Factor Pattern example 2</h3>
-          <ul>
-            <li>Select the most uniform pattern from the print. The damping factor increases by 0.05 on each successive pattern.</li>
-          </ul>
+          <p>TODO: Better Damping Sweep image</p>
           <img src="/assets/images/features/freq-calibr/zeta-pattern.jpg" alt="ZetaDampingFactorPattern" />
         </div>
       </div>
       <div class="row">
         <div class="col-sm-6">
-          <h3>What to look for in the Frequency Pattern</h3>
-          <img src="/assets/images/features/freq-calibr/freq-pattern-magnified.jpg" alt="DampingFrequencyPattern" />
+          <h3>Example of loose POM wheels</h3>
+          <img src="/assets/images/features/freq-calibr/loose-wheels.png" alt="LooseWheelsExample" />
         </div>
         <div class="col-sm-6">
-        </div>
+          &nbsp;
       </div>
   </div>
 </div>
