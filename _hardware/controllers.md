@@ -384,6 +384,7 @@ groups:
         - alt: MKS_ROBIN_TFT35
           front: MKS_ROBIN_TFT35
           back: MKS_ROBIN_TFT35
+      videos: [ EWMw57MFD3c ]
 
     - name: MKS_ROBIN_TFT43
       description:
@@ -533,6 +534,9 @@ Marlin supports a wide variety of display controllers, from simple character-bas
 <div class="lcd">
 {% if cont.images %}
 <div class="gallery">
+  {% for videoid in cont.videos %}
+    <iframe class="youtube rj" width="300" height="225" src="https://youtube.com/embed/{{ videoid }}"></iframe>
+  {% endfor %}
   {% for img in cont.images %}
     {% if img.front %}<a href="{{ fldr }}{{ img.front }}_front.jpg" target="_blank" title="{{ img.alt }} Front"><img src="{{ fldr }}{{ img.front }}_front_thumb.jpg" alt="{{ img.alt }} Front"></a>{% endif %}
     {% if img.back -%}

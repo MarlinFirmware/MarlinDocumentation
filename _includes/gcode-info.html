@@ -72,45 +72,43 @@
     {% if gcode.parameters %}
       {% assign list = ('' | split: '|') %}
       {% for parm in gcode.parameters %}
-        {% if parm.tag %}
-          {% assign list = list | push: parm %}
-        {% endif %}
+        {% if parm.tag %}{% assign list = list | push: parm %}{% endif %}
       {% endfor %}
 
       {% if list.size > 0 %}
         {% assign list = (list | sort: 'tag') %}
-        {% for parm in list %}<!--
-        --><span {% if parm.optional %}class="optional" {% endif %}data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="{{ parm.description | markdownify | strip_html }}"><!--
-          -->{% if parm.optional %}&#x5B;{% endif %}<!--
-            -->{{ parm.tag }}<!--
-            -->{% if parm.values.size > 0 %}<!--
-              -->{% if parm.values.size == 1 %}<!--
-                -->{% assign pv = parm.values[0] %}<!--
-                -->{% if pv.type != 'flag' %}<!--
-                  -->{% if pv.optional %}&#x5B;{% else %}&lt;{% endif %}<!--
-                  -->{% if pv.tag %}<!--
-                    -->{{ pv.tag }}{% if pv.unit %} ({{ pv.unit }}){% endif %}<!--
-                  -->{% elsif pv.unit %}<!--
-                    -->{{ pv.unit }}<!--
-                  -->{% elsif pv.type %}<!--
-                    -->{{ pv.type }}<!--
-                  -->{% else %}<!--
-                    -->Unknown<!--
-                  -->{% endif %}<!--
-                  -->{% if pv.optional %}&#x5D;{% else %}&gt;{% endif %}<!--
-                -->{% endif %}<!--
-              -->{% else %}<!--
-                -->&lt;<!--
-                -->{% for pv in parm.values %}<!--
-                  -->{{ pv.tag }}<!--
-                  -->{% if forloop.last != true %}&#x7C;{% endif %}<!--
-                -->{% endfor %}<!--
-                -->&gt;<!--
-              -->{% endif %}<!--
-            -->{% endif %}<!--
-            -->{% if parm.optional %}&#x5D;{% endif %}<!--
-          --></span> <!--
-     -->{% endfor %}
+        {% for parm in list -%}
+          <span {% if parm.optional %}class="optional" {% endif %}data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="{{ parm.description | markdownify | strip_html }}">
+          {%- if parm.optional %}&#x5B;{% endif -%}
+            {{- parm.tag -}}
+            {%- if parm.values.size > 0 -%}
+              {%- if parm.values.size == 1 -%}
+                {%- assign pv = parm.values[0] -%}
+                {%- if pv.type != 'flag' -%}
+                  {%- if pv.optional %}&#x5B;{% else -%}&lt;{%- endif -%}
+                  {%- if pv.tag -%}
+                    {{ pv.tag }}{%- if pv.unit -%} ({{ pv.unit }}){%- endif -%}
+                  {%- elsif pv.unit -%}
+                    {{ pv.unit }}
+                  {%- elsif pv.type -%}
+                    {{ pv.type }}
+                  {%- else -%}
+                    Unknown
+                  {%- endif -%}
+                  {%- if pv.optional %}&#x5D;{% else -%}&gt;{%- endif -%}
+                {%- endif -%}
+              {%- else -%}
+                &lt;
+                {%- for pv in parm.values -%}
+                  {{- pv.tag -}}
+                  {%- if forloop.last != true %}&#x7C;{% endif -%}
+                {%- endfor -%}
+                &gt;
+              {%- endif -%}
+            {%- endif -%}
+            {%- if parm.optional -%}&#x5D;{% endif -%}
+          </span>
+        {% endfor %}
       {% endif %}
     {% endif %}
   </code></div>
@@ -131,64 +129,66 @@
             {% assign list = (list | sort: 'tag') %}
             {% for parm in list %}
               <tr>
-                <td class="arg"><code>
-                  {% if parm.optional %}&#x5B;{% endif %}<!--
-                  -->{{ parm.tag }}<!--
-                  -->{% if parm.values.size > 0 %}<!--
-                    -->{% if parm.values.size == 1 %}<!--
-                      -->{% assign pv = parm.values[0] %}<!--
-                      -->{% if pv.type != 'flag' %}<!--
-                        -->{% if pv.optional %}&#x5B;{% else %}&lt;{% endif %}<!--
-                        -->{% if pv.tag %}<!--
-                          -->{{ pv.tag }}{% if pv.unit %}({{ pv.unit }}){% endif %}<!--
-                        -->{% elsif pv.unit %}<!--
-                          -->{{ pv.unit }}<!--
-                        -->{% elsif pv.type %}<!--
-                          -->{{ pv.type }}<!--
-                        -->{% else %}<!--
-                          -->Unknown<!--
-                        -->{% endif %}<!--
-                        -->{% if pv.optional %}&#x5D;{% else %}&gt;{% endif %}<!--
-                      -->{% endif %}<!--
-                    -->{% else %}<!--
-                      -->&lt;<!--
-                      -->{% for pv in parm.values %}<!--
-                        -->{{ pv.tag }}<!--
-                        -->{% if forloop.last != true %}&#x7C;{% endif %}<!--
-                      -->{% endfor %}<!--
-                      -->&gt;<!--
-                    -->{% endif %}<!--
-                  -->{% endif %}<!--
-                  -->{% if parm.optional %}&#x5D;{% endif %}
-                </code><!--
-                -->{% if parm.since %} <span class="label label-success"><span data-toggle="tooltip" data-placement="bottom" title="Available since"><i class="fa fa-code" aria-hidden="true"></i> {{ parm.since }}</span></span>{% endif %}<!--
-                -->{% if parm.requires %}{% assign list = (parm.requires | split: ',') %}<!--
-                  -->{% for item in list %}<!--
-                    --> <span class="label label-requires"><span data-toggle="tooltip" data-placement="bottom" title="Option required">{{item}}</span></span><!--
-                  -->{% endfor %}<!--
-                -->{% endif %}<!--
-                -->{% if parm.experimental %} <span class="label label-warning"><span data-toggle="tooltip" data-placement="bottom" title="Experimental option"><i class="fa fa-flask" aria-hidden="true"></i></span></span>{% endif %}<!--
-                --></td>
+                <td class="arg">
+                  {%- if parm.since %}<span class="label label-success"><span data-toggle="tooltip" data-placement="bottom" title="Available since"><i class="fa fa-code" aria-hidden="true"></i> {{ parm.since }}</span></span>{% endif -%}
+                  <code>
+                    {%- if parm.optional %}&#x5B;{% endif -%}
+                    {{ parm.tag }}
+                    {%- if parm.values.size > 0 -%}
+                      {%- if parm.values.size == 1 -%}
+                        {%- assign pv = parm.values[0] -%}
+                        {%- if pv.type != 'flag' -%}
+                          {%- if pv.optional -%}&#x5B;{%- else -%}&lt;{%- endif -%}
+                          {%- if pv.tag -%}
+                            {{- pv.tag }}{%- if pv.unit -%}({{ pv.unit }}){%- endif -%}
+                          {%- elsif pv.unit -%}
+                            {{- pv.unit -}}
+                          {%- elsif pv.type -%}
+                            {{- pv.type -}}
+                          {%- else -%}
+                            Unknown
+                          {%- endif -%}
+                          {%- if pv.optional -%}&#x5D;{%- else -%}&gt;{%- endif -%}
+                        {%- endif -%}
+                      {%- else -%}
+                        &lt;
+                        {%- for pv in parm.values -%}
+                          {{ pv.tag }}
+                          {%- if forloop.last != true -%}&#x7C;{%- endif -%}
+                        {%- endfor -%}
+                        &gt;
+                      {%- endif -%}
+                    {%- endif -%}
+                    {%- if parm.optional %}&#x5D;{% endif -%}
+                  </code>
+                  {%- if parm.requires %}{% assign list = (parm.requires | split: ',') -%}
+                    {%- for item in list %} <span class="label label-requires"><span data-toggle="tooltip" data-placement="bottom" title="Option required">{{item}}</span></span>{% endfor -%}
+                  {%- endif -%}
+                  {%- if parm.experimental %} <span class="label label-warning"><span data-toggle="tooltip" data-placement="bottom" title="Experimental option"><i class="fa fa-flask" aria-hidden="true"></i></span></span>{% endif -%}
+                </td>
                 <td>
-                  {{ parm.description | markdownify }}
-                  {% if parm.values.size > 0 %}
+                  {{- parm.description | markdownify -}}
+                  {%- if parm.values.size > 0 %}
                     <ul class="param-desc-list">
-                      {% for pv in parm.values %}
-                        {% if pv.description %}
-                          <li><code>{{ parm.tag }}{{ pv.tag }}</code>: {{ pv.description | markdownify }}</li>
-                        {% endif %}
-                      {% endfor %}
+                      {%- for pv in parm.values -%}
+                        {%- if pv.description -%}
+                          <li>
+                            {%- if pv.since %}<span class="label label-success"><span data-toggle="tooltip" data-placement="bottom" title="Available since"><i class="fa fa-code" aria-hidden="true"></i> {{ pv.since }}</span></span>{% endif %}
+                            <code>{{ parm.tag }}{{ pv.tag }}</code>: {{ pv.description | markdownify -}}
+                          </li>
+                        {%- endif -%}
+                      {%- endfor -%}
                     </ul>
-                  {% endif %}
+                  {%- endif -%}
                 </td>
               </tr>
-            {% endfor %}
+            {%- endfor -%}
           </tbody>
         </table>
       </div>
     </div>
   {% endif %}
-{% endif %}
+{%- endif %}
 
 {% if gcode.images %}
 <div class="col-lg-12 row gallery" id="gallery-{{ gcode.tag }}">
@@ -215,24 +215,20 @@
 {% if gcode.examples %}{% assign ex = gcode.examples %}
 {% elsif gcode.example %}{% assign ex = gcode.example %}
 {% else %}{% assign ex = false %}{% endif %}
-{% if ex %}
+{% if ex -%}
   <div class="col-lg-12 row examples">
     <h3>Example{% if ex[1] %}s{% endif %}</h3>
-    {% for item in ex %}
-      {% if item.pre %}
-        {% for line in item.pre %}
-          {{ line | markdownify }}
-        {% endfor %}
-      {% endif %}
-      {% highlight gcode %}{% for line in item.code %}{{ line }}
-{% endfor %}{% endhighlight %}
-      {% if item.post %}
+    {%- for item in ex -%}
+      {%- if item.pre -%}
+        {%- for line in item.pre -%}{{ line | markdownify }}{%- endfor -%}
+      {%- endif -%}
+      {%- highlight gcode -%}{% for line in item.code %}{{ line }}
+{% endfor %}{% endhighlight -%}
+      {%- if item.post -%}
         <div class="post">
-          {% for line in item.post %}
-            {{ line | markdownify }}
-          {% endfor %}
+          {%- for line in item.post -%}{{ line | markdownify }}{%- endfor -%}
         </div>
-      {% endif %}
-    {% endfor %}
+      {%- endif -%}
+    {%- endfor -%}
   </div>
-{% endif %}
+{%- endif %}
