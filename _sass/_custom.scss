@@ -532,7 +532,6 @@ div.container.detail, div.container.config {
   strong em { color: var(--color-jumbo-strong); }
   h2 { background: var(--color-jumbo-h2-bg); }
   }
-iframe.youtube { border-color: var(--color-iframe-border); }
 #search.container {
   color: var(--color-iframe-search);
   background: var(--color-iframe-search-bg);
@@ -1041,8 +1040,10 @@ li#searchbox {
 li#searchbox { &:hover, &:active { background-color: transparent; } }
 
 iframe.youtube {
+  border-color: var(--color-iframe-border);
   border: 2px solid;
   margin: 0.5em auto;
+  &.rj { margin: 0; float: right; }
 }
 hr { margin-top: 0; margin-bottom: 0; }
 summary h3 { display: inline; }
@@ -1217,5 +1218,5 @@ div.tags { display: inline-block; float: right; margin: 0.5em; }
   .lcd div { padding-bottom: 0.9em; }
   .lcd .desc { float: left; width: 60%; margin-right: -60%; padding-left: 1em; }
   .lcd .gallery { float: right; width: 40%; margin-left: -40%; padding: 0 1em 0.9em 0; }
-  .lcd .gallery img { float: right; margin-bottom: 1px; }
+  .lcd .gallery img { float: right; margin-top: 4px; }
 }
