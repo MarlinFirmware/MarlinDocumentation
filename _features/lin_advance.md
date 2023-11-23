@@ -10,20 +10,18 @@ category: [ features, developer ]
 
 Under default conditions, extruder axis movement is treated in the same way as the XYZ linear axes. The extruder motor moves in linear proportion to all the other motors, maintaining exactly the same acceleration profile and start/stop points. But an extruder is not a linear system, so this approach leads, most obviously, to extra material being extruded at the end of each linear movement.
 
-Take the common test-cube as an example. Even with the best tuning the corners are usually not sharp, but bleed out. The top solid infill displays roughness where the print direction changes on perimeters. These problems are minor or even imperceptible at low printing speeds, but they become more noticeable and problematic as print speeds increase.
+Take the common test-cube as an example. Even with the best tuning the corners aren't usually sharp, but bleed out. The top solid infill displays roughness where the print direction changes on perimeters. Such problems are minor or even imperceptible at low printing speeds, but they become more noticeable and problematic as print speeds increase.
 
-Tuning the flow can help, but this may lead to under-extrusion when starting new lines. Some slicers include an option to end extrusion early in each move, but this adds more complexity to the G-code and has to be retuned for different temperatures and materials.
+Tuning flow and retraction can help, but this may lead to under-extrusion when starting new lines. Some slicers include an option to end extrusion early in each move, but this adds more complexity to the G-code and has to be re-tuned for different temperatures and materials.
 
-Since the root cause is pressure, `LIN_ADVANCE` de-couples extrusion from the other axes to produce the correct pressure inside the nozzle, adapting to the printing speed. Once Linear Advance is properly tuned, bleeding edges and rough solid infill should be nearly eliminated.
-<br>
+Since the root cause is pressure, `LIN_ADVANCE` de-couples extrusion from the other axes to better control material pressure inside the nozzle, adapting to the printing speed. Once Linear Advance is properly tuned, bleeding edges and rough solid infill should be nearly eliminated.
+
 # Advantages
 
 - Better dimensional precision due to reduced bleeding edges.
 - Higher printing speeds are possible without any loss of print quality - as long as your extruder can handle the needed speed changes.
 - Visible and tangible print quality is increased even at lower printing speeds.
 - No need for high acceleration and jerk values to get sharp edges.
-
-<br>
 
 # Special notes for v1.5
 
@@ -39,20 +37,20 @@ Since the root cause is pressure, `LIN_ADVANCE` de-couples extrusion from the ot
 
 As the unit of K has changed, you have to redo the K calibration procedure. See next chapter for details. While old v1 K values for PLA might be between 30-130, you can now expect K to be around 0.1-2.0.
 
-## LIN_ADVANCE can reduce your print acceleration
+## LIN_ADVANCE may reduce acceleration
 
-In v1, if K was set to a high value which couldn't be handled by your printer, then the printer was losing steps and/or using all of it's processing power to execute extruder steps. In v1.5, this is handled much smarter. `LIN_ADVANCE` will now check if it can execute the advance steps as needed. If the needed extruder speed exceeds the extruder jerk limit, it will reduce the print acceleration for the line printed to a value which keeps the extruder speed within the limit.
+In v1, if K was set to a high value which couldn't be handled by your printer, then the printer was losing steps and/or using all of its processing power to execute extruder steps. In v1.5, this is handled much smarter. `LIN_ADVANCE` will now check if it can execute the advance steps as needed. If the needed extruder speed exceeds the extruder jerk limit, it will reduce the print acceleration for the line printed to a value which keeps the extruder speed within the limit.
 
-While you will most likely not run into this on direct drive printers with filaments like PLA, it will happen most likely on bowden printers as they need higher K values and therefore faster speed adaptions. If this happens to an amount you don't want to accept, you have the following options:
+While you will most likely not run into this on direct drive printers with filaments like PLA, it will happen most likely on Bowden printers as they need higher K values and therefore faster speed adaptions. If this happens to an amount you don't want to accept, you have the following options:
 - Check your extruder jerk setting. If you have the feeling it is set to a very conservative value, try increasing it.
 - Keep the extruder acceleration low. This can be achieved by lowering the layer height or line width for example
-- Keep K as low as possible. Maybe you can shorten the bowden tube?
+- Keep K as low as possible. Maybe you can shorten the Bowden tube?
 
-## A note on bowden printers vs. LIN_ADVANCE
+## LIN_ADVANCE with Bowden extruders
 
-A quite common note during development of `LIN_ADVANCE` was that bowden systems (and especially delta printers) are meant to be faster due to the lower moving mass. So lowering the print acceleration as described above would be an inadequate solution. On the other hand, bowden systems need a pressure advance feature the most as they usually have the most problems with speed changes.
+A quite common note during development of `LIN_ADVANCE` was that Bowden systems (and especially delta printers) are meant to be faster due to the lower moving mass. So lowering the print acceleration as described above would be an inadequate solution. On the other hand, Bowden systems need a pressure advance feature the most as they usually have the most problems with speed changes.
 
-Well, `LIN_ADVANCE` was developed because I (Sebastianv650) wasn't satisfied by the print quality I got out of my direct drive printer. While it's a possible point of view to say that lowering acceleration on a bowden printer (which is meant to be fast) is a bad thing, I see it differently: if you would be satisfied with the print quality your bowden setup gives you, you wouldn't be reading about a way to do pressure corrections, isn't it? So maybe in this case the highest possible top speed is quite useless.. Bowdens are an option to keep moving mass low and therefore allowing higher movement speeds, but don't expect them to give the same precise filament laydown ability than a direct drive one.
+Well, `LIN_ADVANCE` was developed because I (Sebastianv650) wasn't satisfied by the print quality I got out of my direct drive printer. While some might say that lowering acceleration on a Bowden printer (which is meant to be fast) is a bad thing, I see it differently: if you were satisfied with the print quality of your Bowden setup, you wouldn't be reading about a way to do pressure corrections, right? So maybe in this case the highest possible top speed is quite useless. Bowdens are an option to keep moving mass low and therefore allowing higher movement speeds, but don't expect them to give the same precise filament laydown ability than a direct drive one.
 It's like painting a picture: try to paint with a 1m long brush, grabing the rear end of the handle which is made from rubber. Even if you try to compensate for the wobbly brush tip (which is basically what `LIN_ADVANCE` does), it will never be as good as using a usual brush.
 On the other hand, if you only need to have a part printed fast without special needs in terms of quality, there is no reason to enable `LIN_ADVANCE` at all. For those prints, you can just set K to 0.
 
@@ -77,7 +75,7 @@ For each new line the K-Factor will be increased by the `K-Factor Stepping` valu
  - The best matching K-Factor to be used in production depends on.
    - Type of filament. Extremely flexible filaments like Ninjaflex may not work at all.
    - Printing temperature.
-   - Extruder characteristics: Bowden vs.  direct extruder , bowden length, free filament length in the extruder, etc.
+   - Extruder characteristics: Bowden vs.  direct extruder , Bowden length, free filament length in the extruder, etc.
    - Nozzle size and geometry.
  - The extruder's steps/mm value has to be [calibrated precisely](//reprap.org/wiki/Triffid_Hunter%27s_Calibration_Guide#E_steps). Calibration is recommended at low speeds to avoid additional influences.
  - Minimize Backlash caused by gears [geared extruder](//reprap.org/wiki/Wade%27s_Geared_Extruder) or by push fittings. As it will not influence the K-Factor, it can lead to strange noises from the extruder due to the pressure control.

@@ -50,7 +50,7 @@ function genGcode() {
   var Z_SPEED = 10.0,              // (mm/s) Z movement speed
       WAVELENGTH = 2.0,            // (mm) the width of one ful zig-zag
       AMPLITUDE = 0.5;             // (mm) the peak to peak size of the zig-zag pattern
-      
+
   var gcodeOut = document.getElementById('freq-gcode-out');
   var zeta_x_gcodeOut = document.getElementById('zeta-x-gcode-out');
   var zeta_y_gcodeOut = document.getElementById('zeta-y-gcode-out');
@@ -142,7 +142,7 @@ function genGcode() {
                   'G92 E0 ; Reset extruder distance\n' +
                   'M501 ; Load settings from EEPROM\n' +
                   ';';
-  
+
   // Clear output
   gcodeOut.value = '';
   zeta_x_gcodeOut.value = '';
@@ -152,7 +152,7 @@ function genGcode() {
     let lines = generatePattern(settings);
 
     let freq = '; ### Marlin IS Calibration Damping Frequency Pattern ###\n' +
-              start_script + 
+              start_script +
               'M593 F0 ; input shaping off\n' +
               lines['freq'] + end_script;
     let zeta_x_script = '; ### Marlin IS Calibration Zeta/Damping Factor X Pattern ###\n' +
@@ -511,7 +511,7 @@ function saveTextAsFile(type) {
         return;
       }
   }
-  
+
 }
 
 // sanity checks for pattern / bed size
@@ -544,7 +544,7 @@ function validateInput() {
     invalidDiv = 0;
 
   // Start clean
-  $('#BEDSIZE_X,#BEDSIZE_Y,#MAX_FREQ_X,#MAX_FREQ_Y,#PRINT_SPEED,#TRAVEL_SPEED,#FILAMENT_DIAMETER,' + 
+  $('#BEDSIZE_X,#BEDSIZE_Y,#MAX_FREQ_X,#MAX_FREQ_Y,#PRINT_SPEED,#TRAVEL_SPEED,#FILAMENT_DIAMETER,' +
   '#LINE_WIDTH,#LAYER_HEIGHT,#FAN_SPEED,#EXTRUSION_MULT,#Z_OFFSET,#NOZZLE_TEMP,#BED_TEMP,' +
   '#DECEL,#JERK,#JUNCTION,#RETRACTION,#RETRACT_SPEED').each((i,t) => {
     t.setCustomValidity('');
