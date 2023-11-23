@@ -192,7 +192,7 @@ function generatePattern(settings) {
   }
   let max_x_speed = settings.wavelength * settings.top_freq_x;
   let coast_dist_x = Math.pow(max_x_speed, 2) / 2 / settings.decel;
-  let max_y_size = settings.top_freq_x * settings.wavelength + coast_dist_x + 8;
+  let max_y_size = Math.max(110, settings.top_freq_x * settings.wavelength + coast_dist_x + 8);
 
   idx = 0;
   for (i = 0; i < settings.top_freq_y; i++) {
@@ -209,7 +209,7 @@ function generatePattern(settings) {
   }
   let max_y_speed = settings.wavelength * settings.top_freq_y;
   let coast_dist_y = Math.pow(max_y_speed, 2) / 2 / settings.decel;
-  let max_x_size = settings.top_freq_y * settings.wavelength + coast_dist_y + 8;
+  let max_x_size = Math.max(110, settings.top_freq_y * settings.wavelength + coast_dist_y + 8);
 
   let min_x = (settings.bed_x - max_x_size) / 2;
   let max_x = (settings.bed_x + max_x_size) / 2;
@@ -543,7 +543,20 @@ function validateInput() {
       RETRACTION: $('#RETRACTION').val(),
       RETRACT_SPEED: $('#RETRACT_SPEED').val(),
     },
-    invalidDiv = 0;
+    wavelength = 2.0,
+    decel = parseFloat(testNaN['DECEL']),
+    top_freq_x = parseInt(testNaN['MAX_FREQ_X']),
+    top_freq_y = parseInt(testNaN['MAX_FREQ_Y']);
+
+  let max_x_speed = wavelength * top_freq_x;
+  let coast_dist_x = Math.pow(max_x_speed, 2) / 2 / decel;
+  let max_y_size = Math.max(110, top_freq_x * wavelength + coast_dist_x + 8);
+
+  let max_y_speed = wavelength * top_freq_y;
+  let coast_dist_y = Math.pow(max_y_speed, 2) / 2 / decel;
+  let max_x_size = Math.max(110, top_freq_y * wavelength + coast_dist_y + 8);
+
+    
 
   // Start clean
   $('#BEDSIZE_X,#BEDSIZE_Y,#MAX_FREQ_X,#MAX_FREQ_Y,#PRINT_SPEED,#TRAVEL_SPEED,#FILAMENT_DIAMETER,' +
@@ -556,7 +569,7 @@ function validateInput() {
   $('#warning1').hide();
   $('#warning2').hide();
   $('#warning3').hide();
-  $('#button').prop('disabled', false);
+  $('.tool').prop('disabled', false);
 
   // Check for proper numerical values
   Object.keys(testNaN).forEach((k) => {
@@ -566,9 +579,30 @@ function validateInput() {
       $('#warning3').text('Some values are not proper numbers. Check highlighted Settings.');
       $('#warning3').addClass('invalidNumber');
       $('#warning3').show();
-      $('#button').prop('disabled', true);
+      $('.tool').prop('disabled', true);
     }
   });
+  
+  if (max_x_size > (parseInt(testNaN['BEDSIZE_X']) - 8)) {
+    $('label[for=BEDSIZE_X]').addClass('invalidSize');
+    $('#BEDSIZE_X')[0].setCustomValidity('Pattern size (x: ' + max_x_size + ', y: ' + max_y_size + ') exceeds your X bed size.');
+    $('label[for=MAX_FREQ_Y]').addClass('invalidSize');
+    $('#MAX_FREQ_Y')[0].setCustomValidity('Pattern size (x: ' + max_x_size + ', y: ' + max_y_size + ') exceeds your X bed size.');
+    $('#warning1').text('Your Pattern size (x: ' + max_x_size + ', y: ' + max_y_size + ') exceeds your X bed size. Check highlighted Pattern Settings.');
+    $('#warning1').addClass('invalidSize');
+    $('#warning1').show();
+    $('.tool').prop('disabled', true);
+  }
+  if (max_y_size > (parseInt(testNaN['BEDSIZE_Y']) - 8)) {
+    $('label[for=BEDSIZE_Y]').addClass('invalidSize');
+    $('#BEDSIZE_Y')[0].setCustomValidity('Pattern size (x: ' + max_x_size + ', y: ' + max_y_size + ') exceeds your Y bed size.');
+    $('label[for=MAX_FREQ_X]').addClass('invalidSize');
+    $('#MAX_FREQ_X')[0].setCustomValidity('Pattern size (x: ' + max_x_size + ', y: ' + max_y_size + ') exceeds your Y bed size.');
+    $('#warning2').text('Your Pattern size (x: ' + max_x_size + ', y: ' + max_y_size + ') exceeds your Y bed size. Check highlighted Pattern Settings.');
+    $('#warning2').addClass('invalidSize');
+    $('#warning2').show();
+    $('.tool').prop('disabled', true);
+  }
 }
 
 // save current settings as localStorage object
