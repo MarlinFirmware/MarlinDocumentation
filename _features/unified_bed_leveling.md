@@ -42,7 +42,7 @@ G29 T           ; View the Z compensation values.
 G29 S0          ; Save UBL mesh points to slot 0.
 G29 F 10.0      ; Set Fade Height for correction at 10.0 mm.
 G29 A           ; Activate the UBL System.
-M500            ; Save settings to EEPROM. 
+M500            ; Save settings to EEPROM.
                 ; WARNING: Causes UBL to be active at power-up, before any G28.
 ```
 

@@ -11,18 +11,12 @@ category:     [ tools ]
   <div class="row">
     <div id="calibpat">
       <h1>K-factor Calibration Pattern</h1>
-      <div class="row alert alert-info custom-alert">
-        <div class="col-lg-1 col-md-2 visible-md-block custom-alert-icon"> <i class="fa fa-info-circle fa-4x" aria-hidden="true"></i> </div>
-        <div class="col-lg-11 col-md-10 custom-alert-text">
-          <p><em>Caution!</em><br/>
-          K-values for Linear Advance 1.0 and 1.5 are not compatible.<br/>
-          Linear Advance 1.0 is used in Marlin 1.1.8 and earlier.<br/>
-          Linear Advance 1.5 is used in Marlin 1.1.9 and later.</p>
-        </div>
-      </div>
-      <p>Use this form to generate G-code that you can use to calibrate your Linear Advance K-factor. Default values apply to standard PLA with a 0.4mm nozzle.</p>
-      <p>Press the <strong>Generate G-code</strong> button followed by <strong>Download as file</strong> to save the result.</p>
-      <table id="kfactor">
+{% alert warning %}
+__Caution!__
+- K-values for Linear Advance 1.0 and 1.5 are not compatible.
+- Linear Advance 1.5 only applies to Marlin 1.1.9 and later.
+{% endalert %}
+      <table id="tool">
         <tbody>
           <tr class="head">
             <td colspan="3"><h3>Settings</h3></td>
@@ -300,19 +294,19 @@ category:     [ tools ]
           </tr>
           <tr class="calibpat2">
             <th><label for="FILENAME">Filename</label></th>
-            <td colspan="2"><input name="FILENAME" id="FILENAME" value="filename" />
-              <input name="button" type="button" id="button" onclick="genGcode()" value="Generate G-code" />
-              <input name="button3" type="button" id="button3" onclick="setLocalStorage()" value="Save as default" title="Save settings in a cookie." />
+            <td colspan="2"><input name="FILENAME" id="FILENAME" value="kfactor" />
+              <input type="button" class="tool" onclick="genGcode()" value="Generate G-code" />
+              <input type="button" class="tool" onclick="setLocalStorage()" value="Save as default" title="Save settings in a cookie." />
             <p id="warning1" style="display: none;">warning</p>
             <p id="warning2" style="display: none;">warning</p>
             <p id="warning3" style="display: none;">warning</p></td>
             <td class="options"><p>
-              <input name="button2" type="button" id="button2" onclick="saveTextAsFile()" value="Download as file" />
+              <input type="button" class="tool" onclick="saveTextAsFile()" value="Download as file" />
             </p></td>
           </tr>
         </tbody>
       </table>
-      <h3>Notes on the settings:</h3>
+      <h3>Notes:</h3>
       <ul>
         <li><strong>Fast Printing Speed</strong> and <strong>Slow Printing Speed</strong> should be significantly different or the K-factor effect will barely be visible.</li>
         <li><strong>Use Bed Leveling</strong> requires a probe.</li>
