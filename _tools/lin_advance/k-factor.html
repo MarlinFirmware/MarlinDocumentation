@@ -16,7 +16,7 @@ __Caution!__
 - K-values for Linear Advance 1.0 and 1.5 are not compatible.
 - Linear Advance 1.5 only applies to Marlin 1.1.9 and later.
 {% endalert %}
-      <table id="kfactor">
+      <table id="tool">
         <tbody>
           <tr class="head">
             <td colspan="3"><h3>Settings</h3></td>
@@ -295,13 +295,13 @@ __Caution!__
           <tr class="calibpat2">
             <th><label for="FILENAME">Filename</label></th>
             <td colspan="2"><input name="FILENAME" id="FILENAME" value="filename" />
-              <input name="button" type="button" id="button" onclick="genGcode()" value="Generate G-code" />
-              <input name="button3" type="button" id="button3" onclick="setLocalStorage()" value="Save as default" title="Save settings in a cookie." />
+              <input type="button" class="tool" onclick="genGcode()" value="Generate G-code" />
+              <input type="button" class="tool" onclick="setLocalStorage()" value="Save as default" title="Save settings in a cookie." />
             <p id="warning1" style="display: none;">warning</p>
             <p id="warning2" style="display: none;">warning</p>
             <p id="warning3" style="display: none;">warning</p></td>
             <td class="options"><p>
-              <input name="button2" type="button" id="button2" onclick="saveTextAsFile()" value="Download as file" />
+              <input type="button" class="tool" onclick="saveTextAsFile()" value="Download as file" />
             </p></td>
           </tr>
         </tbody>

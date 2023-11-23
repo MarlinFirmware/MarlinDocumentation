@@ -23,7 +23,7 @@ Caution! Only for Cartesian printers. CoreXY kinematics are not yet tested.
       <ul>Zeta/damping factor for X-axis (not shown)</ul>
       <ul>Zeta/damping factor for Y-axis (not shown)</ul>
       <p>Press <strong>Generate G-code</strong> followed by each <strong>Download * as file</strong> to save the results.</p>
-      <table id="kfactor">
+      <table id="tool">
         <tbody>
           <tr class="head">
             <td colspan="3"><h3>Settings</h3></td>
@@ -170,15 +170,15 @@ Caution! Only for Cartesian printers. CoreXY kinematics are not yet tested.
           <tr class="calibpat2">
             <th><label for="FILENAME">Filename</label></th>
             <td colspan="2"><input name="FILENAME" id="FILENAME" value="filename" />
-              <input type="button" name="button" id="button" onclick="genGcode()" value="Generate G-code" />
-              <input type="button" name="button3" id="button3" onclick="setLocalStorage()" value="Save as default" title="Save settings in a cookie." />
+              <input type="button" class="tool" onclick="genGcode()" value="Generate G-code" />
+              <input type="button" class="tool" onclick="setLocalStorage()" value="Save as default" title="Save settings in a cookie." />
             <p id="warning1" style="display: none;">warning</p>
             <p id="warning2" style="display: none;">warning</p>
             <p id="warning3" style="display: none;">warning</p></td>
             <td class="options"><p>
-              <input name="button2" type="button" id="button2" onclick="saveTextAsFile(0)" value="Download Damping Frequency as file" />
-              <input name="button4" type="button" id="button4" onclick="saveTextAsFile(1)" value="Download Damping/zeta factor for X as file" />
-              <input name="button5" type="button" id="button5" onclick="saveTextAsFile(2)" value="Download Damping/zeta factor for Y as file" />
+              <input type="button" class="tool" onclick="saveTextAsFile(0)" value="Download Damping Frequency as file" />
+              <input type="button" class="tool" onclick="saveTextAsFile(1)" value="Download Damping/zeta factor for X as file" />
+              <input type="button" class="tool" onclick="saveTextAsFile(2)" value="Download Damping/zeta factor for Y as file" />
             </p></td>
           </tr>
         </tbody>

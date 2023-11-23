@@ -117,100 +117,100 @@ function genGcode() {
   };
 
   var patSettings = {
-    'lengthSlow' : LENGTH_SLOW,
+    'lengthSlow': LENGTH_SLOW,
     'lengthFast': LENGTH_FAST,
-    'kStart' : K_START,
-    'kEnd' : K_END,
-    'kStep' : K_STEP,
-    'lineSpacing' : LINE_SPACING
+    'kStart': K_START,
+    'kEnd': K_END,
+    'kStep': K_STEP,
+    'lineSpacing': LINE_SPACING
   };
 
   // Start G-code for pattern
-  var k_script =  '; ### Marlin K-Factor Calibration Pattern ###\n' +
-                  '; -------------------------------------------\n' +
-                  ';\n' +
-                  '; Printer: ' + PRINTER + '\n' +
-                  '; Filament: ' + FILAMENT + '\n' +
-                  '; Created: ' + new Date() + '\n' +
-                  ';\n' +
-                  '; Settings Printer:\n' +
-                  '; Filament Diameter = ' + FILAMENT_DIAMETER + ' mm\n' +
-                  '; Nozzle Diameter = ' + NOZZLE_DIAMETER + ' mm\n' +
-                  '; Nozzle Temperature = ' + NOZZLE_TEMP + ' °C\n' +
-                  '; Bed Temperature = ' + BED_TEMP + ' °C\n' +
-                  '; Retraction Distance = ' + RETRACT_DIST + ' mm\n' +
-                  '; Layer Height = ' + HEIGHT_LAYER + ' mm\n' +
-                  '; Extruder = ' + TOOL_INDEX + ' \n' +
-                  '; Fan Speed = ' + FAN_SPEED + ' %\n' +
-                  '; Z-axis Offset = ' + Z_OFFSET + ' mm\n' +
-                  ';\n' +
-                  '; Settings Print Bed:\n' +
-                  '; Bed Shape = ' + BED_SHAPE + '\n' +
-                  (BED_SHAPE === 'Round' ? '; Bed Diameter = ' + BED_X + ' mm\n' : '; Bed Size X = ' + BED_X + ' mm\n') +
-                  (BED_SHAPE === 'Round' ? '' : '; Bed Size Y = ' + BED_Y + ' mm\n') +
-                  '; Origin Bed Center = ' + (NULL_CENTER ? 'true' : 'false') + '\n' +
-                  ';\n' +
-                  '; Settings Speed:\n' +
-                  '; Slow Printing Speed = ' + SPEED_SLOW + ' mm/min\n' +
-                  '; Fast Printing Speed = ' + SPEED_FAST + ' mm/min\n' +
-                  '; Movement Speed = ' + SPEED_MOVE + ' mm/min\n' +
-                  '; Retract Speed = ' + SPEED_RETRACT + ' mm/min\n' +
-                  '; Unretract Speed = ' + SPEED_UNRETRACT + ' mm/min\n' +
-                  '; Printing Acceleration = ' + ACCELERATION + ' mm/s^2\n' +
-                  '; Jerk X-axis = ' + (X_JERK !== -1 ? X_JERK + '\n': ' firmware default\n') +
-                  '; Jerk Y-axis = ' + (Y_JERK !== -1 ? Y_JERK + '\n': ' firmware default\n') +
-                  '; Jerk Z-axis = ' + (Z_JERK !== -1 ? Z_JERK + '\n': ' firmware default\n') +
-                  '; Jerk Extruder = ' + (E_JERK !== -1 ? E_JERK + '\n': ' firmware default\n') +
-                  ';\n' +
-                  '; Settings Pattern:\n' +
-                  '; Linear Advance Version = ' + VERSION_LIN + '\n' +
-                  '; Starting Value Factor = ' + K_START + '\n' +
-                  '; Ending Value Factor = ' + K_END + '\n' +
-                  '; Factor Stepping = ' + K_STEP + '\n' +
-                  '; Test Line Spacing = ' + LINE_SPACING + ' mm\n' +
-                  '; Test Line Length Slow = ' + LENGTH_SLOW + ' mm\n' +
-                  '; Test Line Length Fast = ' + LENGTH_FAST + ' mm\n' +
-                  '; Print Pattern = ' + (PATTERN_TYPE === 'alt' ? 'Alternate' : 'Standard') + '\n' +
-                  '; Print Frame = ' + (USE_FRAME ? 'true' : 'false') + '\n' +
-                  '; Number Lines = ' + (USE_LINENO ? 'true' : 'false') + '\n' +
-                  '; Print Size X = ' + FIT_WIDTH + ' mm\n' +
-                  '; Print Size Y = ' + FIT_HEIGHT + ' mm\n' +
-                  '; Print Rotation = ' + PRINT_DIR + ' degree\n' +
-                  ';\n' +
-                  '; Settings Advance:\n' +
-                  '; Nozzle / Line Ratio = ' + NOZZLE_LINE_RATIO + '\n' +
-                  '; Bed leveling = ' + BED_LEVELING + '\n' +
-                  '; Use FWRETRACT = ' + (USE_FWR ? 'true' : 'false') + '\n' +
-                  '; Extrusion Multiplier = ' + EXT_MULT + '\n' +
-                  '; Prime Nozzle = ' + (USE_PRIME ? 'true' : 'false') + '\n' +
-                  '; Prime Extrusion Multiplier = ' + EXT_MULT_PRIME + '\n' +
-                  '; Prime Speed = ' + SPEED_PRIME + '\n' +
-                  '; Dwell Time = ' + PRIME_DWELL + ' s\n' +
-                  ';\n' +
-                  '; prepare printing\n' +
-                  ';\n' +
-                  'G21 ; Millimeter units\n' +
-                  'G90 ; Absolute XYZ\n' +
-                  'M83 ; Relative E\n' +
-                  'G28 ; Home all axes\n' +
-                  (DO_Z_ALIGNMENT ? 'G34 ; Align Z\n' : '') +
-                  'T' + TOOL_INDEX + ' ; Switch to tool ' + TOOL_INDEX + '\n' +
-                  'G1 Z10 F100 ; Z raise\n' +
-                  'M104 S' + NOZZLE_TEMP + ' ; Set nozzle temperature (no wait)\n' +
-                  'M190 S' + BED_TEMP + ' ; Set bed temperature (wait)\n' +
-                  'M109 S' + NOZZLE_TEMP + ' ; Wait for nozzle temp\n' +
-                  (BED_LEVELING !== '0' ? BED_LEVELING + '; Activate bed leveling compensation\n' : '') +
-                  'M204 P' + ACCELERATION + ' ; Acceleration\n' +
-                  (X_JERK !== -1 ? 'M205 X' + X_JERK + ' ; X Jerk\n' : '') +
-                  (Y_JERK !== -1 ? 'M205 Y' + Y_JERK + ' ; Y Jerk\n' : '') +
-                  (Z_JERK !== -1 ? 'M205 Z' + Z_JERK + ' ; Z Jerk\n' : '') +
-                  (E_JERK !== -1 ? 'M205 E' + E_JERK + ' ; E Jerk\n' : '') +
-                  'G92 E0 ; Reset extruder distance\n' +
-                  'M106 P' + TOOL_INDEX + ' S' + Math.round(FAN_SPEED * 2.55) + '\n';
+  var k_script = `; ### Marlin K-Factor Calibration Pattern ###
+; -------------------------------------------
+;
+; Printer: ${PRINTER}
+; Filament: ${FILAMENT}
+; Created: ${new Date()}
+;
+; Settings Printer:
+; Filament Diameter = ${FILAMENT_DIAMETER} mm
+; Nozzle Diameter = ${NOZZLE_DIAMETER} mm
+; Nozzle Temperature = ${NOZZLE_TEMP} °C
+; Bed Temperature = ${BED_TEMP} °C
+; Retraction Distance = ${RETRACT_DIST} mm
+; Layer Height = ${HEIGHT_LAYER} mm
+; Extruder = ${TOOL_INDEX}
+; Fan Speed = ${FAN_SPEED} %
+; Z-axis Offset = ${Z_OFFSET} mm
+;
+; Settings Print Bed:
+; Bed Shape = ${BED_SHAPE}
+${BED_SHAPE === 'Round' ? `; Bed Diameter = ${BED_X} mm` : `; Bed Size X = ${BED_X} mm
+; Bed Size Y = ${BED_Y} mm`}
+; Origin Bed Center = ${NULL_CENTER ? 'true' : 'false'}
+;
+; Settings Speed:
+; Slow Printing Speed = ${SPEED_SLOW} mm/min
+; Fast Printing Speed = ${SPEED_FAST} mm/min
+; Movement Speed = ${SPEED_MOVE} mm/min
+; Retract Speed = ${SPEED_RETRACT} mm/min
+; Unretract Speed = ${SPEED_UNRETRACT} mm/min
+; Printing Acceleration = ${ACCELERATION} mm/s^2
+; Jerk X-axis = ${X_JERK !== -1 ? X_JERK : ' firmware default'}
+; Jerk Y-axis = ${Y_JERK !== -1 ? Y_JERK : ' firmware default'}
+; Jerk Z-axis = ${Z_JERK !== -1 ? Z_JERK : ' firmware default'}
+; Jerk Extruder = ${E_JERK !== -1 ? E_JERK : ' firmware default'}
+;
+; Settings Pattern:
+; Linear Advance Version = ${VERSION_LIN}
+; Starting Value Factor = ${K_START}
+; Ending Value Factor = ${K_END}
+; Factor Stepping = ${K_STEP}
+; Test Line Spacing = ${LINE_SPACING} mm
+; Test Line Length Slow = ${LENGTH_SLOW} mm
+; Test Line Length Fast = ${LENGTH_FAST} mm
+; Print Pattern = ${PATTERN_TYPE === 'alt' ? 'Alternate' : 'Standard'}
+; Print Frame = ${USE_FRAME ? 'true' : 'false'}
+; Number Lines = ${USE_LINENO ? 'true' : 'false'}
+; Print Size X = ${FIT_WIDTH} mm
+; Print Size Y = ${FIT_HEIGHT} mm
+; Print Rotation = ${PRINT_DIR} degree
+;
+; Settings Advance:
+; Nozzle / Line Ratio = ${NOZZLE_LINE_RATIO}
+; Bed leveling = ${BED_LEVELING}
+; Use FWRETRACT = ${USE_FWR ? 'true' : 'false'}
+; Extrusion Multiplier = ${EXT_MULT}
+; Prime Nozzle = ${USE_PRIME ? 'true' : 'false'}
+; Prime Extrusion Multiplier = ${EXT_MULT_PRIME}
+; Prime Speed = ${SPEED_PRIME}
+; Dwell Time = ${PRIME_DWELL} s
+;
+; prepare printing
+;
+G21 ; Millimeter units
+G90 ; Absolute XYZ
+M83 ; Relative E
+G28 ; Home all axes
+${DO_Z_ALIGNMENT ? 'G34 ; Align Z' : ''}
+T${TOOL_INDEX} ; Switch to tool ${TOOL_INDEX}
+G1 Z10 F100 ; Z raise
+M104 S${NOZZLE_TEMP} ; Set nozzle temperature (no wait)
+M190 S${BED_TEMP} ; Set bed temperature (wait)
+M109 S${NOZZLE_TEMP} ; Wait for nozzle temp
+${BED_LEVELING !== '0' ? BED_LEVELING + '; Activate bed leveling compensation' : ''}
+M204 P${ACCELERATION} ; Acceleration
+${X_JERK !== -1 ? `M205 X${X_JERK} ; X Jerk` : ''}
+${Y_JERK !== -1 ? `M205 Y${Y_JERK} ; Y Jerk` : ''}
+${Z_JERK !== -1 ? `M205 Z${Z_JERK} ; Z Jerk` : ''}
+${E_JERK !== -1 ? `M205 E${E_JERK} ; E Jerk` : ''}
+G92 E0 ; Reset extruder distance
+M106 P${TOOL_INDEX} S${Math.round(FAN_SPEED * 2.55)}
 
-  //move to center and layer Height
-  k_script += moveTo(CENTER_X, CENTER_Y, basicSettings) +
-              'G1 Z' + (HEIGHT_LAYER + Z_OFFSET) + ' F' + SPEED_SLOW + ' ; Move to layer height\n';
+${moveTo(CENTER_X, CENTER_Y, basicSettings)}
+G1 Z${HEIGHT_LAYER + Z_OFFSET} F${SPEED_SLOW} ; Move to layer height
+`;
 
   // Prime nozzle if activated
   if (USE_PRIME) {
@@ -616,7 +616,7 @@ function rotateY(x, xm, y, ym, a) {
 
 // save current settings as localStorage object
 function setLocalStorage() {
-  var FILAMENT_DIAMETER = parseFloat($('#FIL_DIA').val()),
+  let FILAMENT_DIAMETER = parseFloat($('#FIL_DIA').val()),
       NOZZLE_DIAMETER = parseFloat($('#NOZ_DIA').val()),
       NOZZLE_TEMP = parseInt($('#NOZZLE_TEMP').val()),
       NOZZLE_LINE_RATIO = parseFloat($('#NOZ_LIN_R').val()),
@@ -658,7 +658,7 @@ function setLocalStorage() {
       USE_MMS = $('#MM_S').prop('checked'),
       USE_LINENO = $('#LINE_NO').prop('checked');
 
-  var settings = {
+  let settings = {
     'Version' : SETTINGS_VERSION,
     'FILAMENT_DIAMETER': FILAMENT_DIAMETER,
     'NOZZLE_DIAMETER': NOZZLE_DIAMETER,
@@ -709,7 +709,7 @@ function setLocalStorage() {
 
 // toggle between mm/s and mm/min speed settings
 function speedToggle() {
-  var SPEED_SLOW = $('#SLOW_SPEED').val(),
+  let SPEED_SLOW = $('#SLOW_SPEED').val(),
       SPEED_FAST = $('#FAST_SPEED').val(),
       SPEED_MOVE = $('#MOVE_SPEED').val(),
       SPEED_RETRACT = $('#RETRACT_SPEED').val(),
@@ -966,52 +966,52 @@ $(window).load(() => {
 
   if (lsSettings) {
     var settings = jQuery.parseJSON(lsSettings);
-    if (!settings['Version'] || settings['Version'] != SETTINGS_VERSION) {
+    if (!settings.Version || settings.Version != SETTINGS_VERSION) {
       window.localStorage.removeItem('LIN_SETTINGS');
       alert('Script settings have been updated. Saved settings are reset to default values');
     }
     else {
-      $('#FIL_DIA').val(settings['FILAMENT_DIAMETER']);
-      $('#NOZ_DIA').val(settings['NOZZLE_DIAMETER']);
-      $('#NOZZLE_TEMP').val(settings['NOZZLE_TEMP']);
-      $('#NOZ_LIN_R').val(settings['NOZZLE_LINE_RATIO']);
-      $('#BED_TEMP').val(settings['BED_TEMP']);
-      $('#SLOW_SPEED').val(settings['SPEED_SLOW']);
-      $('#FAST_SPEED').val(settings['SPEED_FAST']);
-      $('#MOVE_SPEED').val(settings['SPEED_MOVE']);
-      $('#RETRACT_SPEED').val(settings['SPEED_RETRACT']);
-      $('#PRINT_ACCL').val(settings['ACCELERATION']);
-      $('#RETRACTION').val(settings['RETRACT_DIST']);
-      $('#SHAPE_BED').val(settings['BED_SHAPE']);
-      $('#BEDSIZE_X').val(settings['BED_X']);
-      $('#BEDSIZE_Y').val(settings['BED_Y']);
-      $('#CENTER_NULL').prop('checked', settings['NULL_CENTER']);
-      $('#LAYER_HEIGHT').val(settings['HEIGHT_LAYER']);
-      $('#TOOL_INDEX').val(settings['TOOL_INDEX']);
-      $('#FAN_SPEED').val(settings['FAN_SPEED']);
-      $('#EXTRUSION_MULT').val(settings['EXT_MULT']);
-      $('#LIN_VERSION').val(settings['VERSION_LIN']);
-      $('#TYPE_PATTERN').val(settings['PATTERN_TYPE']);
-      $('#K_START').val(settings['K_START']);
-      $('#K_END').val(settings['K_END']);
-      $('#K_STEP').val(settings['K_STEP']);
-      $('#X_JERK').val(settings['X_JERK']);
-      $('#Y_JERK').val(settings['Y_JERK']);
-      $('#Z_JERK').val(settings['Z_JERK']);
-      $('#E_JERK').val(settings['E_JERK']);
-      $('#DIR_PRINT').val(settings['PRINT_DIR']);
-      $('#SPACE_LINE').val(settings['LINE_SPACING']);
-      $('#FRAME').prop('checked', settings['USE_FRAME']);
-      $('#PRIME').prop('checked', settings['USE_PRIME']);
-      $('#PRIME_EXT').val(settings['EXT_MULT_PRIME']);
-      $('#PRIME_SPEED').val(settings['SPEED_PRIME']);
-      $('#DWELL_PRIME').val(settings['PRIME_DWELL']);
-      $('#SLOW_LENGTH').val(settings['LENGTH_SLOW']);
-      $('#FAST_LENGTH').val(settings['LENGTH_FAST']);
-      $('#OFFSET_Z').val(settings['Z_OFFSET']);
-      $('#USE_FWR').prop('checked', settings['USE_FWR']);
-      $('#MM_S').prop('checked', settings['USE_MMS']);
-      $('#LINE_NO').prop('checked', settings['USE_LINENO']);
+      $('#FIL_DIA').val(settings.FILAMENT_DIAMETER);
+      $('#NOZ_DIA').val(settings.NOZZLE_DIAMETER);
+      $('#NOZZLE_TEMP').val(settings.NOZZLE_TEMP);
+      $('#NOZ_LIN_R').val(settings.NOZZLE_LINE_RATIO);
+      $('#BED_TEMP').val(settings.BED_TEMP);
+      $('#SLOW_SPEED').val(settings.SPEED_SLOW);
+      $('#FAST_SPEED').val(settings.SPEED_FAST);
+      $('#MOVE_SPEED').val(settings.SPEED_MOVE);
+      $('#RETRACT_SPEED').val(settings.SPEED_RETRACT);
+      $('#PRINT_ACCL').val(settings.ACCELERATION);
+      $('#RETRACTION').val(settings.RETRACT_DIST);
+      $('#SHAPE_BED').val(settings.BED_SHAPE);
+      $('#BEDSIZE_X').val(settings.BED_X);
+      $('#BEDSIZE_Y').val(settings.BED_Y);
+      $('#CENTER_NULL').prop('checked', settings.NULL_CENTER);
+      $('#LAYER_HEIGHT').val(settings.HEIGHT_LAYER);
+      $('#TOOL_INDEX').val(settings.TOOL_INDEX);
+      $('#FAN_SPEED').val(settings.FAN_SPEED);
+      $('#EXTRUSION_MULT').val(settings.EXT_MULT);
+      $('#LIN_VERSION').val(settings.VERSION_LIN);
+      $('#TYPE_PATTERN').val(settings.PATTERN_TYPE);
+      $('#K_START').val(settings.K_START);
+      $('#K_END').val(settings.K_END);
+      $('#K_STEP').val(settings.K_STEP);
+      $('#X_JERK').val(settings.X_JERK);
+      $('#Y_JERK').val(settings.Y_JERK);
+      $('#Z_JERK').val(settings.Z_JERK);
+      $('#E_JERK').val(settings.E_JERK);
+      $('#DIR_PRINT').val(settings.PRINT_DIR);
+      $('#SPACE_LINE').val(settings.LINE_SPACING);
+      $('#FRAME').prop('checked', settings.USE_FRAME);
+      $('#PRIME').prop('checked', settings.USE_PRIME);
+      $('#PRIME_EXT').val(settings.EXT_MULT_PRIME);
+      $('#PRIME_SPEED').val(settings.SPEED_PRIME);
+      $('#DWELL_PRIME').val(settings.PRIME_DWELL);
+      $('#SLOW_LENGTH').val(settings.LENGTH_SLOW);
+      $('#FAST_LENGTH').val(settings.LENGTH_FAST);
+      $('#OFFSET_Z').val(settings.Z_OFFSET);
+      $('#USE_FWR').prop('checked', settings.USE_FWR);
+      $('#MM_S').prop('checked', settings.USE_MMS);
+      $('#LINE_NO').prop('checked', settings.USE_LINENO);
 
       //toggleBedShape();
       //patternType();
