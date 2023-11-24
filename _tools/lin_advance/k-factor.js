@@ -889,7 +889,7 @@ function validateInput() {
   }
 }
 
-$(window).load(() => {
+$(() => {
   // create tab index dynamically
   $(':input:not(:hidden)').each((i) => { $(this).attr('tabindex', i + 1); });
 

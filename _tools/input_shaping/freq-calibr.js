@@ -597,7 +597,7 @@ function setLocalStorage() {
   window.localStorage.setItem('IS_ZV_SETTINGS', lsSettings);
 }
 
-$(window).load(() => {
+$(() => {
   // Create tab index dynamically
   $(':input:not(:hidden)').each((i) => {
     $(this).attr('tabindex', i + 1);
