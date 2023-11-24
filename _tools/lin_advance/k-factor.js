@@ -817,149 +817,89 @@ function toggleRetract() {
 
 // sanity checks for pattern / bed size
 function validateInput() {
-  var testNaN = {
-      // do not use parseInt or parseFloat for validating, since both
-      // functions will have special parsing characteristics leading to
-      // false numeric validation
-      BEDSIZE_X: $('#BEDSIZE_X').val(),
-      BEDSIZE_Y: $('#BEDSIZE_Y').val(),
-      K_START: $('#K_START').val(),
-      K_END: $('#K_END').val(),
-      K_STEP: $('#K_STEP').val(),
-      SPACE_LINE: $('#SPACE_LINE').val(),
-      SLOW_SPEED: $('#SLOW_SPEED').val(),
-      FAST_SPEED: $('#FAST_SPEED').val(),
-      SLOW_LENGTH: $('#SLOW_LENGTH').val(),
-      FAST_LENGTH: $('#FAST_LENGTH').val(),
-      FIL_DIA: $('#FIL_DIA').val(),
-      NOZ_DIA: $('#NOZ_DIA').val(),
-      NOZ_LIN_R: $('#NOZ_LIN_R').val(),
-      LAYER_HEIGHT: $('#LAYER_HEIGHT').val(),
-      FAN_SPEED: $('#FAN_SPEED').val(),
-      EXTRUSION_MULT: $('#EXTRUSION_MULT').val(),
-      PRIME_EXT: $('#PRIME_EXT').val(),
-      OFFSET_Z: $('#OFFSET_Z').val(),
-      X_JERK: $('#X_JERK').val(),
-      Y_JERK: $('#Y_JERK').val(),
-      Z_JERK: $('#Z_JERK').val(),
-      E_JERK: $('#E_JERK').val(),
-      NOZZLE_TEMP: $('#NOZZLE_TEMP').val(),
-      BED_TEMP: $('#BED_TEMP').val(),
-      MOVE_SPEED: $('#MOVE_SPEED').val(),
-      RETRACT_SPEED: $('#RETRACT_SPEED').val(),
-      PRINT_ACCL: $('#PRINT_ACCL').val(),
-      RETRACTION: $('#RETRACTION').val(),
-      PRIME_SPEED: $('#PRIME_SPEED').val(),
-      DWELL_PRIME: $('#DWELL_PRIME').val()
-    },
-    selectShape = $('#SHAPE_BED'),
-    bedShape = selectShape.val(),
-    selectDir = $('#DIR_PRINT'),
-    printDir = selectDir.val(),
-    usePrime = $('#PRIME').prop('checked'),
-    useLineNo = $('#LINE_NO').prop('checked'),
-    sizeY = ((parseFloat(testNaN['K_END']) - parseFloat(testNaN['K_START'])) / parseFloat(testNaN['K_STEP']) * parseFloat(testNaN['SPACE_LINE'])) + 25, // +25 with ref marking
-    sizeX = (2 * parseFloat(testNaN['SLOW_LENGTH'])) + parseFloat(testNaN['FAST_LENGTH']) + (usePrime ? 10 : 0) + (useLineNo ? 8 : 0),
-    printDirRad = printDir * Math.PI / 180,
-    fitWidth = Math.round10(Math.abs(sizeX * Math.cos(printDirRad)) + Math.abs(sizeY * Math.sin(printDirRad)), 0),
-    fitHeight = Math.round10(Math.abs(sizeX * Math.sin(printDirRad)) + Math.abs(sizeY * Math.cos(printDirRad)), 0),
-    decimals = getDecimals(parseFloat(testNaN['K_STEP'])),
-    invalidDiv = 0;
+  // Don't use parseInt or parseFloat for validating, since both
+  // functions will have special parsing characteristics leading to
+  // false numeric validation
+  const nanfields = [ 'BEDSIZE_X', 'BEDSIZE_Y', 'K_START', 'K_END', 'K_STEP', 'SPACE_LINE',
+                      'SLOW_SPEED', 'FAST_SPEED', 'SLOW_LENGTH', 'FAST_LENGTH', 'FIL_DIA',
+                      'NOZ_DIA', 'NOZ_LIN_R', 'LAYER_HEIGHT', 'FAN_SPEED', 'EXTRUSION_MULT',
+                      'PRIME_EXT', 'OFFSET_Z', 'X_JERK', 'Y_JERK', 'Z_JERK', 'E_JERK',
+                      'NOZZLE_TEMP', 'BED_TEMP', 'MOVE_SPEED', 'RETRACT_SPEED', 'PRINT_ACCL',
+                      'RETRACTION', 'PRIME_SPEED', 'DWELL_PRIME' ];
+  var testNaN = {};
+  for (let f of nanfields) testNaN[f] = $(`#${f}`).val();
+
+  var selectShape = $('#SHAPE_BED'),
+      bedShape = selectShape.val(),
+      selectDir = $('#DIR_PRINT'),
+      printDir = selectDir.val(),
+      usePrime = $('#PRIME').prop('checked'),
+      useLineNo = $('#LINE_NO').prop('checked'),
+      sizeY = ((parseFloat(testNaN['K_END']) - parseFloat(testNaN['K_START'])) / parseFloat(testNaN['K_STEP']) * parseFloat(testNaN['SPACE_LINE'])) + 25, // +25 with ref marking
+      sizeX = (2 * parseFloat(testNaN['SLOW_LENGTH'])) + parseFloat(testNaN['FAST_LENGTH']) + (usePrime ? 10 : 0) + (useLineNo ? 8 : 0),
+      printDirRad = printDir * Math.PI / 180,
+      fitWidth = Math.round10(Math.abs(sizeX * Math.cos(printDirRad)) + Math.abs(sizeY * Math.sin(printDirRad)), 0),
+      fitHeight = Math.round10(Math.abs(sizeX * Math.sin(printDirRad)) + Math.abs(sizeY * Math.cos(printDirRad)), 0),
+      decimals = getDecimals(parseFloat(testNaN['K_STEP'])),
+      invalidDiv = 0;
 
   // Start clean
-  $('#K_START,#K_END,#K_STEP,#SPACE_LINE,#SLOW_LENGTH,#FAST_LENGTH,#FIL_DIA,#NOZ_DIA,#LAYER_HEIGHT,#EXTRUSION_MULT,#PRIME_EXT,#OFFSET_Z,#NOZ_LIN_R,'
-     + '#NOZZLE_TEMP,#BED_TEMP,#MOVE_SPEED,#RETRACT_SPEED,#UNRETRACT_SPEED,#PRINT_ACCL,#RETRACTION,#PRIME_SPEED,#DWELL_PRIME,#FAST_SPEED,#SLOW_SPEED,#X_JERK,#Y_JERK,#Z_JERK,#E_JERK').each((i,t) => {
+  const clean = [ 'K_START', 'K_END', 'K_STEP', 'SPACE_LINE', 'SLOW_LENGTH', 'FAST_LENGTH', 'FIL_DIA', 'NOZ_DIA',
+                  'LAYER_HEIGHT', 'EXTRUSION_MULT', 'PRIME_EXT', 'OFFSET_Z', 'NOZ_LIN_R', 'NOZZLE_TEMP', 'BED_TEMP',
+                  'MOVE_SPEED', 'RETRACT_SPEED', 'UNRETRACT_SPEED', 'PRINT_ACCL', 'RETRACTION', 'PRIME_SPEED',
+                  'DWELL_PRIME', 'FAST_SPEED', 'SLOW_SPEED', 'X_JERK', 'Y_JERK', 'Z_JERK', 'E_JERK' ];
+  $('#' + clean.join(',#')).each((i,t) => {
     t.setCustomValidity('');
     const tid = $(t).attr('id');
     $(`label[for=${tid}]`).removeClass();
   });
-  $('#warning1').hide();
-  $('#warning2').hide();
-  $('#warning3').hide();
+  $('#warning1, #warning2, #warning3').hide();
   $('#button').prop('disabled', false);
+
+  function warn(num, type, msg, elems, emsg) {
+    $(`#warning${num}`).text(`${msg} Fix the highlighted fields.`).show();
+    if (emsg === undefined) emsg = msg;
+    if (elems) {
+      if (emsg) $('#' + elems.join(',#')).each((i,t) => { t.setCustomValidity(emsg); });
+      $('label[for=' + elems.join('],label[for=') + ']').addClass(type);
+    }
+    $('input.tool').prop('disabled', true);
+  }
 
   // Check for proper numerical values
   Object.keys(testNaN).forEach((k) => {
-    if ((isNaN(testNaN[k]) && !isFinite(testNaN[k])) || testNaN[k].trim().length === 0) {
-      $('label[for=' + k + ']').addClass('invalidNumber');
-      $('#' + k)[0].setCustomValidity('The value is not a proper number.');
-      $('#warning3').text('Some values are not proper numbers. Check highlighted Settings.');
-      $('#warning3').addClass('invalidNumber');
-      $('#warning3').show();
+    if ((isNaN(testNaN[k]) && !isFinite(testNaN[k])) || testNaN[k].trim() === '') {
+      warn(3, 'invalidNumber', 'Some values are not proper numbers.', [k], 'Value is not a proper number.');
       $('#button').prop('disabled', true);
     }
   });
 
   // Check if K-Factor Stepping is a multiple of the K-Factor Range
   if ((Math.round10(parseFloat(testNaN['K_END']) - parseFloat(testNaN['K_START']), -3) * Math.pow(10, decimals)) % (parseFloat(testNaN['K_STEP']) * Math.pow(10, decimals)) !== 0) {
-    $('label[for=K_START]').addClass('invalidDiv');
-    $('#K_START')[0].setCustomValidity('K-Factor range cannot be cleanly divided.');
-    $('label[for=K_END]').addClass('invalidDiv');
-    $('#K_END')[0].setCustomValidity('K-Factor range cannot be cleanly divided.');
-    $('label[for=K_STEP]').addClass('invalidDiv');
-    $('#K_STEP')[0].setCustomValidity('K-Factor range cannot be cleanly divided.');
-    $('#warning1').text('Your K-Factor range cannot be cleanly divided. Check highlighted Pattern Settings.');
-    $('#warning1').addClass('invalidDiv');
-    $('#warning1').show();
+    warn(1, 'invalidDiv', 'K-Factor range cannot be cleanly divided.', ['K_START','K_END','K_STEP']);
     $('#button').prop('disabled', true);
     invalidDiv = 1;
   }
 
   // Check if pattern settings exceed bed size
-  if (bedShape === 'Round' && (Math.sqrt(Math.pow(fitWidth, 2) + Math.pow(fitHeight, 2)) > (parseInt(testNaN['BEDSIZE_X']) - 5)) && fitHeight > fitWidth) {
-    $('label[for=K_START]').addClass('invalidSize');
-    $('#K_START')[0].setCustomValidity('Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your bed\'s diameter.');
-    $('label[for=K_END]').addClass('invalidSize');
-    $('#K_END')[0].setCustomValidity('Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your bed\'s diameter.');
-    $('label[for=K_STEP]').addClass('invalidSize');
-    $('#K_STEP')[0].setCustomValidity('Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your bed\'s diameter.');
-    $('label[for=SPACE_LINE]').addClass('invalidSize');
-    $('#SPACE_LINE')[0].setCustomValidity('Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your bed\'s diameter.');
-    $((invalidDiv ? '#warning2' : '#warning1')).text('Your Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your bed\'s diameter. Check highlighted Pattern Settings.');
-    $((invalidDiv ? '#warning2' : '#warning1')).addClass('invalidSize');
-    $((invalidDiv ? '#warning2' : '#warning1')).show();
+  if (bedShape === 'Round') {
+    const wnum = invalidDiv ? 2 : 1;
+    if ((Math.sqrt(Math.pow(fitWidth, 2) + Math.pow(fitHeight, 2)) > (parseInt(testNaN['BEDSIZE_X']) - 5)) && fitHeight > fitWidth)
+      warn(wnum, 'invalidSize', `Pattern size (x: ${fitWidth} y: ${fitHeight}) exceeds the bed diameter.`, ['K_START','K_END','K_STEP','SPACE_LINE']);
+    if ((Math.sqrt(Math.pow(fitWidth, 2) + Math.pow(fitHeight, 2)) > (parseInt(testNaN['BEDSIZE_X']) - 5)) && fitWidth > fitHeight)
+      warn(wnum, 'invalidSize', `Pattern size (x: ${fitWidth} y: ${fitHeight}) exceeds the bed diameter.`, ['SLOW_LENGTH','FAST_LENGTH']);
   }
-
-  if (bedShape === 'Round' && (Math.sqrt(Math.pow(fitWidth, 2) + Math.pow(fitHeight, 2)) > (parseInt(testNaN['BEDSIZE_X']) - 5)) && fitWidth > fitHeight) {
-    $('label[for=SLOW_LENGTH]').addClass('invalidSize');
-    $('#SLOW_LENGTH')[0].setCustomValidity('Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your bed\'s diameter.');
-    $('label[for=FAST_LENGTH]').addClass('invalidSize');
-    $('#FAST_LENGTH')[0].setCustomValidity('Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your bed\'s diameter.');
-    $((invalidDiv ? '#warning2' : '#warning1')).text('Your Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your bed\'s diameter. Check highlighted Pattern Settings.');
-    $((invalidDiv ? '#warning2' : '#warning1')).addClass('invalidSize');
-    $((invalidDiv ? '#warning2' : '#warning1')).show();
-  }
-
-  if (bedShape === 'Rect' && fitWidth > (parseInt(testNaN['BEDSIZE_X']) - 5)) {
-    $('label[for=SLOW_LENGTH]').addClass('invalidSize');
-    $('#SLOW_LENGTH')[0].setCustomValidity('Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your X bed size.');
-    $('label[for=FAST_LENGTH]').addClass('invalidSize');
-    $('#FAST_LENGTH')[0].setCustomValidity('Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your X bed size.');
-    $((invalidDiv ? '#warning2' : '#warning1')).text('Your Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your X bed size. Check highlighted Pattern Settings.');
-    $((invalidDiv ? '#warning2' : '#warning1')).addClass('invalidSize');
-    $((invalidDiv ? '#warning2' : '#warning1')).show();
-  }
-
-  if (bedShape === 'Rect' && fitHeight > (parseInt(testNaN['BEDSIZE_Y']) - 5)) {
-    $('label[for=K_START]').addClass('invalidSize');
-    $('#K_START')[0].setCustomValidity('Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your Y bed size.');
-    $('label[for=K_END]').addClass('invalidSize');
-    $('#K_END')[0].setCustomValidity('Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your Y bed size.');
-    $('label[for=K_STEP]').addClass('invalidSize');
-    $('#K_STEP')[0].setCustomValidity('Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your Y bed size.');
-    $('label[for=SPACE_LINE]').addClass('invalidSize');
-    $('#SPACE_LINE')[0].setCustomValidity('Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your Y bed size.');
-    $((invalidDiv ? '#warning2' : '#warning1')).text('Your Pattern size (x: ' + fitWidth + ', y: ' + fitHeight + ') exceeds your Y bed size. Check highlighted Pattern Settings.');
-    $((invalidDiv ? '#warning2' : '#warning1')).addClass('invalidSize');
-    $((invalidDiv ? '#warning2' : '#warning1')).show();
+  else if (bedShape === 'Rect') {
+    if (fitWidth > (parseInt(testNaN['BEDSIZE_X']) - 5))
+      warn(invalidDiv ? 2 : 1, 'invalidSize', `Pattern size (x: ${fitWidth} y: ${fitHeight}) exceeds the X bed size.`, ['SLOW_LENGTH','FAST_LENGTH']);
+    if (fitHeight > (parseInt(testNaN['BEDSIZE_Y']) - 5))
+      warn(invalidDiv ? 2 : 1, 'invalidSize', `Pattern size (x: ${fitWidth} y: ${fitHeight}) exceeds the Y bed size.`, ['K_START','K_END','K_STEP','SPACE_LINE']);
   }
 }
 
 $(window).load(() => {
   // create tab index dynamically
-  $(':input:not(:hidden)').each(function(i) {
-    $(this).attr('tabindex', i + 1);
-  });
+  $(':input:not(:hidden)').each((i) => { $(this).attr('tabindex', i + 1); });
 
   // Get localStorage data
   var lsSettings = window.localStorage.getItem('LIN_SETTINGS');
