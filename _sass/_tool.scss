@@ -19,6 +19,9 @@
   --color-tool-disabled: #F00;
 
   --color-tool-button-bg: #BFA;
+
+  --color-warning-text: #440;
+  --color-warning-bg: #FF0;
 }
 [data-theme="dark"] {
   --color-tool-header: #CCC;
@@ -37,6 +40,9 @@
   --color-tool-invalid-border: #FFD800;
   --color-tool-invalid-bg: yellow;
   --color-tool-disabled: #F00;
+
+  --color-warning-text: #FF0;
+  --color-warning-bg: #330;
 }
 div#calibpat {
   #gcode-out { height: 100%; }
@@ -51,7 +57,7 @@ table#tool {
   height: 100%;
   width: 100%;
 
-  h1, h2, h3, h4, h5 { color: var(--color-tool--header); }
+  h1, h2, h3, h4, h5 { color: var(--color-tool-header); }
 
   tr {
     height: 100%;
@@ -102,7 +108,7 @@ table#tool {
 
   select {
     width: 140px;
-    color: var(--color-tool--header);
+    //color: var(--color-tool-header);
   }
 
   label {
@@ -144,4 +150,13 @@ table#tool {
 input[type="button"].tool {
   background: var(--color-tool-button-bg);
   margin: 20px 0 0 0.5em;
+}
+
+#warnbox { display: none; }
+p#warning1, p#warning2, p#warning3 {
+  display: none;
+  padding: 0.25em 0;
+  text-align: center;
+  color: var(--color-warning-text);
+  background: var(--color-warning-bg);
 }

@@ -1,0 +1,264 @@
+---
+title:        'Input Shaping Calibration Pattern'
+description:  'Create G-code to calibrate IS setting'
+category:     [ tools ]
+author:       KimmoHop
+---
+<script language="JavaScript" type="text/javascript" src="{{ site.js }}jquery-2.2.1.min.js"></script>
+<script language="JavaScript" type="text/javascript" src="{{ site.js }}jquery-ui.min.js"></script>
+<script language="JavaScript" type="text/javascript" src="{{ site.js }}FileSaver.min.js"></script>
+<script language="JavaScript" type="text/javascript" src="./freq-calibr.js"></script>
+<div class="container" role="main">
+  <div class="row">
+    <div id="calibpat">
+      <h1>Input Shaping Calibration Pattern</h1>
+      <p><i>Based on the excellent work of <a href="https://github.com/tombrazier">@tombrazier</a></i></p>
+{% alert warning %}
+Caution! Only for Cartesian printers. CoreXY kinematics are not yet tested.
+{% endalert %}
+      <p>Use this form to generate G-code that you can use to calibrate your Input Shaping Damping Frequency and Zeta/Damping factor. Default values apply to standard PLA filament and a 0.4mm nozzle.</p>
+      <p>The generated G-code files print frequency sweeps (zigzag patterns with increasing speeds) to find Resonant Frequencies (frequencies to dampen) and Zeta/Damping Factors for X-axis and Y-axis.</p>
+      <p>Three separate files are generated for download:</p>
+      <ol>
+        <li>Damping Frequency to find resonant frequency for X-axis and Y-axis (shown on right side)</li>
+        <li>Zeta/damping factor for X-axis (not shown)</li>
+        <li>Zeta/damping factor for Y-axis (not shown)</li>
+      </ol>
+      <p>Press <strong>Generate G-code</strong> to create test patterns based on the form settings. You can then use the <strong>Download * as file</strong> buttonsto save the results.</p>
+      <table id="tool">
+        <tbody>
+          <tr class="head">
+            <td colspan="3"><h3>Settings</h3></td>
+            <td><h3>G-code</h3></td>
+          </tr>
+          <tr>
+            <td colspan="3" class="section"><h4>Printer Info</h4></td>
+            <td rowspan="24">
+              <textarea name="freq-gcode-out" id="freq-gcode-out" style="height:100%"></textarea>
+            </td>
+            <td class="td-hidden">
+              <textarea name="zeta-x-gcode-out" id="zeta-x-gcode-out" style="height:100%"></textarea>
+            </td>
+            <td class="td-hidden">
+              <textarea name="zeta-y-gcode-out" id="zeta-y-gcode-out" style="height:100%"></textarea>
+            </td>
+          </tr>
+          <tr>
+            <th><label for="PRINTER">Printer Name</label></th>
+            <td><input name="PRINTER" id="PRINTER" value="printer name" /></td>
+          </tr>
+          <tr>
+            <th><label for="FILAMENT_DIAMETER">Filament Diameter</label></th>
+            <td><input name="FILAMENT_DIAMETER" id="FILAMENT_DIAMETER" step="any" value="1.75" onblur="validateInput()" /></td>
+            <td>Diameter of the used filament (mm)</td>
+          </tr>
+          <tr>
+            <th><label for="NOZZLE_TEMP">Nozzle Temperature</label></th>
+            <td><input name="NOZZLE_TEMP" id="NOZZLE_TEMP" step="any" value="205" onblur="validateInput()" /></td>
+            <td>Nozzle Temperature (°C)</td>
+          </tr>
+          <tr>
+            <th><label for="BED_TEMP">Bed Temperature</label></th>
+            <td><input name="BED_TEMP" id="BED_TEMP" step="any" value="60" onblur="validateInput()" /></td>
+            <td>Bed Temperature (°C)</td>
+          </tr>
+          <tr>
+            <th><label for="RETRACTION">Retraction Distance</label></th>
+            <td><input name="RETRACTION" id="RETRACTION" step="any" value="1" onblur="validateInput()" /></td>
+            <td>Retraction distance after pattern (mm)</td>
+          </tr>
+          <tr>
+            <th><label for="LINE_WIDTH">Line Width</label></th>
+            <td><input name="LINE_WIDTH" id="LINE_WIDTH" step="any" value="0.5" onblur="validateInput()" /></td>
+            <td>Line width (mm)</td>
+          </tr>
+          <tr>
+            <th><label for="LAYER_HEIGHT">Layer Height</label></th>
+            <td><input name="LAYER_HEIGHT" id="LAYER_HEIGHT" step="0.05" value="0.2" onblur="validateInput()" /></td>
+            <td>Layer Height (mm). If pattern is not clear, try to increase Layer Height</td>
+          </tr>
+          <tr>
+            <th><label for="FAN_SPEED">Fan Speed</label></th>
+            <td><input name="FAN_SPEED" id="FAN_SPEED" step="1" value="0" onblur="validateInput()" /></td>
+            <td>Fan Speed (%)</td>
+          </tr>
+          <tr>
+            <td colspan="3" class="section"><h4>Speed</h4></td>
+          </tr>
+          <tr>
+            <th><label for="PRINT_SPEED">Frame Printing Speed</label></th>
+            <td><input name="PRINT_SPEED" id="PRINT_SPEED" step="any" value="40" onblur="validateInput()" /></td>
+            <td>Printing speed when not in pattern</td>
+          </tr>
+          <tr>
+            <th><label for="SPEED_TRAVEL">Travel Speed</label></th>
+            <td><input name="SPEED_TRAVEL" id="SPEED_TRAVEL" step="any" value="100" onblur="validateInput()" /></td>
+            <td>Travel Speed </td>
+          </tr>
+          <tr>
+            <th><label for="SPEED_RETRACT">Retract Speed</label></th>
+            <td><input name="SPEED_RETRACT" id="SPEED_RETRACT" step="1" value="30" onblur="validateInput()" /></td>
+            <td>Retract Speed of the extruder</td>
+          </tr>
+          <tr>
+            <th><label for="DECEL">Frame Acceleration</label></th>
+            <td><input name="DECEL" id="DECEL" step="any" value="500" onblur="validateInput()" /></td>
+            <td>Printing and transition acceleration/deceleration (mm/s^2)</td>
+          </tr>
+          <tr>
+            <th><label for="JERK">Jerk</label></th>
+            <td><input name="JERK" id="JERK" step="1" value="-1" onblur="validateInput()" /></td>
+            <td>Jerk for X-axis and Y-axis when not in pattern. -1 to use pattern default</td>
+          </tr>
+          <tr>
+            <th><label for="JUNCTION">Junction Deviation</label></th>
+            <td><input name="JUNCTION" id="JUNCTION" step="any" value="-1.0" onblur="validateInput()" /></td>
+            <td>Junction Deviation when not in pattern. -1.0 to use pattern default</td>
+          </tr>
+          <tr>
+            <td colspan="3" class="section"><h4>Print Bed</h4></td>
+          </tr>
+          <tr>
+            <th><label for="BEDSIZE_X">Bed Size X</label></th>
+            <td><input name="BEDSIZE_X" id="BEDSIZE_X" step="any" value="200" onblur="validateInput()" /></td>
+            <td id="shape">Size (mm) of the bed in X</td>
+          </tr>
+          <tr>
+            <th><label for="BEDSIZE_Y">Bed Size Y</label></th>
+            <td><input name="BEDSIZE_Y" id="BEDSIZE_Y" step="any" value="200" onblur="validateInput()" /></td>
+            <td>Size (mm) of the bed in Y</td>
+          </tr>
+          <tr>
+            <td colspan="3" class="section"><h4>Pattern</h4></td>
+          </tr>
+          <tr>
+            <th><label for="MAX_FREQ_X">Max X Frequency</label></th>
+            <td><input name="MAX_FREQ_X" id="MAX_FREQ_X" step="any" value="60" onblur="validateInput()" /></td>
+            <td id="x_factor">Maximum frequency for X pattern</td>
+          </tr>
+          <tr>
+            <th><label for="MAX_FREQ_Y">Max Y Frequency</label></th>
+            <td><input name="MAX_FREQ_Y" id="MAX_FREQ_Y" step="any" value="60" onblur="validateInput()" /></td>
+            <td id="y_factor">Maximum frequency for Y pattern</td>
+          </tr>
+          <tr>
+            <th><label for="OFFSET_Z">Z-Offset</label></th>
+            <td><input name="OFFSET_Z" id="OFFSET_Z" step="any" value="0" onblur="validateInput()" /></td>
+            <td>Offset the Z-axis for manual Layer adjustment</td>
+          </tr>
+          <tr>
+            <th><label for="BED_LEVELING">Use Bed Leveling</label></th>
+            <td><select name="BED_LEVELING" id="BED_LEVELING" onchange="validateInput()">
+              <option value="0" selected="selected">No</option>
+              <option value="G29 ; Level bed">Level bed (G29)</option>
+              <option value="M420 S1 ; Leveling ON">Leveling ON</option>
+              <option value="M420 L0 S1 ; Load UBL mesh 0">Load UBL mesh 0</option>
+              <option value="M420 L1 S1 ; Load UBL mesh 1">Load UBL mesh 1</option>
+              <option value="M420 L2 S1 ; Load UBL mesh 2">Load UBL mesh 2</option>
+              <option value="M420 L3 S1 ; Load UBL mesh 3">Load UBL mesh 3</option>
+            </select></td>
+            <td>Level bed or load a saved mesh (i.e. for UBL) before printing. Bed leveling has to be activated in Configuration.h! Loading a mesh requires UBL to be activated!</td>
+          </tr>
+          <tr>
+            <th><label for="EXTRUSION_MULT">Extrusion Multiplier</label></th>
+            <td><input name="EXTRUSION_MULT" id="EXTRUSION_MULT" step="0.1" value="1.0" onblur="validateInput()" /></td>
+            <td>Usually 1.0</td>
+          </tr>
+          <tr>
+            <th><label for="DO_Z_ALIGNMENT">Align Z</label></th>
+            <td><input name="DO_Z_ALIGNMENT" type="checkbox" id="DO_Z_ALIGNMENT" /></td>
+            <td>Align the Z gantry by running the G34 command</td>
+          </tr>
+          <tr id="warnbox">
+            <td colspan="4">
+              <p id="warning1">warning</p>
+              <p id="warning2">warning</p>
+              <p id="warning3">warning</p>
+            </td>
+          </tr>
+          <tr class="calibpat2">
+            <th><label for="FILENAME">Filename</label></th>
+            <td colspan="2"><input name="FILENAME" id="FILENAME" value="is-pattern" />
+              <input type="button" class="tool" onclick="genGcode()" value="Generate G-code" />
+              <input type="button" class="tool" onclick="setLocalStorage()" value="Save as default" title="Save settings in a cookie." />
+              <td class="options">
+                <input type="button" class="tool" onclick="saveTextAsFile(0)" value="Download Damping Frequency as file" />
+                <input type="button" class="tool" onclick="saveTextAsFile(1)" value="Download Damping/zeta factor for X as file" />
+                <input type="button" class="tool" onclick="saveTextAsFile(2)" value="Download Damping/zeta factor for Y as file" />
+              </td>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <h3>Notes:</h3>
+      <ul>
+        <li><strong>Max X Frequency</strong> and <strong>Max Y Frequency</strong> should be high enough to reach resonant frequency. The moving bed of a "bedslinger" printer usually has a lower resonant frequency corresponding to its greater mass. Adjust values after your first test print and as-needed to match the printer.</li>
+        <li><strong>Use Bed Leveling</strong> requires a probe.</li>
+        <li><strong>Printer and other parts (e.g., filament spool) may resonate and emit sounds during frequency sweeps.</strong></li>
+        <li>The printer's stepper motors may skip steps leading to lost position —aka "layer shift"— at or above the resonant frequency. This is normal behaviour.</li>
+        <li>Be aware that high speeds may exceed what your extruder can handle. A 60Hz frequency corresponds to 120mm/s (7200 mm/min) movement speed. For the default 0.5mm line width and 0.2mm layer height the machine needs to extrude 12 cubic mm of filament per second. Know your extruder's limits.</li>
+        <li>If the test patterns show asymmetry or vibration in the Z direction, linear motion might have slack or flex (e.g., from loose roller wheels). See the image below.</li>
+      </ul>
+      <h2>Examples</h2>
+      <p>The following images demonstrate some test pattern examples.</p>
+      <div class="row">
+        <div class="col-sm-6">
+          <h3>Damping Frequency Pattern theory</h3>
+          <ul>
+            <li>Frequency sweep patterns is printed for both axes.</li>
+            <li>As frequency approaches resonant frequency, vibration amplitude increases.</li>
+            <li>At resonant frequency amplitude reaches it's peak.</li>
+            <li>Beyond resonant frequency amplitude may remain high or decrease.</li>
+            <li>Measuring the distance (mm) from the beginning of the pattern to the point of amplitude peak reveals resonant frequency, where frequency is this distance divided by 2.</li>
+            <li>To reduce ringing, Input Shaping tries to dampen resonant frequency, aka. Damping Frequency.</li>
+          </ul>
+          <p>TODO: Frequency Sweep image</p>
+          <!-- <img src="/assets/images/features/freq-calibr/freq-pattern-1.jpg" alt="DampingFrequencyPattern" /> -->
+        </div>
+        <div class="col-sm-6">
+          <h3>Zeta/Damping Factor theory</h3>
+          <ul>
+            <li>Damping Factor sweep patterns are printed for both axes.</li>
+            <li>Damping Factor controls damping:</li>
+            <ul>
+              <li>Too low Damping Factor: vibration is not cancelled at Damping Frequency.</li>
+              <li>Correct (critical) Damping Factor: vibration is cancelled at Damping Frequency.</li>
+              <li>Too high Damping Factor: vibration is reduced too aggressively also below Damping Frequency.</li>
+            </ul>
+            <li>Best value can be found by looking for zigzag pattern with most uniform amplitude at and below Damping Frequency and decreased amplitude above Damping Frequency.</li>
+          </ul>
+          <p>TODO: Damping Sweep image</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <h3>Damping Frequency Pattern example 1</h3>
+          <img src="/assets/images/features/freq-calibr/freq-pattern-1.jpg" alt="DampingFrequencyPattern" />
+        </div>
+        <div class="col-sm-6">
+          <h3>Zeta/Damping Factor Pattern example 1</h3>
+          <img src="/assets/images/features/freq-calibr/zeta-pattern-y-1.jpg" alt="ZetaDampingFactorPattern" />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <h3>Damping Frequency Pattern example 2</h3>
+          <p>TODO: Better Frequency Sweep image</p>
+          <img src="/assets/images/features/freq-calibr/freq-pattern.jpg" alt="DampingFrequencyPattern" />
+        </div>
+        <div class="col-sm-6">
+          <h3>Zeta/Damping Factor Pattern example 2</h3>
+          <p>TODO: Better Damping Sweep image</p>
+          <img src="/assets/images/features/freq-calibr/zeta-pattern.jpg" alt="ZetaDampingFactorPattern" />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <h3>Example of loose POM wheels</h3>
+          <img src="/assets/images/features/freq-calibr/loose-wheels.png" alt="LooseWheelsExample" />
+        </div>
+        <div class="col-sm-6">
+          &nbsp;
+      </div>
+  </div>
+</div>
