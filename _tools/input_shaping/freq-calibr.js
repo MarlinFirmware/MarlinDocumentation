@@ -19,7 +19,7 @@
 
 // Settings version of localStorage
 // Increase if default settings are changed / amended
-const SETTINGS_VERSION = '1.1';
+const SETTINGS_VERSION = '1.2';
 
 function genGcode() {
 
@@ -33,8 +33,8 @@ function genGcode() {
       LAYER_HEIGHT = parseFloat($('#LAYER_HEIGHT').val()),
       FAN_SPEED = parseFloat($('#FAN_SPEED').val()),
       PRINT_SPEED = parseInt($('#PRINT_SPEED').val()),
-      TRAVEL_SPEED = parseInt($('#TRAVEL_SPEED').val()),
-      RETRACT_SPEED = parseInt($('#RETRACT_SPEED').val()),
+      SPEED_TRAVEL = parseInt($('#SPEED_TRAVEL').val()),
+      SPEED_RETRACT = parseInt($('#SPEED_RETRACT').val()),
       DECEL = parseInt($('#DECEL').val()),
       JERK = parseInt($('#JERK').val()),
       JUNCTION = parseFloat($('#JUNCTION').val()),
@@ -42,10 +42,10 @@ function genGcode() {
       BEDSIZE_Y = parseInt($('#BEDSIZE_Y').val()),
       MAX_FREQ_X = parseInt($('#MAX_FREQ_X').val()),
       MAX_FREQ_Y = parseInt($('#MAX_FREQ_Y').val()),
-      Z_OFFSET = parseFloat($('#Z_OFFSET').val()),
+      OFFSET_Z = parseFloat($('#OFFSET_Z').val()),
       BED_LEVELING = $('#BED_LEVELING').val(),
       EXTRUSION_MULT = parseFloat($('#EXTRUSION_MULT').val()),
-      Z_ALIGNMENT = $('#Z_ALIGNMENT').prop('checked');
+      DO_Z_ALIGNMENT = $('#DO_Z_ALIGNMENT').prop('checked');
 
   var Z_SPEED = 10.0,              // (mm/s) Z movement speed
       WAVELENGTH = 2.0,            // (mm) the width of one ful zig-zag
@@ -65,10 +65,10 @@ function genGcode() {
     'ext_mult': EXTRUSION_MULT,
     'top_freq_x': MAX_FREQ_X,
     'top_freq_y': MAX_FREQ_Y,
-    'z_offset': Z_OFFSET,
+    'z_offset': OFFSET_Z,
     'z_speed': Z_SPEED,
-    'travel_speed': TRAVEL_SPEED,
-    'retract_speed': RETRACT_SPEED,
+    'travel_speed': SPEED_TRAVEL,
+    'retract_speed': SPEED_RETRACT,
     'anchor_line_speed': PRINT_SPEED,
     'wavelength': WAVELENGTH,
     'amplitude': AMPLITUDE,
@@ -90,7 +90,7 @@ function genGcode() {
 ; Nozzle Diameter = ${LINE_WIDTH} mm
 ; Layer Height = ${LAYER_HEIGHT} mm
 ; Fan Speed = ${FAN_SPEED} %
-; Z-axis Offset = ${Z_OFFSET} mm
+; Z-axis Offset = ${OFFSET_Z} mm
 ; Retraction = ${RETRACTION} mm
 ;
 ; Settings Print Bed:
@@ -99,8 +99,8 @@ function genGcode() {
 ;
 ; Settings Speed:
 ; Printing Speed = ${PRINT_SPEED} mm/s
-; Movement Speed = ${TRAVEL_SPEED} mm/s
-; Retraction Speed = ${RETRACT_SPEED} mm/s
+; Movement Speed = ${SPEED_TRAVEL} mm/s
+; Retraction Speed = ${SPEED_RETRACT} mm/s
 ; Printing Deceleration = ${DECEL} mm/s^2
 ; Jerk = ${JERK !== -1 ? JERK : ' pattern default'}
 ; Junction Deviation = ${JUNCTION !== -1 ? JUNCTION : ' pattern default'}
@@ -120,7 +120,7 @@ M205 S0 T0 ; minimum extruding and travel feed rate
 G21 ; Millimeter units
 G90 ; Absolute XYZ
 G28 ; Home all axes
-${Z_ALIGNMENT ? 'G34 ; Align Z' : ''}
+${DO_Z_ALIGNMENT ? 'G34 ; Align Z' : ''}
 G1 Z10 F100 ; Z raise
 M104 S${NOZZLE_TEMP} ; Set nozzle temperature (no wait)
 M190 S${BED_TEMP} ; Set bed temperature (wait)
@@ -138,7 +138,7 @@ M107 ; Turn off fan
 M400 ; Finish moving
 M104 S0 ; Turn off hotend
 M140 S0 ; Turn off bed
-G1 Z30 X0 Y${BEDSIZE_Y} F${TRAVEL_SPEED * 60} ; Move away from the print
+G1 Z30 X0 Y${BEDSIZE_Y} F${SPEED_TRAVEL * 60} ; Move away from the print
 M84 ; Disable motors
 G92 E0 ; Reset extruder distance
 M501 ; Load settings from EEPROM
@@ -484,9 +484,9 @@ function validateInput() {
   // Don't use parseInt or parseFloat for validating, since both
   // functions will have special parsing characteristics leading to
   // false numeric validation
-  const nanfields = [ 'BEDSIZE_X', 'BEDSIZE_Y', 'MAX_FREQ_X', 'MAX_FREQ_Y', 'PRINT_SPEED', 'TRAVEL_SPEED', 'DECEL',
+  const nanfields = [ 'BEDSIZE_X', 'BEDSIZE_Y', 'MAX_FREQ_X', 'MAX_FREQ_Y', 'PRINT_SPEED', 'SPEED_TRAVEL', 'DECEL',
                       'JERK', 'JUNCTION', 'FILAMENT_DIAMETER', 'LINE_WIDTH', 'LAYER_HEIGHT', 'FAN_SPEED',
-                      'EXTRUSION_MULT', 'Z_OFFSET', 'NOZZLE_TEMP', 'BED_TEMP', 'RETRACTION', 'RETRACT_SPEED' ];
+                      'EXTRUSION_MULT', 'OFFSET_Z', 'NOZZLE_TEMP', 'BED_TEMP', 'RETRACTION', 'SPEED_RETRACT' ];
   var testNaN = {};
   for (let f of nanfields) testNaN[f] = $(`#${f}`).val();
 
@@ -504,14 +504,13 @@ function validateInput() {
       max_x_size = Math.max(110, top_freq_y * wavelength + coast_dist_y + 8);
 
   // Start clean
-  $('#BEDSIZE_X,#BEDSIZE_Y,#MAX_FREQ_X,#MAX_FREQ_Y,#PRINT_SPEED,#TRAVEL_SPEED,#FILAMENT_DIAMETER,' +
-    '#LINE_WIDTH,#LAYER_HEIGHT,#FAN_SPEED,#EXTRUSION_MULT,#Z_OFFSET,#NOZZLE_TEMP,#BED_TEMP,' +
-    '#DECEL,#JERK,#JUNCTION,#RETRACTION,#RETRACT_SPEED').each(
-    (i,t) => {
-      t.setCustomValidity('');
-      $(`label[for=${$(t).attr('id')}]`).removeClass();
-    }
-  );
+  const clean = [ 'BEDSIZE_X', 'BEDSIZE_Y', 'MAX_FREQ_X', 'MAX_FREQ_Y', 'PRINT_SPEED', 'SPEED_TRAVEL',
+                  'FILAMENT_DIAMETER', 'LINE_WIDTH', 'LAYER_HEIGHT', 'FAN_SPEED', 'EXTRUSION_MULT', 'OFFSET_Z',
+                  'NOZZLE_TEMP', 'BED_TEMP', 'DECEL', 'JERK', 'JUNCTION', 'RETRACTION', 'SPEED_RETRACT' ];
+  $('#' + clean.join(',#')).each((i,t) => {
+    t.setCustomValidity('');
+    $(`label[for=${$(t).attr('id')}]`).removeClass();
+  });
   $('#warnbox').hide();
   $('#warning1, #warning2, #warning3').hide().text('');
   $('input.tool').prop('disabled', false);
@@ -554,7 +553,7 @@ function setLocalStorage() {
     LAYER_HEIGHT = parseFloat($('#LAYER_HEIGHT').val()),
     FAN_SPEED = parseFloat($('#FAN_SPEED').val()),
     PRINT_SPEED = parseInt($('#PRINT_SPEED').val()),
-    TRAVEL_SPEED = parseInt($('#TRAVEL_SPEED').val()),
+    SPEED_TRAVEL = parseInt($('#SPEED_TRAVEL').val()),
     DECEL = parseInt($('#DECEL').val()),
     JERK = parseInt($('#JERK').val()),
     JUNCTION = parseInt($('#JUNCTION').val()),
@@ -562,12 +561,12 @@ function setLocalStorage() {
     BEDSIZE_Y = parseInt($('#BEDSIZE_Y').val()),
     MAX_FREQ_X = parseInt($('#MAX_FREQ_X').val()),
     MAX_FREQ_Y = parseInt($('#MAX_FREQ_Y').val()),
-    Z_OFFSET = parseFloat($('#Z_OFFSET').val()),
+    OFFSET_Z = parseFloat($('#OFFSET_Z').val()),
     BED_LEVELING = $('#BED_LEVELING').val(),
     EXTRUSION_MULT = parseFloat($('#EXTRUSION_MULT').val()),
-    Z_ALIGNMENT = $('#Z_ALIGNMENT').prop('checked'),
+    DO_Z_ALIGNMENT = $('#DO_Z_ALIGNMENT').prop('checked'),
     RETRACTION = parseInt($('#RETRACTION').val()),
-    RETRACT_SPEED = parseInt($('#RETRACT_SPEED').val());
+    SPEED_RETRACT = parseInt($('#SPEED_RETRACT').val());
 
   var settings = {
     'Version': SETTINGS_VERSION,
@@ -578,7 +577,7 @@ function setLocalStorage() {
     'LAYER_HEIGHT': LAYER_HEIGHT,
     'FAN_SPEED': FAN_SPEED,
     'PRINT_SPEED': PRINT_SPEED,
-    'TRAVEL_SPEED': TRAVEL_SPEED,
+    'SPEED_TRAVEL': SPEED_TRAVEL,
     'DECEL': DECEL,
     'JERK': JERK,
     'JUNCTION': JUNCTION,
@@ -586,12 +585,12 @@ function setLocalStorage() {
     'BEDSIZE_Y': BEDSIZE_Y,
     'MAX_FREQ_X': MAX_FREQ_X,
     'MAX_FREQ_Y': MAX_FREQ_Y,
-    'Z_OFFSET': Z_OFFSET,
+    'OFFSET_Z': OFFSET_Z,
     'BED_LEVELING': BED_LEVELING,
     'EXTRUSION_MULT': EXTRUSION_MULT,
-    'Z_ALIGNMENT': Z_ALIGNMENT,
+    'DO_Z_ALIGNMENT': DO_Z_ALIGNMENT,
     'RETRACTION': RETRACTION,
-    'RETRACT_SPEED': RETRACT_SPEED
+    'SPEED_RETRACT': SPEED_RETRACT
   };
 
   const lsSettings = JSON.stringify(settings);
@@ -614,16 +613,17 @@ $(window).load(() => {
       alert('Script settings have been updated. Saved settings are reset to default values');
     }
     else {
-      const fields = [ 'FILAMENT_DIAMETER', 'LINE_WIDTH', 'NOZZLE_TEMP', 'BED_TEMP', 'LAYER_HEIGHT',
-                       'FAN_SPEED', 'PRINT_SPEED', 'TRAVEL_SPEED', 'DECEL', 'JERK',
-                       'BEDSIZE_X', 'BEDSIZE_Y', 'MAX_FREQ_X', 'MAX_FREQ_Y', 'Z_OFFSET',
-                       'BED_LEVELING', 'EXTRUSION_MULT', 'RETRACTION', 'RETRACT_SPEED' ];
-      for (let f of fields) $(`#${f}`).val(settings[f]);
-      $('#Z_ALIGNMENT').prop('checked', settings.Z_ALIGNMENT);
+      const vfields = [ 'FILAMENT_DIAMETER', 'LINE_WIDTH', 'NOZZLE_TEMP', 'BED_TEMP', 'LAYER_HEIGHT',
+                        'FAN_SPEED', 'PRINT_SPEED', 'SPEED_TRAVEL', 'DECEL', 'JERK',
+                        'BEDSIZE_X', 'BEDSIZE_Y', 'MAX_FREQ_X', 'MAX_FREQ_Y', 'OFFSET_Z',
+                        'BED_LEVELING', 'EXTRUSION_MULT', 'RETRACTION', 'SPEED_RETRACT' ];
+      const cfields = [ 'DO_Z_ALIGNMENT' ];
+      for (let f of vfields) $(`#${f}`).val(settings[f]);
+      for (let f of cfields) $(`#${f}`).prop('checked', settings[f]);
     }
   }
 
   // Focus the first field
-  $('#kfactor input:first').focus();
+  $('#tool input:first').focus();
 
 });

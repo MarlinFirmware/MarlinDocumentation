@@ -91,13 +91,13 @@ Caution! Only for Cartesian printers. CoreXY kinematics are not yet tested.
             <td>Printing speed when not in pattern</td>
           </tr>
           <tr>
-            <th><label for="TRAVEL_SPEED">Travel Speed</label></th>
-            <td><input name="TRAVEL_SPEED" id="TRAVEL_SPEED" step="any" value="100" onblur="validateInput()" /></td>
+            <th><label for="SPEED_TRAVEL">Travel Speed</label></th>
+            <td><input name="SPEED_TRAVEL" id="SPEED_TRAVEL" step="any" value="100" onblur="validateInput()" /></td>
             <td>Travel Speed </td>
           </tr>
           <tr>
-            <th><label for="RETRACT_SPEED">Retract Speed</label></th>
-            <td><input name="RETRACT_SPEED" id="RETRACT_SPEED" step="1" value="30" onblur="validateInput()" /></td>
+            <th><label for="SPEED_RETRACT">Retract Speed</label></th>
+            <td><input name="SPEED_RETRACT" id="SPEED_RETRACT" step="1" value="30" onblur="validateInput()" /></td>
             <td>Retract Speed of the extruder</td>
           </tr>
           <tr>
@@ -142,8 +142,8 @@ Caution! Only for Cartesian printers. CoreXY kinematics are not yet tested.
             <td id="y_factor">Maximum frequency for Y pattern</td>
           </tr>
           <tr>
-            <th><label for="Z_OFFSET">Z-Offset</label></th>
-            <td><input name="Z_OFFSET" id="Z_OFFSET" step="any" value="0" onblur="validateInput()" /></td>
+            <th><label for="OFFSET_Z">Z-Offset</label></th>
+            <td><input name="OFFSET_Z" id="OFFSET_Z" step="any" value="0" onblur="validateInput()" /></td>
             <td>Offset the Z-axis for manual Layer adjustment</td>
           </tr>
           <tr>
@@ -165,8 +165,8 @@ Caution! Only for Cartesian printers. CoreXY kinematics are not yet tested.
             <td>Usually 1.0</td>
           </tr>
           <tr>
-            <th><label for="Z_ALIGNMENT">Align Z</label></th>
-            <td><input name="Z_ALIGNMENT" type="checkbox" id="Z_ALIGNMENT" /></td>
+            <th><label for="DO_Z_ALIGNMENT">Align Z</label></th>
+            <td><input name="DO_Z_ALIGNMENT" type="checkbox" id="DO_Z_ALIGNMENT" /></td>
             <td>Align the Z gantry by running the G34 command</td>
           </tr>
           <tr id="warnbox">
