@@ -19,7 +19,7 @@
 
 // Settings version of localStorage
 // Increase if default settings are changed / amended
-const SETTINGS_VERSION = '1.2';
+const SETTINGS_VERSION = '1.0';
 
 function genGcode() {
 
