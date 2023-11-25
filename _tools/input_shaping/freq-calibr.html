@@ -198,6 +198,7 @@ Caution! Only for Cartesian printers. CoreXY kinematics are not yet tested.
         <li>The printer's stepper motors may skip steps leading to lost position —aka "layer shift"— at or above the resonant frequency. This is normal behaviour.</li>
         <li>Be aware that high speeds may exceed what your extruder can handle. A 60Hz frequency corresponds to 120mm/s (7200 mm/min) movement speed. For the default 0.5mm line width and 0.2mm layer height the machine needs to extrude 12 cubic mm of filament per second. Know your extruder's limits.</li>
         <li>If the test patterns show asymmetry or vibration in the Z direction, linear motion might have slack or flex (e.g., from loose roller wheels). See the image below.</li>
+        <li><strong>Input Shaping can affect Linear Advance.</strong> If Linear Advance is enabled, calibrate K-factor after calibrating Input Shaping.</li>
       </ul>
       <h2>Examples</h2>
       <p>The following images demonstrate some test pattern examples.</p>
@@ -212,8 +213,7 @@ Caution! Only for Cartesian printers. CoreXY kinematics are not yet tested.
             <li>Measuring the distance (mm) from the beginning of the pattern to the point of amplitude peak reveals resonant frequency, where frequency is this distance divided by 2.</li>
             <li>To reduce ringing, Input Shaping tries to dampen resonant frequency, aka. Damping Frequency.</li>
           </ul>
-          <p>TODO: Frequency Sweep image</p>
-          <!-- <img src="/assets/images/features/freq-calibr/freq-pattern-1.jpg" alt="DampingFrequencyPattern" /> -->
+          <img src="/assets/images/features/freq-calibr/frequency-drawing.png" alt="DampingFrequencyDrawing" />
         </div>
         <div class="col-sm-6">
           <h3>Zeta/Damping Factor theory</h3>
@@ -221,13 +221,13 @@ Caution! Only for Cartesian printers. CoreXY kinematics are not yet tested.
             <li>Damping Factor sweep patterns are printed for both axes.</li>
             <li>Damping Factor controls damping:</li>
             <ul>
-              <li>Too low Damping Factor: vibration is not cancelled at Damping Frequency.</li>
-              <li>Correct (critical) Damping Factor: vibration is cancelled at Damping Frequency.</li>
-              <li>Too high Damping Factor: vibration is reduced too aggressively also below Damping Frequency.</li>
+              <li>Too low Damping Factor: vibration is not cancelled at Damping Frequency. Topmost pattern in image below.</li>
+              <li>Correct (critical) Damping Factor: vibration is cancelled at Damping Frequency. Middle pattern in image below.</li>
+              <li>Too high Damping Factor: vibration is reduced too aggressively also below Damping Frequency. Bottom pattern in image below.</li>
             </ul>
-            <li>Best value can be found by looking for zigzag pattern with most uniform amplitude at and below Damping Frequency and decreased amplitude above Damping Frequency.</li>
+            <li>Best value can be found by looking for zigzag pattern with most uniform amplitude at and below Damping Frequency and same or decreased amplitude above Damping Frequency.</li>
           </ul>
-          <p>TODO: Damping Sweep image</p>
+          <img src="/assets/images/features/freq-calibr/damping-drawing.png" alt="DampingFactorDrawing" />
         </div>
       </div>
       <div class="row">
@@ -243,18 +243,35 @@ Caution! Only for Cartesian printers. CoreXY kinematics are not yet tested.
       <div class="row">
         <div class="col-sm-6">
           <h3>Damping Frequency Pattern example 2</h3>
-          <p>TODO: Better Frequency Sweep image</p>
-          <img src="/assets/images/features/freq-calibr/freq-pattern.jpg" alt="DampingFrequencyPattern" />
+          <p>Print consists of</p>
+          <ul>
+            <li>Frame (back and left lines)</li>
+            <li>Y-axis frequency sweep (horizontal at front)</li>
+            <li>Slowdown</li>
+            <li>X-axis frequency sweep (vertical on left)</li>
+            <li>Slowdown</li>
+          </ul>
+          <p>Resonant frequency for Y-axis is around 39Hz (78mm). Resonant frequency for X-axis is not so clear, 55-60Hz (110-120mm).</p>
+          <img src="/assets/images/features/freq-calibr/freq-pattern2.png" alt="DampingFrequencyPattern" />
         </div>
         <div class="col-sm-6">
           <h3>Zeta/Damping Factor Pattern example 2</h3>
-          <p>TODO: Better Damping Sweep image</p>
-          <img src="/assets/images/features/freq-calibr/zeta-pattern.jpg" alt="ZetaDampingFactorPattern" />
+          <p>Print consists of</p>
+          <ul>
+            <li>Frame (back and left lines)</li>
+            <li>Y-axis frequency sweeps at increasing Damping Factor values</li>
+          </ul>
+          <p>Damping Factor values start from 0.05 and increase by 0.05.</p>
+          <p>0.40 (8th pattern) looks the best.</p>
+          <p>Note! Zeta/Damping pattern for X-axis is vertical. Leftmost line is part of anchor and is not counted as part of Damping Factor values.</p>
+          <img src="/assets/images/features/freq-calibr/zeta-pattern2.png" alt="ZetaDampingFactorPattern" />
         </div>
       </div>
       <div class="row">
         <div class="col-sm-6">
-          <h3>Example of loose POM wheels</h3>
+          <h3>Example of loose roller wheels</h3>
+          <p>During this pattern, bed may have been moving and rotating in other directions than just Y-axis.</p>
+          <p>Roller wheels of the bed were too loose and tightening them improved pattern.</p>
           <img src="/assets/images/features/freq-calibr/loose-wheels.png" alt="LooseWheelsExample" />
         </div>
         <div class="col-sm-6">
