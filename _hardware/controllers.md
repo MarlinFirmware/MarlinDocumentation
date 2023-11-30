@@ -194,7 +194,15 @@ groups:
       description:
 
     - name: LCD_FOR_MELZI
-      description:
+      description: |
+        - 128x64 pixel LCD panel
+        - Reset button
+        - Combined rotary encoder and push button for menu control
+        - Buzzer
+      images:
+        - alt: LCD_FOR_MELZI
+          front: LCD_FOR_MELZI
+          back: LCD_FOR_MELZI
 
     - name: ULTI_CONTROLLER
       description:
