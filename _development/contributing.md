@@ -28,7 +28,7 @@ Your sponsorship accelerates development, testing, and advancement of the most a
 
 ### Report bugs
 - Use the community links below for help with configuration and troubleshooting.
-- Submit your **Confirmed Bugs** to the [Issue Queue](//github.com/MarlinFirmware/Marlin/issues/new?template=bug_report.yml&title=%5BBUG%5D+%28bug+summary%29). Search the Issue Queue first!
+- Submit your **Confirmed Bugs** to the [Issue Queue](//github.com/MarlinFirmware/Marlin/issues/new?labels=Bug%3A+Potential+%3F&template=bug_report.yml&title=%5BBUG%5D+%28bug+summary%29). Search the Issue Queue first!
 
 ### Request features
 - Submit your **Feature Requests** to the [Issue Queue](//github.com/MarlinFirmware/Marlin/issues/new?labels=T%3A+Feature+Request&template=feature_request.yml&title=%5BFR%5D+%28feature+summary%29). Search the Issue Queue first!
