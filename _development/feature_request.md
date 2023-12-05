@@ -24,7 +24,7 @@ Marlin has _a lot_ of features, and there are several more in development, but w
 
 # Submitting a Feature Request
 
-Go to the Marlin project page to [Open a New Issue](//github.com/MarlinFirmware/Marlin/issues/new) and follow these guidelines:
+Go to the Marlin project page to [Open a Feature Request](//github.com/MarlinFirmware/Marlin/issues/new?labels=T%3A+Feature+Request&template=feature_request.yml&title=%5BFR%5D+%28feature+summary%29) and follow these guidelines:
 
 - Prefix the title with **'[Feature Request]'** or its short form, **'[FR]'**.
 - Keep the title short and to the point. A good example would be:
