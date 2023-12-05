@@ -152,7 +152,7 @@ groups:
 
     - name: REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER
       description: |
-        One of the most common mono bitmap displays. Comes in white and red PCBs
+        One of the most common mono bitmap displays. Comes in white and red PCBs.
         - 128x64 pixel LCD panel
         - SD Card reader
         - Reset button
