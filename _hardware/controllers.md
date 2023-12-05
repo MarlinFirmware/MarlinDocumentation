@@ -152,7 +152,7 @@ groups:
 
     - name: REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER
       description: |
-        One of the most common mono bitmap displays. Comes in white and red PCBs
+        One of the most common mono bitmap displays. Comes in white and red PCBs.
         - 128x64 pixel LCD panel
         - SD Card reader
         - Reset button
@@ -194,7 +194,15 @@ groups:
       description:
 
     - name: LCD_FOR_MELZI
-      description:
+      description: |
+        - 128x64 pixel LCD panel
+        - Reset button
+        - Combined rotary encoder and push button for menu control
+        - Buzzer
+      images:
+        - alt: LCD_FOR_MELZI
+          front: LCD_FOR_MELZI
+          back: LCD_FOR_MELZI
 
     - name: ULTI_CONTROLLER
       description:
