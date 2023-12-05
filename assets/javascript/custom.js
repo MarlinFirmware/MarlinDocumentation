@@ -57,22 +57,19 @@ var $animation_elements = $('.animation-element');
 var $window = $(window);
 
 function check_if_in_view() {
-  var window_height = $window.height();
-  var window_top_position = $window.scrollTop();
-  var window_bottom_position = (window_top_position + window_height);
+  var win_height = $window.height();
+  var win_top = $window.scrollTop();
+  var win_bottom = (win_top + win_height);
 
   $.each($animation_elements, function() {
-    var $element = $(this);
-    var element_height = $element.outerHeight();
-    var element_top_position = ($element.offset().top);
-    var element_bottom_position = (element_top_position + element_height);
+    var $e = $(this);
+    var height = $e.outerHeight();
+    var top = ($e.offset().top);
+    var bottom = (top + height);
 
     // Check whether this current container is within viewport
-    if (element_bottom_position >= window_top_position && element_top_position <= window_bottom_position - 100) {
-      $element.addClass('in-view');
-    } else {
-      // $element.removeClass('in-view');  // uncomment to animate out
-    }
+    if (bottom >= win_top && top <= win_bottom - 100)
+      $e.addClass('in-view');
   });
 }
 check_if_in_view();
