@@ -221,7 +221,7 @@ groups:
         - Reset button
         - Combined rotary encoder and push button for menu control
         - Buzzer
-        - *Some have a jumper on the back to switch voltage.
+        - *Some have a jumper on the back to switch logic level voltage
       images:
         - alt: MKS_LCD12864A
           front: MKS_LCD12864A
