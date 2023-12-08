@@ -214,10 +214,31 @@ groups:
       description:
 
     - name: MKS_LCD12864A
-      description:
+      description: |
+        Designed for 5v 8bit mootherboards.*
+        - 128x64 pixel LCD panel
+        - SD Card reader
+        - Reset button
+        - Combined rotary encoder and push button for menu control
+        - Buzzer
+        - *Some have a jumper on the back to switch voltage.
+      images:
+        - alt: MKS_LCD12864A
+          front: MKS_LCD12864A
+          back: MKS_LCD12864A
 
     - name: MKS_LCD12864B
-      description:
+      description: |
+        Designed for 3.3v 32bit mootherboards.
+        - 128x64 pixel LCD panel
+        - SD Card reader
+        - Reset button
+        - Combined rotary encoder and push button for menu control
+        - Buzzer
+      images:
+        - alt: MKS_LCD12864B
+          front: MKS_LCD12864B
+          back: MKS_LCD12864B
 
     - name: FYSETC_MINI_12864_X_X
       description:
