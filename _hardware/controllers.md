@@ -220,7 +220,7 @@ groups:
         - SD Card reader
         - Reset button
         - Combined rotary encoder and push button for menu control
-        - Buzzer
+        - Speaker
         - *Some have a jumper on the back to switch logic level voltage
       images:
         - alt: MKS_LCD12864A
@@ -234,7 +234,7 @@ groups:
         - SD Card reader
         - Reset button
         - Combined rotary encoder and push button for menu control
-        - Buzzer
+        - Speaker
       images:
         - alt: MKS_LCD12864B
           front: MKS_LCD12864B
