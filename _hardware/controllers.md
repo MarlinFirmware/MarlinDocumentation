@@ -294,7 +294,16 @@ groups:
           back: ENDER2_STOCK
 
     - name: ANET_FULL_GRAPHICS_LCD
-      description:
+      description: |
+        - 128x64 pixel LCD panel
+        - Reset button
+        - Combined rotary encoder and push button for menu control
+        - Buzzer
+        - Option for a Bluetooth module
+      images:
+        - alt: ANET_FULL_GRAPHICS_LCD
+          front: ANET_FULL_GRAPHICS_LCD
+          back: ANET_FULL_GRAPHICS_LCD
 
     - name: AZSMZ_12864
       description:
