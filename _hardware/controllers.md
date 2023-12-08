@@ -305,6 +305,16 @@ groups:
           front: ANET_FULL_GRAPHICS_LCD
           back: ANET_FULL_GRAPHICS_LCD
 
+    - name: CTC_A10S_A13
+      description: |
+        - 128x64 pixel LCD panel
+        - Combined rotary encoder and push button for menu control
+        - Option for a Buzzer
+      images:
+        - alt: CTC_A10S_A13
+          front: CTC_A10S_A13
+          back: CTC_A10S_A13
+
     - name: AZSMZ_12864
       description:
 
