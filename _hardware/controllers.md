@@ -258,7 +258,7 @@ groups:
         - Combined rotary encoder and push button for menu control
         - Buzzer
 
-    - name: BTT_MINI_12864_V1
+    - name: BTT_MINI_12864
       description: |
         Clone of FYSETC_MINI_12864_2_1
         - 128x64 pixel LCD panel
@@ -267,9 +267,9 @@ groups:
         - Buzzer
         - Neopixel backlight
       images:
-        - alt: BTT_MINI_12864_V1
-          front: BTT_MINI_12864_V1
-          back: BTT_MINI_12864_V1
+        - alt: BTT_MINI_12864
+          front: BTT_MINI_12864
+          back: BTT_MINI_12864
 
     - name: CR10_STOCKDISPLAY
       description: |
