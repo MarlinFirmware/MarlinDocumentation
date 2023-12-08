@@ -296,7 +296,6 @@ groups:
       description: |
         One of the most common Creality mono bitmap displays.
         - 128x64 pixel LCD panel
-        - Reset button
         - Combined rotary encoder and push button for menu control
         - Buzzer
         - Cen be configuraed as a REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER
