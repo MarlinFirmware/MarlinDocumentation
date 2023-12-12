@@ -1,6 +1,6 @@
 ---
-title: Hardware Access Layer
-description: Overview of the Hardware Access Layer in Marlin
+title: Hardware Abstraction Layer
+description: Overview of the Hardware Abstraction Layer in Marlin
 tag: coding
 
 author: chepo92
@@ -8,7 +8,7 @@ contrib: thinkyhead
 category: [ development ]
 ---
 
-The Hardware Access Layer –"HAL" for short– allows Marlin to run on a wide variety of boards by providing a common interface for low-level resources like timers, serial ports, i2c and SPI buses, EEPROM, SDIO, and so on.
+The Hardware Abstraction Layer –"HAL" for short– allows Marlin to run on a wide variety of boards by providing a common interface for low-level resources like timers, serial ports, i2c and SPI buses, EEPROM, SDIO, and so on.
 
 ## HAL Rationale
 

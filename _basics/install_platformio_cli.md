@@ -19,9 +19,9 @@ Python 2.7 is required for both **Auto Build** and **PlatformIO**.  It is automa
 
 ## Install PlatformIO Core
 
-Follow [these instructions](//docs.platformio.org/en/latest/installation.html) to install **PlatformIO Core** and it's dependencies.
+Follow [these instructions](//docs.platformio.org/en/latest/installation.html) to install **PlatformIO Core** and its dependencies.
 
-NOTE: If a **PlatformIO** plugin/extension has previously been installed then **PlatformIO Core** is already installed.  You may still need to follow the [Install PlatformIO Core Shell Commands](//docs.platformio.org/en/latest/faq.html#faq-install-shell-commands) section in the above link.
+NOTE: If a **PlatformIO** plugin/extension has previously been installed then **PlatformIO Core** is already installed.  You may still need to follow the [Install PlatformIO Core Shell Commands](//docs.platformio.org/en/latest/core/installation/shell-commands.html) section in the above link.
 
 ## Find the environment for your board
 
@@ -37,14 +37,14 @@ The PlatformIO environment needed for a motherboard is in the comments for the b
 
   ```cpp
   #elif MB(RAMPS_14_EEB)
-     #include "pins_RAMPS.h"     // ATmega1280, ATmega2560                     env:megaatmega1280 env:megaatmega2560
+     #include "pins_RAMPS.h"     // ATmega1280, ATmega2560                     env:mega1280 env:mega2560
   ```
 
   The first part of the comment lists the CPU(s) used in the board.
 
   The env:xxxx section(s) are the PlatformIO environment(s) that are used for this board.
 
-  In this case **megaatmega2560** is the one used 99.9% of the time.
+  In this case **mega2560** is the one used 99.9% of the time.
 
 ## Run PlatformIO from the command line
 

@@ -532,7 +532,6 @@ div.container.detail, div.container.config {
   strong em { color: var(--color-jumbo-strong); }
   h2 { background: var(--color-jumbo-h2-bg); }
   }
-iframe.youtube { border-color: var(--color-iframe-border); }
 #search.container {
   color: var(--color-iframe-search);
   background: var(--color-iframe-search-bg);
@@ -563,7 +562,7 @@ h1+h2 { margin-top: -0.4em; color: #BBC; }
 
 #daynite { visibility: hidden; margin: 6px 0 0 4px; padding-left: 4px; }
 
-#discord-frame { float: right; margin-left: 1em; }
+#discord-frame { float: right; margin-left: 1em; padding-bottom: 1em; +p { clear: none; +ul { clear: none; >li { clear: none; } } } }
 .home-discord { width: 350px; margin: 0 auto; text-align: center; }
 
 #carouselmarlin { background-color: #F8F8F9; .item { height: 320px; img { padding: -50px 0; } } }
@@ -628,7 +627,17 @@ div.highlight { margin-bottom: 25px; }
   padding: 1em;
   > p { margin: 0; }
 }
-.param-desc-list p { display: inline; }
+.param-desc-list {
+  p { display: inline; }
+  li {
+    position: relative;
+    span.label-success {
+      position: absolute;
+      left: -7em;
+      top: 2px;
+    }
+  }
+}
 td.arg code { white-space: nowrap; }
 #search-block-form .button { margin-right: 0.25em; }
 
@@ -832,7 +841,8 @@ div.container.detail {
   div.row {
     margin-left: 16px;
     h3, h4 { margin-left: -0.5em; }
-    h4, h5, h6 { margin-left: -0.5em; padding-left: 0.5em; }
+    h5, h6 { margin-left: 0; }
+    h4, h5, h6 { padding-left: 0.5em; }
     font-size: 110%;
   }
   div.row.examples .post {
@@ -1031,8 +1041,10 @@ li#searchbox {
 li#searchbox { &:hover, &:active { background-color: transparent; } }
 
 iframe.youtube {
+  border-color: var(--color-iframe-border);
   border: 2px solid;
   margin: 0.5em auto;
+  &.rj { margin: 0; float: right; }
 }
 hr { margin-top: 0; margin-bottom: 0; }
 summary h3 { display: inline; }
@@ -1168,10 +1180,21 @@ div.container.detail div.row div.subopt {
 
 div.settings.item {
   padding: 0.25em;
+  margin-bottom: 1em;
+  h2 { margin-bottom: 0; padding-bottom: 0; }
+  p { margin-left: 1em; }
 }
 div.summ-opts {
+  div.group {
+    margin-bottom: 0.5em;
+    .sub {
+      font-size: 90%;
+      padding-left: 2em;
+    }
+  }
   a.opt {
-    padding: 4px 8px;
+    padding: 3px 1em;
+    display: block;
     &:hover, &:active {
       background: var(--color-link-hover-bg);
       color: var(--color-link-hover);
@@ -1191,3 +1214,10 @@ div.options table {
 div.brief { font-weight: bolder; }
 div.since { float: right; margin-right: 0.25em; }
 div.tags { display: inline-block; float: right; margin: 0.5em; }
+
+#controllers-page {
+  .lcd div { padding-bottom: 0.9em; }
+  .lcd .desc { float: left; width: 60%; margin-right: -60%; padding-left: 1em; }
+  .lcd .gallery { float: right; width: 40%; margin-left: -40%; padding: 0 1em 0.9em 0; }
+  .lcd .gallery img { float: right; margin-top: 4px; }
+}

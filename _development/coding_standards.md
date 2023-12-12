@@ -221,8 +221,6 @@ Marlin provides several shorthand macros - mostly in the `macros.h` file - that 
 Macro|Description
 ----|-----------
 `ENABLED(OPTION)`/`DISABLED(OPTION)`| Test whether an option is on/off. These macros are required so that `make` can set options.
-`EITHER(OPT1, OPT2)`| True if either of the listed options is enabled.
-`BOTH(OPT1, OPT2)`| True if both of the listed options is enabled.
 `ANY(...)`| True if any of the listed options is enabled.
 `MANY(...)`| True only if more than one of the listed options is enabled.
 `ALL(...)`| True only if all of the listed options are enabled.
@@ -261,7 +259,7 @@ TERN_(EEPROM_SETTINGS, settings.read()); // Read settings (or not)
 Macro|Description
 ----|-----------
 `PIN_EXISTS(NAME)`| True if the pin is defined. **Precompiler only.** (Takes a pin name minus `_PIN`.)
-`PINS_EXISTS(...)`| True if all the listed pins are defined. **Precompiler only.** (Takes pin names minus `_PIN`.)
+`PINS_EXIST(...)`| True if all the listed pins are defined. **Precompiler only.** (Takes pin names minus `_PIN`.)
 `ANY_PIN(...)`| True if any of the listed pins is defined. **Precompiler only.** (Takes pin names minus `_PIN`.)
 
 ### FastIO
@@ -286,10 +284,6 @@ Macro|Description
 {:.pretty-list.headless}
 Macro|Description
 ----|-----------
-`LOOP_L_N(VAR, N)` | Zero-based loop, given a size. `for (uint8_t VAR=0; VAR<(N); VAR++)`
-`LOOP_LE_N(VAR, N)` | Zero-based loop, given a last index. `for (uint8_t VAR=0; VAR<=(N); VAR++)`
-`LOOP_S_L_N(VAR, S, N)` | Loop over range, excluding end index. `for (uint8_t VAR=(S); VAR<(N); VAR++)`
-`LOOP_S_LE_N(VAR, S, N)` | Loop over range, including end index. `for (uint8_t VAR=(S); VAR<=(N); VAR++)`
 `LOOP_ABC(VAR)` | Loop over the first (up to) three axes
 `LOOP_NUM_AXES(VAR)` | Loop over all axes except for E
 `LOOP_LOGICAL_AXES(VAR)` | Loop over all axes including E as a single axis

@@ -11,18 +11,12 @@ category:     [ tools ]
   <div class="row">
     <div id="calibpat">
       <h1>K-factor Calibration Pattern</h1>
-      <div class="row alert alert-info custom-alert">
-        <div class="col-lg-1 col-md-2 visible-md-block custom-alert-icon"> <i class="fa fa-info-circle fa-4x" aria-hidden="true"></i> </div>
-        <div class="col-lg-11 col-md-10 custom-alert-text">
-          <p><em>Caution!</em><br/>
-          K-values for Linear Advance 1.0 and 1.5 are not compatible.<br/>
-          Linear Advance 1.0 is used in Marlin 1.1.8 and earlier.<br/>
-          Linear Advance 1.5 is used in Marlin 1.1.9 and later.</p>
-        </div>
-      </div>
-      <p>Use this form to generate G-code that you can use to calibrate your Linear Advance K-factor. Default values apply to standard PLA with a 0.4mm nozzle.</p>
-      <p>Press the <strong>Generate G-code</strong> button followed by <strong>Download as file</strong> to save the result.</p>
-      <table id="kfactor">
+{% alert warning %}
+__Caution!__
+- K-values for Linear Advance 1.0 and 1.5 are not compatible.
+- Linear Advance 1.0 only applies to Marlin version 1.1.8 and earlier.
+{% endalert %}
+      <table id="tool">
         <tbody>
           <tr class="head">
             <td colspan="3"><h3>Settings</h3></td>
@@ -41,13 +35,13 @@ category:     [ tools ]
             <td><input name="FILAMENT" id="FILAMENT" value="filament name" /></td>
           </tr>
           <tr>
-            <th><label for="FIL_DIA">Filament Diameter</label></th>
-            <td><input name="FIL_DIA" id="FIL_DIA" step="any" value="1.75" onblur="validateInput()" /></td>
+            <th><label for="FILAMENT_DIAMETER">Filament Diameter</label></th>
+            <td><input name="FILAMENT_DIAMETER" id="FILAMENT_DIAMETER" step="any" value="1.75" onblur="validateInput()" /></td>
             <td>Diameter of the used filament (mm)</td>
           </tr>
           <tr>
-            <th><label for="NOZ_DIA">Nozzle Diameter</label></th>
-            <td><input name="NOZ_DIA" id="NOZ_DIA" step="any" value="0.4" onblur="validateInput()" /></td>
+            <th><label for="NOZZLE_DIAMETER">Nozzle Diameter</label></th>
+            <td><input name="NOZZLE_DIAMETER" id="NOZZLE_DIAMETER" step="any" value="0.4" onblur="validateInput()" /></td>
             <td>Diameter of the nozzle (mm)</td>
           </tr>
           <tr>
@@ -84,8 +78,8 @@ category:     [ tools ]
             <td colspan="3" class="section"><h4>Print Bed</h4></td>
           </tr>
           <tr>
-            <th><label for="SHAPE_BED">Bed Shape</label></th>
-            <td><select name="SHAPE_BED" id="SHAPE_BED">
+            <th><label for="BED_SHAPE">Bed Shape</label></th>
+            <td><select name="BED_SHAPE" id="BED_SHAPE">
               <option value="Rect">Rectangular</option>
               <option value="Round">Round</option>
             </select></td>
@@ -110,28 +104,28 @@ category:     [ tools ]
             <td colspan="3" class="section"><h4>Speed</h4></td>
           </tr>
           <tr>
-            <th><label for="MM_S">Use mm/s</label></th>
-            <td><input name="MM_S" type="checkbox" id="MM_S" checked="checked" /></td>
+            <th><label for="USE_MMS">Use mm/s</label></th>
+            <td><input name="USE_MMS" type="checkbox" id="USE_MMS" checked="checked" /></td>
             <td>Use mm/s instead of mm/min</td>
           </tr>
           <tr>
-            <th><label for="SLOW_SPEED">Slow Printing Speed</label></th>
-            <td><input name="SLOW_SPEED" id="SLOW_SPEED" step="any" value="20" onblur="validateInput()" /></td>
+            <th><label for="SPEED_SLOW">Slow Printing Speed</label></th>
+            <td><input name="SPEED_SLOW" id="SPEED_SLOW" step="any" value="20" onblur="validateInput()" /></td>
             <td>Slow printing speed</td>
           </tr>
           <tr>
-            <th><label for="FAST_SPEED">Fast Printing Speed</label></th>
-            <td><input name="FAST_SPEED" id="FAST_SPEED" step="any" value="70" onblur="validateInput()" /></td>
+            <th><label for="SPEED_FAST">Fast Printing Speed</label></th>
+            <td><input name="SPEED_FAST" id="SPEED_FAST" step="any" value="70" onblur="validateInput()" /></td>
             <td>Fast printing speed. This should differ noticeably from Slow Speed</td>
           </tr>
           <tr>
-            <th><label for="MOVE_SPEED">Movement Speed</label></th>
-            <td><input name="MOVE_SPEED" id="MOVE_SPEED" step="any" value="120" onblur="validateInput()" /></td>
+            <th><label for="SPEED_MOVE">Movement Speed</label></th>
+            <td><input name="SPEED_MOVE" id="SPEED_MOVE" step="any" value="120" onblur="validateInput()" /></td>
             <td>Movement speed</td>
           </tr>
           <tr>
-            <th><label for="RETRACT_SPEED">Retract Speed</label></th>
-            <td><input name="RETRACT_SPEED" id="RETRACT_SPEED" step="any" value="30" onblur="validateInput()" /></td>
+            <th><label for="SPEED_RETRACT">Retract Speed</label></th>
+            <td><input name="SPEED_RETRACT" id="SPEED_RETRACT" step="any" value="30" onblur="validateInput()" /></td>
             <td>Retract Speed of the extruder</td>
           </tr>
           <tr>
@@ -140,8 +134,8 @@ category:     [ tools ]
             <td>Unretract Speed of the extruder</td>
           </tr>
           <tr>
-            <th><label for="PRINT_ACCL">Acceleration</label></th>
-            <td><input name="PRINT_ACCL" id="PRINT_ACCL" step="any" value="500" onblur="validateInput()" /></td>
+            <th><label for="ACCELERATION">Acceleration</label></th>
+            <td><input name="ACCELERATION" id="ACCELERATION" step="any" value="500" onblur="validateInput()" /></td>
             <td>Set printing acceleration (mm/s^2)</td>
           </tr>
           <tr>
@@ -214,8 +208,8 @@ category:     [ tools ]
             <td>Distance between the test lines. This will impact print size</td>
           </tr>
           <tr>
-            <th><label for="FRAME">Print Anchor Frame</label></th>
-            <td><input name="FRAME" type="checkbox" id="FRAME" /></td>
+            <th><label for="USE_FRAME">Print Anchor Frame</label></th>
+            <td><input name="USE_FRAME" type="checkbox" id="USE_FRAME" /></td>
             <td>Adds a frame around the start and end points of the test lines. May improve adhesion</td>
           </tr>
           <tr>
@@ -233,16 +227,16 @@ category:     [ tools ]
             <td>Rotates the print in 45° steps</td>
           </tr>
           <tr>
-            <th><label for="LINE_NO">Line Numbering</label></th>
-            <td><input name="LINE_NO" type="checkbox" id="LINE_NO" checked="checked" /></td>
+            <th><label for="USE_LINE_NUM">Line Numbering</label></th>
+            <td><input name="USE_LINE_NUM" type="checkbox" id="USE_LINE_NUM" checked="checked" /></td>
             <td>Prints the K-value besides every second test line</td>
           </tr>
           <tr>
             <td colspan="3" class="section"><h4>Advanced</h4></td>
           </tr>
           <tr>
-            <th><label for="NOZ_LIN_R">Nozzle Line Ratio</label></th>
-            <td><input name="NOZ_LIN_R" id="NOZ_LIN_R" step="0.1" value="1.2" onblur="validateInput()" /></td>
+            <th><label for="NOZZLE_LINE_RATIO">Nozzle Line Ratio</label></th>
+            <td><input name="NOZZLE_LINE_RATIO" id="NOZZLE_LINE_RATIO" step="0.1" value="1.2" onblur="validateInput()" /></td>
             <td>Ratio between extruded line width and nozzle diameter. Should be between 1.05 and 1.2</td>
           </tr>
           <tr>
@@ -252,7 +246,7 @@ category:     [ tools ]
           </tr>
           <tr>
             <th><label for="USE_BL">Use Bed Leveling</label></th>
-            <td><select name="SELECT_BED_LEVELING" id="SELECT_BED_LEVELING" onchange="validateInput()">
+            <td><select name="BED_LEVELING" id="BED_LEVELING" onchange="validateInput()">
               <option value="0" selected="selected">No</option>
               <option value="G29 ; Level bed">Level bed (G29)</option>
               <option value="M420 S1 ; Leveling ON">Leveling ON</option>
@@ -274,8 +268,8 @@ category:     [ tools ]
             <td>Usually 1.0</td>
           </tr>
           <tr>
-            <th><label for="PRIME">Prime Nozzle</label></th>
-            <td><input name="PRIME" type="checkbox" id="PRIME" checked="checked" /></td>
+            <th><label for="USE_PRIME">Prime Nozzle</label></th>
+            <td><input name="USE_PRIME" type="checkbox" id="USE_PRIME" checked="checked" /></td>
             <td>Prime the nozzle before starting the test pattern</td>
           </tr>
           <tr>
@@ -284,8 +278,8 @@ category:     [ tools ]
             <td>The default of 2.5 results in roughly 1mm of filament for 10mm line length</td>
           </tr>
           <tr>
-            <th height="24"><label for="PRIME_SPEED">Prime Printing Speed</label></th>
-            <td><input name="PRIME_SPEED" id="PRIME_SPEED" step="any" value="30" onblur="validateInput()" /></td>
+            <th height="24"><label for="SPEED_PRIME">Prime Printing Speed</label></th>
+            <td><input name="SPEED_PRIME" id="SPEED_PRIME" step="any" value="30" onblur="validateInput()" /></td>
             <td>Speed of the prime move</td>
           </tr>
           <tr>
@@ -294,25 +288,25 @@ category:     [ tools ]
             <td>Insert a pause of x seconds before starting the test pattern to bleed off any residual nozzle pressure</td>
           </tr>
           <tr>
-            <th><label for="Z_ALIGNMENT">Align Z</label></th>
-            <td><input name="Z_ALIGNMENT" type="checkbox" id="Z_ALIGNMENT" /></td>
+            <th><label for="DO_Z_ALIGNMENT">Align Z</label></th>
+            <td><input name="DO_Z_ALIGNMENT" type="checkbox" id="DO_Z_ALIGNMENT" /></td>
             <td>Align the Z gantry by running the G34 command</td>
           </tr>
           <tr class="calibpat2">
             <th><label for="FILENAME">Filename</label></th>
-            <td colspan="2"><input name="FILENAME" id="FILENAME" value="filename" />
-              <input name="button" type="button" id="button" onclick="genGcode()" value="Generate G-code" />
-              <input name="button3" type="button" id="button3" onclick="setLocalStorage()" value="Save as default" title="Save settings in a cookie." />
+            <td colspan="2"><input name="FILENAME" id="FILENAME" value="kfactor" />
+              <input type="button" class="tool" onclick="genGcode()" value="Generate G-code" />
+              <input type="button" class="tool" onclick="setLocalStorage()" value="Save as default" title="Save settings in a cookie." />
             <p id="warning1" style="display: none;">warning</p>
             <p id="warning2" style="display: none;">warning</p>
             <p id="warning3" style="display: none;">warning</p></td>
             <td class="options"><p>
-              <input name="button2" type="button" id="button2" onclick="saveTextAsFile()" value="Download as file" />
+              <input type="button" class="tool" onclick="saveTextAsFile()" value="Download as file" />
             </p></td>
           </tr>
         </tbody>
       </table>
-      <h3>Notes on the settings:</h3>
+      <h3>Notes:</h3>
       <ul>
         <li><strong>Fast Printing Speed</strong> and <strong>Slow Printing Speed</strong> should be significantly different or the K-factor effect will barely be visible.</li>
         <li><strong>Use Bed Leveling</strong> requires a probe.</li>
@@ -324,8 +318,8 @@ category:     [ tools ]
         <li>The <strong>Alternate Pattern</strong> has a second line of <strong>Fast Printing Speed</strong> to test 0 to <strong>Fast Printing Speed</strong> and back to 0 conditions. Best used with an increased <strong>Test Line Spacing</strong> and reduced K-factor range.</li>
         <li>The proper K-factor depends on the filament, nozzle size, nozzle geometry and printing temperature. If any of these values change, the calibration might need to be repeated.</li>
       </ul>
-      <h2>Screen-shots</h2>
-      <p>The following screen-shots show some examples of the test patterns</p>
+      <h2>Screenshots</h2>
+      <p>The following screenshots show some examples of the test patterns</p>
       <ul>
         <li>Blue Lines are Slow Printing Speeds</li>
         <li>Red Lines are Fast Printing Speed</li>

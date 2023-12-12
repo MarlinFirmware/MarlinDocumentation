@@ -29,7 +29,7 @@ To build Marlin for a specific board, set the `MOTHERBOARD` option in `Configura
 #define MOTHERBOARD BOARD_RAMPS_EFB
 ```
 
-See the [boards list](#board_list) at the bottom of this page for a complete list of boards supported in the latest release of Marlin.
+See the [boards list](#board-list) at the bottom of this page for a complete list of boards supported in the latest release of Marlin.
 
 ### FastIO and Pin Mapping
 

@@ -802,7 +802,7 @@ Junction Deviation determins the cornering speed. The smaller the value the slow
 
 Use the above formula to calculate the Junction Deviation amount.
 
-See the following sources for detailed explainations on Junction Deviation:
+See the following sources for detailed explanations of Junction Deviation:
 - [JD Explained and Visualized, by Paul Wanamaker](//reprap.org/forum/read.php?1,739819)
 - [Computing JD for Marlin Firmware](//blog.kyneticcnc.com/2018/10/computing-junction-deviation-for-marlin.html)
 - [Improving GRBL: Cornering Algorithm](//onehossshay.wordpress.com/2011/09/24/improving_grbl_cornering_algorithm/)
@@ -1166,7 +1166,10 @@ For all the in-depth details please read the [Auto Bed Leveling](/docs/features/
 
 With Bed Leveling enabled:
 
-- [`G28`](/docs/gcode/G028.html) will disable bed leveling (but preserves your leveling data). You can enable `RESTORE_LEVELING_AFTER_G28` to keep leveling in its previous state.
+- |
+  By default `G28` disables bed leveling. Follow `G28` with `M420 S` to turn leveling on.
+    - With `ENABLE_LEVELING_AFTER_G28` leveling will always be enabled after `G28`.
+    - With `RESTORE_LEVELING_AFTER_G28` leveling is restored to whatever state it was in before `G28`.
 - [`G29`](/docs/gcode/G029.html) will automatically probe the bed or guide you to do a paper-test at various points. After measurement it calculates a correction grid or matrix and enables leveling compensation. The specific behavior depends on configuration and type of bed leveling.
 - [`M500`](/docs/gcode/M500.html) will save the bed leveling data to EEPROM. [`M501`](/docs/gcode/M501.html) will load it. [`M502`](/docs/gcode/M502.html) will erase it. And [`M503`](/docs/gcode/M503.html) will report it.
 - `M420 S<bool>` can be used to enable/disable bed leveling. For example, [`M420 S1`](/docs/gcode/M420.html) must be used after [`M501`](/docs/gcode/M501.html) to enable the loaded mesh or matrix, and to re-enable leveling after [`G28`](/docs/gcode/G028.html), which disables leveling compensation.
@@ -1550,17 +1553,17 @@ Choose your preferred language for the LCD controller here. Supported languages 
 Code|Language||Code|Language||Code|Language
 ----|--------||----|--------||----|--------
 en|English (Default)||an|Aragonese||bg|Bulgarian
-ca|Catalan||cn|Chinese||cz|Czech
-da|Danish||de|German||el|Greek
-el-gr|Greek (Greece)||es|Spanish||eu|Basque-Euskera
-fi|Finnish||fr|French||gl|Galician
-hr|Croatian||it|Italian||kana|Japanese
-kana_utf8|Japanese (UTF8)||ko_KR|Korean (South Korea)||nl|Dutch
-pl|Polish||pt|Portuguese||pt-br|Portuguese (Brazilian)
-pt-|Portuguese (Brazilian UTF8)||pt_utf8|Portuguese (UTF8)||ru|Russian
-sk_utf8|Slovak (UTF8)||tr|Turkish||uk|Ukrainian
-vi|Vietnamese||zh_CN|Chinese (Simplified)||zh_TW|Chinese (Traditional)
-||||||
+ca|Catalan||cz|Czech||da|Danish
+de|German||el|Greek||el_CY|Greek (Cyprus)
+el_gr|Greek (Greece)||es|Spanish||eu|Basque-Euskera
+fi|Finnish||fr|French||fr_na|French (no accent)
+gl|Galician||hr|Croatian (Hrvatski)||hu|Hungarian / Magyar
+it|Italian||jp_kana|Japanese (Kana)||ko_KR|Korean
+nl|Dutch||pl|Polish||pt|Portuguese
+pt_br|Portuguese (Brazil)||ro|Romanian||ru|Russian
+sk|Slovak||sv|Swedish||tr|Turkish
+uk|Ukrainian||vi|Vietnamese||zh_CN|Simplified Chinese
+zh_TW|Traditional Chinese||||
 
 See `language.h` for the latest list of supported languages and their international language codes.
 

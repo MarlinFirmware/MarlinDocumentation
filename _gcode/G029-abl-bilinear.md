@@ -12,7 +12,10 @@ codes: [ G29 ]
 
 notes:
 - Any arguments left out of `G29` will use the default values set in `Configuration.h`.
-- "[`G28`](/docs/gcode/G028.html) disables bed leveling. Follow with `M420 S1` to turn leveling on, or use `RESTORE_LEVELING_AFTER_G28` to automatically keep leveling on after [`G28`](/docs/gcode/G028.html)."
+- |
+  By default `G28` disables bed leveling. Follow `G28` with `M420 S` to turn leveling on.
+    - With `ENABLE_LEVELING_AFTER_G28` leveling will always be enabled after `G28`.
+    - With `RESTORE_LEVELING_AFTER_G28` leveling is restored to whatever state it was in before `G28`.
 - To save time and machine wear, save your mesh to EEPROM with [`M500`](/docs/gcode/M500.html) and in your slicer's "Starting G-code" replace `G29` with `M420 S1` to enable your last-saved mesh.
 
 parameters:

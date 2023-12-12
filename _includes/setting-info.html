@@ -38,7 +38,7 @@
     </div>
   {%- endif -%}
 
-  <a name="{{ conf.name }}"></a><{{ h1 }}{% if conf.disabled %} class="dis"{% endif %}>{{ title }}</{{ h1 }}>
+  <a name="{{ aprefix }}{{ conf.name }}"></a><{{ h1 }}{% if conf.disabled %} class="dis"{% endif %}>{{ title }}</{{ h1 }}>
 
   {% if conf.experimental %}
     <span class="label label-warning"><span data-toggle="tooltip" data-placement="bottom" title="Experimental"><i class="fa fa-flask" aria-hidden="true"></i></span></span>
@@ -126,7 +126,7 @@
 {% endif %}
 
 {% if conf.images %}
-<div class="gallery" id="gallery-{{ conf.tag }}">
+<div class="gallery">
   <{{ h3 }}>Gallery</{{ h3 }}>
   {% for img in conf.images %}
     {% assign cap = img.caption | markdownify %}
@@ -138,8 +138,19 @@
 </div>
 {% endif %}
 
+{% if conf.links %}
+<div class="links">
+  <{{ h3 }}>External Links</{{ h3 }}>
+  <ul>
+    {% for link in conf.links %}
+      <li><a href="{{ link.url }}">{{ link.label }}</a></li>
+    {% endfor %}
+  </ul>
+</div>
+{% endif %}
+
 {% if conf.videos %}
-<div class="videos" id="videos-{{ conf.tag }}">
+<div class="videos">
   <{{ h3 }}>Related Media</{{ h3 }}>
   {% for videoid in conf.videos %}
     <iframe class="youtube" width="300" height="225" src="https://youtube.com/embed/{{ videoid }}"></iframe>
@@ -152,11 +163,14 @@
 {% elsif conf.settings %}{% assign sub = conf.settings %}{% assign label = "Settings" %}
 {% else %}{% assign sub = false %}{% endif %}
 {% if sub %}
-  {% assign thisconf = conf %}
+  {% assign confbak = conf %}
+  {% assign aprefixbak = aprefix %}
+  {% if conf.name %}{% assign aprefix = aprefix | append: conf.name | append: '-' %}{% else %}{% assign aprefix = '' %}{% endif %}
   {% for conf in sub %}
-    {% if conf contains 'since' %}{% else %}{% assign parsince = thisconf.since %}{% endif %}
-    {% if conf contains 'tags' %}{% else %}{% assign partags = thisconf.tags %}{% endif %}
+    {% if conf contains 'since' %}{% else %}{% assign parsince = conf.since %}{% endif %}
+    {% if conf contains 'tags' %}{% else %}{% assign partags = conf.tags %}{% endif %}
     <div class="subopt">{% include setting-info.html %}</div>
   {% endfor %}
-  {% assign conf = thisconf %}
+  {% assign aprefix = aprefixbak %}
+  {% assign conf = confbak %}
 {% endif %}

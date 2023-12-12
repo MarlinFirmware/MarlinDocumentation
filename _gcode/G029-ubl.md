@@ -13,7 +13,6 @@ codes: [ G29 ]
 
 notes: |
   - Requires `AUTO_BED_LEVELING_UBL`.
-  - [`G28`](/docs/gcode/G028.html) disables bed leveling. Follow with `G29 A` to turn leveling on, or use `RESTORE_LEVELING_AFTER_G28` to automatically keep leveling on after [`G28`](/docs/gcode/G028.html).
   - `M420 S1` can be used to turn leveling on, but requires a valid (complete) mesh. See [`M420`](/docs/gcode/M420.html) for more details.
 
   ### Release Notes:
