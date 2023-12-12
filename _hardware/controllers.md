@@ -15,7 +15,7 @@ groups:
     - name: REPRAP_DISCOUNT_SMART_CONTROLLER
       description: |
         One of the most common character displays. Comes in white and red PCBs
-        - 4×20 character LCD panel
+        - 20×4 character LCD panel
         - SD Card reader
         - Reset button
         - Combined rotary encoder and push button for menu control
@@ -27,7 +27,7 @@ groups:
 
     - name: YHCB2004
       description: |
-        - 4×20 character LCD panel
+        - 20×4 character LCD panel
         - Reset button
         - Combined rotary encoder and push button for menu control
         - Buzzer
@@ -38,7 +38,7 @@ groups:
 
     - name: RADDS_DISPLAY
       description: |
-        - 4×20 character LCD panel
+        - 20×4 character LCD panel
         - SD Card reader
         - Back button
         - Reset button
@@ -54,7 +54,7 @@ groups:
 
     - name: ULTIPANEL
       description: |
-        - 4×20 character LCD panel
+        - 20×4 character LCD panel
         - SD Card reader
         - Combined rotary encoder and push button for menu control
         - Potentiometer for LCD contrast adjustment
@@ -66,7 +66,7 @@ groups:
 
     - name: PANEL_ONE
       description: |
-        - 4×20 character LCD panel
+        - 20×4 character LCD panel
         - SD Card reader
         - Combined rotary encoder and push button for menu control
         - Potentiometer for LCD contrast adjustment
@@ -78,7 +78,7 @@ groups:
 
     - name: G3D_PANEL
       description: |
-        - 4×20 character LCD panel
+        - 20×4 character LCD panel
         - Combined rotary encoder and push button for menu control
       images:
         - alt: G3D Panel
@@ -89,7 +89,7 @@ groups:
 
     - name: MAKEBOARD_MINI_2_LINE_DISPLAY_1602
       description: |
-        - 2×16 character LCD panel
+        - 16×2 character LCD panel
         - Reset button
         - SD Card reader
         - Combined rotary encoder and push button for menu control
@@ -100,7 +100,7 @@ groups:
 
     - name: ZONESTAR_LCD
       description: |
-        - 4×20 character LCD panel
+        - 20×4 character LCD panel
         - 5 Menu buttons
       images:
         - alt: Zonestar LCD
