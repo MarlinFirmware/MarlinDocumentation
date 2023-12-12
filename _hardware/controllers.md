@@ -80,6 +80,7 @@ groups:
       description: |
         - 20×4 character LCD panel
         - Combined rotary encoder and push button for menu control
+        - Requires an adapter slightly different from the RRDSC
       images:
         - alt: G3D Panel
           front: G3DPANEL
@@ -215,7 +216,7 @@ groups:
 
     - name: MKS_LCD12864A
       description: |
-        Designed for 5v 8bit mootherboards.*
+        Designed for 5V 8-bit motherboards.
         - 128x64 pixel LCD panel
         - SD Card reader
         - Reset button
@@ -229,7 +230,7 @@ groups:
 
     - name: MKS_LCD12864B
       description: |
-        Designed for 3.3v 32bit mootherboards.
+        Designed for 3.3V 32-bit motherboards.
         - 128x64 pixel LCD panel
         - SD Card reader
         - Reset button
