@@ -15,7 +15,7 @@ groups:
     - name: REPRAP_DISCOUNT_SMART_CONTROLLER
       description: |
         One of the most common character displays. Comes in white and red PCBs
-        - 4×20 character LCD panel
+        - 20×4 character LCD panel
         - SD Card reader
         - Reset button
         - Combined rotary encoder and push button for menu control
@@ -27,7 +27,7 @@ groups:
 
     - name: YHCB2004
       description: |
-        - 4×20 character LCD panel
+        - 20×4 character LCD panel
         - Reset button
         - Combined rotary encoder and push button for menu control
         - Buzzer
@@ -38,7 +38,7 @@ groups:
 
     - name: RADDS_DISPLAY
       description: |
-        - 4×20 character LCD panel
+        - 20×4 character LCD panel
         - SD Card reader
         - Back button
         - Reset button
@@ -54,7 +54,7 @@ groups:
 
     - name: ULTIPANEL
       description: |
-        - 4×20 character LCD panel
+        - 20×4 character LCD panel
         - SD Card reader
         - Combined rotary encoder and push button for menu control
         - Potentiometer for LCD contrast adjustment
@@ -66,7 +66,7 @@ groups:
 
     - name: PANEL_ONE
       description: |
-        - 4×20 character LCD panel
+        - 20×4 character LCD panel
         - SD Card reader
         - Combined rotary encoder and push button for menu control
         - Potentiometer for LCD contrast adjustment
@@ -78,8 +78,9 @@ groups:
 
     - name: G3D_PANEL
       description: |
-        - 4×20 character LCD panel
+        - 20×4 character LCD panel
         - Combined rotary encoder and push button for menu control
+        - Requires an adapter slightly different from the RRDSC
       images:
         - alt: G3D Panel
           front: G3DPANEL
@@ -89,7 +90,7 @@ groups:
 
     - name: MAKEBOARD_MINI_2_LINE_DISPLAY_1602
       description: |
-        - 2×16 character LCD panel
+        - 16×2 character LCD panel
         - Reset button
         - SD Card reader
         - Combined rotary encoder and push button for menu control
@@ -100,7 +101,7 @@ groups:
 
     - name: ZONESTAR_LCD
       description: |
-        - 4×20 character LCD panel
+        - 20×4 character LCD panel
         - 5 Menu buttons
       images:
         - alt: Zonestar LCD
@@ -214,10 +215,31 @@ groups:
       description:
 
     - name: MKS_LCD12864A
-      description:
+      description: |
+        Designed for 5V 8-bit motherboards.
+        - 128x64 pixel LCD panel
+        - SD Card reader
+        - Reset button
+        - Combined rotary encoder and push button for menu control
+        - Speaker
+        - *Some have a jumper on the back to switch logic level voltage
+      images:
+        - alt: MKS_LCD12864A
+          front: MKS_LCD12864A
+          back: MKS_LCD12864A
 
     - name: MKS_LCD12864B
-      description:
+      description: |
+        Designed for 3.3V 32-bit motherboards.
+        - 128x64 pixel LCD panel
+        - SD Card reader
+        - Reset button
+        - Combined rotary encoder and push button for menu control
+        - Speaker
+      images:
+        - alt: MKS_LCD12864B
+          front: MKS_LCD12864B
+          back: MKS_LCD12864B
 
     - name: FYSETC_MINI_12864_X_X
       description:
@@ -275,7 +297,6 @@ groups:
       description: |
         One of the most common Creality mono bitmap displays.
         - 128x64 pixel LCD panel
-        - Reset button
         - Combined rotary encoder and push button for menu control
         - Buzzer
         - Cen be configuraed as a REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER
@@ -294,7 +315,26 @@ groups:
           back: ENDER2_STOCK
 
     - name: ANET_FULL_GRAPHICS_LCD
-      description:
+      description: |
+        - 128x64 pixel LCD panel
+        - Reset button
+        - Combined rotary encoder and push button for menu control
+        - Buzzer
+        - Option for a Bluetooth module
+      images:
+        - alt: ANET_FULL_GRAPHICS_LCD
+          front: ANET_FULL_GRAPHICS_LCD
+          back: ANET_FULL_GRAPHICS_LCD
+
+    - name: CTC_A10S_A13
+      description: |
+        - 128x64 pixel LCD panel
+        - Combined rotary encoder and push button for menu control
+        - Option for a Buzzer
+      images:
+        - alt: CTC_A10S_A13
+          front: CTC_A10S_A13
+          back: CTC_A10S_A13
 
     - name: AZSMZ_12864
       description:
