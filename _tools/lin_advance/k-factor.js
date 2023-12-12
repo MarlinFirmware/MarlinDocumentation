@@ -352,19 +352,17 @@ function saveTextAsFile() {
 
   function decimalAdjust(type, value, exp) {
     // If the exp is undefined or zero...
-    if (typeof exp === 'undefined' || Number(exp) === 0) {
-      return Math[type](value);
-    }
+    if (typeof exp === 'undefined' || Number(exp) === 0) return Math[type](value);
+
     value = Number(value);
     exp = Number(exp);
     // If the value is not a number or the exp is not an integer...
-    if (value === null || isNaN(value) || !(typeof exp === 'number' && exp % 1 === 0)) {
+    if (value === null || isNaN(value) || !(typeof exp === 'number' && exp % 1 === 0))
       return NaN;
-    }
+
     // If the value is negative...
-    if (value < 0) {
-      return -decimalAdjust(type, -value, exp);
-    }
+    if (value < 0) return -decimalAdjust(type, -value, exp);
+
     // Shift
     value = value.toString().split('e');
     value = Math[type](Number(value[0] + 'e' + (value[1] ? (Number(value[1]) - exp) : -exp)));
@@ -395,18 +393,14 @@ function saveTextAsFile() {
 
 // get the number of decimal places of a float
 function getDecimals(num) {
-  var match = (String(num)).match(/(?:\.(\d+))?(?:[eE]([+-]?\d+))?$/);
-  if (!match) {
-    return num;
-  }
-  var decimalPlaces = Math.max(0, (match[1] ? match[1].length : 0) - (match[2] ? Number(match[2]) : 0));
-  return decimalPlaces;
+  let match = (String(num)).match(/(?:\.(\d+))?(?:[eE]([+-]?\d+))?$/);
+  if (!match) return num;
+  return Math.max(0, (match[1] ? match[1].length : 0) - (match[2] ? Number(match[2]) : 0));
 }
 
 // print a line between current position and target
 function createLine(coordX, coordY, length, basicSettings, optional) {
-  var ext = 0,
-      gcode = '';
+  var ext = 0, gcode = '';
 
   //handle optional function arguements passed as object
   var defaults = {
@@ -828,7 +822,8 @@ function validateInput() {
       printDir = selectDir.val(),
       usePrime = $('#USE_PRIME').prop('checked'),
       useLineNo = $('#USE_LINE_NUM').prop('checked'),
-      sizeY = ((parseFloat(testNaN['K_END']) - parseFloat(testNaN['K_START'])) / parseFloat(testNaN['K_STEP']) * parseFloat(testNaN['SPACE_LINE'])) + 25, // +25 with ref marking
+      kspan = parseFloat(testNaN['K_END']) - parseFloat(testNaN['K_START']),
+      sizeY = (kspan / parseFloat(testNaN['K_STEP']) * parseFloat(testNaN['SPACE_LINE'])) + 25, // +25 with ref marking
       sizeX = (2 * parseFloat(testNaN['SLOW_LENGTH'])) + parseFloat(testNaN['FAST_LENGTH']) + (usePrime ? 10 : 0) + (useLineNo ? 8 : 0),
       printDirRad = printDir * Math.PI / 180,
       fitWidth = Math.round10(Math.abs(sizeX * Math.cos(printDirRad)) + Math.abs(sizeY * Math.sin(printDirRad)), 0),
@@ -867,7 +862,8 @@ function validateInput() {
   });
 
   // Check if K-Factor Stepping is a multiple of the K-Factor Range
-  if ((Math.round10(parseFloat(testNaN['K_END']) - parseFloat(testNaN['K_START']), -3) * Math.pow(10, decimals)) % (parseFloat(testNaN['K_STEP']) * Math.pow(10, decimals)) !== 0) {
+  const exp = Math.pow(10, decimals);
+  if (parseInt(Math.round10(kspan, -3) * exp) % parseInt(parseFloat(testNaN['K_STEP']) * exp) !== 0) {
     warn(1, 'invalidDiv', 'K-Factor range cannot be cleanly divided.', ['K_START','K_END','K_STEP']);
     $('input.tool').prop('disabled', true);
     invalidDiv = 1;
