@@ -8,7 +8,7 @@ body {
 
 p { /*text-align: justify;*/ }
 
-.navbar { font-weight: 600; }
+.navbar { font-weight: $navbar-font-weight; }
 
 .nav.navbar-nav li a.here,
 .nav.navbar-nav li.here > a {

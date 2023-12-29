@@ -40,6 +40,7 @@ ul.tocify-subheader {
 .nav-list > li > a, .nav-list .nav-header {
   margin: 0px;
 }
+.nav-list strong { color: var(--color-toc-strong); font-weight: 300; }
 
 /* Twitter Bootstrap Override Style */
 .nav-list > li > a {
@@ -76,7 +77,6 @@ ul.tocify-subheader {
 .tocify.bigtoc,
 .custom-fixed-sidebar .tocify {
   -webkit-scrollbar { display: none; }
-  font-size: 13px;
   cursor: pointer;
   // li { line-height: 1em; margin: -1px 0 0; }
 }
