@@ -130,7 +130,7 @@
             {% for parm in list %}
               <tr>
                 <td class="arg">
-                  {%- if parm.since %}<span class="label label-success"><span data-toggle="tooltip" data-placement="bottom" title="Available since"><i class="fa fa-code" aria-hidden="true"></i> {{ parm.since }}</span></span>{% endif -%}
+                  {%- if parm.experimental %} <span class="label label-warning"><span data-toggle="tooltip" data-placement="bottom" title="Experimental option"><i class="fa fa-flask" aria-hidden="true"></i></span></span>{% endif -%}
                   <code>
                     {%- if parm.optional %}&#x5B;{% endif -%}
                     {{ parm.tag }}
@@ -161,10 +161,10 @@
                     {%- endif -%}
                     {%- if parm.optional %}&#x5D;{% endif -%}
                   </code>
+                  {%- if parm.since %}<div><span class="label label-success"><span data-toggle="tooltip" data-placement="bottom" title="Available since"><i class="fa fa-code" aria-hidden="true"></i> {{ parm.since }}</span></span></div>{% endif -%}
                   {%- if parm.requires %}{% assign list = (parm.requires | split: ',') -%}
-                    {%- for item in list %} <span class="label label-requires"><span data-toggle="tooltip" data-placement="bottom" title="Option required">{{item}}</span></span>{% endfor -%}
+                    <div>{%- for item in list %}<span class="label label-requires"><span data-toggle="tooltip" data-placement="bottom" title="Option required">{{item}}</span></span>{% endfor -%}</div>
                   {%- endif -%}
-                  {%- if parm.experimental %} <span class="label label-warning"><span data-toggle="tooltip" data-placement="bottom" title="Experimental option"><i class="fa fa-flask" aria-hidden="true"></i></span></span>{% endif -%}
                 </td>
                 <td>
                   {{- parm.description | markdownify -}}
