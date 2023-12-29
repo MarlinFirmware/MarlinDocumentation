@@ -11,13 +11,13 @@ category: [ articles, getting-started ]
 
 ![What is Marlin?](/assets/images/basics/what_is_marlin.png)
 
-Marlin is an open source [firmware](//en.wikipedia.org/wiki/Firmware) for the [RepRap](//en.wikipedia.org/wiki/RepRap_project) family of replicating rapid prototypers — popularly known as "3D printers." It was derived from [Sprinter](//reprap.org/wiki/List_of_Firmware#Sprinter) and [grbl](//reprap.org/wiki/Grbl#Grbl), and became a standalone [open source](//en.wikipedia.org/wiki/Open-source_software) project on August 12, 2011 with its [Github release](//github.com/MarlinFirmware/Marlin/commit/f850af5c1ca343ed65b94c4b9da5dd1ab4c4a53c). Marlin is licensed under the GPLv3 and is free for all applications.
+Marlin is an open source [firmware](//en.wikipedia.org/wiki/Firmware) for the [RepRap](//en.wikipedia.org/wiki/RepRap_project) family of replicating rapid prototypers — popularly known as "3D printers." Originally derived from [Sprinter](//reprap.org/wiki/List_of_Firmware#Sprinter) and [grbl](//reprap.org/wiki/Grbl#Grbl), Marlin became a standalone [open source](//en.wikipedia.org/wiki/Open-source_software) project on August 12, 2011 with its [Github release](//github.com/MarlinFirmware/Marlin/commit/f850af5c1ca343ed65b94c4b9da5dd1ab4c4a53c). Marlin is licensed under the GPLv3 and is free for all applications.
 
 From the start Marlin was built by and for [RepRap](//reprap.org/wiki/) enthusiasts to be a straightforward, reliable, and adaptable printer driver that "just works." As a testament to its quality, Marlin is used by several respected commercial 3D printers. [LulzBot](https://www.lulzbot.com/), [Průša Research](https://www.prusa3d.com/), [Creality3D](https://creality3d.shop/), [BIQU](https://www.biqu.equipment/), [Geeetech](https://www.geeetech.com/), and [Ultimaker](https://ultimaker.com/) are just a few of the vendors who ship a variant of Marlin. Marlin is also capable of driving CNC machines and laser engravers.
 
-One key to Marlin's popularity is that it runs on inexpensive 8-bit [Atmel AVR](//www.atmel.com/products/microcontrollers/avr/) [micro-controllers](//en.wikipedia.org/wiki/Microcontroller) - Marlin 2.x has added support for 32-bit boards. These chips are at the center of the popular [open source](//en.wikipedia.org/wiki/Open-source_hardware) [Arduino/Genuino](//arduino.cc) platform. The reference platforms for Marlin is an Arduino Mega2560 with RAMPS 1.4 and Re-Arm with Ramps 1.4.
+One key to Marlin's popularity is that it can run on a wide variety of inexpensive [micro-controllers](//en.wikipedia.org/wiki/Microcontroller) including 8-bit [Atmel AVR](//www.atmel.com/products/microcontrollers/avr/) Marlin 2.x has added support for 32-bit boards. These chips are at the center of the popular [open source](//en.wikipedia.org/wiki/Open-source_hardware) [Arduino/Genuino](//arduino.cc) platform. The reference platforms for Marlin is an Arduino Mega2560 with RAMPS 1.4 and Re-Arm with Ramps 1.4.
 
-As a community product, Marlin aims to be adaptable to as many boards and configurations as possible. We want it to be configurable, customizable, extensible, and economical for hobbyists and vendors alike. A Marlin build can be very small, for use on a headless printer with only modest hardware. Features are enabled as-needed to adapt Marlin to added components.
+Marlin aims to support all possible boards and machine configurations. We want it to be configurable, customizable, extensible, and economical for hobbyists and vendors alike. A Marlin build can be very small (under 64KB), for use on a headless printer with only modest hardware. Features are enabled as-needed to support added components.
 
 ## Main features
 
@@ -38,7 +38,7 @@ As a community product, Marlin aims to be adaptable to as many boards and config
 
 ## How Marlin Works
 
-Marlin Firmware runs on the 3D printer's main board, managing all the real-time activities of the machine. It coordinates the heaters, steppers, sensors, lights, LCD display, buttons, and everything else involved in the 3D printing process.
+Unlike some other offerings, Marlin Firmware runs entirely on the 3D printer's main board, managing all the real-time activities of the machine. It coordinates the heaters, steppers, sensors, lights, LCD display, buttons, and everything else involved in the 3D printing process.
 
 Marlin implements an additive manufacturing process called [Fused Deposition Modeling (FDM)](//en.wikipedia.org/wiki/Fused_deposition_modeling) — aka [Fused Filament Fabrication (FFF)](//en.wikipedia.org/wiki/Fused_filament_fabrication). In this process a motor pushes plastic filament through a hot nozzle that melts and extrudes the material while the nozzle is moved under computer control. After several minutes (or many hours) of laying down thin layers of plastic, the result is a physical object.
 
@@ -46,7 +46,7 @@ The control-language for Marlin is a derivative of [G-code](//en.wikipedia.org/w
 
 As Marlin receives movement commands it adds them to a movement queue to be executed in the order received. The "stepper interrupt" processes the queue, converting linear movements into precisely-timed electronic pulses to the stepper motors. Even at modest speeds Marlin needs to generate thousands of stepper pulses every second. (_e.g.,_ 80 steps-per-mm * 50mm/s = 4000 steps-per-second!) Since CPU speed limits how fast the machine can move, we're always looking for new ways to optimize the stepper interrupt!
 
-Heaters and sensors are managed in a second interrupt that executes at much slower speed, while the main loop handles command processing, updating the display, and controller events. For safety reasons, Marlin will actually reboot if the CPU gets too overloaded to read the sensors.
+Heaters and sensors are managed in a second interrupt that executes at much lower rate, while the main loop handles command processing, updating the display, and controller events. As a safety measure, Marlin will stop or even reboot itself if the CPU gets overloaded or otherwise cannot read the temperature sensors.
 
 ## Printing Things
 
