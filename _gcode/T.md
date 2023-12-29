@@ -39,8 +39,7 @@ Use `T0`, `T1`, etc. to switch to the respective physical or virtual tool. See [
 
 In Marlin 2.1.3 and up you can use `T` with no tool number to report the current tool index to the serial console.
 
-#### MMU 2 Special Commands
-- `T0`-`T7` : Select a new filament. G-code to extrude at least 38.1 mm at feedrate 19.02 mm/s must follow to reach the extruder.
-- `T?` : (Requires `MMU2_MENUS`) G-code to extrude shouldn't have to follow. Load to extruder wheels is done automatically.
-- `Tx` : (Requires `MMU2_MENUS`) Same as `T?` but the nozzle doesn't have to be preheated. `Tc` requires a preheated nozzle to finish filament load.
-- `Tc` : Wait for target temperature, then load to nozzle.
+#### For MMU 2 (and Clones)
+See the [MMU2 Special Commands](T-mmu2.html) page for information about special commands `T?`, `Tc`, and `Tx`.
+
+For the MMU2 and clones the `T0`-`T7` commands select a new filament. After this command you must extrude at least 38.1 mm of filament at feedrate 19.02 mm/s to reach the extruder. (The distance to the extruder may differ for your particular machine.)
