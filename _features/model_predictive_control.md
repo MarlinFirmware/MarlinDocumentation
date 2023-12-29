@@ -54,23 +54,6 @@ MPC_AMBIENT_XFER_COEFF_FAN255 0.0998
 
 [`M306`](/docs/gcode/M306.html) can also be used to change constants at runtime.
 
-### Manual Tuning
-
-If `M306 T` doesn't work –e.g., with positive temperature coefficient (PTC) hotends– MPC can be configured manually.
-
-1. Start with the part cooling fan off and hotend cold. Record the ambient starting temperature Ta. e.g., Ta = 20°C.
-1. Set the temperature to 200°C and then back to 0°C once it reaches around 200°C. Measure the curve of temperature
-vs time while the hotend is heating, starting at time = 0s.
-1. Measure the fastest rate Rf at which temperature increases in °C/s. e.g., Rf = 3°C/s.
-1. Divide the heater power by Rf to get `MPC_BLOCK_HEAT_CAPACITY` in J/K. e.g., 40W / 3°C/s = 13.33 J/K.
-1. Measure the temperature Tf and time tf of the point where temperature was increasing fastest.
-1. `MPC_SENSOR_RESPONSIVENESS` is Rf / (Rf x tf + Ta - Tf). e.g., for tf = 10s and Tf = 35°C, this is 3°C/s / ( 3°C/s x 10s + 20°C - 35°C) = 0.2 K/s/K.
-1. Set these values with `M306` and set the temperature to 200°C.
-1. MPC should eventually settle at a stable temperature around 200°C.
-1. Use `M105` to find the PWM output required to maintain 200°C. e.g., if `M105` returns `T:200.12 /200.00 B:18.38 /0.00 P:18.24 /0.00 @:41 B@:0` it is the value `41` after the first `@` so PWM = 41.
-1. `MPC_AMBIENT_XFER_COEFF` is PWM / 127 * heater power / (200°C - Ta). e.g., 41 / 127 * 40 W / (200°C - 20°C) = 0.072 W/K.
-1. Find `MPC_AMBIENT_XFER_COEFF_FAN255` by repeating the last three steps with the fan on full.
-
 ## Advanced Configuration
 
 `MPC_FAN_0_ALL_HOTENDS` and `MPC_FAN_0_ACTIVE_HOTEND`: Marlin assumes fan _N_ cools parts printed by hotend _N_. However some multi-hotend machines have only one fan. In these cases MPC needs to know whether the cooling fan cools all hotends simultaneously or whether it cools only the active hotend. Enable the appropriate option.
@@ -130,17 +113,7 @@ It is important to note that the simulated ambient temperature will only converg
 
 Finally, armed with a new set of temperatures, the MPC algorithm calculates how much power must be applied to get the heater block to target temperature in the next two seconds. This calculation takes into account the heat that is expected to be lost to ambient air and filament heating. This power value is then converted to a PWM output.
 
-## `M306 T` Details
-The tuning algorithm does the following with the target hotend:
-- Move to the center and close to bed: Printing occurs close to the bed or printed model so tuning is done close to a surface to best emulate the conditions while printing.
-- Cool to ambient: The tuning algorithm needs to know the approximate ambient temperature. It switches the part cooling fan on and waits until the temperature stops decreasing.
-- Heat past 200°C: Three temperature measurements are needed at some point after the initial latency has taken effect. The tuning algorithm heats the hotend to over 200°C.
-- Hold temperature while measuring ambient heat-loss: At this point enough is known for the MPC algorithm to engage. The tuning algorithm makes a best guess at the overshoot past 200°C which will occur and targets this temperature for about a minute while ambient heat-loss is measured without (and optionally with) the fan.
-- Set MPC up to use the measured constants and report them for use in `Configuration.h`.
-
-If the algorithm fails or is interrupted with `M108`, some or all of the MPC constants may be changed anyway and their values may not be reliable.
-
-## Model Details & Tuning Algorithm
+## Model Theory & Tuning Algorithms
 
 The simulated hotend model is not a physically-accurate representation of the hotend but it's good enough. Differences include:
 - The real heating element is a separate thermal mass, somewhat thermally insulated from the heater block.
@@ -179,7 +152,13 @@ $$C_s$$ = heat capacity of the sensor.
 
 Since $$h_s$$ and $$C_s$$ never appear independently, they are collapsed into a single the single constant represented by `MPC_SENSOR_RESPONSIVENESS` which has the value $$\dfrac{h_s}{C_s}$$.
 
-These differential equations are continually solved numerically by MPC. There is also a simple analytical solution which is used by `M306 T`:
+These differential equations are continually solved numerically by MPC to calculate the correct desired heater power to achieve a particular block temperature. To do this the above variables must be determined and there are two ways of doing this:
+1. Establish the asymptotic temperature that a given power will achieve. (Asymptotic Method)
+1. Measure the rate of change of temperature for a given power. (Differential Method)
+
+### Automatic Asymptotic Tuning
+
+There is a simple analytical solution to the above equations which is (by default) used by `M306 T`:
 
 $$ T_b = T_{asymp} + (T_a - T_{asymp}) . e ^ {(-\alpha_b . t)}$$
 
@@ -241,4 +220,36 @@ And for any known $$T_s(t)$$ equation $$\eqref{approx}$$ can be solved to give
 
 $$ \alpha_s = \dfrac{\alpha_b . (T_s(t) - T_{asymp})}{T_s(t) - T_{asymp} - (T_a - T_{asymp}) . e^{-\alpha_b . t}} $$
 
-`M306 T` finds a $$t$$ and $$\Delta t$$ with known sensor values for $$T_s(t)$$, $$T_s(t + \Delta t)$$ and $$T_s(t + 2 \Delta t)$$. These are used with the equations above to calculate values for `MPC_SENSOR_RESPONSIVENESS`, `MPC_AMBIENT_XFER_COEFF` and `MPC_BLOCK_HEAT_CAPACITY`. These values are then used to target a particular temperature while heat loss is measured to obtain `MPC_AMBIENT_XFER_COEFF_FAN255` and an even better estimate of `MPC_AMBIENT_XFER_COEFF`.
+### Automatic Differential Tuning
+
+If asymptotic tuning (above) fails, or Differential Tuning is forced with `M306 TD` then automatic tuning uses the following algorithm.
+
+As the block is heated from ambient, the maximum rate of heating, $R_f$, can be used to establish `MPC_BLOCK_HEAT_CAPACITY` in J/K, using:
+
+$$ C_b = \dfrac{P}{R_f} $$
+
+Furthermore, the temperature, $T_f$, and time, $t_f$, at which the rate of heating is fastest can be used to get `MPC_SENSOR_RESPONSIVENESS` in K/s/K using:
+
+$$ \alpha_s = \dfrac{R_f}{R_f.t_f + T_{s0} - T_f} $$
+
+Where $ T_{s0} = T_a = $ starting ambient temperature
+
+Finally, to calculate the ambient transfer coefficients, the hotend is heated to a steady state sensor temperature, $ T_s $ and the ambient transfer coefficient is given by (from eq. 12):
+
+$$ h_a = \dfrac{P}{T_s - T_{s0}} $$
+
+The heat transfer coefficients for both zero and full part cooling are used in the model.
+
+### Heat Transfer Coefficients
+
+After Asymptotic or Differential Tuning has established $$C_b$$ and $$\alpha_s$$, `M306 T` finds a $$t$$ and $$\Delta t$$ with known sensor values for $$T_s(t)$$, $$T_s(t + \Delta t)$$ and $$T_s(t + 2 \Delta t)$$. These are used with the equations above to calculate values for `MPC_SENSOR_RESPONSIVENESS`, `MPC_AMBIENT_XFER_COEFF` and `MPC_BLOCK_HEAT_CAPACITY`. These values are then used to target a particular temperature while heat loss is measured to obtain `MPC_AMBIENT_XFER_COEFF_FAN255` and an even better estimate of `MPC_AMBIENT_XFER_COEFF`.
+
+## `M306 T` Details
+The tuning algorithm does the following with the target hotend:
+- Move to the center and close to bed: Printing occurs close to the bed or printed model so tuning is done close to a surface to best emulate the conditions while printing.
+- Cool to ambient: The tuning algorithm needs to know the approximate ambient temperature. It switches the part cooling fan on and waits until the temperature stops decreasing.
+- Heat past 200°C: Measure the point where the temperature is increasing most rapidly, and the time and temperature at that point. Also, three temperature measurements are needed at some point after the initial latency has taken effect. The tuning algorithm heats the hotend to over 200°C.
+- Hold temperature while measuring ambient heat-loss: At this point enough is known for the MPC algorithm to engage. The tuning algorithm makes a best guess at the overshoot past 200°C which will occur and targets this temperature for about a minute while ambient heat-loss is measured without (and optionally with) the fan.
+- Set MPC up to use the measured constants and report them for use in `Configuration.h`.
+
+NOTE: If the algorithm fails or is interrupted with `M108`, some or all of the MPC constants may be changed anyway and their values may not be reliable.
