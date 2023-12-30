@@ -1,7 +1,7 @@
 #
 # jekyll-pub.yml
 #
-# Publish the Jekyll site whenever 'deploy' is pushed
+# Publish the Jekyll site whenever 'master' is pushed
 #
 
 name: Jekyll Deploy
@@ -9,7 +9,7 @@ name: Jekyll Deploy
 on:
   push:
     branches:
-    - deploy
+    - master
 
 jobs:
   deploy-site:
