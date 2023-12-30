@@ -29,8 +29,8 @@ footer: |
           <strong>{{ release.description }}</strong><br/>
           <em>{{ release.tools }}<em>
         </td>
-        <td><a href="//github.com/MarlinFirmware/Marlin/tree/{{ release.version }}"><code>{{ release.version }}</code></a></td>
-        <td><a href="//github.com/MarlinFirmware/Marlin/archive/{{ release.file }}">{{ release.file }}</a></td>
+        <td><a href="//github.com/MarlinFirmware/Marlin/tree/{{ release.version }}" title="Github Files"><code>{{ release.version }}</code></a></td>
+        <td><a href="//github.com/MarlinFirmware/Marlin/archive/{{ release.file }}" title="Download {{ release.file }}">{{ release.file }}</a></td>
         <td>
           {% if release.config %}
             <a href="//github.com/MarlinFirmware/Configurations/tree/{{ release.config }}">View / Download</a>
@@ -51,7 +51,7 @@ footer: |
           <strong>{{ nightly.description }}</strong><br/>
           <em>{{ nightly.tools }}<em>
         </td>
-        <td><code>{{ nightly.version }}</code></td>
+        <td><code><a href="//github.com/MarlinFirmware/Marlin/tree/{{ nightly.version }}" title="Github Files">{{ nightly.version }}</a></code></td>
         <td><a href="//github.com/MarlinFirmware/Marlin/archive/{{ nightly.file }}">{{ nightly.file }}</a></td>
         <td>
           {% if nightly.config %}
@@ -64,18 +64,18 @@ footer: |
   <h2 class="ctr">Marlin Patched Source</h2>
   <table>
     <tr><th>Description</th><th>Version</th><th>Download</th><th>Configurations</th>
-    {% for nightly in site.data.marlin.patched %}
+    {% for patched in site.data.marlin.patched %}
       <tr>
         <td>
-          {% if nightly.extra %}<strong><em>{{ nightly.extra }}</em></strong><br/>{% endif %}
-          <strong>{{ nightly.description }}</strong><br/>
-          <em>{{ nightly.tools }}<em>
+          {% if patched.extra %}<strong><em>{{ patched.extra }}</em></strong><br/>{% endif %}
+          <strong>{{ patched.description }}</strong><br/>
+          <em>{{ patched.tools }}<em>
         </td>
-        <td><code>{{ nightly.version }}</code></td>
-        <td><a href="//github.com/MarlinFirmware/Marlin/archive/{{ nightly.file }}">{{ nightly.file }}</a></td>
+        <td><code><a href="//github.com/MarlinFirmware/Marlin/tree/{{ patched.version }}" title="Github Files">{{ patched.version }}</a></code></td>
+        <td><a href="//github.com/MarlinFirmware/Marlin/archive/{{ patched.file }}">{{ patched.file }}</a></td>
         <td>
-          {% if nightly.config %}
-            <a href="//github.com/MarlinFirmware/Configurations/tree/{{ nightly.config }}">View / Download</a>
+          {% if patched.config %}
+            <a href="//github.com/MarlinFirmware/Configurations/tree/{{ patched.config }}">View / Download</a>
           {% endif %}
         </td>
       </tr>

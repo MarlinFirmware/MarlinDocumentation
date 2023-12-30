@@ -139,21 +139,41 @@ category:     [ default ]
 <script language="javascript">
   // Custom Taglines
   var taglines = [
-    "The code that makes the things",
+    "World Leader in 3D Printing",
+    "Multi-Axis Robot Driver",
+    "Free 3D Printer Firmware",
+    "Own Your Own Technology",
+    "Open Source RepRap Driver",
     "Printing things since 2011",
-    "The firmware we all trust",
-    "Heating, moving, making, grooving",
+    "The code that makes the things",
+    "The ghost in the machine",
+    "Not just for 3D printers",
+    "Print a toy, a home, or a meal",
+    "Home-brewed, community-focused",
     "Responsive, Reliable, Accurate",
+    "Speed, accuracy, and finesse",
+    "Deterministic plastic mover",
+    "Heating, moving, making, grooving",
     "Fabricating Fused Filament",
     "Fused Deposition Engine",
     "Build It Your Way",
-    "Open Source RepRap Driver",
     "Heating, moving, making, grooving",
-    "Deterministic deposition engine",
-    "A really good 3D printer driver",
-    "Motors & heaters & sensors, oh my!",
-    "Stepper Motor Repurposer"
-  ],
-  tagline = taglines[Math.floor(Math.random()*taglines.length)];
-  document.getElementById('tagline').innerText = tagline;
+    "Stepper Motor Repurposer",
+  ];
+
+  // Create a random sequence from the number of taglines
+  var sequence = [];
+  for (var i = 0; i < taglines.length; i++) sequence.push(i);
+  sequence.sort(function() { return .5 - Math.random(); });
+
+  var tindex = 0;
+  function next_tagline() {
+    document.getElementById('tagline').innerText = taglines[sequence[tindex]];
+    if (++tindex >= taglines.length) tindex = 0;
+  }
+  next_tagline();
+
+  // Set a repeating timer to change the tagline every minute
+  setInterval(next_tagline, 20000);
+
 </script>
