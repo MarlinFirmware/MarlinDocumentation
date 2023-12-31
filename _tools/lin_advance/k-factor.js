@@ -841,7 +841,7 @@ function validateInput() {
     $(`label[for=${$(t).attr('id')}]`).removeClass();
   });
   $('#warning1, #warning2, #warning3').hide();
-  $('imput.tool').prop('disabled', false);
+  $('input.tool').removeAttr('disabled');
 
   function warn(num, type, msg, elems, emsg) {
     $(`#warning${num}`).text(`${msg} Fix the highlighted fields.`).show();
@@ -857,7 +857,6 @@ function validateInput() {
   Object.keys(testNaN).forEach((k) => {
     if ((isNaN(testNaN[k]) && !isFinite(testNaN[k])) || testNaN[k].trim() === '') {
       warn(3, 'invalidNumber', 'Some values are not proper numbers.', [k], 'Value is not a proper number.');
-      $('input.tool').prop('disabled', true);
     }
   });
 
@@ -865,7 +864,6 @@ function validateInput() {
   const exp = Math.pow(10, decimals);
   if (parseInt(Math.round10(kspan, -3) * exp) % parseInt(parseFloat(testNaN['K_STEP']) * exp) !== 0) {
     warn(1, 'invalidDiv', 'K-Factor range cannot be cleanly divided.', ['K_START','K_END','K_STEP']);
-    $('input.tool').prop('disabled', true);
     invalidDiv = 1;
   }
 
@@ -888,6 +886,10 @@ function validateInput() {
 $(() => {
   // create tab index dynamically
   $(':input:not(:hidden)').each((i) => { $(this).attr('tabindex', i + 1); });
+
+  // Add fields validation according to class
+  $('.vblur').on('blur', validateInput);
+  $('.vchange').on('change', validateInput);
 
   // Get localStorage data
   var lsSettings = window.localStorage.getItem('LIN_SETTINGS');

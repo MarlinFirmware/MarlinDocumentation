@@ -49,37 +49,37 @@ Caution! Only for Cartesian printers. CoreXY kinematics are not yet tested.
           </tr>
           <tr>
             <th><label for="FILAMENT_DIAMETER">Filament Diameter</label></th>
-            <td><input name="FILAMENT_DIAMETER" id="FILAMENT_DIAMETER" step="any" value="1.75" onblur="validateInput()" /></td>
+            <td><input name="FILAMENT_DIAMETER" id="FILAMENT_DIAMETER" step="any" value="1.75" class="vblur" /></td>
             <td>Diameter (mm) of the filament used for the tests</td>
           </tr>
           <tr>
             <th><label for="NOZZLE_TEMP">Nozzle Temperature</label></th>
-            <td><input name="NOZZLE_TEMP" id="NOZZLE_TEMP" step="any" value="205" onblur="validateInput()" /></td>
+            <td><input name="NOZZLE_TEMP" id="NOZZLE_TEMP" step="any" value="205" class="vblur" /></td>
             <td>Nozzle Temperature (°C)</td>
           </tr>
           <tr>
             <th><label for="BED_TEMP">Bed Temperature</label></th>
-            <td><input name="BED_TEMP" id="BED_TEMP" step="any" value="60" onblur="validateInput()" /></td>
+            <td><input name="BED_TEMP" id="BED_TEMP" step="any" value="60" class="vblur" /></td>
             <td>Bed Temperature (°C)</td>
           </tr>
           <tr>
             <th><label for="RETRACTION">Retraction Distance</label></th>
-            <td><input name="RETRACTION" id="RETRACTION" step="any" value="1" onblur="validateInput()" /></td>
+            <td><input name="RETRACTION" id="RETRACTION" step="any" value="1" class="vblur" /></td>
             <td>Retraction distance after pattern (mm)</td>
           </tr>
           <tr>
             <th><label for="LINE_WIDTH">Line Width</label></th>
-            <td><input name="LINE_WIDTH" id="LINE_WIDTH" step="any" value="0.5" onblur="validateInput()" /></td>
+            <td><input name="LINE_WIDTH" id="LINE_WIDTH" step="any" value="0.5" class="vblur" /></td>
             <td>Line width (mm)</td>
           </tr>
           <tr>
             <th><label for="LAYER_HEIGHT">Layer Height</label></th>
-            <td><input name="LAYER_HEIGHT" id="LAYER_HEIGHT" step="0.05" value="0.2" onblur="validateInput()" /></td>
+            <td><input name="LAYER_HEIGHT" id="LAYER_HEIGHT" step="0.05" value="0.2" class="vblur" /></td>
             <td>Layer Height (mm). If pattern is not clear, try to increase Layer Height</td>
           </tr>
           <tr>
             <th><label for="FAN_SPEED">Fan Speed</label></th>
-            <td><input name="FAN_SPEED" id="FAN_SPEED" step="1" value="0" onblur="validateInput()" /></td>
+            <td><input name="FAN_SPEED" id="FAN_SPEED" step="1" value="0" class="vblur" /></td>
             <td>Fan Speed (%)</td>
           </tr>
           <tr>
@@ -87,32 +87,32 @@ Caution! Only for Cartesian printers. CoreXY kinematics are not yet tested.
           </tr>
           <tr>
             <th><label for="PRINT_SPEED">Frame Printing Speed</label></th>
-            <td><input name="PRINT_SPEED" id="PRINT_SPEED" step="any" value="40" onblur="validateInput()" /></td>
+            <td><input name="PRINT_SPEED" id="PRINT_SPEED" step="any" value="40" class="vblur" /></td>
             <td>Printing speed when not in pattern (mm/s)</td>
           </tr>
           <tr>
             <th><label for="SPEED_TRAVEL">Travel Speed</label></th>
-            <td><input name="SPEED_TRAVEL" id="SPEED_TRAVEL" step="any" value="100" onblur="validateInput()" /></td>
+            <td><input name="SPEED_TRAVEL" id="SPEED_TRAVEL" step="any" value="100" class="vblur" /></td>
             <td>Travel Speed (mm/s)</td>
           </tr>
           <tr>
             <th><label for="SPEED_RETRACT">Retract Speed</label></th>
-            <td><input name="SPEED_RETRACT" id="SPEED_RETRACT" step="1" value="30" onblur="validateInput()" /></td>
+            <td><input name="SPEED_RETRACT" id="SPEED_RETRACT" step="1" value="30" class="vblur" /></td>
             <td>Retract Speed of the extruder (mm/s)</td>
           </tr>
           <tr>
             <th><label for="DECEL">Frame Acceleration</label></th>
-            <td><input name="DECEL" id="DECEL" step="any" value="500" onblur="validateInput()" /></td>
+            <td><input name="DECEL" id="DECEL" step="any" value="500" class="vblur" /></td>
             <td>Printing and transition acceleration/deceleration (mm/s^2)</td>
           </tr>
           <tr>
             <th><label for="JERK">Jerk</label></th>
-            <td><input name="JERK" id="JERK" step="1" value="-1" onblur="validateInput()" /></td>
+            <td><input name="JERK" id="JERK" step="1" value="-1" class="vblur" /></td>
             <td>Jerk for X and Y when not in pattern. -1 to use pattern default</td>
           </tr>
           <tr>
             <th><label for="JUNCTION">Junction Deviation</label></th>
-            <td><input name="JUNCTION" id="JUNCTION" step="any" value="-1.0" onblur="validateInput()" /></td>
+            <td><input name="JUNCTION" id="JUNCTION" step="any" value="-1.0" class="vblur" /></td>
             <td>Junction Deviation when not in pattern. -1.0 to use pattern default</td>
           </tr>
           <tr>
@@ -120,12 +120,12 @@ Caution! Only for Cartesian printers. CoreXY kinematics are not yet tested.
           </tr>
           <tr>
             <th><label for="BEDSIZE_X">Bed Size X</label></th>
-            <td><input name="BEDSIZE_X" id="BEDSIZE_X" step="any" value="200" onblur="validateInput()" /></td>
+            <td><input name="BEDSIZE_X" id="BEDSIZE_X" step="any" value="200" class="vblur" /></td>
             <td id="shape">Size (mm) of the bed in X</td>
           </tr>
           <tr>
             <th><label for="BEDSIZE_Y">Bed Size Y</label></th>
-            <td><input name="BEDSIZE_Y" id="BEDSIZE_Y" step="any" value="200" onblur="validateInput()" /></td>
+            <td><input name="BEDSIZE_Y" id="BEDSIZE_Y" step="any" value="200" class="vblur" /></td>
             <td>Size (mm) of the bed in Y</td>
           </tr>
           <tr>
@@ -133,22 +133,22 @@ Caution! Only for Cartesian printers. CoreXY kinematics are not yet tested.
           </tr>
           <tr>
             <th><label for="MAX_FREQ_X">Max X Frequency</label></th>
-            <td><input name="MAX_FREQ_X" id="MAX_FREQ_X" step="any" value="60" onblur="validateInput()" /></td>
+            <td><input name="MAX_FREQ_X" id="MAX_FREQ_X" step="any" value="60" class="vblur" /></td>
             <td id="x_factor">Maximum frequency (Hz) for X pattern</td>
           </tr>
           <tr>
             <th><label for="MAX_FREQ_Y">Max Y Frequency</label></th>
-            <td><input name="MAX_FREQ_Y" id="MAX_FREQ_Y" step="any" value="60" onblur="validateInput()" /></td>
+            <td><input name="MAX_FREQ_Y" id="MAX_FREQ_Y" step="any" value="60" class="vblur" /></td>
             <td id="y_factor">Maximum frequency (Hz) for Y pattern</td>
           </tr>
           <tr>
             <th><label for="OFFSET_Z">Z-Offset</label></th>
-            <td><input name="OFFSET_Z" id="OFFSET_Z" step="any" value="0" onblur="validateInput()" /></td>
+            <td><input name="OFFSET_Z" id="OFFSET_Z" step="any" value="0" class="vblur" /></td>
             <td>Offset the Z (mm) for manual layer adjustment</td>
           </tr>
           <tr>
             <th><label for="BED_LEVELING">Use Bed Leveling</label></th>
-            <td><select name="BED_LEVELING" id="BED_LEVELING" onchange="validateInput()">
+            <td><select name="BED_LEVELING" id="BED_LEVELING" class="vchange">
               <option value="0" selected="selected">No</option>
               <option value="G29 ; Level bed">Level bed (G29)</option>
               <option value="M420 S1 ; Leveling ON">Leveling ON</option>
@@ -161,7 +161,7 @@ Caution! Only for Cartesian printers. CoreXY kinematics are not yet tested.
           </tr>
           <tr>
             <th><label for="EXTRUSION_MULT">Extrusion Multiplier</label></th>
-            <td><input name="EXTRUSION_MULT" id="EXTRUSION_MULT" step="0.1" value="1.0" onblur="validateInput()" /></td>
+            <td><input name="EXTRUSION_MULT" id="EXTRUSION_MULT" step="0.1" value="1.0" class="vblur" /></td>
             <td>Usually 1.0</td>
           </tr>
           <tr>

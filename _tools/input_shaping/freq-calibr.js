@@ -233,7 +233,7 @@ function generatePattern(settings) {
     return gcode;
   }
 
-function line_to(new_x, new_y, new_z, f = null) {
+  function line_to(new_x, new_y, new_z, f = null) {
     e += extrusion_ratio * Math.sqrt(Math.pow(new_x - x, 2) + Math.pow(new_y - y, 2) + Math.pow(new_z - z, 2));
     x = new_x; y = new_y; z = new_z;
     var gcode = `G1 X${x.toFixed(2)} Y${y.toFixed(2)} Z${z.toFixed(2)} E${e.toFixed(2)}`;
@@ -476,7 +476,6 @@ function saveTextAsFile(type) {
       else
         return alert('Generate G-code first');
   }
-
 }
 
 // Sanity checks for pattern / bed size
@@ -496,11 +495,10 @@ function validateInput() {
     top_freq_y = parseInt(testNaN['MAX_FREQ_Y']);
 
   let max_x_speed = wavelength * top_freq_x,
+      max_y_speed = wavelength * top_freq_y,
       coast_dist_x = Math.pow(max_x_speed, 2) / 2 / decel,
-      max_y_size = Math.max(110, top_freq_x * wavelength + coast_dist_x + 8);
-
-  let max_y_speed = wavelength * top_freq_y,
       coast_dist_y = Math.pow(max_y_speed, 2) / 2 / decel,
+      max_y_size = Math.max(110, top_freq_x * wavelength + coast_dist_x + 8),
       max_x_size = Math.max(110, top_freq_y * wavelength + coast_dist_y + 8);
 
   // Start clean
@@ -513,7 +511,7 @@ function validateInput() {
   });
   $('#warnbox').hide();
   $('#warning1, #warning2, #warning3').hide().text('');
-  $('input.tool').prop('disabled', false);
+  $('input.tool').removeAttr('disabled');
 
   function warn(num, type, msg, elems, emsg) {
     $(`#warning${num}`).text(`${msg} Fix the highlighted fields.`).show();
@@ -602,6 +600,10 @@ $(() => {
   $(':input:not(:hidden)').each((i) => {
     $(this).attr('tabindex', i + 1);
   });
+
+  // Add fields validation according to class
+  $('.vblur').on('blur', validateInput);
+  $('.vchange').on('change', validateInput);
 
   // Get localStorage data
   var lsSettings = window.localStorage.getItem('IS_ZV_SETTINGS');
