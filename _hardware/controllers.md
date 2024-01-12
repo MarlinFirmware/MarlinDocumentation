@@ -212,7 +212,19 @@ groups:
       description:
 
     - name: MKS_MINI_12864_V3
-      description:
+      description: |
+        Clone of FYSETC_MINI_12864_2_1
+        - 128x64 pixel LCD panel
+        - SD Card reader
+        - Reset button
+        - Combined rotary encoder and push button for menu control
+        - Buzzer
+        - Neopixel backlight
+        - Option of a front or side facing SD slot.
+      images:
+        - alt: MKS_MINI_12864_V3
+          front: MKS_MINI_12864_V3
+          back: MKS_MINI_12864_V3
 
     - name: MKS_LCD12864A
       description: |
@@ -247,6 +259,7 @@ groups:
     - name: FYSETC_MINI_12864_1_2
       description: |
         - 128x64 pixel LCD panel
+        - SD Card reader
         - Reset button
         - Combined rotary encoder and push button for menu control
         - Buzzer
@@ -255,6 +268,7 @@ groups:
     - name: FYSETC_MINI_12864_2_0
       description: |
         - 128x64 pixel LCD panel
+        - SD Card reader
         - Reset button
         - Combined rotary encoder and push button for menu control
         - Buzzer
@@ -263,6 +277,7 @@ groups:
     - name: FYSETC_MINI_12864_2_1
       description: |
         - 128x64 pixel LCD panel
+        - SD Card reader
         - Reset button
         - Combined rotary encoder and push button for menu control
         - Buzzer
@@ -276,6 +291,7 @@ groups:
       description: |
         Larger display with basic ON/OFF backlight.
         - 128x64 pixel LCD panel
+        - SD Card reader
         - Reset button
         - Combined rotary encoder and push button for menu control
         - Buzzer
@@ -284,6 +300,7 @@ groups:
       description: |
         Clone of FYSETC_MINI_12864_2_1
         - 128x64 pixel LCD panel
+        - SD Card reader
         - Reset button
         - Combined rotary encoder and push button for menu control
         - Buzzer
@@ -441,7 +458,15 @@ groups:
       description:
 
     - name: TFT_TRONXY_X5SA
-      description:
+      description: |
+        Stock Display from Tronxy
+        - 480x320
+        - 3.5"
+        - FSMC
+      images:
+        - alt: TFT_TRONXY_X5SA
+          front: TFT_TRONXY_X5SA
+          back: TFT_TRONXY_X5SA
 
     - name: ANYCUBIC_TFT35
       description:
