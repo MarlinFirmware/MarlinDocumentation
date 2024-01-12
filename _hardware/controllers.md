@@ -365,6 +365,9 @@ groups:
     - name: U8GLIB_SSD1306
       description:
 
+    - name: SAV_3DGLCD
+      description:
+
     - name: OLED_PANEL_TINYBOY2
       description:
 
