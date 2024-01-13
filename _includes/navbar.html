@@ -86,12 +86,12 @@
     <div class="navbar-collapse collapse" id="navbar-main">
       <ul class="nav navbar-nav">
 
-        <li><a href="/docs/basics/introduction.html">About Marlin</a></li>
-        <li><a href="/meta/download/">Download</a></li>
-        <li><a href="/docs/configuration/configuration.html">Configure</a></li>
-        <li><a href="/docs/basics/install.html">Install</a></li>
+        <li id="top-intro"><a href="/docs/basics/introduction.html">About Marlin</a></li>
+        <li id="top-download"><a href="/meta/download/">Download</a></li>
+        <li id="top-config"><a href="/docs/configuration/configuration.html">Configure</a></li>
+        <li id="top-install"><a href="/docs/basics/install.html">Install</a></li>
 
-        <li class="dropdown">
+        <li id="top-tools" class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="navbar-tools">Tools <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="/tools/u8glib/converter.html">Bitmap Converter</a></li>
@@ -112,7 +112,7 @@
         {%- endfor %}
         {%- if list.size > 0 %}{% assign list = (list | sort: 'title') %}{% endif %}
 
-        <li class="dropdown">
+        <li id="top-help" class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="navbar-documentation">Help <span class="caret"></span></a>
           <ul class="dropdown-menu">
             {%- if list.size > 0 %}
@@ -158,7 +158,7 @@
           </ul>
         </li>
 
-        <li><a href="/docs/development/contributing.html#donate">❤️ Donate</a></li>
+        <li id="top-donate"><a href="/docs/development/contributing.html#donate">❤️ Donate</a></li>
 
         <li id="searchbox">
           <form action="/meta/search/">
@@ -167,7 +167,7 @@
         </li>
       </ul>
 
-      <ul class="nav navbar-nav navbar-right hidden-sm">
+      <ul class="nav navbar-right hidden-sm">
         <li>
           {%- if page.collection %}
             <a href="{{ site.repository.doc }}/edit/master/{{ page.path }}" data-proofer-ignore><i class="fa fa-pen-to-square" aria-hidden="true"></i> <span>Edit Page</span></a>

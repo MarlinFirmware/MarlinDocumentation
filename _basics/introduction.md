@@ -83,7 +83,7 @@ Slicers prepare a solid 3D model by dividing it up into thin slices (layers). In
 
 ### SD Printing
 
-Marlin can run in standalone mode printing a file from an SD Card. On a headless printer with an SD card, a standalone SD print can also be initiated from the host and then the host can still monitor the print.
+Marlin can print a file from an SD Card with no connection to a host device. On a headless printer with an SD card, a standalone SD print can be initiated from the host and then the host can still monitor the print.
 
 USB Flash drives (and USB-C dongles as on the AnkerMake M5) are also supported, and Marlin 2.x can switch between two media drives. In a future update we'll be adding support for several arbitrary media types.
 

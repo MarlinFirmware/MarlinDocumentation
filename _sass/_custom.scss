@@ -1,5 +1,13 @@
 /**
  * _custom.scss for marlinfw.org
+ *
+ * This file is roughly organized with:
+ *  - :root (daylight) variables
+ *  - "dark" theme override variables
+ *  - Color theming for DOM elements, classes, IDs, etc.
+ *  - Layout theming for DOM elements, classes, IDs, etc.
+ *    - @media overrides are used for adaptive layout
+ *  - Follow the comments below for further customizations.
  */
 :root {
   --bg-midsection: radial-gradient(circle, rgba(0,0,0, 1) 0%, rgba(0,0,0, 0) 60%, rgba(0,0,0, 0) 100%);
@@ -99,14 +107,11 @@
   --color-link: #8492FD;
   --color-link-hover: #8492FD;
   --color-link-hover-bg: #0002;
+  --color-link-edit: #C189E2;
+  --color-link-edit-hover: #A169C2;
+  --color-link-edit-hover-bg: #A6C2;
   --color-logo-fill: #000;
   --color-logo-fill-hover: #606;
-  --color-navbar-default: #777;
-  --color-navbar-default-bg: #3A633F;
-  --color-navbar-bg: #FFF;
-  --color-navbar-border: #222;
-  --color-navbar-li: #FFF;
-  --color-navbar-li-bg: #0088CC;
   // Top nav
   --color-nav: #FFF;
   --color-nav-active: #FFF;
@@ -118,9 +123,16 @@
   --color-nav-list: #09B;
   --color-dropdown: #262626;
   --color-dropdown-a: #000;
-  --color-dropdown-a-hover: #0088CC;
+  --color-dropdown-a-hover: #000;
   --color-dropdown-a-hover-bg: #F5F5F5;
   --color-dropdown-bg: #FFF;
+  --color-intro-hover-bg: #CC2;
+  --color-download-hover-bg: #6DD;
+  --color-config-hover-bg: #FA2;
+  --color-install-hover-bg: #6AF;
+  --color-tools-hover-bg: #FBC;
+  --color-help-hover-bg: #AEA;
+  --color-donate-hover-bg: #FCC;
   --color-gcode-toc-border: #EEE;
   --color-search-bg: #FFF;
   --color-search: #000;
@@ -235,7 +247,7 @@
   // Top nav
   --color-nav: #CCC;
   --color-nav-active: #FF0;
-  --color-nav-active-bg: #004466;
+  --color-nav-active-bg: #000;
   --color-nav-bg: #222;
   --color-nav-border: #333;
   --color-nav-focus: #444;
@@ -250,9 +262,19 @@
   --color-gcode-toc-border: #EEE;
   --color-link: #F88;
   --color-link-hover: #F88;
-  --color-link-hover-bg: #FFF2;
+  --color-link-hover-bg: #CCE2;
+  --color-link-edit: #EC6;
+  --color-link-edit-hover: #FD8;
+  --color-link-edit-hover-bg: #CCE1;
   --color-logo-fill: #FFF;
-  --color-logo-fill-hover: #FCF;
+  --color-logo-fill-hover: #44C;
+  --color-intro-hover-bg: #DD22;
+  --color-download-hover-bg: #8FF2;
+  --color-config-hover-bg: #FA22;
+  --color-install-hover-bg: #6AF2;
+  --color-tools-hover-bg: #FBC2;
+  --color-help-hover-bg: #AFA2;
+  --color-donate-hover-bg: #FCC2;
   --color-search-bg: #333;
   --color-search: #EEE;
   // Side nav
@@ -380,7 +402,12 @@ pre.highlight{ background-color: var(--color-highlight-bg); }
   &:hover > g > path { fill: var(--color-logo-fill-hover); }
 }
 
-// Top nav bar
+/**
+ * Top nav bar contains:
+ * - div.container
+ *   - div.navbar-header > .daynite, .navbar-brand
+ *   - div#navbar-main   > ul.navbar-nav (bootstrap), ul.navbar-right ("edit page")
+ */
 .navbar {
   color: var(--color-nav);
   background-color: var(--color-nav-bg);
@@ -391,6 +418,16 @@ pre.highlight{ background-color: var(--color-highlight-bg); }
   .navbar-nav { &>li>a:hover, &>li>a:focus { background-color: var(--color-nav-hover-bg); color: var(--color-nav-hover); } }
   .navbar-nav>.open>a { &, &:hover, &:focus { background-color: var(--color-nav-hover-bg); color: var(--color-hover-focus); } }
 }
+
+.nav.navbar-right li>a {
+  color: var(--color-link-edit);
+  padding: 14px 12px;
+  &:hover { color: var(--color-link-edit-hover); background: var(--color-link-edit-hover-bg); }
+}
+
+/**
+ * .navbar-nav may be hooked into bootstrap.js for dynamic navigation
+ */
 .nav.navbar-nav {
   li.here {
     &>a { color: var(--color-nav-active); background: var(--color-nav-active-bg); }
@@ -408,12 +445,25 @@ pre.highlight{ background-color: var(--color-highlight-bg); }
   }
 }
 
+// Nav bar links
+li#top-intro    { a:hover, a:active { background-color: var(--color-intro-hover-bg);    } }
+li#top-download { a:hover, a:active { background-color: var(--color-download-hover-bg); } }
+li#top-config   { a:hover, a:active { background-color: var(--color-config-hover-bg);   } }
+li#top-install  { a:hover, a:active { background-color: var(--color-install-hover-bg);  } }
+li#top-tools    { a:hover, a:active { background-color: var(--color-tools-hover-bg);    } }
+li#top-help     { a:hover, a:active { background-color: var(--color-help-hover-bg);     } }
+li#top-donate   { a:hover, a:active { background-color: var(--color-donate-hover-bg);   } }
+
 // Nav bar search box
-li#searchbox input[type="search"]{ background-color: var(--color-search-bg); color: var(--color-search); }
+li#searchbox {
+  &:hover, &:active { background-color: transparent; }
+  input[type="search"] { background-color: var(--color-search-bg); color: var(--color-search); }
+}
 
 // TOC Side Navigation
 
-.gcode-section .tocify { font-size: 13px; }
+// G-Code Section has some space for a larger font
+.gcode-section .tocify { font-size: 15px; }
 
 // Mid section
 .mid-section { background-image: var(--bg-midsection); }
@@ -1058,9 +1108,13 @@ div[role=main] { padding-bottom: 33vh; }
   td>em { display: block; font-size: 60%; text-align: right; }
   strong em { font-size: 60%; text-align: left; }
 }
+
+/**
+ * #searchbox contains, yes, the search box
+ * This is the last list-item inside div#navbar-main ul.nav
+ */
 li#searchbox {
   padding-left: 0.5em;
-  height: 50px;
   overflow: hidden;
   form {
     display: none;
@@ -1074,7 +1128,6 @@ li#searchbox {
     width: 7em;
   }
 }
-li#searchbox { &:hover, &:active { background-color: transparent; } }
 
 iframe.youtube {
   border-color: var(--color-iframe-border);
@@ -1117,13 +1170,26 @@ summary h3 { display: inline; }
 #install_platformio_sublime-page .custom-article ol ol {
   list-style-type: upper-alpha;
 }
+
+/**
+ * Top heading navigation
+ */
 .navbar-header { min-width: 153px; }
 .navbar-brand { padding: 4px 0 0 0; }
+
+/**
+ * Common page footer, may be shifted over by a navigation column
+ */
+
 footer>.container { display: block; clear: both; width: 100%}
-.noshift-footer, .shift-footer { padding: 1em; }
-@media (min-width: 991px) {
-  .shift-footer { padding-left: 342px !important; }
+.noshift-footer, .shift-footer {
+  padding: 1em;
+  .back-to-top { margin-top: -3pc; }
 }
+@media (min-width: 991px) {
+  .shift-footer { padding-left: 369px !important; }
+}
+
 @media (min-width: $screen-sm-min) and (max-width: $screen-md-min) {
   .highlight-panels {
     .panel-heading { height: 70px;}
