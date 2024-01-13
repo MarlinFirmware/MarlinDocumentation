@@ -73,23 +73,30 @@ A high degree of knowledge is needed to model complex objects like a [T-Rex Skul
 
 Slicers prepare a solid 3D model by dividing it up into thin slices (layers). In the process it generates the [G-code](//en.wikipedia.org/wiki/G-code) that tells the printer in minute detail how to reproduce the model. There are many slicers to choose from, including:
 
-- [PrůšaSlicer](//www.prusa3d.com/prusaslicer/) (_formerly Slic3r Průša Edition_) The new Kid on the block based on Slic3r.
-- [Orca Slicer](//github.com/SoftFever/OrcaSlicer/) is a popular fork of PrůšaSlicer.
-- [Cura](//ultimaker.com/en/products/cura-software).
+- [PrůšaSlicer](//www.prusa3d.com/prusaslicer/) is a very capable, cutting-edge, free, open source slicer based on Slic3r.
+- [Orca Slicer](//github.com/SoftFever/OrcaSlicer) is a popular fork of PrůšaSlicer with some refinements.
+- [Bambu Studio](//github.com/bambulab/BambuStudio) is a fork of Orca and PrůšaSlicer introduced in 2023 by Bambu Labs.
+- [Cura](//ultimaker.com/en/products/cura-software) is a popular free slicer that's included with many printers and often re-branded.
 - [Slic3r](//slic3r.org/) is one of the first slicers and is the basis for many others.
-- [Simplify3D](//www.simplify3d.com/) is a commercial offering.
+- [Simplify3D](//www.simplify3d.com/) is a solid commercial offering with a simplified interface.
 - [Kiri:Moto](//grid.space/kiri/) is a free web-based slicer that is fine for simpler print jobs.
 
-### Printing
+### SD Printing
 
-Marlin can be controlled entirely from a host or in standalone mode from an SD Card. Even without an LCD controller, a standalone SD print can still be initiated from a host, so your computer can be untethered from the printer.
+Marlin can run in standalone mode printing a file from an SD Card. On a headless printer with an SD card, a standalone SD print can also be initiated from the host and then the host can still monitor the print.
+
+USB Flash drives (and USB-C dongles as on the AnkerMake M5) are also supported, and Marlin 2.x can switch between two media drives. In a future update we'll be adding support for several arbitrary media types.
+
+It's a hassle to carry Micro-SD cards around, so some printer boards have a "target mode" (look for "SDIO") allowing you to tell the printer to temporarily release the onboard media. Then the SD/FD can be mounted as a USB drive on your PC for quick file transfers and firmware updates.
+
+### Host Printing
 
 Host software is available for several platforms, including desktop systems, Raspberry Pi, and Android tablets. Any device with a USB port and serial terminal can technically act as a host, but you'll have a better printing experience using host software specifically designed for 3D printers. Current selections include:
 
-- [OctoPrint](//octoprint.org/) is an open source host for Raspberry Pi by [Gina Häußge](//www.patreon.com/foosel).
-- [Pronterface](//www.pronterface.com/) is an open source host by Kliment.
+- [OctoPrint](//octoprint.org/) is a powerful open source host for Raspberry Pi by [Gina Häußge](//www.patreon.com/foosel).
+- [Pronterface](//www.pronterface.com/) is an open source host by Kliment that runs on desktop.
 - [Repetier Host](//www.repetier.com/) is a closed-source host by Repetier Software.
-- [Cura](//ultimaker.com/en/products/cura-software) is an open source host by Ultimaker. (WARNING: You can no longer manual select com port and speed, your printer needs to be auto detected by Cura)
-- [Simplify3D](//www.simplify3d.com/) includes both a host and slicer.
+- [Cura](//ultimaker.com/en/products/cura-software) is an open source host by Ultimaker. YMMV depending on your printer.
+- [Simplify3D](//www.simplify3d.com/) is a slicer but includes a basic host and console to send a print job.
 
-Many 3D printers ship with a customized version of Repetier or Cura. While this helps to associate the printer brand with a companion piece of software, these versions are usually obsolete and receive few upgrades. We recommend you download the latest generic version of your preferred host software instead.
+Many 3D printers ship with a customized version of Repetier or Cura. While this helps to associate the printer brand with a companion piece of software, these versions are usually obsolete and receive few upgrades. We recommend you download the latest generic or open source version instead. The latest innovations can also save time and material, so it pays to stay up to date.
