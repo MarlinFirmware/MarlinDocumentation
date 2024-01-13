@@ -56,6 +56,7 @@ table#tool {
   border: thin solid var(--color-tool-border);
   height: 100%;
   width: 100%;
+  font-size: 110%;
 
   h1, h2, h3, h4, h5 { color: var(--color-tool-header); }
 
@@ -68,7 +69,7 @@ table#tool {
     vertical-align: middle;
   }
   th {
-    width: 14%;
+    width: 20%;
     text-align: right;
   }
   td:nth-child(2) {
@@ -76,10 +77,11 @@ table#tool {
     min-width: 7%;
   }
   td:nth-child(3) {
-    width: 45%;
+    width: 39%;
     font-size: 80%;
   }
   td.options { text-align: center; }
+  td.td-hidden { display: none; }
 
   tr.head td { background-color: var(--color-tool-td-head-bg); }
   td.section { background-color: var(--color-tool-td-section-bg); }
@@ -103,8 +105,8 @@ table#tool {
     background: var(--color-tool-textarea);
   }
 
-  input, select { color: #000; }
-  input[type="number"] { width: 140px; }
+  input, select { color: #000; font-size: 120%; }
+  input[type="number"] { width: 120px; }
 
   select {
     width: 140px;

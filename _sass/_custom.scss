@@ -11,7 +11,7 @@
  */
 :root {
   --bg-midsection: radial-gradient(circle, rgba(0,0,0, 1) 0%, rgba(0,0,0, 0) 60%, rgba(0,0,0, 0) 100%);
-  --color-background: #F8F8F8;
+  --color-background: #F8FCFE;
   --color-color: #000;
   --color-nesting: #00000014;
   --color-scrollbar: #DDD;
@@ -118,6 +118,7 @@
   --color-nav-active-bg: #0088CC;
   --color-nav-bg: #F8F8F8;
   --color-nav-border: #222;
+  --color-nav-shadow: #222;
   --color-nav-hover: #000;
   --color-nav-hover-bg: #AAA;
   --color-nav-list: #09B;
@@ -250,6 +251,7 @@
   --color-nav-active-bg: #000;
   --color-nav-bg: #222;
   --color-nav-border: #333;
+  --color-nav-shadow: #000;
   --color-nav-focus: #444;
   --color-nav-focus-bg: #AAA;
   --color-nav-hover: #FFF;
@@ -412,6 +414,7 @@ pre.highlight{ background-color: var(--color-highlight-bg); }
   color: var(--color-nav);
   background-color: var(--color-nav-bg);
   border-color: var(--color-nav-border);
+  box-shadow: 0 0 5px var(--color-nav-shadow);
 }
 .navbar-default {
   .navbar-brand { &:hover, &:focus { background-color: inherit; } }
