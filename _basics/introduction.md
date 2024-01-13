@@ -74,8 +74,8 @@ A high degree of knowledge is needed to model complex objects like a [T-Rex Skul
 Slicers prepare a solid 3D model by dividing it up into thin slices (layers). In the process it generates the [G-code](//en.wikipedia.org/wiki/G-code) that tells the printer in minute detail how to reproduce the model. There are many slicers to choose from, including:
 
 - [PrůšaSlicer](//www.prusa3d.com/prusaslicer/) is a very capable, cutting-edge, free, open source slicer based on Slic3r.
-- [Orca Slicer](//github.com/SoftFever/OrcaSlicer) is a popular fork of PrůšaSlicer with some refinements.
-- [Bambu Studio](//github.com/bambulab/BambuStudio) is a fork of Orca and PrůšaSlicer introduced in 2023 by Bambu Labs.
+- [Bambu Studio](//github.com/bambulab/BambuStudio) is a fork of PrůšaSlicer introduced in 2023 by Bambu Labs.
+- [Orca Slicer](//github.com/SoftFever/OrcaSlicer) is a popular fork of Bambu Studio with some refinements.
 - [Cura](//ultimaker.com/en/products/cura-software) is a popular free slicer that's included with many printers and often re-branded.
 - [Slic3r](//slic3r.org/) is one of the first slicers and is the basis for many others.
 - [Simplify3D](//www.simplify3d.com/) is a solid commercial offering with a simplified interface.
