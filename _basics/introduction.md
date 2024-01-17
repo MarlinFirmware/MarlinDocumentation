@@ -15,9 +15,9 @@ Marlin is an open source [firmware](//en.wikipedia.org/wiki/Firmware) for the [R
 
 From the start Marlin was built by and for [RepRap](//reprap.org/wiki/) enthusiasts to be a straightforward, reliable, and adaptable printer driver that "just works." As a testament to its quality, Marlin is used by several respected commercial 3D printers. [LulzBot](https://www.lulzbot.com/), [Průša Research](https://www.prusa3d.com/), [Creality3D](https://creality3d.shop/), [BIQU](https://www.biqu.equipment/), [Geeetech](https://www.geeetech.com/), and [Ultimaker](https://ultimaker.com/) are just a few of the vendors who ship a variant of Marlin. Marlin is also capable of driving CNC machines and laser engravers.
 
-One key to Marlin's popularity is that it can run on a wide variety of inexpensive [micro-controllers](//en.wikipedia.org/wiki/Microcontroller) including 8-bit [Atmel AVR](//www.atmel.com/products/microcontrollers/avr/) Marlin 2.x has added support for 32-bit boards. These chips are at the center of the popular [open source](//en.wikipedia.org/wiki/Open-source_hardware) [Arduino/Genuino](//arduino.cc) platform. The reference platforms for Marlin is an Arduino Mega2560 with RAMPS 1.4 and Re-Arm with Ramps 1.4.
+One key to Marlin's usefulness is that it's built around the lightweight Arduino framework, so it runs on a huge number of inexpensive [micro-controllers](//en.wikipedia.org/wiki/Microcontroller) from classic [Atmel AVR](//www.atmel.com/products/microcontrollers/avr/) 8-bit boards all the way up to the latest ARM 32-bit OEM and upgrade boards from companies like BigTreeTech and Makerbase.
 
-Marlin aims to support all possible boards and machine configurations. We want it to be configurable, customizable, extensible, and economical for hobbyists and vendors alike. A Marlin build can be very small (under 64KB), for use on a headless printer with only modest hardware. Features are enabled as-needed to support added components.
+Marlin aims to support all possible boards and machine configurations. We want it to be configurable, customizable, extensible, and economical for hobbyists and vendors alike. A minimal Marlin build can be very small (under 64KB), for use on a headless printer with only modest hardware. Features are enabled as-needed to support added components.
 
 ## Main features
 
