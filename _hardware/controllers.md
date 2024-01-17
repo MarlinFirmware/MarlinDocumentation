@@ -18,7 +18,7 @@ groups:
         - 20×4 character LCD panel
         - SD Card reader
         - Reset button
-        - Combined rotary encoder and push button for menu control
+        - Rotary encoder click wheel
         - Buzzer
       images:
         - alt: RRDSC
@@ -29,7 +29,7 @@ groups:
       description: |
         - 20×4 character LCD panel
         - Reset button
-        - Combined rotary encoder and push button for menu control
+        - Rotary encoder click wheel
         - Buzzer
       images:
         - alt: YHCB2004
@@ -42,7 +42,7 @@ groups:
         - SD Card reader
         - Back button
         - Reset button
-        - Combined rotary encoder and push button for menu control
+        - Rotary encoder click wheel
         - Potentiometer for LCD contrast adjustment
         - Buzzer
       images:
@@ -56,7 +56,7 @@ groups:
       description: |
         - 20×4 character LCD panel
         - SD Card reader
-        - Combined rotary encoder and push button for menu control
+        - Rotary encoder click wheel
         - Potentiometer for LCD contrast adjustment
         - Buzzer
       images:
@@ -68,7 +68,7 @@ groups:
       description: |
         - 20×4 character LCD panel
         - SD Card reader
-        - Combined rotary encoder and push button for menu control
+        - Rotary encoder click wheel
         - Potentiometer for LCD contrast adjustment
         - Potentiometer for LCD brightness adjustment
       images:
@@ -79,7 +79,7 @@ groups:
     - name: G3D_PANEL
       description: |
         - 20×4 character LCD panel
-        - Combined rotary encoder and push button for menu control
+        - Rotary encoder click wheel
         - Requires an adapter slightly different from the RRDSC
       images:
         - alt: G3D Panel
@@ -93,7 +93,7 @@ groups:
         - 16×2 character LCD panel
         - Reset button
         - SD Card reader
-        - Combined rotary encoder and push button for menu control
+        - Rotary encoder click wheel
       images:
         - alt: Makeboard Mini
           front: MAKEBOARD_MINI_2_LINE_DISPLAY
@@ -157,7 +157,7 @@ groups:
         - 128x64 pixel LCD panel
         - SD Card reader
         - Reset button
-        - Combined rotary encoder and push button for menu control
+        - Rotary encoder click wheel
         - Buzzer
       images:
         - alt: RDFGSC
@@ -198,7 +198,7 @@ groups:
       description: |
         - 128x64 pixel LCD panel
         - Reset button
-        - Combined rotary encoder and push button for menu control
+        - Rotary encoder click wheel
         - Buzzer
       images:
         - alt: LCD_FOR_MELZI
@@ -217,9 +217,9 @@ groups:
         - 128x64 pixel LCD panel
         - SD Card reader
         - Reset button
-        - Combined rotary encoder and push button for menu control
+        - Rotary encoder click wheel
         - Buzzer
-        - Neopixel backlight
+        - NeoPixel backlight
         - Option of a front or side facing SD slot.
       images:
         - alt: MKS_MINI_12864_V3
@@ -232,7 +232,7 @@ groups:
         - 128x64 pixel LCD panel
         - SD Card reader
         - Reset button
-        - Combined rotary encoder and push button for menu control
+        - Rotary encoder click wheel
         - Speaker
         - *Some have a jumper on the back to switch logic level voltage
       images:
@@ -246,7 +246,7 @@ groups:
         - 128x64 pixel LCD panel
         - SD Card reader
         - Reset button
-        - Combined rotary encoder and push button for menu control
+        - Rotary encoder click wheel
         - Speaker
       images:
         - alt: MKS_LCD12864B
@@ -261,7 +261,7 @@ groups:
         - 128x64 pixel LCD panel
         - SD Card reader
         - Reset button
-        - Combined rotary encoder and push button for menu control
+        - Rotary encoder click wheel
         - Buzzer
         - RGB backlight (no PWM)
 
@@ -270,7 +270,7 @@ groups:
         - 128x64 pixel LCD panel
         - SD Card reader
         - Reset button
-        - Combined rotary encoder and push button for menu control
+        - Rotary encoder click wheel
         - Buzzer
         - RGB LEDs backlight
 
@@ -279,9 +279,9 @@ groups:
         - 128x64 pixel LCD panel
         - SD Card reader
         - Reset button
-        - Combined rotary encoder and push button for menu control
+        - Rotary encoder click wheel
         - Buzzer
-        - Neopixel backlight
+        - NeoPixel backlight
       images:
         - alt: FYSETC_MINI_12864_2_1
           front: FYSETC_MINI_12864_2_1
@@ -293,7 +293,7 @@ groups:
         - 128x64 pixel LCD panel
         - SD Card reader
         - Reset button
-        - Combined rotary encoder and push button for menu control
+        - Rotary encoder click wheel
         - Buzzer
 
     - name: BTT_MINI_12864
@@ -302,9 +302,9 @@ groups:
         - 128x64 pixel LCD panel
         - SD Card reader
         - Reset button
-        - Combined rotary encoder and push button for menu control
+        - Rotary encoder click wheel
         - Buzzer
-        - Neopixel backlight
+        - NeoPixel backlight
       images:
         - alt: BTT_MINI_12864
           front: BTT_MINI_12864
@@ -314,9 +314,9 @@ groups:
       description: |
         One of the most common Creality mono bitmap displays.
         - 128x64 pixel LCD panel
-        - Combined rotary encoder and push button for menu control
+        - Rotary encoder click wheel
         - Buzzer
-        - Cen be configuraed as a REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER
+        - Can be configured as a REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER
       images:
         - alt: CR10_STOCK
           front: CR10_STOCK
@@ -325,7 +325,7 @@ groups:
     - name: ENDER2_STOCKDISPLAY
       description: |
         - 128x64 pixel LCD panel
-        - Combined rotary encoder and push button for menu control
+        - Rotary encoder click wheel
       images:
         - alt: ENDER2_STOCK
           front: ENDER2_STOCK
@@ -335,7 +335,7 @@ groups:
       description: |
         - 128x64 pixel LCD panel
         - Reset button
-        - Combined rotary encoder and push button for menu control
+        - Rotary encoder click wheel
         - Buzzer
         - Option for a Bluetooth module
       images:
@@ -346,7 +346,7 @@ groups:
     - name: CTC_A10S_A13
       description: |
         - 128x64 pixel LCD panel
-        - Combined rotary encoder and push button for menu control
+        - Rotary encoder click wheel
         - Option for a Buzzer
       images:
         - alt: CTC_A10S_A13
@@ -409,7 +409,7 @@ groups:
         - 3.5"
         - SPI
         - Reset* (* some are not populated)
-        - Combined rotary encoder and push button
+        - Rotary encoder click wheel
         - Buzzer
       images:
         - alt: MKS_TS35_V2_0
@@ -565,7 +565,7 @@ groups:
         - 480x272
         - 4.3"
         - Serial (DWIN T5UIC1)
-        - Combined rotary encoder and push button
+        - Rotary encoder click wheel
         - Buzzer
 
       images:
