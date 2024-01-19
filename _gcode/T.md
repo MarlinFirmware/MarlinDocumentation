@@ -10,31 +10,38 @@ group: control
 codes: [ T0, T1, T2, T3, T4, T5, T6, T7 ]
 
 parameters:
-  - tag: F
-    optional: true
-    description: Movement feedrate for the tool-change.
-    values:
-      - tag: feedrate
-        type: float
-  - tag: S
-    optional: true
-    description: "Specify movement in XY after the tool-change. (Default: allow)"
-    values:
-      - tag: 0
-        description: Allow movement in XY
-        type: bool
-      - tag: 1
-        description: Prevent movement in XY
-        type: bool
+
+- tag: F
+  optional: true
+  description: Movement feedrate for the tool-change.
+  values:
+  - tag: feedrate
+    type: float
+
+- tag: S
+  optional: true
+  description: "Specify movement in XY after the tool-change. (Default: allow)"
+  values:
+  - tag: 0
+    description: Allow movement in XY
+    type: bool
+  - tag: 1
+    description: Prevent movement in XY
+    type: bool
 
 examples:
-  - pre: Switch to tool 1 with XY move feedrate of 30mm/s
-    code: T1 F1800
-  - pre: Switch to tool 3, disallowing XY moves
-    code: T3 S1
-  - pre: Report the current tool
-    code: T
+
+- pre: Switch to tool 1 with XY move feedrate of 30mm/s
+  code: T1 F1800
+
+- pre: Switch to tool 3, disallowing XY moves
+  code: T3 S1
+
+- pre: Report the current tool
+  code: T
+
 ---
+
 Use `T0`, `T1`, etc. to switch to the respective physical or virtual tool. See [Universal Tool Change Settings](/docs/configuration/configuration.html#universal-tool-change-settings) in `Configuration_adv.h` for more details.
 
 In Marlin 2.1.3 and up you can use `T` with no tool number to report the current tool index to the serial console.

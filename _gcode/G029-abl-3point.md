@@ -7,80 +7,73 @@ author: thinkyhead
 requires: AUTO_BED_LEVELING_3POINT
 group: calibration
 
-related: [ M420 ]
 codes: [ G29 ]
+related: [ M420 ]
 
-notes:
-- Any arguments left out of `G29` will use your configured defaults.
-- |
-  By default `G28` disables bed leveling. Follow `G28` with `M420 S` to turn leveling on.
-    - With `ENABLE_LEVELING_AFTER_G28` leveling will always be enabled after `G28`.
-    - With `RESTORE_LEVELING_AFTER_G28` leveling is restored to whatever state it was in before `G28`.
-- To save time and machine wear, save your matrix to EEPROM with [`M500`](/docs/gcode/M500.html) and in your slicer's "Starting G-code" replace `G29` with `M420 S1` to enable your last-saved matrix.
+notes: |
+  - Any arguments left out of `G29` will use your configured defaults.
+  - By default `G28` disables bed leveling. Follow `G28` with `M420 S` to turn leveling on.
+      - With `ENABLE_LEVELING_AFTER_G28` leveling will always be enabled after `G28`.
+      - With `RESTORE_LEVELING_AFTER_G28` leveling is restored to whatever state it was in before `G28`.
+  - To save time and machine wear, save your matrix to EEPROM with [`M500`](/docs/gcode/M500.html) and in your slicer's "Starting G-code" replace `G29` with `M420 S1` to enable your last-saved matrix.
 
 parameters:
--
-  tag: A
+
+- tag: A
   optional: true
   description: Abort leveling procedure in-progress (`PROBE_MANUALLY`)
   values:
-    -
-      type: bool
--
-  tag: C
+  - type: bool
+
+- tag: C
   optional: true
   description: Create fake points for testing. (`DEBUG_LEVELING_FEATURE`)
   values:
-    -
-      type: bool
--
-  tag: O
+  - type: bool
+
+- tag: O
   type: bool
   optional: true
   description: Optional. If leveling is already enabled then exit without leveling. (1.1.9)
--
-  tag: Q
+
+- tag: Q
   optional: true
   description: Query the current leveling state (`PROBE_MANUALLY`, `DEBUG_LEVELING_FEATURE`)
   values:
-    -
-      type: bool
--
-  tag: E
+  - type: bool
+
+- tag: E
   optional: true
   description: |
-               - By default G29 will engage the Z probe, test the bed, then disengage.
-               - Include "E" to engage/disengage the Z probe for each sample.
-               - There's no extra effect if you have a fixed Z probe. (without `PROBE_MANUALLY`)
+    - By default G29 will engage the Z probe, test the bed, then disengage.
+    - Include "E" to engage/disengage the Z probe for each sample.
+    - There's no extra effect if you have a fixed Z probe. (without `PROBE_MANUALLY`)
   values:
-    -
-      type: bool
--
-  tag: D
+  - type: bool
+
+- tag: D
   optional: true
   description: Dry-Run mode. Just probe the grid but don't update the bed leveling data
   values:
-    -
-      type: bool
--
-  tag: J
+  - type: bool
+
+- tag: J
   optional: true
   description: Jettison the leveling data stored in SRAM and turn off leveling compensation. Data in EEPROM is not affected.
   values:
-    -
-      type: bool
--
-  tag: V
+  - type: bool
+
+- tag: V
   optional: true
   description: Set the verbose level
   values:
-    -
-      type: int
-      tag: 0-4
+  - type: int
+    tag: 0-4
 
-examples:
--
-  code: G29 ; Probe 3 points and compensate
+example:
+- pre: Probe 3 points and compensate
+  code: G29
+
 ---
 
 Automatic (3-Point) Bed Leveling probes the bed at 3 points and enables bed leveling compensation using a rotation matrix to compensate for bed tilt.

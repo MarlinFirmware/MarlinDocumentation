@@ -10,163 +10,145 @@ group: calibration
 related: [ M420, M421 ]
 codes: [ G29 ]
 
-notes:
-- Any arguments left out of `G29` will use the default values set in `Configuration.h`.
-- |
-  By default `G28` disables bed leveling. Follow `G28` with `M420 S` to turn leveling on.
-    - With `ENABLE_LEVELING_AFTER_G28` leveling will always be enabled after `G28`.
-    - With `RESTORE_LEVELING_AFTER_G28` leveling is restored to whatever state it was in before `G28`.
-- To save time and machine wear, save your mesh to EEPROM with [`M500`](/docs/gcode/M500.html) and in your slicer's "Starting G-code" replace `G29` with `M420 S1` to enable your last-saved mesh.
+notes: |
+  - Any arguments left out of `G29` will use the default values set in `Configuration.h`.
+  - By default `G28` disables bed leveling. Follow `G28` with `M420 S` to turn leveling on.
+      - With `ENABLE_LEVELING_AFTER_G28` leveling will always be enabled after `G28`.
+      - With `RESTORE_LEVELING_AFTER_G28` leveling is restored to whatever state it was in before `G28`.
+  - To save time and machine wear, save your mesh to EEPROM with [`M500`](/docs/gcode/M500.html) and in your slicer's "Starting G-code" replace `G29` with `M420 S1` to enable your last-saved mesh.
 
 parameters:
--
-  tag: A
+
+- tag: A
   optional: true
   description: Abort leveling procedure in-progress (`PROBE_MANUALLY`)
   values:
-    -
-      type: bool
--
-  tag: C
+  - type: bool
+
+- tag: C
   optional: true
   description: Create a fake grid for testing. (`DEBUG_LEVELING_FEATURE`)
   values:
-    -
-      type: bool
--
-  tag: O
+  - type: bool
+
+- tag: O
   type: bool
   optional: true
   description: Optional. If leveling is already enabled then exit without leveling. (1.1.9)
--
-  tag: Q
+
+- tag: Q
   optional: true
   description: Query the current leveling state (`PROBE_MANUALLY`, `DEBUG_LEVELING_FEATURE`)
   values:
-    -
-      type: bool
--
-  tag: X
+  - type: bool
+
+- tag: X
   optional: true
   description: Specify X when setting a mesh value (`PROBE_MANUALLY`).
   values:
-    -
-      type: int/float
--
-  tag: Y
+  - type: float
+
+- tag: Y
   optional: true
   description: Specify Y when setting a mesh value.
   values:
-    -
-      type: int/float
--
-  tag: Z
+  - type: float
+
+- tag: Z
   optional: true
   description: Specify the Z offset when setting a mesh value.
   values:
-    -
-      type: float
--
-  tag: W
+  - type: float
+
+- tag: W
   optional: true
   description: |
     Write a mesh Z offset.
     - Use `X`,`Y` or `I`,`J` to specify the point.
     - Use `Z` to specify the new value to set.
   values:
-    -
-      type: bool
--
-  tag: S
+  - type: bool
+
+- tag: S
   optional: true
   description: Set the XY travel speed between probe points.
   values:
-    -
-      tag: rate
-      type: float
--
-  tag: E
+  - tag: rate
+    type: float
+
+- tag: E
   optional: true
   description: |
     - By default G29 will engage the Z probe, test the bed, then disengage.
     - Include "E" to engage/disengage the Z probe for each sample.
     - There's no extra effect if you have a fixed Z probe.
   values:
-    -
-      type: bool
--
-  tag: D
+  - type: bool
+
+- tag: D
   optional: true
   description: Dry-Run mode. Just probe the grid but don't update the bed leveling data
   values:
-    -
-      type: bool
--
-  tag: H
+  - type: bool
+
+- tag: H
   optional: true
   description: Set the square width and height of the area to probe.
   values:
-    -
-      tag: linear
-      type: float
--
-  tag: F
+  - tag: linear
+    type: float
+
+- tag: F
   optional: true
   description: Set the front limit of the probing grid.
   values:
-    -
-      tag: linear
-      type: float
--
-  tag: B
+  - tag: linear
+    type: float
+
+- tag: B
   optional: true
   description: Set the back limit of the probing grid.
   values:
-    -
-      tag: linear
-      type: float
--
-  tag: L
+  - tag: linear
+    type: float
+
+- tag: L
   optional: true
   description: Set the left limit of the probing grid.
   values:
-    -
-      tag: linear
-      type: float
--
-  tag: R
+  - tag: linear
+    type: float
+
+- tag: R
   optional: true
   description: Set the right limit of the probing grid.
   values:
-    -
-      tag: linear
-      type: float
--
-  tag: J
+  - tag: linear
+    type: float
+
+- tag: J
   optional: true
   description: (Without `W`) Jettison the leveling data stored in SRAM and turn off leveling compensation. Data in EEPROM is not affected.
   values:
-    -
-      type: bool
--
-  tag: V
+  - type: bool
+
+- tag: V
   optional: true
   description: Set the verbose level
   values:
-    -
-      type: int
-      tag: 0-4
+  - type: int
+    tag: 0-4
 
 examples:
--
-  pre: Automatic Probing examples
+
+- pre: Automatic Probing examples
   post: '`G29` without arguments uses your default settings.'
   code: G29 ; Measure the bed
--
-  post: 'Probe your configured N x N matrix within the bounds `X50` `Y50` to `X150` `Y150` (verbose).'
+
+- post: 'Probe your configured N x N matrix within the bounds `X50` `Y50` to `X150` `Y150` (verbose).'
   code: G29 L50 R150 F50 B150 V4
--
-  pre: Manual Probing example
+
+- pre: Manual Probing example
   post: 'Each `G29` command goes to the next step until the whole procedure is done. The `V1` parameter provides a progress report.'
   code:
     - G29 V1 ;  Ready!  Go to Point 1, wait...
@@ -179,6 +161,7 @@ examples:
     - G29 V1 ; Store Z, go to Point 8, wait...
     - G29 V1 ; Store Z, go to Point 9, wait...
     - G29 V1 ; Store Z. Calculate matrix. Activate.
+
 ---
 
 Automatic (Bilinear) Bed Leveling probes the bed at some fixed number of points and produces a mesh representing the imperfections across the bed.

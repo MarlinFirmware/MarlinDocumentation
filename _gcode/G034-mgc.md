@@ -11,35 +11,29 @@ group: calibration
 codes: [ G34 ]
 related: [ M422, M906, M907, M915 ]
 
-notes:
-  - Requires `MECHANICAL_GANTRY_CALIBRATION`.
-
 parameters:
-  -
-    tag: S
-    optional: true
-    description: "Current value to use for the raise move. (Default: `GANTRY_CALIBRATION_CURRENT`)"
-    values:
-      -
-        unit: mA
-        type: int
-  -
-    tag: Z
-    optional: true
-    description: "Extra distance past `Z_MAX_POS` to move the Z axis. (Default: `GANTRY_CALIBRATION_EXTRA_HEIGHT`)"
-    values:
-      -
-        unit: linear
-        type: float
+
+- tag: S
+  optional: true
+  description: "Current value to use for the raise move. (Default: `GANTRY_CALIBRATION_CURRENT`)"
+  values:
+  - unit: mA
+    type: int
+
+- tag: Z
+  optional: true
+  description: "Extra distance past `Z_MAX_POS` to move the Z axis. (Default: `GANTRY_CALIBRATION_EXTRA_HEIGHT`)"
+  values:
+  - unit: linear
+    type: float
 
 videos:
-  - 3jAFQdTk8iw
+- 3jAFQdTk8iw
 
 example:
-  -
-    pre: 'Mechanical gantry calibration:'
-    code:
-      - G34
+- pre: 'Mechanical gantry calibration:'
+  code: G34
+
 ---
 
 This command is used to align the ends of the X gantry. See the [video demonstration](//youtu.be/3jAFQdTk8iw?t=684) below.
