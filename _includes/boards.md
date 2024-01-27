@@ -1,6 +1,10 @@
+<!--
+	Display the boards from _data/boards.yml
+-->
 ### General information
 
 Marlin supports a wide variety of 3D printers, including all RAMPS variants, and is adaptable to virtually any Arduino/Genuino-based electronics through pin-mapping - associating pins with their functions.
+
 Originally Marlin was designed to run on low-powered 8-bit AVR boards, but starting with Marlin 1.1.9 it has gained support for dozens of ARM-based boards. The Hardware Abstraction Layer created for Marlin 2.0 provides a consistent set of interfaces, making it much easier to add support for new platforms.
 
 Several files in the Marlin source code provide hardware support, but the files supporting the core electronics are:
@@ -20,7 +24,7 @@ To build Marlin for a specific board, set the `MOTHERBOARD` option in `Configura
 #define MOTHERBOARD BOARD_RAMPS_EFB
 ```
 
-See the [boards list](#board_list) below for a complete list of boards supported in the latest release of Marlin.
+See the [boards list](#board-list) below for a complete list of boards supported in the latest release of Marlin.
 
 ### FastIO and Pin Mapping
 
