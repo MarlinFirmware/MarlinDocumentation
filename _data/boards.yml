@@ -42,14 +42,19 @@
     brief: "RAMPS Plus 3DYMY (Power outputs: Spindle, Controller Fan)"
   - name: RAMPS_BTT_16_PLUS_EFB
     brief: "RAMPS 1.6+ (Power outputs: Hotend, Fan, Bed)"
+    since: 2.1.3
   - name: RAMPS_BTT_16_PLUS_EEB
     brief: "RAMPS 1.6+ (Power outputs: Hotend0, Hotend1, Bed)"
+    since: 2.1.3
   - name: RAMPS_BTT_16_PLUS_EFF
     brief: "RAMPS 1.6+ (Power outputs: Hotend, Fan0, Fan1)"
+    since: 2.1.3
   - name: RAMPS_BTT_16_PLUS_EEF
     brief: "RAMPS 1.6+ (Power outputs: Hotend0, Hotend1, Fan)"
+    since: 2.1.3
   - name: RAMPS_BTT_16_PLUS_SF
     brief: "RAMPS 1.6+ (Power outputs: Spindle, Controller Fan)"
+    since: 2.1.3
 
 #
 # RAMPS Derivatives - ATmega1280, ATmega2560
@@ -190,8 +195,10 @@
     brief: Pxmalion Core I3
   - name: PANOWIN_CUTLASS
     brief: Panowin Cutlass (as found in the Panowin F1)
+    since: 2.1.3
   - name: KODAMA_BARDO
     brief: Kodama Bardo V1.x (as found in the Kodama Trinus)
+    since: 2.1.3
 
 #
 # RAMBo and derivatives
@@ -286,6 +293,7 @@
     brief: WEEDO 62A board (TINA2, Monoprice Cadet, etc.)
   - name: GT2560_V41B
     brief: Geeetech GT2560 V4.1B for A10(M/T/D)
+    since: 2.1.3
 
 #
 # ATmega1281, ATmega2561
@@ -320,6 +328,7 @@
     brief: Melzi Creality3D (for CR-10 etc)
   - name: MELZI_CREALITY_ENDER2
     brief: Melzi Creality3D (for Ender-2)
+    since: 2.1.3
   - name: MELZI_MALYAN
     brief: Melzi Malyan M150
   - name: MELZI_TRONXY
@@ -396,14 +405,19 @@
   boards:
   - name: RAMPS_14_RE_ARM_EFB
     brief: "Re-ARM with RAMPS 1.4 (Power outputs: Hotend, Fan, Bed)"
+    since: 2.0.0
   - name: RAMPS_14_RE_ARM_EEB
     brief: "Re-ARM with RAMPS 1.4 (Power outputs: Hotend0, Hotend1, Bed)"
+    since: 2.0.0
   - name: RAMPS_14_RE_ARM_EFF
     brief: "Re-ARM with RAMPS 1.4 (Power outputs: Hotend, Fan0, Fan1)"
+    since: 2.0.0
   - name: RAMPS_14_RE_ARM_EEF
     brief: "Re-ARM with RAMPS 1.4 (Power outputs: Hotend0, Hotend1, Fan)"
+    since: 2.0.0
   - name: RAMPS_14_RE_ARM_SF
     brief: "Re-ARM with RAMPS 1.4 (Power outputs: Spindle, Controller Fan)"
+    since: 2.0.0
   - name: MKS_SBASE
     brief: MKS-Sbase
   - name: AZSMZ_MINI
@@ -426,6 +440,7 @@
     brief: BigTreeTech SKR v1.4
   - name: EMOTRONIC
     brief: eMotion-Tech eMotronic
+    since: 2.1.1
 
 #
 # LPC1769 ARM Cortex-M3
@@ -452,10 +467,12 @@
     brief: TH3D EZBoard v1.0
   - name: BTT_SKR_V1_4_TURBO
     brief: BigTreeTech SKR v1.4 TURBO
+    since: 2.0.2
   - name: MKS_SGEN_L_V2
     brief: MKS SGEN_L V2
   - name: BTT_SKR_E3_TURBO
     brief: BigTreeTech SKR E3 Turbo
+    since: 2.0.7
   - name: FLY_CDY
     brief: FLYmaker FLY CDY
 
@@ -544,18 +561,25 @@
   boards:
   - name: BTT_EBB42_V1_1
     brief: BigTreeTech EBB42 V1.1 (STM32G0B1CB)
+    since: 2.1.2.1
   - name: BTT_SKR_MINI_E3_V3_0
     brief: BigTreeTech SKR Mini E3 V3.0 (STM32G0B0RE / STM32G0B1RE)
+    since: 2.1.2.1
   - name: BTT_MANTA_E3_EZ_V1_0
     brief: BigTreeTech Manta E3 EZ V1.0 (STM32G0B1RE)
+    since: 2.1.2.1
   - name: BTT_MANTA_M4P_V2_1
     brief: BigTreeTech Manta M4P V2.1 (STM32G0B0RE)
+    since: 2.1.2.1
   - name: BTT_MANTA_M5P_V1_0
     brief: BigTreeTech Manta M5P V1.0 (STM32G0B1RE)
+    since: 2.1.2.1
   - name: BTT_MANTA_M8P_V1_0
     brief: BigTreeTech Manta M8P V1.0 (STM32G0B1VE)
+    since: 2.1.2.1
   - name: BTT_MANTA_M8P_V1_1
     brief: BigTreeTech Manta M8P V1.1 (STM32G0B1VE)
+    since: 2.1.2.1
 
 #
 # STM32 ARM Cortex-M3
@@ -700,16 +724,22 @@
     brief: Panda Pi V2.9 - Standalone (STM32F103RC)
   - name: SOVOL_V131
     brief: Sovol V1.3.1 (GD32F103RE)
+    since: 2.1.2.1
   - name: TRIGORILLA_V006
     brief: Trigorilla V0.0.6 (GD32F103RE)
+    since: 2.1.3
   - name: KEDI_CONTROLLER_V1_2
     brief: EDUTRONICS Kedi Controller V1.2 (STM32F103RC)
+    since: 2.1.3
   - name: MD_D301
     brief: Mingda D2 DZ301 V1.0 (STM32F103ZE)
+    since: 2.1.3
   - name: VOXELAB_AQUILA
     brief: Voxelab Aquila V1.0.0/1 (GD32F103RC / N32G455RE / STM32F103RE)
+    since: 2.1.3
   - name: SPRINGER_CONTROLLER
     brief: ORCA 3D SPRINGER Modular Controller (STM32F103VC)
+    since: 2.1.3
 
 #
 # ARM Cortex-M4F
@@ -814,6 +844,7 @@
     brief: Creality v2.4.S1_301F4 (STM32F401RC) as found in the Ender-3 S1 F4
   - name: CREALITY_CR4NTXXC10
     brief: Creality E3 Free-runs Silent Motherboard (STM32F401RET6)
+    since: 2.1.3
   - name: OPULO_LUMEN_REV4
     brief: Opulo Lumen PnP Controller REV4 (STM32F407VE / STM32F407VG)
   - name: FYSETC_SPIDER_KING407
@@ -824,16 +855,22 @@
     brief: TRONXY V10 (STM32F446ZE)
   - name: CREALITY_F401RE
     brief: Creality CR4NS200141C13 (STM32F401RE) as found in the Ender-5 S1
+    since: 2.1.3
   - name: BLACKPILL_CUSTOM
     brief: Custom board based on STM32F401CDU6
+    since: 2.1.3
   - name: I3DBEEZ9_V1
     brief: I3DBEEZ9 V1 (STM32F407ZG)
+    since: 2.1.3
   - name: MELLOW_FLY_E3_V2
     brief: Mellow Fly E3 V2 (STM32F407VG)
+    since: 2.1.3
   - name: FYSETC_CHEETAH_V30
     brief: FYSETC Cheetah V3.0 (STM32F446RC)
+    since: 2.1.3
   - name: BLACKBEEZMINI_V1
     brief: BlackBeezMini V1 (STM32F401CCU6)
+    since: 2.1.3
 
 #
 # ARM Cortex-M7
@@ -860,16 +897,22 @@
     brief: BigTreeTech SKR V3.0 EZ (STM32H743VI / STM32H723VG)
   - name: BTT_OCTOPUS_MAX_EZ_V1_0
     brief: BigTreeTech Octopus Max EZ V1.0 (STM32H723ZE)
+    since: 2.1.2
   - name: BTT_OCTOPUS_PRO_V1_0_1
     brief: BigTreeTech Octopus Pro v1.0.1 (STM32H723ZE)
+    since: 2.1.3
   - name: BOARD_BTT_OCTOPUS_PRO_V1_0_1
     brief: BigTreeTech Octopus Pro v1.0.1 (STM32H723ZE)
+    since: 2.1.3
   - name: BTT_OCTOPUS_PRO_V1_1
     brief: BigTreeTech Octopus Pro v1.1 (STM32H723ZE)
+    since: 2.1.3
   - name: BTT_MANTA_M8P_V2_0
     brief: BigTreeTech Manta M8P V2.0 (STM32H723ZE)
+    since: 2.1.3
   - name: BTT_KRAKEN_V1_0
     brief: BigTreeTech Kraken v1.0 (STM32H723ZG)
+    since: 2.1.3
 
 #
 # Espressif ESP32 WiFi
@@ -900,8 +943,10 @@
     brief: enwi ESPNP (with I2S stepper stream)
   - name: GODI_CONTROLLER_V1_0
     brief: EDUTRONICS Godi Controller V1.0 based on ESP32
+    since: 2.1.3
   - name: MM_JOKER
     brief: MagicMaker JOKER based on ESP32 (with I2S stepper stream)
+    since: 2.1.3
 
 #
 # SAMD51 ARM Cortex-M4
@@ -936,8 +981,10 @@
   boards:
   - name: AQUILA_V101
     brief: Voxelab Aquila V1.0.0/V1.0.1/V1.0.2/V1.0.3 as found in the Voxelab Aquila X2 and C2
+    since: 2.1.3
   - name: CREALITY_ENDER2P_V24S4
     brief: Creality Ender-2 Pro v2.4.S4_170 (HC32F460KCTA)
+    since: 2.1.3
 
 #
 # Custom board
@@ -948,6 +995,7 @@
   boards:
   - name: CUSTOM
     brief: Custom pins definition for development and/or rare boards.
+    since: 2.0.6.1
 
 #
 # Marlin Simulator
@@ -960,3 +1008,4 @@
   boards:
   - name: SIMULATED
     brief: Simulated cartesian printer built with Dear ImGui, SDL, and OpenGL.
+    since: 2.1.2.2

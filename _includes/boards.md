@@ -52,16 +52,16 @@ The easiest way to add a new board to Marlin is to start with one of the existin
 If you're developing a custom board, try to use common pinouts as much as possible, or choose a pin-mapping similar to another board Marlin supports. The more a new board resembles an existing board, the easier it will be to integrate.
 {% endalert %}
 
-### Board list
+### Boards list
 
 <div id="board-list">
 {% for item in site.data.boards %}
 <h4>{{ item.group }}</h4>
 {% if item.long %}<p>{{ item.long | markdownify }}</p>{% endif %}
 <table class="table table-condensed table-striped">
-<tr><th>Name</th><th>Description</th></tr>
+<tr><th>Name</th><th>Description</th><th>Version</th></tr>
 {% for board in item.boards %}
-<tr><td>BOARD_{{ board.name }}</td><td>{{ board.brief }}</td></tr>
+<tr{% if board.class %} class="{{ board.class }}"{% endif %}><td>BOARD_{{ board.name }}</td><td>{{ board.brief }}</td><td>{% if board.since %}{{ board.since }}{% endif %}</td></tr>
 {% endfor %}
 </table>
 {% endfor %}
