@@ -10,7 +10,7 @@ category: [ features, eeprom ]
 
 {% alert info %}Requires `EEPROM_SETTINGS`.{% endalert %}
 
-Most 3D printer electronics include a little bit of storage (512K, 3K, or more) called EEPROM (Electrically Erasable Programmable Read-Only Memory) that persists when the power is off. Marlin uses the EEPROM to store the printer settings and loads them up the next time the machine powers up. Changing the source code and re-flashing the firmware does not change the contents of EEPROM.
+Most 3D printer electronics include a little bit of storage (512K, 3K, or more) called EEPROM (Electrically Erasable Programmable Read-Only Memory) that persists when the power is off. Marlin uses the EEPROM to store the printer settings and loads them up the next time the machine powers up. Changing the source code and re-flashing the firmware does not necessarily change the contents of EEPROM. If the firmware is compiled with `EEPROM_AUTO_INIT` or `EEPROM_INIT_NOW` enabled, the EEPROM contents could be rewritten with the default values and only if you flash with the same firmware version/build the contents of the EEPROM are preserved.
 
 # Enable EEPROM
 
