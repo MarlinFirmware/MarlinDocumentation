@@ -8,7 +8,7 @@ requires: Z_STEPPER_AUTO_ALIGN
 group: calibration
 
 codes: [ G34 ]
-related: [ M422, M906, M907 ]
+related: [ G28, M422, M906, M907 ]
 
 parameters:
 
@@ -37,4 +37,4 @@ example:
 
 ---
 
-Align multiple Z stepper motors using a bed probe by probing one position per stepper. See [`M422`](/docs/gcode/M422.html) for Z-Stepper automatic alignment parameter selection.
+Align multiple Z stepper motors using a bed probe by probing one position per stepper. See [`M422`](/docs/gcode/M422.html) for Z-Stepper automatic alignment parameter selection. `G28` is done beforehand and is implicit.
