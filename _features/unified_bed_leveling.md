@@ -24,7 +24,7 @@ UBL is a superset of previous automatic leveling systems, but it does not necess
 
 The printer must be already fully functional and tested, with a well-constrained movement system. The more physically level and straight the bed is, the better your results will be. See `Configuration.h` and `Configuration_adv.h` for all of UBL's settings.
 
-You should be able to successfully print a small object at the center of the bed with bed leveling turned off. It's very important to verify that your `Configuration.h` settings make this possible before trying to bring up UBL. Most problems bringing up the UBL Bed Leveling system occur when this step has been ignored. Please pay particular attention to your `Z_PROBE_OFFSET_FROM_EXTRUDER` value. Usually it's best to home the Z-Axis in the center of the bed. But wherever you decide to home, the Z value reported on the LCD (or with [`M114`](/docs/gcode/M114.html)) should be _very_ close to 0.0 mm when the nozzle is just touching the bed. Failure to calibrate `Z_PROBE_OFFSET_FROM_EXTRUDER` properly will result in dimensional errors in your printed parts.
+You should be able to successfully print a small object at the center of the bed with bed leveling turned off. It's very important to verify that your `Configuration.h` settings make this possible before trying to bring up UBL. Most problems bringing up the UBL Bed Leveling system occur when this step has been ignored. Please pay particular attention to your `Z_PROBE_OFFSET_FROM_EXTRUDER` value (`NOZZLE_TO_PROBE_OFFSET` in Marilin 2.1). Usually it's best to home the Z-Axis in the center of the bed. But wherever you decide to home, the Z value reported on the LCD (or with [`M114`](/docs/gcode/M114.html)) should be _very_ close to 0.0 mm when the nozzle is just touching the bed. Failure to calibrate `Z_PROBE_OFFSET_FROM_EXTRUDER` properly will result in dimensional errors in your printed parts.
 
 The following command sequences can then be used as a quick-start guide to home, level, and fine-tune the results. These commands are for a 'normal' setup; see the relevant [addenda](#addenda) for concerns and G-code sequences related to setups without an LCD or Z-probe.
 
@@ -34,21 +34,40 @@ M190 S65        ; Set bed temp to 65C (S65) recommended for accuracy when using 
 M104 S210       ; Set nozzle temp to 210C (S210) recommended for accuracy when using nozzle to probe
 
 G28             ; Home XYZ.
+                ; before testing G29 set GRID_MAX_POINTS to 3, else each testrun will take forever.
+                ; you can increase it later when you are fine with the boundaries.
 G29 P1          ; Do automated probing of the bed.
 G29 P2 B T      ; Manual probing of locations. (USUALLY NOT NEEDED!)
-G29 P3 T        ; Repeat until all mesh points are filled in.
+G29 P3 T        ; Repeat until all mesh points are filled in. (interpolates missing points? better check margins, see next)
 
 G29 T           ; View the Z compensation values.
+                ; if some of the grid points are still ".", it cannot reach these points with current settings.
+                ; check PROBING_MARGIN and MESH_MIN
 G29 S0          ; Save UBL mesh points to slot 0.
 G29 F 10.0      ; Set Fade Height for correction at 10.0 mm.
 G29 A           ; Activate the UBL System.
-M500            ; Save settings to EEPROM.
+M500            ; Save settings to EEPROM. Some boards use an EPROM.DAT file on the SD card. 
                 ; WARNING: Causes UBL to be active at power-up, before any G28.
+                ; probably activate 3-Point Probing after home, see below
+```
+
+### Find Z Probe Offset
+```gcode
+                ; BABYSTEP_ZPROBE_OFFSET and BABYSTEPPING must be activated before you can use M290
+M851            ; to show current Z offset
+G28 XYZ         ; home if not done recently.
+G1 Xxx Yxx      ; move hotend to the center of the bed or where you can reach it best.
+G1 Z0           ; move Z to zero, then insert a paper under the hotend.
+M290 Z-0.1      ; incrementally move the hotend down until you just feel the paper meet some resistance.                
+                ; this command is relative. you can monitor the absolute value using M851
+                ; do not use M851 for setting the offset, it sets a new value but nothing changes. why?
+M500            ; Save new M851 to EEPROM.
 ```
 
 ### Mesh Fine-Tuning
 ```gcode
-G26 C P5.0 F3.0 ; Produce mesh validation pattern (G26), continue with closest point (C), prime nozzle by extruding 5mm (P5.0), and set filament diameter 3mm (F3.0)
+G26 C P5.0 F3.0 ; Produce mesh validation pattern (G26), continue with closest point (C), prime nozzle by extruding 5mm (P5.0)
+                ; and set filament diameter 3mm (F3.0), nozzle size (S0.4)
                 ; PLA temperatures are assumed unless you specify, e.g., B105 H225 for ABS Plastic
 G29 P4 T        ; Move nozzle to 'bad' areas and fine tune the values if needed
                 ; Repeat G26 and 'G29 P4 T' commands as needed.
@@ -63,6 +82,14 @@ G29 L0          ; Load UBL mesh values from slot 0.
 G29 J           ; Probe 3 points and tilt the mesh to the plane.
                 ; This can be useful in the starting G-code of your preferred slicer.
 ```
+                         
+See also : 
+- `RESTORE_LEVELING_AFTER_G28`
+- `GRID_MAX_POINTS`
+- ``
+- ``
+- ``
+
 
 ## Scope
 
