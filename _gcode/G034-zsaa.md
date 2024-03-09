@@ -37,4 +37,4 @@ example:
 
 ---
 
-Align multiple Z stepper motors using a bed probe by probing one position per stepper. See [`M422`](/docs/gcode/M422.html) for Z-Stepper automatic alignment parameter selection. `G28` is done beforehand and is implicit. Also see `HOME_AFTER_G34` in `Configuration_adv.h`
+Align multiple Z stepper motors using a bed probe by probing one position per stepper. See [`M422`](/docs/gcode/M422.html) for Z-Stepper automatic alignment parameter selection. Also see `HOME_AFTER_G34` in `Configuration_adv.h`
