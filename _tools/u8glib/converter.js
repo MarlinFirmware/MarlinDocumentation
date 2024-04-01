@@ -437,7 +437,7 @@ var bitmap_converter = function() {
             outstr = outstr.slice(0, -2);
             const size = rledata.length;
             const defname = isext ? 'COMPACT_CUSTOM_BOOTSCREEN_EXT' : 'COMPACT_CUSTOM_BOOTSCREEN';
-            return `\n// Saves ${rawsize - size} bytes\n#define ${defname}\n$uint8_t custom_start_bmp_rle[${size}] PROGMEM = {\n${outstr}\n};\n`;
+            return `\n// Saves ${rawsize - size} bytes\n#define ${defname}\nconst unsigned char custom_start_bmp_rle[${size}] PROGMEM = {\n${outstr}\n};\n`;
           }
 
           cpp += rle_emit(rledata, bitmap_data.length, isext);
