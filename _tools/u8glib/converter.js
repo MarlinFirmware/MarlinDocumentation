@@ -22,6 +22,7 @@
  * By : @jbrazio
  *      @thinkyhead
  *      @shitcreek
+ *      @dust
  * Todo:
  * - Composite status image from logo, nozzle, bed, fan
  * - Slider for threshold (jQuery.ui)
@@ -71,14 +72,16 @@ var bitmap_converter = function() {
       $ascii      = $('#ascii-on'),
       $skinny     = $('#skinny-on'),
       $hotends    = $('#hotends'),
+      $compact    = $('#compact-on'),
       $rj         = $('#rj-on'),
       $bed        = $('#bed-on'),
       $fan        = $('#fan-on'),
       $vers       = $('input[name=marlin-ver]'),
       $type       = $('input[name=bitmap-type]'),
+      $bootop     = $('#boot-sub'),
       $statop     = $('#stat-sub'),
       $pasted     = $('#pasted'),
-      $field_arr  = $('#bin-on, #ascii-on, #skinny-on, #hotends, #rj-on, #bed-on, #fan-on, input[name=marlin-ver], input[name=bitmap-type]'),
+      $field_arr  = $('#bin-on, #ascii-on, #skinny-on, #hotends, #compact-on, #rj-on, #bed-on, #fan-on, input[name=marlin-ver], input[name=bitmap-type]'),
       tobytes     = function(n) { return Math.ceil(n / 8); },
       tohex       = function(b) { return '0x' + ('0' + (b & 0xFF).toString(16)).toUpperCase().slice(-2); },
       tobin       = function(b) { return 'B' + ('0000000' + (b & 0xFF).toString(2)).slice(-8); },
@@ -128,6 +131,76 @@ var bitmap_converter = function() {
         });
         // Load from the given source 'file'
         reader.readAsDataURL(fileref);
+      },
+
+    /**
+      * Bitwise RLE (run length) encoding
+      * Convert data from raw mono bitmap to a bitwise run-length-encoded format.
+      * - The first nybble is the starting bit state. Changing this nybble inverts the bitmap.
+      * - The following bytes provide the runs for alternating on/off bits.
+      *   - A value of 0-14 encodes a run of 1-15.
+      *   - A value of 16 indicates a run of 16-270 calculated using the next two bytes.
+      */
+      bitwise_rle_encode = function(data) {
+        function get_bit(data, n) {
+          return (data[Math.floor(n / 8)] & (0x80 >> (n % 8))) ? 1 : 0;
+        }
+
+        function try_encode(data, isext) {
+          const bitslen = data.length * 8;
+          let bitstate = get_bit(data, 0);
+          const rledata = [bitstate];
+          const bigrun = isext ? 256 : 272;
+          let medrun = false;
+
+          let i = 0;
+          let runlen = -1;
+          while (i <= bitslen) {
+            const b = i < bitslen ? get_bit(data, i) : null;
+            runlen += 1;
+            if (bitstate !== b || i === bitslen) {
+              if (runlen >= bigrun) {
+                isext = true;
+                if (medrun) return [
+                  [], isext
+                ];
+                const rem = runlen & 0xFF;
+                rledata.push(15, 15, Math.floor(rem / 16), rem % 16);
+              } else if (runlen >= 16) {
+                rledata.push(15, Math.floor(runlen / 16) - 1, runlen % 16);
+                if (runlen >= 256) medrun = true;
+              } else {
+                rledata.push(runlen - 1);
+              }
+              bitstate ^= 1;
+              runlen = 0;
+            }
+            i += 1;
+          }
+
+          const encoded = [];
+          let ri = 0;
+          const rlen = rledata.length;
+          while (ri < rlen) {
+            let v = rledata[ri] << 4;
+            if (ri < rlen - 1) v |= rledata[ri + 1];
+            encoded.push(v);
+            ri += 2;
+          }
+
+          return [encoded, isext];
+        }
+
+        // Try to encode with the original isext flag
+        //const warn = data.length > 300000 ? "This may take a while" : "";
+        //console.log("Compressing image data...", warn);
+        let isext = false;
+        let encoded = [];
+        [encoded, isext] = try_encode(data, isext);
+        if (encoded.length === 0) {
+          [encoded, isext] = try_encode(data, true);
+        }
+        return [encoded, isext];
       },
 
       /**
@@ -195,6 +268,8 @@ var bitmap_converter = function() {
 
             is_asc = $ascii[0].checked,                       // Include ASCII version of the bitmap?
             is_thin = $skinny[0].checked,                     // A skinny ASCII output with blocks.
+
+            is_compact = $compact[0].checked && vers == 2 && type == 'boot',    // Display compact data for marlin 2.0 only with bootscreen
 
             is_stat = type == 'stat',                         // "Status" has extra options
             is_lpad = is_stat && !$rj[0].checked,             // Right justify?
@@ -311,6 +386,8 @@ var bitmap_converter = function() {
 
         cpp += '\nconst unsigned char ' + name + '[] PROGMEM = {\n';
 
+        const bitmap_data = [];                     // keep a copy of the bitmapdata
+
         /**
          * Print the data as hex or binary,
          * appending ASCII art if selected.
@@ -333,6 +410,7 @@ var bitmap_converter = function() {
               xx++;
             }
             // Append the byte and optional comma or space
+            bitmap_data.push(byte);                // populate the bitmap data
             cpp += tobase(byte) + (y != ih - 1 || x < lastx ? ',' : is_asc ? ' ' : '');
           }
 
@@ -341,6 +419,29 @@ var bitmap_converter = function() {
         }
 
         cpp += '};\n';
+
+        if (is_compact) {
+          const [rledata, isext] = bitwise_rle_encode(bitmap_data);
+
+          function rle_emit(rledata, rawsize, isext) {
+            let outstr = '';
+            const rows = rledata.reduce((acc, val, i) => {
+                if (i % 16 === 0) acc.push([]);
+                acc[acc.length - 1].push(`0x${val.toString(16).padStart(2, '0').toUpperCase()}`);
+                return acc;
+            }, []);
+            for (let i = 0; i < rows.length; i++) {
+                outstr += `  ${rows[i].join(', ')},\n`;
+            }
+
+            outstr = outstr.slice(0, -2);
+            const size = rledata.length;
+            const defname = isext ? 'COMPACT_CUSTOM_BOOTSCREEN_EXT' : 'COMPACT_CUSTOM_BOOTSCREEN';
+            return `\n// Saves ${rawsize - size} bytes\n#define ${defname}\n$uint8_t custom_start_bmp_rle[${size}] PROGMEM = {\n${outstr}\n};\n`;
+          }
+
+          cpp += rle_emit(rledata, bitmap_data.length, isext);
+        }
 
         /*
         if (is_stat)
@@ -391,8 +492,14 @@ var bitmap_converter = function() {
         // Restore cosmetic 'ASCII Art' behavior
         $ascii.change(function(){ $skinny.prop('disabled', !this.checked); return false; });
 
+        // Remove 'Compact' option for Marlin 1.x
+        $vers.change(function() {
+          if ($(this).val() == '1') $bootop.hide(); else $bootop.show();
+        });
+
         // Restore cosmetic 'Status' behavior
         $type.change(function() {
+          if ($(this).val() == 'boot' && $vers.filter(':checked').val() == 2 ) $bootop.show(); else $bootop.hide();
           if ($(this).val() == 'stat') $statop.show(); else $statop.hide();
         });
       },
