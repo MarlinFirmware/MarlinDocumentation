@@ -20,13 +20,15 @@ _A future version of Marlin will do a better job of preserving settings across u
 
 ![EEPROM](/assets/images/features/EEPROM.png)
 
-By default, EEPROM is disabled. This is to avoid the "unintended consequence" of local developers making changes to the values in Source Code and then having the printer boot up using the EEPROM values instead. But note that if you have EEPROM enabled, you can load it with "factory defaults" (coming from the Source Code) using [`M502`](/docs/gcode/M502.html) followed by [`M500`](/docs/gcode/M500.html).
+EEPROM can be an expensive feature so it is disabled by default. But if you can afford to enable EEPROM it's extremely valuable and highly recommended. With EEPROM enabled, you can reset the EEPROM contents to "factory defaults" (as defined in `Configuration.h` and `Configuration_adv.h`) using [`M502`](/docs/gcode/M502.html) followed by [`M500`](/docs/gcode/M500.html). (To use the defaults for just one session skip the `M500`.)
 
 # EEPROM G-codes
 
-[`M500`](/docs/gcode/M500.html) - store current settings in EEPROM for the next startup or [`M501`](/docs/gcode/M501.html).
-[`M501`](/docs/gcode/M501.html) - read all parameters from EEPROM, or undo changes.
-[`M502`](/docs/gcode/M502.html) - Reset current settings to defaults, as set in Configurations.h - follow with [`M500`](/docs/gcode/M500.html) to reset the EEPROM.
-[`M503`](/docs/gcode/M503.html) - Print the current settings – ''Not the settings stored in EEPROM.''
+|G-code|Description|
+|------|-----------|
+|[`M500`](/docs/gcode/M500.html)|Store current settings to EEPROM (Loaded on the next reboot or [`M501`](/docs/gcode/M501.html).)|
+|[`M501`](/docs/gcode/M501.html)|Read all parameters from EEPROM (Undo changes).|
+|[`M502`](/docs/gcode/M502.html)|Restore current settings to defaults (as defined in `Configuration.h` and `Configuration_adv.h`)<br/>Follow with [`M500`](/docs/gcode/M500.html) to reset the EEPROM.|
+|[`M503`](/docs/gcode/M503.html)|Print the current settings – _**Not the settings stored in EEPROM.**_|
 
-EEPROM is also accessible through the [LCD menu](/docs/features/lcd_menu.html).
+The EEPROM is also accessible through the [MarlinUI menu](/docs/features/lcd_menu.html) and most display/controllers.
