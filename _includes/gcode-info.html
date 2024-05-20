@@ -219,6 +219,9 @@
   <div class="col-lg-12 row examples">
     <h3>Example{% if ex[1] %}s{% endif %}</h3>
     {%- for item in ex -%}
+    {% if item.since %}
+      <span class="label label-success"><span data-toggle="tooltip" data-placement="bottom" title="{% if item.until %}Availability{% else %}Available since{% endif %}"><i class="fa fa-code" aria-hidden="true"></i> {{ item.since }}</span></span>
+    {% endif %}
       {%- if item.pre -%}
         {%- for line in item.pre -%}{{ line | markdownify }}{%- endfor -%}
       {%- endif -%}
