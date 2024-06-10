@@ -295,7 +295,7 @@ settings:
     default: 0
 
 - name: TEMP_SENSOR_SOC
-  since: 2.2.0
+  since: 2.1.3
   type: int
   default: 0
   brief: Thermistor or thermocouple ID for the MCU.
@@ -339,7 +339,7 @@ settings:
 
 
 - name: BED_ANNEALING_GCODE
-  since: 2.2.0
+  since: 2.1.3
   brief: Enable gradual bed cooling via [`M190 R<temp> T<seconds>`](/docs/gcode/M190.html).
 
 ---
