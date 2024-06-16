@@ -593,6 +593,10 @@ groups:
         - 1024×600
         - 7"
         - Rotary encoder click wheel
+      images:
+        - alt: BIQU_BX_TFT70
+          front: BIQU_BX_TFT70
+          back: BIQU_BX_TFT70
 
     - name: BTT_TFT35_SPI_V1_0
       description: 480×320, 3.5", SPI Stock Display with Rotary Encoder from BIQU B1 SE Series
