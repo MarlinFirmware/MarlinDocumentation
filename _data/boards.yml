@@ -851,8 +851,8 @@
     brief: FYSETC Spider King407 (STM32F407ZG)
   - name: MKS_SKIPR_V1
     brief: MKS SKIPR v1.0 all-in-one board (STM32F407VE)
-  - name: TRONXY_V10
-    brief: TRONXY V10 (STM32F446ZE)
+  - name: TRONXY_CXY_446_V10
+    brief: TRONXY CXY-446-V10-220413/CXY-V6-191121 (STM32F446ZE)
   - name: CREALITY_F401RE
     brief: Creality CR4NS200141C13 (STM32F401RE) as found in the Ender-5 S1
     since: 2.1.3
