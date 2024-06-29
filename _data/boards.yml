@@ -199,6 +199,9 @@
   - name: KODAMA_BARDO
     brief: Kodama Bardo V1.x (as found in the Kodama Trinus)
     since: 2.1.3
+  - name: DAGOMA_D6
+    brief: Dagoma D6 (as found in the Dagoma DiscoUltimate V2 TMC)
+    since: 2.1.3
 
 #
 # RAMBo and derivatives
