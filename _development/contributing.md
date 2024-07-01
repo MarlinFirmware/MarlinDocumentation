@@ -24,7 +24,6 @@ Your sponsorship accelerates development, testing, and advancement of the most a
 - <span class="fa-brands fa-paypal"></span> [PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=KMTV4WEYBEMWU&source=url)
 - ☕️ [Buy Me a Coffee!](https://buymeacoff.ee/thinkyhead)
 - $$ [GoFundMe](https://www.gofundme.com/marlin-firmware)
-- 💸 [Flattr](https://www.flattr.com/@thinkyhead)
 
 ### Report bugs
 - Use the community links below for help with configuration and troubleshooting.
