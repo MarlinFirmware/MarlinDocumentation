@@ -116,8 +116,11 @@
     brief: MKS BASE 1.0 with Heroic HR4982 stepper drivers
     since: 1.1.9
   - name: MKS_GEN_13
-    brief: MKS GEN v1.3 or 1.4. Originally supported as `BOARD_MKS_13` since `1.1.0-RC6`.
+    brief: MKS GEN v1.3 or 1.4.
     since: 1.1.9
+    old:
+    - name: MKS_13
+      since: 1.1.0-RC6
   - name: MKS_GEN_L
     brief: MKS GEN L
     since: 1.1.7
@@ -200,8 +203,11 @@
     brief: Creality CR10S, CR20, and CR-X
     since: 2.0.0
   - name: DAGOMA_F5
-    brief: Dagoma F5. Originally supported as `BOARD_RAMPS_DAGOMA` since `2.0.0`.
+    brief: Dagoma F5.
     since: 2.0.8
+    old:
+    - name: RAMPS_DAGOMA
+      since: 2.0.0
   - name: FYSETC_F6_13
     brief: FYSETC F6 1.3
     since: 2.0.0
@@ -601,14 +607,23 @@
     brief: GMARSH X6, revision 1 prototype
     since: 2.0.0
   - name: BTT_SKR_V1_1
-    brief: BigTreeTech SKR v1.1. Originally supported as `BOARD_BIGTREE_SKR_V1_1` since `2.0.0`.
+    brief: BigTreeTech SKR v1.1.
     since: 2.0.4
+    old:
+    - name: BIGTREE_SKR_V1_1
+      since: 2.0.0
   - name: BTT_SKR_V1_3
-    brief: BigTreeTech SKR v1.3. Originally supported as `BOARD_BIGTREE_SKR_V1_3` since `2.0.0`.
+    brief: BigTreeTech SKR v1.3.
     since: 2.0.4
+    old:
+    - name: BIGTREE_SKR_V1_3
+      since: 2.0.0
   - name: BTT_SKR_V1_4
-    brief: BigTreeTech SKR v1.4. Originally supported as `BOARD_BIGTREE_SKR_V1_4` since `2.0.1`.
+    brief: BigTreeTech SKR v1.4.
     since: 2.0.4
+    old:
+    - name: BIGTREE_SKR_V1_4
+      since: 2.0.1
   - name: EMOTRONIC
     brief: eMotion-Tech eMotronic
     since: 2.0.9.5/2.1.1
@@ -645,8 +660,11 @@
     brief: TH3D EZBoard v1.0
     since: 2.0.0
   - name: BTT_SKR_V1_4_TURBO
-    brief: BigTreeTech SKR v1.4 TURBO. Originally supported as `BOARD_BIGTREE_SKR_V1_4_TURBO` since `2.0.2`.
+    brief: BigTreeTech SKR v1.4 TURBO.
     since: 2.0.4
+    old:
+    - name: BIGTREE_SKR_V1_4_TURBO
+      since: 2.0.2
   - name: MKS_SGEN_L_V2
     brief: MKS SGEN_L V2
     since: 2.0.7
@@ -783,8 +801,11 @@
     brief: BigTreeTech Manta E3 EZ V1.0 (STM32G0B1RE)
     since: 2.1.2.1
   - name: BTT_MANTA_M4P_V2_1
-    brief: BigTreeTech Manta M4P V2.1 (STM32G0B0RE). Originally supported as `BOARD_BTT_MANTA_M4P_V1_0` since `2.1.2.1`.
+    brief: BigTreeTech Manta M4P V2.1 (STM32G0B0RE).
     since: 2.1.2.2
+    old:
+    - name: BTT_MANTA_M4P_V1_0
+      since: 2.1.2.1
   - name: BTT_MANTA_M5P_V1_0
     brief: BigTreeTech Manta M5P V1.0 (STM32G0B1RE)
     since: 2.1.2.1
@@ -872,8 +893,11 @@
     brief: MKS Robin E3P (STM32F103VE)
     since: 2.0.7
   - name: BTT_SKR_MINI_V1_1
-    brief: BigTreeTech SKR Mini v1.1 (STM32F103RC). Originally supported as `BOARD_BIGTREE_SKR_MINI_V1_1` since `2.0.0`.
+    brief: BigTreeTech SKR Mini v1.1 (STM32F103RC).
     since: 2.0.4
+    old:
+    - name: BIGTREE_SKR_MINI_V1_1
+      since: 2.0.0
   - name: BTT_SKR_MINI_E3_V1_0
     brief: BigTreeTech SKR Mini E3 (STM32F103RC)
     since: 2.0.0
@@ -887,8 +911,11 @@
     brief: BigTreeTech SKR Mini MZ V1.0 (STM32F103RC)
     since: 2.0.8
   - name: BTT_SKR_E3_DIP
-    brief: BigTreeTech SKR E3 DIP V1.0 (STM32F103RC / STM32F103RE). Originally supported as `BOARD_BIGTREE_SKR_E3_DIP` since `2.0.0`.
+    brief: BigTreeTech SKR E3 DIP V1.0 (STM32F103RC / STM32F103RE).
     since: 2.0.4
+    old:
+    - name: BIGTREE_SKR_E3_DIP
+      since: 2.0.0
   - name: BTT_SKR_CR6
     brief: BigTreeTech SKR CR6 v1.0 (STM32F103RE)
     since: 2.0.8
@@ -1047,14 +1074,20 @@
     brief: Arm'ed STM32F4-based controller
     since: 2.0.0
   - name: RUMBA32_V1_0
-    brief: RUMBA32 STM32F446VE based controller from Aus3D. Originally supported as `BOARD_RUMBA32` since `2.0.0`.
+    brief: RUMBA32 STM32F446VE based controller from Aus3D.
     since: 2.0.6
+    old:
+    - name: RUMBA32
+      since: 2.0.0
   - name: RUMBA32_V1_1
     brief: RUMBA32 STM32F446VE based controller from Aus3D
     since: 2.0.6
   - name: RUMBA32_MKS
-    brief: RUMBA32 STM32F446VE based controller from Makerbase. Originally supported as `BOARD_RUMBA32` since `2.0.0`.
+    brief: RUMBA32 STM32F446VE based controller from Makerbase.
     since: 2.0.4
+    old:
+    - name: RUMBA32
+      since: 2.0.0
   - name: RUMBA32_BTT
     brief: RUMBA32 STM32F446VE based controller from BIGTREETECH
     since: 2.0.9.2
@@ -1068,23 +1101,35 @@
     brief: BigTreeTech SKR Mini E3 V3.0.1 (STM32F401RC)
     since: 2.1.2
   - name: BTT_SKR_PRO_V1_1
-    brief: BigTreeTech SKR Pro v1.1 (STM32F407ZG). Originally supported as `BOARD_BIGTREE_SKR_PRO_V1_1` since `2.0.0`.
+    brief: BigTreeTech SKR Pro v1.1 (STM32F407ZG).
     since: 2.0.4
+    old:
+    - name: BIGTREE_SKR_PRO_V1_1
+      since: 2.0.0
   - name: BTT_SKR_PRO_V1_2
     brief: BigTreeTech SKR Pro v1.2 (STM32F407ZG)
     since: 2.0.6
   - name: BTT_BTT002_V1_0
-    brief: BigTreeTech BTT002 v1.0 (STM32F407VG). Originally supported as `BOARD_BIGTREE_BTT002_V1_0` since `2.0.0`.
+    brief: BigTreeTech BTT002 v1.0 (STM32F407VG).
     since: 2.0.4
+    old:
+    - name: BIGTREE_BTT002_V1_0
+      since: 2.0.0
   - name: BTT_E3_RRF
     brief: BigTreeTech E3 RRF (STM32F407VG)
     since: 2.0.8
   - name: BTT_SKR_V2_0_REV_A
-    brief: BigTreeTech SKR v2.0 Rev A (STM32F407VG). Originally supported as `BOARD_BTT_SKR_V2_0` since `2.0.8`.
+    brief: BigTreeTech SKR v2.0 Rev A (STM32F407VG).
     since: 2.0.8.1
+    old:
+    - name: BTT_SKR_V2_0
+      since: 2.0.8
   - name: BTT_SKR_V2_0_REV_B
-    brief: BigTreeTech SKR v2.0 Rev B (STM32F407VG/STM32F429VG). Originally supported as `BOARD_BTT_SKR_V2_0` since `2.0.8`.
+    brief: BigTreeTech SKR v2.0 Rev B (STM32F407VG/STM32F429VG).
     since: 2.0.8.1
+    old:
+    - name: BTT_SKR_V2_0
+      since: 2.0.8
   - name: BTT_GTR_V1_0
     brief: BigTreeTech GTR v1.0 (STM32F407IGT)
     since: 2.0.4
@@ -1131,11 +1176,17 @@
     brief: MKS Robin Nano V3.1 (STM32F407VE)
     since: 2.0.9.4
   - name: MKS_MONSTER8_V1
-    brief: MKS Monster8 V1 (STM32F407VE). Originally supported as `BOARD_MKS_MONSTER8` since `2.0.9.2`.
+    brief: MKS Monster8 V1 (STM32F407VE).
     since: 2.0.9.5/2.1.1
+    old:
+    - name: MKS_MONSTER8
+      since: 2.0.9.2
   - name: MKS_MONSTER8_V2
-    brief: MKS Monster8 V2 (STM32F407VE). Originally supported as `BOARD_MKS_MONSTER8` since `2.0.9.2`.
+    brief: MKS Monster8 V2 (STM32F407VE).
     since: 2.0.9.5/2.1.1
+    old:
+    - name: MKS_MONSTER8
+      since: 2.0.9.2
   - name: ANET_ET4
     brief: ANET ET4 V1.x (STM32F407VG)
     since: 2.0.8
@@ -1146,8 +1197,11 @@
     brief: FYSETC Cheetah V2.0 (STM32F401RC)
     since: 2.0.8
   - name: TH3D_EZBOARD_V2
-    brief: TH3D EZBoard v2.0 (STM32F405RG). Originally supported as `BOARD_TH3D_EZBOARD_LITE_V2` since `2.0.9.2`.
+    brief: TH3D EZBoard v2.0 (STM32F405RG).
     since: 2.0.9.3
+    old:
+    - name: TH3D_EZBOARD_LITE_V2
+      since: 2.0.9.2
   - name: OPULO_LUMEN_REV3
     brief: Opulo Lumen PnP Controller REV3 (STM32F407VE / STM32F407VG)
     since: 2.0.9.5/2.1.1
@@ -1179,9 +1233,11 @@
     brief: MKS SKIPR v1.0 all-in-one board (STM32F407VE)
     since: 2.1.2
   - name: TRONXY_CXY_446_V10
-    oldname: TRONXY_V10
-    brief: TRONXY CXY-446-V10-220413/CXY-V6-191121 (STM32F446ZE). `BOARD_TRONXY_V10` prior to `2.1.3`.
+    brief: TRONXY CXY-446-V10-220413/CXY-V6-191121 (STM32F446ZE)
     since: 2.1.3
+    old:
+    - name: TRONXY_V10
+      since: 2.1.2
   - name: CREALITY_F401RE
     brief: Creality CR4NS200141C13 (STM32F401RE) as found in the Ender-5 S1
     since: 2.1.3
@@ -1246,11 +1302,17 @@
     brief: ST NUCLEO-F767ZI Dev Board
     since: 2.0.7.2
   - name: BTT_SKR_SE_BX_V2
-    brief: BigTreeTech SKR SE BX V2.0 (STM32H743II). Originally supported as `BOARD_BTT_SKR_SE_BX` since `2.0.8`.
+    brief: BigTreeTech SKR SE BX V2.0 (STM32H743II).
     since: 2.0.9.5/2.1.1
+    old:
+    - name: BTT_SKR_SE_BX
+      since: 2.0.8
   - name: BTT_SKR_SE_BX_V3
-    brief: BigTreeTech SKR SE BX V3.0 (STM32H743II). Originally supported as `BOARD_BTT_SKR_SE_BX` since `2.0.8`.
+    brief: BigTreeTech SKR SE BX V3.0 (STM32H743II).
     since: 2.0.9.5/2.1.1
+    old:
+    - name: BTT_SKR_SE_BX
+      since: 2.0.8
   - name: BTT_SKR_V3_0
     brief: BigTreeTech SKR V3.0 (STM32H743VI / STM32H723VG)
     since: 2.0.9.4
@@ -1380,5 +1442,8 @@
     It can simulate a Character-based LCD, standard Graphical LCD, or a TFT Color display.
   boards:
   - name: SIMULATED
-    brief: Simulated cartesian printer built with Dear ImGui, SDL, and OpenGL. Originally supported as `BOARD_LINUX_RAMPS` since `2.0.0`.
+    brief: Simulated cartesian printer built with Dear ImGui, SDL, and OpenGL.
     since: 2.1.2.1
+    old:
+    - name: LINUX_RAMPS
+      since: 2.0.0
