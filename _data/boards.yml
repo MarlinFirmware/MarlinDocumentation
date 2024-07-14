@@ -199,6 +199,15 @@
   - name: KODAMA_BARDO
     brief: Kodama Bardo V1.x (as found in the Kodama Trinus)
     since: 2.1.3
+  - name: DAGOMA_D6
+    brief: Dagoma D6 (as found in the Dagoma DiscoUltimate V2 TMC)
+    since: 2.1.3
+  - name: XTLW_MFF_V1
+    brief: XTLW MFF V1.0
+    since: 2.1.3
+  - name: XTLW_MFF_V2
+    brief: XTLW MFF V2.0
+    since: 2.1.3
 
 #
 # RAMBo and derivatives
@@ -475,6 +484,8 @@
     since: 2.0.7
   - name: FLY_CDY
     brief: FLYmaker FLY CDY
+  - name: XTLW_CLIMBER_8TH_LPC
+    brief: XTLW_CLIMBER_8TH_LPC
 
 #
 # SAM3X8E ARM Cortex-M3
@@ -695,11 +706,11 @@
   - name: CREALITY_V521
     brief: Creality v5.2.1 (STM32F103VE) as found in the SV04
   - name: CREALITY_V24S1
-    brief: Creality v2.4.S1 (STM32F103RC / STM32F103RE) v101 as found in the Ender-7
+    brief: Creality v2.4.S1 (STM32F103RC / STM32F103RE) CR-FDM-v2.4.S1_v101 as found in the Ender-7
   - name: CREALITY_V24S1_301
-    brief: Creality v2.4.S1_301 (STM32F103RC / STM32F103RE) v301 as found in the Ender-3 S1
+    brief: Creality v2.4.S1_301 (STM32F103RC / STM32F103RE) CR-FDM-v24S1_301 as found in the Ender-3 S1
   - name: CREALITY_V25S1
-    brief: Creality v2.5.S1 (STM32F103RE) as found in the CR-10 Smart Pro
+    brief: Creality v2.5.S1 (STM32F103RE) CR-FDM-v2.5.S1_100 as found in the CR-10 Smart Pro
   - name: TRIGORILLA_PRO
     brief: Trigorilla Pro (STM32F103ZE)
   - name: FLY_MINI
@@ -851,8 +862,9 @@
     brief: FYSETC Spider King407 (STM32F407ZG)
   - name: MKS_SKIPR_V1
     brief: MKS SKIPR v1.0 all-in-one board (STM32F407VE)
-  - name: TRONXY_V10
-    brief: TRONXY V10 (STM32F446ZE)
+  - name: TRONXY_CXY_446_V10
+    brief: TRONXY CXY-446-V10-220413/CXY-V6-191121 (STM32F446ZE)
+    since: 2.1.3
   - name: CREALITY_F401RE
     brief: Creality CR4NS200141C13 (STM32F401RE) as found in the Ender-5 S1
     since: 2.1.3
@@ -870,6 +882,20 @@
     since: 2.1.3
   - name: BLACKBEEZMINI_V1
     brief: BlackBeezMini V1 (STM32F401CCU6)
+    since: 2.1.3
+  - name: XTLW_CLIMBER_8TH
+    brief: XTLW Climber-8th (STM32F407VGT6)
+    since: 2.1.3
+
+#
+# Other ARM Cortex-M4
+#
+
+- group: Other ARM Cortex-M4
+  long:
+  boards:
+  - name: CREALITY_CR4NS
+    brief: Creality CR4NS200320C13 (GD32F303RET6) as found in the Ender-3 V3 SE
     since: 2.1.3
 
 #
@@ -901,7 +927,7 @@
   - name: BTT_OCTOPUS_PRO_V1_0_1
     brief: BigTreeTech Octopus Pro v1.0.1 (STM32H723ZE)
     since: 2.1.3
-  - name: BOARD_BTT_OCTOPUS_PRO_V1_0_1
+  - name: BTT_OCTOPUS_PRO_V1_0_1
     brief: BigTreeTech Octopus Pro v1.0.1 (STM32H723ZE)
     since: 2.1.3
   - name: BTT_OCTOPUS_PRO_V1_1
