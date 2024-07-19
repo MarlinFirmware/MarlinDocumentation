@@ -137,7 +137,6 @@ groups:
       protocol: LCM1602
 
     - name: LCD_I2C_PANELOLU2
-      description: PANELOLU2 LCD with status LEDs, separate encoder and click inputs.
       description: |
         - 20x4 character LCD panel
         - SD Card reader
