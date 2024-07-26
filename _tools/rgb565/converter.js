@@ -517,14 +517,14 @@ var bitmap_converter = () => {
 
       // If the browser supports "items" then use it
       if (items) {
-        $.each(items, () => {
-          switch (this.kind) {
+        $.each(items, (i,v) => {
+          switch (v.kind) {
             case 'string':
               found = 'text';
               return false;
             case 'file':
               found = 'image';
-              data = this;
+              data = v;
               return false;
           }
         });
@@ -595,14 +595,14 @@ var bitmap_converter = () => {
       return false;
     })
     .on('focus click', (e) => {
-      this.select();
+      $(e.target).select();
       return false;
     });
 
   // Paste old C++ code to see the image and reformat
   $pasted
-    .focus(() => {
-      var $this = $(this);
+    .focus((e) => {
+      var $this = $(e.target);
       $this
         .val('')
         .css('color', '#F80')
@@ -614,13 +614,8 @@ var bitmap_converter = () => {
           return false;
         });
     })
-    .keyup(() => {
-      $(this).val('');
-      return false;
-    })
-    .keydown(() => {
-      $(this).val('');
-    });
+    .keyup((e) => { $(e.target).val(''); return false; })
+    .keydown((e) => { $(e.target).val(''); });
 };
 
 head.ready(bitmap_converter);

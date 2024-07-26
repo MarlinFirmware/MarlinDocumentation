@@ -348,7 +348,7 @@ var bitmap_converter = () => {
           // Render the modified Preview Image
           tctx.putImageData(tref, 0, 0);
           var $vimg = $('<img/>').width(iw).height(ih)
-                        .one('load', () => { render_image_into_canvases($(this), true, false); })
+                        .one('load', (e) => { render_image_into_canvases($(e.target), true, false); })
                         .attr('src', $tcnv[0].toDataURL('image/png'));
         }
 
@@ -505,7 +505,7 @@ var bitmap_converter = () => {
         // Restore cosmetic 'Status' behavior
         $type.change(() => {
           bootop_update();
-          if ($(this).val() == 'stat') $statop.show(); else $statop.hide();
+          if ($type.filter(':checked').val() == 'stat') $statop.show(); else $statop.hide();
         });
       },
 
@@ -622,14 +622,14 @@ var bitmap_converter = () => {
 
         // If the browser supports "items" then use it
         if (items) {
-          $.each(items, () => {
-            switch (this.kind) {
+          $.each(items, (n,v) => {
+            switch (v.kind) {
               case 'string':
                 found = 'text';
                 return false;
               case 'file':
                 found = 'image';
-                data = this;
+                data = v;
                 return false;
             }
           });
@@ -644,8 +644,8 @@ var bitmap_converter = () => {
               case 'image/png':
                 found = 'webkit';
                 //data = clipboardData.getData(type);
-                // console.log('Got ' + (typeof data) + ' for ' + type + ' with length ' + data.length);
-                // $('<img/>').attr('src', 'blob:'+clipboardData.types[i-1]);
+                //console.log('Got ' + (typeof data) + ' for ' + type + ' with length ' + data.length);
+                //$('<img/>').attr('src', 'blob:'+clipboardData.types[i-1]);
                 return false;
             }
           });
@@ -701,12 +701,12 @@ var bitmap_converter = () => {
   // If the output is clicked, select all
   $output
     .on('mousedown mouseup', () => { return false; })
-    .on('focus click', (e) => { this.select(); return false; });
+    .on('focus click', (e) => { $(e.target).select(); return false; });
 
   // Paste old C++ code to see the image and reformat
   $pasted
-    .focus(() => {
-      var $this = $(this);
+    .focus((e) => {
+      var $this = $(e.target);
       $this
         .val('')
         .css('color', '#F80')
@@ -718,8 +718,8 @@ var bitmap_converter = () => {
           return false;
         });
     })
-    .keyup(() => { $(this).val(''); return false; })
-    .keydown(() => { $(this).val(''); });
+    .keyup((e) => { $(e.target).val(''); return false; })
+    .keydown((e) => { $(e.target).val(''); });
 };
 
 head.ready(bitmap_converter);

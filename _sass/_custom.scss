@@ -573,8 +573,8 @@ div.alert-danger {
 
 #bitmap-converter {
   label:hover { color: var(--color-bitmap-label-hover); }
-  #preview-lg { border-color: var(--color-bitmap-preview-lg); }
-  #preview-sm { border-color: var(--color-bitmap-preview-sm); }
+  #preview-lg { border-color: var(--color-bitmap-preview-lg); background: var(--color-bitmap-preview-lg); }
+  #preview-sm { border-color: var(--color-bitmap-preview-sm); background: var(--color-bitmap-preview-sm); }
   input#pasted { color: var(--color-bitmap-input); }
   textarea#output {
     border-color: var(--color-bitmap-output-border);
