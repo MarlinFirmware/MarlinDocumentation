@@ -26,10 +26,10 @@
  *    : @shitcreek
  */
 
-var bitmap_converter = function() {
+var bitmap_converter = () => {
 
   // Extend jQuery.event.fix for copy/paste to fix clipboardData
-  $.event.fix = (function(originalFix) {
+  $.event.fix = ((originalFix) => {
     return function(e) {
       e = originalFix.apply(this, arguments);
       if (e.type.indexOf('copy') === 0 || e.type.indexOf('paste') === 0) {
@@ -56,20 +56,18 @@ var bitmap_converter = function() {
     $output = $('#output'),
     $pasted = $('#pasted'),
     $field_arr = $('#rle16-on'),
-    tobytes = function(n) {
-      return Math.ceil(n / 8);
-    },
-    tohex = function(b) {
+    tobytes = (n) => { return Math.ceil(n / 8); },
+    tohex = (b) => {
       return '0x' + ('0000' + (b & 0xFFFF).toString(16)).toUpperCase().slice(-4);
     },
     data_source,
 
-    error_message = function(msg) {
+    error_message = (msg) => {
       $err.text(msg).show();
       console.log(msg);
     },
 
-    restore_pasted_cpp_field = function() {
+    restore_pasted_cpp_field = () => {
       $pasted.val(paste_message).css('color', '');
     },
 
@@ -77,7 +75,7 @@ var bitmap_converter = function() {
      * Set the image src to some new data.
      * On $img.load it will call generate_cpp.
      */
-    load_url_into_image = function(data_url, w, h) {
+    load_url_into_image = (data_url, w, h) => {
       $img = $('<img/>');
 
       if (w) $img.width(w);
@@ -86,7 +84,7 @@ var bitmap_converter = function() {
       $img.one('load', generate_cpp) // Generate when the image loads
         .attr('src', data_url); // Start loading image data
 
-      $field_arr.change(function(e) {
+      $field_arr.change((e) => {
         generate_cpp(e, true);
       });
     },
@@ -98,9 +96,9 @@ var bitmap_converter = function() {
      * - File input field, passing the first selected file.
      * - Image pasted directly into a textfield.
      */
-    load_file_into_image = function(fileref) {
+    load_file_into_image = (fileref) => {
       var reader = new FileReader();
-      $(reader).one('load', function() {
+      $(reader).one('load', () => {
         load_url_into_image(this.result);
       });
       // Load from the given source 'file'
@@ -110,7 +108,7 @@ var bitmap_converter = function() {
     /**
      * Draw the given image into one or both canvases.
      */
-    render_image_into_canvases = function($i, notlarge) {
+    render_image_into_canvases = ($i, notlarge) => {
       var img = $i[0],
         iw = img.width,
         ih = img.height;
@@ -138,7 +136,7 @@ var bitmap_converter = function() {
      *   - Otherwise it repeats the following word N + 1 times.
      * - Each RGB565 word is stored in MSB / LSB order.
      */
-    rle_encode = function(data) {
+    rle_encode = (data) => {
       var distinct, i, nr, rledata, rsize, v;
       rledata = [];
       distinct = [];
@@ -176,7 +174,7 @@ var bitmap_converter = function() {
       return rledata;
     },
 
-    rle_decode = function(rle_data) {
+    rle_decode = (rle_data) => {
       var decoded = [];
       var color = 0;
       var done = false;
@@ -203,7 +201,7 @@ var bitmap_converter = function() {
       return decoded;
     },
 
-    splitRGB = function(raw565_data) {
+    splitRGB = (raw565_data) => {
 
       var arrayLength = raw565_data.length;
       var bitmap = [];
@@ -228,7 +226,7 @@ var bitmap_converter = function() {
      * - Convert the image data into C text.
      * - Display the image and converted text.
      */
-    generate_cpp = function(e, no_render) {
+    generate_cpp = (e, no_render) => {
 
       // Get the image width and height in pixels.
       var iw = $img[0].width,
@@ -343,7 +341,8 @@ var bitmap_converter = function() {
               size += 2;
             }
             i += count;
-          } else {
+          }
+          else {
             outstr = append_byte(outstr, rval);
             outstr = append_byte(outstr, rledata[i] >> 8);
             outstr = append_byte(outstr, rledata[i] & 255);
@@ -374,7 +373,7 @@ var bitmap_converter = function() {
     /**
      * Get ready to evaluate incoming data
      */
-    prepare_for_new_image = function() {
+    prepare_for_new_image = () => {
       $err.hide();
 
       /**
@@ -393,7 +392,7 @@ var bitmap_converter = function() {
      * Finds the correct line-length before scanning for data.
      * Does well screening out most extraneous text.
      */
-    process_pasted_cpp = function(cpp) {
+    process_pasted_cpp = (cpp) => {
 
       prepare_for_new_image();
       restore_pasted_cpp_field();
@@ -403,9 +402,9 @@ var bitmap_converter = function() {
         mostlens = [],
         contains_rle16 = false,
         pasted_tablename;
-      $.each(cpp.split('\n'), function(i, s) {
+      $.each(cpp.split('\n'), (i, s) => {
         var pw = 0;
-        $.each(s.replace(/[ \t]/g, '').split(','), function(i, s) {
+        $.each(s.replace(/[ \t]/g, '').split(','), (i, s) => {
           if (s.match("_rle16")) {
             contains_rle16 = true;
             pasted_tablename = s.slice(s.search("uint8_t") + 7, s.search("\\["));
@@ -417,13 +416,12 @@ var bitmap_converter = function() {
         mostlens[pw] = 0;
       });
 
-      var wide = 0,
-        high = 0;
+      var wide = 0, high = 0;
 
       // Find the length with the most instances
       var most_so_far = 0;
       mostlens.fill(0);
-      $.each(lens, function(i, v) {
+      $.each(lens, (i, v) => {
         if (++mostlens[v] > most_so_far) {
           most_so_far = mostlens[v];
           wide = v;
@@ -434,31 +432,31 @@ var bitmap_converter = function() {
 
       // Split up lines and iterate
       var bitmap = [],
-        rledata = [],
-        bitstr = '';
-      $.each(cpp.split('\n'), function(i, s) {
+          rledata = [],
+          bitstr = '';
+      $.each(cpp.split('\n'), (i, s) => {
         s = s.replace(/[ \t]/g, '');
         // Split up bytes and iterate
         var wordline = [],
-          len = 0;
-        $.each(s.split(','), function(i, s) {
+            len = 0;
+        $.each(s.split(','), (i, s) => {
           //console.log("s value:",s);
           var b;
           if (s.match(/\b0x[0-9a-f]+/i)) { // Hex
             b = parseInt(s.substring(2), 16);
             if (contains_rle16) rledata.push(b);
-          } else if (s.match(/[0-9]+/)) // Decimal
+          }
+          else if (s.match(/[0-9]+/)) // Decimal
             b = s * 1;
           else
             return true; // Skip this item
 
           if (!contains_rle16) {
-            var r_data = (b & 0xF800) >> 6 + 5 - 3;
-            var g_data = (b & 0x07E0) >> 5 - 2;
-            var b_data = (b & 0x001F) << 3;
-
+            var r_data = (b & 0xF800) >> 6 + 5 - 3,
+                g_data = (b & 0x07E0) >> 5 - 2,
+                b_data = (b & 0x001F) << 3;
             Array.prototype.push.apply(wordline, [r_data, g_data, b_data, 0xFF]);
-            len += 1;
+            len++;
           }
         });
         if (len == wide && !contains_rle16) {
@@ -468,9 +466,9 @@ var bitmap_converter = function() {
       });
 
       if (contains_rle16) {
-        var sizeEnd = pasted_tablename.lastIndexOf('x');
-        var sizeMid = pasted_tablename.lastIndexOf('x', pasted_tablename.lastIndexOf('x') - 1);
-        var sizeStart = pasted_tablename.lastIndexOf('_', pasted_tablename.lastIndexOf('_') - 1);
+        var sizeEnd = pasted_tablename.lastIndexOf('x'),
+            sizeMid = pasted_tablename.lastIndexOf('x', pasted_tablename.lastIndexOf('x') - 1),
+            sizeStart = pasted_tablename.lastIndexOf('_', pasted_tablename.lastIndexOf('_') - 1);
 
         wide = parseInt(pasted_tablename.substring(sizeStart + 1, sizeMid));
         high = parseInt(pasted_tablename.substring(sizeMid + 1, sizeEnd));
@@ -497,7 +495,7 @@ var bitmap_converter = function() {
      * Prep the form for a pasted image.
      * Call to load and process the image data.
      */
-    process_pasted_image = function(fileref) {
+    process_pasted_image = (fileref) => {
       $filein.val('');
 
       prepare_for_new_image();
@@ -512,14 +510,14 @@ var bitmap_converter = function() {
      * For image data call process_pasted_image to process it.
      * Call process_pasted_cpp to parse the code into an image.
      */
-    convert_clipboard_to_image = function(e) {
+    convert_clipboard_to_image = (e) => {
       var clipboardData = e.clipboardData || window.clipboardData,
-        items = clipboardData.items,
-        found, data;
+          items = clipboardData.items,
+          found, data;
 
       // If the browser supports "items" then use it
       if (items) {
-        $.each(items, function() {
+        $.each(items, () => {
           switch (this.kind) {
             case 'string':
               found = 'text';
@@ -530,9 +528,10 @@ var bitmap_converter = function() {
               return false;
           }
         });
-      } else {
+      }
+      else {
         // Try the 'types' array for Safari / Webkit
-        $.each(clipboardData.types, function(i, type) {
+        $.each(clipboardData.types, (i, type) => {
           switch (type) {
             case 'text/plain':
               found = type;
@@ -569,7 +568,7 @@ var bitmap_converter = function() {
    * If the file input value changes try to read the data from the file.
    * The reader.load() handler will fire on successful load.
    */
-  $filein.change(function() {
+  $filein.change(() => {
 
     prepare_for_new_image();
 
@@ -577,7 +576,8 @@ var bitmap_converter = function() {
     if (fileref) {
       data_source = "the file '" + fileref.name + "'";
       load_file_into_image(fileref);
-    } else
+    }
+    else
       error_message("Error opening file.");
 
     //return false; // No default handler
@@ -591,34 +591,34 @@ var bitmap_converter = function() {
 
   // If the output is clicked, select all
   $output
-    .on('mousedown mouseup', function() {
+    .on('mousedown mouseup', () => {
       return false;
     })
-    .on('focus click', function(e) {
+    .on('focus click', (e) => {
       this.select();
       return false;
     });
 
   // Paste old C++ code to see the image and reformat
   $pasted
-    .focus(function() {
+    .focus(() => {
       var $this = $(this);
       $this
         .val('')
         .css('color', '#F80')
         .one('blur', restore_pasted_cpp_field)
-        .one('paste', function(e) {
+        .one('paste', (e) => {
           $this.css('color', '#FFFFFF00');
           convert_clipboard_to_image(e);
           $this.trigger('blur');
           return false;
         });
     })
-    .keyup(function() {
+    .keyup(() => {
       $(this).val('');
       return false;
     })
-    .keydown(function() {
+    .keydown(() => {
       $(this).val('');
     });
 };
