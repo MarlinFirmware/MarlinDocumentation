@@ -475,6 +475,14 @@ var bitmap_converter = () => {
       prepare_for_new_image = () => {
         $err.hide();
 
+        function bootop_update() {
+          const v = $vers.filter(':checked').val();
+          if ($vers.filter(':checked').val() == '2' && $type.filter(':checked').val() == 'boot')
+            $bootop.show();
+          else
+            $bootop.hide();
+        }
+
         /**
          * Kill most form actions until an image exists.
          *
@@ -486,18 +494,17 @@ var bitmap_converter = () => {
         $lit.off();
         $invert.off();
         $field_arr.off();
+        bootop_update();
 
         // Restore cosmetic 'ASCII Art' behavior
-        $ascii.change(() => { $skinny.prop('disabled', !this.checked); return false; });
+        $ascii.change((e) => { $skinny.prop('disabled', !$(e.target).is(':checked')); return false; });
 
         // Remove 'Compact' option for Marlin 1.x
-        $vers.change(() => {
-          if ($(this).val() == '1') $bootop.hide(); else $bootop.show();
-        });
+        $vers.change(bootop_update);
 
         // Restore cosmetic 'Status' behavior
         $type.change(() => {
-          if ($(this).val() == 'boot' && $vers.filter(':checked').val() == 2 ) $bootop.show(); else $bootop.hide();
+          bootop_update();
           if ($(this).val() == 'stat') $statop.show(); else $statop.hide();
         });
       },
