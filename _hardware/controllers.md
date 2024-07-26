@@ -145,7 +145,7 @@ groups:
         - Buzzer
         - 3 LEDs
       interface: I2C
-      url: [ reprap.org/wiki/Panelolu2, https://github.com/T3P3/Panelolu2 ]
+      url: [ reprap.org/wiki/Panelolu2, github.com/T3P3/Panelolu2 ]
       images:
         - alt: LCD_I2C_PANELOLU2
           front: LCD_I2C_PANELOLU2
