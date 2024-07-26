@@ -27,7 +27,7 @@
   --color-bitmap-output-border: #077;
   --color-bitmap-selector-bg: #EEE;
   --color-bitmap-selector-options-bg: #FFF;
-  --color-bitmap-selector-label: #FDD;
+  --color-bitmap-selector-unimplemented: #FDD;
   --color-bitmap-err-box: red;
   --color-code: #0088CC;
   --color-code-bg: #DEF;
@@ -208,7 +208,7 @@
   --color-bitmap-output: #666;
   --color-bitmap-selector-bg: #226;
   --color-bitmap-selector-options-bg: #8888;
-  --color-bitmap-selector-label: #FDD;
+  --color-bitmap-selector-unimplemented: #FDD;
   --color-bitmap-err-box: red;
   --color-code: #AAF;
   --color-code-bg: #114;
@@ -584,7 +584,7 @@ div.alert-danger {
   div.file-selector {
     background: var(--color-bitmap-selector-bg);
     .options { background-color: var(--color-bitmap-selector-options-bg); }
-    label.tbd, label.tbd:hover { color: var(--color-bitmap-selector-label) !important; }
+    label.tbd, label.tbd:hover { color: var(--color-bitmap-selector-unimplemented) !important; }
   }
   div#err-box { color: var(--color-bitmap-err-box); }
 }

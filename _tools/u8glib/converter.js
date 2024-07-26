@@ -36,8 +36,8 @@ var bitmap_converter = () => {
 
   // Extend jQuery.event.fix for copy/paste to fix clipboardData
   $.event.fix = ((originalFix) => {
-    return function(e) {
-      e = originalFix.apply(this, arguments);
+    return function(e) { // Must be function to get (this, arguments)
+      e = originalFix.apply(this, arguments); // this == e.target
       if (e.type.indexOf('copy') === 0 || e.type.indexOf('paste') === 0) {
         e.clipboardData = e.originalEvent.clipboardData;
       }
@@ -126,7 +126,7 @@ var bitmap_converter = () => {
        */
       load_file_into_image = (fileref) => {
         var reader = new FileReader();
-        $(reader).one('load', () => { load_url_into_image(this.result); });
+        $(reader).one('load', (e) => { load_url_into_image(e.target.result); });
         // Load from the given source 'file'
         reader.readAsDataURL(fileref);
       },
@@ -238,7 +238,7 @@ var bitmap_converter = () => {
        * - Convert the image data into C text.
        * - Display the image and converted text.
        */
-      generate_cpp = (e,no_render) => {
+      generate_cpp = (e, no_render) => {
 
         // Get the image width and height in pixels.
         var iw = $img[0].width, ih = $img[0].height;
@@ -701,7 +701,7 @@ var bitmap_converter = () => {
   // If the output is clicked, select all
   $output
     .on('mousedown mouseup', () => { return false; })
-    .on('focus click', (e) => { $(e.target).select(); return false; });
+    .on('focus click', (e) => { e.target.select(); return false; });
 
   // Paste old C++ code to see the image and reformat
   $pasted

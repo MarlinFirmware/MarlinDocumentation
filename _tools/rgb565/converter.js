@@ -30,8 +30,8 @@ var bitmap_converter = () => {
 
   // Extend jQuery.event.fix for copy/paste to fix clipboardData
   $.event.fix = ((originalFix) => {
-    return function(e) {
-      e = originalFix.apply(this, arguments);
+    return function(e) { // Must be function to get (this, arguments)
+      e = originalFix.apply(this, arguments); // this == e.target
       if (e.type.indexOf('copy') === 0 || e.type.indexOf('paste') === 0) {
         e.clipboardData = e.originalEvent.clipboardData;
       }
@@ -81,12 +81,10 @@ var bitmap_converter = () => {
       if (w) $img.width(w);
       if (h) $img.height(h);
 
-      $img.one('load', generate_cpp) // Generate when the image loads
-        .attr('src', data_url); // Start loading image data
+      $img.one('load', generate_cpp)  // Generate when the image loads
+          .attr('src', data_url);     // Start loading image data
 
-      $field_arr.change((e) => {
-        generate_cpp(e, true);
-      });
+      $field_arr.change((e) => { generate_cpp(e, true); });
     },
 
     /**
@@ -98,9 +96,7 @@ var bitmap_converter = () => {
      */
     load_file_into_image = (fileref) => {
       var reader = new FileReader();
-      $(reader).one('load', () => {
-        load_url_into_image(this.result);
-      });
+      $(reader).one('load', (e) => { load_url_into_image(e.target.result); });
       // Load from the given source 'file'
       reader.readAsDataURL(fileref);
     },
@@ -230,10 +226,10 @@ var bitmap_converter = () => {
 
       // Get the image width and height in pixels.
       var iw = $img[0].width,
-        ih = $img[0].height;
+          ih = $img[0].height;
 
       var bytewidth = tobytes(iw), // Bytes wide is important
-        tobase = tohex;
+          tobase = tohex;
 
       // Render the last-loaded image into the Source canvas.
       // Render Preview only if the image won't be modified.
@@ -591,13 +587,8 @@ var bitmap_converter = () => {
 
   // If the output is clicked, select all
   $output
-    .on('mousedown mouseup', () => {
-      return false;
-    })
-    .on('focus click', (e) => {
-      $(e.target).select();
-      return false;
-    });
+    .on('mousedown mouseup', () => { return false; })
+    .on('focus click', (e) => { e.target.select(); return false; });
 
   // Paste old C++ code to see the image and reformat
   $pasted
