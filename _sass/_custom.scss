@@ -1202,7 +1202,7 @@ summary h3 { display: inline; }
 footer>.container { display: block; clear: both; width: 100%}
 .noshift-footer, .shift-footer {
   padding: 1em;
-  .back-to-top { margin-top: -3pc; }
+  .back-to-top { margin-top: -0.5pc; }
 }
 @media (min-width: 991px) {
   .shift-footer { padding-left: 369px !important; }
