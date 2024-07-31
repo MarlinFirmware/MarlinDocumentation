@@ -21,17 +21,19 @@ category:     [ tools ]
           <label title="Marlin 1.x">&nbsp;<input type="radio" name="marlin-ver" value="1" />&nbsp;Marlin 1.x</label>
           <label title="Marlin 2.x">&nbsp;<input type="radio" name="marlin-ver" value="2" checked="checked" />&nbsp;Marlin 2.x</label>
           <br/>
+          <label title="Generic bitmap.">&nbsp;&nbsp;<input type="radio" name="bitmap-type" value="bits" checked="checked" />&nbsp;Bitmap</label>
+          <label title="Format for _Bootscreen.h">&nbsp;<input type="radio" name="bitmap-type" value="boot" />&nbsp;Boot</label>
+          <label id="boot-sub" title="Include compact data.">&nbsp;&nbsp;<input type="checkbox" id="compact-on" />&nbsp;Compact</label>
+          <label title="Format for _Statusscreen.h">&nbsp;<input type="radio" name="bitmap-type" value="stat" />&nbsp;Status</label>
+          <br/>
           <label id="liton-lbl" title="Light pixels are solid.">&nbsp;&nbsp;<input type="checkbox" id="lit-on" />&nbsp;Light</label>
           <label title="Invert the output bits.">&nbsp;&nbsp;<input type="checkbox" id="inv-on" />&nbsp;Invert</label>
           <label title="Output in Binary (not Hex) format.">&nbsp;&nbsp;<input type="checkbox" id="bin-on" checked="checked" />&nbsp;Binary</label>
           <label title="Include an ASCII representation.">&nbsp;&nbsp;<input type="checkbox" id="ascii-on" />&nbsp;ASCII Art</label>
-          <label title="Use UTF8 blocks instead of ASCII.">&nbsp;&nbsp;<input type="checkbox" id="skinny-on" />&nbsp;Narrow</label>
-          <br/>
-          <label title="Generic bitmap.">&nbsp;&nbsp;<input type="radio" name="bitmap-type" value="bits" checked="checked" />&nbsp;Bitmap</label>
-          <label title="Format for _Bootscreen.h">&nbsp;<input type="radio" name="bitmap-type" value="boot" />&nbsp;Boot</label>
-          <label title="Format for _Statusscreen.h">&nbsp;<input type="radio" name="bitmap-type" value="stat" />&nbsp;Status</label>
+          <label title="Use UTF8 blocks instead of ASCII.">&nbsp;&nbsp;<input type="checkbox" id="skinny-on" disabled />&nbsp;Narrow</label>
           <span id="stat-sub">
-            :<label title="Right-justify the image.">&nbsp;&nbsp;<input type="checkbox" id="rj-on" />&nbsp;&gt;&gt;</label>
+            <br/>
+            <label title="Right-justify the image.">&nbsp;&nbsp;<input type="checkbox" id="rj-on" />&nbsp;&gt;&gt;</label>
             <label class="tbd" title="Overlay a bed image.">&nbsp;&nbsp;<input type="checkbox" id="bed-on" />&nbsp;Bed</label>
             <label class="tbd" title="Overlay a fan image.">&nbsp;&nbsp;<input type="checkbox" id="fan-on" />&nbsp;Fan</label>
             <label class="tbd">&nbsp;&nbsp;Nozzles:
