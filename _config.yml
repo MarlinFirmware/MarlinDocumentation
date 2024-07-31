@@ -13,7 +13,7 @@ enforce_ssl: marlinfw.org
 version: '1.0.0'
 environment: development
 
-destination: ./build
+destination: ./_site
 
 twitter:
   username: MarlinFirmware

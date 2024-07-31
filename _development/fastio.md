@@ -22,7 +22,7 @@ In Marlin we only use `digitalRead` and `digitalWrite` in cases where the pin nu
 
 ## AT90USB pins
 
-Since version 1.1.4, Marlin also uses Arduino pin mapping for Teensy++, Sanguino, and other AT90USB-based processors, so we can still use the documented digital pin numbers even in the Teenyduino build environment. Previous versions of Marlin provided an option to use either Teensyduino or Arduino mapping, depending on the what the active pins file supported.
+Since version 1.1.4, Marlin also uses Arduino pin mapping for Teensy++, Sanguino, and other AT90USB-based processors, so we can still use the documented digital pin numbers even in the Teensyduino build environment. Previous versions of Marlin provided an option to use either Teensyduino or Arduino mapping, depending on the what the active pins file supported.
 
 ## Analog pins
 

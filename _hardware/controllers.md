@@ -137,8 +137,19 @@ groups:
       protocol: LCM1602
 
     - name: LCD_I2C_PANELOLU2
-      description: PANELOLU2 LCD with status LEDs, separate encoder and click inputs.
+      description: |
+        - 20x4 character LCD panel
+        - SD Card reader
+        - Reset button
+        - Rotary encoder click wheel
+        - Buzzer
+        - 3 LEDs
       interface: I2C
+      url: [ reprap.org/wiki/Panelolu2, github.com/T3P3/Panelolu2 ]
+      images:
+        - alt: LCD_I2C_PANELOLU2
+          front: LCD_I2C_PANELOLU2
+          back: LCD_I2C_PANELOLU2
 
     - name: LCD_I2C_VIKI
       description: Panucatt VIKI LCD with status LEDs, integrated click & L/R/U/D buttons, separate encoder inputs.
@@ -593,6 +604,10 @@ groups:
         - 1024×600
         - 7"
         - Rotary encoder click wheel
+      images:
+        - alt: BIQU_BX_TFT70
+          front: BIQU_BX_TFT70
+          back: BIQU_BX_TFT70
 
     - name: BTT_TFT35_SPI_V1_0
       description: 480×320, 3.5", SPI Stock Display with Rotary Encoder from BIQU B1 SE Series
