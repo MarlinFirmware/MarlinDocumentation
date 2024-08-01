@@ -25,7 +25,7 @@ examples:
   - Tc
 
 ---
-For the MMU2 and other Multi Material Unit clones the `T0`-`T7` commands select a new filament. After this command you must extrude at least 38.1 mm of filament at feedrate 19.02 mm/s to reach the extruder. (The distance to the extruder may differ for your particular machine.)
+For the MMU2 (and other Multi Material Unit clones) the `T0`-`T7` commands select a new filament. After this command you must extrude at least 38.1 mm of filament at feedrate 19.02 mm/s to reach the extruder. (The distance to the extruder may differ for your particular machine.)
 
 #### Special Commands
 
