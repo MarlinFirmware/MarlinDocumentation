@@ -4,6 +4,7 @@ brief: Extruder settings.
 category: [ wip ]
 tags: [ hardware, extruder ]
 pagetype: toc
+author: thinkyhead
 
 settings:
 

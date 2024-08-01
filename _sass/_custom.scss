@@ -918,10 +918,13 @@ div.custom-article, div.col-md-12>.row.long, div.col-md-12>.row.notes {
   margin: -1em 0 1em;
   padding: 0.5em 0.5em 0.25em;
 }
-.detail-header h1 { margin-bottom: 4px; }
+
 #authors {
-  height: 0; margin-top: 0; margin-bottom: 0; padding-top: 0; padding-bottom: 0;
-  img.avatar { float: right; margin: 8px 0 0 2px; background: white; }
+  width: 100%;
+  height: 0;
+  text-align: right;
+  padding-right: 2px;
+  img.avatar { margin: 8px 0 0 2px; }
 }
 
 div.custom-article {
@@ -1330,7 +1333,12 @@ div.options table {
   td { font-size: 90% }
 }
 
-.detail-header { position: relative; a[name] { position: absolute; top: -5em; } }
+.detail-header {
+  position: relative;
+  pointer-events: none;
+  h1 { margin-bottom: 4px; }
+  a[name] { position: absolute; top: -5em; }
+}
 
 div.brief { font-weight: $bold-font-weight; }
 div.since { float: right; margin-right: 0.25em; }
