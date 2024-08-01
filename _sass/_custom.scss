@@ -8,6 +8,13 @@
  *  - Layout theming for DOM elements, classes, IDs, etc.
  *    - @media overrides are used for adaptive layout
  *  - Follow the comments below for further customizations.
+ *
+ * Bootstrap sizes for this site:
+ *  - $screen-sm-min = 768px
+ *  - $screen-sm-max = 991px
+ *  - $screen-md-min = 992px
+ *  - $screen-md-max = 1199px
+ *  - $screen-lg-min = 1200px
  */
 :root {
   --bg-midsection: radial-gradient(circle, rgba(0,0,0, 1) 0%, rgba(0,0,0, 0) 60%, rgba(0,0,0, 0) 100%);
@@ -27,7 +34,7 @@
   --color-bitmap-output-border: #077;
   --color-bitmap-selector-bg: #EEE;
   --color-bitmap-selector-options-bg: #FFF;
-  --color-bitmap-selector-label: #FDD;
+  --color-bitmap-selector-unimplemented: #FDD;
   --color-bitmap-err-box: red;
   --color-code: #0088CC;
   --color-code-bg: #DEF;
@@ -208,7 +215,7 @@
   --color-bitmap-output: #666;
   --color-bitmap-selector-bg: #226;
   --color-bitmap-selector-options-bg: #8888;
-  --color-bitmap-selector-label: #FDD;
+  --color-bitmap-selector-unimplemented: #FDD;
   --color-bitmap-err-box: red;
   --color-code: #AAF;
   --color-code-bg: #114;
@@ -422,6 +429,10 @@ pre.highlight{ background-color: var(--color-highlight-bg); }
   .navbar-nav>.open>a { &, &:hover, &:focus { background-color: var(--color-nav-hover-bg); color: var(--color-hover-focus); } }
 }
 
+/**
+ * Top nav bar for "Edit Page" or "Follow Us" links
+ */
+.nav.navbar-right li { float: left; }
 .nav.navbar-right li>a {
   color: var(--color-link-edit);
   padding: 14px 12px;
@@ -573,8 +584,8 @@ div.alert-danger {
 
 #bitmap-converter {
   label:hover { color: var(--color-bitmap-label-hover); }
-  #preview-lg { border-color: var(--color-bitmap-preview-lg); }
-  #preview-sm { border-color: var(--color-bitmap-preview-sm); }
+  #preview-lg { border-color: var(--color-bitmap-preview-lg); background: var(--color-bitmap-preview-lg); }
+  #preview-sm { border-color: var(--color-bitmap-preview-sm); background: var(--color-bitmap-preview-sm); }
   input#pasted { color: var(--color-bitmap-input); }
   textarea#output {
     border-color: var(--color-bitmap-output-border);
@@ -584,7 +595,7 @@ div.alert-danger {
   div.file-selector {
     background: var(--color-bitmap-selector-bg);
     .options { background-color: var(--color-bitmap-selector-options-bg); }
-    label.tbd, label.tbd:hover { color: var(--color-bitmap-selector-label) !important; }
+    label.tbd, label.tbd:hover { color: var(--color-bitmap-selector-unimplemented) !important; }
   }
   div#err-box { color: var(--color-bitmap-err-box); }
 }
@@ -667,16 +678,16 @@ div.highlight { margin-bottom: 25px; }
 }
 .container {
   h2, h3, h4, h5, h6 {
-    padding: 0.25em;
+    padding: 10px;
     border-top-left-radius: 0.25em;
     border-top-right-radius: 0.05em;
     border-bottom-left-radius: 0.25em;
     border-bottom-right-radius: 0.25em;
   }
-  h3, h4, h5, h6 {
-    margin-top: 1em;
-    margin-left: 0.25em;
-  }
+  h2 { padding: 10px 0; }
+  h3, h4 { margin-left: 6px; }
+  p+h3, p+h4, p+h5, p+h6,
+  p+div+h3, p+div+h4, p+div+h5, p+div+h6 { margin-top: 1em; }
 }
 .container td {
   h2, h3, h4, h5, h6 {
@@ -907,13 +918,17 @@ div.custom-article, div.col-md-12>.row.long, div.col-md-12>.row.notes {
   margin: -1em 0 1em;
   padding: 0.5em 0.5em 0.25em;
 }
-.detail-header h1 { margin-bottom: 4px; }
+
 #authors {
-  height: 0; margin-top: 0; margin-bottom: 0; padding-top: 0; padding-bottom: 0;
-  img.avatar { float: right; margin: 8px 0 0 2px; background: white; }
+  width: 100%;
+  height: 0;
+  text-align: right;
+  padding-right: 2px;
+  img.avatar { margin: 8px 0 0 2px; }
 }
 
 div.custom-article {
+  p { margin-left: 0.5em; }
   p, ul>li {
     font-size: 110%; clear: both;
     ul>li p { font-size: 100%; }
@@ -1082,6 +1097,7 @@ div.container.detail {
     font-weight: bold;
   }
   div#cpp-container,
+  #boot-sub { display: none; }
   #stat-sub { display: none; }
 }
 
@@ -1103,8 +1119,8 @@ div[role=main] { padding-bottom: 33vh; }
   h1, p { text-align: center; }
   ul li { display: block; margin: 0.5em auto; width: 20em; }
   table { margin: 1em auto; font-size: 140%;
-    @media (min-width: 1200px) { width: 1000px; }
-    @media (max-width: 1200px) { width: 85.5%; }
+    @media (min-width: $screen-md-min) { width: 1000px; }
+    @media (max-width: $screen-sm-max) { width: 85.5%; }
   }
   th, td { border-bottom: 1px solid; padding: 1em; }
   th { font-size: 110%; font-weight: $headings-font-weight; }
@@ -1195,7 +1211,7 @@ footer>.container { display: block; clear: both; width: 100%}
   .shift-footer { padding-left: 369px !important; }
 }
 
-@media (min-width: $screen-sm-min) and (max-width: $screen-md-min) {
+@media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
   .highlight-panels {
     .panel-heading { height: 70px;}
     .panel {
@@ -1204,6 +1220,7 @@ footer>.container { display: block; clear: both; width: 100%}
     }
   }
 }
+@media (max-width: 1050px) { .nav.navbar-right { li { clear: both; a { padding: 2px 12px 2px 2px; } } } }
 @media (min-width: $screen-sm-min) {
   #search.container .overlay { width: 750px; }
   .navbar-nav>li>a { padding-left: 4px; padding-right: 4px; }
@@ -1236,7 +1253,7 @@ footer>.container { display: block; clear: both; width: 100%}
 .container {
   width: 100%;
   max-width: 1400px;
-  padding: 0 1em;
+  padding: 0;
 }
 .navbar-fixed-top { padding: 0 1em; }
 @media (min-width: $screen-lg-min) {
@@ -1257,7 +1274,7 @@ footer>.container { display: block; clear: both; width: 100%}
   li#searchbox input[type="search"] { width: 10em; }
   .tocify.bigtoc, .custom-fixed-sidebar .tocify { width: 324px; }
   //footer>.container { width: 100%; padding-left: 0; }
-  footer>.container { width: ($screen-lg-min - 30 - 20); padding-left: 312px; }
+  footer>.container { width: ($screen-lg-min - 30px - 20px); padding-left: 312px; }
 }
 // Fix headings in panels
 div.panel.panel-info, div.panel.panel-warning {
@@ -1316,7 +1333,12 @@ div.options table {
   td { font-size: 90% }
 }
 
-.detail-header { position: relative; a[name] { position: absolute; top: -5em; } }
+.detail-header {
+  position: relative;
+  pointer-events: none;
+  h1 { margin-bottom: 4px; }
+  a[name] { position: absolute; top: -5em; }
+}
 
 div.brief { font-weight: $bold-font-weight; }
 div.since { float: right; margin-right: 0.25em; }
@@ -1328,3 +1350,5 @@ div.tags { display: inline-block; float: right; margin: 0.5em; }
   .lcd .gallery { float: right; width: 40%; margin-left: -40%; padding: 0 1em 0.9em 0; }
   .lcd .gallery img { float: right; margin-top: 4px; }
 }
+
+.fa-x:before { content: "𝕏"; }

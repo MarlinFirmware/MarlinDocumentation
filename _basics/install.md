@@ -19,7 +19,7 @@ Links for current and previous versions can be found on the [Download Marlin](/m
 
 ### Configure
 
-To configure Marlin you can use the Arduino IDE or your [favorite text editor](//www.sublimetext.com/){:target="_blank"} to edit the `Configuration.h` and `Configuration_adv.h` files. See [Configuring Marlin](/docs/configuration/configuration.html) for full details.
+To configure Marlin you can start with one of our [example configurations](//github.com/MarlinFirmware/Configurations), then you'll use VSCode, Arduino IDE, or your [favorite text editor](//www.sublimetext.com/){:target="_blank"} to make modifications according to your preferences. Marlin is configured with two files: `Configuration.h` and `Configuration_adv.h`. See [Configuring Marlin](/docs/configuration/configuration.html) for full details.
 
 ### Build and Install
 

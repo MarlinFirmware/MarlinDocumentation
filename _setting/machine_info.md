@@ -4,6 +4,7 @@ brief: Human-readable machine information.
 category: [ wip ]
 tags: [ info ]
 pagetype: toc
+author: thinkyhead
 
 settings:
 - name: CUSTOM_MACHINE_NAME
