@@ -4,6 +4,7 @@ brief: Machine electronics and main components.
 category: [ wip ]
 tags: [ hardware ]
 pagetype: toc
+author: thinkyhead
 
 settings:
 - name: MOTHERBOARD

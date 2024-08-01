@@ -4,6 +4,7 @@ brief: Extruder settings.
 category: [ wip ]
 tags: [ hardware, extruder ]
 pagetype: toc
+author: thinkyhead
 
 settings:
 
@@ -13,7 +14,7 @@ settings:
   since: 1.0.0
   brief: Total number of extruders.
   long: The number of addressable extruder tools that can be selected with `T0`, `T1`, etc.
-  options: [0, 1, 2, 3, 4, 5, 6, 7,8]
+  options: [0, 1, 2, 3, 4, 5, 6, 7, 8]
   example:
   - value: 2
 

@@ -3,6 +3,7 @@ label: Configuration Info
 brief: Information about the configuration itself.
 category: [ wip ]
 tags: [ info ]
+author: thinkyhead
 
 settings:
 - name: CONFIGURATION_H_VERSION

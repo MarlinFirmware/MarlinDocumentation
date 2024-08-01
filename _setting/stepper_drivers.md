@@ -4,6 +4,7 @@ brief: Basic Stepper Driver settings
 category: [ wip ]
 tags: [ hardware ]
 pagetype: toc
+author: thinkyhead
 
 shared:
   -

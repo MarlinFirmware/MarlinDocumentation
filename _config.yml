@@ -13,7 +13,7 @@ enforce_ssl: marlinfw.org
 version: '1.0.0'
 environment: development
 
-destination: ./build
+destination: ./_site
 
 twitter:
   username: MarlinFirmware
@@ -95,12 +95,12 @@ collections:
     permalink: /:collection/:path:output_ext
 
 exclude:
-  - '_config.yml'
-  - 'Gemfile'
-  - 'LICENSE'
-  - 'public'
-  - 'script'
-  - 'vendor'
+  - _config.yml
+  - Gemfile
+  - LICENSE
+  - public
+  - script
+  - vendor
 
 plugins:
   - jekyll-mentions
@@ -114,9 +114,9 @@ defaults:
     scope:
       path: '' # all files
     values:
-      layout: 'default'
-      author: 'MarlinFirmware'
-      category: [ 'default' ]
+      layout: default
+      author: MarlinFirmware
+      category: [ default ]
       show:
         navbar: true
         footer: true
@@ -124,55 +124,55 @@ defaults:
 
   - # Basics collection
     scope:
-      type: 'basics'
+      type: basics
     values:
-      layout: 'docs'
-      category: [ 'Basics' ]
+      layout: docs
+      category: [ Basics ]
 
   - # Configuration collection
     scope:
-      type: 'configuration'
+      type: configuration
     values:
-      layout: 'docs'
-      category: [ 'configuration' ]
+      layout: docs
+      category: [ configuration ]
 
   - # Settings collection
     scope:
-      type: 'setting'
+      type: setting
     values:
-      layout: 'setting'
-      category: [ 'setting' ]
+      layout: setting
+      category: [ setting ]
 
   - # Development collection
     scope:
-      type: 'development'
+      type: development
     values:
-      layout: 'docs'
-      category: [ 'development' ]
+      layout: docs
+      category: [ development ]
 
   - # Features collection
     scope:
-      type: 'features'
+      type: features
     values:
-      layout: 'docs'
-      category: [ 'features' ]
+      layout: docs
+      category: [ features ]
 
   - # G-code collection
     scope:
-      type: 'gcode'
+      type: gcode
     values:
-      layout: 'gcode'
-      category: [ 'gcode' ]
+      layout: gcode
+      category: [ gcode ]
 
   - # Hardware collection
     scope:
-      type: 'hardware'
+      type: hardware
     values:
-      layout: 'docs'
-      category: [ 'hardware' ]
+      layout: docs
+      category: [ hardware ]
 
   - # Meta collection
     scope:
-      type: 'meta'
+      type: meta
     values:
-      category: [ 'meta' ]
+      category: [ meta ]
