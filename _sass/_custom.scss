@@ -422,6 +422,10 @@ pre.highlight{ background-color: var(--color-highlight-bg); }
   .navbar-nav>.open>a { &, &:hover, &:focus { background-color: var(--color-nav-hover-bg); color: var(--color-hover-focus); } }
 }
 
+/**
+ * Top nav bar for "Edit Page" or "Follow Us" links
+ */
+.nav.navbar-right li { float: left; }
 .nav.navbar-right li>a {
   color: var(--color-link-edit);
   padding: 14px 12px;
@@ -1205,6 +1209,7 @@ footer>.container { display: block; clear: both; width: 100%}
     }
   }
 }
+@media (max-width: 1050px) { .nav.navbar-right { li { clear: both; a { padding: 2px 12px 2px 2px; } } } }
 @media (min-width: $screen-sm-min) {
   #search.container .overlay { width: 750px; }
   .navbar-nav>li>a { padding-left: 4px; padding-right: 4px; }
@@ -1329,3 +1334,5 @@ div.tags { display: inline-block; float: right; margin: 0.5em; }
   .lcd .gallery { float: right; width: 40%; margin-left: -40%; padding: 0 1em 0.9em 0; }
   .lcd .gallery img { float: right; margin-top: 4px; }
 }
+
+.fa-x:before { content: "𝕏"; }

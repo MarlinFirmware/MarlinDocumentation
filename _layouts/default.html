@@ -11,6 +11,9 @@
 {% seo %}
 
     <link rel="icon" href="{{ '/assets/favicon_m.ico' | prepend: site.baseurl }}" />
+    <link rel="stylesheet" href="{{ '/assets/stylesheets/fontawesome.min.css' | prepend: site.baseurl }}" />
+    <link rel="stylesheet" href="{{ '/assets/stylesheets/solid.min.css' | prepend: site.baseurl }}" />
+    <link rel="stylesheet" href="{{ '/assets/stylesheets/brands.min.css' | prepend: site.baseurl }}" />
     <link rel="stylesheet" href="{{ '/assets/stylesheets/main.css' | prepend: site.baseurl }}" />
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -43,10 +46,6 @@
        * with the main page.
        */
       head.load(
-          "{{ '/assets/stylesheets/fontawesome.min.css' | prepend: site.baseurl }}",
-          "{{ '/assets/stylesheets/solid.min.css' | prepend: site.baseurl }}",
-          "{{ '/assets/stylesheets/brands.min.css' | prepend: site.baseurl }}",
-
           "{{ 'jquery-2.2.1.min.js' | prepend: site.js }}",
           "{{ 'jquery-ui.min.js' | prepend: site.js }}",
           "{{ 'bootstrap.min.js' | prepend: site.js }}",
