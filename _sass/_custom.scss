@@ -425,7 +425,7 @@ pre.highlight{ background-color: var(--color-highlight-bg); }
 }
 .navbar-default {
   .navbar-brand { &:hover, &:focus { background-color: inherit; } }
-  .navbar-nav { &>li>a:hover, &>li>a:focus { background-color: var(--color-nav-hover-bg); color: var(--color-nav-hover); } }
+  .navbar-nav { >li>a:hover, >li>a:focus { background-color: var(--color-nav-hover-bg); color: var(--color-nav-hover); } }
   .navbar-nav>.open>a { &, &:hover, &:focus { background-color: var(--color-nav-hover-bg); color: var(--color-hover-focus); } }
 }
 
@@ -444,7 +444,10 @@ pre.highlight{ background-color: var(--color-highlight-bg); }
  */
 .nav.navbar-nav {
   li.here {
-    &>a { color: var(--color-nav-active); background: var(--color-nav-active-bg); }
+    >a {
+      color: var(--color-nav-active); background: var(--color-nav-active-bg);
+      &:hover { color: var(--color-nav-hover); }
+    }
     &.open>a { color: var(--color-nav); }
   }
   li:hover { background-color: var(--color-nav-hover-bg); color: var(--color-nav-hover); }
@@ -455,7 +458,7 @@ pre.highlight{ background-color: var(--color-highlight-bg); }
   background-color: var(--color-dropdown-bg); color: var(--color-dropdown);
   li {
     a { color: var(--color-dropdown-a); }
-    &>a:hover, &>a:active { color: var(--color-dropdown-a-hover); background-color: var(--color-dropdown-a-hover-bg); }
+    >a:hover, >a:active { color: var(--color-dropdown-a-hover); background-color: var(--color-dropdown-a-hover-bg); }
   }
 }
 
@@ -466,7 +469,8 @@ li#top-config   { a:hover, a:active { background-color: var(--color-config-hover
 li#top-install  { a:hover, a:active { background-color: var(--color-install-hover-bg);  } }
 li#top-tools    { a:hover, a:active { background-color: var(--color-tools-hover-bg);    } }
 li#top-help     { a:hover, a:active { background-color: var(--color-help-hover-bg);     } }
-li#top-donate   { a:hover, a:active { background-color: var(--color-donate-hover-bg);   } }
+#contributing-page li#top-donate, li#top-donate { a:hover, a:active { background-color: var(--color-donate-hover-bg); color: var(--color-nav-hover); } }
+#contributing-page li#top-donate a { background-color: var(--color-nav-active-bg); color: var(--color-nav-active); }
 
 // Nav bar search box
 li#searchbox {
