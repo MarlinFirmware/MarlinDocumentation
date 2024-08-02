@@ -143,7 +143,6 @@ var jekyllSearch = (() => {
 
     // When the field value changes (as on blur, paste) execute a search right away.
     onSearchChanged: (e, allow=false) => {
-      console.log("onSearchChanged", e, allow);
       if (!allow) e.preventDefault();
       const newq = self.searchFieldString();
       if (newq.length == 0 || newq.length >= 3 || newq.match(/^[gmd]\d+/i))

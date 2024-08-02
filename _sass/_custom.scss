@@ -922,10 +922,9 @@ div.custom-article, div.col-md-12>.row.long, div.col-md-12>.row.notes {
 }
 
 #authors {
-  width: 100%;
-  height: 0;
+  position: absolute;
   text-align: right;
-  padding-right: 2px;
+  right: 4px;
   img.avatar { margin: 8px 0 0 2px; }
 }
 
@@ -1343,7 +1342,6 @@ div.options table {
 
 .detail-header {
   position: relative;
-  pointer-events: none;
   h1 { margin-bottom: 4px; }
   a[name] { position: absolute; top: -5em; }
 }
