@@ -19,7 +19,7 @@ Visit the [Setting up Visual Studio Code](//code.visualstudio.com/docs/setup/set
 
 You can download the latest Marlin source code from the [Downloads](/meta/download/) page. Older versions and detailed Release Notes can be downloaded from the [Marlin Releases](//github.com/MarlinFirmware/Marlin/releases) page on GitHub.
 
-The 'latest' version might not always be the 'greatest' version for your setup. Be sure to ask around in our [Discord community](//discord.gg/n5NJ59y) if you need assistance with any version of Marlin Firmware.
+The 'latest' version might not always be the 'greatest' version for your setup. Be sure to ask around in our [Discord community](//discord.gg/marlin-firmware-461605380783472640) if you need assistance with any version of Marlin Firmware.
 
 ### 3. Install PlatformIO IDE
 

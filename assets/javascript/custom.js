@@ -2,6 +2,8 @@
 // Marlin custom Javascript
 //
 
+var discord_widget_url = 'https://discord.com/widget?id=461605380783472640';
+
 // Cookie Helpers
 
 function setCookie(cname, cvalue, exdays) {
@@ -32,6 +34,7 @@ function setDarkMode(dark) {
   $('#daynite')
     .attr('src', q + 'btn-' + (dark ? 'day' : 'night') + '.svg')
     .css('visibility', 'visible');
+  $('#discord-frame').attr('src', `${discord_widget_url}&theme=` + (dark ? 'dark' : 'light'));
 }
 
 function toggleDarkMode() {
@@ -39,6 +42,12 @@ function toggleDarkMode() {
   setDarkMode(dark);
   return dark;
 }
+
+// If a Discord widget exists store its URL (for dark/light theming)
+
+discord_widget_url = $('#discord-frame').attr('src');
+
+// Set dark / light theme as soon as possible
 
 var nightMode = getCookie('nightMode');
 if (nightMode === '') {
@@ -157,6 +166,7 @@ $(function() {
 
   $(window).resize(shiftSubMenu, resizeImage);
 
+  // Toggle dark / light theme on click
   $('#daynite').click(function(){
     const dark = toggleDarkMode();
     setCookie('nightMode', dark);
