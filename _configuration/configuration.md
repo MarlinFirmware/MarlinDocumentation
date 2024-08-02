@@ -3222,7 +3222,7 @@ Enables [`G60`](/docs/gcode/G060.html) & [`G61`](/docs/gcode/G061.html) and spec
 ```
 [`G2/G3`](/docs/gcode/G002-G003.html) Arc Support
 
-### G5 Bezier Curve
+### G5 Bézier Curve
 ```cpp
 //#define BEZIER_CURVE_SUPPORT
 ```
