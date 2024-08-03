@@ -425,7 +425,7 @@ pre.highlight{ background-color: var(--color-highlight-bg); }
 }
 .navbar-default {
   .navbar-brand { &:hover, &:focus { background-color: inherit; } }
-  .navbar-nav { &>li>a:hover, &>li>a:focus { background-color: var(--color-nav-hover-bg); color: var(--color-nav-hover); } }
+  .navbar-nav { >li>a:hover, >li>a:focus { background-color: var(--color-nav-hover-bg); color: var(--color-nav-hover); } }
   .navbar-nav>.open>a { &, &:hover, &:focus { background-color: var(--color-nav-hover-bg); color: var(--color-hover-focus); } }
 }
 
@@ -444,7 +444,10 @@ pre.highlight{ background-color: var(--color-highlight-bg); }
  */
 .nav.navbar-nav {
   li.here {
-    &>a { color: var(--color-nav-active); background: var(--color-nav-active-bg); }
+    >a {
+      color: var(--color-nav-active); background: var(--color-nav-active-bg);
+      &:hover { color: var(--color-nav-hover); }
+    }
     &.open>a { color: var(--color-nav); }
   }
   li:hover { background-color: var(--color-nav-hover-bg); color: var(--color-nav-hover); }
@@ -455,7 +458,7 @@ pre.highlight{ background-color: var(--color-highlight-bg); }
   background-color: var(--color-dropdown-bg); color: var(--color-dropdown);
   li {
     a { color: var(--color-dropdown-a); }
-    &>a:hover, &>a:active { color: var(--color-dropdown-a-hover); background-color: var(--color-dropdown-a-hover-bg); }
+    >a:hover, >a:active { color: var(--color-dropdown-a-hover); background-color: var(--color-dropdown-a-hover-bg); }
   }
 }
 
@@ -466,7 +469,8 @@ li#top-config   { a:hover, a:active { background-color: var(--color-config-hover
 li#top-install  { a:hover, a:active { background-color: var(--color-install-hover-bg);  } }
 li#top-tools    { a:hover, a:active { background-color: var(--color-tools-hover-bg);    } }
 li#top-help     { a:hover, a:active { background-color: var(--color-help-hover-bg);     } }
-li#top-donate   { a:hover, a:active { background-color: var(--color-donate-hover-bg);   } }
+#contributing-page li#top-donate, li#top-donate { a:hover, a:active { background-color: var(--color-donate-hover-bg); color: var(--color-nav-hover); } }
+#contributing-page li#top-donate a { background-color: var(--color-nav-active-bg); color: var(--color-nav-active); }
 
 // Nav bar search box
 li#searchbox {
@@ -524,12 +528,14 @@ a.panel-wrapper:hover, a.panel-wrapper:active {
 }
 .post { background-color: var(--color-post-bg); }
 [data-search-results]>h1 { color: var(--color-data-search); background: var(--color-data-search-bg); }
-h1.gcode { background: var(--color-h1-gcode); }
-h1.basics { background: var(--color-h1-basics); }
-h1.feat { background: var(--color-h1-feat); }
-h1.hardware { background: var(--color-h1-hardware); }
-h1.devel { background: var(--color-h1-devel); }
-h1.setting { background: var(--color-h1-setting); }
+[data-search-results] {
+  h1.gcode { background: var(--color-h1-gcode); }
+  h1.basics { background: var(--color-h1-basics); }
+  h1.feat { background: var(--color-h1-feat); }
+  h1.hardware { background: var(--color-h1-hardware); }
+  h1.devel { background: var(--color-h1-devel); }
+  h1.setting { background: var(--color-h1-setting); }
+}
 
 div.panel.panel-info {
   background-color: var(--color-panel-info); border-color: var(--color-panel-info-border); color: var(--color-panel-info-bg);
@@ -920,10 +926,9 @@ div.custom-article, div.col-md-12>.row.long, div.col-md-12>.row.notes {
 }
 
 #authors {
-  width: 100%;
-  height: 0;
+  position: absolute;
   text-align: right;
-  padding-right: 2px;
+  right: 4px;
   img.avatar { margin: 8px 0 0 2px; }
 }
 
@@ -999,12 +1004,17 @@ div.container.detail {
 
 .clear { clear: both; }
 .params .table>tbody>tr:first-child>td { border-top: 0; }
-.gcode.item, [data-search-results]>.item {
-  padding-bottom: 1em;
+.item.gcode, [data-search-results]>.item {
+  width: 100%;
+  float: left;
+  clear: both;
+  padding: 0 0 1em 1em;
   border-top: 2px solid #888;
+  a { margin-left: 1em; }
   p { margin-top: 1em; font-size: 120%; padding-left: 1em; }
-  >span { float: right; margin: 1em 0.5em 0 0; }
+  >span { float: right; margin: 1em 0.5em -1.5em 0; }
   h2 { margin-top: 0; }
+  h2, p { margin-top: 0; }
 }
 [data-search-results]>.item h2 {
   margin-bottom: 0;
@@ -1012,6 +1022,7 @@ div.container.detail {
   a { display: block; padding: 4px; }
 }
 [data-search-results]>h1 {
+  clear: both;
   text-transform: capitalize;
   color: white;
   display: block;
@@ -1335,7 +1346,6 @@ div.options table {
 
 .detail-header {
   position: relative;
-  pointer-events: none;
   h1 { margin-bottom: 4px; }
   a[name] { position: absolute; top: -5em; }
 }

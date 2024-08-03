@@ -4,8 +4,8 @@
   {% alert info %}This page is under construction and may not have complete or up-to-date information.{% endalert %}
 {% endif %}
 <div class="col-lg-12 row meta detail-header">
-  {% assign matter = gcode %}{% include authors.html %}
 
+  {% assign matter = gcode %}{% include authors.html %}
   <h1>{{ gcode.codes | codes_desc }} - {{ gcode.title }}</h1>
 
   {% if gcode.experimental %}
