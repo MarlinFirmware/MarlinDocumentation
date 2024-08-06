@@ -1390,9 +1390,9 @@ div.tags { display: inline-block; float: right; margin: 0.5em; }
   /* Full height */
   overflow: auto;
   /* Enable scroll if needed */
-  background-color: rgb(0, 0, 0);
+  background-color: var(--color-hl-pre);
   /* Fallback color */
-  background-color: rgba(0, 0, 0, 0.9);
+  background-color: rgba(var(--color-hl-pre), 0.9);
   /* Black w/ opacity */
 }
 
@@ -1409,7 +1409,7 @@ div.tags { display: inline-block; float: right; margin: 0.5em; }
   width: 80%;
   max-width: 700px;
   text-align: center;
-  color: #ccc;
+  color: var(--color-tool-header);
   padding: 10px 0;
   height: 150px;
 }
@@ -1433,7 +1433,7 @@ div.tags { display: inline-block; float: right; margin: 0.5em; }
   position: absolute;
   top: 40px;
   right: 35px;
-  color: #f1f1f1;
+  color: var(--color-tool-header);
   font-size: 40px;
   font-weight: bold;
   transition: 0.3s;
