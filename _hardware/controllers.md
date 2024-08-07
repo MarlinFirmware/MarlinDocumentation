@@ -752,14 +752,14 @@ Marlin supports a wide variety of display controllers, from simple character-bas
     <iframe class="youtube rj" width="300" height="225" src="https://youtube.com/embed/{{ videoid }}"></iframe>
   {% endfor %}
   {% for img in cont.images %}
-    {% if img.front %}<img class="zoomImg" src="{{ fldr }}{{ img.front }}_front.jpg" alt="{{ img.alt }} Front" style="width:100%;max-width:300px">{% endif %}
+    {% if img.front %}<img class="zoomImg" src="{{ fldr }}{{ img.front }}_front.jpg" alt="{{ img.alt }} Front">{% endif %}
     {% if img.back -%}
       {% if img.back.size > 1 %}
         {% for bimg in img.back %}
-          <img class="zoomImg" src="{{ fldr }}{{ bimg }}_back.jpg" alt="{{ img.alt }} Back" style="width:100%;max-width:300px">
+          <img class="zoomImg" src="{{ fldr }}{{ bimg }}_back.jpg" alt="{{ img.alt }} Back">
         {% endfor %}
       {% else %}
-          <img class="zoomImg" src="{{ fldr }}{{ img.back }}_back.jpg" alt="{{ img.alt }} Back" style="width:100%;max-width:300px">
+          <img class="zoomImg" src="{{ fldr }}{{ img.back }}_back.jpg" alt="{{ img.alt }} Back">
       {% endif %}
     {%- endif %}
   {% endfor %}

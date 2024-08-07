@@ -1358,7 +1358,7 @@ div.tags { display: inline-block; float: right; margin: 0.5em; }
   .lcd div { padding-bottom: 0.9em; }
   .lcd .desc { float: left; width: 60%; margin-right: -60%; padding-left: 1em; }
   .lcd .gallery { float: right; width: 40%; margin-left: -40%; padding: 0 1em 0.9em 0; }
-  .lcd .gallery img { float: right; margin-top: 4px; }
+  .lcd .gallery img { float: right; margin-top: 4px; width: 100%; max-width: 300px; }
 }
 
 .fa-x:before { content: "𝕏"; }
