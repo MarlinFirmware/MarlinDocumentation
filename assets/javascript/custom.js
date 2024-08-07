@@ -172,6 +172,16 @@ $(function() {
     setCookie('nightMode', dark);
   });
 
+  // Set up Bootstrap Modal click handler for zoomable images
+  const $modal = $('#myModal');
+  $('.zoomImg').click((e) => {
+    $modal.show();
+    $('#img01').attr('src', e.target.src);
+    $('#caption').html(e.target.alt);
+  });
+  // And Close Button handler
+  $('.modalclose').click((e) => { $modal.hide(); });
+
   // Scroll to the active nav item in a long nav sidebar, such as docs/gcode/*.html
   const $here_ul = $('.container.detail ul.nav.nav-list');
   if ($here_ul.length) {
