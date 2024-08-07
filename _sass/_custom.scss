@@ -1363,37 +1363,31 @@ div.tags { display: inline-block; float: right; margin: 0.5em; }
 
 .fa-x:before { content: "𝕏"; }
 
-#myImg {
+//
+// Bootstrap .modal Image Zoomer
+//
+
+.zoomImg {
   border-radius: 5px;
   cursor: pointer;
   transition: 0.3s;
-}
-
-#myImg:hover {
-  opacity: 0.7;
+  &:hover { opacity: 0.7; }
 }
 
 .modal {
-  display: none;
-  /* Hidden by default */
-  position: fixed;
-  /* Stay in place */
-  z-index: 1;
-  /* Sit on top */
+  width: 80%;
+  max-width: 900px;
+  height: auto; // Allow height to stretch
   padding-top: 100px;
-  /* Location of the box */
-  left: 0;
+  position: fixed; // Position the div on top
   top: 0;
-  width: 100%;
-  /* Full width */
-  height: 100%;
-  /* Full height */
+  left: 50%;
+  transform: translateX(-50%); // Center the div horizontally
+  display: none;
+  z-index: 1;
   overflow: auto;
-  /* Enable scroll if needed */
   background-color: var(--color-hl-pre);
-  /* Fallback color */
   background-color: rgba(var(--color-hl-pre), 0.9);
-  /* Black w/ opacity */
 }
 
 .modal-content {
@@ -1414,8 +1408,7 @@ div.tags { display: inline-block; float: right; margin: 0.5em; }
   height: 150px;
 }
 
-.modal-content,
-#caption {
+.modal-content, #caption {
   animation-name: zoom;
   animation-duration: 0.6s;
 }
@@ -1447,7 +1440,5 @@ div.tags { display: inline-block; float: right; margin: 0.5em; }
 }
 
 @media only screen and (max-width: 700px) {
-  .modal-content {
-    width: 100%;
-  }
+  .modal-content { width: 100%; }
 }
