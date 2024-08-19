@@ -115,18 +115,34 @@ If you'd like to be able to preview your contributions before submitting them, y
 
 > [!NOTE]
 > Ruby may come preinstalled, but macOS' "system Ruby" is outdated, unmaintained, and not recommended for general use.
+>
+> There are many popular package managers for macOS, but we'll cover installation with [Homebrew](//brew.sh/) & [MacPorts](//www.macports.org/).
 
-1. Install [Homebrew](//brew.sh/) by launching Terminal and running the following command:
+1. Install a package manager. You **do not** need to install both:
 
-   ```shell
-   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-   ```
+   - Install Homebrew by launching Terminal and running the following command:
 
-2. Install `chruby`, `ruby-install`, and `xz` with Homebrew:
+      ```shell
+      /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+      ```
 
-   ```shell
-   brew install chruby ruby-install xz
-   ```
+   - Install MacPorts by downloading & installing the correct package for your version of macOS from the [Installing MacPorts](//www.macports.org/install.php) page.
+
+     - Either Xcode or Command Line Tools for Xcode are required to install packages with MacPorts. You **do not** need to install both. These are available for free on [Apple's Developer Program website](https://developer.apple.com/download/). An Apple Developer Program membership is not required, but you will need to sign in with your Apple ID.
+
+2. Install `chruby`, `ruby-install`, and `xz`:
+
+   - Homebrew:
+
+      ```shell
+      brew install chruby ruby-install xz
+      ```
+
+   - MacPorts:
+
+     ```shell
+     sudo port install chruby ruby-install xz
+     ```
 
 3. Install Ruby `3.3.4`:
 
@@ -134,15 +150,27 @@ If you'd like to be able to preview your contributions before submitting them, y
    ruby-install ruby 3.3.4
    ```
 
-   This will take a few minutes. Once the install is complete, configure your shell to automatically use `chruby`:
+   This will take a few minutes.
 
-   ```shell
-   echo "source $(brew --prefix)/opt/chruby/share/chruby/chruby.sh" >> ~/.zshrc
-   echo "source $(brew --prefix)/opt/chruby/share/chruby/auto.sh" >> ~/.zshrc
-   echo "chruby ruby-3.3.4" >> ~/.zshrc
-   ```
+4. Configure your shell to automatically use `chruby`:
 
-4. Quit and relaunch Terminal, then check that everything is working:
+   - Homebrew:
+
+     ```shell
+     echo "source $(brew --prefix)/opt/chruby/share/chruby/chruby.sh" >> ~/.zshrc
+     echo "source $(brew --prefix)/opt/chruby/share/chruby/auto.sh" >> ~/.zshrc
+     echo "chruby ruby-3.3.4" >> ~/.zshrc
+     ```
+
+   - MacPorts:
+
+     ```shell
+     echo "source ${prefix}/opt/local/share/chruby/chruby.sh" >> ~/.zshrc
+     echo "source ${prefix}/opt/local/share/chruby/auto.sh" >> ~/.zshrc
+     echo "chruby ruby-3.3.4" >> ~/.zshrc
+     ```
+
+5. Quit and relaunch Terminal, then check that everything is working:
 
    ```shell
    ruby -v
