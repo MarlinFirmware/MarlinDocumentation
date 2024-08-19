@@ -109,7 +109,7 @@ If you'd like to be able to preview your contributions before submitting them, y
    ```shell
    ruby -v
    ```
-   If `ruby 3.3.4 (2024-07-09 revision be1089c8ec) [x64-mingw-ucrt]` is reported, then proceed to proceed to the [Jekyll primer](#jekyll-primer) section below.
+   If `ruby 3.3.4 (2024-07-09 revision be1089c8ec)` is reported, then proceed to proceed to the [Jekyll primer](#jekyll-primer) section below.
 
 ### Installing buildroot on macOS
 
@@ -148,7 +148,7 @@ If you'd like to be able to preview your contributions before submitting them, y
    ruby -v
    ```
 
-   If `ruby 3.3.4 (2024-07-09 revision be1089c8ec) [x86_64-darwin21]` is reported, proceed to the [Jekyll primer](#jekyll-primer) section below.
+   If `ruby 3.3.4 (2024-07-09 revision be1089c8ec)` is reported, proceed to the [Jekyll primer](#jekyll-primer) section below.
 
 ### Installing buildroot on Ubuntu
 
@@ -184,7 +184,7 @@ If you'd like to be able to preview your contributions before submitting them, y
    ```shell
    ruby -v
    ```
-   If `ruby 3.3.4 (2024-07-09 revision be1089c8ec) [x86_64-linux]` is reported, proceed to the next step.
+   If `ruby 3.3.4 (2024-07-09 revision be1089c8ec)` is reported, proceed to the next step.
 
 5. Add environment variables to your `~/.bashrc` file to configure the gem installation path:
 
