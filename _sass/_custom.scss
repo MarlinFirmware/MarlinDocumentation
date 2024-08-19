@@ -8,6 +8,13 @@
  *  - Layout theming for DOM elements, classes, IDs, etc.
  *    - @media overrides are used for adaptive layout
  *  - Follow the comments below for further customizations.
+ *
+ * Bootstrap sizes for this site:
+ *  - $screen-sm-min = 768px
+ *  - $screen-sm-max = 991px
+ *  - $screen-md-min = 992px
+ *  - $screen-md-max = 1199px
+ *  - $screen-lg-min = 1200px
  */
 :root {
   --bg-midsection: radial-gradient(circle, rgba(0,0,0, 1) 0%, rgba(0,0,0, 0) 60%, rgba(0,0,0, 0) 100%);
@@ -27,7 +34,7 @@
   --color-bitmap-output-border: #077;
   --color-bitmap-selector-bg: #EEE;
   --color-bitmap-selector-options-bg: #FFF;
-  --color-bitmap-selector-label: #FDD;
+  --color-bitmap-selector-unimplemented: #FDD;
   --color-bitmap-err-box: red;
   --color-code: #0088CC;
   --color-code-bg: #DEF;
@@ -208,7 +215,7 @@
   --color-bitmap-output: #666;
   --color-bitmap-selector-bg: #226;
   --color-bitmap-selector-options-bg: #8888;
-  --color-bitmap-selector-label: #FDD;
+  --color-bitmap-selector-unimplemented: #FDD;
   --color-bitmap-err-box: red;
   --color-code: #AAF;
   --color-code-bg: #114;
@@ -418,10 +425,14 @@ pre.highlight{ background-color: var(--color-highlight-bg); }
 }
 .navbar-default {
   .navbar-brand { &:hover, &:focus { background-color: inherit; } }
-  .navbar-nav { &>li>a:hover, &>li>a:focus { background-color: var(--color-nav-hover-bg); color: var(--color-nav-hover); } }
+  .navbar-nav { >li>a:hover, >li>a:focus { background-color: var(--color-nav-hover-bg); color: var(--color-nav-hover); } }
   .navbar-nav>.open>a { &, &:hover, &:focus { background-color: var(--color-nav-hover-bg); color: var(--color-hover-focus); } }
 }
 
+/**
+ * Top nav bar for "Edit Page" or "Follow Us" links
+ */
+.nav.navbar-right li { float: left; }
 .nav.navbar-right li>a {
   color: var(--color-link-edit);
   padding: 14px 12px;
@@ -433,7 +444,10 @@ pre.highlight{ background-color: var(--color-highlight-bg); }
  */
 .nav.navbar-nav {
   li.here {
-    &>a { color: var(--color-nav-active); background: var(--color-nav-active-bg); }
+    >a {
+      color: var(--color-nav-active); background: var(--color-nav-active-bg);
+      &:hover { color: var(--color-nav-hover); }
+    }
     &.open>a { color: var(--color-nav); }
   }
   li:hover { background-color: var(--color-nav-hover-bg); color: var(--color-nav-hover); }
@@ -444,7 +458,7 @@ pre.highlight{ background-color: var(--color-highlight-bg); }
   background-color: var(--color-dropdown-bg); color: var(--color-dropdown);
   li {
     a { color: var(--color-dropdown-a); }
-    &>a:hover, &>a:active { color: var(--color-dropdown-a-hover); background-color: var(--color-dropdown-a-hover-bg); }
+    >a:hover, >a:active { color: var(--color-dropdown-a-hover); background-color: var(--color-dropdown-a-hover-bg); }
   }
 }
 
@@ -455,7 +469,8 @@ li#top-config   { a:hover, a:active { background-color: var(--color-config-hover
 li#top-install  { a:hover, a:active { background-color: var(--color-install-hover-bg);  } }
 li#top-tools    { a:hover, a:active { background-color: var(--color-tools-hover-bg);    } }
 li#top-help     { a:hover, a:active { background-color: var(--color-help-hover-bg);     } }
-li#top-donate   { a:hover, a:active { background-color: var(--color-donate-hover-bg);   } }
+#contributing-page li#top-donate, li#top-donate { a:hover, a:active { background-color: var(--color-donate-hover-bg); color: var(--color-nav-hover); } }
+#contributing-page li#top-donate a { background-color: var(--color-nav-active-bg); color: var(--color-nav-active); }
 
 // Nav bar search box
 li#searchbox {
@@ -513,12 +528,14 @@ a.panel-wrapper:hover, a.panel-wrapper:active {
 }
 .post { background-color: var(--color-post-bg); }
 [data-search-results]>h1 { color: var(--color-data-search); background: var(--color-data-search-bg); }
-h1.gcode { background: var(--color-h1-gcode); }
-h1.basics { background: var(--color-h1-basics); }
-h1.feat { background: var(--color-h1-feat); }
-h1.hardware { background: var(--color-h1-hardware); }
-h1.devel { background: var(--color-h1-devel); }
-h1.setting { background: var(--color-h1-setting); }
+[data-search-results] {
+  h1.gcode { background: var(--color-h1-gcode); }
+  h1.basics { background: var(--color-h1-basics); }
+  h1.feat { background: var(--color-h1-feat); }
+  h1.hardware { background: var(--color-h1-hardware); }
+  h1.devel { background: var(--color-h1-devel); }
+  h1.setting { background: var(--color-h1-setting); }
+}
 
 div.panel.panel-info {
   background-color: var(--color-panel-info); border-color: var(--color-panel-info-border); color: var(--color-panel-info-bg);
@@ -573,8 +590,8 @@ div.alert-danger {
 
 #bitmap-converter {
   label:hover { color: var(--color-bitmap-label-hover); }
-  #preview-lg { border-color: var(--color-bitmap-preview-lg); }
-  #preview-sm { border-color: var(--color-bitmap-preview-sm); }
+  #preview-lg { border-color: var(--color-bitmap-preview-lg); background: var(--color-bitmap-preview-lg); }
+  #preview-sm { border-color: var(--color-bitmap-preview-sm); background: var(--color-bitmap-preview-sm); }
   input#pasted { color: var(--color-bitmap-input); }
   textarea#output {
     border-color: var(--color-bitmap-output-border);
@@ -584,7 +601,7 @@ div.alert-danger {
   div.file-selector {
     background: var(--color-bitmap-selector-bg);
     .options { background-color: var(--color-bitmap-selector-options-bg); }
-    label.tbd, label.tbd:hover { color: var(--color-bitmap-selector-label) !important; }
+    label.tbd, label.tbd:hover { color: var(--color-bitmap-selector-unimplemented) !important; }
   }
   div#err-box { color: var(--color-bitmap-err-box); }
 }
@@ -667,16 +684,16 @@ div.highlight { margin-bottom: 25px; }
 }
 .container {
   h2, h3, h4, h5, h6 {
-    padding: 0.25em;
+    padding: 10px;
     border-top-left-radius: 0.25em;
     border-top-right-radius: 0.05em;
     border-bottom-left-radius: 0.25em;
     border-bottom-right-radius: 0.25em;
   }
-  h3, h4, h5, h6 {
-    margin-top: 1em;
-    margin-left: 0.25em;
-  }
+  h2 { padding: 10px 0; }
+  h3, h4 { margin-left: 6px; }
+  p+h3, p+h4, p+h5, p+h6,
+  p+div+h3, p+div+h4, p+div+h5, p+div+h6 { margin-top: 1em; }
 }
 .container td {
   h2, h3, h4, h5, h6 {
@@ -907,13 +924,16 @@ div.custom-article, div.col-md-12>.row.long, div.col-md-12>.row.notes {
   margin: -1em 0 1em;
   padding: 0.5em 0.5em 0.25em;
 }
-.detail-header h1 { margin-bottom: 4px; }
+
 #authors {
-  height: 0; margin-top: 0; margin-bottom: 0; padding-top: 0; padding-bottom: 0;
-  img.avatar { float: right; margin: 8px 0 0 2px; background: white; }
+  position: absolute;
+  text-align: right;
+  right: 4px;
+  img.avatar { margin: 8px 0 0 2px; }
 }
 
 div.custom-article {
+  p { margin-left: 0.5em; }
   p, ul>li {
     font-size: 110%; clear: both;
     ul>li p { font-size: 100%; }
@@ -984,12 +1004,17 @@ div.container.detail {
 
 .clear { clear: both; }
 .params .table>tbody>tr:first-child>td { border-top: 0; }
-.gcode.item, [data-search-results]>.item {
-  padding-bottom: 1em;
+.item.gcode, [data-search-results]>.item {
+  width: 100%;
+  float: left;
+  clear: both;
+  padding: 0 0 1em 1em;
   border-top: 2px solid #888;
+  a { margin-left: 1em; }
   p { margin-top: 1em; font-size: 120%; padding-left: 1em; }
-  >span { float: right; margin: 1em 0.5em 0 0; }
+  >span { float: right; margin: 1em 0.5em -1.5em 0; }
   h2 { margin-top: 0; }
+  h2, p { margin-top: 0; }
 }
 [data-search-results]>.item h2 {
   margin-bottom: 0;
@@ -997,6 +1022,7 @@ div.container.detail {
   a { display: block; padding: 4px; }
 }
 [data-search-results]>h1 {
+  clear: both;
   text-transform: capitalize;
   color: white;
   display: block;
@@ -1082,6 +1108,7 @@ div.container.detail {
     font-weight: bold;
   }
   div#cpp-container,
+  #boot-sub { display: none; }
   #stat-sub { display: none; }
 }
 
@@ -1103,8 +1130,8 @@ div[role=main] { padding-bottom: 33vh; }
   h1, p { text-align: center; }
   ul li { display: block; margin: 0.5em auto; width: 20em; }
   table { margin: 1em auto; font-size: 140%;
-    @media (min-width: 1200px) { width: 1000px; }
-    @media (max-width: 1200px) { width: 85.5%; }
+    @media (min-width: $screen-md-min) { width: 1000px; }
+    @media (max-width: $screen-sm-max) { width: 85.5%; }
   }
   th, td { border-bottom: 1px solid; padding: 1em; }
   th { font-size: 110%; font-weight: $headings-font-weight; }
@@ -1189,13 +1216,13 @@ summary h3 { display: inline; }
 footer>.container { display: block; clear: both; width: 100%}
 .noshift-footer, .shift-footer {
   padding: 1em;
-  .back-to-top { margin-top: -3pc; }
+  .back-to-top { margin-top: -0.5pc; }
 }
 @media (min-width: 991px) {
   .shift-footer { padding-left: 369px !important; }
 }
 
-@media (min-width: $screen-sm-min) and (max-width: $screen-md-min) {
+@media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
   .highlight-panels {
     .panel-heading { height: 70px;}
     .panel {
@@ -1204,6 +1231,7 @@ footer>.container { display: block; clear: both; width: 100%}
     }
   }
 }
+@media (max-width: 1050px) { .nav.navbar-right { li { clear: both; a { padding: 2px 12px 2px 2px; } } } }
 @media (min-width: $screen-sm-min) {
   #search.container .overlay { width: 750px; }
   .navbar-nav>li>a { padding-left: 4px; padding-right: 4px; }
@@ -1236,7 +1264,7 @@ footer>.container { display: block; clear: both; width: 100%}
 .container {
   width: 100%;
   max-width: 1400px;
-  padding: 0 1em;
+  padding: 0;
 }
 .navbar-fixed-top { padding: 0 1em; }
 @media (min-width: $screen-lg-min) {
@@ -1256,8 +1284,7 @@ footer>.container { display: block; clear: both; width: 100%}
 @media (max-width: $screen-sm-min) {
   li#searchbox input[type="search"] { width: 10em; }
   .tocify.bigtoc, .custom-fixed-sidebar .tocify { width: 324px; }
-  //footer>.container { width: 100%; padding-left: 0; }
-  footer>.container { width: ($screen-lg-min - 30 - 20); padding-left: 312px; }
+  footer>.container { width: 100%; padding-left: 0; }
 }
 // Fix headings in panels
 div.panel.panel-info, div.panel.panel-warning {
@@ -1316,7 +1343,11 @@ div.options table {
   td { font-size: 90% }
 }
 
-.detail-header { position: relative; a[name] { position: absolute; top: -5em; } }
+.detail-header {
+  position: relative;
+  h1 { margin-bottom: 4px; }
+  a[name] { position: absolute; top: -5em; }
+}
 
 div.brief { font-weight: $bold-font-weight; }
 div.since { float: right; margin-right: 0.25em; }
@@ -1328,3 +1359,5 @@ div.tags { display: inline-block; float: right; margin: 0.5em; }
   .lcd .gallery { float: right; width: 40%; margin-left: -40%; padding: 0 1em 0.9em 0; }
   .lcd .gallery img { float: right; margin-top: 4px; }
 }
+
+.fa-x:before { content: "𝕏"; }

@@ -3,7 +3,6 @@ module Jekyll
     def indexify(input)
       # Reduce text down to searchable terms
       some = input.downcase
-      some = some.gsub('průša', 'prusa')
       some = some.gsub(/(<[^>]*>|$$.+$$)/, '')
       some = some.gsub(/(en|dis)abled\(([^\)]+)\)/i, '\2')
       some = some.gsub(/!\[[^\]]+\]\([^\)]+\)(\s*\{[^\}]+\})?/, ' ')

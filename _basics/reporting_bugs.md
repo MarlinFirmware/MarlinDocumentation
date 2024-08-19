@@ -70,7 +70,7 @@ In addition to following the guidelines above, we ask that you follow a thorough
   - [Issue Queue](//github.com/MarlinFirmware/Marlin/issues)
   - [Post a New Issue](//github.com/MarlinFirmware/Marlin/issues/new?labels=Bug%3A+Potential+%3F&template=bug_report.yml&title=%5BBUG%5D+%28bug+summary%29)
   - [Bug Fix branch](//github.com/MarlinFirmware/Marlin/tree/bugfix-2.1.x)
-  - [MarlinFirmware on Discord](//discord.gg/n5NJ59y) - Realtime chat with users and developers
+  - [MarlinFirmware on Discord](//discord.gg/marlin-firmware-461605380783472640) - Realtime chat with users and developers
   - [Marlin Firmware](//www.facebook.com/groups/1049718498464482/) and [Marlin Firmware for 3D Printers](//www.facebook.com/groups/3Dtechtalk/) Facebook Groups
   - [Marlin Forum](//forums.reprap.org/list.php?415) at RepRap.org
   - [Marlin YouTube Videos](//youtube.com/results?search_query=marlin+firmware)

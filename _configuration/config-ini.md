@@ -18,11 +18,11 @@ Marlin configurations include `#if` blocks to group dependent options, although 
 
 It can be tricky to migrate from older versions of Marlin as settings change. Marlin checks for old settings and tells you what to change during the build, but the final result is never fully up to date. Wouldn't it be nice if Marlin would automatically migrate old settings to a new configuration for you?
 
-We're currently working on tools to improve the situation, with the goal to build a schema and a database of configurations across all Marlin versions so we can generate complete configuration headers, perform migrations, and even generate searchable documentation for this website. That is a big project unto itself, so feel free to [get involved on Discord](https://discord.gg/n5NJ59y)!
+We're currently working on tools to improve the situation, with the goal to build a schema and a database of configurations across all Marlin versions so we can generate complete configuration headers, perform migrations, and even generate searchable documentation for this website. That is a big project unto itself, so feel free to [get involved on Discord](https://discord.gg/marlin-firmware-461605380783472640)!
 
 ## Meta Configuration
 
-Since Marlin now supports PlatformIO we can do custom pre-processing as part of the build. PlatformIO loves INI files, which are very simple and commonly used for 3D printer firmware configuration. So, we now include a [`config.ini` configuration file](https://github.com/MarlinFirmware/Marlin/blob/2.1.2.3/Marlin/config.ini) that can do a lot of useful tricks.
+Since Marlin now supports PlatformIO we can do custom pre-processing as part of the build. PlatformIO loves INI files, which are very simple and commonly used for 3D printer firmware configuration. So, we now include a [`config.ini` configuration file](https://github.com/MarlinFirmware/Marlin/blob/2.1.2.4/Marlin/config.ini) that can do a lot of useful tricks.
 
 ## config.ini
 
@@ -30,7 +30,7 @@ Note that the behavior of this feature is likely to change as we continue to exp
 
 ### Overview
 
-The default `config.ini` for Marlin 2.1.2.3 looks something like this:
+The default `config.ini` for Marlin 2.1.2.4 looks something like this:
 
 ```ini
 #

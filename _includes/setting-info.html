@@ -9,14 +9,6 @@
   {% if page.label %}{% assign title = page.label %}{% else %}{% assign title = false %}{% endif %}
   {% if page.since %}{% assign since = page.since %}{% else %}{% assign since = false %}{% endif %}
   {% if page.tags %}{% assign tags = page.tags | join: ", " %}{% else %}{% assign tags = false %}{% endif %}
-  <p id="authors" class="text-right pull-right visible-lg-block hidden-print small custom-pt25">
-    {% assign authors = conf.author | append: ',' | append: conf.contrib | replace: " ","" | split: ',' %}
-    {% if authors %}
-      {% for author in authors %}
-        <a href="//github.com/{{ author }}" data-toggle="tooltip" data-placement="bottom" title="Visit {{ author }}'s profile on Github">{% avatar user=author size=30 %}</a>
-      {% endfor %}
-    {% endif %}
-  </p>
 {% else %}
   {% assign ispage = false %}
   {% assign h1 = "h4" %}{% assign h3 = "h5" %}
@@ -31,6 +23,8 @@
 {%- endif -%}
 
 <div class="detail-header">
+  {% if ispage %}{% assign matter = conf %}{% include authors.html %}{% endif %}
+
   {%- if since -%}
     <div class="since">
       <span class="label label-success"><i class="fa fa-code" aria-hidden="true"></i>

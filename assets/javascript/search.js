@@ -12,7 +12,7 @@
 //
 // Declare a jekyllSearch singleton
 //
-var jekyllSearch = (function(){
+var jekyllSearch = (() => {
 
   var q, qmatch, jsonFeedUrl = '/feeds/feed.json',
     $searchForm, $searchInput, $searchButton,
@@ -45,19 +45,33 @@ var jekyllSearch = (function(){
      * @param {String} placeholder
      * @return {String} injected content
      */
-    injectContent: function(originalContent, injection, placeholder) {
+    injectContent: (originalContent, injection, placeholder) => {
       if (injection === undefined) injection = '';
       var regex = new RegExp(placeholder, 'g');
       return originalContent.replace(regex, injection);
     },
 
     init: function() {
-      self = this;
+      self = this;  // The enclosing function()
 
       if (document.location.href.indexOf('meta/search/') == -1) {
-        setTimeout(function(){ $('#searchbox>form').css('display','inline-block'); }, 800);
+        setTimeout(() => { $('#searchbox>form').css('display','inline-block'); }, 800);
         return;
       }
+
+      // Extend String to remove accents from characters
+      String.prototype.unaccent = function() { return this.normalize("NFD").replace(/[\u0300-\u036f]/g, ""); }
+
+      // Extend jQuery.event.fix for copy/paste to fix clipboardData
+      // $.event.fix = ((originalFix) => {
+      //   return function(e) { // Must be function to get (this, arguments)
+      //     e = originalFix.apply(this, arguments); // this == e.target
+      //     if (e.type.indexOf('copy') === 0 || e.type.indexOf('paste') === 0) {
+      //       e.clipboardData = e.originalEvent.clipboardData;
+      //     }
+      //     return e;
+      //   };
+      // })($.event.fix);
 
       $searchForm = $("[data-search-form]");
       $searchInput = $("[data-search-input]");
@@ -89,51 +103,64 @@ var jekyllSearch = (function(){
       // Get search results on submission of form
       // TODO: Update results on change, after a pause
       $searchInput.change(self.onSearchChanged)
-                  .keydown(function(e){
+                  .on('input cut paste', () => { setTimeout(self.searchFromField, 50) })
+                  .keydown((e) => {
                     var k = e.keyCode;
                     if (k == 10 || k == 13) return self.onSearchChanged(e);
                   })
-                  .keyup(function(e){
+                  .keyup((e) => {
                     var k = e.keyCode;
                     if (k >= 32 || k == 8) self.onSearchKeyUp();
-                  });
+                  })
 
-      $searchButton.click(function(e) { self.onSearchChanged(e); });
+      $searchButton.click((e) => { self.onSearchChanged(e); });
 
+      // Search the provided string on load
       self.searchFromField();
+
+      // Focus the search field, and also select all chars
+      $searchInput.focus().select();
     },
 
-    searchFieldString: function() {
-      return $searchInput.val().trim();
-    },
+    // Get the trimmed string from the search field
+    searchFieldString: () => { return $searchInput.val().trim(); },
 
-    searchPattern: function(str) {
-      const patt = str.toLowerCase().replace(ignore_pattern, '').trim().replace(/\s+/g, '.+');
+    // Convert a string to a regex pattern
+    searchPattern: (str) => {
+      const patt = str.toLowerCase().replace(ignore_pattern, '').trim().replace(/\s+/gm, '.+').replace(/([([\\])/gm, '\\$1');
       return new RegExp(patt);
     },
 
-    searchFromField: function() {
-      var newq = self.searchFieldString(),
+    // Execute a search using the field value
+    searchText: (intext) => {
+      var newq = intext.unaccent(),
           newm = self.searchPattern(newq);
       self.execSearch(newq, newm);
     },
 
-    onSearchChanged: function(e) {
-      e.preventDefault();
-      var newq = self.searchFieldString();
-      if (newq.length >= 3 || newq.match(/^[gm]\d+/i))
+    // Execute a search using the field value
+    searchFromField: () => { self.searchText(self.searchFieldString()); },
+
+    // When the field value changes (as on blur, paste) execute a search right away.
+    onSearchChanged: (e, allow=false) => {
+      if (!allow) e.preventDefault();
+      const newq = self.searchFieldString();
+      if (newq.length == 0 || newq.length >= 3 || newq.match(/^[gmd]\d+/i))
         self.searchFromField();
-      return false;
+      return allow;
     },
 
-    onSearchKeyUp: function() {
+    // After a keypress set a timer to run a search on the field value,
+    // canceling any previous timer.
+    onSearchKeyUp: () => {
       if (searchTimer) { clearTimeout(searchTimer); searchTimer = 0; }
-      var newq = self.searchFieldString();
-      if (newq.length >= 3 || newq.match(/^[gm]\d+/i))
-        searchTimer = setTimeout(self.searchFromField, 800);
+      const newq = self.searchFieldString();
+      if (newq.length == 0 || newq.length >= 3 || newq.match(/^[gmd]\d+/i))
+        searchTimer = setTimeout(self.searchFromField, 50);
     },
 
-    fixResultsPos: function() {
+    // Put the search results below the header
+    fixResultsPos: () => {
       $resultsPlaceholder.css('padding-top', ($("#search .overlay").height() + 6) + 'px');
       $(window).scrollTop(0);
     },
@@ -142,7 +169,7 @@ var jekyllSearch = (function(){
      * Execute search
      * @return null
      */
-    execSearch: function(newq, newm) {
+    execSearch: (newq, newm) => {
       if (newq != '' || allowEmpty) {
         q = newq;
         qmatch = newm;
@@ -157,7 +184,7 @@ var jekyllSearch = (function(){
      * Toggle loading class on results and found string
      * @return null
      */
-    toggleLoadingClass: function() {
+    toggleLoadingClass: () => {
       $resultsPlaceholder.toggleClass(loadingClass);
       $foundContainer.toggleClass(loadingClass);
     },
@@ -167,7 +194,7 @@ var jekyllSearch = (function(){
      * @param {Function} callbackFunction
      * @return null
      */
-    getSearchResults: function(callbackFunction) {
+    getSearchResults: (callbackFunction) => {
       $.get(jsonFeedUrl, callbackFunction, 'json');
     },
 
@@ -175,16 +202,16 @@ var jekyllSearch = (function(){
      * Process search result data
      * @return null
      */
-    resultsProcessor: function() {
+    resultsProcessor: () => {
       var results = [];
 
-      return function(data) {
+      return (data) => {
 
         //console.log("Processor data", data);
 
         var resultsCount = 0, results = '', lastclass = '';
 
-        $.each(data, function(index, item) {
+        $.each(data, (index, item) => {
           // check if search term is in content or title
           const comp = (item.name + " " + item.title + ' ' + item.content + item.excerpt).toLowerCase();
           if (comp.match(qmatch)) {
@@ -211,7 +238,7 @@ var jekyllSearch = (function(){
      * @param {String} results
      * @return null
      */
-    showSearchResults: function(results) {
+    showSearchResults: (results) => {
       // Add results HTML to placeholder
       $resultsPlaceholder.html(results);
       self.fixResultsPos();
@@ -223,7 +250,7 @@ var jekyllSearch = (function(){
      * @param {object} item
      * @return {String} Populated HTML
      */
-    populateResultContent: function(html, item) {
+    populateResultContent: (html, item) => {
       html = self.injectContent(html, item.title, '##Title##');
       html = self.injectContent(html, item.link, '##Url##');
       html = self.injectContent(html, item.excerpt, '##Excerpt##');
@@ -235,8 +262,8 @@ var jekyllSearch = (function(){
       if (item.group !== undefined)
         extra_tags += '<span class="label label-default"><i class="fa fa-tags" aria-hidden="true"></i>' + item.group + '</span>';
       if (item.requires !== undefined)
-        $.each(item.requires.split(","), function() {
-          extra_tags += '<span class="label label-requires">' + this + '</span>';
+        $.each(item.requires.split(","), (i,v) => {
+          extra_tags += '<span class="label label-requires">' + v + '</span>';
         });
       html = self.injectContent(html, extra_tags, '##CustomHTML##');
       var c = item.class ? item.class : '';
@@ -256,7 +283,7 @@ var jekyllSearch = (function(){
      * @param {String} count
      * @return null
      */
-    populateResultsString: function(count) {
+    populateResultsString: (count) => {
       $foundTerm.text(q);
       $foundCount.text(count);
       $foundContainer.show();

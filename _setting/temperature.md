@@ -4,6 +4,7 @@ brief: Basic Temperature settings
 category: [ wip ]
 tags: [ hardware, temperature ]
 pagetype: toc
+author: thinkyhead
 
 settings:
 - name: TEMP_SENSOR_0
