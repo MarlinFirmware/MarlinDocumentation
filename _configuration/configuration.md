@@ -2490,8 +2490,8 @@ Fixed-time-based Motion Control. Enable/disable and set parameters with G-code [
 #if ENABLED(FT_MOTION)
   #define FTM_DEFAULT_MODE         ftMotionMode_ENABLED // Default mode of fixed time control. (Enums in ft_types.h)
   #define FTM_DEFAULT_DYNFREQ_MODE dynFreqMode_DISABLED // Default mode of dynamic frequency calculation. (Enums in ft_types.h)
-  #define FTM_SHAPING_DEFAULT_X_FREQ 37.0f              // (Hz) Default peak frequency used by input shapers.
-  #define FTM_SHAPING_DEFAULT_Y_FREQ 37.0f              // (Hz) Default peak frequency used by input shapers.
+  #define FTM_SHAPING_DEFAULT_FREQ_X 37.0f              // (Hz) Default peak frequency used by input shapers.
+  #define FTM_SHAPING_DEFAULT_FREQ_Y 37.0f              // (Hz) Default peak frequency used by input shapers.
   #define FTM_LINEAR_ADV_DEFAULT_ENA false              // Default linear advance enable (true) or disable (false).
   #define FTM_LINEAR_ADV_DEFAULT_K    0.0f              // Default linear advance gain.
   #define FTM_SHAPING_ZETA            0.1f              // Zeta used by input shapers.

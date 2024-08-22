@@ -1216,7 +1216,7 @@ summary h3 { display: inline; }
 footer>.container { display: block; clear: both; width: 100%}
 .noshift-footer, .shift-footer {
   padding: 1em;
-  .back-to-top { margin-top: -3pc; }
+  .back-to-top { margin-top: -0.5pc; }
 }
 @media (min-width: 991px) {
   .shift-footer { padding-left: 369px !important; }
@@ -1284,8 +1284,7 @@ footer>.container { display: block; clear: both; width: 100%}
 @media (max-width: $screen-sm-min) {
   li#searchbox input[type="search"] { width: 10em; }
   .tocify.bigtoc, .custom-fixed-sidebar .tocify { width: 324px; }
-  //footer>.container { width: 100%; padding-left: 0; }
-  footer>.container { width: ($screen-lg-min - 30px - 20px); padding-left: 312px; }
+  footer>.container { width: 100%; padding-left: 0; }
 }
 // Fix headings in panels
 div.panel.panel-info, div.panel.panel-warning {
