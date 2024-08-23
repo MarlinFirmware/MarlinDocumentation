@@ -143,7 +143,7 @@ If you'd like to be able to preview your contributions before submitting them, y
    - MacPorts:
 
      ```sh
-     sudo port install chruby ruby-install xz
+     sudo port install chruby ruby-install
      ```
 
 3. Install Ruby `3.3.4`:
@@ -152,7 +152,7 @@ If you'd like to be able to preview your contributions before submitting them, y
    ruby-install ruby 3.3.4
    ```
 
-   This will take a few minutes. (It's not as quick as the `rbenv` install you may have used previously.)
+   The configure, build, and install process will take a few minutes.
 
 4. Configure your shell to automatically use `chruby`:
 
@@ -183,6 +183,9 @@ If you'd like to be able to preview your contributions before submitting them, y
    ```
 
    It should report `ruby 3.3.4 (2024-07-09 revision be1089c8ec)`. If not, repeat the above steps.
+
+> [!NOTE]
+> When using `ruby-install` you'll find your Ruby installations in `~/.rubies/` and you can switch between them with `chruby`. New instances of `zsh` in Terminal will default to 3.3.4 due to the changes made to `~/.zshrc`.
 
 6. Proceed to the [Installing Jekyll](#installing-jekyll) section below. (Note that `bundler` is already included.)
 
@@ -216,6 +219,9 @@ If you'd like to be able to preview your contributions before submitting them, y
    rbenv global 3.3.4
    ```
 
+> [!NOTE]
+> When using `rbenv` you'll find your Ruby installations in `~/.rbenv/versions/` and you can switch between them with `rbenv global <version>`.
+
 4. Check Ruby version:
 
    ```sh
@@ -238,7 +244,7 @@ If you'd like to be able to preview your contributions before submitting them, y
    gem install bundler
    ```
 
-7. Proceed to Installing Jekyll….
+7. Proceed to **Installing Jekyll**….
 
 ### Installing Jekyll
 
