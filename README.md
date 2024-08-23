@@ -132,12 +132,12 @@ If you'd like to be able to preview your contributions before submitting them, y
 
      - Either Xcode or Command Line Tools for Xcode are required to install packages with MacPorts. You **do not** need to install both. These are available for free on [Apple's Developer Program website](https://developer.apple.com/download/). An Apple Developer Program membership is not required, but you will need to sign in with your Apple ID.
 
-2. Install `chruby`, `ruby-install`, and `xz`:
+2. Install `chruby` and `ruby-install`:
 
    - Homebrew:
 
      ```sh
-     brew install chruby ruby-install xz
+     brew install chruby ruby-install
      ```
 
    - MacPorts:
