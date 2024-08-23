@@ -21,16 +21,17 @@ This repository contains the raw documentation for [Marlin 3D printer firmware](
 
 - [Technical details](#technical-details)
 - [How to contribute](#how-to-contribute)
-  * [Coding style](#coding-style)
-  * [Editorial style](#editorial-style)
-  * [Work in progress](#work-in-progress)
+  - [Coding style](#coding-style)
+  - [Editorial style](#editorial-style)
+  - [Work in progress](#work-in-progress)
 - [Local Jekyll preview](#local-jekyll-preview)
-  * [Installing buildroot on Windows](#installing-buildroot-on-windows)
-  * [Installing buildroot on macOS](#installing-buildroot-on-macos)
-  * [Installing buildroot on Ubuntu](#installing-buildroot-on-ubuntu)
-- [Jekyll primer](#jekyll-primer)
-- [Previewing content](#previewing-content)
-- [License](#license)
+  - [Installing Ruby on Windows](#installing-ruby-on-windows)
+  - [Installing Ruby on macOS](#installing-ruby-on-macos)
+  - [Installing Ruby on Ubuntu](#installing-ruby-on-ubuntu)
+  - [Installing Jekyll](#installing-jekyll)
+  - [Jekyll basics](#jekyll-basics)
+  - [Previewing content](#previewing-content)
+  - [License](#license)
 
 ## Technical details
 
@@ -96,7 +97,7 @@ You can use the `_tmp` folder for work-in-progress, and they will not be include
 
 If you'd like to be able to preview your contributions before submitting them, you'll need to install Jekyll on your system. Instructions for Windows and macOS are given below:
 
-### Installing buildroot on Windows
+### Installing Ruby on Windows
 
 1. Download and install a Ruby+Devkit `3.3.4` from [RubyInstaller Download Archives](//rubyinstaller.org/downloads/archives/). Use default options for installation.
 
@@ -110,9 +111,9 @@ If you'd like to be able to preview your contributions before submitting them, y
    ```sh
    ruby -v
    ```
-   If `ruby 3.3.4 (2024-07-09 revision be1089c8ec)` is reported, then proceed to proceed to the [Jekyll primer](#jekyll-primer) section below.
+   If `ruby 3.3.4 (2024-07-09 revision be1089c8ec)` is reported, then proceed to proceed to the [Installing Jekyll](#installing-jekyll) section below.
 
-### Installing buildroot on macOS
+### Installing Ruby on macOS
 
 > [!NOTE]
 > Ruby may come preinstalled, but macOS' "system Ruby" is outdated, unmaintained, and not recommended for general use.
@@ -135,9 +136,9 @@ If you'd like to be able to preview your contributions before submitting them, y
 
    - Homebrew:
 
-      ```sh
-      brew install chruby ruby-install xz
-      ```
+     ```sh
+     brew install chruby ruby-install xz
+     ```
 
    - MacPorts:
 
@@ -151,13 +152,15 @@ If you'd like to be able to preview your contributions before submitting them, y
    ruby-install ruby 3.3.4
    ```
 
-   This will take a few minutes.
+   This will take a few minutes. (It's not as quick as the `rbenv` install you may have used previously.)
 
 4. Configure your shell to automatically use `chruby`:
 
    - Homebrew:
 
      ```sh
+     echo "" >> ~/.zshrc
+     echo "# Ruby Configuration" >> ~/.zshrc
      echo "source $(brew --prefix)/opt/chruby/share/chruby/chruby.sh" >> ~/.zshrc
      echo "source $(brew --prefix)/opt/chruby/share/chruby/auto.sh" >> ~/.zshrc
      echo "chruby ruby-3.3.4" >> ~/.zshrc
@@ -166,6 +169,8 @@ If you'd like to be able to preview your contributions before submitting them, y
    - MacPorts:
 
      ```sh
+     echo "" >> ~/.zshrc
+     echo "# Ruby Configuration" >> ~/.zshrc
      echo "source ${prefix}/opt/local/share/chruby/chruby.sh" >> ~/.zshrc
      echo "source ${prefix}/opt/local/share/chruby/auto.sh" >> ~/.zshrc
      echo "chruby ruby-3.3.4" >> ~/.zshrc
@@ -177,15 +182,18 @@ If you'd like to be able to preview your contributions before submitting them, y
    ruby -v
    ```
 
-   If `ruby 3.3.4 (2024-07-09 revision be1089c8ec)` is reported, proceed to the [Jekyll primer](#jekyll-primer) section below.
+   It should report `ruby 3.3.4 (2024-07-09 revision be1089c8ec)`. If not, repeat the above steps.
 
-### Installing buildroot on Ubuntu
+6. Proceed to the [Installing Jekyll](#installing-jekyll) section below. (Note that `bundler` is already included.)
+
+### Installing Ruby on Ubuntu
 
 1. Ensure APT is up to date:
 
    ```sh
    sudo apt update
    ```
+
 2. Install prerequisites:
 
    ```sh
@@ -230,30 +238,33 @@ If you'd like to be able to preview your contributions before submitting them, y
    gem install bundler
    ```
 
-7. Proceed to the [Jekyll primer](#jekyll-primer) section below.
+7. Proceed to Installing Jekyll….
 
-## Jekyll primer
+### Installing Jekyll
 
-Under Jekyll, we use YAML, Markdown, Liquid, and HTML to fill out the site content and layout. A `_config.yml` file defines the site structure using "collections" that correspond to site sub-folders. The site is "compiled" to produce a static HTML and Javascript file structure. The most important folders are:
-
-- `_layouts` contains the general layouts (aka page templates).
-- `_includes` has partial layouts included by others.
-- `_meta` is where we keep top-level page descriptions.
-- Site sub-pages: `_basics`, `_configuration`, `_development`, `_features`, `_gcode`, `_hardware`.
-
-## Previewing content
-
-Now that Ruby is installed, you'll be able to use Jekyll to preview your changes exactly as they will appear on the final site. Just open a new Command Prompt or Terminal window, `cd` to change the working path to **your MarlinDocumentation fork**, and execute the following commands:
+Once Ruby is installed you'll need to install Jekyll itself. Open the Command Prompt or Terminal and `cd` to the working path of **your MarlinDocumentation fork**. Execute the following commands:
 
 ```sh
+rm -f Gemfile.lock
 bundle config set path 'vendor/bundle'
 bundle install
 ```
 
 > [!NOTE]
-> You'll only need to execute the above commands **once** to install all the required Ruby gems, including Jekyll itself. If you get errors at this stage, you may need to update your Ruby installation, fix your Ruby environment, or resolve dependencies between the Ruby gems.
+> You only need to execute the above commands **once** to complete the install. If you see errors at this stage you may need to update your Ruby installation, fix your Ruby environment, or resolve dependencies between the Ruby gems.
 
-To start a web server & preview your changes, run the following command:
+### Jekyll basics
+
+Jekyll uses a combination of YAML, Markdown, Liquid, and HTML to define the site content and layout. A `_config.yml` file defines a site structure with "collections" corresponding to sub-folders. The website is "compiled" to produce static HTML and Javascript. The most important folders in the site are:
+
+- `_layouts` contains the general layouts (aka page templates).
+- `_includes` has partial layouts included by others.
+- `_meta` is where we keep top-level page descriptions.
+- Sections: `_basics`, `_configuration`, `_development`, `_features`, `_gcode`, `_hardware`….
+
+### Previewing content
+
+To start a mini web server and preview your changes, run the following command:
 
 ```sh
 bundle exec jekyll serve --watch --incremental
