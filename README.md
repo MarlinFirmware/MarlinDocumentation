@@ -1,15 +1,16 @@
-<p align="center"><img src="https://raw.githubusercontent.com/MarlinFirmware/Marlin/bugfix-2.1.x/buildroot/share/pixmaps/logo/marlin-outrun-nf-500.png" height="250" alt="MarlinFirmware's logo" /></p>
+<p align="center"><img src="https://raw.githubusercontent.com/MarlinFirmware/Marlin/bugfix-2.1.x/buildroot/share/pixmaps/logo/marlin-outrun-nf-500.png" height="250" alt="Marlin Firmware logo" /></p>
 
 <h1 align="center">Marlin Documentation Project</h1>
 
 <p align="center">
-    <a href="/LICENSE"><img alt="GPL-V3.0 License" src="https://img.shields.io/github/license/MarlinFirmware/MarlinDocumentation.svg"></a>
-    <a href="//github.com/MarlinFirmware/MarlinDocumentation/graphs/contributors"><img alt="Contributors" src="https://img.shields.io/github/contributors/marlinfirmware/marlindocumentation.svg"></a>
-    <a href="//github.com/MarlinFirmware/MarlinDocumentation/releases"><img alt="Last Updated" src="https://img.shields.io/github/last-commit/marlinfirmware/marlindocumentation?label=last%20updated"></a>
-    <a href="//github.com/MarlinFirmware/MarlinDocumentation/actions/workflows/jekyll-pub.yml"><img alt="Jekyll Deploy Status" src="https://github.com/MarlinFirmware/MarlinDocumentation/actions/workflows/jekyll-pub.yml/badge.svg"></a>
-    <a href="//github.com/sponsors/thinkyhead"><img alt="GitHub Sponsors" src="https://img.shields.io/github/sponsors/thinkyhead?color=db61a2"></a>
-    <br />
-    <a href="//fosstodon.org/@marlinfirmware"><img alt="Follow MarlinFirmware on Mastodon" src="https://img.shields.io/mastodon/follow/109450200866020466?domain=https%3A%2F%2Ffosstodon.org&logoColor=%2300B&style=social"></a>
+  <a href="/LICENSE"><img alt="GPL-V3.0 License" src="https://img.shields.io/github/license/MarlinFirmware/MarlinDocumentation.svg"></a>
+  <a href="https://github.com/MarlinFirmware/MarlinDocumentation/graphs/contributors"><img alt="Contributors" src="https://img.shields.io/github/contributors/marlinfirmware/marlindocumentation.svg"></a>
+  <a href="https://github.com/MarlinFirmware/MarlinDocumentation/releases"><img alt="Last Updated" src="https://img.shields.io/github/last-commit/marlinfirmware/marlindocumentation?label=last%20updated"></a>
+  <a href="https://github.com/MarlinFirmware/MarlinDocumentation/actions/workflows/jekyll-pub.yml"><img alt="Jekyll Deploy Status" src="https://github.com/MarlinFirmware/MarlinDocumentation/actions/workflows/jekyll-pub.yml/badge.svg"></a>
+  <a href="https://github.com/sponsors/thinkyhead"><img alt="GitHub Sponsors" src="https://img.shields.io/github/sponsors/thinkyhead?color=db61a2"></a>
+  <br />
+  <a href="https://twitter.com/MarlinFirmware?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false">Follow @MarlinFirmware</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  <a href="https://fosstodon.org/@marlinfirmware"><img alt="Follow MarlinFirmware on Mastodon" src="https://img.shields.io/mastodon/follow/109450200866020466?domain=https%3A%2F%2Ffosstodon.org&logoColor=%2300B&style=social"></a>
 </p>
 
 ## About
@@ -68,7 +69,7 @@ git checkout master -b doc-mashed_potatoes
 
 Inside the `_docs` folder, add the new file `mashed-potatoes.md` and let flow all your creativity into it. When you feel your masterpiece is ready to be shared with the world, commit the changes and push them up to **your MarlinDocumentation fork**. This is done most easily from within the GitHub Desktop app, but here are the command line commands for reference:
 
-```shell
+```sh
 git add mashed-potatoes.md
 git commit -m "Added a new document about potatoes"
 git push
@@ -106,7 +107,7 @@ If you'd like to be able to preview your contributions before submitting them, y
 
 3. Open a new Command Prompt so that changes to the `PATH` environment variable become effective, then check that everything is working:
 
-   ```shell
+   ```sh
    ruby -v
    ```
    If `ruby 3.3.4 (2024-07-09 revision be1089c8ec)` is reported, then proceed to proceed to the [Jekyll primer](#jekyll-primer) section below.
@@ -122,7 +123,7 @@ If you'd like to be able to preview your contributions before submitting them, y
 
    - Install Homebrew by launching Terminal and running the following command:
 
-      ```shell
+      ```sh
       /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
       ```
 
@@ -134,19 +135,19 @@ If you'd like to be able to preview your contributions before submitting them, y
 
    - Homebrew:
 
-      ```shell
+      ```sh
       brew install chruby ruby-install xz
       ```
 
    - MacPorts:
 
-     ```shell
+     ```sh
      sudo port install chruby ruby-install xz
      ```
 
 3. Install Ruby `3.3.4`:
 
-   ```shell
+   ```sh
    ruby-install ruby 3.3.4
    ```
 
@@ -156,7 +157,7 @@ If you'd like to be able to preview your contributions before submitting them, y
 
    - Homebrew:
 
-     ```shell
+     ```sh
      echo "source $(brew --prefix)/opt/chruby/share/chruby/chruby.sh" >> ~/.zshrc
      echo "source $(brew --prefix)/opt/chruby/share/chruby/auto.sh" >> ~/.zshrc
      echo "chruby ruby-3.3.4" >> ~/.zshrc
@@ -164,7 +165,7 @@ If you'd like to be able to preview your contributions before submitting them, y
 
    - MacPorts:
 
-     ```shell
+     ```sh
      echo "source ${prefix}/opt/local/share/chruby/chruby.sh" >> ~/.zshrc
      echo "source ${prefix}/opt/local/share/chruby/auto.sh" >> ~/.zshrc
      echo "chruby ruby-3.3.4" >> ~/.zshrc
@@ -172,7 +173,7 @@ If you'd like to be able to preview your contributions before submitting them, y
 
 5. Quit and relaunch Terminal, then check that everything is working:
 
-   ```shell
+   ```sh
    ruby -v
    ```
 
@@ -182,18 +183,18 @@ If you'd like to be able to preview your contributions before submitting them, y
 
 1. Ensure APT is up to date:
 
-   ```shell
+   ```sh
    sudo apt update
    ```
 2. Install prerequisites:
 
-   ```shell
+   ```sh
    sudo apt install git curl libssl-dev libreadline-dev zlib1g-dev autoconf bison build-essential libyaml-dev libreadline-dev libncurses5-dev libffi-dev libgdbm-dev
    ```
 
 3. Install rbenv:
 
-   ```shell
+   ```sh
    curl -fsSL https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-installer | bash
    echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
    echo 'eval "$(rbenv init -)"' >> ~/.bashrc
@@ -202,21 +203,21 @@ If you'd like to be able to preview your contributions before submitting them, y
 
 4. Install Ruby 3.3.4:
 
-   ```shell
+   ```sh
    rbenv install 3.3.4
    rbenv global 3.3.4
    ```
 
 4. Check Ruby version:
 
-   ```shell
+   ```sh
    ruby -v
    ```
    If `ruby 3.3.4 (2024-07-09 revision be1089c8ec)` is reported, proceed to the next step.
 
 5. Add environment variables to your `~/.bashrc` file to configure the gem installation path:
 
-   ```shell
+   ```sh
    echo '# Install Ruby Gems to ~/gems' >> ~/.bashrc
    echo 'export GEM_HOME="$HOME/gems"' >> ~/.bashrc
    echo 'export PATH="$HOME/gems/bin:$PATH"' >> ~/.bashrc
@@ -225,7 +226,7 @@ If you'd like to be able to preview your contributions before submitting them, y
 
 6. Install Bundler Gem:
 
-   ```shell
+   ```sh
    gem install bundler
    ```
 
@@ -244,7 +245,7 @@ Under Jekyll, we use YAML, Markdown, Liquid, and HTML to fill out the site conte
 
 Now that Ruby is installed, you'll be able to use Jekyll to preview your changes exactly as they will appear on the final site. Just open a new Command Prompt or Terminal window, `cd` to change the working path to **your MarlinDocumentation fork**, and execute the following commands:
 
-```shell
+```sh
 bundle config set path 'vendor/bundle'
 bundle install
 ```
@@ -254,7 +255,7 @@ bundle install
 
 To start a web server & preview your changes, run the following command:
 
-```shell
+```sh
 bundle exec jekyll serve --watch --incremental
 ```
 
