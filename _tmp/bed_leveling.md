@@ -57,7 +57,7 @@ Since the bed probe is often not exactly where the nozzle is, areas of the bed c
  - Optimized boundary-splitting with pre-calculation
  - Optimized handling of special cases, and avoiding recursion.
  - Allows for 'tilting' of probed mesh with either 3-Point or Planar Grid to compensate for slight changes in bed orientation.
- - Ability to fill in the portions of the mesh that can’t be reached by automated probing. This allows the entire bed to be compensated.
+ - Ability to fill in the portions of the mesh that can't be reached by automated probing. This allows the entire bed to be compensated.
  - Mesh fine tuning based on print results.
 
 With UBL, areas beyond the reach of the probe can be probed by the nozzle like Mesh Beb Leveling (manual), manually inputted or interpolated like Bi-Linear Bed Leveling.

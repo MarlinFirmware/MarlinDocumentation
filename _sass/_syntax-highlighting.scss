@@ -1,16 +1,30 @@
 /**
  * Syntax highlighting styles
  */
-pre.highlight {
-  margin-bottom: 15px;
+:root {
+  --color-hl-pre: #EEF;
+  --color-hl-c: #AAA;
+  --color-hl-cp: #999;
+  --color-hl-s: #D14;
+}
+[data-theme="dark"] {
+  --color-hl-pre: #113;
+  --color-hl-c: #666;
+  --color-hl-cp: #999;
+  --color-hl-s: #F8B;
+}
 
-  .c     { color: #998; font-style: italic } // Comment
+.highlight pre {
+  margin-bottom: 15px;
+  background: var(--color-hl-pre);
+
+  .c     { color: var(--color-hl-c); font-style: italic } // Comment
   .err   { color: #A61717; background-color: #E3D2D2 } // Error
   .k     { font-weight: bold } // Keyword
   .o     { font-weight: bold } // Operator
-  .cm    { color: #998; font-style: italic } // Comment.Multiline
-  .cp    { color: #999; font-weight: bold } // Comment.Preproc
-  .c1    { color: #998; font-style: italic } // Comment.Single
+  .cm    { color: var(--color-hl-c); font-style: italic } // Comment.Multiline
+  .cp    { color: var(--color-hl-cp); } // Comment.Preproc
+  .c1    { color: var(--color-hl-c); font-style: italic } // Comment.Single
   .cs    { color: #999; font-weight: bold; font-style: italic } // Comment.Special
   .gd    { color: #000; background-color: #FDD } // Generic.Deleted
   .gd .x { color: #000; background-color: #FAA } // Generic.Deleted.Specific
@@ -30,7 +44,7 @@ pre.highlight {
   .kr    { font-weight: bold } // Keyword.Reserved
   .kt    { color: #458; font-weight: bold } // Keyword.Type
   .m     { color: #099 } // Literal.Number
-  .s     { color: #D14 } // Literal.String
+  .s     { color: var(--color-hl-s) } // Literal.String
   .na    { color: #008080 } // Name.Attribute
   .nb    { color: #0086B3 } // Name.Builtin
   .nc    { color: #458; font-weight: bold } // Name.Class

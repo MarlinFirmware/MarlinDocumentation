@@ -2,6 +2,8 @@
 // Marlin custom Javascript
 //
 
+var discord_widget_url = 'https://discord.com/widget?id=461605380783472640';
+
 // Cookie Helpers
 
 function setCookie(cname, cvalue, exdays) {
@@ -32,6 +34,7 @@ function setDarkMode(dark) {
   $('#daynite')
     .attr('src', q + 'btn-' + (dark ? 'day' : 'night') + '.svg')
     .css('visibility', 'visible');
+  $('#discord-frame').attr('src', `${discord_widget_url}&theme=` + (dark ? 'dark' : 'light'));
 }
 
 function toggleDarkMode() {
@@ -39,6 +42,12 @@ function toggleDarkMode() {
   setDarkMode(dark);
   return dark;
 }
+
+// If a Discord widget exists store its URL (for dark/light theming)
+
+discord_widget_url = $('#discord-frame').attr('src');
+
+// Set dark / light theme as soon as possible
 
 var nightMode = getCookie('nightMode');
 if (nightMode === '') {
@@ -57,23 +66,19 @@ var $animation_elements = $('.animation-element');
 var $window = $(window);
 
 function check_if_in_view() {
-  var window_height = $window.height();
-  var window_top_position = $window.scrollTop();
-  var window_bottom_position = (window_top_position + window_height);
+  var win_height = $window.height();
+  var win_top = $window.scrollTop();
+  var win_bottom = (win_top + win_height);
 
   $.each($animation_elements, function() {
-    var $element = $(this);
-    var element_height = $element.outerHeight();
-    var element_top_position = ($element.offset().top);
-    var element_bottom_position = (element_top_position + element_height);
+    var $e = $(this);
+    var height = $e.outerHeight();
+    var top = ($e.offset().top);
+    var bottom = (top + height);
 
-    //check to see if this current container is within viewport
-    if ((element_bottom_position >= window_top_position) &&
-        (element_top_position + 100 <= window_bottom_position)) {
-      $element.addClass('in-view');
-    } else {
-      // $element.removeClass('in-view');  // uncomment to animate out
-    }
+    // Check whether this current container is within viewport
+    if (bottom >= win_top && top <= win_bottom - 100)
+      $e.addClass('in-view');
   });
 }
 check_if_in_view();
@@ -86,10 +91,11 @@ $(function() {
    */
   $toc = $("#toc");
   if ($toc !== undefined) $toc.tocify({
-    selectors: (typeof toc_selectors != 'undefined') ? toc_selectors : 'h1,h2,h3',
-    scrollTo: 65,
+    selectors: (typeof toc_selectors != 'undefined') ? toc_selectors : 'h1,h2,h3,h4',
+    scrollTo: 60,
+    smoothScroll: false,
     extendPage: false,
-    hashGenerator: 'pretty',
+    hashGenerator: 'pretty'
   });
 
   /**
@@ -115,7 +121,7 @@ $(function() {
   });
 
   // Expand first item of tocify (table of content) by default
-  $('.tocify-subheader').first().css('display','block');
+  $('#toc .tocify-subheader').first().css('display','block');
 
   // Responsive submenu - shifts to left on smaller window
   // Bootstrap's pull-left is right and vice versa
@@ -160,24 +166,28 @@ $(function() {
 
   $(window).resize(shiftSubMenu, resizeImage);
 
+  // Toggle dark / light theme on click
   $('#daynite').click(function(){
-    var dark = toggleDarkMode();
+    const dark = toggleDarkMode();
     setCookie('nightMode', dark);
   });
 
-  var $here_ul = $('.container.gcode ul.nav.nav-list');
+  // Scroll to the active nav item in a long nav sidebar, such as docs/gcode/*.html
+  const $here_ul = $('.container.detail ul.nav.nav-list');
   if ($here_ul.length) {
-    var $here_link = $here_ul.children('li.tocify-item.active');
-    $.fn.visibleHeight = function() {
-      var scrollTop = $(window).scrollTop(),
-          scrollBot = scrollTop + $(window).height(),
-          elTop = this.offset().top,
-          elBottom = elTop + this.outerHeight(),
-          visibleTop = elTop < scrollTop ? scrollTop : elTop,
-          visibleBot = elBottom > scrollBot ? scrollBot : elBottom;
-      return visibleBot - visibleTop;
-    };
-    $here_ul.prop({ scrollTop: $here_link.offset().top - $here_ul.visibleHeight() / 2 });
+    const $here_link = $here_ul.children('li.tocify-item.active');
+    if ($here_link.length) {
+      $.fn.visibleHeight = function() {
+        const scrollTop = $(window).scrollTop(),
+              scrollBot = scrollTop + $(window).height(),
+              elTop = this.offset().top,
+              elBottom = elTop + this.outerHeight(),
+              visibleTop = elTop < scrollTop ? scrollTop : elTop,
+              visibleBot = elBottom > scrollBot ? scrollBot : elBottom;
+        return visibleBot - visibleTop;
+      };
+      $here_ul.prop({ scrollTop: $here_link.offset().top - $here_ul.visibleHeight() / 2 });
+    }
   }
 
   // Fire the singleton init on document.ready

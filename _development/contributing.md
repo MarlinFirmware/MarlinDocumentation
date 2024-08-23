@@ -14,12 +14,23 @@ The core Marlin team consists of a few maintainers who review contributions, dis
 
 ## Ways to contribute
 
+### Donate
+The current maintainer of Marlin is [Scott Lahteine](//www.thinkyhead.com/donate-to-marlin) aka [@thinkyhead](https://github.com/thinkyhead/). Scott has been writing software since 1977 mostly focusing on shareware and open source. He reviews every contribution before it goes into Marlin, maintains documentation, hosts the [Facebook](https://www.facebook.com/groups/marlinfirmware) and [Marlin Discord](https://discord.com/servers/marlin-firmware-461605380783472640), and maintains a test lab in Austin, TX.
+
+Your sponsorship accelerates development, testing, and advancement of the most ambitious open source multi-platform 3D printing firmware in the world. Several support options are available:
+
+- <span class="fa-brands fa-github"></span> [Github Sponsors](https://github.com/sponsors/thinkyhead)
+- <span class="fa-brands fa-patreon"></span> [Patreon](https://www.patreon.com/thinkyhead)
+- <span class="fa-brands fa-paypal"></span> [PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=KMTV4WEYBEMWU&source=url)
+- ☕️ [Buy Me a Coffee!](https://buymeacoff.ee/thinkyhead)
+- $$ [GoFundMe](https://www.gofundme.com/marlin-firmware)
+
 ### Report bugs
 - Use the community links below for help with configuration and troubleshooting.
-- Submit your **Confirmed Bugs** to the [Issue Queue](//github.com/MarlinFirmware/Marlin/issues/new/choose). Search the Issue Queue first!
+- Submit your **Confirmed Bugs** to the [Issue Queue](//github.com/MarlinFirmware/Marlin/issues/new?labels=Bug%3A+Potential+%3F&template=bug_report.yml&title=%5BBUG%5D+%28bug+summary%29). Search the Issue Queue first!
 
 ### Request features
-- Submit your **Feature Requests** to the [Issue Queue](//github.com/MarlinFirmware/Marlin/issues/new/choose). Search the Issue Queue first!
+- Submit your **Feature Requests** to the [Issue Queue](//github.com/MarlinFirmware/Marlin/issues/new?labels=T%3A+Feature+Request&template=feature_request.yml&title=%5BFR%5D+%28feature+summary%29). Search the Issue Queue first!
 
 ### Submit code
 If you know C or C++ and can help to patch bugs, fix typos, or just add helpful comments, we welcome your expertise. See "[Contributing Code with Pull Requests](/docs/development/getting_started_pull_requests.html)" to find out how to submit code.
@@ -33,24 +44,19 @@ Marlin posts "nightly" builds that contain the most up-to-date code. While they 
 ### Contribute Documentation
 Are you skilled in information design? This website is far from complete, and it's a bit text-heavy. We need more photos, diagrams, and YouTube videos to embed on these pages. A well-chosen image or well-produced video can have more impact than many pages of written documentation. Visit the [MarlinDocumentation Project](//github.com/MarlinFirmware/MarlinDocumentation) for more information.
 
-### Fund Development
-The current maintainer of Marlin is [Scott Lahteine](//www.thinkyhead.com/donate-to-marlin) aka @thinkyhead. Scott has been writing software for a few decades, with a focus on shareware and open source. He reviews every contribution before it goes into Marlin, maintains documentation, hosts Facebook and Discord groups, and maintains a little test lab in Austin, TX.
-
-Your donation accelerates development, testing, and advancement of the most ambitious open source multi-platform 3D printing firmware in the world. See "[Donate to Marlin](//www.thinkyhead.com/donate-to-marlin)" for funding options. The newest way to provide support is through [GitHub Sponsors](//github.com/sponsors/thinkyhead).
-
 ### Join the Community
 
-<iframe id="discord-frame" src="https://discordapp.com/widget?id=461605380783472640&theme=light" width="350" height="500" allowtransparency="true" frameborder="0"></iframe>
+<iframe id="discord-frame" src="https://discord.com/widget?id=461605380783472640" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
 
 There are now many community resources for users of Marlin. If you're looking for help installing or troubleshooting these are the best places to go.
 
-- [MarlinFirmware on Discord](//discord.gg/n5NJ59y) - Realtime chat with users and developers
+- [MarlinFirmware on Discord](//discord.com/servers/marlin-firmware-461605380783472640) - Realtime chat with users and developers
 - [Marlin Firmware](//www.facebook.com/groups/1049718498464482/) and [Marlin Firmware for 3D Printers](//www.facebook.com/groups/3Dtechtalk/) Facebook Groups
 - [Marlin Forum](//forums.reprap.org/list.php?415) at RepRap.org
 - [Marlin YouTube Videos](//youtube.com/results?search_query=marlin+firmware)
 
 ### Promote Marlin
-Marlin needs evangelists, enthusiasts, fans, and everyday users to tell everyone just how awesome Marlin is. Users and vendors may be wary of installing Marlin 2.0 on their trusty old and reliable hardware. Let them know that Marlin continues to evolve! And be sure to engage with Marlin's Twitter feed at [@MarlinFirmware](//twitter.com/MarlinFirmware).
+Marlin needs evangelists, enthusiasts, fans, and everyday users to tell everyone just how awesome Marlin is. Users and vendors may be wary of installing Marlin 2.0 on their trusty old and reliable hardware. Let them know that Marlin continues to evolve! And be sure to engage with Marlin's Mastodon feed at [@MarlinFirmware@fosstodon.org](//fosstodon.org/@marlinfirmware).
 
 ### Nag Your Vendor
 Some companies do a very poor job of deploying Marlin on their hardware. And a dark side of open source is that some vendors fail to honor the terms of our license which requires them to give you the exact Marlin source code for the firmware on your machine. We understand that companies want to be protective of their trade secrets, but our license terms are clear, and the years of work we have put into Marlin is a major foundation of these businesses. If your vendor is misbehaving, send them a polite message to remind them of your rights under the GPL and their obligation as beneficiaries of Open Source software.

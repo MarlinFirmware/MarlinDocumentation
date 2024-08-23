@@ -4,7 +4,7 @@ layout: articles
 title:        'Automatic bed leveling'
 description:  'Tutorial on how to use the automatic bed leveling feature of Marlin'
 
-category: [ howto, needs-review ]
+category: [ howto, in-review ]
 ---
 There are three options for Automatic Bed Leveling. You may choose to use a servo mounted on the X carriage or you may use a sled that mounts on the X axis and can be docked when not in use or you may use a fixed proximity sensor.
 See the section for each option below for specifics about installation and configuration. Also included are instructions that apply to both options. The Z probe switch can replace the Z end stop or wired in parallel/series or defined as a separate pin on the Arduino board.

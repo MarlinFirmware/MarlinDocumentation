@@ -8,8 +8,10 @@ body {
 
 p { /*text-align: justify;*/ }
 
-.navbar { font-weight: 600; }
+/* The top navbar div with classes: navbar navbar-default navbar-fixed-top */
+.navbar { font-weight: $navbar-font-weight; }
 
+/* .navbar-nav may hook into bootstrap.js for dynamic navigation */
 .nav.navbar-nav li a.here,
 .nav.navbar-nav li.here > a {
   color: #FFF;

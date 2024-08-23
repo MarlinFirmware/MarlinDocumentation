@@ -4,14 +4,15 @@
 
 $icon-font-path: '/assets/fonts/';
 
-$headings-font-weight: 600 !default;
-$font-family-sans-serif: 'Open Sans', sans-serif !default;
+$headings-font-weight: 300 !default;
+$bold-font-weight: 500 !default;
+$font-family-sans-serif: Roboto, 'Open Sans', sans-serif !default;
 $font-family-monospace: 'Oxygen Mono', monospace !default;
-$font-family-heading: 'Montserrat', sans-serif !default;
+$font-family-heading: Roboto, -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;
 
 $btn-font-weight: 500 !default;
 
-$navbar-font-weight: 500 !default;
+$navbar-font-weight: 100 !default;
 $navbar-default-link-hover-bg: #EEE !default;
 $navbar-default-brand-hover-bg: #EEE !default;
 
@@ -26,7 +27,7 @@ $link-hover-color: #E22620 !default;
   'sidebar',
   'syntax-highlighting',
   'toc',
-  'k-pattern',
+  'tool',
   'custom',
   'anim',
-  'https://fonts.googleapis.com/css?family=Open+Sans:400,600|Oxygen+Mono|Montserrat';
+  'https://fonts.googleapis.com/css?family=Open+Sans:100,400&family=Oxygen+Mono&family=Roboto:wght@100;300;500';

@@ -1,6 +1,6 @@
 ---
-title: Hardware Access Layer
-description: Overview of the Hardware Access Layer in Marlin
+title: Hardware Abstraction Layer
+description: Overview of the Hardware Abstraction Layer in Marlin
 tag: coding
 
 author: chepo92
@@ -8,11 +8,11 @@ contrib: thinkyhead
 category: [ development ]
 ---
 
-The Hardware Access Layer –"HAL" for short– allows Marlin to run on a wide variety of boards by providing a common interface for low-level resources like timers, serial ports, i2c and SPI buses, EEPROM, SDIO, and so on.
+The Hardware Abstraction Layer –"HAL" for short– allows Marlin to run on a wide variety of boards by providing a common interface for low-level resources like timers, serial ports, i2c and SPI buses, EEPROM, SDIO, and so on.
 
 ## HAL Rationale
 
-Marlin was originally derived in 2011 from [Sprinter](//github.com/kliment/Sprinter) and [GRBL](//github.com/gnea/grbl). Initially, Marlin could only run on Arduino's AVR boards, but it was quickly ported to DUE. Soon we saw boards based on the LPC1768/9 appearing, along with a Grbl-based firmware called [Smoothieware](https://reprap.org/wiki/Smoothieboard).
+Marlin was originally derived in 2011 from [Sprinter](//github.com/kliment/Sprinter) and [GRBL](//github.com/gnea/grbl). Initially, Marlin could only run on Arduino's AVR boards, but it was quickly ported to DUE. Soon we saw boards based on the LPC1768/9 appearing, along with a Grbl-based firmware called [Smoothieware](//reprap.org/wiki/Smoothieboard).
 
 Another ARM processor, the STM32, was poised to take over as the new frontrunner, so we put our heads together to pick a course for extended hardware support. We decided not to rebuild Marlin from the ground up, but to preserve the existing work by adding a layer to abstract away the platform.
 

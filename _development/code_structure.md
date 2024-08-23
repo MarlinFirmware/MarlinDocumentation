@@ -21,13 +21,13 @@ File|Description
 **`MarlinFirmware`**|The root folder contains only files that need to be here. When you build Marlin with PlatformIO it creates a `.pio` folder here, and when working with git in the shell this should be your current work directory.
 **`buildroot`**|Contains helper scripts for developers, font tools, CI tests, Marlin logo art, and other data.
 **`buildroot/share/PlatformIO`**|Board definitions, variants, linker scripts, and build scripts are stored here. This folder is frequently referenced by the build environments in the `ini` folder.
-**`ini`**|This folder contains all the PlatformIO environment settings organized by MCU type. The `platformio.ini` file pulls these in to provide build / upload / debug settings for PlatformIO. One file is extra useful: Marlin's custom build scripts use `features.ini` at the start of the build to filter source files based on enabled features, so the build finishes much more quickly.
+**`ini`**|This folder contains all the PlatformIO environment settings organized by MCU type. The `platformio.ini` file pulls these in to provide build / upload / debug settings for PlatformIO. The file `ini/features.ini` is used by Marlin's build scripts to filter out source files that aren't needed, so the build can finish much more quickly with PlatformIO than with Arduino IDE.
 **`Marlin`**|Primarily, this is where the main configuration files need to be when building Marlin. The `Marlin.ino` Arduino project file is here. And, you should `cd Marlin` in the shell if you want to do a build with `make` (only supported for Arduino IDE-compatible targets).
 **`Marlin/src`**|Contains the Marlin application ("sketch"). The main program starts with `MarlinCore.cpp` which contains the `setup()` and `loop()` functions that make Marlin an Arduino program. The contents of this folder are described in detail in the next section.
 
 ### The Marlin/src Folder
 
-The only files in the `Marlin/src` folder are Marlin's main source file, `MarlinCore.cpp`, where you'll find `setup()` and `loop()`, and the `MarlinCore.h` header file.
+The `Marlin/src` folder contains Marlin's main source file, `MarlinCore.cpp` and the `MarlinCore.h` header file. `MarlinCore.cpp` contains the `setup()` function that initializes the firmware and the `loop()` function that continuously runs the program loop.
 
 The rest of the source code is divided up into 10 subfolders, and many of these subfolders are divided up further. Here's a basic overview of each one:
 
@@ -163,7 +163,7 @@ It is pretty straightforward to follow the function calls from `idle` to see how
 
 Marlin defines a few Interrupt Service Routines (ISRs):
 - The **Stepper ISR** runs repeatedly, advancing the planner queue and moving the stepper motors at high speed by sending pulses to their STEP and DIR pins. The frequency of this interrupt is tied to the movement speed.
-- The **Temperature ISR** reads the temperature sensors at a frequency close to 1KHz and signals to the main program when the readings are ready. It also manages Software / Slow PWM configured for heaters and fans that don't need a very high base frequency.
+- The **Temperature ISR** reads the temperature sensors at a frequency close to 1kHz and signals to the main program when the readings are ready. It also manages Software / Slow PWM configured for heaters and fans that don't need a very high base frequency.
 - The **Endstop ISR** can be activated if the endstop pins are interrupt-capable. It only fires when an endstop pin's input state changes.
 - The **Tone Timer** is defined by Arduino for some platforms and defined by Marlin for others. It handles pulsing the Piezo buzzer to create tones, and it runs at double the frequency of the current tone.
 - The **Servo Timer** provides PWM signals for servos.
@@ -183,7 +183,7 @@ The `manage_inactivity` function calls `queue.get_available_commands()` which ch
 #### 2. Pop a G-code
 The main `loop()` calls `queue.advance()` which gets the command at the front of the queue and runs it right away. Marlin won't come back to `loop()` until the command has been completed.
 
-Note that `queue.advance()` runs internal commands *ahead of the queue*, so Marlin can command itself to do things within the regular command flow.
+Marlin can command itself to do things within the regular command flow and these commands get run by `queue.advance()` *ahead of the print job queue* so they must be used with care.
 
 #### 3. Prescan the G-code
 Once `queue.advance()` has chosen the next command, it calls the parser to pre-process the G-code line. The pre-processor validates the line number and checksum and if all is well it does a quick pre-scan of the parameters before calling the specific G-code handler.
@@ -191,11 +191,44 @@ Once `queue.advance()` has chosen the next command, it calls the parser to pre-p
 #### 4. Handle the G-code
 All G-code handlers are encapsulated in the `GcodeSuite` class (_e.g.,_ `GcodeSuite::G28()`) although a few are implemented elsewhere. A G-code handler is a simple void method with no return value. Instead of getting parameters from the function call, it queries the `GCodeParser` class to check for parameters and read their values.
 
-For example, the handler uses `parser.seen('X')` to check if the `'X'` parameter exists, then calls `parser.value_float()` to get its numerical value in the form of a float. See `gcode/parser.h` for all the available methods.
+For example, a handler might use `parser.seenval('X')` to check if the `'X'` parameter exists and has a value, then call `parser.value_float()` to get the value as a float. See `gcode/parser.h` for all the available methods.
 
-G-code handlers can do almost anything, so they are split up into individual files, with each one including only the headers it needs. All handlers must include `gcode.h` and that will include `parser.h`.
+There are hundreds of G-code handlers, so they are split up into individual files by category, with each G-code file only including the headers it needs. All handlers include `gcode.h` (which includes `parser.h`) so they can process parameters. Other component headers are included as-needed by each G-code handler file.
 
 #### 5. Command Blocking
-A `G1` command is considered completed as soon as its move is enqueued, so it can potentially return right away. In practice, and especially with bed leveling enabled, every linear move has the potential to fill up the planner queue and block for a long time waiting for space to open up.
+Since a G-code command blocks the command queue from advancing until it returns, each command must take care to keep the machine alive during its execution.
+
+A `G1` command is considered "completed" as soon as the move is enqueued, so it can potentially return right away. In practice, and especially with bed leveling enabled, every linear move has the potential to fill up the planner queue and block while waiting for planner space to open up.
 
 When a command needs to wait for something like free space in the planner or user feedback, it calls the `idle` function to keep the machine alive and running. The `idle` function will even keep reading incoming commands into the queue, but since `idle` doesn't dispatch G-codes or advance the queue, the queue can't get any emptier until the handler finishes and returns.
+
+### Movement
+Marlin is specialized for movement with stepper motors. These devices allow for precise positioning in a very repeatable and reliable way. You can run print jobs that span several days without losing a single step. The downside to these devices is that the MCU needs to generate precisely-timed signals for every tiny step the motors take. And they require complicated drivers that tend to generate a lot of heat.
+
+In its most basic form, a motion command goes through this flow:
+
+**(1) G-code** -> **(2) Segmented Move** -> **(3) Planner Queue** <-> **(4) Stepper ISR**
+
+1. A movement command specifies a destination position and a nominal feedrate that it would like to achieve. The actual speed will depend on how fast the machine can accelerate and how far the machine will move before it has to change direction.
+2. Marlin only does linear moves at the level of the Planner, so commands like `G2`/`G3`/`G5` are converted into several small linear segments. The same goes for Delta and SCARA kinematics and leveled moves. So at this stage Marlin may generate several smaller segments and add them to the Planner Queue.
+3. The machine can't instantly go from a full-stop to a fast move rate, nor can it just instantly stop, so all moves need to be accelerated or decelerated to the requested feedrate. As each move goes into the queue we do a "lookahead" over the entire queue to determine each block's achievable start and end speeds. Acceleration can be linear or slightly curved.
+One problem you might encounter is "juddering" on curves. This is caused by small segments completing so quickly that the Planner queue gets emptied out. As a result the machine is forced to decelerate to the minimal "jerk" speed. Marlin can throttle the UI and/or slow down moves to try and prevent this, but it's not always enough. The simple solution is to configure your slicer to produce longer segments on curves, or to use `G2`/`G3` arcs.
+4. The Stepper ISR is a high priority interrupt routine that obediently fetches and processes the Planner queue until there are no more segments in the queue. Since it produces the actual STEP signals to the stepper motors it may need to run as often as 40,000 times or more per second.
+In practice we want to run it as often as possible because this improves timing and reduces "aliasing" (i.e., rounding). The Stepper ISR uses the clever and fast [Bresenham line algorithm](//en.wikipedia.org/wiki/Bresenham's_line_algorithm) to coordinate the timing of STEP signals. This algorithm benefits from finer resolution, so we get more accurate timing by running the Stepper ISR "as often as possible."
+
+### Fixed-Time Motion
+Marlin 2.1.3 introduces Fixed-Time Motion as an alternative method to get more precise step and direction timing along with its own Linear Advance and Input Shaping handlers. Fixed-Time Motion also uses the Stepper ISR to do regular stepping, but it also has a periodic `idle` task to handle state changes.
+
+Since Fixed-Time motion requires significantly more resources than the standard motion system to pre-calculate its precise pulse timings, it requires a faster processor and more RAM.
+
+As this system matures it will likely become default for fast 32-bit boards, but the original motion system will be preserved for slower processors and for simpler motion systems that don't need the most precise timing.
+
+### Interesting Numbers
+- A 1.8° stepper motor has 200 full steps-per-revolution. A 0.9° stepper motor has 400 steps-per-revolution.
+- With the most common 16x micro-stepping that's 3200 (1.8°) or 6400 (0.9°) micro-steps-per-revolution.
+- X and Y are usually driven with a GT2 (2mm pitch) belt and 20 tooth gear, for 40mm per revolution.
+- This gives you 80 steps-per-millimeter on the X and Y axis. (The Z axis is commonly 400 steps-per-mm.)
+- At 80 steps/mm a modest move speed of 60mm/s on a single axis requires a peak step rate of 4.8kHz.
+- A fast move speed of 200mm/s requires a peak step rate of 16kHz.
+- A very fast move speed of 500mm/s requires a peak step rate of 40kHz.
+- The slowest MCUs are 16MHz AVR. So a 200mm/s move speed needs one step for every 1000 CPU cycles.

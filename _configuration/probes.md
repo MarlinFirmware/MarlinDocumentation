@@ -7,13 +7,7 @@ contrib: shitcreek
 category: [ configuration ]
 ---
 
-{% alert info %}
-This document is based on Marlin 1.1.0
-{% endalert %}
-
-# Bed Probe Configuration
-
-No matter how well you constrain, tighten up, and align the components of your 3D printer, there are bound to be imperfections in alignment that can negatively affect print quality. Among these imperfections, irregularities in bed-nozzle distance is one of the most problematic. After all, if the first layer doesn't adhere to the bed then the rest of the print job is moot.
+No matter how well you constrain, tighten, and align the components of your 3D printer there are bound to be imperfections in alignment that can negatively affect your print quality. Among these issues, irregularities in bed-nozzle distance is one of the most problematic. After all, if the first layer doesn't adhere to the bed then the rest of the print job is moot.
 
 Marlin includes a "Bed Leveling" feature that compensates for these imperfections by taking measurements of the bed-nozzle distance at 3 or more points and then adjusting the nozzle position throughout the print so that it remains at a consistent distance from the bed.
 
@@ -21,26 +15,27 @@ Marlin allows you to take these bed measurements using nothing but a piece of pa
 
 ## Bed Probes
 
-Marlin 1.1 supports a wide variety of probe types:
+Marlin supports a wide variety of probe types:
 
-- Simple switch (`FIX_MOUNTED_PROBE`)
-- Switch on a servo arm (`Z_ENDSTOP_SERVO_NR`)
-- Switch on a solenoid (`SOLENOID_PROBE`)
-- Inductive probes (`FIX_MOUNTED_PROBE`)
-- BLTouch - and clones (`BLTOUCH`)
-- Sled-mounted probe (`Z_PROBE_SLED`)
-- Allen-key delta probe (`Z_PROBE_ALLEN_KEY`)
-- No probe (`PROBE_MANUALLY`)
+- Simple switch [`FIX_MOUNTED_PROBE`](#fix_mounted_probe)
+- Nozzle probe [`NOZZLE_AS_PROBE`](#nozzle_as_probe)
+- Switch on a servo arm [`Z_PROBE_SERVO_NR`](#z_probe_servo_nr)
+- Switch on a solenoid [`SOLENOID_PROBE`](#solenoid_probe)
+- Inductive probes [`FIX_MOUNTED_PROBE`](#fix_mounted_probe)
+- BLTouch - and clones [`BLTOUCH`](#bltouch)
+- Sled-mounted probe [`Z_PROBE_SLED`](#z_probe_sled)
+- Allen-key delta probe [`Z_PROBE_ALLEN_KEY`](#z_probe_allen_key)
+- No probe [`PROBE_MANUALLY`](#probe_manually)
 
 ## Bed Leveling Methods
 
 Marlin includes various methods of probing and leveling:
 
-- "3-Point" probes a triangle to determine the height and tilt of the bed plane. During printing the nozzle is adjusted in X, Y, and Z, so you can even print on a badly-tilted bed. However, this method requires a very flat and even surface.
-- "Linear Grid" probes a square grid (as much as possible on `DELTA`) to determine the height and tilt of the bed. After that it works just the same way as 3-point leveling.
-- "Bilinear Grid" probes a grid in the same manner as Linear Grid, but during printing the Z axis is adjusted according to bilinear interpolation between the measured points. This allows the printer to compensate for an uneven surface,
-- "Mesh Bed Leveling" works in the same manner as "Bilinear Grid" but takes different [`G29`](/docs/gcode/G029.html) parameters. (This feature is superseded by combining the manual probe option with bilinear leveling,  and will not be included in future versions of Marlin.)
-- "Unified Bed Leveling" combines elements of bilinear and planar leveling and includes extra utilities to help improve measurement accuracy, especially for deltas. See (link) for an article specifically about this feature.
+- **3-Point** probes a triangle to determine the height and tilt of the bed plane. During printing the nozzle is adjusted in X, Y, and Z, so you can even print on a badly-tilted bed. However, this method requires a very flat and even surface.
+- **Linear Grid** probes a square grid (as much as possible on `DELTA`) to determine the height and tilt of the bed. After that it works just the same way as 3-point leveling.
+- **Bilinear Grid** probes a grid in the same manner as Linear Grid, but during printing the Z axis is adjusted according to bilinear interpolation between the measured points. This allows the printer to compensate for an uneven surface,
+- **Mesh Bed Leveling** works in the same manner as **Bilinear Grid** but takes different [`G29`](/docs/gcode/G029.html) parameters. (This feature is superseded by combining the manual probe option with bilinear leveling,  and will not be included in future versions of Marlin.)
+- **Unified Bed Leveling** combines elements of bilinear and planar leveling and includes extra utilities to help improve measurement accuracy, especially for deltas. See [this page](/docs/features/unified_bed_leveling.html) for an article specifically about this feature.
 
 ## Configuration
 
@@ -58,31 +53,34 @@ In general, on deltabots the probe should be connected to the unused Z-Min endst
 
 What kind of probe do you have?
 
-- `FIX_MOUNTED_PROBE`
+#### FIX_MOUNTED_PROBE
 ![Fixed Probe - EZABL](/assets/images/config/fixed_probe_EZABL.png){: .floater.framed}
-  Use this option for a fixed switch or inductive probe. This is the option to select if the nozzle itself is used as the probe.
+Use this option for a fixed switch or inductive probe.
 
-- `Z_ENDSTOP_SERVO_NR`
+#### NOZZLE_AS_PROBE
+Use this option if the nozzle itself is used as the probe.
+
+#### Z_ENDSTOP_SERVO_NR
 ![Probe](/assets/images/config/probe.png){: .floater.framed}
-  Endstop switches are inexpensive, and some printer kits include one or two replacement parts. So one popular probe type mounts an endstop switch on a servo-driven arm. Set this option to `0` for a servo-probe connected to the first servo plug, `1` for the next servo plug, etc. Set the servo's deployed/stowed angles with the `Z_SERVO_ANGLES` setting.
+Endstop switches are inexpensive, and some printer kits include one or two replacement parts. So one popular probe type mounts an endstop switch on a servo-driven arm. Set this option to `0` for a servo-probe connected to the first servo plug, `1` for the next servo plug, etc. Set the servo's deployed/stowed angles with the `Z_SERVO_ANGLES` setting.
 
-- `SOLENOID_PROBE`
+#### SOLENOID_PROBE
 ![Solenoid probe](/assets/images/config/solenoid.png){: .floater.framed}
-  Select this option for a switch mounted on a solenoid.
+Select this option for a switch mounted on a solenoid.
 
-- `BLTOUCH`
+#### BLTOUCH
 ![BLTouch](/assets/images/config/BLTouch.png){: .floater.framed}
-  The BLTouch by ANTCLABS is a compact probe specifically designed for use on inexpensive 3D printers. It uses a Hall effect sensor to detect the movement of a metal pin that can be magnetically extended and retracted. The BLTouch connects to the servo pins which function to send commands to the probe.
+The BLTouch by ANTCLABS is a compact probe specifically designed for use on inexpensive 3D printers. It uses a Hall effect sensor to detect the movement of a metal pin that can be magnetically extended and retracted. The BLTouch connects to the servo pins which function to send commands to the probe.
 
-- `Z_PROBE_SLED`
+#### Z_PROBE_SLED
 ![Z-Probe Sled](/assets/images/config/zprobe_sled.png){: .floater.framed}
-  This option applies to a switch mounted on a "sled" that can be docked to the end of the X axis. The X carriage can pick up this sled, use it to perform probing, and put it back when done.
+This is a switch mounted on a "sled" that can be docked to the end of the X axis. The X carriage can pick up this sled, use it to perform probing, and put it back when done.
 
-- `Z_PROBE_ALLEN_KEY`
-  This is a popular solution on deltas. A spare Allen key is used with an endstop switch to make a probe that's deployed and stowed by turning the key 90 degrees. You can either deploy and stow the key manually or configure movements that bump the key against some fixed point. Options for this type of probe are included in the delta example configurations that come with Marlin.
+#### Z_PROBE_ALLEN_KEY
+This is a popular solution on deltas. A spare Allen key is used with an endstop switch to make a probe that's deployed and stowed by turning the key 90 degrees. You can either deploy and stow the key manually or configure movements that bump the key against some fixed point. Options for this type of probe are included in the delta example configurations that come with Marlin.
 
-- `PROBE_MANUALLY`
-  The bed-nozzle distance can be measured without a probe by following a [`manual procedure`](/docs/gcode/G029-mbl.html). The nozzle moves to each point and pauses. You adjust the Z height so that the nozzle is touching the bed. Once the Z height is adjusted, you tell the machine to go to the next point. Continue until all points are probed. This option can be used with all Auto Bed Leveling options except UBL, which is freestanding.
+#### PROBE_MANUALLY
+The bed-nozzle distance can be measured without a probe by following a [`manual procedure`](/docs/gcode/G029-mbl.html). The nozzle moves to each point and pauses. You adjust the Z height so that the nozzle is touching the bed. Once the Z height is adjusted, you tell the machine to go to the next point. Continue until all points are probed. This option can be used with all Auto Bed Leveling options except UBL, which is freestanding.
 
 ### 3. Other Probe Options
 

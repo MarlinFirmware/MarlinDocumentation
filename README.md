@@ -2,7 +2,7 @@
 
 This repository contains the raw documentation for [Marlin 3D printer firmware](//github.com/MarlinFirmware/Marlin) which is regularly deployed to [marlinfw.org](//marlinfw.org/). This documentation is open and available on Github so anyone may contribute by completing, correcting, or creating articles.
 
-![Marlin logo](assets/images/logo/marlin/small.png)
+<div align="center"><img width="300" src="https://raw.githubusercontent.com/MarlinFirmware/Marlin/bugfix-2.1.x/buildroot/share/pixmaps/logo/marlin-outrun-nf-500.png" /></div>
 
 ## Technical details
 
@@ -54,7 +54,7 @@ If you'd like to be able to preview your contributions before submitting them, y
 ### Installing buildroot on Windows
 
  1. Get Ruby for Windows ([32 bit](//dl.bintray.com/oneclick/rubyinstaller/rubyinstaller-2.3.3.exe), [64bit](//dl.bintray.com/oneclick/rubyinstaller/rubyinstaller-2.3.3-x64.exe)), execute the installer and go through the steps of the installation, make sure to check the “Add Ruby executables to your PATH” box.
- 2. Get Ruby Devkit ([32 bit](//dl.bintray.com/oneclick/rubyinstaller/DevKit-mingw64-32-4.7.2-20130224-1151-sfx.exe), [64bit](//dl.bintray.com/oneclick/rubyinstaller/DevKit-mingw64-64-4.7.2-20130224-1432-sfx.exe)), the download is a self-extracting archive. When you execute the file, it’ll ask you for a destination for the files. Enter a path that has no spaces in it. We recommend something simple, like ` C:\RubyDevKit\` . Click Extract and wait until the process is finished.
+ 2. Get Ruby Devkit ([32 bit](//dl.bintray.com/oneclick/rubyinstaller/DevKit-mingw64-32-4.7.2-20130224-1151-sfx.exe), [64bit](//dl.bintray.com/oneclick/rubyinstaller/DevKit-mingw64-64-4.7.2-20130224-1432-sfx.exe)), the download is a self-extracting archive. When you execute the file, it'll ask you for a destination for the files. Enter a path that has no spaces in it. We recommend something simple, like ` C:\RubyDevKit\` . Click Extract and wait until the process is finished.
  3. Open your favorite command line tool and do:
   - `cd C:\RubyDevKit`
   - `ruby dk.rb init`
@@ -72,7 +72,7 @@ To install [rbenv](//github.com/rbenv/rbenv) and [ruby-build](//github.com/rbenv
 Once you have `rbenv` and `ruby-build` installed, follow the instructions on the [rbenv](//github.com/rbenv/rbenv) project page to:
 
 - install a local version of Ruby (2.3 or newer),
-- modify your `.bash_profile` with code to set your Ruby environment, and
+- modify your `.bash_profile` and `.zprofile` to set your Ruby environment, and
 - create a local `shims` folder with `$PATH` pointing to your Ruby.
 
 It sounds ugly, but hopefully the instructions on the [rbenv](//github.com/rbenv/rbenv) project page are clear enough to get you that far. You'll be using `rbenv` from now on to install and manage local Ruby environments.

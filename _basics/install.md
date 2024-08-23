@@ -15,18 +15,21 @@ Marlin only needs to be re-flashed when fixed settings are changed in the config
 
 ### Download
 
-Start by downloading the Marlin source code. There are a few [codebases](//en.wikipedia.org/wiki/Codebase) to choose from.
+Links for current and previous versions can be found on the [Download Marlin](/meta/download) page. If you need an older or specific version go to the [Marlin Releases](//github.com/MarlinFirmware/Marlin/releases){:target="_blank"} page on GitHub.
 
-----|-----------
-[Download 2.1](//github.com/MarlinFirmware/Marlin/archive/2.1.zip)|Current release
-[Download 2.1.x](//github.com/MarlinFirmware/Marlin/archive/2.1.x.zip)|Current release, patched
-[Download bugfix-2.1.x](//github.com/MarlinFirmware/Marlin/archive/bugfix-2.1.x.zip)|"Nightly" build for Marlin 2.1.x _Proceed with Caution!_
-[Download 2.0.9.4](//github.com/MarlinFirmware/Marlin/archive/2.0.9.4.zip)|Previous release
-[Download 2.0.x](//github.com/MarlinFirmware/Marlin/archive/2.0.x.zip)|Previous release, patched
-[Download bugfix-2.0.x](//github.com/MarlinFirmware/Marlin/archive/bugfix-2.0.x.zip)|"Nightly" build for Marlin 2.0.x _Proceed with Caution!_
-[Download 1.1.x](//github.com/MarlinFirmware/Marlin/archive/1.1.x.zip)|Legacy Marlin 1.1
-[Download bugfix-1.1.x](//github.com/MarlinFirmware/Marlin/archive/bugfix-1.1.x.zip)|"Nightly" build. _Proceed with Caution!_
-[Download 1.0.x](//github.com/MarlinFirmware/Marlin/archive/1.0.x.zip)|Legacy Marlin 1.0
+### Configure
+
+To configure Marlin you can start with one of our [example configurations](//github.com/MarlinFirmware/Configurations), then you'll use VSCode, Arduino IDE, or your [favorite text editor](//www.sublimetext.com/){:target="_blank"} to make modifications according to your preferences. Marlin is configured with two files: `Configuration.h` and `Configuration_adv.h`. See [Configuring Marlin](/docs/configuration/configuration.html) for full details.
+
+### Build and Install
+
+Marlin installation can vary depending on which version of Marlin you want to install and which board you're installing onto. Once your Marlin build environment is set up installing updates can be a one-click operation.
+
+Marlin Version|Platform(s)|Instructions
+--------------|-----------|----
+1.1.9 or 2.x|8-bit AVR, 32-bit ARM|[Install Marlin with PlatformIO](install_platformio.html)
+2.1.x|8-bit AVR, 32-bit ARM|[Install Marlin with PlatformIO in a DevContainer](install_devcontainer_vscode.html)
+1.1.x or 2.x|8-bit AVR|[Install Marlin with Arduino IDE](install_arduino.html)
 
 {% alert warning %}
 - Marlin 1.0 **does not support PlatformIO**. For older versions of Marlin use Arduino IDE.
@@ -34,24 +37,10 @@ Start by downloading the Marlin source code. There are a few [codebases](//en.wi
 - Marlin 2.0 and up include 32-bit ARM support. **PlatformIO is not required for AVR boards.**
 {% endalert %}
 
-### Configure
-
-To configure Marlin you can use the Arduino IDE or your [favorite text editor](//www.sublimetext.com/){:target="_blank"} to edit the `Configuration.h` and `Configuration_adv.h` files. See [Configuring Marlin](/docs/configuration/configuration.html) for full details.
-
-### Build and Install
-
-Marlin installation procedure can vary depending on which version of Marlin you want to install and which board you're installing onto. Once your Marlin build environment is set up installing updates can be a one-click operation.
-
-Marlin Version|Platform(s)|Instructions
---------------|-----------|----
-1.1.x or 2.x|8-bit AVR|[Install Marlin with Arduino IDE](install_arduino.html)
-1.1.9 or 2.x|8-bit AVR, 32-bit ARM|[Install Marlin with PlatformIO](install_platformio.html)
-2.x|LPC1768 (Re-Arm)|[Install Marlin on Re-ARM](install_rearm.html)
-
 {% alert info %}
 Looking for Example Configurations for your machine?
 - Marlin 1.1.x : Included in the '`example_configurations`' folder.
-- Marlin 2.x.x : [Hosted separately](//github.com/MarlinFirmware/Configurations). Links on the [Downloads](/meta/download/) page.
+- Marlin 2.x.x : [Hosted separately](//github.com/MarlinFirmware/Configurations){:target="_blank"}. Links on the [Downloads](/meta/download/) page.
 {% endalert %}
 
 ### Troubleshooting

@@ -1,36 +1,77 @@
 ---
 layout: null
 ---
-{% assign first = true %}
+{%- assign first = true -%}
 [
-{% for gcode in site.gcode %}
-  {% if gcode.codes[0] %}
-  {% unless first %},{% endunless %}{
+{%- for gcode in site.gcode %}
+  {%- if gcode.codes[0] %}
+  {%- unless first %},{% endunless %}{
     "title":{{ gcode.codes | join: ", " | append: " : " | append: gcode.title | jsonify }},
     "content":{{ gcode.content | indexify | jsonify }},
     "excerpt":"{{ gcode.brief }}",
     "link":"{{ site.baseurl }}{{ gcode.url }}",
-    {% if gcode.experimental %}
+    {%- if gcode.experimental -%}
       "exp":true,
-    {% endif %}
-    {% if gcode.since %}
+    {%- endif %}
+    {%- if gcode.since -%}
       "since":{{ gcode.since | jsonify }},
-    {% endif %}
-    {% if gcode.group %}
+    {%- endif %}
+    {%- if gcode.group -%}
       "group":{{ gcode.group | jsonify }},
-    {% endif %}
-    {% if gcode.requires %}
+    {%- endif %}
+    {%- if gcode.requires -%}
       "requires":{{ gcode.requires | jsonify }},
-    {% endif %}
+    {%- endif -%}
     "class":"gcode"
   }
-  {% assign first = false %}
-  {% endif %}
-{% endfor %}
+  {%- assign first = false %}
+  {%- endif %}
+{%- endfor %}
 
-{% for feature in site.features %}
-  {% if feature.title != null and feature.title != empty and item.search_omit != empty %}
-  {% unless first %},{% endunless %}{
+{%- for conf in site.setting -%}
+  {%- if conf.label %}{% assign title = conf.label %}{% else %}{% assign title = conf.name %}{% endif %}
+  {%- capture subtext -%}
+    {% if conf.settings %}{% assign subs = conf.settings %}{% elsif conf.subopts %}{% assign subs = conf.subopts %}{% endif %}
+    {{ conf.name }} {{ conf.content }}
+    {% for sub1 in subs %}
+      {{ sub1.name }} {{ sub1.brief }} {{ sub1.long }}
+      {% for sub2 in sub1.subopts %}
+        {{ sub2.name }} {{ sub2.brief }} {{ sub2.long }}
+        {% for sub3 in sub2.subopts %}
+          {{ sub3.name }} {{ sub3.brief }} {{ sub3.long }}
+          {% for sub4 in sub3.subopts %}
+            {{ sub4.name }} {{ sub4.brief }} {{ sub4.long }}
+          {% endfor %}
+        {% endfor %}
+      {% endfor %}
+    {% endfor %}
+  {%- endcapture -%}
+  {%- if conf.settings %}{% assign subs = conf.settings %}{% elsif conf.subopts %}{% assign subs = conf.subopts %}{% endif -%}
+  {%- unless first %},{% endunless %}{
+    "title":{{ title | jsonify }},
+    "content":{{ subtext | indexify | jsonify }},
+    "excerpt":"{{ conf.brief }}",
+    "link":"{{ site.baseurl }}{{ conf.url }}",
+    {%- if conf.experimental -%}
+      "exp":true,
+    {%- endif %}
+    {%- if conf.since -%}
+      "since":{{ gcode.since | jsonify }},
+    {%- endif %}
+    {%- if conf.until -%}
+      "until":{{ gcode.until | jsonify }},
+    {%- endif %}
+    {%- if conf.tags -%}
+      "tags": [ {{ conf.tags | join: ", " | jsonify }} ],
+    {%- endif -%}
+    "class":"setting"
+  }
+  {%- assign first = false %}
+{%- endfor %}
+
+{%- for feature in site.features %}
+  {%- if feature.title != null and feature.title != empty and item.search_omit != empty %}
+  {%- unless first %},{% endunless %}{
     "title":{{ feature.title | jsonify }},
     "content":{{ feature.content | indexify | jsonify }},
     "link":"{{ site.baseurl }}{{ feature.url | replace: 'index.html','' }}",
@@ -41,68 +82,68 @@ layout: null
   {% endif %}
 {% endfor %}
 
-{% for hw in site.hardware %}
-  {% if hw.title != null and hw.title != empty and item.search_omit != empty %}
-  {% unless first %},{% endunless %}{
+{%- for hw in site.hardware %}
+  {%- if hw.title != null and hw.title != empty and item.search_omit != empty %}
+  {%- unless first %},{% endunless %}{
     "title":{{ hw.title | jsonify }},
     "content":{{ hw.content | indexify | jsonify }},
     "link":"{{ site.baseurl }}{{ hw.url | replace: 'index.html','' }}",
     "excerpt":{{ hw.description | jsonify }},
     "class":"hardware"
   }
-  {% assign first = false %}
-  {% endif %}
-{% endfor %}
+  {%- assign first = false %}
+  {%- endif %}
+{%- endfor %}
 
-{% for inst in site.basics %}
-  {% if inst.title != null and inst.title != empty and item.search_omit != empty %}
-  {% unless first %},{% endunless %}{
+{%- for inst in site.basics %}
+  {%- if inst.title != null and inst.title != empty and item.search_omit != empty %}
+  {%- unless first %},{% endunless %}{
     "title":{{ inst.title | jsonify }},
     "content":{{ inst.content | indexify | jsonify }},
     "link":"{{ site.baseurl }}{{ inst.url | replace: 'index.html','' }}",
     "excerpt":{{ inst.description | jsonify }},
     "class":"basics"
   }
-  {% assign first = false %}
-  {% endif %}
-{% endfor %}
+  {%- assign first = false %}
+  {%- endif %}
+{%- endfor %}
 
-{% for dev in site.development %}
-  {% if dev.title != null and dev.title != empty and item.search_omit != empty %}
-  {% unless first %},{% endunless %}{
+{%- for dev in site.development %}
+  {%- if dev.title != null and dev.title != empty and item.search_omit != empty %}
+  {%- unless first %},{% endunless %}{
     "title":{{ dev.title | jsonify }},
     "content":{{ dev.content | markdownify | indexify | jsonify }},
     "link":"{{ site.baseurl }}{{ dev.url | replace: 'index.html','' }}",
     "excerpt":{{ dev.description | jsonify }},
     "class":"devel"
   }
-  {% assign first = false %}
-  {% endif %}
-{% endfor %}
+  {%- assign first = false %}
+  {%- endif %}
+{%- endfor %}
 
-{% for cnf in site.configuration %}
-  {% if cnf.title != null and cnf.title != empty and item.search_omit != empty %}
-  {% unless first %},{% endunless %}{
+{%- for cnf in site.configuration %}
+  {%- if cnf.title != null and cnf.title != empty and item.search_omit != empty %}
+  {%- unless first %},{% endunless %}{
     "title":{{ cnf.title | jsonify }},
     "content":{{ cnf.content | indexify | jsonify }},
     "link":"{{ site.baseurl }}{{ cnf.url | replace: 'index.html','' }}",
     "excerpt":{{ cnf.description | jsonify }},
     "class":"config"
   }
-  {% assign first = false %}
-  {% endif %}
-{% endfor %}
+  {%- assign first = false %}
+  {%- endif %}
+{%- endfor %}
 
-{% for page in site.pages %}
-  {% if page.title != null and page.title != empty and item.search_omit != empty %}
-  {% unless first %},{% endunless %}{
+{%- for page in site.pages %}
+  {%- if page.title != null and page.title != empty and item.search_omit != empty %}
+  {%- unless first %},{% endunless %}{
     "title":{{ page.title | jsonify }},
     "content":{{ page.content | indexify | jsonify }},
     "link":"{{ site.baseurl }}{{ page.url | replace: 'index.html','' }}",
     "excerpt":{{ page.description | jsonify }},
     "class":"page"
   }
-  {% assign first = false %}
-  {% endif %}
-{% endfor %}
+  {%- assign first = false %}
+  {%- endif %}
+{%- endfor -%}
 ]

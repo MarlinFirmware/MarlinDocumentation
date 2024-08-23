@@ -7,11 +7,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="flattr:id" content="e7nqg5" />
 
 {% seo %}
 
     <link rel="icon" href="{{ '/assets/favicon_m.ico' | prepend: site.baseurl }}" />
+    <link rel="stylesheet" href="{{ '/assets/stylesheets/fontawesome.min.css' | prepend: site.baseurl }}" />
+    <link rel="stylesheet" href="{{ '/assets/stylesheets/solid.min.css' | prepend: site.baseurl }}" />
+    <link rel="stylesheet" href="{{ '/assets/stylesheets/brands.min.css' | prepend: site.baseurl }}" />
     <link rel="stylesheet" href="{{ '/assets/stylesheets/main.css' | prepend: site.baseurl }}" />
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -44,8 +46,6 @@
        * with the main page.
        */
       head.load(
-          "{{ '/assets/stylesheets/font-awesome.min.css' | prepend: site.baseurl }}",
-
           "{{ 'jquery-2.2.1.min.js' | prepend: site.js }}",
           "{{ 'jquery-ui.min.js' | prepend: site.js }}",
           "{{ 'bootstrap.min.js' | prepend: site.js }}",
@@ -70,47 +70,43 @@
 {% if page.show.navbar %}{% include navbar.html %}{% endif %}
 
 {% if page.show.breadcrumbs %}
-    <!-- breadcrumbs -->
-    <nav>
-      <div class="container custom-no-padding">
-        <div class="row">
-          <div class="col-lg-12 visible-lg-block visible-md-block custom-no-margin">
-            <ol class="breadcrumb custom-no-margin">
-              <li>
-                <a href="{{ '/' | prepend: site.baseurl }}">
-                <i class="glyphicon glyphicon-home"></i></a> </li>
-{% assign crumbs = page.url | replace: '.html','' | split: '/' %}
-{% for crumb in crumbs offset: 1 %}
-  {% assign next = forloop.index  | plus: 1 %}
-  {% if forloop.last %}
-    {% if page.title %}
-                <li class="active">{{ page.title }}</li>
-    {% endif %}
-  {% else %}
-    {% if crumbs[next] == 'index' %}
-                <li class="active">{{ crumb | replace:'-',' ' | capitalize }}</li>
-    {% else %}
-                <li><a href="{% assign crumb_limit = forloop.index | plus: 1 %}{% for crumb in crumbs limit: crumb_limit %}{{ crumb | append: '/' }}{% endfor %}">{{ crumb | replace:'-',' ' | capitalize }}</a></li>
-    {% endif %}
-  {% endif %}
-{% endfor %}
-            </ol>
-          </div>
+  <!-- breadcrumbs -->
+  <nav>
+    <div class="container custom-no-padding">
+      <div class="row">
+        <div class="col-lg-12 visible-lg-block visible-md-block custom-no-margin">
+          <ol class="breadcrumb custom-no-margin">
+            <li><a href="{{ '/' | prepend: site.baseurl }}"><i class="glyphicon glyphicon-home"></i></a> </li>
+              {%- assign crumbs = page.url | replace: '.html','' | split: '/' -%}
+              {%- for crumb in crumbs offset: 1 -%}
+                {%- assign next = forloop.index  | plus: 1 -%}
+                {%- if forloop.last -%}
+                  {%- if page.title -%}
+                    <li class="active">{{ page.title }}</li>
+                  {%- endif -%}
+                {%- elsif crumbs[next] == 'index' -%}
+                  <li class="active">{{ crumb | replace:'-',' ' | capitalize }}</li>
+                {%- else -%}
+                  <li><a href="{% assign crumb_limit = forloop.index | plus: 1 %}{% for crumb in crumbs limit: crumb_limit %}{{ crumb | append: '/' }}{% endfor %}">{{ crumb | replace:'-',' ' | capitalize }}</a></li>
+                {%- endif -%}
+              {%- endfor -%}
+          </ol>
         </div>
       </div>
-    </nav>
-    <!-- /breadcrumbs -->
+    </div>
+  </nav>
+  <!-- /breadcrumbs -->
 {% endif %}
 
-    {{ content }}
+{{ content }}
 
 {% if page.show.footer %}
     <footer>
-      <div class="container {% if page.url == '/' or page.collection == 'tools' or page.collection == 'meta' %} noShift-footer {% else %} shift-footer {% endif %}">
+      <div class="container {% if page.url == '/' or page.collection == 'tools' or page.collection == 'meta' %} noshift-footer {% else %} shift-footer {% endif %}">
         <div class="row">
           <div class="col-8">
-            <p>Brought to you with <i class="fa fa-heart text-danger" aria-hidden="true"></i> lack of
-              <i class="fa fa-bed" aria-hidden="true"></i> and lots of
+            <p class="text-center">Brought to you with <i class="fa fa-heart text-danger" aria-hidden="true"></i>, lack of
+              <i class="fa fa-bed" aria-hidden="true"></i>, and lots of
               <i class="fa fa-coffee" aria-hidden="true"></i>. <br />
               The contents of this website are &copy; {{ site.time | date: '%Y' }} under the terms of the <a href="//www.gnu.org/licenses/gpl-3.0.txt">GPLv3</a> License.</p>
           </div>
