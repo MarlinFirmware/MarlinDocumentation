@@ -28,7 +28,7 @@ This repository contains the raw documentation for [Marlin 3D printer firmware](
   - [Installing Ruby on Windows](#installing-ruby-on-windows)
   - [Installing Ruby on macOS](#installing-ruby-on-macos)
   - [Installing Ruby on Ubuntu](#installing-ruby-on-ubuntu)
-  - [Installing Jekyll](#installing-jekyll)
+  - [Set up Marlin Documentation project](#set-up-marlin-documentation-project)
   - [Jekyll basics](#jekyll-basics)
   - [Previewing content](#previewing-content)
   - [License](#license)
@@ -68,7 +68,7 @@ If your new document is about "mashed potatoes" then name the new branch accordi
 git checkout master -b doc-mashed_potatoes
 ```
 
-Inside the `_docs` folder, add the new file `mashed-potatoes.md` and let flow all your creativity into it. When you feel your masterpiece is ready to be shared with the world, commit the changes and push them up to **your MarlinDocumentation fork**. This is done most easily from within the GitHub Desktop app, but here are the command line commands for reference:
+Inside the `_docs` folder, add the new file `mashed-potatoes.md` and let flow all your creativity into it. When you feel your masterpiece is ready to be shared with the world, commit the changes and push them up to **your Marlin Documentation fork**. This is done most easily from within the GitHub Desktop app, but here are the command line commands for reference:
 
 ```sh
 git add mashed-potatoes.md
@@ -111,7 +111,7 @@ If you'd like to be able to preview your contributions before submitting them, y
    ```sh
    ruby -v
    ```
-   If `ruby 3.3.4 (2024-07-09 revision be1089c8ec)` is reported, then proceed to proceed to the [Installing Jekyll](#installing-jekyll) section below.
+   If `ruby 3.3.4 (2024-07-09 revision be1089c8ec)` is reported, then proceed to proceed to the [Set up Marlin Documentation project](#set-up-marlin-documentation-project) section below.
 
 ### Installing Ruby on macOS
 
@@ -187,7 +187,7 @@ If you'd like to be able to preview your contributions before submitting them, y
 > [!NOTE]
 > When using `ruby-install` you'll find your Ruby installations in `~/.rubies/` and you can switch between them with `chruby`. New instances of `zsh` in Terminal will default to 3.3.4 due to the changes made to `~/.zshrc`.
 
-6. Proceed to the [Installing Jekyll](#installing-jekyll) section below. (Note that `bundler` is already included.)
+6. Proceed to the [Set up Marlin Documentation project](#set-up-marlin-documentation-project) section below. (Note that `bundler` is already included.)
 
 ### Installing Ruby on Ubuntu
 
@@ -246,9 +246,9 @@ If you'd like to be able to preview your contributions before submitting them, y
 
 8. Proceed to **Installing Jekyll**….
 
-### Installing Jekyll
+### Set up Marlin Documentation project
 
-Once Ruby is installed you'll need to install Jekyll itself. Open the Command Prompt or Terminal and `cd` to the working path of **your MarlinDocumentation fork**. Execute the following commands:
+Once Ruby is installed, set up the Marlin Documentation project with Bundler. Open Command Prompt or Terminal and `cd` to the working path of **your Marlin Documentation fork**. Execute the following commands:
 
 ```sh
 rm -f Gemfile.lock
