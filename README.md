@@ -111,7 +111,7 @@ If you'd like to be able to preview your contributions before submitting them, y
    ```sh
    ruby -v
    ```
-   If `ruby 3.3.4 (2024-07-09 revision be1089c8ec)` is reported, then proceed to proceed to the [Set up Marlin Documentation project](#set-up-marlin-documentation-project) section below.
+   If `ruby 3.3.4 (2024-07-09 revision be1089c8ec)` is reported, then proceed to [Set up the Marlin Documentation project](#set-up-marlin-documentation-project).
 
 ### Installing Ruby on macOS
 
@@ -181,13 +181,12 @@ If you'd like to be able to preview your contributions before submitting them, y
    ```sh
    ruby -v
    ```
-
    It should report `ruby 3.3.4 (2024-07-09 revision be1089c8ec)`. If not, repeat the above steps.
 
 > [!NOTE]
 > When using `ruby-install` you'll find your Ruby installations in `~/.rubies/` and you can switch between them with `chruby`. New instances of `zsh` in Terminal will default to 3.3.4 due to the changes made to `~/.zshrc`.
 
-6. Proceed to the [Set up Marlin Documentation project](#set-up-marlin-documentation-project) section below. (Note that `bundler` is already included.)
+6. Proceed to [Set up the Marlin Documentation project](#set-up-marlin-documentation-project). (Note that `bundler` is already included.)
 
 ### Installing Ruby on Ubuntu
 
@@ -227,7 +226,7 @@ If you'd like to be able to preview your contributions before submitting them, y
    ```sh
    ruby -v
    ```
-   If `ruby 3.3.4 (2024-07-09 revision be1089c8ec)` is reported, proceed to the next step.
+   It should report `ruby 3.3.4 (2024-07-09 revision be1089c8ec)`. If not, repeat the above steps.
 
 6. Add environment variables to your `~/.bashrc` file to configure the gem installation path:
 
@@ -244,7 +243,7 @@ If you'd like to be able to preview your contributions before submitting them, y
    gem install bundler
    ```
 
-8. Proceed to **Installing Jekyll**….
+8. Proceed to **Set up Marlin Documentation project**.
 
 ### Set up Marlin Documentation project
 
