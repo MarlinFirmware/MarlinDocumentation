@@ -222,14 +222,14 @@ If you'd like to be able to preview your contributions before submitting them, y
 > [!NOTE]
 > When using `rbenv` you'll find your Ruby installations in `~/.rbenv/versions/` and you can switch between them with `rbenv global <version>`.
 
-4. Check Ruby version:
+5. Check Ruby version:
 
    ```sh
    ruby -v
    ```
    If `ruby 3.3.4 (2024-07-09 revision be1089c8ec)` is reported, proceed to the next step.
 
-5. Add environment variables to your `~/.bashrc` file to configure the gem installation path:
+6. Add environment variables to your `~/.bashrc` file to configure the gem installation path:
 
    ```sh
    echo '# Install Ruby Gems to ~/gems' >> ~/.bashrc
@@ -238,13 +238,13 @@ If you'd like to be able to preview your contributions before submitting them, y
    source ~/.bashrc
    ```
 
-6. Install Bundler Gem:
+7. Install Bundler Gem:
 
    ```sh
    gem install bundler
    ```
 
-7. Proceed to **Installing Jekyll**….
+8. Proceed to **Installing Jekyll**….
 
 ### Installing Jekyll
 
