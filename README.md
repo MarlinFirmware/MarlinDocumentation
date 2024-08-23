@@ -9,7 +9,7 @@
   <a href="https://github.com/MarlinFirmware/MarlinDocumentation/actions/workflows/jekyll-pub.yml"><img alt="Jekyll Deploy Status" src="https://github.com/MarlinFirmware/MarlinDocumentation/actions/workflows/jekyll-pub.yml/badge.svg"></a>
   <a href="https://github.com/sponsors/thinkyhead"><img alt="GitHub Sponsors" src="https://img.shields.io/github/sponsors/thinkyhead?color=db61a2"></a>
   <br />
-  <a href="https://twitter.com/MarlinFirmware?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false">Follow @MarlinFirmware</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  <a href="https://x.com/marlinfirmware"><img src="https://img.shields.io/twitter/follow/marlinfirmware?logo=x&style=for-the-badge" alt="@MarlinFirmware" /></a>
   <a href="https://fosstodon.org/@marlinfirmware"><img alt="Follow MarlinFirmware on Mastodon" src="https://img.shields.io/mastodon/follow/109450200866020466?domain=https%3A%2F%2Ffosstodon.org&logoColor=%2300B&style=social"></a>
 </p>
 
