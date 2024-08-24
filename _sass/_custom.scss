@@ -81,7 +81,7 @@
   --color-iframe-search-search-border: #000;
   --color-iframe-search-submit-bg: #C4E6DB;
   --color-iframe-search-submit-border: #000;
-  --color-iframe-overlay-bg: linear-gradient(0deg, #DDF1EA, #DDF1EA, #FFFFFF);
+  --color-iframe-overlay-bg: linear-gradient(0deg, rgba(80%, 95%, 90%, 0.5), #DDF1EA, #FFFFFF);
   --color-iframe-overlay-a: #00F;
   --color-item-bg: #F0F0FF;
   --color-item-code-bg: #E0E0F0;
@@ -340,9 +340,9 @@
   --color-iframe-search-search-border: #FC0;
   --color-iframe-search-submit-bg: #425FB3;
   --color-iframe-search-submit-border: #FFF8;
-  --color-iframe-overlay-bg: linear-gradient(0deg, #000, #142, #000);
+  --color-iframe-overlay-bg: linear-gradient(0deg, rgba(10%, 20%, 10%, 0.5), #241, #112208);
   --color-iframe-overlay-a: #FF0;
-  --color-item-bg: #111;
+  --color-item-bg: #112233;
   --color-item-code-bg: #E0E0F0;
   --color-item-post: #EAEAFC;
   --color-jumbo: #FFF;
@@ -637,7 +637,7 @@ div.container.detail, div.container.config {
   a { color: var(--color-iframe-search-a); }
   input[type="search"] { border-color: var(--color-iframe-search-border); background: var(--color-iframe-search-bg); color: var(--color-iframe-search); }
   input[type="submit"] { background: var(--color-iframe-search-submit-bg); border-color: var(--color-iframe-search-submit-border); }
-  .overlay { background: var(--color-iframe-overlay-bg); }
+  .overlay { background: var(--color-iframe-overlay-bg); border-bottom: 1px solid var(--color-iframe-border); }
   [data-search-results]>.item:hover a { color: var(--color-iframe-overlay-a); }
 }
 
@@ -1017,6 +1017,8 @@ div.container.detail {
 }
 [data-search-results]>.item {
   width: 100%;
+  max-width: 80em;
+  margin: 0 auto;
   padding: 0 0 1em 1em;
   border-top: 1px solid #888;
   border-bottom: 1px solid #888;
@@ -1029,16 +1031,14 @@ div.container.detail {
 [data-search-results]>h1 {
   clear: both;
   text-transform: capitalize;
+  text-align: center;
   color: white;
   display: block;
   width: 12em;
-  margin: 0.75em 0 0.25em;
+  margin: 0.75em auto 0.25em;
   background: #BBB;
   padding: 0.25em 0 0.25em 0.25em;
-  border-top-right-radius: 0.75em;
-  border-bottom-right-radius: 0.75em;
-  border-top-left-radius: 0.125em;
-  border-bottom-left-radius: 0.125em;
+  border-radius: 0.75em;
 }
 #lcd_menu-page .col-lg-9 {
   td {
@@ -1175,6 +1175,7 @@ iframe.youtube {
 hr { margin-top: 0; margin-bottom: 0; }
 summary h3 { display: inline; }
 #search.container {
+  max-width: calc(100% - 2em);
   padding-left: 0;
   padding-right: 0;
   a { text-decoration: none; }
@@ -1271,6 +1272,7 @@ footer>.container { display: block; clear: both; width: 100%}
   max-width: 1400px;
   padding: 0;
 }
+
 .navbar-fixed-top { padding: 0 1em; }
 @media (min-width: $screen-lg-min) {
   .highlight-panels {
