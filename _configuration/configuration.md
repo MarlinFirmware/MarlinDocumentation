@@ -4390,7 +4390,7 @@ Use [Marlin converter tool](https://marlinfw.org/tools/u8glib/converter.html) to
 #define CHR6 "\x6"
 #define CHR7 "\x7"
 ```
-Define these characters so they can easily be used in custom boot screen strings.
+Define these characters so they can easily be used in custom boot screen strings.The display can have up to 8 custom characters.
 
 ## Character bootscreen example
 ![Image](/assets/images/bootscreen/character%20bootscreen%20eg.png){: .floater.framed}
@@ -4490,7 +4490,7 @@ const static PROGMEM byte customBootChars[][8] = {
 };
 ```
 # `_Statusscreen.h`
-The logo is displayed in the top left of the main marlin status screen.
+The logo is displayed in the top left of the main Marlin status screen.
 This is available on 128x64 mono lcd displays.
 Requires: CUSTOM_STATUS_SCREEN_IMAGE
 Use [Marlin converter tool](https://marlinfw.org/tools/u8glib/converter.html) to generate custom status logos.
