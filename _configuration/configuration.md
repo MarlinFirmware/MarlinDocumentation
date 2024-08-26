@@ -4508,5 +4508,4 @@ Use [Marlin converter tool](https://marlinfw.org/tools/u8glib/converter.html) to
 `STATUS_BED_X` Postion of heated bed icon<br>
 `STATUS_HEATERS_X` Position of first hotend icon<br>
 `STATUS_LOGO_WIDTH`Width of status logo in bits<br>
-`STATUS_LOGO_X` Start X postion of status logo<br>
-`STATUS_LOGO_Y` Start Y postion of status logo<br>
+`STATUS_LOGO_[X|Y]` Start X|Y postion of status logo<br>
