@@ -1396,7 +1396,87 @@ div.tags { display: inline-block; float: right; margin: 0.5em; }
   .lcd div { padding-bottom: 0.9em; }
   .lcd .desc { float: left; width: 60%; margin-right: -60%; padding-left: 1em; }
   .lcd .gallery { float: right; width: 40%; margin-left: -40%; padding: 0 1em 0.9em 0; }
-  .lcd .gallery img { float: right; margin-top: 4px; }
+  .lcd .gallery img { float: right; margin-top: 4px; width: 100%; max-width: 300px; }
 }
 
 .fa-x:before { content: "𝕏"; }
+
+//
+// Bootstrap .modal Image Zoomer
+//
+
+.zoomImg {
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+  &:hover { opacity: 0.7; }
+}
+
+.modal {
+  width: 80%;
+  max-width: 900px;
+  height: auto; // Allow height to stretch
+  padding-top: 100px;
+  position: fixed; // Position the div on top
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%); // Center the div horizontally
+  display: none;
+  z-index: 1;
+  overflow: auto;
+  background-color: var(--color-hl-pre);
+  background-color: rgba(var(--color-hl-pre), 0.9);
+}
+
+.modal-content {
+  margin: auto;
+  display: block;
+  width: 80%;
+  /*max-width: 700px;*/
+}
+
+#caption {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+  text-align: center;
+  color: var(--color-tool-header);
+  padding: 10px 0;
+  height: 150px;
+}
+
+.modal-content, #caption {
+  animation-name: zoom;
+  animation-duration: 0.6s;
+}
+
+@keyframes zoom {
+  from {
+    transform: scale(0)
+  }
+  to {
+    transform: scale(1)
+  }
+}
+
+.modalclose {
+  position: absolute;
+  top: 40px;
+  right: 35px;
+  color: var(--color-tool-header);
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.modalclose:hover,
+.modalclose:focus {
+  color: #bbb;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 700px) {
+  .modal-content { width: 100%; }
+}
