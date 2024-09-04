@@ -122,7 +122,7 @@
   // Top nav
   --color-nav: #FFF;
   --color-nav-active: #FFF;
-  --color-nav-active-bg: #0088CC;
+  --color-nav-active-bg: #51B1F6;
   --color-nav-bg: #F8F8F8;
   --color-nav-border: #222;
   --color-nav-shadow: #222;
@@ -144,6 +144,8 @@
   --color-gcode-toc-border: #EEE;
   --color-search-bg: #FFF;
   --color-search: #000;
+  --color-btn-follow: black;
+  --color-btn-follow-hover: red;
   // Side nav
   --color-toc-hover: #66C;
   --color-toc-hover-bg: #DDD;
@@ -284,8 +286,10 @@
   --color-tools-hover-bg: #FBC2;
   --color-help-hover-bg: #AFA2;
   --color-donate-hover-bg: #FCC2;
-  --color-search-bg: #333;
   --color-search: #EEE;
+  --color-search-bg: #333;
+  --color-btn-follow: lightgray;
+  --color-btn-follow-hover: white;
   // Side nav
   --color-toc-hover: #FCC;
   --color-toc-hover-bg: #222;
@@ -432,11 +436,18 @@ pre.highlight{ background-color: var(--color-highlight-bg); }
 /**
  * Top nav bar for "Edit Page" or "Follow Us" links
  */
-.nav.navbar-right li { float: left; }
-.nav.navbar-right li>a {
-  color: var(--color-link-edit);
-  padding: 14px 12px;
-  &:hover { color: var(--color-link-edit-hover); background: var(--color-link-edit-hover-bg); }
+.nav.navbar-right {
+  margin-left: -200px; // Prevent breaking the layout
+  li {
+    float: left;
+    margin-left: 4px;
+    >a { padding: 14px 10px; }
+    &.edit-page>a {
+      color: var(--color-link-edit);
+      padding: 14px 12px;
+      &:hover { color: var(--color-link-edit-hover); background: var(--color-link-edit-hover-bg); }
+    }
+  }
 }
 
 /**
@@ -659,7 +670,15 @@ h1+h2 { margin-top: -0.4em; color: #BBC; }
 .row { margin: 0; padding: 0; }
 .back-to-top { padding-right: 2em; }
 
-#daynite { visibility: hidden; margin: 6px 0 0 4px; padding-left: 4px; }
+#daynite {
+  &:hover { background: none; }
+  img {
+    visibility: hidden;
+    margin: 6px 0 0 4px;
+    padding-left: 4px;
+    &:hover { cursor: pointer; background: none; }
+  }
+}
 
 #discord-frame { float: right; margin-left: 1em; padding-bottom: 1em; +p { clear: none; +ul { clear: none; >li { clear: none; } } } }
 .home-discord { width: 350px; margin: 0 auto; text-align: center; }
@@ -740,14 +759,29 @@ div.highlight { margin-bottom: 25px; }
 td.arg code { white-space: nowrap; }
 #search-block-form .button { margin-right: 0.25em; }
 
-/*
- * Edit this page Button
- */
+// 
+// Navigation "Buttons"
+// 
+.btn:hover { color: white; }
+.panel-learn, .panel-discord, .panel-github {
+  color: white;
+  display: block;
+  white-space: nowrap;
+}
+.nav>li>a.btn-follow {
+  background: none;
+  color: var(--color-btn-follow);
+  &:hover { color: var(--color-btn-follow-hover); }
+}
+
+//
+// Edit this page Button
+//
 .btn-edit { background: #C58A03; }
 
-/*
- * Follow Button
- */
+//
+// Follow Button
+//
 .navbar-nav>li>a.btn-follow {
   color: rgb(0, 132, 180);
   &:hover, &:active {
@@ -756,29 +790,29 @@ td.arg code { white-space: nowrap; }
   }
 }
 
-/*
- * Contribute Button
- */
+//
+// Contribute Button
+//
 .btn-contribute { background: #B8B; }
 
-/*
- * Download Button
- */
+//
+// Download Button
+//
  .btn-download { background: #5BC0DE; }
 
-/*
- * Learn More Button
- */
+//
+// Learn More Button
+//
  .btn-learn, .panel-learn { background: rgb(120, 168, 120); }
 
-/*
- * Nav bar expand/collapse btn
- */
+//
+// Nav bar expand/collapse btn
+//
 .navbar-toggle { margin-right: 0; }
 
-/*
- * Panels
- */
+//
+// Panels
+//
 .highlight-panels {
   .panel-heading { height: auto; }
   .panel-body {
@@ -820,9 +854,9 @@ a.panel-wrapper:hover, a.panel-wrapper:active {
 .panel-discord { background: rgb(115, 138, 219); }
 .panel-svg { padding: 1em; }
 
-/*
- * Tagline
- */
+//
+// Tagline
+//
 #tagline { padding: 0; margin-top: 0; color: var(--color-tagline-id); }
 .custom-tagline {
   text-align: left;
@@ -834,9 +868,9 @@ a.panel-wrapper:hover, a.panel-wrapper:active {
 }
 .custom-tagline-btn a { color: var(--color-tagline-btn); }
 
-/*
- * Tiles
- */
+//
+// Tiles
+//
 .mid-section {
   padding-top: 3em;
   width: auto;
@@ -849,7 +883,7 @@ a.panel-wrapper:hover, a.panel-wrapper:active {
   padding-left: 1em;
   margin: 5em 0 5em 0;
 }
-hr.custom-hr{
+hr.custom-hr {
   border-width: 0 0 1px;
   border-style: solid;
   width: 90%;
@@ -875,9 +909,9 @@ hr.custom-hr{
   font-size: 1.2em;
 }
 
-/*
- * Scrolling code blocks
- */
+//
+// Scrolling code blocks
+//
 div.language-cpp { overflow: hidden; }
 pre {
   width: auto;
@@ -1153,10 +1187,7 @@ div[role=main] { padding-bottom: 33vh; }
 li#searchbox {
   padding-left: 0.5em;
   overflow: hidden;
-  form {
-    display: none;
-    padding: 12px 0;
-  }
+  form { display: inline-block; padding: 12px 0; }
   input[type="search"] {
     border: 1px solid;
     border-radius: 0.25em;
@@ -1165,6 +1196,8 @@ li#searchbox {
     width: 7em;
   }
 }
+
+.search-section li#searchbox form { display: none; }
 
 iframe.youtube {
   border-color: var(--color-iframe-border);
@@ -1211,15 +1244,15 @@ summary h3 { display: inline; }
   list-style-type: upper-alpha;
 }
 
-/**
- * Top heading navigation
- */
+//
+// Top heading navigation
+//
 .navbar-header { min-width: 153px; }
 .navbar-brand { padding: 4px 0 0 0; }
 
-/**
- * Common page footer, may be shifted over by a navigation column
- */
+//
+// Common page footer, may be shifted over by a navigation column
+//
 
 footer>.container { display: block; clear: both; width: 100%}
 .noshift-footer, .shift-footer {
@@ -1262,7 +1295,7 @@ footer>.container { display: block; clear: both; width: 100%}
   hr.custom-hr { width: 70%; }
   .features-tile-image { margin: 0; }
   li#searchbox input[type="search"] { width: 13em; }
-  #daynite { display: inline; }
+  #daynite img { display: inline; }
   .tocify.bigtoc, .custom-fixed-sidebar .tocify { width: 300px; }
   .custom-tagline { padding-left: 1em; padding-right: 3em; }
   .features-tile-image { height: 300px; }

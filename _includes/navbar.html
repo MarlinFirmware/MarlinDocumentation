@@ -7,7 +7,6 @@
 <nav class="navbar navbar-default navbar-fixed-top custom-no-margin">
   <div class="container">
     <div class="navbar-header">
-      <img id="daynite" src="/assets/images/btn-night.svg" alt="Dark Mode" width="32" height="32" />
       <a href="/" class="navbar-brand">{% include marlin-svg.html %}</a>
       <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
         <span class="icon-bar"></span>
@@ -98,14 +97,17 @@
             <input type="search" name="q" placeholder="Search" />
           </form>
         </li>
+
+        <li id="daynite"><img src="/assets/images/btn-night.svg" alt="Dark Mode" width="32" height="32" /></li>
+
       </ul>
 
-      <ul class="nav navbar-right hidden-sm">
+      <ul class="nav navbar-right">
         {%- if is_editable %}
-          <li><a href="{{ site.repository.doc }}/edit/master/{{ page.path }}" data-proofer-ignore><i class="fa fa-pen-to-square" aria-hidden="true"></i> <span>Edit Page</span></a></li>
+          <li class="hidden-sm edit-page"><a href="{{ site.repository.doc }}/edit/master/{{ page.path }}" data-proofer-ignore><i class="fa fa-pen-to-square" aria-hidden="true"></i> <span>Edit Page</span></a></li>
         {%- else %}
-          <li><a class="btn btn-follow btn-block btn-sm" href="//x.com/marlinfirmware" role="button"><span class="btn-text"><em class="fa-brands fa-x" aria-hidden="true"></em>&nbsp; Follow on X</span></a></li>
-          <li><a class="btn btn-follow btn-block btn-sm" href="//fosstodon.org/@marlinfirmware" role="button"><span class="btn-text"><em class="fa-brands fa-mastodon" aria-hidden="true"></em>&nbsp; Mastodon</span></a></li>
+          <li class="hidden-sm"><a class="btn btn-follow btn-block btn-med" href="//x.com/marlinfirmware" role="button"><span class="btn-text"><em class="fa-brands fa-x" aria-hidden="true"></em>&nbsp; Follow on X</span></a></li>
+          <li class="hidden-sm"><a class="btn btn-follow btn-block btn-med" href="//fosstodon.org/@marlinfirmware" role="button"><span class="btn-text"><em class="fa-brands fa-mastodon" aria-hidden="true"></em>&nbsp; Mastodon</span></a></li>
         {%- endif %}
       </ul>
 

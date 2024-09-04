@@ -54,10 +54,7 @@ var jekyllSearch = (() => {
     init: function() {
       self = this;  // The enclosing function()
 
-      if (document.location.href.indexOf('meta/search/') == -1) {
-        setTimeout(() => { $('#searchbox>form').css('display','inline-block'); }, 800);
-        return;
-      }
+      if (document.location.href.indexOf('meta/search/') == -1) return;
 
       // Extend String to remove accents from characters
       String.prototype.unaccent = function() { return this.normalize("NFD").replace(/[\u0300-\u036f]/g, ""); }
