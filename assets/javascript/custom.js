@@ -31,7 +31,7 @@ function setDarkMode(dark) {
   //console.log((dark ? "Set" :  "Clear") + " dark mode.");
   var $t = $('html'), q = '/assets/images/';
   dark ? $t.attr('data-theme', 'dark') : $t.removeAttr('data-theme');
-  $('#daynite')
+  $('#daynite img')
     .attr('src', q + 'btn-' + (dark ? 'day' : 'night') + '.svg')
     .css('visibility', 'visible');
   $('#discord-frame').attr('src', `${discord_widget_url}&theme=` + (dark ? 'dark' : 'light'));
@@ -167,7 +167,7 @@ $(function() {
   $(window).resize(shiftSubMenu, resizeImage);
 
   // Toggle dark / light theme on click
-  $('#daynite').click(function(){
+  $('#daynite img').click(function(){
     const dark = toggleDarkMode();
     setCookie('nightMode', dark);
   });
