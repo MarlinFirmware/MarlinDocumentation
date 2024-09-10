@@ -196,6 +196,8 @@
   --color-table-header: #FFF;
   --color-table-header-bg: #000;
   --color-table-striped-bg: #CCC;
+  --color-btn-download-fg: white;
+  --color-btn-download-bg: #5BC0DE;
 }
 
 /* Variable declaration for dark mode */
@@ -382,6 +384,8 @@
   --color-table-header: #000;
   --color-table-header-bg: #CCC;
   --color-table-striped-bg: #333;
+  --color-btn-download-fg: yellow;
+  --color-btn-download-bg: #425FB3;
 }
 
 body {
@@ -674,8 +678,7 @@ h1+h2 { margin-top: -0.4em; color: #BBC; }
   &:hover { background: none; }
   img {
     visibility: hidden;
-    margin: 6px 0 0 4px;
-    padding-left: 4px;
+    margin: 8px 8px 0 0;
     &:hover { cursor: pointer; background: none; }
   }
 }
@@ -759,9 +762,9 @@ div.highlight { margin-bottom: 25px; }
 td.arg code { white-space: nowrap; }
 #search-block-form .button { margin-right: 0.25em; }
 
-// 
+//
 // Navigation "Buttons"
-// 
+//
 .btn:hover { color: white; }
 .panel-learn, .panel-discord, .panel-github {
   color: white;
@@ -790,20 +793,25 @@ td.arg code { white-space: nowrap; }
   }
 }
 
+.btn.btn-download {
+  color: var(--color-btn-download-fg);
+  &:hover { text-shadow: 1px 1px rgb(70, 70, 70); }
+}
+
 //
 // Contribute Button
 //
-.btn-contribute { background: #B8B; }
+.btn.btn-contribute { background: #B8B; }
 
 //
 // Download Button
 //
- .btn-download { background: #5BC0DE; }
+.btn.btn-download { background: var(--color-btn-download-bg); }
 
 //
 // Learn More Button
 //
- .btn-learn, .panel-learn { background: rgb(120, 168, 120); }
+.btn-learn, .panel-learn { background: rgb(120, 168, 120); }
 
 //
 // Nav bar expand/collapse btn
