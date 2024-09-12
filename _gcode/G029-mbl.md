@@ -17,6 +17,7 @@ notes: |
   - By default `G28` disables bed leveling. Follow `G28` with `M420 S` to turn leveling on.
       - With `ENABLE_LEVELING_AFTER_G28` leveling will always be enabled after `G28`.
       - With `RESTORE_LEVELING_AFTER_G28` leveling is restored to whatever state it was in before `G28`.
+  - For multi-axis machines (`I_DRIVER_TYPE` defined) without implementation of inverse kinematics, bed leveling produces wrong results while the toolhead is not oriented vertical and perpendicular to the bed and must be turned off with `M420 S0`
 
 parameters:
 
