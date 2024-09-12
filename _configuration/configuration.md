@@ -41,7 +41,7 @@ If you've never configured and calibrated a 3D Printer before, here are some goo
 - [Průša's calculators](//blog.prusaprinters.org/calculator_3416/)
 - [Triffid Hunter's Calibration Guide](//reprap.org/wiki/Triffid_Hunter%27s_Calibration_Guide)
 - [The Essential Calibration Set](//www.thingiverse.com/thing:5573)
-- [Calibration of your RepRap (Internet Archive link)](//web.archive.org/web/20220907014303/https://sites.google.com/site/repraplogphase/calibration-of-your-reprap)
+- [Calibration of your RepRap](//web.archive.org/web/20220907014303/sites.google.com/site/repraplogphase/calibration-of-your-reprap)
 - [XY 20mm Calibration Box](//www.thingiverse.com/thing:298812)
 - [G-code reference](//reprap.org/wiki/G-code)
 - [Marlin3DprinterTool](//github.com/cabbagecreek/Marlin3DprinterTool)

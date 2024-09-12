@@ -118,7 +118,7 @@ groups:
 
     - name: RA_CONTROL_PANEL
       description: Elefu RA board control panel.
-      url: web.archive.org/web/20140823033947/http://www.elefu.com/index.php?route=product/product&product_id=53
+      url: web.archive.org/web/20140823033947/www.elefu.com/index.php?route=product/product&product_id=53
       interface: I2C
 
     - name: LCD_SAINSMART_I2C_1602
