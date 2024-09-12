@@ -18,7 +18,7 @@ Marlin configurations include `#if` blocks to group dependent options, although 
 
 It can be tricky to migrate from older versions of Marlin as settings change. Marlin checks for old settings and tells you what to change during the build, but the final result is never fully up to date. Wouldn't it be nice if Marlin would automatically migrate old settings to a new configuration for you?
 
-We're currently working on tools to improve the situation, with the goal to build a schema and a database of configurations across all Marlin versions so we can generate complete configuration headers, perform migrations, and even generate searchable documentation for this website. That is a big project unto itself, so feel free to [get involved on Discord](https://discord.gg/marlin-firmware-461605380783472640)!
+We're currently working on tools to improve the situation, with the goal to build a schema and a database of configurations across all Marlin versions so we can generate complete configuration headers, perform migrations, and even generate searchable documentation for this website. That is a big project unto itself, so feel free to [get involved on Discord](https://discord.com/servers/marlin-firmware-461605380783472640)!
 
 ## Meta Configuration
 
