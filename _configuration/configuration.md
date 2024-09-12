@@ -11,8 +11,8 @@ Marlin is a huge C++ program composed of many files, but among the most importan
 
 - `Configuration.h` contains the core settings for the hardware, language and controller selection, and settings for the most common features and components.
 - `Configuration_adv.h` contains more detailed customization options, add-ons, experimental features, and other esoteric settings.
-- `_Bootscreen.h` is included when SHOW_CUSTOM_BOOTSCREEN is defined.
-- `_Statusscreen` is included when CUSTOM_STATUS_SCREEN_IMAGE is defined.
+- `_Bootscreen.h` is included when `SHOW_CUSTOM_BOOTSCREEN` is defined.
+- `_Statusscreen` is included when `CUSTOM_STATUS_SCREEN_IMAGE` is defined.
 - `config.ini` may be included to modify the configuration at the start of a PlatformIO build. See the [Configuration with INI](config-ini.html) page for more information.
 
 The two `.h` files contain all of Marlin's build-time configuration options. Simply edit or replace these files, then build and upload Marlin to the board. Hundreds of user-donated configurations are posted at the [Configurations repository](//github.com/MarlinFirmware/Configurations) to get you started.
