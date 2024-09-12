@@ -126,7 +126,7 @@ module Jekyll
     def fill_pages(site, urlset)
       site.pages.each do |page|
         if !excluded?(site, page.path_to_source)
-          if File.exists?(page.path)
+          if File.exist?(page.path)
             url = fill_url(site, page)
             urlset.add_element(url)
           end
