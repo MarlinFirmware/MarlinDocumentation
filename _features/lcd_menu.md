@@ -122,7 +122,7 @@ Save Settings          |[`M500`](/docs/gcode/M500.html)                        |
 
 ## Unified Bed Leveling
 
-The Unified Bed Leveling menu groups together commands for leveling and mesh editing. Since this menu is very large and complex, it will be described in a separate document - coming soon.
+The Unified Bed Leveling menu groups together commands for leveling and mesh editing. Since this menu is very large and complex, it is described in a [separate document](/docs/features/unified_bed_leveling.html).
 
 ## Preheat PLA
 
@@ -363,11 +363,3 @@ Reset BLTouch          |Revive after an error|
 BLTouch Self-Test      |Run the built-in self-test|
 Deploy BLTouch         ||
 Stow BLTouch           ||
-
-----
-
-# UBL Submenus
-
-Unified Bed Leveling aims to be a comprehensive all-in-one system to calibrate the bed based on every available datapoint.
-
----
