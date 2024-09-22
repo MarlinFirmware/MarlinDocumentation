@@ -9,4 +9,3 @@ vendor
 applet/
 *.DS_Store
 Thumbs.db
-.ruby-version
