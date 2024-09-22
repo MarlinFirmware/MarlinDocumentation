@@ -7,18 +7,22 @@ contrib: paulusjacobus, jbrazio, landodragon141, thinkyhead, shitcreek, LMF5000,
 category: [ configuration ]
 ---
 
-Marlin is a huge C++ program composed of many files, but among the most important are the files that contain all of Marlin's compile-time configuration options:
+Marlin has many features and options. They are defined and documented in two very large files:
 
 - `Configuration.h` contains the core settings for the hardware, language and controller selection, and settings for the most common features and components.
 - `Configuration_adv.h` contains more detailed customization options, add-ons, experimental features, and other esoteric settings.
-- `config.ini` may be included to modify the configuration at the start of a PlatformIO build. See the [Configuration with INI](config-ini.html) page for more information.
 
-The two `.h` files contain all of Marlin's build-time configuration options. Simply edit or replace these files, then build and upload Marlin to the board. Hundreds of user-donated configurations are posted at the [Configurations repository](//github.com/MarlinFirmware/Configurations) to get you started.
+Build-time configuration options describe aspects of the machine that will never change, such as the total build area. Other settings define defaults that can be changed while the printer is running, such as the preheat temperatures.
+
+Marlin also provides minimal and intelligent configuration methods that may be more suitable for your needs. Give these a try and let us know what you think!
+
+- `Config.h` (2.1.3 and up) should contain just your pertinent settings. This replaces `Configuration.h` and `Configuration_adv.h`, which will be ignored.
+- `config.ini` (2.1.0 and up) modifies the configuration files at the start of a PlatformIO build and has some other useful powers. See the [Configuration with INI](config-ini.html) page to see if it's right for you.
 
 ## Compiler Directives
-Marlin is configured using C++ compiler directives. This allows Marlin to leverage the C++ preprocessor and include only the code and data needed for the enabled options. This results in the smallest possible binary. A build of Marlin can range from 50K to over 230K in size.
+Marlin is configured using C `#define` statements so the firmeware can be as small, fast, and efficient as possible, but if you want all the bells and whistles and your board has the power, you can go for it.
 
-Settings can be enabled, disabled, and assigned values using C preprocessor syntax like so:
+Settings are enabled, disabled, and assigned values using C preprocessor syntax like so:
 
 ```cpp
 #define THIS_IS_ENABLED    // this switch is enabled
@@ -34,20 +38,19 @@ To migrate your settings to a new Configuration you can use tools like Notepad++
 ## Sources of Documentation
 The most authoritative source on configuration details will always be **the configuration files themselves**. They provide pretty complete descriptions of each option, and are themselves the source for most of the information presented here.
 
-If you've never configured and calibrated a 3D Printer before, here are some good resources:
+It's hard to know as a beginner which settings are important and which can be safely ignored.
 
-- [Calibration](//reprap.org/wiki/Calibration)
-- [Calibrating Steps-per-unit (video)](//youtu.be/wAL9d7FgInk)
-- [Průša's calculators](//blog.prusaprinters.org/calculator_3416/)
+Here are some useful resources to get you started configuring and calibrating your 3D Printer:
+
+- [Marlin Example Configurations](//github.com/MarlinFirmware/Configurations)
+- ["Marlin Firmware Help" YouTube Playlist](//www.youtube.com/playlist?list=PL8O17J4ws-VNc7cM7l_bPRjK0Kbi0CEOd)
+- [Marlin Daily Builds](//marlin.crc.id.au)
 - [Triffid Hunter's Calibration Guide](//reprap.org/wiki/Triffid_Hunter%27s_Calibration_Guide)
-- [The Essential Calibration Set](//www.thingiverse.com/thing:5573)
+- [Calibrating Steps-per-unit (video)](//youtu.be/wAL9d7FgInk)
 - [Calibration of your RepRap](//web.archive.org/web/20220907014303/sites.google.com/site/repraplogphase/calibration-of-your-reprap)
-- [XY 20mm Calibration Box](//www.thingiverse.com/thing:298812)
-- [G-code reference](//reprap.org/wiki/G-code)
-- [Marlin3DprinterTool](//github.com/cabbagecreek/Marlin3DprinterTool)
 
 ## Before You Begin
-To get your core `Configuration.h` settings right you'll need to know the following things about your printer:
+For the main settings you'll need to know a few things about your machine:
 
 - Printer style, such as Cartesian, Delta, CoreXY, or SCARA
 - Driver board, such as RAMPS, RUMBA, Teensy, etc.
@@ -60,7 +63,7 @@ To get your core `Configuration.h` settings right you'll need to know the follow
 - Add-ons and custom components
 
 # `Configuration.h`
-The core and default settings of Marlin live in the `Configuration.h` file. Most of these settings are fixed. Once you compile Marlin, that's it. To change them you need to re-compile. However, several items in `Configuration.h` only provide defaults -factory settings- that can be changed via the user interface, stored on EEPROM and reloaded or restored to initial values.
+The most fundamental settings for your hardware are found here.
 
 {% alert info %}
 Settings that can be changed and saved to EEPROM are marked with <em class="fa fa-sticky-note" aria-hidden="true"></em>. Options marked with <em class="fa fa-desktop" aria-hidden="true"></em> can be changed from the LCD controller.
@@ -70,29 +73,43 @@ Settings that can be changed and saved to EEPROM are marked with <em class="fa f
 Settings saved in EEPROM persist across reboots and still remain after flashing new firmware, so always send [`M502`](/docs/gcode/M502.html), [`M500`](/docs/gcode/M500.html) (or "Reset EEPROM" from the LCD) after flashing.
 {% endalert %}
 
-This section follows the order of settings as they appear. The order isn't always logical, so "Search In Page" may be helpful. We've tried to keep descriptions brief and to the point. For more detailed information on various topics, please read the main articles and follow the links provided in the option descriptions.
+This section follows the order of settings as they appear. The order isn't always logical,
+so "Search In Page" may be helpful. We've tried to keep descriptions brief and to the point.
+For more detailed information on various topics, please read the main articles and follow the
+links provided in the option descriptions.
 
 ## Configuration versioning
 ```cpp
-#define CONFIGURATION_H_VERSION 020005
+#define CONFIGURATION_H_VERSION 02010200
 ```
-Marlin now checks for a configuration version and won't compile without this setting. If you want to upgrade from an earlier version of Marlin, add this line to your old configuration file. During compilation, Marlin will throw errors explaining what needs to be changed.
+Marlin now checks for a configuration version and won't compile without this setting.
+If you want to upgrade from an earlier version of Marlin, add this line to your old
+configuration file and set it to the current version. During the build Marlin will throw
+errors explaining what needs to be changed.
 
 ## Firmware Info
 ```cpp
 #define STRING_CONFIG_H_AUTHOR "(none, default config)"
-
-#define SHOW_BOOTSCREEN
-#define SHOW_CUSTOM_BOOTSCREEN
-#define CUSTOM_STATUS_SCREEN_IMAGE
+//#define CUSTOM_VERSION_FILE Version.h
 ```
 
 - `STRING_CONFIG_H_AUTHOR` is shown in the Marlin startup message to identify the author (and optional variant) of the firmware. Use this setting as a way to uniquely identify your custom configurations. The startup message is printed whenever the board (re)boots.
-- `SHOW_BOOTSCREEN` enables the boot screen for LCD controllers.
-- `SHOW_CUSTOM_BOOTSCREEN` shows the bitmap in `Marlin/_Bootscreen.h` on startup.
-- `CUSTOM_STATUS_SCREEN_IMAGE` shows the bitmap in `Marlin/_Statusscreen.h` on the status screen.
+- `CUSTOM_VERSION_FILE` can be set to the name of a custom firmware version file. See `Marlin/Version.h` for the standard version file.
 
 ## Hardware Info
+
+### Motherboard
+```cpp
+#define MOTHERBOARD BOARD_RAMPS_14_EFB
+```
+The most important setting is Marlin is the motherboard. The firmware needs to know what board it will be running on so it can assign the right functions to all pins and take advantage of the full capabilities of the board. Setting this incorrectly will lead to unpredictable results.
+
+Using `boards.h` as a reference, replace `BOARD_RAMPS_14_EFB` with your board's ID. The `boards.h` file has the most up-to-date listing of supported boards - check there first if you don't see yours listed [`here`](/docs/hardware/boards.html).
+
+{% alert info %}
+The Sanguino board requires adding "Sanguino" support to Arduino IDE. Open `Preferences` and locate the `Additional Boards Manager URLs` field. Copy and paste [this source URL](//raw.githubusercontent.com/Lauszus/Sanguino/master/package_lauszus_sanguino_index.json). Then use `Tools` > `Boards` > `Boards Manager` to install "Sanguino" from the list. An internet connection is required. (Thanks to "Dust's RepRap Blog" for the tip.)
+{% endalert %}
+
 ### Serial Port
 ```cpp
 #define SERIAL_PORT 0
@@ -123,18 +140,6 @@ The serial communication speed of the printer should be as fast as it can manage
 Enable the Bluetooth serial interface. For boards based on the AT90USB.
 
 ![Motherboard](/assets/images/config/motherboard.jpg){: .floater.framed}
-
-### Motherboard
-```cpp
-#define MOTHERBOARD BOARD_RAMPS_14_EFB
-```
-The most important setting is Marlin is the motherboard. The firmware needs to know what board it will be running on so it can assign the right functions to all pins and take advantage of the full capabilities of the board. Setting this incorrectly will lead to unpredictable results.
-
-Using `boards.h` as a reference, replace `BOARD_RAMPS_14_EFB` with your board's ID. The `boards.h` file has the most up-to-date listing of supported boards - check there first if you don't see yours listed [`here`](/docs/hardware/boards.html).
-
-{% alert info %}
-The Sanguino board requires adding "Sanguino" support to Arduino IDE. Open `Preferences` and locate the `Additional Boards Manager URLs` field. Copy and paste [this source URL](//raw.githubusercontent.com/Lauszus/Sanguino/master/package_lauszus_sanguino_index.json). Then use `Tools` > `Boards` > `Boards Manager` to install "Sanguino" from the list. An internet connection is required. (Thanks to "Dust's RepRap Blog" for the tip.)
-{% endalert %}
 
 ### Custom Machine Name
 ```cpp
@@ -173,8 +178,8 @@ A unique ID for your 3D printer. A suitable unique ID can be generated randomly 
 //#define E6_DRIVER_TYPE A4988
 //#define E7_DRIVER_TYPE A4988
 ```
-These settings allow Marlin to tune stepper driver timing and enable advanced options for stepper drivers that support them. 
-You may also override timing options in `Configuration_adv.h`. Each driver is associated with an axis (internal axis identifiers: 
+These settings allow Marlin to tune stepper driver timing and enable advanced options for stepper drivers that support them.
+You may also override timing options in `Configuration_adv.h`. Each driver is associated with an axis (internal axis identifiers:
 `X`, `Y`, `Z`, `I`, `J`, `K`, `U`, `V`, `W`) or an extruder (`E0` to `E7`).
 
 Each axis gets its own stepper control and endstops depending on the following settings:
@@ -704,7 +709,7 @@ Enable for Polargraph Kinematics
 ```cpp
 //#define FOAMCUTTER_XYUV
 ```
-Enable for a 4 axis hot wire foam cutter with paralell horizontal axes X, U where hights of the wire ends 
+Enable for a 4 axis hot wire foam cutter with paralell horizontal axes X, U where hights of the wire ends
 are controlled by vertical axes Y, V. Requires `I_DRIVER_TYPE`, J_DRIVER_TYPE, `AXIS4_NAME 'U'` and `AXIS5_NAME 'V'`. The Z axis is unused.
 The LASER features (see section "Spindle / Laser") can be used to control the heating element for the tool.
 
@@ -713,11 +718,11 @@ The LASER features (see section "Spindle / Laser") can be used to control the he
 ```cpp
 //#define ARTICULATED_ROBOT_ARM
 ```
-Enable for articulated robots or for machines with `I_DRIVER_TYPE` defined, if feed rate interpretation should be 
-compatibile with firmwares (e.g. grblHAL/grblHAL, Duet-3D/RepRapFirmware, synthetos/g2) that behave different 
-from LinuxCNC. When enabled, feedrate `F` is defined as follows: Let `dX`, `dY`, ... be displacements along the 
-X, Y, ... axes. Let `T` be the time required for the move at the specified nominal feedrate. 
-Then `F = sqrt(dX^2 + dY^2 + dZ^2 + dA^2 + dB^2 + dC^2 + dU^2 + dV^2 + dW^2) / T`. 
+Enable for articulated robots or for machines with `I_DRIVER_TYPE` defined, if feed rate interpretation should be
+compatibile with firmwares (e.g. grblHAL/grblHAL, Duet-3D/RepRapFirmware, synthetos/g2) that behave different
+from LinuxCNC. When enabled, feedrate `F` is defined as follows: Let `dX`, `dY`, ... be displacements along the
+X, Y, ... axes. Let `T` be the time required for the move at the specified nominal feedrate.
+Then `F = sqrt(dX^2 + dY^2 + dZ^2 + dA^2 + dB^2 + dC^2 + dU^2 + dV^2 + dW^2) / T`.
 Moves should finish in `T` plus any time required for acceleration and decceleration.
 
 ![Endstop switch](/assets/images/config/endstop.jpg){: .floater}
@@ -2157,6 +2162,18 @@ Delay (in microseconds) before the next move will start, to give the servo time 
 With this option servos are powered only during movement, then turned off to prevent jitter. We recommend enabling this option to keep electrical noise from active servos from interfering with other components. The high amperage generated by extruder motor wiring during movement can also induce movement in active servos. Leave this option enabled to avoid all such servo-related troubles.
 
 # `Configuration_adv.h`
+## Configuration Export
+With this option the configuration will be exported to the build folder as part of the build process.
+- 1 = `marlin_config.json` - Dictionary containing the configuration. (Also generated for `CONFIGURATION_EMBEDDING`).
+- 2 = `config.ini` - File format for PlatformIO preprocessing.
+- 3 = `schema.json` - The entire configuration schema. (13 = pattern groups)
+- 4 = `schema.yml` - The entire configuration schema.
+- 5 = `Config.h` - Minimal configuration.
+Add 100 for some variant of the exported configuration, e.g., organized by section.
+```cpp
+//#define CONFIG_EXPORT 105 // :[1:'JSON', 2:'config.ini', 3:'schema.json', 4:'schema.yml', 5:'Config.h']
+```
+
 ## Temperature Options
 ### Custom Thermistor 1000 Parameters
 ```cpp
@@ -3773,6 +3790,7 @@ Experimental feature for filament change support and parking the nozzle when pau
 
 ## Stepper Drivers
 ### Trinamic TMC26X
+(Removed in Marlin 2.1.3)
 ```cpp
 #if HAS_DRIVER(TMC26X)
 
@@ -3813,9 +3831,10 @@ You'll need the [TMC2130Stepper](//github.com/teemuatlut/TMC2130Stepper) Arduino
 To use TMC2130 stepper drivers in SPI mode connect your SPI2130 pins to the hardware SPI interface on your board and define the required CS pins in your `pins_MYBOARD.h` file. (_e.g.,_ RAMPS 1.4 uses AUX3 pins `X_CS_PIN 53`, `Y_CS_PIN 49`, etc.).
 
 ### L6470 Drivers
+(Removed in Marlin 2.1.2)
 ```cpp
 #if HAS_L64XX
-  //#define L6470_CHITCHAT        // Display additional status info
+  //#define L6470_CHITCHAT          // Display additional status info
   #if AXIS_IS_L64XX(X)
     #define X_MICROSTEPS       128  // Number of microsteps (VALID: 1, 2, 4, 8, 16, 32, 128) - L6474 max is 16
     #define X_OVERCURRENT     2000  // (mA) Current where the driver detects an over current
