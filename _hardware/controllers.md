@@ -693,6 +693,18 @@ groups:
     - name: ANYCUBIC_LCD_VYPER
       description: Touchscreen included with the Anycubic Vyper.
 
+    - name: SOVOL_SV06_RTS
+      description: |
+        Touchscreen found in Sovol SV-06
+        - 272x480
+        - 4.3"
+        - Serial (DWIN T5LC1)
+      interface: Serial
+      protocol: T5LC1
+      images:
+        - alt: SOVOL_SV06_RTS
+          back: SOVOL_SV06_RTS
+
     - name: NEXTION_TFT
       description: 320×240 Nextion 2.8" serial TFT Resistive Touch Screen. Model NX3224T028.
 
