@@ -42,6 +42,7 @@ function setDarkMode(dark) {
     .attr('src', q + 'btn-' + (dark ? 'day' : 'night') + '.svg')
     .css('visibility', 'visible');
   $('#discord-frame').attr('src', `${discord_widget_url}&theme=` + (dark ? 'dark' : 'light'));
+  $('#starchart img').attr('src', 'https://api.star-history.com/svg?repos=MarlinFirmware/Marlin&type=Date' + (dark ? '&theme=dark' : ''));
 }
 
 function toggleDarkMode() {
@@ -60,8 +61,11 @@ function userToggleDarkMode() {
 // Set dark / light theme as soon as possible
 var nightMode = getCookie('nightMode');        // A cookie?
 if (nightMode === '') {
+  const hasMatchMedia = () => window && window.matchMedia,
+        prefersDarkColorScheme = () => hasMatchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches,
+        prefersLightColorScheme = () => hasMatchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
   var d = new Date(), h = d.getHours();
-  nightMode = (h >= 19 || h < 6);
+  nightMode = prefersDarkColorScheme || (!prefersLightColorScheme && (h >= 19 || h < 6));
 }
 else
   nightMode = (nightMode === 'true');

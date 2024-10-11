@@ -17,6 +17,7 @@
  *  - $screen-lg-min = 1200px
  */
 :root {
+  prefers-color-scheme: light;
   --bg-midsection: radial-gradient(circle, rgba(0,0,0, 1) 0%, rgba(0,0,0, 0) 60%, rgba(0,0,0, 0) 100%);
   --color-background: #F8FCFE;
   --color-color: #000;
@@ -202,6 +203,7 @@
 
 /* Variable declaration for dark mode */
 [data-theme="dark"] {
+  prefers-color-scheme: dark;
   --bg-midsection: radial-gradient(circle, rgba(255,255,255, 1) 0%, rgba(255,255,255, 0) 60%, rgba(255,255,255, 0) 100%);
   --color-background: #000;
   --color-color: #B5B5B5;
@@ -866,6 +868,8 @@ a.panel-wrapper:hover, a.panel-wrapper:active {
 .panel-github { background: rgb(65, 131, 196); }
 .panel-discord { background: rgb(115, 138, 219); }
 .panel-svg { padding: 1em; }
+
+#starchart img { display: block; margin: 0 auto; }
 
 //
 // Tagline
