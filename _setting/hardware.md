@@ -33,6 +33,9 @@ settings:
   - name: BAUDRATE
     type: int
     long: Default baud rate for the main serial port. (USB ports always run at full speed.)
+- name: BAUD_RATE_GCODE
+  since: 2.0.0
+  long: Enable setting the baud with `M575 P<port> B<baud rate>`.
 
 - name: SERIAL_PORT_2
   type: int
@@ -40,7 +43,6 @@ settings:
   disabled: true
   brief: Secondary serial port
   long: The secondary serial port can be used to communicate with a host, serial controller, or WiFi interface.
-
   subopts:
   - name: BAUDRATE_2
     type: int
@@ -51,39 +53,36 @@ settings:
   type: int
   since: 2.0.0
   disabled: true
-  brief: Secondary serial port
-  long: The secondary serial port can be used to communicate with a host, serial controller, or WiFi interface.
+  brief: Third serial port
+  long: The third serial port can be used to communicate with a host, serial controller, or WiFi interface.
   subopts:
   - name: BAUDRATE_3
     type: int
     disabled: true
     long: Default baud rate for the third serial port. If not specified then `BAUDRATE` is used.
 
+- name: RS485_SERIAL_PORT
+  type: int
+  since: 2.1.3
+  disabled: true
+  brief: RS485 serial port (i.e., CANbus)
+  long: The RS485 serial ports is used to communicate with peripherals that use the CAN bus protocol.
+  subopts:
+  - name: M485_PROTOCOL
+    type: int
+    disabled: true
+    long: Leave this set to `1` to use the default protocol. Check your host for protocol compatibility.
+  - name: RS485_BUS_BUFFER_SIZE
+    type: int
+    disabled: true
+    default: 128
+    long: The size of the CAN bus buffer. This should be set to the maximum number of messages that can be sent in a single CAN frame.
+
 - name: BLUETOOTH
   since: 1.1.0
   disabled: true
   brief: Bluetooth wireless interface.
   long: Enable the Bluetooth serial interface on AT90USB devices.
-
-- name: CUSTOM_MACHINE_NAME
-  type: string
-  since: 1.1.0
-  disabled: true
-  default: '"3D Printer"'
-  brief: A unique name for your machine.
-  long: Enable this option and set a unique name such as "Ralph" or "Printy McPrintface" to identify your 3D printer.
-  example:
-  - value: '"X5 Endeavour"'
-
-- name: MACHINE_UUID
-  type: string
-  since: 1.1.0
-  disabled: true
-  default: '"00000000-0000-0000-0000-000000000000"'
-  brief: A unique ID for your machine.
-  long: This unique ID can be used by some programs to differentiate between machines.
-  example:
-  - value: '"A34F2190-C84E-F553-97C3-12A4DA78A01B"'
 
 ---
 Use these options to define the machine hardware, including the mainboard, serial ports, etc. These are the most basic settings for every type of machine that Marlin supports.

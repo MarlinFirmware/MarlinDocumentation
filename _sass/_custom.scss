@@ -625,11 +625,10 @@ div.alert-danger {
 
 div.container.detail, div.container.config {
   div.row {
-    h4, h5, h6 { background: var(--color-code-bg); color: var(--color-code); }
-    h5 {
-      background: var(--color-gcode-h5-bg); color: var(--color-gcode-h5);
-      code { background: var(--color-gcode-h5-code-bg); color: var(--color-gcode-h5-code); }
-    }
+    h4, h6 { background: var(--color-code-bg); color: var(--color-code); }
+    h5 { background: var(--color-gcode-h5-bg); }
+    h5, strong { color: var(--color-gcode-h5); }
+    h5 code { background: var(--color-gcode-h5-code-bg); color: var(--color-gcode-h5-code); }
   }
   div.row.examples pre { background: var(--color-gcode-examples-bg); }
   div.row.gallery p { color: var(--color-gcode-gallery); }

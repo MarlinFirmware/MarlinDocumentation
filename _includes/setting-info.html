@@ -79,15 +79,15 @@
 {% endif %}
 {%- if options %}
   <div class="options">
-    <{{ h3 }}>Options</{{ h3 }}>
     {% if options[0].value %}
-      <table{% if options.size > 4 %} class="table-striped"{% endif %}>
+      <{{ h3 }}>Options</{{ h3 }}>
+      <table{% if options.size > 4 or options[0].brief %} class="table-striped"{% endif %}>
         {%- for op in options -%}
           <tr><th>{{ op.value }}</th><td>{% if op.brief %}{{ op.brief }}{% endif %}</td></tr>
         {%- endfor -%}
       </table>
     {% else %}
-      {{ options | join: ", " }}
+      <strong>Options:</strong> {{ options | join: ", " }}
     {% endif %}
   </div>
 {% endif %}
@@ -97,7 +97,7 @@
 {% else %}{% assign example = false %}{% endif %}
 {%- if example %}
   <div class="examples">
-    <{{ h3 }}>Example{% if example[1] %}s{% endif %}</{{ h3 }}>
+    <{{ h3 }}>Example{% if example.size > 1 %}s{% endif %}</{{ h3 }}>
     {% for ex in example %}
       {% if ex.pre %}
         {% for line in ex.pre %}
@@ -134,12 +134,18 @@
 
 {% if conf.links %}
 <div class="links">
-  <{{ h3 }}>External Links</{{ h3 }}>
-  <ul>
-    {% for link in conf.links %}
-      <li><a href="{{ link.url }}">{{ link.label }}</a></li>
-    {% endfor %}
-  </ul>
+  {% if conf.links.size > 1 %}
+    <{{ h3 }}>External Links</{{ h3 }}>
+    <ul>
+      {% for link in conf.links %}{% assign label = link.label | default: link.url %}
+        <li><a href="{{ link.url }}">{{ label }}</a></li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    {% assign link = conf.links[0] %}
+    {% assign label = link.label | default: link.url %}
+    <strong>External Link:</strong> <a href="{{ link.url }}">{{ label }}</a>
+  {% endif %}
 </div>
 {% endif %}
 
@@ -159,7 +165,7 @@
 {% if sub %}
   {% assign confbak = conf %}
   {% assign aprefixbak = aprefix %}
-  {% if conf.name %}{% assign aprefix = aprefix | append: conf.name | append: '-' %}{% else %}{% assign aprefix = '' %}{% endif %}
+  {% if conf.name %}{% assign aprefix = aprefix | append: conf.name | append: '-' %}{% endif %}
   {% for conf in sub %}
     {% if conf contains 'since' %}{% else %}{% assign parsince = conf.since %}{% endif %}
     {% if conf contains 'tags' %}{% else %}{% assign partags = conf.tags %}{% endif %}
