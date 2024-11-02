@@ -19,7 +19,8 @@
   {% endfor %}
 {% endif %}
 
-<h2><a href="{{ conf.url | prepend: site.baseurl }}">{% if conf.label %}{{ conf.label }}{% else %}{{ conf.name }}{% endif %}</a></h2>
+{% assign here = conf.url | prepend: site.baseurl -%}
+<h2><a href="{{ here }}">{% if conf.label %}{{ conf.label }}{% else %}{{ conf.name }}{% endif %}</a></h2>
 
 {% if conf.brief %}
   <p>{{conf.brief}}</p>
@@ -29,19 +30,19 @@
   <div class="summ-opts">
   {% for opt in conf.settings %}
     <div class="group">
-      <a class="opt" href="{{ conf.url | prepend: site.baseurl }}#{{opt.name}}">{{opt.name}}</a>
+      <a class="opt" href="{{ here }}#{{opt.name}}">{{opt.name}}</a>
       {% if opt.subopts %}
         <div class="sub">
           {% for sub1 in opt.subopts %}
-            <a class="opt" href="{{ conf.url | prepend: site.baseurl }}#{{opt.name}}-{{sub1.name}}">{{sub1.name}}</a>
+            <a class="opt" href="{{ here }}#{{opt.name}}-{{sub1.name}}">{{sub1.name}}</a>
             {% if sub1.subopts %}
               <div class="sub">
                 {% for sub2 in sub1.subopts %}
-                  <a class="opt" href="{{ conf.url | prepend: site.baseurl }}#{{opt.name}}-{{sub1.name}}-{{sub2.name}}">{{sub2.name}}</a>
+                  <a class="opt" href="{{ here }}#{{opt.name}}-{{sub1.name}}-{{sub2.name}}">{{sub2.name}}</a>
                   {% if sub2.subopts %}
                     <div class="sub">
                       {% for sub3 in sub2.subopts %}
-                        <a class="opt" href="{{ conf.url | prepend: site.baseurl }}#{{opt.name}}-{{sub1.name}}-{{sub2.name}}-{{sub3.name}}">{{sub3.name}}</a>
+                        <a class="opt" href="{{ here }}#{{opt.name}}-{{sub1.name}}-{{sub2.name}}-{{sub3.name}}">{{sub3.name}}</a>
                       {% endfor %}
                     </div>
                   {% endif %}
