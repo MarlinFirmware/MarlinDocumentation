@@ -4476,3 +4476,15 @@ Display pin status, toggle pins, watch pins, watch endstops & toggle LED, test s
 //#define MARLIN_DEV_MODE
 ```
 Enable Marlin dev mode which adds some special commands.
+
+#### Enable Postmortem Debugging
+```cpp
+//#define POSTMORTEM_DEBUGGING
+```
+Captures misbehavior and outputs the CPU status and backtrace to serial. When running in the debugger it will break for debugging. This is useful to help understand a crash from a remote location.
+
+#### Enable Marlin Small Build
+```cpp
+//#define MARLIN_SMALL_BUILD
+```
+Shrink the build for smaller boards by sacrificing some serial feedback.
