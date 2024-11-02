@@ -1858,13 +1858,15 @@ Enable to use SD printing, whether as part of an LCD controller or as a standalo
 The `SDSUPPORT` option must be enabled or SD printing will not be supported. It is no longer enabled automatically for LCD controllers with built-in SDCard slot.
 {% endalert %}
 
-### SPI Speed
+### SD SPI Speed
 ```cpp
-//#define SPI_SPEED SPI_HALF_SPEED
-//#define SPI_SPEED SPI_QUARTER_SPEED
-//#define SPI_SPEED SPI_EIGHTH_SPEED
+//#define SD_SPI_SPEED SPI_HALF_SPEED
 ```
-Uncomment ONE of these options to use a slower SPI transfer speed. This is usually required if you're getting volume init errors.
+Uncomment to enable and set ONE of these options to use a slower SPI transfer speed, otherwise full speed will be applied:
+- `SPI_HALF_SPEED`
+- `SPI_QUARTER_SPEED`
+- `SPI_EIGHTH_SPEED`
+This is usually required if you're getting volume init errors.
 
 ### Enable CRC
 ```cpp
@@ -1945,6 +1947,7 @@ Marlin includes support for several controllers. The two most popular controller
 Most other LCD controllers are variants of these. Enable just one of the following options for your specific controller:
 
 ### Character LCDs
+
 Option|Description
 ------|-----------
 `ULTIMAKERCONTROLLER`|The original Ultimaker Controller.
@@ -1956,6 +1959,7 @@ Option|Description
 `ANET_KEYPAD_LCD`|[Anet Keypad LCD](//www.anet3d.com/prod_view.aspx?TypeId=10&Id=178) for the Anet A3
 
 ### Graphical LCDs
+
 Option|Description
 ------|-----------
 `CARTESIO_UI`|[Cartesio UI](//mauk.cc/webshop/cartesio-shop/electronics/user-interface).
@@ -1970,6 +1974,7 @@ Option|Description
 `ANET_FULL_GRAPHICS_LCD`|[Anet Full Graphics LCD](//www.anet3d.com/prod_view.aspx?TypeId=10&Id=178) for the Anet A3
 
 ### Keypads
+
 Option|Description
 ------|-----------
 `REPRAPWORLD_KEYPAD`|[RepRapWorld Keypad v1.1](//reprapworld.com/?products_details&products_id=202&cPath=1591_1626) Use `REPRAPWORLD_KEYPAD_MOVE_STEP` to set how much the robot should move on each keypress (_e.g.,_ 10mm per click).
@@ -4471,3 +4476,15 @@ Display pin status, toggle pins, watch pins, watch endstops & toggle LED, test s
 //#define MARLIN_DEV_MODE
 ```
 Enable Marlin dev mode which adds some special commands.
+
+#### Enable Postmortem Debugging
+```cpp
+//#define POSTMORTEM_DEBUGGING
+```
+Captures misbehavior and outputs the CPU status and backtrace to serial. When running in the debugger it will break for debugging. This is useful to help understand a crash from a remote location.
+
+#### Enable Marlin Small Build
+```cpp
+//#define MARLIN_SMALL_BUILD
+```
+Shrink the build for smaller boards by sacrificing some serial feedback.
