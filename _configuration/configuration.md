@@ -1947,31 +1947,34 @@ Marlin includes support for several controllers. The two most popular controller
 Most other LCD controllers are variants of these. Enable just one of the following options for your specific controller:
 
 ### Character LCDs
+
 Option|Description
 ------|-----------
-`ULTIMAKERCONTROLLER`|The original Ultimaker Controller.  
-`ULTIPANEL`|[ULTIPANEL](//www.thingiverse.com/thing:15081) as seen on Thingiverse.  
-`PANEL_ONE`|[PanelOne from T3P3](//reprap.org/wiki/PanelOne) (via RAMPS 1.4 AUX2/AUX3). A variant of `ULTIMAKERCONTROLLER`.  
-`REPRAP_DISCOUNT_SMART_CONTROLLER`|[RepRapDiscount Smart Controller](//reprap.org/wiki/RepRapDiscount_Smart_Controller). Usually sold with a white PCB.  
-`G3D_PANEL`|[Gadgets3D G3D LCD/SD Controller](//reprap.org/wiki/RAMPS_1.3/1.4_GADGETS3D_Shield_with_Panel). Usually sold with a blue PCB.  
-`RIGIDBOT_PANEL`|[RigidBot Panel V1.0](//www.inventapart.com/).  
+`ULTIMAKERCONTROLLER`|The original Ultimaker Controller.
+`ULTIPANEL`|[ULTIPANEL](//www.thingiverse.com/thing:15081) as seen on Thingiverse.
+`PANEL_ONE`|[PanelOne from T3P3](//reprap.org/wiki/PanelOne) (via RAMPS 1.4 AUX2/AUX3). A variant of `ULTIMAKERCONTROLLER`.
+`REPRAP_DISCOUNT_SMART_CONTROLLER`|[RepRapDiscount Smart Controller](//reprap.org/wiki/RepRapDiscount_Smart_Controller). Usually sold with a white PCB.
+`G3D_PANEL`|[Gadgets3D G3D LCD/SD Controller](//reprap.org/wiki/RAMPS_1.3/1.4_GADGETS3D_Shield_with_Panel). Usually sold with a blue PCB.
+`RIGIDBOT_PANEL`|[RigidBot Panel V1.0](//www.inventapart.com/).
 `ANET_KEYPAD_LCD`|[Anet Keypad LCD](//www.anet3d.com/prod_view.aspx?TypeId=10&Id=178) for the Anet A3
 
 ### Graphical LCDs
+
 Option|Description
 ------|-----------
-`CARTESIO_UI`|[Cartesio UI](//mauk.cc/webshop/cartesio-shop/electronics/user-interface).  
-`MAKRPANEL`|[MaKr3d Makr-Panel](//reprap.org/wiki/MaKr3d_MaKrPanel) with graphic controller and SD support.  
-`REPRAPWORLD_GRAPHICAL_LCD`|[ReprapWorld Graphical LCD](//reprapworld.com/?products_details&products_id/1218).  
-`VIKI2`|[Panucatt Devices](//panucatt.com) [Viki 2.0](//panucatt.com).  
-`miniVIKI`|[mini Viki with Graphic LCD](//panucatt.com).  
-`ELB_FULL_GRAPHIC_CONTROLLER`|[Adafruit ST7565 Full Graphic Controller](//github.com/eboston/Adafruit-ST7565-Full-Graphic-Controller/).  
-`REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER`|[RepRapDiscount Full Graphic Smart Controller](//reprap.org/wiki/RepRapDiscount_Full_Graphic_Smart_Controller).  
-`MINIPANEL`|[MakerLab Mini Panel](//reprap.org/wiki/Mini_panel) with graphic controller and SD support.  
-`BQ_LCD_SMART_CONTROLLER`|BQ LCD Smart Controller shipped with the BQ Hephestos 2 and Witbox 2.  
+`CARTESIO_UI`|[Cartesio UI](//mauk.cc/webshop/cartesio-shop/electronics/user-interface).
+`MAKRPANEL`|[MaKr3d Makr-Panel](//reprap.org/wiki/MaKr3d_MaKrPanel) with graphic controller and SD support.
+`REPRAPWORLD_GRAPHICAL_LCD`|[ReprapWorld Graphical LCD](//reprapworld.com/?products_details&products_id/1218).
+`VIKI2`|[Panucatt Devices](//panucatt.com) [Viki 2.0](//panucatt.com).
+`miniVIKI`|[mini Viki with Graphic LCD](//panucatt.com).
+`ELB_FULL_GRAPHIC_CONTROLLER`|[Adafruit ST7565 Full Graphic Controller](//github.com/eboston/Adafruit-ST7565-Full-Graphic-Controller/).
+`REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER`|[RepRapDiscount Full Graphic Smart Controller](//reprap.org/wiki/RepRapDiscount_Full_Graphic_Smart_Controller).
+`MINIPANEL`|[MakerLab Mini Panel](//reprap.org/wiki/Mini_panel) with graphic controller and SD support.
+`BQ_LCD_SMART_CONTROLLER`|BQ LCD Smart Controller shipped with the BQ Hephestos 2 and Witbox 2.
 `ANET_FULL_GRAPHICS_LCD`|[Anet Full Graphics LCD](//www.anet3d.com/prod_view.aspx?TypeId=10&Id=178) for the Anet A3
 
 ### Keypads
+
 Option|Description
 ------|-----------
 `REPRAPWORLD_KEYPAD`|[RepRapWorld Keypad v1.1](//reprapworld.com/?products_details&products_id=202&cPath=1591_1626) Use `REPRAPWORLD_KEYPAD_MOVE_STEP` to set how much the robot should move on each keypress (_e.g.,_ 10mm per click).
@@ -1981,11 +1984,11 @@ These controllers all require the [LiquidCrystal_I2C library](//github.com/kiyos
 
 Option|Description
 ------|-----------
-`RA_CONTROL_PANEL`|Elefu RA Board Control Panel  
-`LCD_I2C_SAINSMART_YWROBOT`|Sainsmart [YWRobot LCM1602 LCD Display](//henrysbench.capnfatz.com/henrys-bench/arduino-displays/ywrobot-lcm1602-iic-v1-lcd-arduino-tutorial/).  
-`LCM1602`|Generic LCM1602 LCD adapter  
-`LCD_I2C_PANELOLU2`|PANELOLU2 LCD with status LEDs, separate encoder and click inputs. The click input can either be directly connected to a pin (if `BTN_ENC` is defined) or read through I2C (with `BTN_ENC` undefined). Requires [LiquidTWI2 library](//github.com/lincomatic/LiquidTWI2) v1.2.3 or later.  
-`LCD_I2C_VIKI`|Panucatt VIKI LCD with status LEDs, integrated click & L/R/U/D buttons, separate encoder inputs.  
+`RA_CONTROL_PANEL`|Elefu RA Board Control Panel
+`LCD_I2C_SAINSMART_YWROBOT`|Sainsmart [YWRobot LCM1602 LCD Display](//henrysbench.capnfatz.com/henrys-bench/arduino-displays/ywrobot-lcm1602-iic-v1-lcd-arduino-tutorial/).
+`LCM1602`|Generic LCM1602 LCD adapter
+`LCD_I2C_PANELOLU2`|PANELOLU2 LCD with status LEDs, separate encoder and click inputs. The click input can either be directly connected to a pin (if `BTN_ENC` is defined) or read through I2C (with `BTN_ENC` undefined). Requires [LiquidTWI2 library](//github.com/lincomatic/LiquidTWI2) v1.2.3 or later.
+`LCD_I2C_VIKI`|Panucatt VIKI LCD with status LEDs, integrated click & L/R/U/D buttons, separate encoder inputs.
 `SAV_3DLCD`|Shift register panels. [2 wire Non-latching LCD SR](//github.com/fmalpartida/New-LiquidCrystal). See [LCD configuration](//reprap.org/wiki/SAV_3D_LCD).
 
 ### I2C Graphical LCDs
@@ -1993,8 +1996,8 @@ These controllers all require the [LiquidCrystal_I2C library](//github.com/kiyos
 
 Option|Description
 ------|-----------
-`U8GLIB_SSD1306`|SSD1306 OLED full graphics generic display.  
-`SAV_3DGLCD`|SAV OLED LCD module support using either SSD1306 or SH1106 based LCD modules.  
+`U8GLIB_SSD1306`|SSD1306 OLED full graphics generic display.
+`SAV_3DGLCD`|SAV OLED LCD module support using either SSD1306 or SH1106 based LCD modules.
 `OLED_PANEL_TINYBOY2`|TinyBoy2 128x64 OLED / Encoder Panel
 
 ### Fan PWM
