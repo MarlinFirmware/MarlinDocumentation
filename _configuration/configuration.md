@@ -1,4 +1,4 @@
---- 
+---
 title:        'Configuring Marlin'
 description:  'Complete guide to Marlin configuration options.'
 
@@ -1858,13 +1858,15 @@ Enable to use SD printing, whether as part of an LCD controller or as a standalo
 The `SDSUPPORT` option must be enabled or SD printing will not be supported. It is no longer enabled automatically for LCD controllers with built-in SDCard slot.
 {% endalert %}
 
-### SPI Speed
+### SD SPI Speed
 ```cpp
-//#define SPI_SPEED SPI_HALF_SPEED
-//#define SPI_SPEED SPI_QUARTER_SPEED
-//#define SPI_SPEED SPI_EIGHTH_SPEED
+//#define SD_SPI_SPEED SPI_HALF_SPEED
 ```
-Uncomment ONE of these options to use a slower SPI transfer speed. This is usually required if you're getting volume init errors.
+Uncomment to enable and set ONE of these options to use a slower SPI transfer speed, otherwise full speed will be applied:
+- `SPI_HALF_SPEED`
+- `SPI_QUARTER_SPEED`
+- `SPI_EIGHTH_SPEED`
+This is usually required if you're getting volume init errors.
 
 ### Enable CRC
 ```cpp
