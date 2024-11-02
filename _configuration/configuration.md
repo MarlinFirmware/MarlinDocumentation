@@ -1,4 +1,4 @@
----
+--- 
 title:        'Configuring Marlin'
 description:  'Complete guide to Marlin configuration options.'
 
