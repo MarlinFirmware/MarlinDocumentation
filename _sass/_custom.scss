@@ -447,7 +447,7 @@ pre.highlight{ background-color: var(--color-highlight-bg); }
   li {
     float: left;
     margin-left: 4px;
-    >a { padding: 14px 10px; }
+    >a { padding: 14px 6px; }
     &.edit-page>a {
       color: var(--color-link-edit);
       padding: 14px 12px;
@@ -1415,4 +1415,5 @@ div.tags { display: inline-block; float: right; margin: 0.5em; }
   .lcd .gallery img { float: right; margin-top: 4px; }
 }
 
-.fa-x:before { content: "𝕏"; }
+.fa-brands.fa-x:before { content: "𝕏"; }
+.fa-brands.fa-bluesky:before { content: "🦋" }

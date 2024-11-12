@@ -4,13 +4,14 @@
 
 <p align="center">
   <a href="/LICENSE" target="_blank"><img alt="GPL-V3.0 License" src="https://img.shields.io/github/license/MarlinFirmware/MarlinDocumentation.svg"></a>
-  <a href="https://github.com/MarlinFirmware/MarlinDocumentation/graphs/contributors" target="_blank"><img alt="Contributors" src="https://img.shields.io/github/contributors/marlinfirmware/marlindocumentation.svg"></a>
-  <a href="https://github.com/MarlinFirmware/MarlinDocumentation/releases" target="_blank"><img alt="Last Updated" src="https://img.shields.io/github/last-commit/marlinfirmware/marlindocumentation?label=last%20updated"></a>
-  <a href="https://github.com/MarlinFirmware/MarlinDocumentation/actions/workflows/jekyll-pub.yml" target="_blank"><img alt="Jekyll Deploy Status" src="https://github.com/MarlinFirmware/MarlinDocumentation/actions/workflows/jekyll-pub.yml/badge.svg"></a>
-  <a href="https://github.com/sponsors/thinkyhead" target="_blank"><img alt="GitHub Sponsors" src="https://img.shields.io/github/sponsors/thinkyhead?color=db61a2"></a>
+  <a href="//github.com/MarlinFirmware/MarlinDocumentation/graphs/contributors" target="_blank"><img alt="Contributors" src="https://img.shields.io/github/contributors/marlinfirmware/marlindocumentation.svg"></a>
+  <a href="//github.com/MarlinFirmware/MarlinDocumentation/releases" target="_blank"><img alt="Last Updated" src="https://img.shields.io/github/last-commit/marlinfirmware/marlindocumentation?label=last%20updated"></a>
+  <a href="//github.com/MarlinFirmware/MarlinDocumentation/actions/workflows/jekyll-pub.yml" target="_blank"><img alt="Jekyll Deploy Status" src="https://github.com/MarlinFirmware/MarlinDocumentation/actions/workflows/jekyll-pub.yml/badge.svg"></a>
+  <a href="//github.com/sponsors/thinkyhead" target="_blank"><img alt="GitHub Sponsors" src="https://img.shields.io/github/sponsors/thinkyhead?color=db61a2"></a>
   <br />
-  <a href="https://x.com/marlinfirmware" target="_blank"><img src="https://img.shields.io/twitter/follow/MarlinFirmware" alt="@MarlinFirmware" /></a>
-  <a href="https://fosstodon.org/@marlinfirmware" target="_blank"><img alt="Follow MarlinFirmware on Mastodon" src="https://img.shields.io/mastodon/follow/109450200866020466?domain=https%3A%2F%2Ffosstodon.org&logoColor=%2300B&style=social"></a>
+  <a href="//x.com/marlinfirmware" target="_blank"><img src="https://img.shields.io/twitter/follow/MarlinFirmware" alt="@MarlinFirmware" /></a>
+  <a href="//fosstodon.org/@marlinfirmware" target="_blank"><img alt="Follow MarlinFirmware on Mastodon" src="https://img.shields.io/mastodon/follow/109450200866020466?domain=https%3A%2F%2Ffosstodon.org&logoColor=%2300B&style=social"></a>
+  <a href="//bsky.app/profile/marlinfirmware.bsky.social" target="_blank"><img alt="Follow MarlinFirmware on Bluesky" src="https://img.shields.io/badge/-Bluesky-3686f7?style=flat&logo=icloud&logoColor=white"></a>
 </p>
 
 ## About
