@@ -96,6 +96,8 @@ collections:
     output: true
     permalink: /:collection/:path:output_ext
 
+include: [ ".well-known" ]
+
 exclude:
   - _config.yml
   - Gemfile
