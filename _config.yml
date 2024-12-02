@@ -112,6 +112,7 @@ plugins:
   - jekyll-avatar
   - jekyll-bootstrap-sass
   - jekyll-tidy
+  - jekyll-redirect-from
 
 defaults:
   - # All types
