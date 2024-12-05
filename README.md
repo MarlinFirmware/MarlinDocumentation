@@ -11,7 +11,7 @@
   <br />
   <a href="//x.com/marlinfirmware" target="_blank"><img src="https://img.shields.io/twitter/follow/MarlinFirmware" alt="@MarlinFirmware" /></a>
   <a href="//fosstodon.org/@marlinfirmware" target="_blank"><img alt="Follow MarlinFirmware on Mastodon" src="https://img.shields.io/mastodon/follow/109450200866020466?domain=https%3A%2F%2Ffosstodon.org&logoColor=%2300B&style=social"></a>
-  <a href="//bsky.app/profile/marlinfirmware.bsky.social" target="_blank"><img alt="Follow MarlinFirmware on Bluesky" src="https://img.shields.io/badge/-Bluesky-3686f7?style=flat&logo=icloud&logoColor=white"></a>
+  <a href="//bsky.app/profile/marlinfw.org" target="_blank"><img alt="Follow MarlinFirmware on Bluesky" src="https://img.shields.io/badge/-Bluesky-3686f7?style=flat&logo=icloud&logoColor=white"></a>
 </p>
 
 ## About
