@@ -64,24 +64,3 @@ The PlatformIO environment needed for a motherboard is in the comments for the b
     | **PIO Test**|			  platformio test upload -e  target_env
     | **PIO Remote**|		  platformio remote run -\-target upload -e  target_env
     | **PIO Debug**|		  platformio debug -e  target_env
-
-## Run Auto Build from the command line
-
-The **Get the correct environment for the selected board** step is not needed.  **Auto Build** will automatically do this.
-
-1. Open a terminal/shell window.
-
-2. Set the current working directory (CWD) to the folder that has the **Marlin** directory and the **platformio.ini** file in it.
-
-3. Issue one of these commands
-
-    | **FUNCTION**     | **COMMAND**                                             |
-    |:-----------------|:--------------------------------------------------------|
-    | **PIO Build**|	   	python buildroot/share/atom/auto_build.py build
-    | **PIO Clean**|	   	python buildroot/share/atom/auto_build.py clean
-    | **PIO Upload**|		  python buildroot/share/atom/auto_build.py upload
-    | **PIO Traceback**|	python buildroot/share/atom/auto_build.py traceback
-    | **PIO Program**|		python buildroot/share/atom/auto_build.py program
-    | **PIO Test**|			  python buildroot/share/atom/auto_build.py test
-    | **PIO Remote**|		  python buildroot/share/atom/auto_build.py remote
-    | **PIO Debug**|		  python buildroot/share/atom/auto_build.py debug
