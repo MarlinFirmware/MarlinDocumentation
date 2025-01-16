@@ -12,6 +12,7 @@ codes: [ G29 ]
 
 notes: |
   - Requires the `MESH_BED_LEVELING` option in `Configuration.h`.
+  - Configure the number of mesh points with `GRID_MAX_POINTS_X` and `GRID_MAX_POINTS_Y`.
   - Similar to `AUTO_BED_LEVELING_BILINEAR` with `PROBE_MANUALLY` but uses less SRAM.
   - For automatic probe-based leveling enable one of the [`AUTO_BED_LEVELING_*`](/docs/configuration/configuration.html#bed-leveling) options instead.
   - By default `G28` disables bed leveling. Follow `G28` with `M420 S` to turn leveling on.
@@ -39,28 +40,32 @@ parameters:
 
 - tag: I
   optional: true
-  description: '**(Marlin 2.x)** With `S3`, the (0...n-1) X index of the mesh value to modify.'
+  since: 2.0.0
+  description: 'With `S3`, the (0...n-1) X index of the mesh value to modify.'
   values:
   - tag: index
     type: int
 
 - tag: J
   optional: true
-  description: '**(Marlin 2.x)** With `S3`, the (0...n-1) Y index of the mesh value to modify.'
+  since: 2.0.0
+  description: 'With `S3`, the (0...n-1) Y index of the mesh value to modify.'
   values:
   - tag: index
     type: int
 
 - tag: X
   optional: true
-  description: '**(Marlin 1.x)** With `S3`, the (1...n) X count of the mesh value to modify.'
+  until: 2.0.0
+  description: 'With `S3`, the (1...n) X count of the mesh value to modify.'
   values:
   - tag: count
     type: int
 
 - tag: Y
   optional: true
-  description: '**(Marlin 1.x)** With `S3`, the (1...n) Y count of the mesh value to modify.'
+  until: 2.0.0
+  description: 'With `S3`, the (1...n) Y count of the mesh value to modify.'
   values:
   - tag: count
     type: int
