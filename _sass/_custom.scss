@@ -1184,7 +1184,7 @@ div[role=main] { padding-bottom: 33vh; }
 .jumbotron {
   h1, p { text-align: center; }
   ul li { display: block; margin: 0.5em auto; width: 20em; }
-  table { margin: 1em auto; font-size: 140%;
+  table { margin: 1em auto; font-size: 125%;
     @media (min-width: $screen-md-min) { width: 1000px; }
     @media (max-width: $screen-sm-max) { width: 85.5%; }
   }

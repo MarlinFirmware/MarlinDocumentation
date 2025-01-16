@@ -30,6 +30,7 @@ betas:
     extra: Major new release currently in public beta testing
     file: 2.1.3-b2.zip
     config: release-2.1.3-b2
+    builds: release-2.1.3-b2
 
 nightlies:
   -
