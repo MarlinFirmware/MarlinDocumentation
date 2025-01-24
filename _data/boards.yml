@@ -128,10 +128,10 @@
     brief: BigTreeTech or BIQU KFB2.0
     since: 2.0.0
   - name: ZRIB_V20
-    brief: zrib V2.0 (Chinese RAMPS replica)
+    brief: Zonestar zrib V2.0 (Chinese RAMPS replica)
     since: 1.1.3
   - name: ZRIB_V52
-    brief: zrib V5.2 (Chinese RAMPS replica)
+    brief: Zonestar zrib V5.2 (Chinese RAMPS replica)
     since: 2.0.8
   - name: ZRIB_V53
     brief: Zonestar zrib V5.3 (Chinese RAMPS replica)
@@ -676,6 +676,21 @@
     since: 2.0.8
   - name: XTLW_CLIMBER_8TH_LPC
     brief: XTLW_CLIMBER_8TH_LPC
+    since: 2.1.3
+  - name: FLY_RRF_E3_V1
+    brief: Fly RRF E3 V1.0 (STM32F407VG)
+    since: 2.1.3
+  - name: ZNP_ROBIN_NANO
+    brief: Elegoo Neptune 2 v1.2 board
+    since: 2.1.3
+  - name: ZNP_ROBIN_NANO_V1_3
+    brief: Elegoo Neptune 2 v1.3 board
+    since: 2.1.3
+  - name: MKS_NEPTUNE_X
+    brief: Elegoo Neptune X
+    since: 2.1.3
+  - name: MKS_NEPTUNE_3
+    brief: Elegoo Neptune 3
     since: 2.1.3
 
 #
