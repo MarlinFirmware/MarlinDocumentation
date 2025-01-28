@@ -70,7 +70,7 @@ collections:
 
   development:
     output: true
-    title: Development
+    title: Developer Guide
     permalink: /docs/:collection/:path:output_ext
 
   features:
