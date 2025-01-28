@@ -130,11 +130,12 @@
   --color-nav-hover: #000;
   --color-nav-hover-bg: #AAA;
   --color-nav-list: #09B;
-  --color-dropdown: #262626;
+  --color-dropdown: #333;
   --color-dropdown-a: #000;
   --color-dropdown-a-hover: #000;
   --color-dropdown-a-hover-bg: #F5F5F5;
   --color-dropdown-bg: #FFF;
+  --color-dropdown-divider: #CCC;
   --color-intro-hover-bg: #CC2;
   --color-download-hover-bg: #6DD;
   --color-config-hover-bg: #FA2;
@@ -274,6 +275,7 @@
   --color-dropdown-a-hover: #FFF;
   --color-dropdown-a-hover-bg: #222;
   --color-dropdown-bg: #555;
+  --color-dropdown-divider: #888;
   --color-gcode-toc-border: #EEE;
   --color-link: #F88;
   --color-link-hover: #F88;
@@ -468,6 +470,7 @@ pre.highlight{ background-color: var(--color-highlight-bg); }
     &.open>a { color: var(--color-nav); }
   }
   li:hover { background-color: var(--color-nav-hover-bg); color: var(--color-nav-hover); }
+  li.divider, li.divider:hover { background-color: var(--color-dropdown-divider); }
 }
 
 // Nav bar drop down menu
