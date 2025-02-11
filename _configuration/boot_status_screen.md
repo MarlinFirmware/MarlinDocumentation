@@ -1,6 +1,6 @@
 ---
 title:        'Boot and Status screens'
-description:  'Complete guide to Marlin configuration options.'
+description:  'Boot and Status screen options.'
 
 author: dust
 contrib:
