@@ -680,6 +680,15 @@
   - name: FLY_RRF_E3_V1
     brief: Fly RRF E3 V1.0 (STM32F407VG)
     since: 2.1.3
+  - name: FLY_SUPER8
+    brief: Fly SUPER8 (STM32F407ZGT6)
+    since: 2.1.3
+  - name: FLY_D8
+    brief: FLY D8 (STM32F407VG)
+    since: 2.1.3
+  - name: FLY_CDY_V3
+    brief: FLY CDY V3 (STM32F407VGT6)
+    since: 2.1.3
   - name: ZNP_ROBIN_NANO
     brief: Elegoo Neptune 2 v1.2 board
     since: 2.1.3
@@ -847,6 +856,15 @@
   - name: MALYAN_M300
     brief: STM32F070-based delta
     since: 2.0.6
+  - name: FLY_D5
+    brief: FLY_D5 (STM32F072RB)
+    since: 2.1.3
+  - name: FLY_DP5
+    brief: FLY_DP5 (STM32F072RB)
+    since: 2.1.3
+  - name: FLY_D7
+    brief: FLY_D7 (STM32F072RB)
+    since: 2.1.3
   - name: STM32F103RE
     brief: STM32F103RE Libmaple-based STM32F1 controller
     since: 2.0.0
@@ -1341,6 +1359,12 @@
   - name: T41U5XBB
     brief: T41U5XBB Teensy 4.1 breakout board
     since: 2.0.7
+  - name: FLY_D8_PRO
+    brief: FLY_D8_PRO (STM32H723VG)
+    since: 2.1.3
+  - name: FLY_SUPER8_PRO
+    brief: FLY SUPER8 PRO (STM32H723ZG)
+    since: 2.1.3
 
 #
 # Espressif ESP32 WiFi
