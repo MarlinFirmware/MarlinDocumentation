@@ -219,6 +219,9 @@ One problem you might encounter is "juddering" on curves. This is caused by smal
 4. The Stepper ISR is a high priority interrupt routine that obediently fetches and processes the Planner queue until there are no more segments in the queue. Since it produces the actual STEP signals to the stepper motors it may need to run as often as 40,000 times or more per second.
 In practice we want to run it as often as possible because this improves timing and reduces "aliasing" (i.e., rounding). The Stepper ISR uses the clever and fast [Bresenham line algorithm](//en.wikipedia.org/wiki/Bresenham's_line_algorithm) to coordinate the timing of STEP signals. This algorithm benefits from finer resolution, so we get more accurate timing by running the Stepper ISR "as often as possible."
 
+### Input Shaping
+See [the Input Shaping page](/docs/features/input_shaping.html) for details on this very cool stage of the motion system that cancels out vibrations to achieve cleaner print surfaces at higher speeds.
+
 ### Fixed-Time Motion
 Marlin 2.1.3 introduces Fixed-Time Motion as an alternative method to get more precise step and direction timing along with its own Linear Advance and Input Shaping handlers. Fixed-Time Motion also uses the Stepper ISR to do regular stepping, but it also has a periodic `idle` task to handle state changes.
 
@@ -227,11 +230,15 @@ Since Fixed-Time motion requires significantly more resources than the standard 
 As this system matures it will likely become default for fast 32-bit boards, but the original motion system will be preserved for slower processors and for simpler motion systems that don't need the most precise timing.
 
 ### Interesting Numbers
-- A 1.8° stepper motor has 200 full steps-per-revolution. A 0.9° stepper motor has 400 steps-per-revolution.
-- With the most common 16x micro-stepping that's 3200 (1.8°) or 6400 (0.9°) micro-steps-per-revolution.
-- X and Y are usually driven with a GT2 (2mm pitch) belt and 20 tooth gear, for 40mm per revolution.
-- This gives you 80 steps-per-millimeter on the X and Y axis. (The Z axis is commonly 400 steps-per-mm.)
-- At 80 steps/mm a modest move speed of 60mm/s on a single axis requires a peak step rate of 4.8kHz.
-- A fast move speed of 200mm/s requires a peak step rate of 16kHz.
-- A very fast move speed of 500mm/s requires a peak step rate of 40kHz.
-- The slowest MCUs are 16MHz AVR. So a 200mm/s move speed needs one step for every 1000 CPU cycles.
+- A __1.8° stepper motor__ has __200 full steps__ per revolution, while a __0.9° stepper motor__ has __400 steps per revolution__.
+- With __16× micro-stepping__, that’s __3200 (1.8°)__ or __6400 (0.9°) micro-steps per revolution__.
+- __X and Y axes__ typically use __GT2 belts__ with a __2mm pitch__ and a __20-tooth pulley__, giving __40mm of travel per revolution__.
+- This results in __80 steps per millimeter__ on X and Y.
+- The __Z axis__ often uses a __lead screw__, commonly with __400 steps per millimeter__ (e.g., a TR8×2 lead screw with 2mm pitch). Some setups use __TR8×8 screws (100 steps per mm)__ or gear reductions for finer control.
+- At __80 steps/mm__, a __60mm/s move__ requires __4.8kHz__, __200mm/s__ requires __16kHz__, and __500mm/s__ requires __40kHz__.
+- Acceleration matters — peak step rates are only needed briefly as a move ramps up and down.
+- Since __TMC drivers__ use __double-edge stepping__, they effectively __*double the maximum step rate*__ compared to traditional drivers.
+- Many AVR-based boards start to struggle above 30–50kHz, while modern 32-bit MCUs can easily drive 100kHz+ step rates.
+- __Extruders__ often have __300–1000 steps/mm__, requiring much higher step rates than linear motion axes, especially for direct drive extruders.
+- The __slowest MCUs (16MHz AVR)__ must generate a step every __1000 CPU cycles__ at __200mm/s__, while __modern 32-bit MCUs (e.g., 100–300MHz ARM)__ can handle much higher step rates, well beyond __100kHz__.
+- __Stepper drivers have limits too__ — commonly __~100kHz per driver__, but __SPI and TMC drivers__ may have lower limits due to communication overhead.
