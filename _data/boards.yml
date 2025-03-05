@@ -77,7 +77,8 @@
 #
 
 - group: RAMPS Derivatives - ATmega1280, ATmega2560
-  long:
+  long: These boards may use the ATmega1280 which has the same clock speed but half the Flash space for features compared to the 2560.
+        Such boards might be the best choice for a small project with a simplified interface.
   boards:
   - name: 3DRAG
     brief: 3Drag Controller
@@ -292,7 +293,7 @@
 #
 
 - group: RAMBo and derivatives
-  long:
+  long: RAMBo boards integrate stepper drivers, MOSFETs, and fuses on a single board for a compact, all-in-one design.
   boards:
   - name: RAMBO
     brief: Rambo
@@ -321,7 +322,8 @@
 #
 
 - group: Other ATmega1280, ATmega2560
-  long:
+  long: These boards may have the ATmega1280 which has the same clock speed but half the Flash space for features compared to the 2560.
+        Such boards might be the best choice for a small project with a simplified interface.
   boards:
   - name: CNCONTROLS_11
     brief: Cartesio CN Controls V11
@@ -434,7 +436,7 @@
 #
 
 - group: ATmega1281, ATmega2561
-  long:
+  long: Boards using these processors are rare because they provide fewer ports and pins than the 1280/2560.
   boards:
   - name: MINITRONICS
     brief: Minitronics v1.0/1.1
@@ -448,7 +450,7 @@
 #
 
 - group: Sanguinololu and Derivatives - ATmega644P, ATmega1284P
-  long:
+  long: Sanguinololu boards are compact, single-board solutions with minimal components, ideal for small-scale 3D printers.
   boards:
   - name: SANGUINOLOLU_11
     brief: Sanguinololu < 1.2
@@ -495,7 +497,7 @@
 #
 
 - group: Other ATmega644P, ATmega644, ATmega1284P
-  long:
+  long: These boards use 16-bit AVR MCUs with lower power consumption and sufficient Flash/RAM for basic printer features.
   boards:
   - name: GEN3_MONOLITHIC
     brief: Gen3 Monolithic Electronics
@@ -536,7 +538,7 @@
 #
 
 - group: Teensyduino - AT90USB1286, AT90USB1286P
-  long:
+  long: Teensy-based boards provide native USB support, faster performance than standard AVRs, and a compact form factor.
   boards:
   - name: TEENSYLU
     brief: Teensylu
@@ -568,7 +570,7 @@
 #
 
 - group: LPC1768 ARM Cortex-M3
-  long:
+  long: Boards with the LPC1768 run at 100MHz, offering significantly more speed and RAM than 8-bit AVRs while maintaining good compatibility.
   boards:
   - name: RAMPS_14_RE_ARM_EFB
     brief: "Re-ARM with RAMPS 1.4 (Power outputs: Hotend, Fan, Bed)"
@@ -707,7 +709,7 @@
 #
 
 - group: SAM3X8E ARM Cortex-M3
-  long:
+  long: Found in the Arduino Due, this 84MHz MCU has 96KB RAM and a wide range of peripherals for expanded functionality.
   boards:
   - name: DUE3DOM
     brief: DUE3DOM for Arduino DUE
@@ -799,7 +801,7 @@
 #
 
 - group: SAM3X8C ARM Cortex-M3
-  long:
+  long: A variant of the SAM3X8E with reduced Flash and RAM, suitable for simpler applications.
   boards:
   - name: PRINTRBOARD_G2
     brief: Printrboard G2
@@ -813,7 +815,7 @@
 #
 
 - group: STM32 ARM Cortex-M0+
-  long:
+  long: These ultra-low-power MCUs are suited for energy-efficient applications with limited computational needs.
   boards:
   - name: BTT_EBB42_V1_1
     brief: BigTreeTech EBB42 V1.1 (STM32G0B1CB)
@@ -844,11 +846,10 @@
     since: 2.1.3
 
 #
-# STM32 ARM Cortex-M3
+# STM32 ARM Cortex-M0
 #
-
-- group: STM32 ARM Cortex-M3
-  long:
+- group: STM32 ARM Cortex-M0
+  long: Entry-level 32-bit STM32 chips with a balance of performance and low power consumption.
   boards:
   - name: MALYAN_M200_V2
     brief: STM32F070CB controller
@@ -865,6 +866,14 @@
   - name: FLY_D7
     brief: FLY_D7 (STM32F072RB)
     since: 2.1.3
+
+#
+# STM32 ARM Cortex-M3
+#
+
+- group: STM32 ARM Cortex-M3
+  long: Mid-range STM32 MCUs provide more processing power than M0/M0+.
+  boards:
   - name: STM32F103RE
     brief: STM32F103RE Libmaple-based STM32F1 controller
     since: 2.0.0
@@ -1090,7 +1099,7 @@
 #
 
 - group: ARM Cortex-M4F
-  long:
+  long: MCUs with floating-point support, improving performance in motion control and complex calculations.
   boards:
   - name: TEENSY31_32
     brief: Teensy3.1 and Teensy3.2
@@ -1104,7 +1113,7 @@
 #
 
 - group: STM32 ARM Cortex-M4F
-  long:
+  long: High-performance STM32 MCUs with an FPU, making them ideal for real-time control applications.
   boards:
   - name: ARMED
     brief: Arm'ed STM32F4-based controller
@@ -1247,6 +1256,9 @@
   - name: OPULO_LUMEN_REV3
     brief: Opulo Lumen PnP Controller REV3 (STM32F407VE / STM32F407VG)
     since: 2.0.9.5/2.1.1
+  - name: OPULO_LUMEN_REV4
+    brief: Opulo Lumen PnP Controller REV4 (STM32F407VE / STM32F407VG)
+    since: 2.1.2
   - name: MKS_ROBIN_NANO_V1_3_F4
     brief: MKS Robin Nano V1.3 and MKS Robin Nano-S V1.3 (STM32F407VE)
     since: 2.0.9.2
@@ -1262,9 +1274,6 @@
   - name: CREALITY_CR4NTXXC10
     brief: Creality E3 Free-runs Silent Motherboard (STM32F401RET6)
     since: 2.1.3
-  - name: OPULO_LUMEN_REV4
-    brief: Opulo Lumen PnP Controller REV4 (STM32F407VE / STM32F407VG)
-    since: 2.1.2
   - name: FYSETC_SPIDER_KING407
     brief: FYSETC Spider King407 (STM32F407ZG)
     since: 2.1.2
@@ -1301,7 +1310,7 @@
 #
 
 - group: Other ARM Cortex-M4
-  long:
+  long: Various ARM M4-based MCUs, typically offering DSP and floating-point enhancements over M3 models.
   boards:
   - name: CREALITY_CR4NS
     brief: Creality CR4NS200320C13 (GD32F303RET6) as found in the Ender-3 V3 SE
@@ -1312,7 +1321,7 @@
 #
 
 - group: ARM Cortex-M7
-  long:
+  long: Higher-end ARM MCUs with advanced processing capabilities, used in demanding real-time applications.
   boards:
   - name: REMRAM_V1
     brief: RemRam v1
@@ -1371,7 +1380,7 @@
 #
 
 - group: Espressif ESP32 WiFi
-  long:
+  long: ESP32 boards offer WiFi and Bluetooth connectivity alongside dual-core processing for IoT applications.
   boards:
   - name: ESPRESSIF_ESP32
     brief: Generic ESP32
@@ -1415,7 +1424,7 @@
 #
 
 - group: SAMD51 ARM Cortex-M4
-  long:
+  long: High-speed 120MHz MCUs with FPU, large Flash/RAM, and flexible peripherals, making them ideal for advanced control.
   boards:
   - name: AGCM4_RAMPS_144
     brief: RAMPS 1.4.4
@@ -1432,7 +1441,7 @@
 #
 
 - group: SAMD21 ARM Cortex-M4
-  long:
+  long: Lower-power SAMD ARM Cortex-M4 MCUs, often found in compact and efficient controller designs.
   boards:
   - name: MINITRONICS20
     brief: Minitronics v2.0
@@ -1443,7 +1452,7 @@
 #
 
 - group: HC32 ARM Cortex-M4
-  long: Boards using the HC32 by Huada Semiconductor Co. Ltd.
+  long: Boards using the HC32 by Huada Semiconductor Co. Ltd., providing an alternative M4-based MCU solution.
   boards:
   - name: AQUILA_V101
     brief: Voxelab Aquila V1.0.0/V1.0.1/V1.0.2/V1.0.3 as found in the Voxelab Aquila X2 and C2
@@ -1457,7 +1466,7 @@
 #
 
 - group: RP2040 Dual Core RISC-V
-  long: Boards using the RP2040 by the Raspberry Pi Foundation
+  long: Boards using the RP2040 by the Raspberry Pi Foundation, featuring dual-core performance with flexible I/O options.
   boards:
   - name: RP2040
     brief: Generic RP2040 Test board
@@ -1471,7 +1480,7 @@
 #
 
 - group: Custom board
-  long:
+  long: User-defined boards with custom MCU configurations and features.
   boards:
   - name: CUSTOM
     brief: Custom pins definition for development and/or rare boards.
