@@ -1465,7 +1465,7 @@
 # Raspberry Pi
 #
 
-- group: RP2040 Dual Core RISC-V
+- group: RP2040 Dual Core ARM Cortex M0+
   long: Boards using the RP2040 by the Raspberry Pi Foundation, featuring dual-core performance with flexible I/O options.
   boards:
   - name: RP2040
