@@ -17,9 +17,9 @@
  *  - $screen-lg-min = 1200px
  */
 :root {
-  prefers-color-scheme: light;
   --bg-midsection: radial-gradient(circle, rgba(0,0,0, 1) 0%, rgba(0,0,0, 0) 60%, rgba(0,0,0, 0) 100%);
   --color-background: #F8FCFE;
+  --color-browser-bg: #D8D8E8;
   --color-color: #000;
   --color-nesting: #00000014;
   --color-scrollbar: #DDD;
@@ -204,9 +204,9 @@
 
 /* Variable declaration for dark mode */
 [data-theme="dark"] {
-  prefers-color-scheme: dark;
   --bg-midsection: radial-gradient(circle, rgba(255,255,255, 1) 0%, rgba(255,255,255, 0) 60%, rgba(255,255,255, 0) 100%);
   --color-background: #000;
+  --color-browser-bg: #282828;
   --color-color: #B5B5B5;
   --color-nesting: #FFFFFF14;
   --color-scrollbar: #222;
@@ -256,7 +256,7 @@
   --color-h1-devel: #BB8;
   --color-h1-setting: #B8B;
   --color-hr: #FFF;
-  --color-header-bg: #004466;
+  --color-header-bg: #046;
   --color-header: #FF0;
   --color-article-header: #FF0;
   // Top nav
@@ -1325,6 +1325,8 @@ footer>.container { display: block; clear: both; width: 100%}
   padding: 0;
 }
 
+.custom-btn .row a span.e-btn-text { top: 5em; }
+
 .navbar-fixed-top { padding: 0 1em; }
 @media (min-width: $screen-lg-min) {
   .highlight-panels {
@@ -1349,6 +1351,9 @@ div.panel.panel-info, div.panel.panel-warning {
   >.panel-heading { padding: 0; }
   h4 { margin-top: 0; padding: 0.5em; }
 }
+
+.label { font-weight: normal; }
+form .label { font-weight: 700; }
 
 .label code { background: none; color: #FFF; }
 
@@ -1419,5 +1424,5 @@ div.more-info { float: right; margin-right: 1em; font-size: small; }
   .lcd .gallery img { float: right; margin-top: 4px; }
 }
 
-.fa-brands.fa-x:before { content: "𝕏"; }
+.fa-brands.fa-x:before { content: "𝕏 "; font-size: 120%; }
 .fa-brands.fa-bluesky:before { content: "🦋" }

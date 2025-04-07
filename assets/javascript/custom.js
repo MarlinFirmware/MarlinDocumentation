@@ -2,6 +2,21 @@
 // Marlin custom Javascript
 //
 
+// Set classes based on user agent
+// Source: www.printables.com
+/*
+if (/(Mac|iPhone|iPod|iPad)/i.test(navigator?.userAgentData?.platform || navigator?.platform || '')) {
+  document.body.classList.add('osx');
+}
+
+window.isMobile = typeof window !== 'undefined' && 'matchMedia' in window && window.matchMedia('(pointer: coarse)').matches;
+if (window.isMobile) {
+  document.body.classList.add('mobile');
+  document.documentElement.style.setProperty('--mobile100vh', `${window.innerHeight}px`);
+  document.body.classList.add('zoom-' + Math.round((window.outerWidth / window.innerWidth) * 100));
+}
+*/
+
 // Cookie Helpers
 
 function setCookie(cname, cvalue, exdays) {
@@ -43,6 +58,9 @@ function setDarkMode(dark) {
     .css('visibility', 'visible');
   $('#discord-frame').attr('src', `${discord_widget_url}&theme=` + (dark ? 'dark' : 'light'));
   $('#starchart img').attr('src', 'https://api.star-history.com/svg?repos=MarlinFirmware/Marlin&type=Date' + (dark ? '&theme=dark' : ''));
+
+  const color = getComputedStyle(document.documentElement).getPropertyValue('--color-browser-bg').trim();
+  $('#theme-color, #tile-color').attr('content', color);
 }
 
 function toggleDarkMode() {
