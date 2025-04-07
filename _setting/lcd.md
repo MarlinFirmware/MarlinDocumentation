@@ -365,7 +365,8 @@ settings:
     type: ms
 
 - name: MALYAN_LCD
-  brief: Touch-screen LCD for Malyan M200/M300 printers.
+  iface: serial
+  brief: Malyan M200/M300 stock Color LCD with Big Clicky Buttons. **NOT A TOUCH SCREEN!**
 
 - name: TOUCH_UI_FTDI_EVE
   brief: Touch UI for FTDI EVE (FT800/FT810) displays. See `Configuration_adv.h` for all configuration options.

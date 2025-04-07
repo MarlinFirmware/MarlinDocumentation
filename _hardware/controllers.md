@@ -588,6 +588,16 @@ groups:
       size: 2.8"
       res: 320×240
 
+    - name: MALYAN_LCD
+      description: |
+        Malyan M200/M300 stock IPS Color LCD with Big Clicky Buttons. **NOT A TOUCH SCREEN!**
+        - 3.2"
+        - Serial host
+        - Custom serial protocol
+        - Buttons: Forward | Action | Back
+      api: ExtUI
+      interface: Serial
+
     - name: ANET_ET4_TFT28
       description: |
         Stock display from the Anet ET4.
@@ -636,6 +646,7 @@ groups:
         - 480×272
         - 4.3"
         - Serial (DWIN T5UID1)
+      api: ExtUI
       interface: Serial
       protocol: T5UID1
       images:
@@ -677,9 +688,6 @@ groups:
     - name: DGUS_LCD_UI CREALITY_TOUCH
       since: 2.1.4
       description: TFT touchscreen included with the Ender-5 S1.
-
-    - name: MALYAN_LCD
-      description: Touchscreen LCD included with the Malyan M200/M300.
 
     - name: TOUCH_UI_FTDI_EVE
       description: Touch UI for FTDI EVE (FT800/FT810) displays for Lulzbot printers.
