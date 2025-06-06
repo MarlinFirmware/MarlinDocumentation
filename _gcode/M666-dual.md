@@ -1,6 +1,6 @@
 ---
 tag: m0666b
-title: Set dual endstop offsets
+title: Set Dual Endstop Offsets
 brief: Set dual endstop offsets
 author: ManuelMcLure
 
