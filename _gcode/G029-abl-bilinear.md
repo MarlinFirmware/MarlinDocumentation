@@ -1,7 +1,7 @@
 ---
 tag: g029m2
 title: Bed Leveling (Bilinear)
-brief: Probe the bed and enable leveling compensation.
+brief: Probe the bed and enable leveling compensation
 author: thinkyhead
 
 requires: AUTO_BED_LEVELING_BILINEAR

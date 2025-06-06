@@ -1,7 +1,7 @@
 ---
 tag: g029g1
 title: Bed Leveling (3-Point)
-brief: Probe the bed and enable leveling compensation.
+brief: Probe the bed and enable leveling compensation
 author: thinkyhead
 
 requires: AUTO_BED_LEVELING_3POINT
