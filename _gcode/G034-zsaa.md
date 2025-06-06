@@ -4,7 +4,7 @@ title: Z Steppers Auto-Alignment
 brief: Align multiple Z steppers using a bed probe
 author: shitcreek
 
-requires: Z_STEPPER_AUTO_ALIGN
+requires: Z_STEPPER_AUTO_ALIGN Z_MULTI_ENDSTOPS
 group: calibration
 
 codes: [ G34 ]
