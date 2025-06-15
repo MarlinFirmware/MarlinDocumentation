@@ -67,7 +67,7 @@ parameters:
 videos:
 - 6UgT9YqY3UA
 
-example:
+examples:
 - pre: Align Z steppers:
   code: G34
   
