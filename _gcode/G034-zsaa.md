@@ -68,10 +68,10 @@ videos:
 - 6UgT9YqY3UA
 
 examples:
-- pre: Align Z steppers:
+- pre: 'Align Z steppers:'
   code: G34
   
-- pre: Lock/Unlock Z steppers:
+- pre: 'Lock/Unlock Z steppers:'
   code: G34 Z1 ; Lock Z1
 - code: G34 L Z2 ; Unlock all, then lock Z2
 - code: G34 Z2 S0 ; Unlock Z2
