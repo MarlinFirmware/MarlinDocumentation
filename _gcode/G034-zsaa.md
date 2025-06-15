@@ -12,28 +12,69 @@ related: [ G28, M422, M906, M907 ]
 
 parameters:
 
+- tag: L
+  optional: true
+  description: Unlock all Z stepper motors
+
+- tag: S
+  optional: true
+  description: Lock state; 0=UNLOCKED 1=LOCKED. If omitted, assume LOCKED
+  values:
+  - type: bool
+
+- tag: Z
+  optional: true
+  description: Target specific Z stepper to lock/unlock (1-4)
+  values:
+  - type: int
+    min: 1
+    max: 4
+
 - tag: I
   optional: true
   description: Iterations - must be between 1 - 30
+  values:
+  - type: linear
+    min: 1
+    max: 30
 
 - tag: T
   optional: true
-  description: Target accuracy - must be between 0.01 - 1.0
+  description: Target Accuracy - must be between 0.01 - 1.0
+  values:
+  - type: float
+    min: 0.01
+    max: 1.0
 
 - tag: A
   optional: true
   description: Amplification - must be between 0.5 - 2.0
+  values:
+  - type: float
+    min: 0.5
+    max: 2.0
 
 - tag: E
   optional: true
-  description: Stow probe after probing each point.
+  description: Stow probe after probing each point
+  values:
+    - type: bool
+  
+- tag: R
+  optional: true
+  description: Recalculate points based on current probe offsets
 
 videos:
 - 6UgT9YqY3UA
 
 example:
-- pre: 'Align Z steppers:'
+- pre: Align Z steppers:
   code: G34
+  
+- pre: Lock/Unlock Z steppers:
+  code: G34 Z1 ; Lock Z1
+- code: G34 L Z2 ; Unlock all, then lock Z2
+- code: G34 Z2 S0 ; Unlock Z2
 
 ---
 
