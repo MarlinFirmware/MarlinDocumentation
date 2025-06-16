@@ -3,7 +3,7 @@ tag: g029m3
 title: Bed Leveling (Unified)
 author: Thinkyhead
 contrib: Vertabreak, shitcreek
-brief: Probe the bed and enable leveling compensation.
+brief: Probe the bed and enable leveling compensation
 
 requires: AUTO_BED_LEVELING_UBL
 group: calibration
