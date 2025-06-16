@@ -3,6 +3,7 @@ tag: g034a
 title: Z Steppers Auto-Alignment
 brief: Align multiple Z steppers using a bed probe
 author: shitcreek
+contrib: classicrocker883
 
 requires: Z_STEPPER_AUTO_ALIGN, Z_MULTI_ENDSTOPS
 group: calibration
