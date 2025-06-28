@@ -147,6 +147,12 @@ Enable the Bluetooth serial interface. For boards based on the AT90USB.
 ```
 This is the name of your printer as displayed on the LCD and by [`M115`](/docs/gcode/M115.html). For example, if you set this to "My Delta" the LCD will display "My Delta ready" when the printer starts up.
 
+### Configurable Machine Name
+```cpp
+//#define CONFIGURABLE_MACHINE_NAME
+```
+Add G-code [`M550`](/docs/gcode/M550.html) to set/report the Machine Name. Enable this option if you need to be able to change the Machine Name for lab use or to switch host configs. Available in Marlin 2.1.3.
+
 ### Machine UUID
 ```cpp
 //#define MACHINE_UUID "00000000-0000-0000-0000-000000000000"
