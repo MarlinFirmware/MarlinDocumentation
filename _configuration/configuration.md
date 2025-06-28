@@ -2728,49 +2728,152 @@ Add the [`G35`](/docs/gcode/G035.html) command to read bed corners to help adjus
 ```
 
 ## Motion Control
+
 ### Fixed-Time Motion Control
-Fixed-time-based Motion Control. Enable/disable and set parameters with G-code [`M493`](/docs/gcode/M493.html).
+
+*New in Marlin 2.1.3.*
+
+The Fixed-Time-based Motion Control (FTM) feature provides an alternative motion system that uses a stepper event chain with sophisticated motion algorithms, allowing you to fine-tune motion control behavior. You can adjust parameters such as dynamic frequency modes, shaper types and frequencies, linear advance settings, and more with G-code [`M493`](/docs/gcode/M493.html). See the [`M493`](/docs/gcode/M493.html) documentation for a basic overview of parameters you can change.
+
 ```cpp
-#define FT_MOTION
+/**
+ * Fixed-time-based Motion Control -- BETA FEATURE
+ * Enable/disable and set parameters with G-code M493.
+ * See ft_types.h for named values used by FTM options.
+ */
+//#define FT_MOTION
 #if ENABLED(FT_MOTION)
-  #define FTM_DEFAULT_MODE         ftMotionMode_ENABLED // Default mode of fixed time control. (Enums in ft_types.h)
-  #define FTM_DEFAULT_DYNFREQ_MODE dynFreqMode_DISABLED // Default mode of dynamic frequency calculation. (Enums in ft_types.h)
-  #define FTM_SHAPING_DEFAULT_FREQ_X 37.0f              // (Hz) Default peak frequency used by input shapers.
-  #define FTM_SHAPING_DEFAULT_FREQ_Y 37.0f              // (Hz) Default peak frequency used by input shapers.
-  #define FTM_LINEAR_ADV_DEFAULT_ENA false              // Default linear advance enable (true) or disable (false).
-  #define FTM_LINEAR_ADV_DEFAULT_K    0.0f              // Default linear advance gain.
-  #define FTM_SHAPING_ZETA            0.1f              // Zeta used by input shapers.
-  #define FTM_SHAPING_V_TOL           0.05f             // Vibration tolerance used by EI input shapers.
+  //#define FTM_IS_DEFAULT_MOTION                 // Use FT Motion as the factory default?
+  #define FTM_DEFAULT_DYNFREQ_MODE dynFreqMode_DISABLED // Default mode of dynamic frequency calculation. (DISABLED, Z_BASED, MASS_BASED)
+  #define FTM_DEFAULT_SHAPER_X      ftMotionShaper_NONE // Default shaper mode on X axis (NONE, ZV, ZVD, ZVDD, ZVDDD, EI, 2HEI, 3HEI, MZV)
+  #define FTM_DEFAULT_SHAPER_Y      ftMotionShaper_NONE // Default shaper mode on Y axis
+  #define FTM_SHAPING_DEFAULT_FREQ_X   37.0f      // (Hz) Default peak frequency used by input shapers
+  #define FTM_SHAPING_DEFAULT_FREQ_Y   37.0f      // (Hz) Default peak frequency used by input shapers
+  #define FTM_LINEAR_ADV_DEFAULT_ENA   false      // Default linear advance enable (true) or disable (false)
+  #define FTM_LINEAR_ADV_DEFAULT_K      0.0f      // Default linear advance gain. (Acceleration-based scaling factor.)
+  #define FTM_SHAPING_ZETA_X            0.1f      // Zeta used by input shapers for X axis
+  #define FTM_SHAPING_ZETA_Y            0.1f      // Zeta used by input shapers for Y axis
+
+  #define FTM_SHAPING_V_TOL_X           0.05f     // Vibration tolerance used by EI input shapers for X axis
+  #define FTM_SHAPING_V_TOL_Y           0.05f     // Vibration tolerance used by EI input shapers for Y axis
+
+  //#define FT_MOTION_MENU                        // Provide a MarlinUI menu to set M493 parameters
 
   /**
    * Advanced configuration
    */
-  #define FTM_BATCH_SIZE 100                            // Batch size for trajectory generation;
-                                                        // half the window size for Ulendo FBS.
-  #define FTM_FS           1000                         // (Hz) Frequency for trajectory generation. (1 / FTM_TS)
-  #define FTM_TS              0.001f                    // (s) Time step for trajectory generation. (1 / FTM_FS)
-  #define FTM_STEPPER_FS  20000                         // (Hz) Frequency for stepper I/O update.
-  #define FTM_MIN_TICKS ((STEPPER_TIMER_RATE) / (FTM_STEPPER_FS)) // Minimum stepper ticks between steps.
-  #define FTM_MIN_SHAPE_FREQ 10                         // Minimum shaping frequency.
-  #define FTM_ZMAX          100                         // Maximum delays for shaping functions (even numbers only!).
-                                                        // Calculate as:
-                                                        //    1/2 * (FTM_FS / FTM_MIN_SHAPE_FREQ) for ZV.
-                                                        //    (FTM_FS / FTM_MIN_SHAPE_FREQ) for ZVD, MZV.
-                                                        //    3/2 * (FTM_FS / FTM_MIN_SHAPE_FREQ) for 2HEI.
-                                                        //    2 * (FTM_FS / FTM_MIN_SHAPE_FREQ) for 3HEI.
-  #define FTM_STEPS_PER_UNIT_TIME 20                    // Interpolated stepper commands per unit time.
-                                                        // Calculate as (FTM_STEPPER_FS / FTM_FS).
-  #define FTM_CTS_COMPARE_VAL 10                        // Comparison value used in interpolation algorithm.
-                                                        // Calculate as (FTM_STEPS_PER_UNIT_TIME / 2).
-  // These values may be configured to adjust duration of loop().
-  #define FTM_STEPS_PER_LOOP 60                         // Number of stepper commands to generate each loop().
-  #define FTM_POINTS_PER_LOOP 100                       // Number of trajectory points to generate each loop().
+  #define FTM_UNIFIED_BWS                         // DON'T DISABLE unless you use Ulendo FBS (not implemented)
+  #if ENABLED(FTM_UNIFIED_BWS)
+    #define FTM_BW_SIZE               100         // Unified Window and Batch size with a ratio of 2
+  #else
+    #define FTM_WINDOW_SIZE           200         // Custom Window size for trajectory generation needed by Ulendo FBS
+    #define FTM_BATCH_SIZE            100         // Custom Batch size for trajectory generation needed by Ulendo FBS
+  #endif
 
-  // This value may be configured to adjust duration to consume the command buffer.
-  // Try increasing this value if stepper motion is not smooth.
-  #define FTM_STEPPERCMD_BUFF_SIZE 1000                 // Size of the stepper command buffers.
-#endif
+  #define FTM_FS                     1000         // (Hz) Frequency for trajectory generation. (Reciprocal of FTM_TS)
+  #define FTM_TS                        0.001f    // (s) Time step for trajectory generation. (Reciprocal of FTM_FS)
+
+  #if DISABLED(COREXY)
+    #define FTM_STEPPER_FS          20000         // (Hz) Frequency for stepper I/O update
+
+    // Use this to adjust the time required to consume the command buffer.
+    // Try increasing this value if stepper motion is choppy.
+    #define FTM_STEPPERCMD_BUFF_SIZE 3000         // Size of the stepper command buffers
+
+  #else
+    // CoreXY motion needs a larger buffer size. These values are based on our testing.
+    #define FTM_STEPPER_FS          30000
+    #define FTM_STEPPERCMD_BUFF_SIZE 6000
+  #endif
+
+  #define FTM_STEPS_PER_UNIT_TIME (FTM_STEPPER_FS / FTM_FS)       // Interpolated stepper commands per unit time
+  #define FTM_CTS_COMPARE_VAL (FTM_STEPS_PER_UNIT_TIME / 2)       // Comparison value used in interpolation algorithm
+  #define FTM_MIN_TICKS ((STEPPER_TIMER_RATE) / (FTM_STEPPER_FS)) // Minimum stepper ticks between steps
+
+  #define FTM_MIN_SHAPE_FREQ           10         // Minimum shaping frequency
+  #define FTM_RATIO (FTM_FS / FTM_MIN_SHAPE_FREQ) // Factor for use in FTM_ZMAX. DON'T CHANGE.
+  #define FTM_ZMAX (FTM_RATIO * 2)                // Maximum delays for shaping functions (even numbers only!)
+                                                  // Calculate as:
+                                                  //   ZV       : FTM_RATIO / 2
+                                                  //   ZVD, MZV : FTM_RATIO
+                                                  //   2HEI     : FTM_RATIO * 3 / 2
+                                                  //   3HEI     : FTM_RATIO * 2
+#endif // FT_MOTION
 ```
+
+#### Enable FTM Motion Control
+```cpp
+#define FT_MOTION
+```
+Enable or disable the Fixed-Time-based Motion Control (FTM) feature, which is a beta feature for advanced motion control. This can be enabled using G-code commands with `M493`.
+
+#### Dynamic Frequency Mode
+```cpp
+#define FTM_DEFAULT_DYNFREQ_MODE dynFreqMode_DISABLED // Default mode of dynamic frequency calculation.
+```
+Set the default dynamic frequency calculation mode for FTM. Options include:
+- `dynFreqMode_DISABLED`: Disable dynamic frequency adjustment (default).
+- `dynFreqMode_Z_BASED`: Use a Z-based dynamic frequency algorithm.
+- `dynFreqMode_MASS_BASED`: Use a mass-based dynamic frequency algorithm.
+
+#### Default Shaper Modes
+```cpp
+#define FTM_DEFAULT_SHAPER_X ftMotionShaper_NONE // Default shaper mode on X axis (NONE, ZV, ZVD, ZVDD, ZVDDD, EI, 2HEI, 3HEI, MZV)
+#define FTM_DEFAULT_SHAPER_Y ftMotionShaper_NONE // Default shaper mode on Y axis
+```
+Set the default shaper modes for both X and Y axes. These control how motion commands are shaped to reduce vibrations and improve performance. Available options include:
+- `ftMotionShaper_NONE`: No shaping (default).
+- `ftMotionShaper_ZV, ZVD, ZVDD, ZVDDD`: Zero-Vibration shapers.
+- `ftMotionShaper_EI, 2HEI, 3HEI`: Enhanced Input shapers.
+- `ftMotionShaper_MZV`: Modified Zero-Vibration shaper.
+
+#### Frequency and Tolerance
+```cpp
+#define FTM_SHAPING_DEFAULT_FREQ_X   37.0f      // (Hz) Default peak frequency used by input shapers
+#define FTM_SHAPING_DEFAULT_FREQ_Y   37.0f      // (Hz) Default peak frequency used by input shapers
+#define FTM_LINEAR_ADV_DEFAULT_ENA   false      // Default linear advance enable (true) or disable (false)
+#define FTM_LINEAR_ADV_DEFAULT_K     0.0f       // Default linear advance gain. (Acceleration-based scaling factor.)
+```
+Set the default peak frequencies for X and Y axes, as well as default parameters for Linear Advance. These settings can be fine-tuned based on your specific printer setup.
+
+#### Vibration Tolerance
+```cpp
+#define FTM_SHAPING_V_TOL_X           0.05f     // Vibration tolerance used by EI input shapers for X axis
+#define FTM_SHAPING_V_TOL_Y           0.05f     // Vibration tolerance used by EI input shapers for Y axis
+```
+Specify the vibration tolerance levels for the X and Y axes, which are particularly important when using Enhanced Input (EI) shaper modes.
+
+#### Advanced Configuration
+```cpp
+#define FTM_UNIFIED_BWS                         // DON'T DISABLE unless you use Ulendo FBS (not implemented)
+#if ENABLED(FTM_UNIFIED_BWS)
+  #define FTM_BW_SIZE               100         // Unified Window and Batch size with a ratio of 2
+#else
+  #define FTM_WINDOW_SIZE           200         // Custom Window size for trajectory generation needed by Ulendo FBS
+  #define FTM_BATCH_SIZE            100         // Custom Batch size for trajectory generation needed by Ulendo FBS
+#endif
+
+#define FTM_FS                     1000         // (Hz) Frequency for trajectory generation.
+#define FTM_TS                        0.001f    // (s) Time step for trajectory generation.
+
+#define FTM_STEPPER_FS          20000         // (Hz) Frequency for stepper I/O update
+#define FTM_STEPPERCMD_BUFF_SIZE 3000         // Size of the stepper command buffers
+```
+These advanced settings configure various aspects of trajectory generation and stepper communication, ensuring smooth and accurate motion control. CoreXY motion needs a larger buffer size. Provided values are based on community testing and feedback.
+
+#### Minimum Parameters
+```cpp
+#define FTM_STEPS_PER_UNIT_TIME (FTM_STEPPER_FS / FTM_FS)       // Interpolated stepper commands per unit time
+#define FTM_CTS_COMPARE_VAL (FTM_STEPS_PER_UNIT_TIME / 2)       // Comparison value used in interpolation algorithm
+#define FTM_MIN_TICKS ((STEPPER_TIMER_RATE) / (FTM_STEPPER_FS)) // Minimum stepper ticks between steps
+
+#define FTM_MIN_SHAPE_FREQ           10         // Minimum shaping frequency
+#define FTM_RATIO (FTM_FS / FTM_MIN_SHAPE_FREQ) // Factor for use in FTM_ZMAX. DON'T CHANGE.
+#define FTM_ZMAX (FTM_RATIO * 2)                // Maximum delays for shaping functions (even numbers only!)
+```
+These parameters ensure that the motion control system operates within optimal ranges, providing a balance between performance and accuracy.
+
+By customizing these settings, you can optimize your printer's performance to suit specific needs or preferences.
 
 ### ZV Input Shaping
 Zero Vibration (ZV) Input Shaping for X and/or Y movements.

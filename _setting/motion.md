@@ -15,10 +15,10 @@ settings:
   example:
   - value: "{ 80, 80, 400, 500 }"
 
-- name: EDITABLE_STEPS_PER_UNI
+- name: EDITABLE_STEPS_PER_UNIT
   since: 2.1.3
   brief: Editable the steps per unit.
-  long: Add a G-code and menu items to edit axis steps per unit. Disable to save some memory.
+  long: Add a G-code ([`M92`](/docs/gcode/M092.html)) and menu items to edit axis steps per unit. Disable to save some memory.
 
 - name: DEFAULT_MAX_FEEDRATE
   type: float
