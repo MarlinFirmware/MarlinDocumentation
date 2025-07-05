@@ -32,21 +32,23 @@ Input Shaping is a form of noise canceling where we measure the dominant resonan
 ## Fixed Time Motion by Ulendo
 
 ### Background
-In 2023 Ulendo submitted the basic code for [**Fixed Time Motion**](/docs/gcode/M493.html) (`FT_MOTION`) as the necessary foundation for more advanced Input Shapers and motion calculation. Ulendo made sure this feature was optional and that it can be turned on and off as needed. They built a motion system that nearly doubled the performance of the Ender-3 and blew our minds. We took that code and extended it to all 9 axes and 8 extruders so you can use it for any motion system project!
+In 2023 [Ulendo](https://ulendo.io) submitted the basic code for [**Fixed Time Motion**](/docs/gcode/M493.html) (`FT_MOTION`) as the necessary foundation for more advanced Input Shapers and motion calculation. Ulendo made sure this feature was optional and that it can be turned on and off as needed. They built a motion system that nearly doubled the performance of the Ender-3 and [blew our minds](https://news.engin.umich.edu/2022/05/university-developed-software-that-doubles-3d-printing-speeds-hits-the-market/). We've taken that code and extended it to all 9 axes and 8 extruders so you can use it for any motion system project!
 
-Fixed Time Motion optimizes the standard Marlin motion system by adding a stepper event buffer layer. Each entry in this buffer corresponds to a single time interval and the complete buffer covers a short time window.
+Fixed Time Motion optimizes the standard Marlin motion system by adding a Stepper Events buffer between the Planner buffer and the Stepper ISR. Each entry in this buffer corresponds to a single time interval. The complete event buffer covers a short time window so it has to be dynamically refreshed.
 
-The first component of Fixed Time Motion is a Polling Task that runs from the main `idle` function. Its job is to keep the STEP/DIR event buffer populated with events for the upcoming time window. This task runs in program context so it can take full advantage of the FPU and apply more complex input shaping algorithms.
+The first component of Fixed Time Motion is a Polling Task that runs from the main `idle` function. Its job is to keep the STEP/DIR event buffer filled with events from the Planner buffer for the upcoming time window. This task runs in program context so it can take full advantage of the FPU and apply more complex Input Shaping and Linear Advance algorithms in batches outside of interrupt-time.
 
-The Stepper interrupt runs at a regular fixed interval and applies the events from the buffer at the appropriate moment. This is where we get the "Fixed Time" component. As with standard motion, the smoothest motion comes from using the smallest interval. We can run the master clock for this style of motion more quickly than with standard motion, without concern for blocking other important processes.
+The second component of Fixed Time Motion is a Stepper Interrupt task that runs at a regular interval. This is where we get the "Fixed Time" component. This task simply applies the events from the buffer to the stepper pins, sets a flag when the buffer runs low, etc.
+
+As with standard motion, the smoothest lines results from dividing up time into the smallest interval. The reduced processing time for Fixed Time Motion inside the interrupt allows us to run the master clock more quickly while still keeping other important processes running regularly.
 
 ### Advantages
 - The Stepper ISR never blocks the MCU waiting to reset a STEP.
 - The decoupling of E for FT Linear Advance has zero impact on Stepper ISR overhead.
 
 ### Disadvantages
-- Requires a 32-bit board with sufficient RAM. This feature works by storing every event for a short slice of time. Although each "event" comprises only two bits per axis, they add up when running many thousands of events.
-- Tuning advanced Input Shapers is far from an easy automated process. But Ulendo is working on something that should help.
+- Fixed Time Motion requires a 32-bit board with enough RAM to store events for a short slice of time. Although each "event" comprises only two bits per axis, they add up when running many thousands of events per second.
+- Tuning advanced Input Shapers is not an easy automated process. But Ulendo is working on something that should help.
 - Not all Marlin features are supported (yet). For example, Mixing Extruder has not yet been implemented as FT Motion events. Please contribute your efforts to help make this feature more capable!
 
 ### Should You Use FT Motion?
