@@ -90,14 +90,14 @@
 {%- if options %}
   <div class="options">
     {% if options[0].value %}
-      <{{ h3 }}>Options</{{ h3 }}>
+      <{{ h3 }}>🗳️ Options</{{ h3 }}>
       <table{% if options.size > 4 or options[0].brief %} class="table-striped"{% endif %}>
         {%- for op in options -%}
           <tr><th>{{ op.value }}</th><td>{% if op.brief %}{{ op.brief }}{% endif %}</td></tr>
         {%- endfor -%}
       </table>
     {% else %}
-      <strong>Options:</strong> {{ options | join: ", " }}
+      <strong>🗳️ Options:</strong> {{ options | join: ", " }}
     {% endif %}
   </div>
 {% endif %}
@@ -107,7 +107,7 @@
 {% else %}{% assign example = false %}{% endif %}
 {%- if example %}
   <div class="examples">
-    <{{ h3 }}>Example{% if example.size > 1 %}s{% endif %}</{{ h3 }}>
+    <{{ h3 }}>👁️ Example{% if example.size > 1 %}s{% endif %}</{{ h3 }}>
     {% for ex in example %}
       {% if ex.pre %}
         {% for line in ex.pre %}
@@ -129,10 +129,16 @@
   </div>
 {% endif %}
 
+{% if conf.override %}
+  <div class="override">
+    {{ "📝 This option can be overridden with " | append: conf.override | append: "." | markdownify }}
+  </div>
+{% endif %}
+
 {% if conf.links %}
 <div class="links">
   {% if conf.links.size > 1 %}
-    <{{ h3 }}>External Links</{{ h3 }}>
+    <{{ h3 }}>🔗 External Links</{{ h3 }}>
     <ul>
       {% for link in conf.links %}{% assign label = link.label | default: link.url %}
         <li><a href="{{ link.url }}">{{ label }}</a></li>
@@ -148,7 +154,7 @@
 
 {% if conf.images %}
 <div class="gallery">
-  <{{ h3 }}>Gallery</{{ h3 }}>
+  <{{ h3 }}>🖼️ Gallery</{{ h3 }}>
   {% for img in conf.images %}
     {% assign cap = img.caption | markdownify %}
     {% assign ttl = img.title | markdownify | strip_html %}
@@ -161,7 +167,7 @@
 
 {% if conf.videos %}
 <div class="videos">
-  <{{ h3 }}>Related Media</{{ h3 }}>
+  <{{ h3 }}>📺 Related Media</{{ h3 }}>
   {% for videoid in conf.videos %}
     <iframe class="youtube" width="300" height="225" src="https://youtube.com/embed/{{ videoid }}"></iframe>
   {% endfor %}

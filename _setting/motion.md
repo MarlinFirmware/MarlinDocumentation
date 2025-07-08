@@ -47,4 +47,8 @@ settings:
 - name: CLASSIC_JERK
   since: 1.1.9
   brief: Use Classic Jerk acceleration for all axes.
-  long: Classic Jerk limits acceleration on a per-axis basis and is suitable for most machines and is the default for all machines except for CoreXY printers.
+  long: Classic Jerk limits acceleration on a per-axis basis and is suitable for most machines and is the default for all machines except for CoreXY printers. If this option is not used then [**Junction Deviation**](/docs/configuration/configuration.html#junction-deviation-) will be used instead.
+
+---
+
+The rotation of stepper motors translates to axis motion through a linkage such as a belt-and-pulley or leadscrew system. Meanwhile the weight of the X carriage and quality of the motion components places limits on the maximum feedrate and maximum acceleration rates. These settings will be fundamental to the accuracy of the motion and how fast the machine is able to go.

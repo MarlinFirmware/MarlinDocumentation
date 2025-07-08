@@ -216,7 +216,7 @@ var jekyllSearch = (() => {
             if (item.class != lastclass) {
               lastclass = item.class;
               var fancy = section_head[item.class];
-              results += '<h1 class="' + item.class + '">' + (fancy ? fancy : item.class) + '</h1>';
+              results += '<h1 class="' + item.class + '">' + (fancy ? fancy : item.class.toTitleCase()) + '</h1>';
             }
             var result = self.populateResultContent($resultTemplate.html(), item);
             resultsCount++;
