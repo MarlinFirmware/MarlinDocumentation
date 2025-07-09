@@ -4,8 +4,8 @@ title: SCARA Configuration
 brief: Set SCARA geometry values
 author: ManuelMcLure
 
-requires: MORGAN_SCARA|MAKERARM_SCARA
 group: none
+requires: MORGAN_SCARA|MAKERARM_SCARA
 
 codes: [ M665 ]
 

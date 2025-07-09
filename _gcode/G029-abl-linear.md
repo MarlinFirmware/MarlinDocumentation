@@ -4,11 +4,11 @@ title: Bed Leveling (Linear)
 brief: Probe the bed and enable leveling compensation.
 author: thinkyhead
 
-requires: AUTO_BED_LEVELING_LINEAR
 group: calibration
+requires: AUTO_BED_LEVELING_LINEAR
 
-related: [ M420 ]
 codes: [ G29 ]
+related: [ M420 ]
 
 notes: |
   - Any arguments left out of `G29` will use the default values set in `Configuration.h`.

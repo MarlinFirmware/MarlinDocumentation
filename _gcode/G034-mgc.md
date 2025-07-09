@@ -4,9 +4,9 @@ title: Mechanical Gantry Calibration
 brief: Modern replacement for Průša's TMC_Z_CALIBRATION
 author: thisiskeithb
 
-requires: MECHANICAL_GANTRY_CALIBRATION
-since: 2.0.4
 group: calibration
+since: 2.0.4
+requires: MECHANICAL_GANTRY_CALIBRATION
 
 codes: [ G34 ]
 related: [ M422, M906, M907, M915 ]

@@ -4,11 +4,11 @@ title: Bed Leveling (Manual)
 brief: Measure Z heights in a grid, enable leveling compensation
 author: thinkyhead
 
-requires: MESH_BED_LEVELING
 group: calibration
+requires: MESH_BED_LEVELING
 
-related: [ M420, M421 ]
 codes: [ G29 ]
+related: [ M420, M421 ]
 
 notes: |
   - Requires the `MESH_BED_LEVELING` option in `Configuration.h`.
