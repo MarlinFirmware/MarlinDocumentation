@@ -99,14 +99,13 @@ $(function() {
   //
 
   var $window = $(window);
-  var $animation_elements = $('.animation-element');
 
   function start_exposed_anims() {
     var win_height = $window.height();
     var win_top = $window.scrollTop();
     var win_bottom = (win_top + win_height);
 
-    $.each($animation_elements, function() {
+    $.each($('.animation-element'), function() {
       var $e = $(this);
       var height = $e.outerHeight();
       var top = ($e.offset().top);
@@ -126,14 +125,22 @@ $(function() {
   /**
    * Dynamically build the table of contents
    */
-  $toc = $("#toc");
-  if ($toc !== undefined) $toc.tocify({
-    selectors: (typeof toc_selectors != 'undefined') ? toc_selectors : 'h1,h2,h3,h4',
-    scrollTo: 60,
+  const top_clearance = $("nav.navbar-fixed-top").height() + 10;
+
+  const $toc = $("#toc");
+  if ($toc.length) $toc.tocify({
+    selectors: (typeof toc_selectors !== 'undefined') ? toc_selectors : 'h1,h2,h3,h4',
+    scrollTo: top_clearance,
     smoothScroll: false,
     extendPage: false,
     hashGenerator: 'pretty'
   });
+
+  /**
+   * If the location has a hash, scroll up to reveal it.
+   */
+  if (window.location.hash)
+    setTimeout(() => { window.scrollBy(0, -top_clearance); }, 100);
 
   /**
    * All external links open in a new tab
@@ -188,7 +195,7 @@ $(function() {
 
   function shiftSubMenu() {
     var w = $(window).width();
-    if (w >= minWindowWidth && w <= maxWindowWidth ) {
+    if (w >= minWindowWidth && w <= maxWindowWidth) {
       $('.dropdown-menu').addClass('pull-right');
       $('.dropdown-submenu .dropdown-menu').addClass('flip-left');
     }
