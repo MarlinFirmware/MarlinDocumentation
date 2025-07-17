@@ -65,7 +65,7 @@ These are the defaults for any RAMPS board and are already defined in `pins_RAMP
 M3 I S20       ; Enter Continuous Inline Mode and preload the next move power with S20
 G1 X10 Y10     ; Move to X10 Y10 with S20 power
 G1 X20 S50     ; Move to X20 with S50 power
-M5             ; Kill the power and remain in Continous Inline Mode (M5 or M5I always waits for last move to complete)
+M5             ; Kill the power and remain in Continuous Inline Mode (M5 or M5I always waits for last move to complete)
 ```
 It's fairly easy to select a pin for `SPINDLE_LASER_ENA_PIN`. Any unused digital pin with a 0 to 3.3V-5V logic level is sufficient.
 
