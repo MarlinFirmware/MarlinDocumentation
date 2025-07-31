@@ -5,11 +5,11 @@ author: Thinkyhead
 contrib: Vertabreak, shitcreek
 brief: Probe the bed and enable leveling compensation
 
-requires: AUTO_BED_LEVELING_UBL
 group: calibration
+requires: AUTO_BED_LEVELING_UBL
 
-related: [ M420, M421 ]
 codes: [ G29 ]
+related: [ M420, M421 ]
 
 notes: |
   - Requires `AUTO_BED_LEVELING_UBL`.

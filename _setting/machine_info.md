@@ -17,6 +17,13 @@ settings:
   example:
   - value: '"X5 Endeavour"'
 
+- name: CONFIGURABLE_MACHINE_NAME
+  type: switch
+  since: 2.1.3
+  disabled: true
+  brief: Add G-code `M550` to set/report the machine name.
+  long: Enable this option if you need to be able to change the machine name for lab use or to switch host configs.
+
 - name: MACHINE_UUID
   type: string
   since: 1.1.0

@@ -58,8 +58,6 @@ shared:
     brief: Trinamic TMC2209
   - value: TMC2240
     brief: Trinamic TMC2240 (SPI)
-  - value: TMC2240_STANDALONE
-    brief: Trinamic TMC2240 (standalone)
 
 settings:
 - name: X_DRIVER_TYPE

@@ -500,6 +500,8 @@ li#searchbox {
 
 // TOC Side Navigation
 
+div[data-unique] { clear: both; }
+
 // G-Code Section has some space for a larger font
 .gcode-section .tocify { font-size: 15px; }
 
@@ -1372,6 +1374,7 @@ div.subopt {
 .main > div.subopt { background: none; border-top: 1px solid var(--color-color); }
 div.container.detail div.row div.subopt {
   h3, h4, h5, h6 { margin: 0.5em 0 0.5em 0; padding: 0; background: none; }
+  h5 { font-size: 100%; font-weight: bold; }
   div.subopt { h3, h4, h5, h6 { margin-top: 0; } }
 }
 
@@ -1409,10 +1412,9 @@ div.options table {
 .detail-header {
   position: relative;
   h1 { margin-bottom: 4px; }
-  a[name] { position: absolute; top: -5em; }
 }
 
-div.brief { font-weight: $bold-font-weight; }
+div.brief { font-weight: bold; opacity: 0.6; }
 div.since { float: right; margin-right: 0.25em; }
 div.tags { display: inline-block; float: right; margin: 0.5em; }
 div.more-info { float: right; margin-right: 1em; font-size: small; }

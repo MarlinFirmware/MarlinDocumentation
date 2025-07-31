@@ -211,12 +211,12 @@ var jekyllSearch = (() => {
         odd = false;
         $.each(data, (index, item) => {
           // check if search term is in content or title
-          const comp = (item.name + " " + item.title + ' ' + item.content + item.excerpt).toLowerCase();
+          const comp = `${it.name} ${it.title} ${it.group} ${it.content} ${it.excerpt}`.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
           if (comp.match(qmatch)) {
             if (item.class != lastclass) {
               lastclass = item.class;
               var fancy = section_head[item.class];
-              results += '<h1 class="' + item.class + '">' + (fancy ? fancy : item.class) + '</h1>';
+              results += '<h1 class="' + item.class + '">' + (fancy ? fancy : item.class.toTitleCase()) + '</h1>';
             }
             var result = self.populateResultContent($resultTemplate.html(), item);
             resultsCount++;

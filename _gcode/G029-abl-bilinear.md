@@ -5,10 +5,11 @@ brief: Probe the bed and enable leveling compensation
 author: thinkyhead
 
 requires: AUTO_BED_LEVELING_BILINEAR
+
 group: calibration
 
-related: [ M420, M421 ]
 codes: [ G29 ]
+related: [ M420, M421 ]
 
 notes: |
   - Any arguments left out of `G29` will use the default values set in `Configuration.h`.

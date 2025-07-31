@@ -111,24 +111,24 @@
 {{ content }}
 
 {% if page.show.footer %}
-    <footer>
-      <div class="container {% if page.url == '/' or page.collection == 'tools' or page.collection == 'meta' %} noshift-footer {% else %} shift-footer {% endif %}">
-        <div class="row">
-          <div class="col-8">
-            <p class="text-center">Brought to you with <i class="fa fa-heart text-danger" aria-hidden="true"></i>, lack of
-              <i class="fa fa-bed" aria-hidden="true"></i>, and lots of
-              <i class="fa fa-coffee" aria-hidden="true"></i>. <br />
-              The contents of this website are &copy; {{ site.time | date: '%Y' }} under the terms of the <a href="//www.gnu.org/licenses/gpl-3.0.txt">GPLv3</a> License.</p>
-          </div>
-          <div class="col-4">
-            <div class="pull-right back-to-top">
-              <a href="#top" data-proofer-ignore>
-              Back to top <i class="fa fa-level-up" aria-hidden="true"></i></a>
-            </div>
+  <footer>
+    <div class="container {% if page.url == '/' or page.collection == 'tools' or page.collection == 'meta' %} noshift-footer {% else %} shift-footer {% endif %}">
+      <div class="row">
+        <div class="col-8">
+          <p class="text-center">Brought to you with <i class="fa fa-heart text-danger" aria-hidden="true"></i>, lack of
+            <i class="fa fa-bed" aria-hidden="true"></i>, and lots of
+            <i class="fa fa-coffee" aria-hidden="true"></i>. <br />
+            The contents of this website are &copy; {{ site.time | date: '%Y' }} under the terms of the <a href="//www.gnu.org/licenses/gpl-3.0.txt">GPLv3</a> License.</p>
+        </div>
+        <div class="col-4">
+          <div class="pull-right back-to-top">
+            <a href="#top" data-proofer-ignore>
+            Back to top <i class="fa fa-level-up" aria-hidden="true"></i></a>
           </div>
         </div>
       </div>
-    </footer>
+    </div>
+  </footer>
 {% endif %}
 
 {% if site.analytics.id %}

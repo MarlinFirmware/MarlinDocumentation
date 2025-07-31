@@ -241,31 +241,31 @@ settings:
   brief: FYSETC variant of the MINI12864 graphic controller with SD support.
          Type C/D/E/F. No tunable RGB Backlight by default.
   links:
-  - url: //wiki.fysetc.com/Mini12864_Panel/
+  - url: //wiki.fysetc.com/docs/Mini12864Panel
 
 - name: FYSETC_MINI_12864_1_2
   iface: spi
   brief: FYSETC variant of the MINI12864 graphic controller with SD support.
   links:
-  - url: //wiki.fysetc.com/Mini12864_Panel/
+  - url: //wiki.fysetc.com/docs/Mini12864Panel
 
 - name: FYSETC_MINI_12864_2_0
   iface: spi
   brief: FYSETC variant of the MINI12864 graphic controller with SD support.
   links:
-  - url: //wiki.fysetc.com/Mini12864_Panel/
+  - url: //wiki.fysetc.com/docs/Mini12864Panel
 
 - name: FYSETC_MINI_12864_2_1
   iface: spi
   brief: FYSETC variant of the MINI12864 graphic controller with SD support.
   links:
-  - url: //wiki.fysetc.com/Mini12864_Panel/
+  - url: //wiki.fysetc.com/docs/Mini12864Panel
 
 - name: FYSETC_GENERIC_12864_1_1
   iface: spi
   brief: FYSETC variant of the MINI12864 graphic controller with SD support.
   links:
-  - url: //wiki.fysetc.com/Mini12864_Panel/
+  - url: //wiki.fysetc.com/docs/Mini12864Panel
 
 - name: BTT_MINI_12864
   iface: spi
