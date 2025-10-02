@@ -431,7 +431,7 @@ function generatePattern(settings) {
     zeta_y_script += go_to(x, y + 5, z, settings.travel_speed);
   }
   zeta_y_script += '; retract\n'
-  zeta_y_script += extrude(settings.retraction, settings.retrac_speed)
+  zeta_y_script += extrude(-settings.retraction, settings.retrac_speed)
 
   return { 'freq':freq_script, 'zeta_x':zeta_x_script, 'zeta_y':zeta_y_script };
 

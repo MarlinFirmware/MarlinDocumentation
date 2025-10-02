@@ -209,16 +209,16 @@ var jekyllSearch = (() => {
         var resultsCount = 0, results = '', lastclass = '';
 
         odd = false;
-        $.each(data, (index, item) => {
+        $.each(data, (index, it) => {
           // check if search term is in content or title
           const comp = `${it.name} ${it.title} ${it.group} ${it.content} ${it.excerpt}`.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
           if (comp.match(qmatch)) {
-            if (item.class != lastclass) {
-              lastclass = item.class;
-              var fancy = section_head[item.class];
-              results += '<h1 class="' + item.class + '">' + (fancy ? fancy : item.class.toTitleCase()) + '</h1>';
+            if (it.class != lastclass) {
+              lastclass = it.class;
+              var fancy = section_head[it.class];
+              results += '<h1 class="' + it.class + '">' + (fancy ? fancy : it.class.toTitleCase()) + '</h1>';
             }
-            var result = self.populateResultContent($resultTemplate.html(), item);
+            var result = self.populateResultContent($resultTemplate.html(), it);
             resultsCount++;
             results += result;
           }
@@ -245,30 +245,30 @@ var jekyllSearch = (() => {
     /**
      * Add results content to item template
      * @param {String} html
-     * @param {object} item
+     * @param {object} it
      * @return {String} Populated HTML
      */
-    populateResultContent: (html, item) => {
-      html = self.injectContent(html, item.title, '##Title##');
-      html = self.injectContent(html, item.link, '##Url##');
-      html = self.injectContent(html, item.excerpt, '##Excerpt##');
+    populateResultContent: (html, it) => {
+      html = self.injectContent(html, it.title, '##Title##');
+      html = self.injectContent(html, it.link, '##Url##');
+      html = self.injectContent(html, it.excerpt, '##Excerpt##');
       var extra_tags = '';
-      if (item.exp !== undefined)
+      if (it.exp !== undefined)
         extra_tags += '<span class="label label-warning"><span data-toggle="tooltip" data-placement="bottom" title="Experimental feature"><i class="fa fa-flask" aria-hidden="true"></i></span></span>';
-      if (item.since !== undefined)
-        extra_tags += '<span class="label label-success"><span data-toggle="tooltip" data-placement="bottom" title="Available since"><i class="fa fa-code" aria-hidden="true"></i>' + item.since + '</span></span>';
-      if (item.group !== undefined)
-        extra_tags += '<span class="label label-default"><i class="fa fa-tags" aria-hidden="true"></i>' + item.group + '</span>';
-      if (item.requires !== undefined)
-        $.each(item.requires.split(","), (i,v) => {
+      if (it.since !== undefined)
+        extra_tags += '<span class="label label-success"><span data-toggle="tooltip" data-placement="bottom" title="Available since"><i class="fa fa-code" aria-hidden="true"></i>' + it.since + '</span></span>';
+      if (it.group !== undefined)
+        extra_tags += '<span class="label label-default"><i class="fa fa-tags" aria-hidden="true"></i>' + it.group + '</span>';
+      if (it.requires !== undefined)
+        $.each(it.requires.split(","), (i,v) => {
           extra_tags += '<span class="label label-requires">' + v + '</span>';
         });
       html = self.injectContent(html, extra_tags, '##CustomHTML##');
-      var c = item.class ? item.class : '';
+      var c = it.class ? it.class : '';
       html = self.injectContent(html, 'item ' + (odd ? 'odd ' : '') + c, '##DivClass##');
 
-      if (item.date)
-        html = self.injectContent(html, item.date, '##Date##');
+      if (it.date)
+        html = self.injectContent(html, it.date, '##Date##');
       else
         html = self.injectContent(html, '', '<h2 class="date"><a href="##Url##">##Date##</a></h2>');
 
