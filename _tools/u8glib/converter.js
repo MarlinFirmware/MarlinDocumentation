@@ -45,7 +45,8 @@ var bitmap_converter = () => {
     };
   })($.event.fix);
 
-  var preview_scale = 4,
+  var paste_message = 'Paste image or C/C++ here.',
+      preview_scale = 4,
       max_size = [ 128, 64 ],
       pix_on  = [   0,   0,   0, 255 ],
       pix_off = [ 255, 255, 255,   0 ],
@@ -90,6 +91,10 @@ var bitmap_converter = () => {
 
       error_message = (msg) => {
         $err.text(msg).show(); console.log(msg);
+      },
+
+      restore_pasted_cpp_field = () => {
+        $pasted.val(paste_message).css('color', '');
       },
 
       /**
@@ -513,6 +518,7 @@ var bitmap_converter = () => {
       process_pasted_cpp = (cpp) => {
 
         prepare_for_new_image();
+        restore_pasted_cpp_field();
 
         // Get the split up bytes on all lines
         var lens = [], mostlens = [];
@@ -689,6 +695,9 @@ var bitmap_converter = () => {
   // Enable standard form field events
   prepare_for_new_image();
 
+  // Set a friendly message for C++ data paste
+  restore_pasted_cpp_field();
+
   // If the output is clicked, select all
   $output
     .on('mousedown mouseup', () => { return false; })
@@ -701,7 +710,9 @@ var bitmap_converter = () => {
       $this
         .val('')
         .css('color', '#F80')
+        .one('blur', restore_pasted_cpp_field)
         .one('paste', (e) => {
+          $this.css('color', '#FFFFFF00');
           convert_clipboard_to_image(e);
           $this.trigger('blur');
           return false;

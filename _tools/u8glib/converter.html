@@ -10,16 +10,14 @@ category:     [ tools ]
   <div class="row">
     <div class="col-lg-12" id="bitmap-converter">
       <h1>Bitmap Converter</h1>
-      <p>Convert image files into Marlin Boot Screens and Status Screen Logos for Graphical Displays.<br/>
-        Conversely, you can enter C/C++ binary/hex code. (<code class="bg-gray-200 p-1 rounded">B11110000</code>, <code class="bg-gray-200 p-1 rounded">0xFF</code>)<br/>
-        Dark colors show up as "on" pixels. Light colors will be transparent.</p>
+      <p>Convert image files and data into Marlin Boot Screens and Status Screen Logos for Graphical Displays.</p>
+      <p>Dark colors show up as "on" pixels. Light colors will be transparent.</p>
+      <p>You can also paste C/C++ bitmap data in the field below, if that wasn't already obvious.</p>
       <div class="file-selector">
         <canvas id="preview-sm" width="32" height="32"></canvas>
         <canvas id="preview-lg" width="32" height="32"></canvas>
         <div id="err-box"></div>
-        <div style="margin-bottom: 10px;">
-          <textarea id="pasted" cols="30" rows="2" placeholder="Paste image, C/C++, or binary/hex here." autocomplete="off"></textarea>
-        </div>
+        <input type="text" id="pasted" size="30" autocomplete="off" />
         <input type="file" id="file-input" accept="image/*" />
         <div class="options">
           <label title="Marlin 1.x">&nbsp;<input type="radio" name="marlin-ver" value="1" />&nbsp;Marlin 1.x</label>
