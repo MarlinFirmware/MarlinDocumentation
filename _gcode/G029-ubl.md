@@ -303,13 +303,13 @@ examples:
 - pre: Use [`G26`](/docs/gcode/G026.html) and `G29` commands to fine-tune a measured mesh
   code: |
     G26 C P T3.0  ; Produce mesh validation pattern with primed nozzle. G26 is optional; any bed leveling stl would also work.
-        ; NOTE - PLA temperatures are assumed unless you specify - e.g. - B 105 H 225 for ABS Plastic
+                  ; NOTE - PLA temperatures are assumed unless you specify, e.g., "B 105 H 225" for ABS Plastic
     G29 P4 T      ; Move nozzle to 'bad' areas and fine tune the values if needed.
-        ; Repeat G26 and G29 P4 T  commands as needed.
+                  ; Repeat G26 and G29 P4 T  commands as needed.
     G29 S0        ; Save UBL mesh values to EEPROM.
     M500          ; Resave UBL's state information.
 
-- pre: Tilt a stored mesh; e.g. in your startup script
+- pre: Tilt a stored mesh; e.g., in your startup script
   code: |
     G29 L0        ; Load the mesh stored in slot 0 (from G29 S0)
     G29 J         ; Probe 3 points and tilt the mesh according to what it finds, optionally G29 J2 would do 4 points.

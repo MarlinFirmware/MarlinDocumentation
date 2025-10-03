@@ -131,7 +131,7 @@ var bitmap_converter = () => {
         reader.readAsDataURL(fileref);
       },
 
-    /**
+     /**
       * Bitwise RLE (run length) encoding
       * Convert data from raw mono bitmap to a bitwise run-length-encoded format.
       * - The first nybble is the starting bit state. Changing this nybble inverts the bitmap.

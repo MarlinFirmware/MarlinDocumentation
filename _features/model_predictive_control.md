@@ -221,7 +221,7 @@ And for any known $$T_s(t)$$ equation $$\eqref{approx}$$ can be solved to give
 $$ \alpha_s = \dfrac{\alpha_b . (T_s(t) - T_{asymp})}{T_s(t) - T_{asymp} - (T_a - T_{asymp}) . e^{-\alpha_b . t}} $$
 
 `M306 T` finds a $$t$$ and $$\Delta t$$ with known sensor values for $$T_s(t)$$, $$T_s(t + \Delta t)$$ and $$T_s(t + 2 \Delta t)$$. These are used with the equations above to calculate values for
-$$h_a$$ (i.e. `MPC_AMBIENT_XFER_COEFF`), $$C_b$$ (i.e. `MPC_BLOCK_HEAT_CAPACITY`) and $$\alpha_s$$ (i.e. `MPC_SENSOR_RESPONSIVENESS`).
+$$h_a$$ (i.e., `MPC_AMBIENT_XFER_COEFF`), $$C_b$$ (i.e., `MPC_BLOCK_HEAT_CAPACITY`) and $$\alpha_s$$ (i.e., `MPC_SENSOR_RESPONSIVENESS`).
 
 ### Automatic Differential Tuning
 
