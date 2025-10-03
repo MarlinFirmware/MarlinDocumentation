@@ -21,7 +21,7 @@ Endstops fulfill two important functions in a 3D printer: Reference system for t
 ## Reference for the axes system
 After powering up a 3D printer the printer's controller board does not know at which position its axes are. Marlin indicates this by blinking question-marks in place of X, Y and Z on the LCD screen (v1.1.8 and older) or blinking '?' in place of the coordinates besides X,Y and Z (Marlin v1.1.9 / v2.0.0 and newer).
 
-This means the system needs first to establish its starting point of the physical (machine) coordinate system, a process called *Homing*. Homing can be initiated either via the [G28 G-code](/docs/gcode/G028.html) or via the LCD controller.
+This means the system needs first to establish its starting point of the physical (machine) coordinate system, a process called *Homing*. Homing can be initiated either via the [G28 G-code](/docs/gcode/G028.html) or via the [LCD controller](/docs/hardware/controllers.html).
 
 ![real](/assets/images/docs/hardware/endstops/not_homed.jpg)
 {: style="text-align: center;"}
