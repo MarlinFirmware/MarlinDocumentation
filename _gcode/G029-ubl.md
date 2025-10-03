@@ -126,7 +126,7 @@ parameters:
 - tag: K
   optional: true
   requires: UBL_DEVEL_DEBUGGING
-  description: '**Kompare**: Subtract (diff) the stored mesh with this index from the current mesh. This destructively operates on the active mesh, and the result should not be used for printing. (Requires `UBL_DEVEL_DEBUGGING`)'
+  description: '**Kompare**: Subtract (diff) the stored mesh with this index from the current mesh. This destructively operates on the active mesh, and the result should not be used for printing.'
   values:
   - unit: index
     type: int
@@ -249,7 +249,7 @@ parameters:
 - tag: W
   optional: true
   requires: UBL_DEVEL_DEBUGGING
-  description: '**_What?_**: Display valuable UBL data. (Requires `UBL_DEVEL_DEBUGGING`)'
+  description: '**_What?_**: Display valuable UBL data.'
   values:
   - type: flag
 
