@@ -309,7 +309,7 @@ examples:
     G29 S0        ; Save UBL mesh values to EEPROM.
     M500          ; Resave UBL's state information.
 
-- pre:  Tilt a stored mesh; e.g. in your startup script
+- pre: Tilt a stored mesh; e.g. in your startup script
   code: |
     G29 L0        ; Load the mesh stored in slot 0 (from G29 S0)
     G29 J         ; Probe 3 points and tilt the mesh according to what it finds, optionally G29 J2 would do 4 points.
