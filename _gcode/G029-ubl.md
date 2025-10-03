@@ -7,6 +7,7 @@ brief: Probe the bed and enable leveling compensation.
 
 group: calibration
 requires: AUTO_BED_LEVELING_UBL
+eeprom: true
 
 codes: [ G29 ]
 related: [ M420, M421 ]

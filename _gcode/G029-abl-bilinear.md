@@ -4,9 +4,9 @@ title: Bed Leveling (Bilinear)
 brief: Probe the bed and enable leveling compensation.
 author: thinkyhead
 
-requires: AUTO_BED_LEVELING_BILINEAR
-
 group: calibration
+requires: AUTO_BED_LEVELING_BILINEAR
+eeprom: true
 
 codes: [ G29 ]
 related: [ M420, M421 ]

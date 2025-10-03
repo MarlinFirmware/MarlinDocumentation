@@ -6,6 +6,7 @@ author: thinkyhead
 
 group: calibration
 requires: MESH_BED_LEVELING
+eeprom: true
 
 codes: [ G29 ]
 related: [ M420, M421 ]
