@@ -59,7 +59,7 @@ parameters:
   optional: true
   description: Stow probe after probing each point.
   values:
-    - type: bool
+  - type: bool
 
 - tag: R
   optional: true
