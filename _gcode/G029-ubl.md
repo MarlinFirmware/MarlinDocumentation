@@ -21,7 +21,7 @@ notes: |
 
   - UBL does not replace 3-Point or Planar leveling. These use a 3D matrix to tilt the whole model. UBL's 3-point and Planar operations only apply to the mesh, not to the whole model.
 
-  - It is highly recommended to enable EEPROM. Without EEPROM storage enabled, UBL is limited to 3-Point or Grid Leveling (`G29 P0 T` or `G29 P0 G`) and can't save meshes for later use.
+  - It is highly recommended to enable [EEPROM](/docs/features/eeprom.html). Without EEPROM storage enabled, UBL is limited to 3-Point or Grid Leveling (`G29 P0 T` or `G29 P0 G`) and can't save meshes for later use.
 
   - For the initial [`G28`](/docs/gcode/G028.html) and `G29 P1` that automatically populates the mesh, UBL probes the mesh points in a growing spiral starting from the center of the bed. This pattern is better for Deltabots, allowing the center of the Mesh to be populated (and edited) more quickly so you can do test printing early in the process.
 
