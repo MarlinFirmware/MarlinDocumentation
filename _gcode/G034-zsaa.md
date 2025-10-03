@@ -6,7 +6,7 @@ author: shitcreek
 contrib: classicrocker883
 
 group: calibration
-requires: Z_MULTI_ENDSTOPS, Z_STEPPER_AUTO_ALIGN
+requires: Z_MULTI_ENDSTOPS | Z_STEPPER_AUTO_ALIGN
 
 codes: [ G34 ]
 related: [ G28, M422, M906, M907 ]
