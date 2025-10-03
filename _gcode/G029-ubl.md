@@ -7,6 +7,7 @@ brief: Probe the bed and enable leveling compensation.
 
 group: calibration
 requires: AUTO_BED_LEVELING_UBL
+eeprom: true
 
 codes: [ G29 ]
 related: [ M420, M421 ]
@@ -126,7 +127,7 @@ parameters:
 - tag: K
   optional: true
   requires: UBL_DEVEL_DEBUGGING
-  description: '**Kompare**: Subtract (diff) the stored mesh with this index from the current mesh. This destructively operates on the active mesh, and the result should not be used for printing. (Requires `UBL_DEVEL_DEBUGGING`)'
+  description: '**Kompare**: Subtract (diff) the stored mesh with this index from the current mesh. This destructively operates on the active mesh, and the result should not be used for printing.'
   values:
   - unit: index
     type: int
@@ -163,7 +164,7 @@ parameters:
       - The `H` value can be negative if the mesh dips in a large area. Press and hold the controller button to terminate the current Phase 2 command. You can then re-issue `G29 P 2` with an `H` parameter more suitable for the area you're manually probing. Note that the command tries to start in a corner of the bed where movement will be predictable. Override the distance calculation location with the `X` and `Y` parameters. You can print a mesh Map (`G29 T`) to see where the mesh is invalidated and where the nozzle needs to move to complete the command. Use `C` to indicate that the search should be based on the current position.
       - The `B` parameter for this command is described above. It places the manual probe subsystem into Business Card mode where the thickness of a business card is measured and then used to accurately set the nozzle height in all manual probing for the duration of the command. A Business card can be used, but you'll get better results with a flexible Shim that doesn't compress. This makes it easier to produce similar amounts of force and get more accurate measurements. Google if you're not sure how to use a shim.
       - The `T` (Map) parameter helps track mesh building progress.
-      - NOTE: `P2` requires an LCD controller!
+      - NOTE: `P2` requires an LCD controller
   - tag: 3
     description: |
       **Fill Unpopulated** regions of the mesh with a fixed value (`C`) or use 'smart fill' to extrapolate from already probed points (`no argument`).
@@ -219,15 +220,14 @@ parameters:
 - tag: T
   optional: true
   description: |
-    **Topology**: Include a Topology Map in the output.
+    **Topology**: Include a Topology Map in the output in one of two styles.
     - This parameter can be used alone (`G29 T`) or in combination with most of the other commands.
     - This option works with all Phase commands (_e.g.,_ `G29 P4 R 5 T X 50 Y100 C-0.1 O`)
-    - A map type can also be specified:
-      - `T0`: Human-readable (the default)
-      - `T1`: Delimited. Suitable to paste into a spreadsheet to obtain a 3D graph of the mesh.
   values:
   - tag: 0
+    description: Human-readable (the default)
   - tag: 1
+    description: Delimited. Suitable to paste into a spreadsheet to obtain a 3D graph of the mesh.
 
 - tag: U
   optional: true
@@ -250,7 +250,7 @@ parameters:
 - tag: W
   optional: true
   requires: UBL_DEVEL_DEBUGGING
-  description: '**_What?_**: Display valuable UBL data. (Requires `UBL_DEVEL_DEBUGGING`)'
+  description: '**_What?_**: Display valuable UBL data.'
   values:
   - type: flag
 
@@ -303,13 +303,13 @@ examples:
 - pre: Use [`G26`](/docs/gcode/G026.html) and `G29` commands to fine-tune a measured mesh
   code: |
     G26 C P T3.0  ; Produce mesh validation pattern with primed nozzle. G26 is optional; any bed leveling stl would also work.
-        ; NOTE - PLA temperatures are assumed unless you specify - e.g. - B 105 H 225 for ABS Plastic
+                  ; NOTE - PLA temperatures are assumed unless you specify, e.g., "B 105 H 225" for ABS Plastic
     G29 P4 T      ; Move nozzle to 'bad' areas and fine tune the values if needed.
-        ; Repeat G26 and G29 P4 T  commands as needed.
+                  ; Repeat G26 and G29 P4 T  commands as needed.
     G29 S0        ; Save UBL mesh values to EEPROM.
     M500          ; Resave UBL's state information.
 
-- pre:  Tilt a stored mesh; e.g. in your startup script
+- pre: Tilt a stored mesh; e.g., in your startup script
   code: |
     G29 L0        ; Load the mesh stored in slot 0 (from G29 S0)
     G29 J         ; Probe 3 points and tilt the mesh according to what it finds, optionally G29 J2 would do 4 points.

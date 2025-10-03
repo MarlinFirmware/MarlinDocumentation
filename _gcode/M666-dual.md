@@ -1,11 +1,12 @@
 ---
 tag: m0666b
-title: Set dual endstop offsets
-brief: Set dual endstop offsets
+title: Dual endstop offsets
+brief: Set/report dual endstop offsets
 author: ManuelMcLure
 
 group: calibration
 requires: (X|Y|Z)_DUAL_ENDSTOPS
+eeprom: true
 
 codes: [ M666 ]
 

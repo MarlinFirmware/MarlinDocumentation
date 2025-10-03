@@ -725,7 +725,7 @@ The LASER features (see section "Spindle / Laser") can be used to control the he
 //#define ARTICULATED_ROBOT_ARM
 ```
 Enable for articulated robots or for machines with `I_DRIVER_TYPE` defined, if feed rate interpretation should be
-compatibile with firmwares (e.g. grblHAL/grblHAL, Duet-3D/RepRapFirmware, synthetos/g2) that behave different
+compatibile with firmwares (e.g., grblHAL/grblHAL, Duet-3D/RepRapFirmware, synthetos/g2) that behave different
 from LinuxCNC. When enabled, feedrate `F` is defined as follows: Let `dX`, `dY`, ... be displacements along the
 X, Y, ... axes. Let `T` be the time required for the move at the specified nominal feedrate.
 Then `F = sqrt(dX^2 + dY^2 + dZ^2 + dA^2 + dB^2 + dC^2 + dU^2 + dV^2 + dW^2) / T`.
@@ -3167,7 +3167,7 @@ Show the total filament used amount during printing.
   //#define PRINT_PROGRESS_SHOW_DECIMALS // Show progress with decimal digits
   //#define SHOW_REMAINING_TIME          // Display estimated time to completion
   #if ENABLED(SHOW_REMAINING_TIME)
-    //#define USE_M73_REMAINING_TIME     // Use remaining time from M73 command instead of estimation
+    //#define SET_REMAINING_TIME         // Use remaining time from M73 command instead of estimation
     //#define ROTATE_PROGRESS_DISPLAY    // Display (P)rogress, (E)lapsed, and (R)emaining time
   #endif
 #endif
@@ -4108,7 +4108,7 @@ Add the [`M240`](/docs/gcode/M240.html) to take a photo. The photo can be trigge
      * 'M4 I' sets dynamic mode which uses the current feedrate to calculate a laser power OCR value.
      *
      * Any move in dynamic mode will use the current feed rate to calculate the laser power.
-     * Feed rates are set by the F parameter of a move command e.g. G1 X0 Y10 F6000
+     * Feed rates are set by the F parameter of a move command e.g., G1 X0 Y10 F6000
      * Laser power would be calculated by bit shifting off 8 LSB's. In binary this is div 256.
      * The calculation gives us ocr values from 0 to 255, values over F65535 will be set as 255 .
      * More refined power control such as compesation for accell/decell will be addressed in future releases.

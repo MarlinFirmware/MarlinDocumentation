@@ -6,6 +6,7 @@ author: thinkyhead
 
 group: calibration
 requires: AUTO_BED_LEVELING_3POINT
+eeprom: true
 
 codes: [ G29 ]
 related: [ M420 ]

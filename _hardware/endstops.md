@@ -54,7 +54,7 @@ Regardless of the type the basic way of working is the same:
  - A 0 Volt signal (LOW) rises to 5 Volts (HIGH): Normally open (NO) switch
 
 {% panel info Note %}
-Since endstops are a safety feature NC switches are recommended as they will halt the machine should the switch be damaged, e.g. by a broken cable etc.
+Since endstops are a safety feature NC switches are recommended as they will halt the machine should the switch be damaged, e.g., by a broken cable etc.
 {% endpanel %}
 
 ### Probe as Z-Endstop
@@ -236,7 +236,7 @@ Figure 8: RAMPS v1.4 vs v1.4.2
 {: style="color:gray; font-size: 80%; text-align: center;"}
 
 #### Endstop PCB
-For 3D printing ready made filtered endstops are available, e.g. according to the Makerbot design:
+For 3D printing ready made filtered endstops are available, e.g., according to the Makerbot design:
 
 ![ramps](/assets/images/docs/hardware/endstops/makerbot_endstop.png)
 {: style="text-align: center;"}
