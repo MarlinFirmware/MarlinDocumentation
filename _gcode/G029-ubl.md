@@ -219,15 +219,14 @@ parameters:
 - tag: T
   optional: true
   description: |
-    **Topology**: Include a Topology Map in the output.
+    **Topology**: Include a Topology Map in the output in one of two styles.
     - This parameter can be used alone (`G29 T`) or in combination with most of the other commands.
     - This option works with all Phase commands (_e.g.,_ `G29 P4 R 5 T X 50 Y100 C-0.1 O`)
-    - A map type can also be specified:
-      - `T0`: Human-readable (the default)
-      - `T1`: Delimited. Suitable to paste into a spreadsheet to obtain a 3D graph of the mesh.
   values:
   - tag: 0
+    description: Human-readable (the default)
   - tag: 1
+    description: Delimited. Suitable to paste into a spreadsheet to obtain a 3D graph of the mesh.
 
 - tag: U
   optional: true
