@@ -5,12 +5,30 @@ brief: Align multiple Z steppers using a bed probe
 author: shitcreek
 
 group: calibration
-requires: Z_STEPPER_AUTO_ALIGN
+requires: Z_MULTI_ENDSTOPS, Z_STEPPER_AUTO_ALIGN
 
 codes: [ G34 ]
 related: [ G28, M422, M906, M907 ]
 
 parameters:
+
+- tag: L
+  optional: true
+  description: Unlock all Z stepper motors.
+
+- tag: Z
+  optional: true
+  description: Target specific Z stepper to lock/unlock (1-4).
+  values:
+  - type: int
+    min: 1
+    max: 4
+
+- tag: S
+  optional: true
+  description: Lock state; 0=UNLOCKED 1=LOCKED. If omitted, assume LOCKED.
+  values:
+  - type: bool
 
 - tag: I
   optional: true
@@ -42,12 +60,22 @@ parameters:
   values:
     - type: bool
 
+- tag: R
+  optional: true
+  description: Recalculate points based on current probe offsets.
+
 videos:
 - 6UgT9YqY3UA
 
-example:
+examples:
 - pre: 'Align Z steppers:'
   code: G34
+
+- pre: 'Lock/Unlock Z steppers:'
+  code: |
+    G34 Z1 ; Lock Z1
+    G34 L Z2 ; Unlock all, then lock Z2
+    G34 Z2 S0 ; Unlock Z2
 
 ---
 
