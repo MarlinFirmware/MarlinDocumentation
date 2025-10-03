@@ -15,18 +15,32 @@ parameters:
 - tag: I
   optional: true
   description: Iterations - must be between 1 - 30
+  values:
+  - type: linear
+    min: 1
+    max: 30
 
 - tag: T
   optional: true
   description: Target accuracy - must be between 0.01 - 1.0
+  values:
+  - type: float
+    min: 0.01
+    max: 1.0
 
 - tag: A
   optional: true
   description: Amplification - must be between 0.5 - 2.0
+  values:
+  - type: float
+    min: 0.5
+    max: 2.0
 
 - tag: E
   optional: true
   description: Stow probe after probing each point.
+  values:
+    - type: bool
 
 videos:
 - 6UgT9YqY3UA
