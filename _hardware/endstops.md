@@ -16,7 +16,6 @@ Endstops or limit switches are used on every moving axes of a 3D printer. The fo
 
 # Endstops purpose
 Endstops fulfill two important functions in a 3D printer: Reference system for the axes system and safety.
-<br>
 
 ## Reference for the axes system
 After powering up a 3D printer the printer's controller board does not know at which position its axes are. Marlin indicates this by blinking question-marks in place of X, Y and Z on the LCD screen (v1.1.8 and older) or blinking '?' in place of the coordinates besides X,Y and Z (Marlin v1.1.9 / v2.0.0 and newer).
@@ -32,12 +31,8 @@ Figure 1: LCD indication not homed axes (Marlin <= v1.1.8)
 ## Safety
 The other important aspect of an endstop is protecting the hardware from damage. Should any movement try to exceed the physical limits of the machine, the endstop will cut the movement.
 
-<br>
-
 # Types of endstops
 There are two main types of endstops. Hardware endstops and software endstops.
-
-<br>
 
 ## Hardware endstops
 Hardware endstops are electrically connected to the endstop ports of the printer control board and will provide a signal when the endstop condition is met.
@@ -73,9 +68,7 @@ Typically 3D printers are only equipped with hardware endstops on one side of ea
 
 In order to also protect the other side of the axes software endstops should be defined in the firmware via the `#define MAX_SOFTWARE_ENDSTOPS` /  `#define MIN_SOFTWARE_ENDSTOPS` directive. This then uses the value from `#define [XYZ]_MAX_POS` / `#define [XYZ]_MIN_POS` to determine the maximum distance between the physical endstop and the software commanded stop of the axis. Software endstops can be (de-)activated via the [M211 G-code](/docs/gcode/M211.html).
 
- <br>
-
-# Configuring endstops and probes.
+# Configuring Endstops & Probes
 ## Background
 
 By default, slicers generate G-code that places the base of a printed model at z=0 and build upwards from there. The result of homing the z-axis should thus place the build surface at the z=0 plane. After homing in z, the hardware z endstop is deactivated (unless you have set `ENDSTOPS_ALWAYS_ON_DEFAULT` in Configuration_adv.h, which can be overridden by [M120](/docs/gcode/M120.html), [M121](/docs/gcode/M121.html)), but to protect the hardware a software endstop is activated (which in turn can be overridden by [M211](/docs/gcode/M211.html) S0). This software endstop is located at `Z_MIN_POS` (defined in Configuration.h) . This is normally at z=0 at the nominal location of the bed. Note that when using bed-leveling, this software endstop is applied to the *uncorrected*  slicer generated z-values. This allows printing into the hollows of the bed, where z < 0.
@@ -115,8 +108,6 @@ To measure an offset between a trigger point and the bed,  lower the nozzle to t
 
 Electromagnetic Interference (EMI) or electric noise, is an effect which can ruin the clean signal needed to properly and precisely measure electronically, be it temperature, endstop hits or any other value.
 
-<br>
-
 ## Sources and effect of EMI
 In today's life an abundance of sources for Electric Noise exists: Mobile phones, microwaves, WIFI, power supplies etc. There are also some prominent and strong sources of such noise in the 3D printer itself:
 
@@ -127,12 +118,8 @@ In today's life an abundance of sources for Electric Noise exists: Mobile phones
 
 The Electromagnetic Interference created by these sources are picked up by other components, either because they are directly connected or via radiation. The useful signal needed by the other components will be disturbed or even altered so much that it is no longer useful.
 
-<br>
-
 ## Effect on endstops / limit switches
 In the following *HIGH = Logic 1 = 5 Volt* will be used for a pressed switch and *LOW = Logic 0 = 0 Volt* for a not triggered switch.
-
-<br>
 
 ### Ideal endstop characteristic
 
@@ -143,8 +130,6 @@ Figure 4: Ideal Endstop
 {: style="color:gray; font-size: 80%; text-align: center;"}
 
 The above Figure 4 shows an ideal endstop characteristic: Once pressed it jumps from LOW to HIGH and the printer control board realizes this in virtually no time.
-
-<br>
 
 ### Real endstop characteristic with low noise
 
@@ -159,8 +144,6 @@ Figure 5 shows:
  - There is no clean LOW or HIGH. Both states are somewhat unclean.
  - Around the trigger point (marked in orange) a "bouncing" effect is shown: Due to mechanical influences the switch bounces between LOW and HIGH a few times before settling at HIGH.
  - Bouncing is unwanted but in case of endstops not a show stopper
-
-<br>
 
 ### Real endstop characteristic with peak noise
 
