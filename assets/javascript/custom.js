@@ -2,6 +2,21 @@
 // Marlin custom Javascript
 //
 
+// Set classes based on user agent
+// Source: www.printables.com
+/*
+if (/(Mac|iPhone|iPod|iPad)/i.test(navigator?.userAgentData?.platform || navigator?.platform || '')) {
+  document.body.classList.add('osx');
+}
+
+window.isMobile = typeof window !== 'undefined' && 'matchMedia' in window && window.matchMedia('(pointer: coarse)').matches;
+if (window.isMobile) {
+  document.body.classList.add('mobile');
+  document.documentElement.style.setProperty('--mobile100vh', `${window.innerHeight}px`);
+  document.body.classList.add('zoom-' + Math.round((window.outerWidth / window.innerWidth) * 100));
+}
+*/
+
 // Cookie Helpers
 
 function setCookie(cname, cvalue, exdays) {
@@ -9,6 +24,10 @@ function setCookie(cname, cvalue, exdays) {
   d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
   var expires = "expires=" + d.toUTCString();
   document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+function deleteCookie(cname) {
+  document.cookie = cname + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 }
 
 function getCookie(cname) {
@@ -23,15 +42,25 @@ function getCookie(cname) {
   return '';
 }
 
-// Set Lighting according to cookie or time
+//
+// Dark / Light Theme
+//
 
+// Discord widget URL (for dark/light theming)
+var discord_widget_url = 'https://discord.com/widget?id=461605380783472640';
+
+// Set the dark mode and update the dark/light toggle button
 function setDarkMode(dark) {
-  //console.log((dark ? "Set" :  "Clear") + " dark mode.");
-  var $t = $('html'), q = '/assets/images/';
+  const $t = $('html'), q = '/assets/images/';
   dark ? $t.attr('data-theme', 'dark') : $t.removeAttr('data-theme');
-  $('#daynite')
+  $('#daynite img')
     .attr('src', q + 'btn-' + (dark ? 'day' : 'night') + '.svg')
     .css('visibility', 'visible');
+  $('#discord-frame').attr('src', `${discord_widget_url}&theme=` + (dark ? 'dark' : 'light'));
+  $('#starchart img').attr('src', 'https://api.star-history.com/svg?repos=MarlinFirmware/Marlin&type=Date' + (dark ? '&theme=dark' : ''));
+
+  const color = getComputedStyle(document.documentElement).getPropertyValue('--color-browser-bg').trim();
+  $('#theme-color, #tile-color').attr('content', color);
 }
 
 function toggleDarkMode() {
@@ -40,54 +69,78 @@ function toggleDarkMode() {
   return dark;
 }
 
-var nightMode = getCookie('nightMode');
+function userToggleDarkMode() {
+  setCookie('nightMode', toggleDarkMode());
+}
+
+// For testing, delete the cookie
+//deleteCookie('nightMode');
+
+// Set dark / light theme as soon as possible
+var nightMode = getCookie('nightMode');        // A cookie?
 if (nightMode === '') {
+  const hasMatchMedia = () => window && window.matchMedia,
+        prefersDarkColorScheme = () => hasMatchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches,
+        prefersLightColorScheme = () => hasMatchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
   var d = new Date(), h = d.getHours();
-  nightMode = (h >= 19 || h < 6);
+  nightMode = prefersDarkColorScheme || (!prefersLightColorScheme && (h >= 19 || h < 6));
 }
 else
   nightMode = (nightMode === 'true');
 
 setDarkMode(nightMode);
 
-
-// Scroll Position Detection
-
-var $animation_elements = $('.animation-element');
-var $window = $(window);
-
-function check_if_in_view() {
-  var win_height = $window.height();
-  var win_top = $window.scrollTop();
-  var win_bottom = (win_top + win_height);
-
-  $.each($animation_elements, function() {
-    var $e = $(this);
-    var height = $e.outerHeight();
-    var top = ($e.offset().top);
-    var bottom = (top + height);
-
-    // Check whether this current container is within viewport
-    if (bottom >= win_top && top <= win_bottom - 100)
-      $e.addClass('in-view');
-  });
-}
-check_if_in_view();
-$window.on('scroll', check_if_in_view);
-
+//
+// After page loading
+//
 $(function() {
+  //
+  // Front Page Animations start when first exposed in the viewport
+  //
+
+  var $window = $(window);
+
+  function start_exposed_anims() {
+    var win_height = $window.height();
+    var win_top = $window.scrollTop();
+    var win_bottom = (win_top + win_height);
+
+    $.each($('.animation-element'), function() {
+      var $e = $(this);
+      var height = $e.outerHeight();
+      var top = ($e.offset().top);
+      var bottom = (top + height);
+
+      // Check whether this current container is within viewport
+      if (bottom >= win_top && top <= win_bottom - 100)
+        $e.addClass('in-view');
+    });
+  }
+
+  start_exposed_anims();
+  $window.on('scroll', start_exposed_anims);
+
+  discord_widget_url = $('#discord-frame').attr('src');
 
   /**
    * Dynamically build the table of contents
    */
-  $toc = $("#toc");
-  if ($toc !== undefined) $toc.tocify({
-    selectors: (typeof toc_selectors != 'undefined') ? toc_selectors : 'h1,h2,h3,h4',
-    scrollTo: 60,
+  const top_clearance = $("nav.navbar-fixed-top").height() + 10;
+
+  const $toc = $("#toc");
+  if ($toc.length) $toc.tocify({
+    selectors: (typeof toc_selectors !== 'undefined') ? toc_selectors : 'h1,h2,h3,h4',
+    scrollTo: top_clearance,
     smoothScroll: false,
     extendPage: false,
     hashGenerator: 'pretty'
   });
+
+  /**
+   * If the location has a hash, scroll up to reveal it.
+   */
+  if (window.location.hash)
+    setTimeout(() => { window.scrollBy(0, -top_clearance); }, 100);
 
   /**
    * All external links open in a new tab
@@ -142,7 +195,7 @@ $(function() {
 
   function shiftSubMenu() {
     var w = $(window).width();
-    if (w >= minWindowWidth && w <= maxWindowWidth ) {
+    if (w >= minWindowWidth && w <= maxWindowWidth) {
       $('.dropdown-menu').addClass('pull-right');
       $('.dropdown-submenu .dropdown-menu').addClass('flip-left');
     }
@@ -157,10 +210,57 @@ $(function() {
 
   $(window).resize(shiftSubMenu, resizeImage);
 
-  $('#daynite').click(function(){
-    const dark = toggleDarkMode();
-    setCookie('nightMode', dark);
+  // Toggle dark / light theme on click
+  $('#daynite img').click(userToggleDarkMode);
+
+  // Watch for a certain keypress to toggle dark mode
+  $(document).keypress(function(e) {
+    const c = String.fromCharCode(e.which).toLowerCase();
+    if (c == 'd' || c == 'n') // 'd' or 'n' key
+      userToggleDarkMode();
   });
+
+  // If the element #tagline exists on the page...
+  const $el = $('#tagline');
+  if ($el.length) {
+    var taglines = [
+      "World Leader in 3D Printing",
+      "Multi-Axis Robot Driver",
+      "Free 3D Printer Firmware",
+      "Own Your Own Technology",
+      "Open Source RepRap Driver",
+      "Printing things since 2011",
+      "The code that makes the things",
+      "The ghost in the machine",
+      "Not just for 3D printers",
+      "Print a toy, a home, or a meal",
+      "Home-brewed, community-focused",
+      "Responsive, Reliable, Accurate",
+      "Speed, accuracy, and finesse",
+      "Deterministic plastic mover",
+      "Heating, moving, making, grooving",
+      "Fabricating Fused Filament",
+      "Fused Deposition Engine",
+      "Build It Your Way",
+      "Heating, moving, making, grooving",
+      "Stepper Motor Repurposer",
+    ];
+
+    // Create a random sequence from the number of taglines
+    var sequence = [];
+    for (var i = 0; i < taglines.length; i++) sequence.push(i);
+    sequence.sort(function() { return .5 - Math.random(); });
+
+    var tindex = 0;
+    function next_tagline() {
+      $el.text(taglines[sequence[tindex]]);
+      if (++tindex >= taglines.length) tindex = 0;
+    }
+    next_tagline();
+
+    // Set a repeating timer to change the tagline every minute
+    setInterval(next_tagline, 20000);
+  }
 
   // Scroll to the active nav item in a long nav sidebar, such as docs/gcode/*.html
   const $here_ul = $('.container.detail ul.nav.nav-list');

@@ -4,11 +4,12 @@ title: Bed Leveling (Bilinear)
 brief: Probe the bed and enable leveling compensation.
 author: thinkyhead
 
-requires: AUTO_BED_LEVELING_BILINEAR
 group: calibration
+requires: AUTO_BED_LEVELING_BILINEAR
+eeprom: true
 
-related: [ M420, M421 ]
 codes: [ G29 ]
+related: [ M420, M421 ]
 
 notes: |
   - Any arguments left out of `G29` will use the default values set in `Configuration.h`.
@@ -16,6 +17,7 @@ notes: |
       - With `ENABLE_LEVELING_AFTER_G28` leveling will always be enabled after `G28`.
       - With `RESTORE_LEVELING_AFTER_G28` leveling is restored to whatever state it was in before `G28`.
   - To save time and machine wear, save your mesh to EEPROM with [`M500`](/docs/gcode/M500.html) and in your slicer's "Starting G-code" replace `G29` with `M420 S1` to enable your last-saved mesh.
+  - For multi-axis machines (`I_DRIVER_TYPE` defined) without implementation of inverse kinematics, bed leveling produces wrong results while the toolhead is not oriented vertical and perpendicular to the bed and must be turned off with `M420 S0`
 
 parameters:
 

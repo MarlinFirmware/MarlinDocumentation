@@ -14,7 +14,7 @@ layout: default
         {%- if list.size > 0 -%}
           <div class="tocify bigtoc">
             <ul class="tocify-header nav nav-list">
-              {%- assign list = list | sort: 'tag' %}<!-- use a sorting tag -->
+              {%- assign list = list | sort: 'label' %}<!-- use a sorting tag -->
               {%- for conf in list %}
                 {% assign active = false %}
                 {% if page.codes[0] == conf.codes[0] and page.title == conf.title %}{% assign active = true %}{% endif %}
@@ -22,19 +22,35 @@ layout: default
                 {%- if active -%}
                   <!-- div id="toc-prefab"></div -->
                   <ul class="tocify-subheader nav nav-list">
-                    {% for opt in conf.settings %}
+                    {% for opt in conf.settings -%}
                       <li class="tocify-item"><a href="#{{ opt.name }}">{{ opt.name }}</a>
                         {%- if opt.subopts -%}
                           <ul class="tocify-subheader nav nav-list">
-                            {% for sub in opt.subopts %}
-                              <li class="tocify-item"><a href="#{{ sub.name }}">{{ sub.name }}</a></li>
-                            {%- endfor %}
+                            {%- for sub1 in opt.subopts -%}
+                              <li class="tocify-item"><a href="#{{ opt.name }}-{{ sub1.name }}">{{ sub1.name }}</a>
+                                {%- if sub1.subopts -%}
+                                  <ul class="tocify-subheader nav nav-list">
+                                    {% for sub2 in sub1.subopts -%}
+                                      <li class="tocify-item"><a href="#{{ opt.name }}-{{ sub1.name }}-{{ sub2.name }}">{{ sub2.name }}</a>
+                                        {%- if sub2.subopts -%}
+                                          <ul class="tocify-subheader nav nav-list">
+                                            {%- for sub3 in sub2.subopts -%}
+                                              <li class="tocify-item"><a href="#{{ opt.name }}-{{ sub1.name }}-{{ sub2.name }}-{{ sub3.name }}">{{ sub3.name }}</a></li>
+                                            {%- endfor =%}
+                                          </ul>
+                                        {%- endif -%}
+                                      </li>
+                                    {%- endfor -%}
+                                  </ul>
+                                {%- endif -%}
+                              </li>
+                            {%- endfor -%}
                           </ul>
-                        {%- endif %}
+                        {%- endif -%}
                       </li>
-                    {%- endfor %}
+                    {%- endfor -%}
                   </ul>
-                {% endif %}
+                {%- endif -%}
               {%- endfor -%}
             </ul>
           </div>

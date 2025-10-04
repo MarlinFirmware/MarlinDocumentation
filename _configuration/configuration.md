@@ -7,18 +7,22 @@ contrib: paulusjacobus, jbrazio, landodragon141, thinkyhead, shitcreek, LMF5000,
 category: [ configuration ]
 ---
 
-Marlin is a huge C++ program composed of many files, but among the most important are the files that contain all of Marlin's compile-time configuration options:
+Marlin has many features and options. They are defined and documented in two very large files:
 
 - `Configuration.h` contains the core settings for the hardware, language and controller selection, and settings for the most common features and components.
 - `Configuration_adv.h` contains more detailed customization options, add-ons, experimental features, and other esoteric settings.
-- `config.ini` may be included to modify the configuration at the start of a PlatformIO build. See the [Configuration with INI](config-ini.html) page for more information.
 
-The two `.h` files contain all of Marlin's build-time configuration options. Simply edit or replace these files, then build and upload Marlin to the board. Hundreds of user-donated configurations are posted at the [Configurations repository](//github.com/MarlinFirmware/Configurations) to get you started.
+Build-time configuration options describe aspects of the machine that will never change, such as the total build area. Other settings define defaults that can be changed while the printer is running, such as the preheat temperatures.
+
+Marlin also provides minimal and intelligent configuration methods that may be more suitable for your needs. Give these a try and let us know what you think!
+
+- `Config.h` (2.1.3 and up) should contain just your pertinent settings. This replaces `Configuration.h` and `Configuration_adv.h`, which will be ignored.
+- `config.ini` (2.1.0 and up) modifies the configuration files at the start of a PlatformIO build and has some other useful powers. See the [Configuration with INI](config-ini.html) page to see if it's right for you.
 
 ## Compiler Directives
-Marlin is configured using C++ compiler directives. This allows Marlin to leverage the C++ preprocessor and include only the code and data needed for the enabled options. This results in the smallest possible binary. A build of Marlin can range from 50K to over 230K in size.
+Marlin is configured using C `#define` statements so the firmeware can be as small, fast, and efficient as possible, but if you want all the bells and whistles and your board has the power, you can go for it.
 
-Settings can be enabled, disabled, and assigned values using C preprocessor syntax like so:
+Settings are enabled, disabled, and assigned values using C preprocessor syntax like so:
 
 ```cpp
 #define THIS_IS_ENABLED    // this switch is enabled
@@ -34,20 +38,19 @@ To migrate your settings to a new Configuration you can use tools like Notepad++
 ## Sources of Documentation
 The most authoritative source on configuration details will always be **the configuration files themselves**. They provide pretty complete descriptions of each option, and are themselves the source for most of the information presented here.
 
-If you've never configured and calibrated a 3D Printer before, here are some good resources:
+It's hard to know as a beginner which settings are important and which can be safely ignored.
 
-- [Calibration](//reprap.org/wiki/Calibration)
-- [Calibrating Steps-per-unit (video)](//youtu.be/wAL9d7FgInk)
-- [Průša's calculators](//blog.prusaprinters.org/calculator_3416/)
+Here are some useful resources to get you started configuring and calibrating your 3D Printer:
+
+- [Marlin Example Configurations](//github.com/MarlinFirmware/Configurations)
+- ["Marlin Firmware Help" YouTube Playlist](//www.youtube.com/playlist?list=PL8O17J4ws-VNc7cM7l_bPRjK0Kbi0CEOd)
+- [Marlin Daily Builds](//marlin.crc.id.au)
 - [Triffid Hunter's Calibration Guide](//reprap.org/wiki/Triffid_Hunter%27s_Calibration_Guide)
-- [The Essential Calibration Set](//www.thingiverse.com/thing:5573)
-- [Calibration of your RepRap](//sites.google.com/site/repraplogphase/calibration-of-your-reprap)
-- [XY 20mm Calibration Box](//www.thingiverse.com/thing:298812)
-- [G-code reference](//reprap.org/wiki/G-code)
-- [Marlin3DprinterTool](//github.com/cabbagecreek/Marlin3DprinterTool)
+- [Calibrating Steps-per-unit (video)](//youtu.be/wAL9d7FgInk)
+- [Calibration of your RepRap](//web.archive.org/web/20220907014303/sites.google.com/site/repraplogphase/calibration-of-your-reprap)
 
 ## Before You Begin
-To get your core `Configuration.h` settings right you'll need to know the following things about your printer:
+For the main settings you'll need to know a few things about your machine:
 
 - Printer style, such as Cartesian, Delta, CoreXY, or SCARA
 - Driver board, such as RAMPS, RUMBA, Teensy, etc.
@@ -60,7 +63,7 @@ To get your core `Configuration.h` settings right you'll need to know the follow
 - Add-ons and custom components
 
 # `Configuration.h`
-The core and default settings of Marlin live in the `Configuration.h` file. Most of these settings are fixed. Once you compile Marlin, that's it. To change them you need to re-compile. However, several items in `Configuration.h` only provide defaults -factory settings- that can be changed via the user interface, stored on EEPROM and reloaded or restored to initial values.
+The most fundamental settings for your hardware are found here.
 
 {% alert info %}
 Settings that can be changed and saved to EEPROM are marked with <em class="fa fa-sticky-note" aria-hidden="true"></em>. Options marked with <em class="fa fa-desktop" aria-hidden="true"></em> can be changed from the LCD controller.
@@ -70,29 +73,43 @@ Settings that can be changed and saved to EEPROM are marked with <em class="fa f
 Settings saved in EEPROM persist across reboots and still remain after flashing new firmware, so always send [`M502`](/docs/gcode/M502.html), [`M500`](/docs/gcode/M500.html) (or "Reset EEPROM" from the LCD) after flashing.
 {% endalert %}
 
-This section follows the order of settings as they appear. The order isn't always logical, so "Search In Page" may be helpful. We've tried to keep descriptions brief and to the point. For more detailed information on various topics, please read the main articles and follow the links provided in the option descriptions.
+This section follows the order of settings as they appear. The order isn't always logical,
+so "Search In Page" may be helpful. We've tried to keep descriptions brief and to the point.
+For more detailed information on various topics, please read the main articles and follow the
+links provided in the option descriptions.
 
 ## Configuration versioning
 ```cpp
-#define CONFIGURATION_H_VERSION 020005
+#define CONFIGURATION_H_VERSION 02010200
 ```
-Marlin now checks for a configuration version and won't compile without this setting. If you want to upgrade from an earlier version of Marlin, add this line to your old configuration file. During compilation, Marlin will throw errors explaining what needs to be changed.
+Marlin now checks for a configuration version and won't compile without this setting.
+If you want to upgrade from an earlier version of Marlin, add this line to your old
+configuration file and set it to the current version. During the build Marlin will throw
+errors explaining what needs to be changed.
 
 ## Firmware Info
 ```cpp
 #define STRING_CONFIG_H_AUTHOR "(none, default config)"
-
-#define SHOW_BOOTSCREEN
-#define SHOW_CUSTOM_BOOTSCREEN
-#define CUSTOM_STATUS_SCREEN_IMAGE
+//#define CUSTOM_VERSION_FILE Version.h
 ```
 
 - `STRING_CONFIG_H_AUTHOR` is shown in the Marlin startup message to identify the author (and optional variant) of the firmware. Use this setting as a way to uniquely identify your custom configurations. The startup message is printed whenever the board (re)boots.
-- `SHOW_BOOTSCREEN` enables the boot screen for LCD controllers.
-- `SHOW_CUSTOM_BOOTSCREEN` shows the bitmap in `Marlin/_Bootscreen.h` on startup.
-- `CUSTOM_STATUS_SCREEN_IMAGE` shows the bitmap in `Marlin/_Statusscreen.h` on the status screen.
+- `CUSTOM_VERSION_FILE` can be set to the name of a custom firmware version file. See `Marlin/Version.h` for the standard version file.
 
 ## Hardware Info
+
+### Motherboard
+```cpp
+#define MOTHERBOARD BOARD_RAMPS_14_EFB
+```
+The most important setting is Marlin is the motherboard. The firmware needs to know what board it will be running on so it can assign the right functions to all pins and take advantage of the full capabilities of the board. Setting this incorrectly will lead to unpredictable results.
+
+Using `boards.h` as a reference, replace `BOARD_RAMPS_14_EFB` with your board's ID. The `boards.h` file has the most up-to-date listing of supported boards - check there first if you don't see yours listed [`here`](/docs/hardware/boards.html).
+
+{% alert info %}
+The Sanguino board requires adding "Sanguino" support to Arduino IDE. Open `Preferences` and locate the `Additional Boards Manager URLs` field. Copy and paste [this source URL](//raw.githubusercontent.com/Lauszus/Sanguino/master/package_lauszus_sanguino_index.json). Then use `Tools` > `Boards` > `Boards Manager` to install "Sanguino" from the list. An internet connection is required. (Thanks to "Dust's RepRap Blog" for the tip.)
+{% endalert %}
+
 ### Serial Port
 ```cpp
 #define SERIAL_PORT 0
@@ -124,29 +141,105 @@ Enable the Bluetooth serial interface. For boards based on the AT90USB.
 
 ![Motherboard](/assets/images/config/motherboard.jpg){: .floater.framed}
 
-### Motherboard
-```cpp
-#define MOTHERBOARD BOARD_RAMPS_14_EFB
-```
-The most important setting is Marlin is the motherboard. The firmware needs to know what board it will be running on so it can assign the right functions to all pins and take advantage of the full capabilities of the board. Setting this incorrectly will lead to unpredictable results.
-
-Using `boards.h` as a reference, replace `BOARD_RAMPS_14_EFB` with your board's ID. The `boards.h` file has the most up-to-date listing of supported boards - check there first if you don't see yours listed [`here`](/docs/hardware/boards.html).
-
-{% alert info %}
-The Sanguino board requires adding "Sanguino" support to Arduino IDE. Open `Preferences` and locate the `Additional Boards Manager URLs` field. Copy and paste [this source URL](//raw.githubusercontent.com/Lauszus/Sanguino/master/package_lauszus_sanguino_index.json). Then use `Tools` > `Boards` > `Boards Manager` to install "Sanguino" from the list. An internet connection is required. (Thanks to "Dust's RepRap Blog" for the tip.)
-{% endalert %}
-
 ### Custom Machine Name
 ```cpp
 //#define CUSTOM_MACHINE_NAME "3D Printer"
 ```
 This is the name of your printer as displayed on the LCD and by [`M115`](/docs/gcode/M115.html). For example, if you set this to "My Delta" the LCD will display "My Delta ready" when the printer starts up.
 
+### Configurable Machine Name
+```cpp
+//#define CONFIGURABLE_MACHINE_NAME
+```
+Add G-code [`M550`](/docs/gcode/M550.html) to set/report the Machine Name. Enable this option if you need to be able to change the Machine Name for lab use or to switch host configs. Available in Marlin 2.1.3.
+
 ### Machine UUID
 ```cpp
 //#define MACHINE_UUID "00000000-0000-0000-0000-000000000000"
 ```
 A unique ID for your 3D printer. A suitable unique ID can be generated randomly at [uuidtools.com](//www.uuidtools.com/generate/v4). Some host programs and slicers may use this identifier to differentiate between specific machines on your network.
+
+### Stepper Drivers
+```cpp
+#define X_DRIVER_TYPE  A4988
+#define Y_DRIVER_TYPE  A4988
+#define Z_DRIVER_TYPE  A4988
+//#define X2_DRIVER_TYPE A4988
+//#define Y2_DRIVER_TYPE A4988
+//#define Z2_DRIVER_TYPE A4988
+//#define Z3_DRIVER_TYPE A4988
+//#define Z4_DRIVER_TYPE A4988
+//#define I_DRIVER_TYPE  A4988
+//#define J_DRIVER_TYPE  A4988
+//#define K_DRIVER_TYPE  A4988
+//#define U_DRIVER_TYPE  A4988
+//#define V_DRIVER_TYPE  A4988
+//#define W_DRIVER_TYPE  A4988
+#define E0_DRIVER_TYPE A4988
+//#define E1_DRIVER_TYPE A4988
+//#define E2_DRIVER_TYPE A4988
+//#define E3_DRIVER_TYPE A4988
+//#define E4_DRIVER_TYPE A4988
+//#define E5_DRIVER_TYPE A4988
+//#define E6_DRIVER_TYPE A4988
+//#define E7_DRIVER_TYPE A4988
+```
+These settings allow Marlin to tune stepper driver timing and enable advanced options for stepper drivers that support them.
+You may also override timing options in `Configuration_adv.h`. Each driver is associated with an axis (internal axis identifiers:
+`X`, `Y`, `Z`, `I`, `J`, `K`, `U`, `V`, `W`) or an extruder (`E0` to `E7`).
+
+Each axis gets its own stepper control and endstops depending on the following settings:
+
+Steppers: `*_STEP_PIN`, `*_ENABLE_PIN`, `*_DIR_PIN`, `*_ENABLE_ON`
+Endstops: `*_STOP_PIN`, `USE_*MIN_PLUG`, `USE_*MAX_PLUG`
+Axes: `*_MIN_POS`, `*_MAX_POS`, `INVERT_*_DIR`
+Planner: `DEFAULT_AXIS_STEPS_PER_UNIT`, `DEFAULT_MAX_FEEDRATE`, `DEFAULT_MAX_ACCELERATION`, `AXIS_RELATIVE_MODES`, `MICROSTEP_MODES`, `MANUAL_FEEDRATE`
+
+For multi-axis-machines (option `I_DRIVER_TYPE` ... enabled), more information can be found at https://github.com/DerAndere1/Marlin/wiki.
+
+Use TMC2208/TMC2208_STANDALONE for TMC2225 drivers and TMC2209/TMC2209_STANDALONE for TMC2226 drivers.
+
+### Additional Axis Settings
+```cpp
+#ifdef I_DRIVER_TYPE
+  #define AXIS4_NAME 'A' // :['A', 'B', 'C', 'U', 'V', 'W']
+  #define AXIS4_ROTATES
+#endif
+#ifdef J_DRIVER_TYPE
+  #define AXIS5_NAME 'B' // :['B', 'C', 'U', 'V', 'W']
+  #define AXIS5_ROTATES
+#endif
+#ifdef K_DRIVER_TYPE
+  #define AXIS6_NAME 'C' // :['C', 'U', 'V', 'W']
+  #define AXIS6_ROTATES
+#endif
+#ifdef U_DRIVER_TYPE
+  #define AXIS7_NAME 'U' // :['U', 'V', 'W']
+  //#define AXIS7_ROTATES
+#endif
+#ifdef V_DRIVER_TYPE
+  #define AXIS8_NAME 'V' // :['V', 'W']
+  //#define AXIS8_ROTATES
+#endif
+#ifdef W_DRIVER_TYPE
+  #define AXIS9_NAME 'W' // :['W']
+  //#define AXIS9_ROTATES
+#endif
+```
+
+Define `AXISn_ROTATES` for all axes that rotate or pivot.
+Rotational axis coordinates are expressed in degrees.
+
+`AXISn_NAME` defines the letter used to refer to the axis in (most) G-code commands.
+By convention the names and roles are typically:
+- 'A' : Rotational axis parallel to X
+- 'B' : Rotational axis parallel to Y
+- 'C' : Rotational axis parallel to Z
+- 'U' : Secondary linear axis parallel to X
+- 'V' : Secondary linear axis parallel to Y
+- 'W' : Secondary linear axis parallel to Z
+
+Regardless of these settings the axes are internally named I, J, K, U, V, W.
 
 ## Extruder Info
 ![Extruders](/assets/images/config/extruders.png){: .floater.framed}
@@ -594,8 +687,49 @@ Marlin supports four kinematic motion systems: Cartesian, Core (H-Bot), Delta, a
 //#define COREYX
 //#define COREZX
 //#define COREZY
+//#define MARKFORGED_XY  // MarkForged. See https://reprap.org/forum/read.php?152,504042
+//#define MARKFORGED_YX
 ```
 Enable the option that applies to the specific Core setup. Both normal and reversed options are included for completeness.
+
+### Belt Printer
+
+```cpp
+//#define BELTPRINTER
+```
+Enable for a belt style printer with endless "Z" motion
+
+### Polargraph
+
+```cpp
+//#define POLARGRAPH
+#if ENABLED(POLARGRAPH)
+  #define POLARGRAPH_MAX_BELT_LEN 1035.0
+  #define POLAR_SEGMENTS_PER_SECOND 5
+#endif
+```
+Enable for Polargraph Kinematics
+
+### Foam Cutter
+
+```cpp
+//#define FOAMCUTTER_XYUV
+```
+Enable for a 4 axis hot wire foam cutter with paralell horizontal axes X, U where hights of the wire ends
+are controlled by vertical axes Y, V. Requires `I_DRIVER_TYPE`, J_DRIVER_TYPE, `AXIS4_NAME 'U'` and `AXIS5_NAME 'V'`. The Z axis is unused.
+The LASER features (see section "Spindle / Laser") can be used to control the heating element for the tool.
+
+### Articulated robot
+
+```cpp
+//#define ARTICULATED_ROBOT_ARM
+```
+Enable for articulated robots or for machines with `I_DRIVER_TYPE` defined, if feed rate interpretation should be
+compatibile with firmwares (e.g., grblHAL/grblHAL, Duet-3D/RepRapFirmware, synthetos/g2) that behave different
+from LinuxCNC. When enabled, feedrate `F` is defined as follows: Let `dX`, `dY`, ... be displacements along the
+X, Y, ... axes. Let `T` be the time required for the move at the specified nominal feedrate.
+Then `F = sqrt(dX^2 + dY^2 + dZ^2 + dA^2 + dB^2 + dC^2 + dU^2 + dV^2 + dW^2) / T`.
+Moves should finish in `T` plus any time required for acceleration and decceleration.
 
 ![Endstop switch](/assets/images/config/endstop.jpg){: .floater}
 
@@ -607,9 +741,21 @@ In open loop systems, endstops are an inexpensive way to establish the actual po
 #define USE_XMIN_PLUG
 #define USE_YMIN_PLUG
 #define USE_ZMIN_PLUG
+//#define USE_IMIN_PLUG
+//#define USE_JMIN_PLUG
+//#define USE_KMIN_PLUG
+//#define USE_UMIN_PLUG
+//#define USE_VMIN_PLUG
+//#define USE_WMIN_PLUG
 //#define USE_XMAX_PLUG
 //#define USE_YMAX_PLUG
 //#define USE_ZMAX_PLUG
+//#define USE_IMAX_PLUG
+//#define USE_JMAX_PLUG
+//#define USE_KMAX_PLUG
+//#define USE_UMAX_PLUG
+//#define USE_VMAX_PLUG
+//#define USE_WMAX_PLUG
 ```
 Specify all the endstop connectors that are connected to any endstop or probe. Most printers will use all three min plugs. On delta machines, all the max plugs should be used. Probes can share the Z min plug, or can use one or more of the extra connectors. Don't enable plugs used for non-endstop and non-probe purposes here.
 {% alert info %}
@@ -622,12 +768,24 @@ Specify all the endstop connectors that are connected to any endstop or probe. M
 
 #if DISABLED(ENDSTOPPULLUPS)
   // Disable ENDSTOPPULLUPS to set pullups individually
-  //#define ENDSTOPPULLUP_XMAX
-  //#define ENDSTOPPULLUP_YMAX
-  //#define ENDSTOPPULLUP_ZMAX
   //#define ENDSTOPPULLUP_XMIN
   //#define ENDSTOPPULLUP_YMIN
   //#define ENDSTOPPULLUP_ZMIN
+  //#define ENDSTOPPULLUP_IMIN
+  //#define ENDSTOPPULLUP_JMIN
+  //#define ENDSTOPPULLUP_KMIN
+  //#define ENDSTOPPULLUP_UMIN
+  //#define ENDSTOPPULLUP_VMIN
+  //#define ENDSTOPPULLUP_WMIN
+  //#define ENDSTOPPULLUP_XMAX
+  //#define ENDSTOPPULLUP_YMAX
+  //#define ENDSTOPPULLUP_ZMAX
+  //#define ENDSTOPPULLUP_IMAX
+  //#define ENDSTOPPULLUP_JMAX
+  //#define ENDSTOPPULLUP_KMAX
+  //#define ENDSTOPPULLUP_UMAX
+  //#define ENDSTOPPULLUP_VMAX
+  //#define ENDSTOPPULLUP_WMAX
   //#define ENDSTOPPULLUP_ZMIN_PROBE
 #endif
 ```
@@ -639,12 +797,24 @@ By default all endstops have pullup resistors enabled. This is best for NC switc
 
 #if DISABLED(ENDSTOPPULLDOWNS)
   // Disable ENDSTOPPULLDOWNS to set pulldowns individually
-  //#define ENDSTOPPULLDOWN_XMAX
-  //#define ENDSTOPPULLDOWN_YMAX
-  //#define ENDSTOPPULLDOWN_ZMAX
   //#define ENDSTOPPULLDOWN_XMIN
   //#define ENDSTOPPULLDOWN_YMIN
   //#define ENDSTOPPULLDOWN_ZMIN
+  //#define ENDSTOPPULLDOWN_IMIN
+  //#define ENDSTOPPULLDOWN_JMIN
+  //#define ENDSTOPPULLDOWN_KMIN
+  //#define ENDSTOPPULLDOWN_UMIN
+  //#define ENDSTOPPULLDOWN_VMIN
+  //#define ENDSTOPPULLDOWN_WMIN
+  //#define ENDSTOPPULLDOWN_XMAX
+  //#define ENDSTOPPULLDOWN_YMAX
+  //#define ENDSTOPPULLDOWN_ZMAX
+  //#define ENDSTOPPULLDOWN_IMAX
+  //#define ENDSTOPPULLDOWN_JMAX
+  //#define ENDSTOPPULLDOWN_KMAX
+  //#define ENDSTOPPULLDOWN_UMAX
+  //#define ENDSTOPPULLDOWN_VMAX
+  //#define ENDSTOPPULLDOWN_WMAX
   //#define ENDSTOPPULLDOWN_ZMIN_PROBE
 #endif
 ```
@@ -654,32 +824,27 @@ By default all endstops have pulldown resistors disabled.
 Use these options to set to the state (HIGH or LOW) that applies to each endstop and the Z probe, if enabled.
 ```cpp
 #define X_MIN_ENDSTOP_HIT_STATE HIGH
-#define X_MAX_ENDSTOP_HIT_STATE HIGH
 #define Y_MIN_ENDSTOP_HIT_STATE HIGH
-#define Y_MAX_ENDSTOP_HIT_STATE HIGH
 #define Z_MIN_ENDSTOP_HIT_STATE HIGH
+#define I_MIN_ENDSTOP_HIT_STATE HIGH
+#define J_MIN_ENDSTOP_HIT_STATE HIGH
+#define K_MIN_ENDSTOP_HIT_STATE HIGH
+#define U_MIN_ENDSTOP_HIT_STATE HIGH
+#define V_MIN_ENDSTOP_HIT_STATE HIGH
+#define W_MIN_ENDSTOP_HIT_STATE HIGH
+#define X_MAX_ENDSTOP_HIT_STATE HIGH
+#define Y_MAX_ENDSTOP_HIT_STATE HIGH
 #define Z_MAX_ENDSTOP_HIT_STATE HIGH
+#define I_MAX_ENDSTOP_HIT_STATE HIGH
+#define J_MAX_ENDSTOP_HIT_STATE HIGH
+#define K_MAX_ENDSTOP_HIT_STATE HIGH
+#define U_MAX_ENDSTOP_HIT_STATE HIGH
+#define V_MAX_ENDSTOP_HIT_STATE HIGH
+#define W_MAX_ENDSTOP_HIT_STATE HIGH
 #define Z_MIN_PROBE_ENDSTOP_HIT_STATE HIGH
 ```
-You can use [`M119`](/docs/gcode/M119.html) to test if these are set correctly. If an endstop shows up as "TRIGGERED" when not pressed, and "open" when pressed, then it should be inverted here.
 
-### Stepper Drivers
-```cpp
-//#define X_DRIVER_TYPE  A4988
-//#define Y_DRIVER_TYPE  A4988
-//#define Z_DRIVER_TYPE  A4988
-//#define X2_DRIVER_TYPE A4988
-//#define Y2_DRIVER_TYPE A4988
-//#define Z2_DRIVER_TYPE A4988
-//#define Z3_DRIVER_TYPE A4988
-//#define E0_DRIVER_TYPE A4988
-//#define E1_DRIVER_TYPE A4988
-//#define E2_DRIVER_TYPE A4988
-//#define E3_DRIVER_TYPE A4988
-//#define E4_DRIVER_TYPE A4988
-//#define E5_DRIVER_TYPE A4988
-```
-These settings allow Marlin to tune stepper driver timing and enable advanced options for stepper drivers that support them. You may also override timing options in Configuration_adv.h.
+You can use [`M119`](/docs/gcode/M119.html) to test if these are set correctly. If an endstop shows up as "TRIGGERED" when not pressed and "open" when pressed, the state should be changed here.
 
 ### Endstop Interrupts
 ```cpp
@@ -707,7 +872,7 @@ Enable `DISTINCT_E_FACTORS` if your extruders are not all mechanically identical
 ```cpp
 #define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 4000, 500 }
 ```
-These are the most crucial settings for your printer, as they determine how accurately the steppers will position the axes. Here we're telling the firmware how many individual steps produce a single millimeter (or degree on SCARA) of movement. These depend on various factors, including belt pitch, number of teeth on the pulley, thread pitch on leadscrews, micro-stepping settings, and extruder style.
+These are the most crucial settings for your printer, as they determine how accurately the steppers will position the axes. Here we're telling the firmware how many individual steps produce a single millimeter (or degree on SCARA or for rotational axes) of movement. These depend on various factors, including belt pitch, number of teeth on the pulley, thread pitch on leadscrews, micro-stepping settings, and extruder style.
 
 Override with [`M92`](/docs/gcode/M092.html).
 
@@ -719,7 +884,7 @@ The [Průša Calculator](//prusaprinters.org/calculator/) is a great tool to hel
 ```cpp
 #define DEFAULT_MAX_FEEDRATE { 500, 500, 2.25, 45 }
 ```
-In any move, the velocities (in mm/sec) in the X, Y, Z, and E directions will be limited to the corresponding `DEFAULT_MAX_FEEDRATE`.
+In any move, the velocities (in mm/sec for linear axes, °/sec for rotational axes) in the X, Y, Z, ..., and E directions will be limited to the corresponding `DEFAULT_MAX_FEEDRATE`.
 
 Override with [`M203`](/docs/gcode/M203.html).
 
@@ -732,7 +897,7 @@ Setting these too high will cause the corresponding stepper motor to lose steps,
 ```cpp
 #define DEFAULT_MAX_ACCELERATION      { 3000, 3000, 100, 10000 }
 ```
-When the velocity of any axis changes, its acceleration (or deceleration) in mm/s/s is limited by the current max acceleration setting. Also see the *jerk* settings below, which specify the largest instant speed change that can occur between segments.
+When the velocity of any axis changes, its acceleration (or deceleration) in mm/s/s (or °/s/s for rotational axes) is limited by the current max acceleration setting. Also see the *jerk* settings below, which specify the largest instant speed change that can occur between segments.
 
 A value of 3000 means that an axis may accelerate by 100mm/s within 1/30th of a second, or up to 3000mm/s (180000mm/m) in a full second.
 
@@ -769,6 +934,12 @@ Don't set these too high. Larger acceleration values can lead to excessive vibra
   #define DEFAULT_XJERK 10.0
   #define DEFAULT_YJERK 10.0
   #define DEFAULT_ZJERK  0.3
+  //#define DEFAULT_IJERK  0.3
+  //#define DEFAULT_JJERK  0.3
+  //#define DEFAULT_KJERK  0.3
+  //#define DEFAULT_UJERK  0.3
+  //#define DEFAULT_VJERK  0.3
+  //#define DEFAULT_WJERK  0.3
 
   //#define TRAVEL_EXTRA_XYJERK 0.0     // Additional jerk allowance for all travel moves
 
@@ -784,7 +955,7 @@ Don't set these too high. Larger acceleration values can lead to excessive vibra
 Junction Deviation is now the default mode. Enabling `CLASSIC JERK` will override it.
 {% endpanel %}
 
-Jerk works in conjunction with acceleration (see above). Jerk is the maximum change in velocity (in mm/sec) that can occur instantaneously. It can also be thought of as the minimum change in velocity that will be done as an accelerated (not instantaneous) move.
+Jerk works in conjunction with acceleration (see above). Jerk is the maximum change in velocity (in mm/sec for linear axes, in °/sec for rotational axes) that can occur instantaneously. It can also be thought of as the minimum change in velocity that will be done as an accelerated (not instantaneous) move.
 
 Both acceleration and jerk affect your print quality. If jerk is too low, the extruder will linger too long on small segments and corners, possibly leaving blobs. If the jerk is set too high, direction changes will apply too much torque and you may see "ringing" artifacts or dropped steps.
 
@@ -925,15 +1096,49 @@ Certain types of probe need to stay away from the edge
 ### Probing Speed
 ```cpp
 // X and Y axis travel speed (mm/m) between probes
-#define XY_PROBE_SPEED 8000
+#define XY_PROBE_FEEDRATE 8000
 
 // Feedrate (mm/m) for the first approach when double-probing (MULTIPLE_PROBING == 2)
-#define Z_PROBE_SPEED_FAST HOMING_FEEDRATE_Z
+#define Z_PROBE_FEEDRATE_FAST HOMING_FEEDRATE_Z
 
 // Feedrate (mm/m) for the "accurate" probe of each point
-#define Z_PROBE_SPEED_SLOW (Z_PROBE_SPEED_FAST / 2)
+#define Z_PROBE_FEEDRATE_SLOW (Z_PROBE_FEEDRATE_FAST / 2)
 ```
 Probing should be done quickly, but the Z speed should be tuned for best repeatability. Depending on the probe, a slower Z probing speed may be needed for repeatable results.
+
+### Probe Activation Switch
+A switch indicating proper deployment, or an optical switch triggered when the carriage is near the bed.
+```cpp
+//#define PROBE_ACTIVATION_SWITCH
+#if ENABLED(PROBE_ACTIVATION_SWITCH)
+  #define PROBE_ACTIVATION_SWITCH_STATE LOW // State indicating probe is active
+  //#define PROBE_ACTIVATION_SWITCH_PIN PC6 // Override default pin
+#endif
+```
+
+### Probe Tare
+Enable this feature to tare the probe (determine zero-point) prior to each probe. Useful for a strain gauge or piezo sensor that needs to factor out elements such as cables pulling on the carriage.
+```cpp
+//#define PROBE_TARE
+#if ENABLED(PROBE_TARE)
+  #define PROBE_TARE_TIME  200    // (ms) Time to hold tare pin
+  #define PROBE_TARE_DELAY 200    // (ms) Delay after tare before
+  #define PROBE_TARE_STATE HIGH   // State to write pin for tare
+  //#define PROBE_TARE_PIN PA5    // Override default pin
+  #if ENABLED(PROBE_ACTIVATION_SWITCH)
+    //#define PROBE_TARE_ONLY_WHILE_INACTIVE  // Fail to tare/probe if PROBE_ACTIVATION_SWITCH is active
+  #endif
+#endif
+```
+
+### Probe Enable/Disable
+Using this feature the probe only provides a triggered signal when enabled. A separate pin is designated to enable the probe.
+```cpp
+//#define PROBE_ENABLE_DISABLE
+#if ENABLED(PROBE_ENABLE_DISABLE)
+  //#define PROBE_ENABLE_PIN -1   // Override the default pin here
+#endif
+```
 
 ### Multiple Probes
 ```cpp
@@ -1005,6 +1210,12 @@ Heatinging the bed and extruder for probing will produce results that more accur
 #define X_ENABLE_ON 0
 #define Y_ENABLE_ON 0
 #define Z_ENABLE_ON 0
+//#define I_ENABLE_ON 0
+//#define J_ENABLE_ON 0
+//#define K_ENABLE_ON 0
+//#define U_ENABLE_ON 0
+//#define V_ENABLE_ON 0
+//#define W_ENABLE_ON 0
 #define E_ENABLE_ON 0 // For all extruders
 ```
 These options set the pin states used for stepper enable. The most common setting is 0 (`LOW`) for Active Low. For Active High use 1 or `HIGH`.
@@ -1014,6 +1225,12 @@ These options set the pin states used for stepper enable. The most common settin
 #define DISABLE_X false
 #define DISABLE_Y false
 #define DISABLE_Z false
+//#define DISABLE_I false
+//#define DISABLE_J false
+//#define DISABLE_K false
+//#define DISABLE_U false
+//#define DISABLE_V false
+//#define DISABLE_W false
 ```
 Use these options to disable steppers when not being issued a movement. This was implemented as a hack to run steppers at higher-than-normal current in an effort to produce more torque at the cost of increased heat for drivers and steppers.
 
@@ -1040,6 +1257,12 @@ The E disable option works like `DISABLE_[XYZ]` but pertains to one or more extr
 #define INVERT_X_DIR false
 #define INVERT_Y_DIR true
 #define INVERT_Z_DIR false
+//#define INVERT_I_DIR false
+//#define INVERT_J_DIR false
+//#define INVERT_K_DIR false
+//#define INVERT_U_DIR false
+//#define INVERT_V_DIR false
+//#define INVERT_W_DIR false
 
 #define INVERT_E0_DIR false
 #define INVERT_E1_DIR false
@@ -1068,6 +1291,12 @@ This value raises Z to the specified height above the bed before homing X or Y. 
 #define X_HOME_DIR -1
 #define Y_HOME_DIR -1
 #define Z_HOME_DIR -1
+//#define I_HOME_DIR -1
+//#define J_HOME_DIR -1
+//#define K_HOME_DIR -1
+//#define U_HOME_DIR -1
+//#define V_HOME_DIR -1
+//#define W_HOME_DIR -1
 ```
 Homing direction for each axis: -1 = min, 1 = max. Most Cartesian and core machines have three min endstops. Deltas have three max endstops. For other configurations set these values appropriately.
 
@@ -1084,7 +1313,19 @@ With Marlin you can directly specify the bed size. This allows Marlin to do extr
 #define Z_MIN_POS 0
 #define X_MAX_POS X_BED_SIZE
 #define Y_MAX_POS Y_BED_SIZE
-#define Z_MAX_POS 170
+#define Z_MAX_POS 200
+//#define I_MIN_POS 0
+//#define I_MAX_POS 50
+//#define J_MIN_POS 0
+//#define J_MAX_POS 50
+//#define K_MIN_POS 0
+//#define K_MAX_POS 50
+//#define U_MIN_POS 0
+//#define U_MAX_POS 50
+//#define V_MIN_POS 0
+//#define V_MAX_POS 50
+//#define W_MIN_POS 0
+//#define W_MAX_POS 50
 ```
 These values specify the physical limits of the machine. Usually the `[XYZ]_MIN_POS` values are set to 0, because endstops are positioned at the bed limits. `[XYZ]_MAX_POS` should be set to the farthest reachable point. By default, these are used as your homing positions as well. However, the `MANUAL_[XYZ]_HOME_POS` options can be used to override these, if needed.
 
@@ -1099,6 +1340,12 @@ Although home positions are fixed, [`M206`](/docs/gcode/M206.html) can be used t
   #define MIN_SOFTWARE_ENDSTOP_X
   #define MIN_SOFTWARE_ENDSTOP_Y
   #define MIN_SOFTWARE_ENDSTOP_Z
+  #define MIN_SOFTWARE_ENDSTOP_I
+  #define MIN_SOFTWARE_ENDSTOP_J
+  #define MIN_SOFTWARE_ENDSTOP_K
+  #define MIN_SOFTWARE_ENDSTOP_U
+  #define MIN_SOFTWARE_ENDSTOP_V
+  #define MIN_SOFTWARE_ENDSTOP_W
 #endif
 
 #define MAX_SOFTWARE_ENDSTOPS
@@ -1106,9 +1353,15 @@ Although home positions are fixed, [`M206`](/docs/gcode/M206.html) can be used t
   #define MAX_SOFTWARE_ENDSTOP_X
   #define MAX_SOFTWARE_ENDSTOP_Y
   #define MAX_SOFTWARE_ENDSTOP_Z
+  #define MAX_SOFTWARE_ENDSTOP_I
+  #define MAX_SOFTWARE_ENDSTOP_J
+  #define MAX_SOFTWARE_ENDSTOP_K
+  #define MAX_SOFTWARE_ENDSTOP_U
+  #define MAX_SOFTWARE_ENDSTOP_V
+  #define MAX_SOFTWARE_ENDSTOP_W
 #endif
 ```
-Enable these options to constrain movement to the physical boundaries of the machine (as set by `[XYZ]_(MIN|MAX)_POS`). For example, `G1 Z-100` can be min constrained to `G1 Z0`. It is recommended to enable these options as a safety feature. If software endstops need to be disabled, use [`M211 S0`](/docs/gcode/M211.html).
+Enable these options to constrain movement to the physical boundaries of the machine (as set by `[XYZIJKUVW]_(MIN|MAX)_POS`). For example, `G1 Z-100` can be min constrained to `G1 Z0`. It is recommended to enable these options as a safety feature. If software endstops need to be disabled, use [`M211 S0`](/docs/gcode/M211.html).
 
 ```cpp
 #if EITHER(MIN_SOFTWARE_ENDSTOPS, MAX_SOFTWARE_ENDSTOPS)
@@ -1340,6 +1593,12 @@ Enable this option if the bed center is at X0 Y0. This setting affects the way a
 //#define MANUAL_X_HOME_POS 0
 //#define MANUAL_Y_HOME_POS 0
 //#define MANUAL_Z_HOME_POS 0 // Distance from nozzle to printbed after homing
+//#define MANUAL_I_HOME_POS 0
+//#define MANUAL_J_HOME_POS 0
+//#define MANUAL_K_HOME_POS 0
+//#define MANUAL_U_HOME_POS 0
+//#define MANUAL_V_HOME_POS 0
+//#define MANUAL_W_HOME_POS 0
 ```
 These settings are used to override the home position. Leave them undefined for automatic settings. For `DELTA` Z home must be set to the top-most position.
 
@@ -1605,13 +1864,15 @@ Enable to use SD printing, whether as part of an LCD controller or as a standalo
 The `SDSUPPORT` option must be enabled or SD printing will not be supported. It is no longer enabled automatically for LCD controllers with built-in SDCard slot.
 {% endalert %}
 
-### SPI Speed
+### SD SPI Speed
 ```cpp
-//#define SPI_SPEED SPI_HALF_SPEED
-//#define SPI_SPEED SPI_QUARTER_SPEED
-//#define SPI_SPEED SPI_EIGHTH_SPEED
+//#define SD_SPI_SPEED SPI_HALF_SPEED
 ```
-Uncomment ONE of these options to use a slower SPI transfer speed. This is usually required if you're getting volume init errors.
+Uncomment to enable and set ONE of these options to use a slower SPI transfer speed, otherwise full speed will be applied:
+- `SPI_HALF_SPEED`
+- `SPI_QUARTER_SPEED`
+- `SPI_EIGHTH_SPEED`
+This is usually required if you're getting volume init errors.
 
 ### Enable CRC
 ```cpp
@@ -1692,6 +1953,7 @@ Marlin includes support for several controllers. The two most popular controller
 Most other LCD controllers are variants of these. Enable just one of the following options for your specific controller:
 
 ### Character LCDs
+
 Option|Description
 ------|-----------
 `ULTIMAKERCONTROLLER`|The original Ultimaker Controller.
@@ -1703,6 +1965,7 @@ Option|Description
 `ANET_KEYPAD_LCD`|[Anet Keypad LCD](//www.anet3d.com/prod_view.aspx?TypeId=10&Id=178) for the Anet A3
 
 ### Graphical LCDs
+
 Option|Description
 ------|-----------
 `CARTESIO_UI`|[Cartesio UI](//mauk.cc/webshop/cartesio-shop/electronics/user-interface).
@@ -1717,6 +1980,7 @@ Option|Description
 `ANET_FULL_GRAPHICS_LCD`|[Anet Full Graphics LCD](//www.anet3d.com/prod_view.aspx?TypeId=10&Id=178) for the Anet A3
 
 ### Keypads
+
 Option|Description
 ------|-----------
 `REPRAPWORLD_KEYPAD`|[RepRapWorld Keypad v1.1](//reprapworld.com/?products_details&products_id=202&cPath=1591_1626) Use `REPRAPWORLD_KEYPAD_MOVE_STEP` to set how much the robot should move on each keypress (_e.g.,_ 10mm per click).
@@ -1909,6 +2173,18 @@ Delay (in microseconds) before the next move will start, to give the servo time 
 With this option servos are powered only during movement, then turned off to prevent jitter. We recommend enabling this option to keep electrical noise from active servos from interfering with other components. The high amperage generated by extruder motor wiring during movement can also induce movement in active servos. Leave this option enabled to avoid all such servo-related troubles.
 
 # `Configuration_adv.h`
+## Configuration Export
+With this option the configuration will be exported to the build folder as part of the build process.
+- 1 = `marlin_config.json` - Dictionary containing the configuration. (Also generated for `CONFIGURATION_EMBEDDING`).
+- 2 = `config.ini` - File format for PlatformIO preprocessing.
+- 3 = `schema.json` - The entire configuration schema. (13 = pattern groups)
+- 4 = `schema.yml` - The entire configuration schema.
+- 5 = `Config.h` - Minimal configuration.
+Add 100 for some variant of the exported configuration, e.g., organized by section.
+```cpp
+//#define CONFIG_EXPORT 105 // :[1:'JSON', 2:'config.ini', 3:'schema.json', 4:'schema.yml', 5:'Config.h']
+```
+
 ## Temperature Options
 ### Custom Thermistor 1000 Parameters
 ```cpp
@@ -2362,14 +2638,17 @@ Requires defining the corresponding pin ie SOL0_PIN, SOL1_PIN, etc.
 
 ## Homing
 ```cpp
-#define X_HOME_BUMP_MM 5
-#define Y_HOME_BUMP_MM 5
-#define Z_HOME_BUMP_MM 2
-#define HOMING_BUMP_DIVISOR { 2, 2, 4 }
-//#define QUICK_HOME
-//#define HOMING_BACKOFF_MM { 2, 2, 2 }
-//#define HOME_Y_BEFORE_X
-//#define CODEPENDENT_XY_HOMING
+//#define SENSORLESS_BACKOFF_MM  { 2, 2, 0 }  // (linear=mm, rotational=°) Backoff from endstops before sensorless homing
+
+#define HOMING_BUMP_MM      { 5, 5, 2 }       // (linear=mm, rotational=°) Backoff from endstops after first bump
+#define HOMING_BUMP_DIVISOR { 2, 2, 4 }       // Re-Bump Speed Divisor (Divides the Homing Feedrate)
+
+//#define HOMING_BACKOFF_POST_MM { 2, 2, 2 }  // (linear=mm, rotational=°) Backoff from endstops after homing
+
+//#define QUICK_HOME                          // If G28 contains XY do a diagonal move first
+//#define HOME_Y_BEFORE_X                     // If G28 contains XY home Y before X
+//#define HOME_Z_FIRST                        // Home Z first. Requires a Z-MIN endstop (not a probe).
+//#define CODEPENDENT_XY_HOMING               // If X/Y can't home without homing Y/X first
 ```
 After an endstop is triggered during homing, the printerhead backs off by the set `HOME_BUMP_MM` distance then homes again at a slower speed.
 The slower homing speed for each axis is set by `HOMING_BUMP_DIVISOR`.
@@ -2407,6 +2686,8 @@ The default BLTouch settings can be overriden with these options. `BLTOUCH_DELAY
   #define Z_STEPPER_ALIGN_ITERATIONS 5    // Number of iterations to apply during alignment
   #define Z_STEPPER_ALIGN_ACC        0.02 // Stop iterating early if the accuracy is better than this
   #define RESTORE_LEVELING_AFTER_G34
+  // After G34, re-home Z (G28 Z) or just calculate it from the last probe heights?
+  // Re-homing might be more precise in reproducing the actual 'G28 Z' homing height, especially on an uneven bed.
   #define HOME_AFTER_G34
 #endif
 ```
@@ -2447,49 +2728,152 @@ Add the [`G35`](/docs/gcode/G035.html) command to read bed corners to help adjus
 ```
 
 ## Motion Control
+
 ### Fixed-Time Motion Control
-Fixed-time-based Motion Control. Enable/disable and set parameters with G-code [`M493`](/docs/gcode/M493.html).
+
+*New in Marlin 2.1.3.*
+
+The Fixed-Time-based Motion Control (FTM) feature provides an alternative motion system that uses a stepper event chain with sophisticated motion algorithms, allowing you to fine-tune motion control behavior. You can adjust parameters such as dynamic frequency modes, shaper types and frequencies, linear advance settings, and more with G-code [`M493`](/docs/gcode/M493.html). See the [`M493`](/docs/gcode/M493.html) documentation for a basic overview of parameters you can change.
+
 ```cpp
-#define FT_MOTION
+/**
+ * Fixed-time-based Motion Control -- BETA FEATURE
+ * Enable/disable and set parameters with G-code M493.
+ * See ft_types.h for named values used by FTM options.
+ */
+//#define FT_MOTION
 #if ENABLED(FT_MOTION)
-  #define FTM_DEFAULT_MODE         ftMotionMode_ENABLED // Default mode of fixed time control. (Enums in ft_types.h)
-  #define FTM_DEFAULT_DYNFREQ_MODE dynFreqMode_DISABLED // Default mode of dynamic frequency calculation. (Enums in ft_types.h)
-  #define FTM_SHAPING_DEFAULT_X_FREQ 37.0f              // (Hz) Default peak frequency used by input shapers.
-  #define FTM_SHAPING_DEFAULT_Y_FREQ 37.0f              // (Hz) Default peak frequency used by input shapers.
-  #define FTM_LINEAR_ADV_DEFAULT_ENA false              // Default linear advance enable (true) or disable (false).
-  #define FTM_LINEAR_ADV_DEFAULT_K    0.0f              // Default linear advance gain.
-  #define FTM_SHAPING_ZETA            0.1f              // Zeta used by input shapers.
-  #define FTM_SHAPING_V_TOL           0.05f             // Vibration tolerance used by EI input shapers.
+  //#define FTM_IS_DEFAULT_MOTION                 // Use FT Motion as the factory default?
+  #define FTM_DEFAULT_DYNFREQ_MODE dynFreqMode_DISABLED // Default mode of dynamic frequency calculation. (DISABLED, Z_BASED, MASS_BASED)
+  #define FTM_DEFAULT_SHAPER_X      ftMotionShaper_NONE // Default shaper mode on X axis (NONE, ZV, ZVD, ZVDD, ZVDDD, EI, 2HEI, 3HEI, MZV)
+  #define FTM_DEFAULT_SHAPER_Y      ftMotionShaper_NONE // Default shaper mode on Y axis
+  #define FTM_SHAPING_DEFAULT_FREQ_X   37.0f      // (Hz) Default peak frequency used by input shapers
+  #define FTM_SHAPING_DEFAULT_FREQ_Y   37.0f      // (Hz) Default peak frequency used by input shapers
+  #define FTM_LINEAR_ADV_DEFAULT_ENA   false      // Default linear advance enable (true) or disable (false)
+  #define FTM_LINEAR_ADV_DEFAULT_K      0.0f      // Default linear advance gain. (Acceleration-based scaling factor.)
+  #define FTM_SHAPING_ZETA_X            0.1f      // Zeta used by input shapers for X axis
+  #define FTM_SHAPING_ZETA_Y            0.1f      // Zeta used by input shapers for Y axis
+
+  #define FTM_SHAPING_V_TOL_X           0.05f     // Vibration tolerance used by EI input shapers for X axis
+  #define FTM_SHAPING_V_TOL_Y           0.05f     // Vibration tolerance used by EI input shapers for Y axis
+
+  //#define FT_MOTION_MENU                        // Provide a MarlinUI menu to set M493 parameters
 
   /**
    * Advanced configuration
    */
-  #define FTM_BATCH_SIZE 100                            // Batch size for trajectory generation;
-                                                        // half the window size for Ulendo FBS.
-  #define FTM_FS           1000                         // (Hz) Frequency for trajectory generation. (1 / FTM_TS)
-  #define FTM_TS              0.001f                    // (s) Time step for trajectory generation. (1 / FTM_FS)
-  #define FTM_STEPPER_FS  20000                         // (Hz) Frequency for stepper I/O update.
-  #define FTM_MIN_TICKS ((STEPPER_TIMER_RATE) / (FTM_STEPPER_FS)) // Minimum stepper ticks between steps.
-  #define FTM_MIN_SHAPE_FREQ 10                         // Minimum shaping frequency.
-  #define FTM_ZMAX          100                         // Maximum delays for shaping functions (even numbers only!).
-                                                        // Calculate as:
-                                                        //    1/2 * (FTM_FS / FTM_MIN_SHAPE_FREQ) for ZV.
-                                                        //    (FTM_FS / FTM_MIN_SHAPE_FREQ) for ZVD, MZV.
-                                                        //    3/2 * (FTM_FS / FTM_MIN_SHAPE_FREQ) for 2HEI.
-                                                        //    2 * (FTM_FS / FTM_MIN_SHAPE_FREQ) for 3HEI.
-  #define FTM_STEPS_PER_UNIT_TIME 20                    // Interpolated stepper commands per unit time.
-                                                        // Calculate as (FTM_STEPPER_FS / FTM_FS).
-  #define FTM_CTS_COMPARE_VAL 10                        // Comparison value used in interpolation algorithm.
-                                                        // Calculate as (FTM_STEPS_PER_UNIT_TIME / 2).
-  // These values may be configured to adjust duration of loop().
-  #define FTM_STEPS_PER_LOOP 60                         // Number of stepper commands to generate each loop().
-  #define FTM_POINTS_PER_LOOP 100                       // Number of trajectory points to generate each loop().
+  #define FTM_UNIFIED_BWS                         // DON'T DISABLE unless you use Ulendo FBS (not implemented)
+  #if ENABLED(FTM_UNIFIED_BWS)
+    #define FTM_BW_SIZE               100         // Unified Window and Batch size with a ratio of 2
+  #else
+    #define FTM_WINDOW_SIZE           200         // Custom Window size for trajectory generation needed by Ulendo FBS
+    #define FTM_BATCH_SIZE            100         // Custom Batch size for trajectory generation needed by Ulendo FBS
+  #endif
 
-  // This value may be configured to adjust duration to consume the command buffer.
-  // Try increasing this value if stepper motion is not smooth.
-  #define FTM_STEPPERCMD_BUFF_SIZE 1000                 // Size of the stepper command buffers.
-#endif
+  #define FTM_FS                     1000         // (Hz) Frequency for trajectory generation. (Reciprocal of FTM_TS)
+  #define FTM_TS                        0.001f    // (s) Time step for trajectory generation. (Reciprocal of FTM_FS)
+
+  #if DISABLED(COREXY)
+    #define FTM_STEPPER_FS          20000         // (Hz) Frequency for stepper I/O update
+
+    // Use this to adjust the time required to consume the command buffer.
+    // Try increasing this value if stepper motion is choppy.
+    #define FTM_STEPPERCMD_BUFF_SIZE 3000         // Size of the stepper command buffers
+
+  #else
+    // CoreXY motion needs a larger buffer size. These values are based on our testing.
+    #define FTM_STEPPER_FS          30000
+    #define FTM_STEPPERCMD_BUFF_SIZE 6000
+  #endif
+
+  #define FTM_STEPS_PER_UNIT_TIME (FTM_STEPPER_FS / FTM_FS)       // Interpolated stepper commands per unit time
+  #define FTM_CTS_COMPARE_VAL (FTM_STEPS_PER_UNIT_TIME / 2)       // Comparison value used in interpolation algorithm
+  #define FTM_MIN_TICKS ((STEPPER_TIMER_RATE) / (FTM_STEPPER_FS)) // Minimum stepper ticks between steps
+
+  #define FTM_MIN_SHAPE_FREQ           10         // Minimum shaping frequency
+  #define FTM_RATIO (FTM_FS / FTM_MIN_SHAPE_FREQ) // Factor for use in FTM_ZMAX. DON'T CHANGE.
+  #define FTM_ZMAX (FTM_RATIO * 2)                // Maximum delays for shaping functions (even numbers only!)
+                                                  // Calculate as:
+                                                  //   ZV       : FTM_RATIO / 2
+                                                  //   ZVD, MZV : FTM_RATIO
+                                                  //   2HEI     : FTM_RATIO * 3 / 2
+                                                  //   3HEI     : FTM_RATIO * 2
+#endif // FT_MOTION
 ```
+
+#### Enable FTM Motion Control
+```cpp
+#define FT_MOTION
+```
+Enable or disable the Fixed-Time-based Motion Control (FTM) feature, which is a beta feature for advanced motion control. This can be enabled using G-code commands with `M493`.
+
+#### Dynamic Frequency Mode
+```cpp
+#define FTM_DEFAULT_DYNFREQ_MODE dynFreqMode_DISABLED // Default mode of dynamic frequency calculation.
+```
+Set the default dynamic frequency calculation mode for FTM. Options include:
+- `dynFreqMode_DISABLED`: Disable dynamic frequency adjustment (default).
+- `dynFreqMode_Z_BASED`: Use a Z-based dynamic frequency algorithm.
+- `dynFreqMode_MASS_BASED`: Use a mass-based dynamic frequency algorithm.
+
+#### Default Shaper Modes
+```cpp
+#define FTM_DEFAULT_SHAPER_X ftMotionShaper_NONE // Default shaper mode on X axis (NONE, ZV, ZVD, ZVDD, ZVDDD, EI, 2HEI, 3HEI, MZV)
+#define FTM_DEFAULT_SHAPER_Y ftMotionShaper_NONE // Default shaper mode on Y axis
+```
+Set the default shaper modes for both X and Y axes. These control how motion commands are shaped to reduce vibrations and improve performance. Available options include:
+- `ftMotionShaper_NONE`: No shaping (default).
+- `ftMotionShaper_ZV, ZVD, ZVDD, ZVDDD`: Zero-Vibration shapers.
+- `ftMotionShaper_EI, 2HEI, 3HEI`: Enhanced Input shapers.
+- `ftMotionShaper_MZV`: Modified Zero-Vibration shaper.
+
+#### Frequency and Tolerance
+```cpp
+#define FTM_SHAPING_DEFAULT_FREQ_X   37.0f      // (Hz) Default peak frequency used by input shapers
+#define FTM_SHAPING_DEFAULT_FREQ_Y   37.0f      // (Hz) Default peak frequency used by input shapers
+#define FTM_LINEAR_ADV_DEFAULT_ENA   false      // Default linear advance enable (true) or disable (false)
+#define FTM_LINEAR_ADV_DEFAULT_K     0.0f       // Default linear advance gain. (Acceleration-based scaling factor.)
+```
+Set the default peak frequencies for X and Y axes, as well as default parameters for Linear Advance. These settings can be fine-tuned based on your specific printer setup.
+
+#### Vibration Tolerance
+```cpp
+#define FTM_SHAPING_V_TOL_X           0.05f     // Vibration tolerance used by EI input shapers for X axis
+#define FTM_SHAPING_V_TOL_Y           0.05f     // Vibration tolerance used by EI input shapers for Y axis
+```
+Specify the vibration tolerance levels for the X and Y axes, which are particularly important when using Enhanced Input (EI) shaper modes.
+
+#### Advanced Configuration
+```cpp
+#define FTM_UNIFIED_BWS                         // DON'T DISABLE unless you use Ulendo FBS (not implemented)
+#if ENABLED(FTM_UNIFIED_BWS)
+  #define FTM_BW_SIZE               100         // Unified Window and Batch size with a ratio of 2
+#else
+  #define FTM_WINDOW_SIZE           200         // Custom Window size for trajectory generation needed by Ulendo FBS
+  #define FTM_BATCH_SIZE            100         // Custom Batch size for trajectory generation needed by Ulendo FBS
+#endif
+
+#define FTM_FS                     1000         // (Hz) Frequency for trajectory generation.
+#define FTM_TS                        0.001f    // (s) Time step for trajectory generation.
+
+#define FTM_STEPPER_FS          20000         // (Hz) Frequency for stepper I/O update
+#define FTM_STEPPERCMD_BUFF_SIZE 3000         // Size of the stepper command buffers
+```
+These advanced settings configure various aspects of trajectory generation and stepper communication, ensuring smooth and accurate motion control. CoreXY motion needs a larger buffer size. Provided values are based on community testing and feedback.
+
+#### Minimum Parameters
+```cpp
+#define FTM_STEPS_PER_UNIT_TIME (FTM_STEPPER_FS / FTM_FS)       // Interpolated stepper commands per unit time
+#define FTM_CTS_COMPARE_VAL (FTM_STEPS_PER_UNIT_TIME / 2)       // Comparison value used in interpolation algorithm
+#define FTM_MIN_TICKS ((STEPPER_TIMER_RATE) / (FTM_STEPPER_FS)) // Minimum stepper ticks between steps
+
+#define FTM_MIN_SHAPE_FREQ           10         // Minimum shaping frequency
+#define FTM_RATIO (FTM_FS / FTM_MIN_SHAPE_FREQ) // Factor for use in FTM_ZMAX. DON'T CHANGE.
+#define FTM_ZMAX (FTM_RATIO * 2)                // Maximum delays for shaping functions (even numbers only!)
+```
+These parameters ensure that the motion control system operates within optimal ranges, providing a balance between performance and accuracy.
+
+By customizing these settings, you can optimize your printer's performance to suit specific needs or preferences.
 
 ### ZV Input Shaping
 Zero Vibration (ZV) Input Shaping for X and/or Y movements.
@@ -2534,6 +2918,12 @@ Adds a duplicate option for well-separated conjoined nozzles.
 #define INVERT_X_STEP_PIN false
 #define INVERT_Y_STEP_PIN false
 #define INVERT_Z_STEP_PIN false
+#define INVERT_I_STEP_PIN false
+#define INVERT_J_STEP_PIN false
+#define INVERT_K_STEP_PIN false
+#define INVERT_U_STEP_PIN false
+#define INVERT_V_STEP_PIN false
+#define INVERT_W_STEP_PIN false
 #define INVERT_E_STEP_PIN false
 ```
 Set to true for active low signal.
@@ -2544,6 +2934,12 @@ Set to true for active low signal.
 #define DISABLE_INACTIVE_X true
 #define DISABLE_INACTIVE_Y true
 #define DISABLE_INACTIVE_Z true
+#define DISABLE_INACTIVE_I true
+#define DISABLE_INACTIVE_J true
+#define DISABLE_INACTIVE_K true
+#define DISABLE_INACTIVE_U true
+#define DISABLE_INACTIVE_V true
+#define DISABLE_INACTIVE_W true
 #define DISABLE_INACTIVE_E true
 ```
 Disable stepper motors after set time. Set to 0 to deactive feature. Time can be set by [`M18 & M84`](/docs/gcode/M018.html).
@@ -2628,6 +3024,21 @@ See `Configuration_adv.h` for further information.
   #define CALIBRATION_MEASURE_LEFT
   #define CALIBRATION_MEASURE_BACK
 
+  //#define CALIBRATION_MEASURE_IMIN
+  //#define CALIBRATION_MEASURE_IMAX
+  //#define CALIBRATION_MEASURE_JMIN
+  //#define CALIBRATION_MEASURE_JMAX
+  //#define CALIBRATION_MEASURE_KMIN
+  //#define CALIBRATION_MEASURE_KMAX
+  //#define CALIBRATION_MEASURE_UMIN
+  //#define CALIBRATION_MEASURE_UMAX
+  //#define CALIBRATION_MEASURE_VMIN
+  //#define CALIBRATION_MEASURE_VMAX
+  //#define CALIBRATION_MEASURE_WMIN
+  //#define CALIBRATION_MEASURE_WMAX
+
+  // Probing at the exact top center only works if the center is flat. If
+  // probing on a screwhead or hollow washer, probe near the edges.
   //#define CALIBRATION_MEASURE_AT_TOP_EDGES
 
   #ifndef CALIBRATION_PIN
@@ -2756,7 +3167,7 @@ Show the total filament used amount during printing.
   //#define PRINT_PROGRESS_SHOW_DECIMALS // Show progress with decimal digits
   //#define SHOW_REMAINING_TIME          // Display estimated time to completion
   #if ENABLED(SHOW_REMAINING_TIME)
-    //#define USE_M73_REMAINING_TIME     // Use remaining time from M73 command instead of estimation
+    //#define SET_REMAINING_TIME         // Use remaining time from M73 command instead of estimation
     //#define ROTATE_PROGRESS_DISPLAY    // Display (P)rogress, (E)lapsed, and (R)emaining time
   #endif
 #endif
@@ -3109,6 +3520,24 @@ Babystepping enables [`M290`](/docs/gcode/M290.html) and LCD menu items to move 
 This feature allows Marlin to use linear pressure control for print extrusion, to eliminate ooze, improve corners, etc. See `Configuration_adv.h` and the [Linear Advance page](/docs/features/lin_advance.html) for more complete documentation.
 
 ## Leveling
+
+### Safe Bed Leveling Start Coordinates
+
+```cpp
+//#define SAFE_BED_LEVELING_START_X 0.0
+//#define SAFE_BED_LEVELING_START_Y 0.0
+//#define SAFE_BED_LEVELING_START_Z 0.0
+//#define SAFE_BED_LEVELING_START_I 0.0
+//#define SAFE_BED_LEVELING_START_J 0.0
+//#define SAFE_BED_LEVELING_START_K 0.0
+//#define SAFE_BED_LEVELING_START_U 0.0
+//#define SAFE_BED_LEVELING_START_V 0.0
+//#define SAFE_BED_LEVELING_START_W 0.0
+```
+Use Safe Bed Leveling coordinates to move axes to a useful position before bed probing.
+For example, after homing a rotational axis the Z probe might not be perpendicular to the bed.
+Choose values the orient the bed horizontally and the Z-probe vertically.
+
 ### 3-Point Options
 ```cpp
 #if EITHER(AUTO_BED_LEVELING_3POINT, AUTO_BED_LEVELING_UBL)
@@ -3188,7 +3617,7 @@ Enables [`G60`](/docs/gcode/G060.html) & [`G61`](/docs/gcode/G061.html) and spec
 ```
 [`G2/G3`](/docs/gcode/G002-G003.html) Arc Support
 
-### G5 Bezier Curve
+### G5 Bézier Curve
 ```cpp
 //#define BEZIER_CURVE_SUPPORT
 ```
@@ -3349,25 +3778,79 @@ This option adds [`G10`](/docs/gcode/G010.html)/[`G11`](/docs/gcode/G011.html) c
 
 ### Universal Tool Change Settings
 ```cpp
-#if EXTRUDERS > 1
-  #define TOOLCHANGE_ZRAISE     2  // (mm)
-  //#define TOOLCHANGE_NO_RETURN   // Never return to the previous position on tool-change
+/**
+ * Universal tool change settings.
+ * Applies to all types of extruders except where explicitly noted.
+ */
+#if HAS_MULTI_EXTRUDER
+  // Z raise distance for tool-change, as needed for some extruders
+  #define TOOLCHANGE_ZRAISE                 2 // (mm)
+  //#define TOOLCHANGE_ZRAISE_BEFORE_RETRACT  // Apply raise before swap retraction (if enabled)
+  //#define TOOLCHANGE_NO_RETURN              // Never return to previous position on tool-change
   #if ENABLED(TOOLCHANGE_NO_RETURN)
-    //#define EVENT_GCODE_AFTER_TOOLCHANGE "G12X"   // G-code to run after tool-change is complete
+    //#define EVENT_GCODE_AFTER_TOOLCHANGE "G12X"   // Extra G-code to run after tool-change
   #endif
+
+  /**
+   * Extra G-code to run while executing tool-change commands. Can be used to use an additional
+   * stepper driver (I_DRIVER_TYPE) in Configuration.h) to drive the tool-changer.
+   */
+  //#define EVENT_GCODE_TOOLCHANGE_T0 "G28 A\nG1 A0" // Extra G-code to run while executing tool-change command T0
+  //#define EVENT_GCODE_TOOLCHANGE_T1 "G1 A10"       // Extra G-code to run while executing tool-change command T1
+  //#define EVENT_GCODE_TOOLCHANGE_ALWAYS_RUN        // Always execute above G-code sequences. Use with caution!
+  /**
+   * Tool Sensors detect when tools have been picked up or dropped.
+   * Requires the pins TOOL_SENSOR1_PIN, TOOL_SENSOR2_PIN, etc.
+   */
+  //#define TOOL_SENSOR
+
+  /**
+   * Retract and prime filament on tool-change to reduce
+   * ooze and stringing and to get cleaner transitions.
+   */
   //#define TOOLCHANGE_FILAMENT_SWAP
   #if ENABLED(TOOLCHANGE_FILAMENT_SWAP)
-    #define TOOLCHANGE_FIL_SWAP_LENGTH          12  // (mm)
-    #define TOOLCHANGE_FIL_EXTRA_PRIME           2  // (mm)
-    #define TOOLCHANGE_FIL_SWAP_RETRACT_SPEED 3600  // (mm/m)
-    #define TOOLCHANGE_FIL_SWAP_PRIME_SPEED   3600  // (mm/m)
+    // Load / Unload
+    #define TOOLCHANGE_FS_LENGTH              12  // (mm) Load / Unload length
+    #define TOOLCHANGE_FS_EXTRA_RESUME_LENGTH  0  // (mm) Extra length for better restart. Adjust with LCD or M217 B.
+    #define TOOLCHANGE_FS_RETRACT_SPEED   (50*60) // (mm/min) (Unloading)
+    #define TOOLCHANGE_FS_UNRETRACT_SPEED (25*60) // (mm/min) (On SINGLENOZZLE or Bowden loading must be slowed down)
+
+    // Longer prime to clean out a SINGLENOZZLE
+    #define TOOLCHANGE_FS_EXTRA_PRIME          0  // (mm) Extra priming length
+    #define TOOLCHANGE_FS_PRIME_SPEED    (4.6*60) // (mm/min) Extra priming feedrate
+    #define TOOLCHANGE_FS_WIPE_RETRACT         0  // (mm) Retract before cooling for less stringing, better wipe, etc.
+
+    // Cool after prime to reduce stringing
+    #define TOOLCHANGE_FS_FAN                 -1  // Fan index or -1 to skip
+    #define TOOLCHANGE_FS_FAN_SPEED          255  // 0-255
+    #define TOOLCHANGE_FS_FAN_TIME            10  // (seconds)
+
+    // Use TOOLCHANGE_FS_PRIME_SPEED feedrate the first time each extruder is primed
+    //#define TOOLCHANGE_FS_SLOW_FIRST_PRIME
+
+    /**
+     * Prime T0 the first time T0 is sent to the printer:
+     *  [ Power-On -> T0 { Activate & Prime T0 } -> T1 { Retract T0, Activate & Prime T1 } ]
+     * If disabled, no priming on T0 until switching back to T0 from another extruder:
+     *  [ Power-On -> T0 { T0 Activated } -> T1 { Activate & Prime T1 } -> T0 { Retract T1, Activate & Prime T0 } ]
+     * Enable with M217 V1 before printing to avoid unwanted priming on host connect.
+     */
+    //#define TOOLCHANGE_FS_PRIME_FIRST_USED
+
+    /**
+     * Tool Change Migration
+     * This feature provides G-code and LCD options to switch tools mid-print.
+     * All applicable tool properties are migrated so the print can continue.
+     * Tools must be closely matching and other restrictions may apply.
+     * Useful to:
+     *   - Change filament color without interruption
+     *   - Switch spools automatically on filament runout
+     *   - Switch to a different nozzle on an extruder jam
+     */
+    #define TOOLCHANGE_MIGRATION_FEATURE
+
   #endif
-  //#define TOOLCHANGE_PARK
-  #if ENABLED(TOOLCHANGE_PARK)
-    #define TOOLCHANGE_PARK_XY    { X_MIN_POS + 10, Y_MIN_POS + 10 }
-    #define TOOLCHANGE_PARK_XY_FEEDRATE 6000  // (mm/m)
-  #endif
-#endif
 ```
 
 ## Advanced Pause
@@ -3421,6 +3904,7 @@ Experimental feature for filament change support and parking the nozzle when pau
 
 ## Stepper Drivers
 ### Trinamic TMC26X
+(Removed in Marlin 2.1.3)
 ```cpp
 #if HAS_DRIVER(TMC26X)
 
@@ -3429,98 +3913,7 @@ Experimental feature for filament change support and parking the nozzle when pau
     #define X_SENSE_RESISTOR    91  // (mOhms)
     #define X_MICROSTEPS        16  // Number of microsteps
   #endif
-
-  #if AXIS_DRIVER_TYPE_X2(TMC26X)
-    #define X2_MAX_CURRENT    1000
-    #define X2_SENSE_RESISTOR   91
-    #define X2_MICROSTEPS       16
-  #endif
-
-  #if AXIS_DRIVER_TYPE_Y(TMC26X)
-    #define Y_MAX_CURRENT     1000
-    #define Y_SENSE_RESISTOR    91
-    #define Y_MICROSTEPS        16
-  #endif
-
-  #if AXIS_DRIVER_TYPE_Y2(TMC26X)
-    #define Y2_MAX_CURRENT    1000
-    #define Y2_SENSE_RESISTOR   91
-    #define Y2_MICROSTEPS       16
-  #endif
-
-  #if AXIS_DRIVER_TYPE_Z(TMC26X)
-    #define Z_MAX_CURRENT     1000
-    #define Z_SENSE_RESISTOR    91
-    #define Z_MICROSTEPS        16
-  #endif
-
-  #if AXIS_DRIVER_TYPE_Z2(TMC26X)
-    #define Z2_MAX_CURRENT    1000
-    #define Z2_SENSE_RESISTOR   91
-    #define Z2_MICROSTEPS       16
-  #endif
-
-  #if AXIS_DRIVER_TYPE_Z3(TMC26X)
-    #define Z3_MAX_CURRENT    1000
-    #define Z3_SENSE_RESISTOR   91
-    #define Z3_MICROSTEPS       16
-  #endif
-
-  #if AXIS_DRIVER_TYPE_Z4(TMC26X)
-    #define Z4_MAX_CURRENT    1000
-    #define Z4_SENSE_RESISTOR   91
-    #define Z4_MICROSTEPS       16
-  #endif
-
-  #if AXIS_DRIVER_TYPE_E0(TMC26X)
-    #define E0_MAX_CURRENT    1000
-    #define E0_SENSE_RESISTOR   91
-    #define E0_MICROSTEPS       16
-  #endif
-
-  #if AXIS_DRIVER_TYPE_E1(TMC26X)
-    #define E1_MAX_CURRENT    1000
-    #define E1_SENSE_RESISTOR   91
-    #define E1_MICROSTEPS       16
-  #endif
-
-  #if AXIS_DRIVER_TYPE_E2(TMC26X)
-    #define E2_MAX_CURRENT    1000
-    #define E2_SENSE_RESISTOR   91
-    #define E2_MICROSTEPS       16
-  #endif
-
-  #if AXIS_DRIVER_TYPE_E3(TMC26X)
-    #define E3_MAX_CURRENT    1000
-    #define E3_SENSE_RESISTOR   91
-    #define E3_MICROSTEPS       16
-  #endif
-
-  #if AXIS_DRIVER_TYPE_E4(TMC26X)
-    #define E4_MAX_CURRENT    1000
-    #define E4_SENSE_RESISTOR   91
-    #define E4_MICROSTEPS       16
-  #endif
-
-  #if AXIS_DRIVER_TYPE_E5(TMC26X)
-    #define E5_MAX_CURRENT    1000
-    #define E5_SENSE_RESISTOR   91
-    #define E5_MICROSTEPS       16
-  #endif
-
-  #if AXIS_DRIVER_TYPE_E6(TMC26X)
-    #define E6_MAX_CURRENT    1000
-    #define E6_SENSE_RESISTOR   91
-    #define E6_MICROSTEPS       16
-  #endif
-
-  #if AXIS_DRIVER_TYPE_E7(TMC26X)
-    #define E7_MAX_CURRENT    1000
-    #define E7_SENSE_RESISTOR   91
-    #define E7_MICROSTEPS       16
-  #endif
-
-#endif
+  ...
 ```
 You'll need to import the [TMC26XStepper](//github.com/trinamic/TMC26XStepper.git) library into the Arduino IDE. See `Configuration_adv.h` for the full set of sub-options.
 
@@ -3529,136 +3922,33 @@ You'll need to import the [TMC26XStepper](//github.com/trinamic/TMC26XStepper.gi
 #if HAS_TRINAMIC_CONFIG
 
   #define HOLD_MULTIPLIER    0.5  // Scales down the holding current from run current
-  #define INTERPOLATE       true  // Interpolate X/Y/Z_MICROSTEPS to 256
+
+  /**
+   * Interpolate microsteps to 256
+   * Override for each driver with <driver>_INTERPOLATE settings below
+   */
+  #define INTERPOLATE      true
 
   #if AXIS_IS_TMC(X)
     #define X_CURRENT       800        // (mA) RMS current. Multiply by 1.414 for peak current.
     #define X_CURRENT_HOME  X_CURRENT  // (mA) RMS current for sensorless homing
-    #define X_MICROSTEPS     16    // 0..256
+    #define X_MICROSTEPS     16        // 0..256
     #define X_RSENSE          0.11
-    #define X_CHAIN_POS      -1    // <=0 : Not chained. 1 : MCU MOSI connected. 2 : Next in chain, ...
+    #define X_CHAIN_POS      -1        // -1..0: Not chained. 1: MCU MOSI connected. 2: Next in chain, ...
+    //#define X_INTERPOLATE  true      // Enable to override 'INTERPOLATE' for the X axis
+    //#define X_HOLD_MULTIPLIER 0.5    // Enable to override 'HOLD_MULTIPLIER' for the X axis
   #endif
-
-  #if AXIS_IS_TMC(X2)
-    #define X2_CURRENT      800
-    #define X2_CURRENT_HOME X2_CURRENT
-    #define X2_MICROSTEPS    16
-    #define X2_RSENSE         0.11
-    #define X2_CHAIN_POS     -1
-  #endif
-
-  #if AXIS_IS_TMC(Y)
-    #define Y_CURRENT       800
-    #define Y_CURRENT_HOME  Y_CURRENT
-    #define Y_MICROSTEPS     16
-    #define Y_RSENSE          0.11
-    #define Y_CHAIN_POS      -1
-  #endif
-
-  #if AXIS_IS_TMC(Y2)
-    #define Y2_CURRENT      800
-    #define Y2_CURRENT_HOME Y2_CURRENT
-    #define Y2_MICROSTEPS    16
-    #define Y2_RSENSE         0.11
-    #define Y2_CHAIN_POS     -1
-  #endif
-
-  #if AXIS_IS_TMC(Z)
-    #define Z_CURRENT       800
-    #define Z_CURRENT_HOME  Z_CURRENT
-    #define Z_MICROSTEPS     16
-    #define Z_RSENSE          0.11
-    #define Z_CHAIN_POS      -1
-  #endif
-
-  #if AXIS_IS_TMC(Z2)
-    #define Z2_CURRENT      800
-    #define Z2_CURRENT_HOME Z2_CURRENT
-    #define Z2_MICROSTEPS    16
-    #define Z2_RSENSE         0.11
-    #define Z2_CHAIN_POS     -1
-  #endif
-
-  #if AXIS_IS_TMC(Z3)
-    #define Z3_CURRENT      800
-    #define Z3_CURRENT_HOME Z3_CURRENT
-    #define Z3_MICROSTEPS    16
-    #define Z3_RSENSE         0.11
-    #define Z3_CHAIN_POS     -1
-  #endif
-
-  #if AXIS_IS_TMC(Z4)
-    #define Z4_CURRENT      800
-    #define Z4_CURRENT_HOME Z4_CURRENT
-    #define Z4_MICROSTEPS    16
-    #define Z4_RSENSE         0.11
-    #define Z4_CHAIN_POS     -1
-  #endif
-
-  #if AXIS_IS_TMC(E0)
-    #define E0_CURRENT      800
-    #define E0_MICROSTEPS    16
-    #define E0_RSENSE         0.11
-    #define E0_CHAIN_POS     -1
-  #endif
-
-  #if AXIS_IS_TMC(E1)
-    #define E1_CURRENT      800
-    #define E1_MICROSTEPS    16
-    #define E1_RSENSE         0.11
-    #define E1_CHAIN_POS     -1
-  #endif
-
-  #if AXIS_IS_TMC(E2)
-    #define E2_CURRENT      800
-    #define E2_MICROSTEPS    16
-    #define E2_RSENSE         0.11
-    #define E2_CHAIN_POS     -1
-  #endif
-
-  #if AXIS_IS_TMC(E3)
-    #define E3_CURRENT      800
-    #define E3_MICROSTEPS    16
-    #define E3_RSENSE         0.11
-    #define E3_CHAIN_POS     -1
-  #endif
-
-  #if AXIS_IS_TMC(E4)
-    #define E4_CURRENT      800
-    #define E4_MICROSTEPS    16
-    #define E4_RSENSE         0.11
-    #define E4_CHAIN_POS     -1
-  #endif
-
-  #if AXIS_IS_TMC(E5)
-    #define E5_CURRENT      800
-    #define E5_MICROSTEPS    16
-    #define E5_RSENSE         0.11
-    #define E5_CHAIN_POS     -1
-  #endif
-
-  #if AXIS_IS_TMC(E6)
-    #define E6_CURRENT      800
-    #define E6_MICROSTEPS    16
-    #define E6_RSENSE         0.11
-    #define E6_CHAIN_POS     -1
-  #endif
-
-  #if AXIS_IS_TMC(E7)
-    #define E7_CURRENT      800
-    #define E7_MICROSTEPS    16
-    #define E7_RSENSE         0.11
-    #define E7_CHAIN_POS     -1
-  #endif
+  ...
 ```
 You'll need the [TMC2130Stepper](//github.com/teemuatlut/TMC2130Stepper) Arduino library. See `Configuration_adv.h` for the full set of sub-options.
 
 To use TMC2130 stepper drivers in SPI mode connect your SPI2130 pins to the hardware SPI interface on your board and define the required CS pins in your `pins_MYBOARD.h` file. (_e.g.,_ RAMPS 1.4 uses AUX3 pins `X_CS_PIN 53`, `Y_CS_PIN 49`, etc.).
 
 ### L6470 Drivers
+(Removed in Marlin 2.1.2)
 ```cpp
 #if HAS_L64XX
-  //#define L6470_CHITCHAT        // Display additional status info
+  //#define L6470_CHITCHAT          // Display additional status info
   #if AXIS_IS_L64XX(X)
     #define X_MICROSTEPS       128  // Number of microsteps (VALID: 1, 2, 4, 8, 16, 32, 128) - L6474 max is 16
     #define X_OVERCURRENT     2000  // (mA) Current where the driver detects an over current
@@ -3818,7 +4108,7 @@ Add the [`M240`](/docs/gcode/M240.html) to take a photo. The photo can be trigge
      * 'M4 I' sets dynamic mode which uses the current feedrate to calculate a laser power OCR value.
      *
      * Any move in dynamic mode will use the current feed rate to calculate the laser power.
-     * Feed rates are set by the F parameter of a move command e.g. G1 X0 Y10 F6000
+     * Feed rates are set by the F parameter of a move command e.g., G1 X0 Y10 F6000
      * Laser power would be calculated by bit shifting off 8 LSB's. In binary this is div 256.
      * The calculation gives us ocr values from 0 to 255, values over F65535 will be set as 255 .
      * More refined power control such as compesation for accell/decell will be addressed in future releases.
@@ -4295,3 +4585,15 @@ Display pin status, toggle pins, watch pins, watch endstops & toggle LED, test s
 //#define MARLIN_DEV_MODE
 ```
 Enable Marlin dev mode which adds some special commands.
+
+#### Enable Postmortem Debugging
+```cpp
+//#define POSTMORTEM_DEBUGGING
+```
+Captures misbehavior and outputs the CPU status and backtrace to serial. When running in the debugger it will break for debugging. This is useful to help understand a crash from a remote location.
+
+#### Enable Marlin Small Build
+```cpp
+//#define MARLIN_SMALL_BUILD
+```
+Shrink the build for smaller boards by sacrificing some serial feedback.

@@ -104,6 +104,10 @@ Marlin's `SanityCheck.h` files exist to check the validity of settings and make 
 
 A Marlin build can range in size from under 60K to over 200K with a generous complement of features enabled. All features try to use as little SRAM as possible, but some have a higher SRAM cost. As a guide and starting-point, be sure to use the example configuration included with Marlin that best matches your specific machine model.
 
+### Assembler messages
+
+Occasionally a build may fail with "Assembler messages: can't create file" or something similar. This is a spurious error caused by a weird interaction between the build system and the file system, where it looks for a file that was supposed to be created before the creation of the file has actually completed. Just keep restarting the build and all the code will eventually be compiled.
+
 ### Delta Height, Z Probe Offset, and G33
 
 Since Marlin 1.1 "Delta Height" is defined as the distance between Z Home Position and the Z-MIN trigger point (so it remains constant). The Z Probe Offset is added to that distance in order to go to the height of the first printed layer and as such is independent from Delta Height. (Printers without a probe have no Z Probe Offset. Instead, the Z-MIN trigger-point comes from the paper test height, aka Z0.)

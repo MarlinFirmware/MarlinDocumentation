@@ -1,0 +1,25 @@
+{% if head_text %}<h2 class="ctr">{{ head_text }}</h2>{% endif %}
+<table>
+  <tr><th>Description</th><th>Version</th><th>Get Source Code</th><th>Configurations</th>
+  {% if download_items[0].builds %}<th>Binaries</th>{% endif %}
+  </tr>
+  {% for item in download_items %}
+  <tr>
+    <td>
+      {% if item.extra %}<strong><em>{{ item.extra }}</em></strong><br/>{% endif %}
+      <strong>{{ item.description }}</strong><br/>
+      <em>{{ item.tools }}<em>
+    </td>
+    <td><code><a href="//github.com/MarlinFirmware/Marlin/tree/{{ item.version }}" title="Github Files">{{ item.version }}</a></code></td>
+    <td><a href="//github.com/MarlinFirmware/Marlin/archive/{{ item.file }}">{{ item.file }}</a></td>
+    <td>
+      {% if item.config %}
+        <a href="//github.com/MarlinFirmware/Configurations/tree/{{ item.config }}">Browse Configs</a>
+      {% endif %}
+    </td>
+    {% if item.builds %}
+      <td><a href="//github.com/MarlinFirmware/MarlinBuilds/tree/{{ item.builds }}/builds">Browse Builds</a></td>
+    {% endif %}
+  </tr>
+  {% endfor %}
+</table>

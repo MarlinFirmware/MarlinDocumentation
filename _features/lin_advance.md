@@ -119,27 +119,26 @@ A too high K-Factor essentially reverses the above picture. The extruded amount 
 
 ## The following considerations are no longer a problem with LIN_ADVANCE version 1.5
  - This feature adds extra load to the CPU (and possibly more wear on the extruder). Using a communication speed of 115200 baud or lower to prevent communication errors and "weird" movements is recommended.
- - The print host software should be using line numbers and checksums. (This is disabled by default e.g. in Simplify3D)
+ - The print host software should be using line numbers and checksums. (This is disabled by default, e.g., in Simplify3D)
  - Theoretically there should be no "extra" movements produced by `LIN_ADVANCE`. If extra movements were produced, this would tend to increase wear on more fragile parts such as the printed gears of a Wade extruder.
-
 
 ## Saving the K-Factor in the Firmware
 If only one filament material is used, the best way is to set the K-Factor inside `Configuration_adv.h` and reflash the firmware:
 
     /**
-    * Implementation of linear pressure control
-    *
-    * Assumption: advance = k * (delta velocity)
-    * K=0 means advance disabled.
-    * See Marlin documentation for calibration instructions.
-    */
+     * Implementation of linear pressure control
+     *
+     * Assumption: advance = k * (delta velocity)
+     * K=0 means advance disabled.
+     * See Marlin documentation for calibration instructions.
+     */
     #define LIN_ADVANCE
 
     #if ENABLED(LIN_ADVANCE)
     #define LIN_ADVANCE_K <your_value_here>
 
 ## Adding the K-Factor to the G-code Start Script
-[G-code Start Scripts](//reprap.org/wiki/Start_GCode_routines) are supported by various slicers. The big advantage of setting the K-Factor via this methods is that it can easily be modified, e.g. when switching to a different material.
+[G-code Start Scripts](//reprap.org/wiki/Start_GCode_routines) are supported by various slicers. The big advantage of setting the K-Factor via this methods is that it can easily be modified, e.g., when switching to a different material.
 The K-Factor is defined by adding the command `M900 Kxx` to the end of the start script, where *xx* is the value determined with the above test pattern.
 
 The following chapter briefly describes where to find the relevant setting in popular slicers.

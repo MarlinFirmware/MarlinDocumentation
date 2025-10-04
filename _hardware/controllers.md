@@ -118,7 +118,7 @@ groups:
 
     - name: RA_CONTROL_PANEL
       description: Elefu RA board control panel.
-      url: web.archive.org/web/20140823033947/http://www.elefu.com/index.php?route=product/product&product_id=53
+      url: web.archive.org/web/20140823033947/www.elefu.com/index.php?route=product/product&product_id=53
       interface: I2C
 
     - name: LCD_SAINSMART_I2C_1602
@@ -137,8 +137,19 @@ groups:
       protocol: LCM1602
 
     - name: LCD_I2C_PANELOLU2
-      description: PANELOLU2 LCD with status LEDs, separate encoder and click inputs.
+      description: |
+        - 20x4 character LCD panel
+        - SD Card reader
+        - Reset button
+        - Rotary encoder click wheel
+        - Buzzer
+        - 3 LEDs
       interface: I2C
+      url: [ reprap.org/wiki/Panelolu2, github.com/T3P3/Panelolu2 ]
+      images:
+        - alt: LCD_I2C_PANELOLU2
+          front: LCD_I2C_PANELOLU2
+          back: LCD_I2C_PANELOLU2
 
     - name: LCD_I2C_VIKI
       description: Panucatt VIKI LCD with status LEDs, integrated click & L/R/U/D buttons, separate encoder inputs.
@@ -197,8 +208,18 @@ groups:
       url: reprapworld.com/electronics/3d-printer-modules/autonomous-printing/graphical-lcd-screen-v1-0/
 
     - name: VIKI2
-      description: Panucatt mini Viki with Graphic LCD
+      description: Panucatt Viki2 Graphic LCD
       url: www.panucatt.com
+      description: |
+        - 128×64 pixel LCD panel
+        - SD Card reader
+        - Reset button
+        - Rotary encoder click wheel
+        - Dual color ring light (Red/Blue, independent control)
+      images:
+        - alt: VIKI2
+          front: VIKI2
+          back: VIKI2
 
     - name: miniVIKI
       description: Panucatt mini Viki with Graphic LCD
@@ -567,6 +588,16 @@ groups:
       size: 2.8"
       res: 320×240
 
+    - name: MALYAN_LCD
+      description: |
+        Malyan M200/M300 stock IPS Color LCD with Big Clicky Buttons. **NOT A TOUCH SCREEN!**
+        - 3.2"
+        - Serial host
+        - Custom serial protocol
+        - Buttons: Forward | Action | Back
+      api: ExtUI
+      interface: Serial
+
     - name: ANET_ET4_TFT28
       description: |
         Stock display from the Anet ET4.
@@ -593,6 +624,10 @@ groups:
         - 1024×600
         - 7"
         - Rotary encoder click wheel
+      images:
+        - alt: BIQU_BX_TFT70
+          front: BIQU_BX_TFT70
+          back: BIQU_BX_TFT70
 
     - name: BTT_TFT35_SPI_V1_0
       description: 480×320, 3.5", SPI Stock Display with Rotary Encoder from BIQU B1 SE Series
@@ -611,6 +646,7 @@ groups:
         - 480×272
         - 4.3"
         - Serial (DWIN T5UID1)
+      api: ExtUI
       interface: Serial
       protocol: T5UID1
       images:
@@ -653,9 +689,6 @@ groups:
       since: 2.1.4
       description: TFT touchscreen included with the Ender-5 S1.
 
-    - name: MALYAN_LCD
-      description: Touchscreen LCD included with the Malyan M200/M300.
-
     - name: TOUCH_UI_FTDI_EVE
       description: Touch UI for FTDI EVE (FT800/FT810) displays for Lulzbot printers.
 
@@ -667,6 +700,18 @@ groups:
 
     - name: ANYCUBIC_LCD_VYPER
       description: Touchscreen included with the Anycubic Vyper.
+
+    - name: SOVOL_SV06_RTS
+      description: |
+        Touchscreen found in Sovol SV-06
+        - 272x480
+        - 4.3"
+        - Serial (DWIN T5LC1)
+      interface: Serial
+      protocol: T5LC1
+      images:
+        - alt: SOVOL_SV06_RTS
+          back: SOVOL_SV06_RTS
 
     - name: NEXTION_TFT
       description: 320×240 Nextion 2.8" serial TFT Resistive Touch Screen. Model NX3224T028.
