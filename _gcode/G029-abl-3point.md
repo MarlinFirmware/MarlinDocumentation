@@ -112,12 +112,12 @@ The first `G29` accepts the same parameters , shown in the [Usage](#usage-g029g1
 
   **To probe the bed using your LCD controller:** (Requires `LCD_BED_LEVELING`)
 
-  1. Select the `Level Bed` sub-menu, then choose `Level Bed` (not `Cancel`).
+  1. Find and select the `Level Bed` menu item and verify your choice. (The location of this menu item differs depending on your controller and Marlin version.)
   2. Wait for `Homing XYZ` to complete.
   3. When `Click to Begin` appears, press the controller button to move to the first point.
-  4. Use the controller wheel to adjust Z so that a piece of paper can just pass under the nozzle.
-  5. Press the controller button to save the Z value and move to the next point.
-  6. Repeat steps 4-5 until completed.
-  7. Use `Control` > `Store memory` to save the mesh to EEPROM, if desired.
+  4. Repeat the following steps until the entire mesh is completed:
+    - Use the controller wheel to adjust Z so that a piece of paper can just pass under the nozzle.
+    - Press the controller button to save the Z value and move to the next point.
+  5. Use `Control` > `Save to EEPROM` to save the mesh to EEPROM.
 
 {% enddetails %}
