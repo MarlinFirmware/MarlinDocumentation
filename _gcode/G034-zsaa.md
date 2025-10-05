@@ -8,7 +8,7 @@ group: calibration
 requires: Z_STEPPER_AUTO_ALIGN
 
 codes: [ G34 ]
-related: [ G28, M422, M906, M907 ]
+related: [ M422, M906, M907 ]
 
 parameters:
 
