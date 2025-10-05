@@ -127,7 +127,7 @@ Mesh Bed Leveling (MBL) allows interactively measuring a Z height mesh without a
 3. Adjust Z so a piece of paper can just pass under the nozzle.
 4. Use `G29 S2` to save the Z value and move to the next point.
 5. Repeat steps 3-4 until completed.
-6. Use [`M500`](/docs/gcode/M500.html) to save the mesh to EEPROM, if desired.
+6. Use [`M500`](/docs/gcode/M500.html) to save the mesh to [EEPROM](/docs/features/eeprom.html), if desired.
 
 **Mesh Bed Leveling using an LCD controller:** (Requires `LCD_BED_LEVELING`)
 

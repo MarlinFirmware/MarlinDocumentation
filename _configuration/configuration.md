@@ -66,7 +66,7 @@ For the main settings you'll need to know a few things about your machine:
 The most fundamental settings for your hardware are found here.
 
 {% alert info %}
-Settings that can be changed and saved to EEPROM are marked with <em class="fa fa-sticky-note" aria-hidden="true"></em>. Options marked with <em class="fa fa-desktop" aria-hidden="true"></em> can be changed from the LCD controller.
+Settings that can be changed and saved to [EEPROM](/docs/features/eeprom.html) are marked with <em class="fa fa-sticky-note" aria-hidden="true"></em>. Options marked with <em class="fa fa-desktop" aria-hidden="true"></em> can be changed from the LCD controller.
 
 ---
 
