@@ -1,25 +1,25 @@
 ---
-permalink:    /
-title:        'Home'
-regenerate: true
-description:  'Marlin Firmware - A Really Good 3D Printer Driver.'
-category:     [ default ]
+permalink:   /
+title:       'Home'
+regenerate:  true
+description: 'Marlin Firmware - A Really Good 3D Printer Driver.'
+category:    [ default ]
 ---
 <div class="container custom-tagline">
   <div class="row">
     <div class="col-md-7" style="z-index: 10; padding-bottom: 5em;">
-        <h1>Marlin Firmware</h1>
-        <h2 id="tagline">Open Source 3D Printer Driver</h2>
-        <p class="text-justify">First created in 2011 for RepRap and Ultimaker by <a href="//github.com/ErikZalm">Erik van der Zalm</a> et. al., today Marlin drives most of the world's 3D printers. Reliable and precise, Marlin delivers outstanding print quality while keeping you in full control of the process.</p>
-        <p>As an <a href="//opensource.org/">Open Source</a> project hosted on <a href="//github.com/">Github</a>, Marlin is owned and maintained by the maker community. <a href="{{ '/docs/development/contributing.html' }}" >Learn how you can contribute!</a></p>
-        <a href="{{ '/meta/download' }}" class="btn btn-download btn-block btn-lg" style=" width: fit-content; margin: 0 auto;" role="button">Download Marlin {{ site.data.marlin.downloads[0].version }}</a>
+      <h1>Marlin Firmware</h1>
+      <h2 id="tagline">Open Source 3D Printer Driver</h2>
+      <p class="text-justify">First created in 2011 for RepRap and Ultimaker by <a href="//github.com/ErikZalm">Erik van der Zalm</a> et. al., today Marlin drives most of the world's 3D printers. Reliable and precise, Marlin delivers outstanding print quality while keeping you in full control of the process.</p>
+      <p>As an <a href="//opensource.org/">Open Source</a> project hosted on <a href="//github.com/">Github</a>, Marlin is owned and maintained by the maker community. <a href="{{ '/docs/development/contributing.html' }}" >Learn how you can contribute!</a></p>
+      <a href="{{ '/meta/download' }}" class="btn btn-download btn-block btn-lg" style=" width: fit-content; margin: 30px auto -30px;" role="button">Download Marlin {{ site.data.marlin.downloads[0].version }}</a>
     </div>
     <div class="col-md-5" id="mfw-logo">
-        <img id="svg-marlin-sun" src="{{ '/assets/images/marlin-outrun-sun.svg' }}" alt="Marlin Outrun" width="320" height="286" />
-        <img id="svg-marlin-tri" src="{{ '/assets/images/marlin-outrun-tri.svg' }}" alt="Marlin Outrun" width="320" height="286" />
-        <img id="svg-marlin-fishf" src="{{ '/assets/images/marlin-outrun-fishf.svg' }}" alt="Marlin Outrun" width="320" height="286" />
-        <img id="svg-marlin-fishol" src="{{ '/assets/images/marlin-outrun-fishol.svg' }}" alt="Marlin Outrun" width="320" height="286" />
-        <img id="svg-marlin-logo" src="{{ '/assets/images/marlin-outrun-logo.svg' }}" alt="Marlin Outrun" width="320" height="286" />
+      <img id="svg-marlin-sun" src="{{ '/assets/images/marlin-outrun-sun.svg' }}" alt="Marlin Outrun" width="320" height="286" />
+      <img id="svg-marlin-tri" src="{{ '/assets/images/marlin-outrun-tri.svg' }}" alt="Marlin Outrun" width="320" height="286" />
+      <img id="svg-marlin-fishf" src="{{ '/assets/images/marlin-outrun-fishf.svg' }}" alt="Marlin Outrun" width="320" height="286" />
+      <img id="svg-marlin-fishol" src="{{ '/assets/images/marlin-outrun-fishol.svg' }}" alt="Marlin Outrun" width="320" height="286" />
+      <img id="svg-marlin-logo" src="{{ '/assets/images/marlin-outrun-logo.svg' }}" alt="Marlin Outrun" width="320" height="286" />
     </div>
   </div>
 </div>
@@ -96,13 +96,18 @@ category:     [ default ]
           <div class="panel-body">Contribute to our ever expanding open source Marlin project on GitHub!</div>
         </div>
       </a>
-      <a class="col-sm-4 animation-element slide-up panel-wrapper" href="//discord.gg/n5NJ59y">
+      <a class="col-sm-4 animation-element slide-up panel-wrapper" href="//discord.com/servers/marlin-firmware-461605380783472640">
         <div class="panel">
           <div class="panel-heading panel-discord"><h4><em class="fa-brands fa-discord" aria-hidden="true"></em> Join Our Discord</h4></div>
           <div class="panel-body">Get help, chat, and share with other Marlin users on our Discord channel.</div>
         </div>
       </a>
   </div>
+
+  <a id="starchart" href="//star-history.com/#MarlinFirmware/Marlin&Date">
+    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=MarlinFirmware/Marlin&type=Date" />
+  </a>
+
 </div>
 
 <script src="{{ '/assets/javascript/vivus.js'}}"></script>
@@ -111,9 +116,7 @@ category:     [ default ]
     duration: 250,
     type: 'oneByOne',
     file: "{{ '/assets/images/features/precision.svg' }}",
-    onReady: function () {
-      setTimeout(playVivus, 1000);
-    }
+    onReady: function () { setTimeout(playVivus, 1000); }
   });
   const vivusProtection = new Vivus('svg-protection', {
     duration: 300,
@@ -127,53 +130,11 @@ category:     [ default ]
   });
 
   function playVivus(){
-    document.getElementById('svg-precision').style.visibility = "visible";
+    $('#svg-precision').show();
     vivusPrecision.reset().play(1);
-    document.getElementById('svg-protection').style.visibility = "visible";
+    $('#svg-protection').show();
     vivusProtection.reset().play(1);
-    document.getElementById('svg-globally').style.visibility = "visible";
+    $('#svg-globally').show();
     vivusGlobally.reset().play(1);
   }
-</script>
-
-<script language="javascript">
-  // Custom Taglines
-  var taglines = [
-    "World Leader in 3D Printing",
-    "Multi-Axis Robot Driver",
-    "Free 3D Printer Firmware",
-    "Own Your Own Technology",
-    "Open Source RepRap Driver",
-    "Printing things since 2011",
-    "The code that makes the things",
-    "The ghost in the machine",
-    "Not just for 3D printers",
-    "Print a toy, a home, or a meal",
-    "Home-brewed, community-focused",
-    "Responsive, Reliable, Accurate",
-    "Speed, accuracy, and finesse",
-    "Deterministic plastic mover",
-    "Heating, moving, making, grooving",
-    "Fabricating Fused Filament",
-    "Fused Deposition Engine",
-    "Build It Your Way",
-    "Heating, moving, making, grooving",
-    "Stepper Motor Repurposer",
-  ];
-
-  // Create a random sequence from the number of taglines
-  var sequence = [];
-  for (var i = 0; i < taglines.length; i++) sequence.push(i);
-  sequence.sort(function() { return .5 - Math.random(); });
-
-  var tindex = 0;
-  function next_tagline() {
-    document.getElementById('tagline').innerText = taglines[sequence[tindex]];
-    if (++tindex >= taglines.length) tindex = 0;
-  }
-  next_tagline();
-
-  // Set a repeating timer to change the tagline every minute
-  setInterval(next_tagline, 20000);
-
 </script>

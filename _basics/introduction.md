@@ -33,7 +33,7 @@ Marlin aims to support all possible boards and machine configurations. We want i
  - Host-based and SD Card printing with autostart
  - Bed Leveling Compensation — with or without a bed probe
  - [Linear Advance](/docs/features/lin_advance.html) for pressure-based extrusion
- - [Input Shaping](/docs/features/input_shaping.html) for faster motion with almost vibration
+ - [Input Shaping](/docs/features/input_shaping.html) for faster motion with almost no vibration
  - Support for Volumetric extrusion
  - Support for mixing and multi-extruders (Cyclops, Chimera, Diamond)
  - Support for Filament Runout/Width Sensors

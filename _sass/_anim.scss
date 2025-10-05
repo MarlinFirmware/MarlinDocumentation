@@ -2,7 +2,7 @@
  * vivus - js for animating SVGs
  */
 #svg-precision, #svg-protection, #svg-globally {
-  visibility: hidden;
+  display: none;
   svg { max-height: 150px; }
 }
 /* animation element */
@@ -180,7 +180,8 @@
   margin-bottom: 10px;
   position: relative;
   float: right;
-  max-width: 40px;
+  clear: both;
+  max-width: 48px;
   -webkit-transition: max-width 0.3s ease-in-out;
   -moz-transition: max-width 0.3s ease-in-out;
   -o-transition: max-width 0.3s ease-in-out;
@@ -213,14 +214,3 @@
 @keyframes animate {
   0% { background-position: 0 0; } 50% { background-position: 400% 0; } 100% { background-position: 0 0; }
 }
-
-.btn:hover { color: white; }
-.btn-follow, .btn-edit, .btn-download, .btn-contribute, .btn-learn, .panel-learn, .panel-discord, .panel-github {
-  color: white;
-  display: block;
-  white-space: nowrap;
-}
-.btn-follow:hover, .btn-edit:hover, .btn-download:hover, .btn-contribute:hover, .btn-learn:hover {
-  text-shadow: 1px 1px rgb(70, 70, 70);
-}
-.btn-follow.e-btn { background: rgb(0, 172, 237); }

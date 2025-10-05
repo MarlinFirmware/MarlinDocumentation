@@ -55,12 +55,12 @@
 
 */
 
-var bitmap_converter = function() {
+var bitmap_converter = () => {
 
   // Extend jQuery.event.fix for copy/paste to fix clipboardData
-  $.event.fix = (function(originalFix) {
-    return function(e) {
-      e = originalFix.apply(this, arguments);
+  $.event.fix = ((originalFix) => {
+    return function(e) { // Must be function to get (this, arguments)
+      e = originalFix.apply(this, arguments); // this == e.target
       if (e.type.indexOf('copy') === 0 || e.type.indexOf('paste') === 0)
         e.clipboardData = e.originalEvent.clipboardData;
       return e;
@@ -102,18 +102,18 @@ var bitmap_converter = function() {
       $opt3       = $('#options3'),
       $pasted     = $('#pasted'),
       $field_arr  = $('#bin-on, #ascii-on, #skinny-on, #hotends, #rj-on, #bed-on, #fan-on, input[name=bitmap-type]'),
-      tobytes     = function(n) { return Math.ceil(n / 8); },
-      tohex       = function(b) { return '0x' + ('0' + (b & 0xFF).toString(16)).toUpperCase().slice(-2); },
-      tobin       = function(b) { return 'B' + ('0000000' + (b & 0xFF).toString(2)).slice(-8); },
-      random_name = function(prefix) { return (prefix||'') + Math.random().toString(36).substring(7); },
-      grayscale   = function(rgb) { return rgb[0] * 0.3 + rgb[1] * 0.59 + rgb[2] * 0.11; },
+      tobytes     = (n) => { return Math.ceil(n / 8); },
+      tohex       = (b) => { return '0x' + ('0' + (b & 0xFF).toString(16)).toUpperCase().slice(-2); },
+      tobin       = (b) => { return 'B' + ('0000000' + (b & 0xFF).toString(2)).slice(-8); },
+      random_name = (prefix) => { return (prefix||'') + Math.random().toString(36).substring(7); },
+      grayscale   = (rgb) => { return rgb[0] * 0.3 + rgb[1] * 0.59 + rgb[2] * 0.11; },
       rnd_name, data_source,
 
-      error_message = function(msg) {
+      error_message = (msg) => {
         $err.text(msg).show(); console.log(msg);
       },
 
-      restore_pasted_cpp_field = function() {
+      restore_pasted_cpp_field = () => {
         $pasted.val(paste_message).css('color', '');
       },
 
@@ -121,7 +121,7 @@ var bitmap_converter = function() {
        * Set the image src to some new data.
        * On $img.load it will call generate_cpp.
        */
-      load_url_into_image = function(data_url, w, h) {
+      load_url_into_image = (data_url, w, h) => {
         $img = $('<img/>');
 
         if (w) $img.width(w);
@@ -130,7 +130,7 @@ var bitmap_converter = function() {
         $img.one('load', generate_cpp)      // Generate when the image loads
             .attr('src', data_url);         // Start loading image data
 
-        $field_arr.change(function(e){ generate_cpp(e, true); });
+        $field_arr.change((e) => { generate_cpp(e, true); });
         $lit.change(generate_cpp);
         $invert.change(generate_cpp);
         $type.change(generate_cpp);
@@ -145,11 +145,9 @@ var bitmap_converter = function() {
        * - File input field, passing the first selected file.
        * - Image pasted directly into a textfield.
        */
-      load_file_into_image = function(fileref) {
+      load_file_into_image = (fileref) => {
         var reader = new FileReader();
-        $(reader).one('load', function() {
-          load_url_into_image(this.result);
-        });
+        $(reader).one('load', (e) => { load_url_into_image(e.target.result); });
         // Load from the given source 'file'
         reader.readAsDataURL(fileref);
       },
@@ -157,7 +155,7 @@ var bitmap_converter = function() {
       /**
        * Draw the given image into one or both canvases.
        */
-      render_image_into_canvases = function($i, notsmall, notlarge) {
+      render_image_into_canvases = ($i, notsmall, notlarge) => {
         var img = $i[0], iw = img.width, ih = img.height;
 
         // The small image needs no update if not changing
@@ -191,7 +189,7 @@ var bitmap_converter = function() {
        * - Convert the image data into C text.
        * - Display the image and converted text.
        */
-      generate_cpp = function(e,no_render) {
+      generate_cpp = (e, no_render) => {
 
         // Get the image width and height in pixels.
         var iw = $img[0].width, ih = $img[0].height;
@@ -303,7 +301,7 @@ var bitmap_converter = function() {
           // Render the modified Preview Image
           tctx.putImageData(tref, 0, 0);
           var $vimg = $('<img/>').width(iw).height(ih)
-                        .one('load', function(){ render_image_into_canvases($(this), true, false); })
+                        .one('load', (e) => { render_image_into_canvases($(e.target), true, false); })
                         .attr('src', $tcnv[0].toDataURL('image/png'));
         }
 
@@ -401,7 +399,7 @@ var bitmap_converter = function() {
       /**
        * Get ready to evaluate incoming data
        */
-      prepare_for_new_image = function() {
+      prepare_for_new_image = () => {
         $err.hide();
 
         /**
@@ -417,11 +415,11 @@ var bitmap_converter = function() {
         $field_arr.off();
 
         // Restore cosmetic 'ASCII Art' behavior
-        $ascii.change(function(){ $skinny.prop('disabled', !this.checked); return false; });
+        $ascii.change((e) => { $skinny.prop('disabled', !$(e.target).is(':checked')); return false; });
 
         // Restore cosmetic 'Status' behavior
-        $type.change(function() {
-          let v = $(this).val();
+        $type.change((e) {
+          let v = $(e.target).val();
           if (v == 'stat1' || v == 'stat2') $opt2.show(); else $opt2.hide();
           if (v == 'stat2') $opt3.show(); else $opt3.hide();
         });
@@ -433,16 +431,16 @@ var bitmap_converter = function() {
        * Finds the correct line-length before scanning for data.
        * Does well screening out most extraneous text.
        */
-      process_pasted_cpp = function(cpp) {
+      process_pasted_cpp = (cpp) => {
 
         prepare_for_new_image();
         restore_pasted_cpp_field();
 
         // Get the split up bytes on all lines
         var lens = [], mostlens = [];
-        $.each(cpp.split('\n'), function(i,s) {
+        $.each(cpp.split('\n'), (i,s) => {
           var pw = 0;
-          $.each(s.replace(/[ \t]/g,'').split(','), function(i,s) {
+          $.each(s.replace(/[ \t]/g,'').split(','), (i,s) => {
             if (s.match(/0x[0-9a-f]+/i) || s.match(/0b[01]+/) || s.match(/B[01]+/) || s.match(/[0-9]+/))
               ++pw;
           });
@@ -455,7 +453,7 @@ var bitmap_converter = function() {
         // Find the length with the most instances
         var most_so_far = 0;
         mostlens.fill(0);
-        $.each(lens, function(i,v){
+        $.each(lens, (i,v) => {
           if (++mostlens[v] > most_so_far) {
             most_so_far = mostlens[v];
             wide = v * 8;
@@ -466,11 +464,11 @@ var bitmap_converter = function() {
 
         // Split up lines and iterate
         var bitmap = [], bitstr = '';
-        $.each(cpp.split('\n'), function(i,s) {
+        $.each(cpp.split('\n'), (i,s) => {
           s = s.replace(/[ \t]/g,'');
           // Split up bytes and iterate
           var byteline = [], len = 0;
-          $.each(s.split(','), function(i,s) {
+          $.each(s.split(','), (i,s) => {
             var b;
             if (s.match(/0x[0-9a-f]+/i))          // Hex
               b = parseInt(s.substring(2), 16);
@@ -514,7 +512,7 @@ var bitmap_converter = function() {
        * Prep the form for a pasted image.
        * Call to load and process the image data.
        */
-      process_pasted_image = function(fileref) {
+      process_pasted_image = (fileref) => {
         $invert.prop('checked', 0);
         $filein.val('');
 
@@ -533,28 +531,28 @@ var bitmap_converter = function() {
        * For image data call process_pasted_image to process it.
        * Call process_pasted_cpp to parse the code into an image.
        */
-      convert_clipboard_to_image = function(e) {
+      convert_clipboard_to_image = (e) => {
         var clipboardData = e.clipboardData || window.clipboardData,
             items = clipboardData.items,
             found, data;
 
         // If the browser supports "items" then use it
         if (items) {
-          $.each(items, function(){
-            switch (this.kind) {
+          $.each(items, (n,v) => {
+            switch (v.kind) {
               case 'string':
                 found = 'text';
                 return false;
               case 'file':
                 found = 'image';
-                data = this;
+                data = v;
                 return false;
             }
           });
         }
         else {
           // Try the 'types' array for Safari / Webkit
-          $.each(clipboardData.types, function(i,type) {
+          $.each(clipboardData.types, (i, type) => {
             switch (type) {
               case 'text/plain':
                 found = type;
@@ -594,7 +592,7 @@ var bitmap_converter = function() {
    * If the file input value changes try to read the data from the file.
    * The reader.load() handler will fire on successful load.
    */
-  $filein.change(function() {
+  $filein.change((e) => {
 
     prepare_for_new_image();
 
@@ -618,26 +616,26 @@ var bitmap_converter = function() {
 
   // If the output is clicked, select all
   $output
-    .on('mousedown mouseup', function(){ return false; })
-    .on('focus click', function(e){ this.select(); return false; });
+    .on('mousedown mouseup', () => { return false; })
+    .on('focus click', (e) => { e.target.select(); return false; });
 
   // Paste old C++ code to see the image and reformat
   $pasted
-    .focus(function() {
-      var $this = $(this);
+    .focus((e) => {
+      var $this = $(e.target);
       $this
         .val('')
         .css('color', '#F80')
         .one('blur', restore_pasted_cpp_field)
-        .one('paste', function(e) {
+        .one('paste', (e) => {
           $this.css('color', '#FFFFFF00');
           convert_clipboard_to_image(e);
           $this.trigger('blur');
           return false;
         });
     })
-    .keyup(function(){ $(this).val(''); return false; })
-    .keydown(function(){ $(this).val(''); });
+    .keyup((e) => { $(e.target).val(''); return false; })
+    .keydown((e) => { $(e.target).val(''); });
 };
 
 head.ready(bitmap_converter);

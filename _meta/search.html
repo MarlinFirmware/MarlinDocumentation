@@ -2,6 +2,7 @@
 title:       Search
 description: Search the marlinfw.org site
 search_omit: true
+category:    [ default, noedit ]
 ---
 
 <div id="search" class="container" role="main">
@@ -29,8 +30,10 @@ search_omit: true
 <script type="text/x-template" id="search-result">
   <div class="##DivClass##">
     ##CustomHTML##
-    <h2 class="title"><a href="##Url##">##Title##</a></h2>
-    <p class="excerpt"><a href="##Url##">##Excerpt##</a></p>
+    <a href="##Url##">
+      <h2 class="title">##Title##</h2>
+      <p class="excerpt">##Excerpt##</p>
+    </a>
   </div>
 </script>
 

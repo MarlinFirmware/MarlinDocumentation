@@ -22,6 +22,7 @@
  * By : @jbrazio
  *      @thinkyhead
  *      @shitcreek
+ *      @dust
  * Todo:
  * - Composite status image from logo, nozzle, bed, fan
  * - Slider for threshold (jQuery.ui)
@@ -31,12 +32,12 @@
  *
  */
 
-var bitmap_converter = function() {
+var bitmap_converter = () => {
 
   // Extend jQuery.event.fix for copy/paste to fix clipboardData
-  $.event.fix = (function(originalFix) {
-    return function(e) {
-      e = originalFix.apply(this, arguments);
+  $.event.fix = ((originalFix) => {
+    return function(e) { // Must be function to get (this, arguments)
+      e = originalFix.apply(this, arguments); // this == e.target
       if (e.type.indexOf('copy') === 0 || e.type.indexOf('paste') === 0) {
         e.clipboardData = e.originalEvent.clipboardData;
       }
@@ -71,26 +72,28 @@ var bitmap_converter = function() {
       $ascii      = $('#ascii-on'),
       $skinny     = $('#skinny-on'),
       $hotends    = $('#hotends'),
+      $compact    = $('#compact-on'),
       $rj         = $('#rj-on'),
       $bed        = $('#bed-on'),
       $fan        = $('#fan-on'),
       $vers       = $('input[name=marlin-ver]'),
       $type       = $('input[name=bitmap-type]'),
+      $bootop     = $('#boot-sub'),
       $statop     = $('#stat-sub'),
       $pasted     = $('#pasted'),
-      $field_arr  = $('#bin-on, #ascii-on, #skinny-on, #hotends, #rj-on, #bed-on, #fan-on, input[name=marlin-ver], input[name=bitmap-type]'),
-      tobytes     = function(n) { return Math.ceil(n / 8); },
-      tohex       = function(b) { return '0x' + ('0' + (b & 0xFF).toString(16)).toUpperCase().slice(-2); },
-      tobin       = function(b) { return 'B' + ('0000000' + (b & 0xFF).toString(2)).slice(-8); },
-      random_name = function(prefix) { return (prefix||'') + Math.random().toString(36).substring(7); },
-      grayscale   = function(rgb) { return rgb[0] * 0.3 + rgb[1] * 0.59 + rgb[2] * 0.11; },
+      $field_arr  = $('#bin-on, #ascii-on, #skinny-on, #hotends, #compact-on, #rj-on, #bed-on, #fan-on, input[name=marlin-ver], input[name=bitmap-type]'),
+      tobytes     = (n) => { return Math.ceil(n / 8); },
+      tohex       = (b) => { return '0x' + ('0' + (b & 0xFF).toString(16)).toUpperCase().slice(-2); },
+      tobin       = (b) => { return 'B' + ('0000000' + (b & 0xFF).toString(2)).slice(-8); },
+      random_name = (prefix) => { return (prefix||'') + Math.random().toString(36).substring(7); },
+      grayscale   = (rgb) => { return rgb[0] * 0.3 + rgb[1] * 0.59 + rgb[2] * 0.11; },
       rnd_name, data_source,
 
-      error_message = function(msg) {
+      error_message = (msg) => {
         $err.text(msg).show(); console.log(msg);
       },
 
-      restore_pasted_cpp_field = function() {
+      restore_pasted_cpp_field = () => {
         $pasted.val(paste_message).css('color', '');
       },
 
@@ -98,7 +101,7 @@ var bitmap_converter = function() {
        * Set the image src to some new data.
        * On $img.load it will call generate_cpp.
        */
-      load_url_into_image = function(data_url, w, h) {
+      load_url_into_image = (data_url, w, h) => {
         $img = $('<img/>');
 
         if (w) $img.width(w);
@@ -107,7 +110,7 @@ var bitmap_converter = function() {
         $img.one('load', generate_cpp)      // Generate when the image loads
             .attr('src', data_url);         // Start loading image data
 
-        $field_arr.change(function(e){ generate_cpp(e, true); });
+        $field_arr.change((e) => { generate_cpp(e, true); });
         $lit.change(generate_cpp);
         $invert.change(generate_cpp);
 
@@ -121,19 +124,87 @@ var bitmap_converter = function() {
        * - File input field, passing the first selected file.
        * - Image pasted directly into a textfield.
        */
-      load_file_into_image = function(fileref) {
+      load_file_into_image = (fileref) => {
         var reader = new FileReader();
-        $(reader).one('load', function() {
-          load_url_into_image(this.result);
-        });
+        $(reader).one('load', (e) => { load_url_into_image(e.target.result); });
         // Load from the given source 'file'
         reader.readAsDataURL(fileref);
+      },
+
+     /**
+      * Bitwise RLE (run length) encoding
+      * Convert data from raw mono bitmap to a bitwise run-length-encoded format.
+      * - The first nybble is the starting bit state. Changing this nybble inverts the bitmap.
+      * - The following bytes provide the runs for alternating on/off bits.
+      *   - A value of 0-14 encodes a run of 1-15.
+      *   - A value of 16 indicates a run of 16-270 calculated using the next two bytes.
+      */
+      bitwise_rle_encode = (data) => {
+        function get_bit(data, n) {
+          return (data[Math.floor(n / 8)] & (0x80 >> (n % 8))) ? 1 : 0;
+        }
+
+        function try_encode(data, isext) {
+          const bitslen = data.length * 8;
+          let bitstate = get_bit(data, 0);
+          const rledata = [bitstate];
+          const bigrun = isext ? 256 : 272;
+          let medrun = false;
+
+          let i = 0;
+          let runlen = -1;
+          while (i <= bitslen) {
+            const b = i < bitslen ? get_bit(data, i) : null;
+            runlen += 1;
+            if (bitstate !== b || i === bitslen) {
+              if (runlen >= bigrun) {
+                isext = true;
+                if (medrun) return [
+                  [], isext
+                ];
+                const rem = runlen & 0xFF;
+                rledata.push(15, 15, Math.floor(rem / 16), rem % 16);
+              } else if (runlen >= 16) {
+                rledata.push(15, Math.floor(runlen / 16) - 1, runlen % 16);
+                if (runlen >= 256) medrun = true;
+              } else {
+                rledata.push(runlen - 1);
+              }
+              bitstate ^= 1;
+              runlen = 0;
+            }
+            i += 1;
+          }
+
+          const encoded = [];
+          let ri = 0;
+          const rlen = rledata.length;
+          while (ri < rlen) {
+            let v = rledata[ri] << 4;
+            if (ri < rlen - 1) v |= rledata[ri + 1];
+            encoded.push(v);
+            ri += 2;
+          }
+
+          return [encoded, isext];
+        }
+
+        // Try to encode with the original isext flag
+        //const warn = data.length > 300000 ? "This may take a while" : "";
+        //console.log("Compressing image data...", warn);
+        let isext = false;
+        let encoded = [];
+        [encoded, isext] = try_encode(data, isext);
+        if (encoded.length === 0) {
+          [encoded, isext] = try_encode(data, true);
+        }
+        return [encoded, isext];
       },
 
       /**
        * Draw the given image into one or both canvases.
        */
-      render_image_into_canvases = function($i, notsmall, notlarge) {
+      render_image_into_canvases = ($i, notsmall, notlarge) => {
         var img = $i[0], iw = img.width, ih = img.height;
 
         // The small image needs no update if not changing
@@ -167,7 +238,7 @@ var bitmap_converter = function() {
        * - Convert the image data into C text.
        * - Display the image and converted text.
        */
-      generate_cpp = function(e,no_render) {
+      generate_cpp = (e, no_render) => {
 
         // Get the image width and height in pixels.
         var iw = $img[0].width, ih = $img[0].height;
@@ -195,6 +266,8 @@ var bitmap_converter = function() {
 
             is_asc = $ascii[0].checked,                       // Include ASCII version of the bitmap?
             is_thin = $skinny[0].checked,                     // A skinny ASCII output with blocks.
+
+            is_compact = $compact[0].checked && vers == 2 && type == 'boot',    // Display compact data for marlin 2.0 only with bootscreen
 
             is_stat = type == 'stat',                         // "Status" has extra options
             is_lpad = is_stat && !$rj[0].checked,             // Right justify?
@@ -275,7 +348,7 @@ var bitmap_converter = function() {
           // Render the modified Preview Image
           tctx.putImageData(tref, 0, 0);
           var $vimg = $('<img/>').width(iw).height(ih)
-                        .one('load', function(){ render_image_into_canvases($(this), true, false); })
+                        .one('load', (e) => { render_image_into_canvases($(e.target), true, false); })
                         .attr('src', $tcnv[0].toDataURL('image/png'));
         }
 
@@ -311,6 +384,8 @@ var bitmap_converter = function() {
 
         cpp += '\nconst unsigned char ' + name + '[] PROGMEM = {\n';
 
+        const bitmap_data = [];                     // keep a copy of the bitmapdata
+
         /**
          * Print the data as hex or binary,
          * appending ASCII art if selected.
@@ -333,6 +408,7 @@ var bitmap_converter = function() {
               xx++;
             }
             // Append the byte and optional comma or space
+            bitmap_data.push(byte);                // populate the bitmap data
             cpp += tobase(byte) + (y != ih - 1 || x < lastx ? ',' : is_asc ? ' ' : '');
           }
 
@@ -341,6 +417,29 @@ var bitmap_converter = function() {
         }
 
         cpp += '};\n';
+
+        if (is_compact) {
+          const [rledata, isext] = bitwise_rle_encode(bitmap_data);
+
+          function rle_emit(rledata, rawsize, isext) {
+            let outstr = '';
+            const rows = rledata.reduce((acc, val, i) => {
+                if (i % 16 === 0) acc.push([]);
+                acc[acc.length - 1].push(`0x${val.toString(16).padStart(2, '0').toUpperCase()}`);
+                return acc;
+            }, []);
+            for (let i = 0; i < rows.length; i++) {
+                outstr += `  ${rows[i].join(', ')},\n`;
+            }
+
+            outstr = outstr.slice(0, -2);
+            const size = rledata.length;
+            const defname = isext ? 'COMPACT_CUSTOM_BOOTSCREEN_EXT' : 'COMPACT_CUSTOM_BOOTSCREEN';
+            return `\n// Saves ${rawsize - size} bytes\n#define ${defname}\nconst unsigned char custom_start_bmp_rle[${size}] PROGMEM = {\n${outstr}\n};\n`;
+          }
+
+          cpp += rle_emit(rledata, bitmap_data.length, isext);
+        }
 
         /*
         if (is_stat)
@@ -373,8 +472,16 @@ var bitmap_converter = function() {
       /**
        * Get ready to evaluate incoming data
        */
-      prepare_for_new_image = function() {
+      prepare_for_new_image = () => {
         $err.hide();
+
+        function bootop_update() {
+          const v = $vers.filter(':checked').val();
+          if ($vers.filter(':checked').val() == '2' && $type.filter(':checked').val() == 'boot')
+            $bootop.show();
+          else
+            $bootop.hide();
+        }
 
         /**
          * Kill most form actions until an image exists.
@@ -387,13 +494,18 @@ var bitmap_converter = function() {
         $lit.off();
         $invert.off();
         $field_arr.off();
+        bootop_update();
 
         // Restore cosmetic 'ASCII Art' behavior
-        $ascii.change(function(){ $skinny.prop('disabled', !this.checked); return false; });
+        $ascii.change((e) => { $skinny.prop('disabled', !$(e.target).is(':checked')); return false; });
+
+        // Remove 'Compact' option for Marlin 1.x
+        $vers.change(bootop_update);
 
         // Restore cosmetic 'Status' behavior
-        $type.change(function() {
-          if ($(this).val() == 'stat') $statop.show(); else $statop.hide();
+        $type.change(() => {
+          bootop_update();
+          if ($type.filter(':checked').val() == 'stat') $statop.show(); else $statop.hide();
         });
       },
 
@@ -403,16 +515,16 @@ var bitmap_converter = function() {
        * Finds the correct line-length before scanning for data.
        * Does well screening out most extraneous text.
        */
-      process_pasted_cpp = function(cpp) {
+      process_pasted_cpp = (cpp) => {
 
         prepare_for_new_image();
         restore_pasted_cpp_field();
 
         // Get the split up bytes on all lines
         var lens = [], mostlens = [];
-        $.each(cpp.split('\n'), function(i,s) {
+        $.each(cpp.split('\n'), (i,s) => {
           var pw = 0;
-          $.each(s.replace(/[ \t]/g,'').split(','), function(i,s) {
+          $.each(s.replace(/[ \t]/g,'').split(','), (i,s) => {
             if (s.match(/0x[0-9a-f]+/i) || s.match(/0b[01]+/) || s.match(/B[01]+/) || s.match(/[0-9]+/))
               ++pw;
           });
@@ -425,7 +537,7 @@ var bitmap_converter = function() {
         // Find the length with the most instances
         var most_so_far = 0;
         mostlens.fill(0);
-        $.each(lens, function(i,v){
+        $.each(lens, (i,v) => {
           if (++mostlens[v] > most_so_far) {
             most_so_far = mostlens[v];
             wide = v * 8;
@@ -436,11 +548,11 @@ var bitmap_converter = function() {
 
         // Split up lines and iterate
         var bitmap = [], bitstr = '';
-        $.each(cpp.split('\n'), function(i,s) {
+        $.each(cpp.split('\n'), (i,s) => {
           s = s.replace(/[ \t]/g,'');
           // Split up bytes and iterate
           var byteline = [], len = 0;
-          $.each(s.split(','), function(i,s) {
+          $.each(s.split(','), (i,s) => {
             var b;
             if (s.match(/0x[0-9a-f]+/i))          // Hex
               b = parseInt(s.substring(2), 16);
@@ -484,7 +596,7 @@ var bitmap_converter = function() {
        * Prep the form for a pasted image.
        * Call to load and process the image data.
        */
-      process_pasted_image = function(fileref) {
+      process_pasted_image = (fileref) => {
         $invert.prop('checked', 0);
         $filein.val('');
 
@@ -503,28 +615,28 @@ var bitmap_converter = function() {
        * For image data call process_pasted_image to process it.
        * Call process_pasted_cpp to parse the code into an image.
        */
-      convert_clipboard_to_image = function(e) {
+      convert_clipboard_to_image = (e) => {
         var clipboardData = e.clipboardData || window.clipboardData,
             items = clipboardData.items,
             found, data;
 
         // If the browser supports "items" then use it
         if (items) {
-          $.each(items, function(){
-            switch (this.kind) {
+          $.each(items, (n,v) => {
+            switch (v.kind) {
               case 'string':
                 found = 'text';
                 return false;
               case 'file':
                 found = 'image';
-                data = this;
+                data = v;
                 return false;
             }
           });
         }
         else {
           // Try the 'types' array for Safari / Webkit
-          $.each(clipboardData.types, function(i,type) {
+          $.each(clipboardData.types, (i, type) => {
             switch (type) {
               case 'text/plain':
                 found = type;
@@ -532,8 +644,8 @@ var bitmap_converter = function() {
               case 'image/png':
                 found = 'webkit';
                 //data = clipboardData.getData(type);
-                // console.log('Got ' + (typeof data) + ' for ' + type + ' with length ' + data.length);
-                // $('<img/>').attr('src', 'blob:'+clipboardData.types[i-1]);
+                //console.log('Got ' + (typeof data) + ' for ' + type + ' with length ' + data.length);
+                //$('<img/>').attr('src', 'blob:'+clipboardData.types[i-1]);
                 return false;
             }
           });
@@ -564,7 +676,7 @@ var bitmap_converter = function() {
    * If the file input value changes try to read the data from the file.
    * The reader.load() handler will fire on successful load.
    */
-  $filein.change(function() {
+  $filein.change(() => {
 
     prepare_for_new_image();
 
@@ -588,26 +700,26 @@ var bitmap_converter = function() {
 
   // If the output is clicked, select all
   $output
-    .on('mousedown mouseup', function(){ return false; })
-    .on('focus click', function(e){ this.select(); return false; });
+    .on('mousedown mouseup', () => { return false; })
+    .on('focus click', (e) => { e.target.select(); return false; });
 
   // Paste old C++ code to see the image and reformat
   $pasted
-    .focus(function() {
-      var $this = $(this);
+    .focus((e) => {
+      var $this = $(e.target);
       $this
         .val('')
         .css('color', '#F80')
         .one('blur', restore_pasted_cpp_field)
-        .one('paste', function(e) {
+        .one('paste', (e) => {
           $this.css('color', '#FFFFFF00');
           convert_clipboard_to_image(e);
           $this.trigger('blur');
           return false;
         });
     })
-    .keyup(function(){ $(this).val(''); return false; })
-    .keydown(function(){ $(this).val(''); });
+    .keyup((e) => { $(e.target).val(''); return false; })
+    .keydown((e) => { $(e.target).val(''); });
 };
 
 head.ready(bitmap_converter);

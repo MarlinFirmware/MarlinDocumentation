@@ -4,58 +4,61 @@ brief: Basic Stepper Driver settings
 category: [ wip ]
 tags: [ hardware ]
 pagetype: toc
+author: thinkyhead
 
 shared:
-  -
-    options:
-    - value: A4988
-      brief: Allegro A4988
-    - value: A5984
-      brief: Allegro A5984
-    - value: DRV8825
-      brief: DRV8825 high-current driver with up to 32x micro-stepping
-    - value: LV8729
-      brief: LV8729 with up to 128x micro-stepping
-    - value: TB6560
-      brief: Toshiba TB6560 stepper driver board
-    - value: TB6600
-      brief: Toshiba TB6600 stepper driver board
-    - value: TMC2100
-      brief: Trinamic TMC2100
-    - value: TMC2130
-      brief: Trinamic TMC2130 (SPI)
-    - value: TMC2130_STANDALONE
-      brief: Trinamic TMC2130 (standalone)
-    - value: TMC2160
-      brief: Trinamic TMC2160 (SPI)
-    - value: TMC2160_STANDALONE
-      brief: Trinamic TMC2160 (standalone)
-    - value: TMC2208
-      brief: Trinamic TMC2208 (UART)
-    - value: TMC2208_STANDALONE
-      brief: Trinamic TMC2208 (standalone)
-    - value: TMC2209
-      brief: Trinamic TMC2209 (UART)
-    - value: TMC2209_STANDALONE
-      brief: Trinamic TMC2209 (standalone)
-    - value: TMC26X
-      brief: Trinamic TMC26X (SPI)
-    - value: TMC26X_STANDALONE
-      brief: Trinamic TMC26X (standalone)
-    - value: TMC2660
-      brief: Trinamic TMC2660 (SPI)
-    - value: TMC2660_STANDALONE
-      brief: Trinamic TMC2660 (standalone)
-    - value: TMC5130
-      brief: Trinamic TMC5130 (SPI)
-    - value: TMC5130_STANDALONE
-      brief: Trinamic TMC5130 (standalone)
-    - value: TMC5160
-      brief: Trinamic TMC5160 (SPI)
-    - value: TMC5160_STANDALONE
-      brief: Trinamic TMC5160 (standalone)
-    - value: TMC2209
-      brief: Trinamic TMC2209
+- options:
+  - value: A4988
+    brief: Allegro A4988
+  - value: A5984
+    brief: Allegro A5984
+  - value: DRV8825
+    brief: DRV8825 high-current driver with up to 32x micro-stepping
+  - value: LV8729
+    brief: LV8729 with up to 128x micro-stepping
+  - value: TB6560
+    brief: Toshiba TB6560 stepper driver board
+  - value: TB6600
+    brief: Toshiba TB6600 stepper driver board
+  - value: TMC2100
+    brief: Trinamic TMC2100
+  - value: TMC2130
+    brief: Trinamic TMC2130 (SPI)
+  - value: TMC2130_STANDALONE
+    brief: Trinamic TMC2130 (standalone
+  - value: TMC2160
+    brief: Trinamic TMC2160 (SPI)
+  - value: TMC2160_STANDALONE
+    brief: Trinamic TMC2160 (standalone)
+  - value: TMC2208
+    brief: Trinamic TMC2208 (UART)
+  - value: TMC2208_STANDALONE
+    brief: Trinamic TMC2208 (standalone)
+  - value: TMC2209
+    brief: Trinamic TMC2209 (UART)
+  - value: TMC2209_STANDALONE
+    brief: Trinamic TMC2209 (standalone)
+  - value: TMC26X
+    brief: Trinamic TMC26X (SPI)
+  - value: TMC26X_STANDALONE
+    brief: Trinamic TMC26X (standalone)
+  - value: TMC2660
+    brief: Trinamic TMC2660 (SPI)
+  - value: TMC2660_STANDALONE
+    brief: Trinamic TMC2660 (standalone)
+  - value: TMC5130
+    brief: Trinamic TMC5130 (SPI)
+  - value: TMC5130_STANDALONE
+    brief: Trinamic TMC5130 (standalone)
+  - value: TMC5160
+    brief: Trinamic TMC5160 (SPI)
+  - value: TMC5160_STANDALONE
+    brief: Trinamic TMC5160 (standalone)
+  - value: TMC2209
+    brief: Trinamic TMC2209
+  - value: TMC2240
+    brief: Trinamic TMC2240 (SPI)
+
 settings:
 - name: X_DRIVER_TYPE
   type: name
@@ -208,54 +211,49 @@ settings:
   since: 2.0.0
   brief: Stepper Driver for the E0 axis.
   options: 0
-
 - name: E1_DRIVER_TYPE
   type: name
   default: A4988
   since: 2.0.0
   brief: Stepper Driver for the E1 axis.
   options: 0
-
 - name: E2_DRIVER_TYPE
   type: name
   default: A4988
   since: 2.0.0
   brief: Stepper Driver for the E2 axis.
   options: 0
-
 - name: E3_DRIVER_TYPE
   type: name
   default: A4988
   since: 2.0.0
   brief: Stepper Driver for the E3 axis.
   options: 0
-
 - name: E4_DRIVER_TYPE
   type: name
   default: A4988
   since: 2.0.0
   brief: Stepper Driver for the E4 axis.
   options: 0
-
 - name: E5_DRIVER_TYPE
   type: name
   default: A4988
   since: 2.0.0
   brief: Stepper Driver for the E5 axis.
   options: 0
-
 - name: E6_DRIVER_TYPE
   type: name
   default: A4988
   since: 2.0.0
   brief: Stepper Driver for the E6 axis.
   options: 0
-
 - name: E7_DRIVER_TYPE
   type: name
   default: A4988
   since: 2.0.0
   brief: Stepper Driver for the E7 axis.
   options: 0
+
 ---
+
 Marlin is able to tune signal timing and provide extra options based on the type of Stepper Driver. These settings are used to specify the type of Stepper Driver for each axis.

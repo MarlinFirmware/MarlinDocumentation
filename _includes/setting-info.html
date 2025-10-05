@@ -9,18 +9,12 @@
   {% if page.label %}{% assign title = page.label %}{% else %}{% assign title = false %}{% endif %}
   {% if page.since %}{% assign since = page.since %}{% else %}{% assign since = false %}{% endif %}
   {% if page.tags %}{% assign tags = page.tags | join: ", " %}{% else %}{% assign tags = false %}{% endif %}
-  <p id="authors" class="text-right pull-right visible-lg-block hidden-print small custom-pt25">
-    {% assign authors = conf.author | append: ',' | append: conf.contrib | replace: " ","" | split: ',' %}
-    {% if authors %}
-      {% for author in authors %}
-        <a href="//github.com/{{ author }}" data-toggle="tooltip" data-placement="bottom" title="Visit {{ author }}'s profile on Github">{% avatar user=author size=30 %}</a>
-      {% endfor %}
-    {% endif %}
-  </p>
+  {% if page.label == "LCD" %}{% assign islcd = 1 %}{% endif %}
 {% else %}
   {% assign ispage = false %}
   {% assign h1 = "h4" %}{% assign h3 = "h5" %}
-  {% assign title = "#define <span>" | append: conf.name | append: "</span> <em>" | append: conf.type | append: "</em>" %}
+  {% assign title = "#define <span>" | append: conf.name | append: "</span>" %}
+  {% if conf.type %}{% assign title = title | append: " <em>" | append: conf.type | append: "</em>" %}{% endif %}
   {% if conf.disabled %}{% assign title = "//" | append: title %}{% endif %}
   {% if conf.since %}{% assign since = conf.since %}
   {% elsif parsince %}{% assign since = parsince %}
@@ -31,12 +25,18 @@
 {%- endif -%}
 
 <div class="detail-header">
+  {% if ispage %}{% assign matter = conf %}{% include authors.html %}{% endif %}
+
   {%- if since -%}
     <div class="since">
       <span class="label label-success"><i class="fa fa-code" aria-hidden="true"></i>
       {{- since }}{% if conf.until %} - {{ conf.until }}{% endif %}</span>
     </div>
   {%- endif -%}
+
+  {% if islcd == 1 and conf.name %}
+    <div class="more-info"><a href="/docs/hardware/controllers.html#{{ conf.name | downcase }}">[More Info]</a></div>
+  {% endif %}
 
   <a name="{{ aprefix }}{{ conf.name }}"></a><{{ h1 }}{% if conf.disabled %} class="dis"{% endif %}>{{ title }}</{{ h1 }}>
 
@@ -45,9 +45,9 @@
   {% endif %}
 </div>
 
-{% if conf.related %}
-  <div class="related">
-    Related codes: {% for item in conf.related %}<a href="/docs/gcode/{{ item | linkify }}.html"><code>{{item}}</code></a> {% endfor %}
+{% if conf.gcodes %}
+  <div class="gcodes">
+    See G-codes: {% for item in conf.gcodes %}<a href="/docs/gcode/{{ item | linkify }}.html"><code>{{item}}</code></a> {% endfor %}
   </div>
 {% endif %}
 
@@ -59,8 +59,12 @@
   <div class="brief">{{conf.brief | markdownify }}</div>
 {% endif %}
 
+{% if conf.description %}
+  <div class="description">{{conf.description | markdownify }}</div>
+{% endif %}
+
 {% if conf.requires %}
-  <div class="requires"><strong>⚠️ Requires: {{ conf.requires }}</strong></div>
+  <div class="requires"><strong>⚠️ Requires: {{ conf.requires | join: ", " }}</strong></div>
 {% endif %}
 
 <div class="long">
@@ -85,15 +89,15 @@
 {% endif %}
 {%- if options %}
   <div class="options">
-    <{{ h3 }}>Options</{{ h3 }}>
     {% if options[0].value %}
-      <table{% if options.size > 4 %} class="table-striped"{% endif %}>
+      <{{ h3 }}>🗳️ Options</{{ h3 }}>
+      <table{% if options.size > 4 or options[0].brief %} class="table-striped"{% endif %}>
         {%- for op in options -%}
           <tr><th>{{ op.value }}</th><td>{% if op.brief %}{{ op.brief }}{% endif %}</td></tr>
         {%- endfor -%}
       </table>
     {% else %}
-      {{ options | join: ", " }}
+      <strong>🗳️ Options:</strong> {{ options | join: ", " }}
     {% endif %}
   </div>
 {% endif %}
@@ -103,7 +107,7 @@
 {% else %}{% assign example = false %}{% endif %}
 {%- if example %}
   <div class="examples">
-    <{{ h3 }}>Example{% if example[1] %}s{% endif %}</{{ h3 }}>
+    <{{ h3 }}>👁️ Example{% if example.size > 1 %}s{% endif %}</{{ h3 }}>
     {% for ex in example %}
       {% if ex.pre %}
         {% for line in ex.pre %}
@@ -125,9 +129,32 @@
   </div>
 {% endif %}
 
+{% if conf.override %}
+  <div class="override">
+    {{ "📝 This option can be overridden with " | append: conf.override | append: "." | markdownify }}
+  </div>
+{% endif %}
+
+{% if conf.links %}
+<div class="links">
+  {% if conf.links.size > 1 %}
+    <{{ h3 }}>🔗 External Links</{{ h3 }}>
+    <ul>
+      {% for link in conf.links %}{% assign label = link.label | default: link.url %}
+        <li><a href="{{ link.url }}">{{ label }}</a></li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    {% assign link = conf.links[0] %}
+    {% assign label = link.label | default: link.url %}
+    <a href="{{ link.url }}">{{ label }}</a>
+  {% endif %}
+</div>
+{% endif %}
+
 {% if conf.images %}
 <div class="gallery">
-  <{{ h3 }}>Gallery</{{ h3 }}>
+  <{{ h3 }}>🖼️ Gallery</{{ h3 }}>
   {% for img in conf.images %}
     {% assign cap = img.caption | markdownify %}
     {% assign ttl = img.title | markdownify | strip_html %}
@@ -138,20 +165,9 @@
 </div>
 {% endif %}
 
-{% if conf.links %}
-<div class="links">
-  <{{ h3 }}>External Links</{{ h3 }}>
-  <ul>
-    {% for link in conf.links %}
-      <li><a href="{{ link.url }}">{{ link.label }}</a></li>
-    {% endfor %}
-  </ul>
-</div>
-{% endif %}
-
 {% if conf.videos %}
 <div class="videos">
-  <{{ h3 }}>Related Media</{{ h3 }}>
+  <{{ h3 }}>📺 Related Media</{{ h3 }}>
   {% for videoid in conf.videos %}
     <iframe class="youtube" width="300" height="225" src="https://youtube.com/embed/{{ videoid }}"></iframe>
   {% endfor %}
@@ -159,13 +175,14 @@
 {% endif %}
 
 <!-- Recursively display sub-options by re-including this template -->
-{% if conf.subopts %}{% assign sub = conf.subopts %}{% assign label = "Sub-Options" %}
+{% assign islcdbak = islcd %}
+{% if conf.subopts %}{% assign sub = conf.subopts %}{% assign label = "Sub-Options" %}{% assign islcd = 0 %}
 {% elsif conf.settings %}{% assign sub = conf.settings %}{% assign label = "Settings" %}
 {% else %}{% assign sub = false %}{% endif %}
 {% if sub %}
   {% assign confbak = conf %}
   {% assign aprefixbak = aprefix %}
-  {% if conf.name %}{% assign aprefix = aprefix | append: conf.name | append: '-' %}{% else %}{% assign aprefix = '' %}{% endif %}
+  {% if conf.name %}{% assign aprefix = aprefix | append: conf.name | append: '-' %}{% endif %}
   {% for conf in sub %}
     {% if conf contains 'since' %}{% else %}{% assign parsince = conf.since %}{% endif %}
     {% if conf contains 'tags' %}{% else %}{% assign partags = conf.tags %}{% endif %}
@@ -174,3 +191,4 @@
   {% assign aprefix = aprefixbak %}
   {% assign conf = confbak %}
 {% endif %}
+{% assign islcd = islcdbak %}
