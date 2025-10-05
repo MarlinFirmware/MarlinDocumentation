@@ -131,10 +131,10 @@ Mesh Bed Leveling (MBL) allows interactively measuring a Z height mesh without a
 
 **Mesh Bed Leveling using an LCD controller:** (Requires `LCD_BED_LEVELING`)
 
-1. Select `Level Bed` then choose `Level Bed` (not `Cancel`) in the sub-menu.
+1. Find and select the `Level Bed` menu item and verify your choice. (The location of this menu item differs depending on your controller and Marlin version.)
 2. Wait for `Homing XYZ` to complete.
 3. When `Click to Begin` appears, press the controller button to move to the first point.
-4. Use the controller wheel to adjust Z so that a piece of paper can just pass under the nozzle.
-5. Press the controller button to save the Z value and move to the next point.
-6. Repeat steps 4-5 until completed.
-7. Use `Control` > `Store memory` to save the mesh to EEPROM, if desired.
+4. Repeat the following steps until the entire mesh is completed:
+  - Use the controller wheel to adjust Z so that a piece of paper can just pass under the nozzle.
+  - Press the controller button to save the Z value and move to the next point.
+5. Use `Control` > `Save to EEPROM` to save the mesh to EEPROM.
