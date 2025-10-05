@@ -131,7 +131,7 @@ If you'd like to be able to preview your contributions before submitting them, y
 
    - Install MacPorts by downloading & installing the correct package for your version of macOS from the [Installing MacPorts](//www.macports.org/install.php) page.
 
-     - Either Xcode or Command Line Tools for Xcode are required to install packages with MacPorts. You **do not** need to install both. These are available for free on [Apple's Developer Program website](https://developer.apple.com/download/). An Apple Developer Program membership is not required, but you will need to sign in with your Apple ID.
+     - Either Xcode or Command Line Tools for Xcode are required to install packages with MacPorts. You **do not** need to install both. These are available for free on [Apple's Developer Program website](//developer.apple.com/download/). An Apple Developer Program membership is not required, but you will need to sign in with your Apple ID.
 
 2. Install `chruby` and `ruby-install`:
 

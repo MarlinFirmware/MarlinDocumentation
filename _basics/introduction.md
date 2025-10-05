@@ -13,7 +13,7 @@ category: [ articles, getting-started ]
 
 Marlin is an open source [firmware](//en.wikipedia.org/wiki/Firmware) for the [RepRap](//en.wikipedia.org/wiki/RepRap_project) family of replicating rapid prototypers — popularly known as "3D printers." Originally derived from [Sprinter](//reprap.org/wiki/List_of_Firmware#Sprinter) and [grbl](//reprap.org/wiki/Grbl#Grbl), Marlin became a standalone [open source](//en.wikipedia.org/wiki/Open-source_software) project on August 12, 2011 with its [Github release](//github.com/MarlinFirmware/Marlin/commit/f850af5c1ca343ed65b94c4b9da5dd1ab4c4a53c). Marlin is licensed under the GPLv3 and is free for all applications.
 
-From the start Marlin was built by and for [RepRap](//reprap.org/wiki/) enthusiasts to be a straightforward, reliable, and adaptable printer driver that "just works." As a testament to its quality, Marlin is used by several respected commercial 3D printers. [LulzBot](https://www.lulzbot.com/), [Průša Research](https://www.prusa3d.com/), [Creality3D](https://creality3d.shop/), [BIQU](https://www.biqu.equipment/), [Geeetech](https://www.geeetech.com/), and [Ultimaker](https://ultimaker.com/) are just a few of the vendors who ship a variant of Marlin. Marlin is also capable of driving CNC machines and laser engravers.
+From the start Marlin was built by and for [RepRap](//reprap.org/wiki/) enthusiasts to be a straightforward, reliable, and adaptable printer driver that "just works." As a testament to its quality, Marlin is used by several respected commercial 3D printers. [LulzBot](//www.lulzbot.com/), [Průša Research](//www.prusa3d.com/), [Creality3D](//creality3d.shop/), [BIQU](//www.biqu.equipment/), [Geeetech](//www.geeetech.com/), and [Ultimaker](//ultimaker.com/) are just a few of the vendors who ship a variant of Marlin. Marlin is also capable of driving CNC machines and laser engravers.
 
 One key to Marlin's usefulness is that it's built around the lightweight Arduino framework, so it runs on a huge number of inexpensive [micro-controllers](//en.wikipedia.org/wiki/Microcontroller) from classic [Atmel AVR](//www.atmel.com/products/microcontrollers/avr/) 8-bit boards all the way up to the latest ARM 32-bit OEM and upgrade boards from companies like BigTreeTech and Makerbase.
 
@@ -61,7 +61,7 @@ Since CPU speed imposes a limit on how fast the machine can move, we're always l
 
 ### Modeling
 
-While Marlin only prints G-code, most slicers only slice [STL](https://en.wikipedia.org/wiki/STL_(file_format)) files.
+While Marlin only prints G-code, most slicers only slice [STL](//en.wikipedia.org/wiki/STL_(file_format)) files.
 
 Whatever you use for your [CAD](//en.wikipedia.org/wiki/Computer-aided_design) toolchain, as long as you can export a solid model, a slicer can "slice" it into G-code, and Marlin firmware will do its best to print the final result.
 

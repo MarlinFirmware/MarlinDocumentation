@@ -206,6 +206,9 @@
   - name: RAMPS_CREALITY
     brief: Creality CR10S, CR20, and CR-X
     since: 2.0.0
+  - name: CREALITY_V252
+    brief: Creality CR-10 V2, CR-10 V3
+    since: 2.1.3
   - name: DAGOMA_F5
     brief: Dagoma F5
     since: 2.0.8
@@ -286,6 +289,9 @@
     since: 2.1.3
   - name: XTLW_MFF_V2
     brief: XTLW MFF V2.0
+    since: 2.1.3
+  - name: RUMBA_E3D
+    brief: E3D Rumba BigBox
     since: 2.1.3
 
 #
@@ -400,6 +406,9 @@
   - name: WANHAO_ONEPLUS
     brief: Wanhao 0ne+ i3 Mini
     since: 2.0.0
+  - name: WANHAO_D9
+    brief: Wanhao D9 MK2
+    since: 2.1.3
   - name: OVERLORD
     brief: Overlord/Overlord Pro
     since: 2.0.0
@@ -677,31 +686,7 @@
     brief: FLYmaker FLY CDY
     since: 2.0.8
   - name: XTLW_CLIMBER_8TH_LPC
-    brief: XTLW_CLIMBER_8TH_LPC
-    since: 2.1.3
-  - name: FLY_RRF_E3_V1
-    brief: Fly RRF E3 V1.0 (STM32F407VG)
-    since: 2.1.3
-  - name: FLY_SUPER8
-    brief: Fly SUPER8 (STM32F407ZGT6)
-    since: 2.1.3
-  - name: FLY_D8
-    brief: FLY D8 (STM32F407VG)
-    since: 2.1.3
-  - name: FLY_CDY_V3
-    brief: FLY CDY V3 (STM32F407VGT6)
-    since: 2.1.3
-  - name: ZNP_ROBIN_NANO
-    brief: Elegoo Neptune 2 v1.2 board
-    since: 2.1.3
-  - name: ZNP_ROBIN_NANO_V1_3
-    brief: Elegoo Neptune 2 v1.3 board
-    since: 2.1.3
-  - name: MKS_NEPTUNE_X
-    brief: Elegoo Neptune X
-    since: 2.1.3
-  - name: MKS_NEPTUNE_3
-    brief: Elegoo Neptune 3
+    brief: XTLW Climber 8
     since: 2.1.3
 
 #
@@ -811,10 +796,10 @@
     since: 2.0.0
 
 #
-# STM32 ARM Cortex-M0+
+# STM32 ARM Cortex-M0/+
 #
 
-- group: STM32 ARM Cortex-M0+
+- group: STM32 ARM Cortex-M0/+
   long: These ultra-low-power MCUs are suited for energy-efficient applications with limited computational needs.
   boards:
   - name: BTT_EBB42_V1_1
@@ -1304,6 +1289,30 @@
   - name: XTLW_CLIMBER_8TH
     brief: XTLW Climber-8th (STM32F407VGT6)
     since: 2.1.3
+  - name: FLY_RRF_E3_V1
+    brief: Fly RRF E3 V1.0 (STM32F407VG)
+    since: 2.1.3
+  - name: FLY_SUPER8
+    brief: Fly SUPER8 (STM32F407ZGT6)
+    since: 2.1.3
+  - name: FLY_D8
+    brief: FLY D8 (STM32F407VG)
+    since: 2.1.3
+  - name: FLY_CDY_V3
+    brief: FLY CDY V3 (STM32F407VGT6)
+    since: 2.1.3
+  - name: ZNP_ROBIN_NANO
+    brief: Elegoo Neptune 2 v1.2 board
+    since: 2.1.3
+  - name: ZNP_ROBIN_NANO_V1_3
+    brief: Elegoo Neptune 2 v1.3 board
+    since: 2.1.3
+  - name: MKS_NEPTUNE_X
+    brief: Elegoo Neptune X
+    since: 2.1.3
+  - name: MKS_NEPTUNE_3
+    brief: Elegoo Neptune 3
+    since: 2.1.3
 
 #
 # Other ARM Cortex-M4
@@ -1452,13 +1461,38 @@
 #
 
 - group: HC32 ARM Cortex-M4
-  long: Boards using the HC32 by Huada Semiconductor Co. Ltd., providing an alternative M4-based MCU solution.
+  long: The HC32 by Huada Semiconductor Co. Ltd. provides an alternative M4-based MCU.
   boards:
   - name: AQUILA_V101
     brief: Voxelab Aquila V1.0.0/V1.0.1/V1.0.2/V1.0.3 as found in the Voxelab Aquila X2 and C2
     since: 2.1.3
   - name: CREALITY_ENDER2P_V24S4
     brief: Creality Ender-2 Pro v2.4.S4_170 (HC32F460KCTA)
+    since: 2.1.3
+
+#
+# GD32 ARM Cortex-M3
+#
+
+- group: GD32 ARM Cortex-M3
+  long: Boards using the GD32 by GigaDevices
+  boards:
+  - name: AQUILA_V101_GD32_MFL
+    brief: Voxelab Aquila V1.0.1 MFL (GD32F103RC)<br>(STM32/HC32 Variants Above)
+    since: 2.1.3
+
+#
+# GD32 ARM Cortex-M4
+#
+
+- group: GD32 ARM Cortex-M3
+  long: Boards using the GD32 by GigaDevices
+  boards:
+  - name: CREALITY_V422_GD32_MFL
+    brief: Creality V4.2.2 MFL (GD32F303RE)<br>(STM32 Variant Above)
+    since: 2.1.3
+  - name: CREALITY_V427_GD32_MFL
+    brief: Creality V4.2.7 MFL (GD32F303RE)<br>(STM32 Variant Above)
     since: 2.1.3
 
 #
