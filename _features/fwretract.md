@@ -20,7 +20,7 @@ Normally you configure the retraction length and feedrate in your slicer softwar
 
 With Firmware-based Retraction, Marlin manages all the details of retraction and recovery. Instead of generating extra E moves, the slicer just outputs [`G10`](/docs/gcode/G010.html) for retract moves and [`G11`](/docs/gcode/G011.html) for recover moves. Before doing a tool-change, the slicer outputs `G10 S1` for a swap-retract, and then the next [`G11`](/docs/gcode/G011.html) for that extruder will automatically be a swap-recover.
 
-In addition to producing a smaller G-code file, firmware-based retraction allows you to tune your retract/recover settings during a print and save them to EEPROM for all future prints with the same material. This means you never have to re-slice your models for a different material or new filament spool. Just run a test print to recheck and fine-tune retraction settings, save them to EEPROM, and get on with more printing.
+In addition to producing a smaller G-code file, firmware-based retraction allows you to tune your retract/recover settings during a print and save them to [EEPROM](/docs/features/eeprom.html) for all future prints with the same material. This means you never have to re-slice your models for a different material or new filament spool. Just run a test print to recheck and fine-tune retraction settings, save them to EEPROM, and get on with more printing.
 
 Enable Firmware-based Retraction with the `FWRETRACT` option in `Configuration_adv.h`. Default lengths and feedrates may also be set there.
 

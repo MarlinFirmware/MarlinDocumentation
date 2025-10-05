@@ -263,7 +263,7 @@ Store settings|[`M500`](/docs/gcode/M500.html)|
 
 ## Motion
 
-The motion settings provide control over tunable movement parameters which can be stored to EEPROM.
+The motion settings provide control over tunable movement parameters which can be stored to [EEPROM](/docs/features/eeprom.html).
 
 Item|Description|Requirements
 ----|-----------|------------
