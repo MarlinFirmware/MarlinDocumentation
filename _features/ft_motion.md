@@ -32,7 +32,7 @@ Input Shaping is a form of noise canceling where we measure the dominant resonan
 ## Fixed Time Motion by Ulendo
 
 ### Background
-In 2023 [Ulendo](https://ulendo.io) submitted the basic code for [**Fixed Time Motion**](/docs/gcode/M493.html) (`FT_MOTION`) as the necessary foundation for more advanced Input Shapers and motion calculation. Ulendo made sure this feature was optional and that it can be turned on and off as needed. They built a motion system that nearly doubled the performance of the Ender-3 and [blew our minds](https://news.engin.umich.edu/2022/05/university-developed-software-that-doubles-3d-printing-speeds-hits-the-market/). We've taken that code and extended it to all 9 axes and 8 extruders so you can use it for any motion system project!
+In 2023 [Ulendo](//ulendo.io) submitted the basic code for [**Fixed Time Motion**](/docs/gcode/M493.html) (`FT_MOTION`) as the necessary foundation for more advanced Input Shapers and motion calculation. Ulendo made sure this feature was optional and that it can be turned on and off as needed. They built a motion system that nearly doubled the performance of the Ender-3 and [blew our minds](//news.engin.umich.edu/2022/05/university-developed-software-that-doubles-3d-printing-speeds-hits-the-market/). We've taken that code and extended it to all 9 axes and 8 extruders so you can use it for any motion system project!
 
 Fixed Time Motion optimizes the standard Marlin motion system by adding a Stepper Events buffer between the Planner buffer and the Stepper ISR. Each entry in this buffer corresponds to a single time interval. The complete event buffer covers a short time window so it has to be dynamically refreshed.
 
