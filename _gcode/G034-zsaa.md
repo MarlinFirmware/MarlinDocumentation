@@ -22,8 +22,7 @@ parameters:
   description: Target specific Z stepper to lock/unlock (1-4).
   values:
   - type: int
-    min: 1
-    max: 4
+    tag: 1-4
 
 - tag: S
   optional: true
@@ -36,24 +35,21 @@ parameters:
   description: Iterations - must be between 1 - 30
   values:
   - type: linear
-    min: 1
-    max: 30
+    tag: 1-30
 
 - tag: T
   optional: true
   description: Target accuracy - must be between 0.01 - 1.0
   values:
   - type: float
-    min: 0.01
-    max: 1.0
+    tag: 0.01-1.0
 
 - tag: A
   optional: true
   description: Amplification - must be between 0.5 - 2.0
   values:
   - type: float
-    min: 0.5
-    max: 2.0
+    tag: 0.5-2.0
 
 - tag: E
   optional: true
