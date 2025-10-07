@@ -57,7 +57,7 @@
   </div>
 {% endif %}
 
-{% if gcode.pagetype != 'toc' %}
+{% if gcode.pagetype != 'toc' and gcode.usage != true %}
 <div class="col-lg-12 row usage" id="usage-{{ gcode.tag }}">
   <h3>Usage</h3>
   {% for code in gcode.codes %}
