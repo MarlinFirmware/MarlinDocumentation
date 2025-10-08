@@ -9,6 +9,8 @@
 
 "use strict";
 
+String.prototype.toTitleCase = function() { return this.replace(/\b([A-Z])(\w+)\b/gi, (_,p1,p2) => { return p1.toUpperCase() + p2.toLowerCase(); }); }
+
 //
 // Declare a jekyllSearch singleton
 //
@@ -90,7 +92,7 @@ var jekyllSearch = (() => {
 
       // Get search results if q parameter is set in querystring
       if (self.getParameterByName('q')) {
-        var newq = decodeURIComponent(self.getParameterByName('q'));
+        let newq = decodeURIComponent(self.getParameterByName('q'));
         $searchInput.val(newq);
         self.execSearch(newq, newq);
       }
@@ -215,10 +217,10 @@ var jekyllSearch = (() => {
           if (comp.match(qmatch)) {
             if (it.class != lastclass) {
               lastclass = it.class;
-              var fancy = section_head[it.class];
+              let fancy = section_head[it.class];
               results += '<h1 class="' + it.class + '">' + (fancy ? fancy : it.class.toTitleCase()) + '</h1>';
             }
-            var result = self.populateResultContent($resultTemplate.html(), it);
+            let result = self.populateResultContent($resultTemplate.html(), it);
             resultsCount++;
             results += result;
           }
