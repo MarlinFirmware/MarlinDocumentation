@@ -29,7 +29,7 @@ Marlin accomplishes separation of the E axis by adding a separate "phase" to the
 ### More Complexity: ZV Input Shaper
 Input Shaping is a form of noise canceling where we measure the dominant resonance — aka "ringing" — of the printer frame. We can then time half of the motion pulses to coincide with the ringing introduced by previous impulses to deter the ringing. Our straightforward [ZV Shaper by Tom Brazier](http://tomblog.firstsolo.net/index.php/reflections-on-input-shaping/) is simple enough that it can even run on AVR, but it requires a big RAM buffer. We love this simple dynamic approach but it doesn't scale to more advanced vibration canceling.
 
-## Fixed Time Motion by Ulendo
+## Fixed Time Motion
 
 ### Background
 In 2023 [Ulendo](//ulendo.io) submitted the basic code for [**Fixed Time Motion**](/docs/gcode/M493.html) (`FT_MOTION`) as the necessary foundation for more advanced Input Shapers and motion calculation. Ulendo made sure this feature was optional and that it can be turned on and off as needed. They built a motion system that nearly doubled the performance of the Ender-3 and [blew our minds](//news.engin.umich.edu/2022/05/university-developed-software-that-doubles-3d-printing-speeds-hits-the-market/). We've taken that code and extended it to all 9 axes and 8 extruders so you can use it for any motion system project!
