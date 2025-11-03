@@ -27,12 +27,12 @@ The first thing you'll need to do is [download Arduino IDE](//www.arduino.cc/en/
 
 ![Arduino starting](/assets/images/basics/install_arduino/arduino.png)
 
-1. In Arduino IDE, select your board from the **Tools > Board** menu.<br />(Note: You may need to [add support](//www.arduino.cc/en/Guide/Cores) for your board to Arduino.)
+1. In Arduino IDE, select your board from the **Tools** ⏵ **Board** menu.<br />(Note: You may need to [add support](//www.arduino.cc/en/Guide/Cores) for your board to Arduino.)
 
 ![Select board](/assets/images/basics/install_arduino/select_board.png)
 
 
-1. Select the serial (USB) port your board is connected to in the **Tools > Port** menu.
+1. Select the serial (USB) port your board is connected to in the **Tools** ⏵ **Port** menu.
 
 ![Select board](/assets/images/basics/install_arduino/select_usb_port.png)
 
