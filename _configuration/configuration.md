@@ -20,7 +20,7 @@ Marlin also provides minimal and intelligent configuration methods that may be m
 - `config.ini` (2.1.0 and up) modifies the configuration files at the start of a PlatformIO build and has some other useful powers. See the [Configuration with INI](config-ini.html) page to see if it's right for you.
 
 ## Compiler Directives
-Marlin is configured using C `#define` statements so the firmeware can be as small, fast, and efficient as possible, but if you want all the bells and whistles and your board has the power, you can go for it.
+Marlin is configured using C `#define` statements so the firmware can be as small, fast, and efficient as possible, but if you want all the bells and whistles and your board has the power, you can go for it.
 
 Settings are enabled, disabled, and assigned values using C preprocessor syntax like so:
 
@@ -68,8 +68,6 @@ The most fundamental settings for your hardware are found here.
 {% alert info %}
 Settings that can be changed and saved to [EEPROM](/docs/features/eeprom.html) are marked with <em class="fa fa-sticky-note" aria-hidden="true"></em>. Options marked with <em class="fa fa-desktop" aria-hidden="true"></em> can be changed from the LCD controller.
 
----
-
 Settings saved in EEPROM persist across reboots and still remain after flashing new firmware, so always send [`M502`](/docs/gcode/M502.html), [`M500`](/docs/gcode/M500.html) (or "Reset EEPROM" from the LCD) after flashing.
 {% endalert %}
 
@@ -80,7 +78,7 @@ links provided in the option descriptions.
 
 ## Configuration versioning
 ```cpp
-#define CONFIGURATION_H_VERSION 02010200
+#define CONFIGURATION_H_VERSION 02010300
 ```
 Marlin now checks for a configuration version and won't compile without this setting.
 If you want to upgrade from an earlier version of Marlin, add this line to your old
@@ -99,16 +97,15 @@ errors explaining what needs to be changed.
 ## Hardware Info
 
 ### Motherboard
+
+{% include media_floater.html float="right" framed="framed" alt="Motherboard" src="/assets/images/config/motherboard.jpg" %}
+
 ```cpp
 #define MOTHERBOARD BOARD_RAMPS_14_EFB
 ```
 The most important setting is Marlin is the motherboard. The firmware needs to know what board it will be running on so it can assign the right functions to all pins and take advantage of the full capabilities of the board. Setting this incorrectly will lead to unpredictable results.
 
 Using `boards.h` as a reference, replace `BOARD_RAMPS_14_EFB` with your board's ID. The `boards.h` file has the most up-to-date listing of supported boards - check there first if you don't see yours listed [`here`](/docs/hardware/boards.html).
-
-{% alert info %}
-The Sanguino board requires adding "Sanguino" support to Arduino IDE. Open `Preferences` and locate the `Additional Boards Manager URLs` field. Copy and paste [this source URL](//raw.githubusercontent.com/Lauszus/Sanguino/master/package_lauszus_sanguino_index.json). Then use `Tools` > `Boards` > `Boards Manager` to install "Sanguino" from the list. An internet connection is required. (Thanks to "Dust's RepRap Blog" for the tip.)
-{% endalert %}
 
 ### Serial Port
 ```cpp
@@ -138,8 +135,6 @@ The serial communication speed of the printer should be as fast as it can manage
 #define BLUETOOTH
 ```
 Enable the Bluetooth serial interface. For boards based on the AT90USB.
-
-![Motherboard](/assets/images/config/motherboard.jpg){: .floater.framed}
 
 ### Custom Machine Name
 ```cpp
@@ -242,9 +237,11 @@ By convention the names and roles are typically:
 Regardless of these settings the axes are internally named I, J, K, U, V, W.
 
 ## Extruder Info
-![Extruders](/assets/images/config/extruders.png){: .floater.framed}
 
 ### Extruders
+
+{% include media_floater.html float="right" framed="framed" alt="Extruders" src="/assets/images/config/extruders.png" %}
+
 ```cpp
 #define EXTRUDERS 1
 ```
@@ -422,7 +419,8 @@ A Mixing Extruder uses two or more stepper motors to drive multiple filaments in
 Hotend offsets are needed if your extruder has more than one nozzle. These values specify the offset from the first nozzle to each nozzle. So the first element is always set to 0.0. The next element corresponds to the next nozzle, and so on. Add more offsets if you have 3 or more nozzles.
 
 ## Power Supply
-![ATX](/assets/images/config/atx.jpg){: .floater.framed}
+
+{% include media_floater.html float="right" framed="framed" alt="ATX PSU" src="/assets/images/config/atx.jpg" %}
 
 ```cpp
 //#define PSU_CONTROL
@@ -450,13 +448,13 @@ This option allows the controller board to switch the power supply 12V on and of
 ```cpp
 //#define PS_DEFAULT_OFF
 ```
-Enable this if you don't want the power supply to switch on when you turn on the printer. This is for printers that have dual power supplies. For instance some setups have a separate power supply for the heaters. In this situation you can save power by leaving the power supply off until needed. If you don't know what this is leave it.
-
-
-![Thermometer](/assets/images/config/thermal.jpg){: .floater}
+Enable this if you don't want the power supply to switch on when you turn on the printer. This is for printers that have dual power supplies. For instance some setups have separate power supplies for heaters. In this situation you can save power by leaving the power supply off until needed.
 
 ## Thermal Settings
 ### Temperature Sensors
+
+{% include media_floater.html float="right" framed="framed" alt="Thermometer" src="/assets/images/config/thermal.jpg" %}
+
 ```cpp
 #define TEMP_SENSOR_0 1
 #define TEMP_SENSOR_1 0
@@ -464,20 +462,29 @@ Enable this if you don't want the power supply to switch on when you turn on the
 #define TEMP_SENSOR_3 0
 #define TEMP_SENSOR_4 0
 #define TEMP_SENSOR_5 0
-#define TEMP_SENSOR_BED 0
+#define TEMP_SENSOR_6 0
+#define TEMP_SENSOR_7 0
+#define TEMP_SENSOR_BED 1
+#define TEMP_SENSOR_PROBE 0
 #define TEMP_SENSOR_CHAMBER 0
+#define TEMP_SENSOR_COOLER 0
+#define TEMP_SENSOR_BOARD 0
+#define TEMP_SENSOR_SOC 0
+#define TEMP_SENSOR_REDUNDANT 0
 ```
-Temperature sensors are vital components in a 3D printer. Fast and accurate sensors ensure that the temperature will be well controlled, to keep plastic flowing smoothly and to prevent mishaps. Use these settings to specify the hotend and bed temperature sensors. Every 3D printer will have a hotend thermistor, and most will have a bed thermistor.
+Reliable temperature sensors are important for your 3D printer to control heat, both for consistent material temperature and for fire safety. Select the appropriate thermistor or thermocouple from the list of available options. Match your sensor by brand/model; if none fits, use a "similar" one or use the generic profile `1`. Accurate selection is essential for proper calibration!
 
-The listing above these options in `Configuration.h` contains all the thermistors and thermocouples that Marlin knows and supports. Try to match your brand and model with one of the sensors in the list. If no match is found, use a profile for a similar sensor of the same brand, or try "1" – the generic profile. Each profile is calibrated for a particular temperature sensor so it's important to be as precise as possible.
+The first set of options pertain to hotends. Up to 8 hotend sensors are supported in Marlin 2.1.x.
 
-{% alert warning %}
-It is crucial to obtain accurate temperature measurements. As a last resort, use 100k thermistor for `TEMP_SENSOR` and `TEMP_SENSOR_BED` but be highly skeptical of the temperature accuracy.
-{% endalert %}
+Set the Bed, Probe, Chamber, Cooler, and Board sensors according to your manufacturer's guidance.
+
+The SOC (System On Chip) sensor should be set to `100` (SoC internal sensor) when it exists. It requires a pin named `ATEMP` or `TEMP_SOC_PIN` to be defined.
+
+The "redundant" temperature sensor can improve accuracy for one of the monitored temperatures. See the additional redundant temperature sensor [settings below](#redundant-temperature-sensor).
 
 ```cpp
 // Dummy thermistor constant temperature readings, for use with 998 and 999
-#define DUMMY_THERMISTOR_998_VALUE 25
+#define DUMMY_THERMISTOR_998_VALUE  25
 #define DUMMY_THERMISTOR_999_VALUE 100
 ```
 Marlin provides two dummy sensors for testing purposes. Set their constant temperature readings here.
@@ -490,23 +497,45 @@ Enable this option to use sensor 1 as a redundant sensor for sensor 0. This is a
 
 ### Temperature Stability
 ```cpp
-#define TEMP_RESIDENCY_TIME 10  // (seconds)
-#define TEMP_HYSTERESIS 3       // (degC) range of +/- temperatures considered "close" to the target one
-#define TEMP_WINDOW 1           // (degC) Window around target to start the residency timer x degC early.
+#if HAS_E_TEMP_SENSOR
+  #define TEMP_RESIDENCY_TIME         10  // (seconds) Time to wait for hotend to "settle" in M109
+  #define TEMP_WINDOW                  1  // (°C) Temperature proximity for the "temperature reached" timer
+  #define TEMP_HYSTERESIS              3  // (°C) Temperature proximity considered "close enough" to the target
+#endif
 ```
 Extruders must maintain a stable temperature for `TEMP_RESIDENCY_TIME` before [`M109`](/docs/gcode/M109.html) will return success and start the print. Tune what "stable" means using `TEMP_HYSTERESIS` and `TEMP_WINDOW`.
 
 ```cpp
-#define TEMP_BED_RESIDENCY_TIME 10  // (seconds)
-#define TEMP_BED_HYSTERESIS 3       // (degC) range of +/- temperatures considered "close" to the target one
-#define TEMP_BED_WINDOW 1           // (degC) Window around target to start the residency timer x degC early.
+#if TEMP_SENSOR_BED
+  #define TEMP_BED_RESIDENCY_TIME     10  // (seconds) Time to wait for bed to "settle" in M190
+  #define TEMP_BED_WINDOW              1  // (°C) Temperature proximity for the "temperature reached" timer
+  #define TEMP_BED_HYSTERESIS          3  // (°C) Temperature proximity considered "close enough" to the target
+#endif
 ```
 The bed must maintain a stable temperature for `TEMP_BED_RESIDENCY_TIME` before [`M109`](/docs/gcode/M109.html) will return success and start the print. Tune what "stable" means using `TEMP_BED_HYSTERESIS` and `TEMP_BED_WINDOW`.
 
 ```cpp
-#define TEMP_CHAMBER_HYSTERESIS  3  // (°C) Temperature proximity considered "close enough" to the target
+#if TEMP_SENSOR_CHAMBER
+  #define TEMP_CHAMBER_RESIDENCY_TIME 10  // (seconds) Time to wait for chamber to "settle" in M191
+  #define TEMP_CHAMBER_WINDOW          1  // (°C) Temperature proximity for the "temperature reached" timer
+  #define TEMP_CHAMBER_HYSTERESIS      3  // (°C) Temperature proximity considered "close enough" to the target
+#endif
 ```
-Set how far from target the chamber can be and still be considered ok.
+
+### Redundant Temperature Sensor
+```cpp
+#if TEMP_SENSOR_REDUNDANT
+  #define TEMP_SENSOR_REDUNDANT_SOURCE    E1  // The sensor that will provide the redundant reading.
+  #define TEMP_SENSOR_REDUNDANT_TARGET    E0  // The sensor that we are providing a redundant reading for.
+  #define TEMP_SENSOR_REDUNDANT_MAX_DIFF  10  // (°C) Temperature difference that will trigger a print abort.
+#endif
+```
+Use a temp sensor as a redundant sensor for another reading. Select an unused temperature sensor, and another
+sensor you'd like it to be redundant for. If the two thermistors differ by `TEMP_SENSOR_REDUNDANT_MAX_DIFF` (°C),
+the print will be aborted. Whichever sensor is selected will have its normal functions disabled; i.e., selecting
+the Bed Sensor (-1) will disable bed heating/monitoring.
+
+For selecting source/target use: `COOLER`, `PROBE`, `BOARD`, `CHAMBER`, `BED`, `E0`, `E1`, `E2`, `E3`, `E4`, `E5`, `E6`, `E7`
 
 ### Temperature Ranges
 ```cpp
@@ -542,16 +571,12 @@ Maximum temperature for each temperature sensor. If Marlin reads a temperature a
 Remember that cold surfaces near hot surfaces can lead to **condensation**, which is NOT GOOD for electronics. Use blower fans to keep air moving and use a [Dew Point Calculator](//www.dpcalc.org/) to check your local dew point.
 {% endalert %}
 
----
-
 ### PID
 Marlin uses PID (Proportional, Integral, Derivative) control ([Wikipedia](//en.wikipedia.org/wiki/PID_controller)) to stabilize the dynamic heating system for the hotends and bed. When PID values are set correctly, heaters reach their target temperatures faster, maintain temperature better, and experience less wear over time.
 
 Most vitally, correct PID settings will prevent excessive overshoot, which is a safety hazard. During PID calibration, use the highest target temperature you intend to use (where overshoots are more critical).
 
 See the [PID Tuning](//reprap.org/wiki/PID_Tuning) topic on the RepRap wiki for detailed instructions on [`M303`](/docs/gcode/M303.html) auto-tuning. The PID settings should be tuned whenever changing a hotend, temperature sensor, heating element, board, power supply voltage (12/24V), or anything else related to the high-voltage circuitry.
-
----
 
 #### Hotend PID Options
 ```cpp
@@ -596,8 +621,6 @@ Sample PID values are included for reference, but they won't apply to most setup
 [`M301`](/docs/gcode/M301.html) can be used to set Hotend PID and is also accessible through the LCD. [`M304`](/docs/gcode/M304.html) can be used to set bed PID. [`M303`](/docs/gcode/M303.html) should be used to tune PID values before using any new hotend components.
 {% endalert %}
 
----
-
 #### Bed PID Options
 ```cpp
 //#define PIDTEMPBED
@@ -637,22 +660,23 @@ The max power delivered to the bed. All forms of bed control obey this (PID, ban
 ```
 Sample Bed PID values are included for reference, but use the result from [`M303 E-1`](/docs/gcode/M303.html) for your specific machine.
 
-![Safety](/assets/images/config/safety.gif){: .floater}
-
 ### Safety
 #### Prevent Cold Extrusion <em class="fa fa-sticky-note" aria-hidden="true"></em>
+
+{% include media_floater.html float="right" framed="framed" alt="Safety" src="/assets/images/config/safety.gif" %}
+
 ```cpp
 #define PREVENT_COLD_EXTRUSION
 #define EXTRUDE_MINTEMP 170
 ```
-So-called "cold extrusion" can damage a machine in several ways, but it usually just results in gouged filament and a jammed extruder. With this option, the extruder motor won't move if the hotend is below the specified temperature. Override this setting with [`M302`](/docs/gcode/M302.html) if needed.
+"Cold Extrusion" refers to any movement of the extruder before the nozzle is hot enough to melt the filament. This could damage your extruder or hotend, but it usually just results in gouged filament and/or a jammed extruder. Keep this option enabled to disable extruder motion until the hotend is at or above the specified temperature. Override this setting with [`M302`](/docs/gcode/M302.html) if needed.
 
 #### Prevent Lengthy Extrude
 ```cpp
 #define PREVENT_LENGTHY_EXTRUDE
 #define EXTRUDE_MAXLENGTH 200
 ```
-A lengthy extrusion may not damage your machine, but it can be an awful waste of filament. This feature is meant to prevent a typo or glitch in a [`G1`](/docs/gcode/G000-G001.html) command from extruding some enormous amount of filament. For Bowden setups, the max length should be set greater than or equal to the load/eject length.
+A lengthy extrusion may not damage your machine, but it could result in wasting costly filament. This feature is meant to prevent a typo or glitch in a [`G1`](/docs/gcode/G000-G001.html) command from extruding some enormous amount of filament. For Bowden setups, the max length should be set greater than or equal to the load/eject length.
 
 #### Thermal Protection
 ```cpp
@@ -664,7 +688,7 @@ Thermal protection is one of the most vital safety features in Marlin, allowing 
 
 Marlin offers two levels of thermal protection:
 
-1. Check that the temperature is actually increasing when a heater is on. If the temperature fails to rise enough within a certain time period (by default, 2 degrees in 20 seconds), the machine will shut down with a "`Heating failed`" error. This will detect a disconnected, loose, or misconfigured thermistor, or a disconnected heater.
+1. Check that the temperature is actually increasing when a heater is on. If the temperature fails to rise enough within a certain time period (by default, 2 degrees in 20 seconds), the machine will shut down with a "`Heating failed`" error. This will detect a disconnected, loose, or mis-configured thermistor, or a disconnected heater.
 2. Monitor thermal stability. If the measured temperature drifts too far from the target temperature for too long, the machine will shut down with a "`Thermal runaway`" error. This error may indicate poor contact between thermistor and hot end, poor PID tuning, or a cold environment.
 
 More thermal protection options are located in `Configuration_adv.h`. In most setups these can be left unchanged, but should be tuned as needed to prevent false positives.
@@ -673,10 +697,10 @@ More thermal protection options are located in `Configuration_adv.h`. In most se
 For false thermal runaways _not_ caused by a loose temperature sensor, try increasing `WATCH_TEMP_PERIOD` or decreasing `WATCH_TEMP_INCREASE`. Heating may be slowed in a cold environment, if a fan is blowing on the heat block, or if the heater has high resistance.
 {% endpanel %}
 
-
-![Kinematics](/assets/images/config/kinematics.jpg){: .floater}
-
 ## Kinematics
+
+{% include media_floater.html float="right" framed="framed" alt="Kinematics" src="/assets/images/config/kinematics.jpg" %}
+
 Marlin supports four kinematic motion systems: Cartesian, Core (H-Bot), Delta, and SCARA. Cartesian is the simplest, applying each stepper directly to an axis. CoreXY uses a special belt arrangement to do XY motion, requiring a little extra maths. Delta robots convert the motion of three vertical carriages into XYZ motion in an "effector" attached to the carriages by six arms. SCARA robots move an arm in the XY plane using two angular joints.
 
 ### CoreXY
@@ -715,7 +739,7 @@ Enable for Polargraph Kinematics
 ```cpp
 //#define FOAMCUTTER_XYUV
 ```
-Enable for a 4 axis hot wire foam cutter with paralell horizontal axes X, U where hights of the wire ends
+Enable for a 4 axis hot wire foam cutter with parallel horizontal axes X, U where the heights of the wire ends
 are controlled by vertical axes Y, V. Requires `I_DRIVER_TYPE`, J_DRIVER_TYPE, `AXIS4_NAME 'U'` and `AXIS5_NAME 'V'`. The Z axis is unused.
 The LASER features (see section "Spindle / Laser") can be used to control the heating element for the tool.
 
@@ -725,15 +749,16 @@ The LASER features (see section "Spindle / Laser") can be used to control the he
 //#define ARTICULATED_ROBOT_ARM
 ```
 Enable for articulated robots or for machines with `I_DRIVER_TYPE` defined, if feed rate interpretation should be
-compatibile with firmwares (e.g., grblHAL/grblHAL, Duet-3D/RepRapFirmware, synthetos/g2) that behave different
+compatible with firmwares (e.g., grblHAL/grblHAL, Duet-3D/RepRapFirmware, synthetos/g2) that behave different
 from LinuxCNC. When enabled, feedrate `F` is defined as follows: Let `dX`, `dY`, ... be displacements along the
 X, Y, ... axes. Let `T` be the time required for the move at the specified nominal feedrate.
 Then `F = sqrt(dX^2 + dY^2 + dZ^2 + dA^2 + dB^2 + dC^2 + dU^2 + dV^2 + dW^2) / T`.
-Moves should finish in `T` plus any time required for acceleration and decceleration.
-
-![Endstop switch](/assets/images/config/endstop.jpg){: .floater}
+Moves should finish in `T` plus any time required for acceleration and deceleration.
 
 ## Endstops
+
+{% include media_floater.html float="right" framed="framed" alt="Endstop switch" src="/assets/images/config/endstop.jpg" %}
+
 In open loop systems, endstops are an inexpensive way to establish the actual position of the carriage on all axes. In the procedure known as "homing," each axis is moved towards one end until the endstop switch is triggered, at which point the machine knows that the axis is at the endstop (home) position. From this point on, the machine "knows" its position by keeping track of how far the steppers have been moved. If the machine gets out of step for any reason, re-homing may be required.
 
 ### Endstop Plugs
@@ -859,10 +884,11 @@ This will remove the need to poll the interrupt pins, saving many CPU cycles.
 ```
 Enable if your probe or endstops falsely trigger due to noise.
 
-![Movement](/assets/images/config/movement.png){: .floater}
-
 ## Movement
 ### Distinct E Factors
+
+{% include media_floater.html float="right" framed="framed" alt="Movement" src="/assets/images/config/movement.png" %}
+
 ```cpp
 //#define DISTINCT_E_FACTORS
 ```
@@ -872,7 +898,7 @@ Enable `DISTINCT_E_FACTORS` if your extruders are not all mechanically identical
 ```cpp
 #define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 4000, 500 }
 ```
-These are the most crucial settings for your printer, as they determine how accurately the steppers will position the axes. Here we're telling the firmware how many individual steps produce a single millimeter (or degree on SCARA or for rotational axes) of movement. These depend on various factors, including belt pitch, number of teeth on the pulley, thread pitch on leadscrews, micro-stepping settings, and extruder style.
+These are the most crucial settings for your printer, as they determine how accurately the steppers will position the axes. Here we're telling the firmware how many individual steps produce a single millimeter (or degree on SCARA or for rotational axes) of movement. These depend on various factors, including belt pitch, number of teeth on the pulley, thread pitch on lead-screws, micro-stepping settings, and extruder style.
 
 Override with [`M92`](/docs/gcode/M092.html).
 
@@ -925,8 +951,6 @@ Override with [`M204`](/docs/gcode/M204.html).
 Don't set these too high. Larger acceleration values can lead to excessive vibration, noisy steppers, or even skipped steps. Lower acceleration produces smoother motion, eliminates vibration, and helps reduce wear on mechanical parts.
 {% endalert %}
 
----
-
 #### Jerk <em class="fa fa-sticky-note" aria-hidden="true"></em> <em class="fa fa-desktop" aria-hidden="true"></em>
 ```cpp
 //#define CLASSIC_JERK
@@ -967,7 +991,7 @@ Override with [`M205`](/docs/gcode/M205.html).
   #define JUNCTION_DEVIATION_MM 0.013 // (mm) Distance from real junction edge
 #endif
 ```
-Junction Deviation determins the cornering speed. The smaller the value the slower the cornering speed will be.
+Junction Deviation determines the cornering speed. The smaller the value the slower the cornering speed will be.
 
 ![Junction Deviation formula](//latex.codecogs.com/gif.latex?d=0.4\frac{Jerk^{2}}{Accel_{printing}})
 
@@ -1010,7 +1034,8 @@ Even if you have no bed probe you can still use any of the core `AUTO_BED_LEVELI
 `MANUAL_PROBE_START_Z` sets the Z-height the printer initially moves to at each mesh point during manual probing. With this disabled, the printer will move to Z0 for the first probe point. Then each consecutive probe point uses the Z position of the probe point preceding it.
 
 #### Fix Mounted Probe
-![Fixed Probe - EZABL](/assets/images/config/fixed_probe_EZABL.png){: .floater.framed}
+
+{% include media_floater.html float="right" framed="framed" alt="EZABL Fixed Probe" src="/assets/images/config/fixed_probe_EZABL.png" %}
 
 ```cpp
 //#define FIX_MOUNTED_PROBE
@@ -1018,7 +1043,8 @@ Even if you have no bed probe you can still use any of the core `AUTO_BED_LEVELI
 This option is for any probe that's fixed in place, with no need to be deployed or stowed. Specify this type for an inductive probe or when using the nozzle itself as the probe.
 
 #### Servo Z Probe
-![Probe](/assets/images/config/probe.png){: .floater.framed}
+
+{% include media_floater.html float="right" framed="framed" alt="Probe" src="/assets/images/config/probe.png" %}
 
 ```cpp
 //#define Z_PROBE_SERVO_NR 0       // Defaults to SERVO 0 connector.
@@ -1027,7 +1053,8 @@ This option is for any probe that's fixed in place, with no need to be deployed 
 To indicate a Servo Z Probe (_e.g.,_ an endstop switch mounted on a rotating arm) just specify the servo index. Use the [`M280`](/docs/gcode/M280.html) command to find the best `Z_SERVO_ANGLES` values.
 
 #### BLTouch
-![BLTouch](/assets/images/config/BLTouch.png){: .floater.framed}
+
+{% include media_floater.html float="right" framed="framed" alt="BLTouch Probe" src="/assets/images/config/BLTouch.png" %}
 
 ```cpp
 //#define BLTOUCH
@@ -1046,7 +1073,8 @@ The [ANTCLABS BLTouch](//plus.google.com/113792662927481823969) probe uses custo
 Touch-MI Probe by hotends.fr is deployed and activated by moving the X-axis to a magnet at the edge of the bed. By default, the magnet is assumed to be on the left and activated by a home. If the magnet is on the right, enable and set TOUCH_MI_DEPLOY_XPOS to the deploy position. Also option requires: `BABYSTEPPING`, `BABYSTEP_ZPROBE_OFFSET`, `Z_SAFE_HOMING`, and a minimum `Z_HOMING_HEIGHT` of 10.
 
 #### Solenoid Probe
-![Solenoid probe](/assets/images/config/solenoid.png){: .floater.framed}
+
+{% include media_floater.html float="right" framed="framed" alt="Solenoid Probe" src="/assets/images/config/solenoid.png" %}
 
 ```cpp
 //#define SOLENOID_PROBE
@@ -1054,7 +1082,8 @@ Touch-MI Probe by hotends.fr is deployed and activated by moving the X-axis to a
 A probe that is deployed and stowed with a solenoid pin (Defined as `SOL1_PIN`.)
 
 #### Z Probe Sled
-![Z-Probe Sled](/assets/images/config/zprobe_sled.png){: .floater.framed}
+
+{% include media_floater.html float="right" framed="framed" alt="Z-Probe Sled" src="/assets/images/config/zprobe_sled.png" %}
 
 ```cpp
 //#define Z_PROBE_SLED
@@ -1185,7 +1214,7 @@ Tip: 0.02mm is normally acceptable for bed leveling to work.
 // Before deploy/stow pause for user confirmation
 //#define PAUSE_BEFORE_DEPLOY_STOW
 #if ENABLED(PAUSE_BEFORE_DEPLOY_STOW)
-  //#define PAUSE_PROBE_DEPLOY_WHEN_TRIGGERED // For Manual Deploy Allenkey Probe
+  //#define PAUSE_PROBE_DEPLOY_WHEN_TRIGGERED // For Manual Deploy Allen Key Probe
 #endif
 ```
 Before deploy/stow pause for user confirmation
@@ -1200,9 +1229,9 @@ Before deploy/stow pause for user confirmation
 //#define PROBING_STEPPERS_OFF      // Turn steppers off (unless needed to hold position) when probing
 //#define DELAY_BEFORE_PROBING 200  // (ms) To prevent vibrations from triggering piezo sensors
 ```
-Heatinging the bed and extruder for probing will produce results that more accurately correspond with your bed if you typically print with the bed heated. Enable `PROBING_HEATERS_OFF` if you are experiencing electrical noise. A delay can also be added to allow noise and vibration to settle.
+Heating the bed and extruder for probing will produce results that more accurately correspond with your bed if you typically print with the bed heated. Enable `PROBING_HEATERS_OFF` if you are experiencing electrical noise. A delay can also be added to allow noise and vibration to settle.
 
-![Stepper Spin](/assets/images/config/motor-dir.jpg){: .floater}
+{% include media_floater.html float="right" framed="framed" alt="Stepper Spin" src="/assets/images/config/motor-dir.jpg" %}
 
 ## Stepper Drivers
 ### Motor Enable
@@ -1274,7 +1303,8 @@ These settings reverse the motor direction for each axis. Be careful when first 
 
 ## Homing and Bounds
 ### Z Homing Height
-![Home Icon](/assets/images/config/home.jpg){: .floater.framed}
+
+{% include media_floater.html float="right" framed="framed" alt="Home Icon" src="/assets/images/config/home.jpg" %}
 
 ```cpp
 //#define NO_MOTION_BEFORE_HOMING	// Inhibit movement until all axes have been homed
@@ -1371,7 +1401,8 @@ Enable these options to constrain movement to the physical boundaries of the mac
 Enable/Disable software endstops from the LCD
 
 ## Filament Runout Sensor
-![Filament Sensor](/assets/images/config/filament-sensor.jpg){: .floater.framed}
+
+{% include media_floater.html float="right" framed="framed" alt="Filament Sensor" src="/assets/images/config/filament-sensor.jpg" %}
 
 ```cpp
 //#define FILAMENT_RUNOUT_SENSOR
@@ -1398,7 +1429,7 @@ Enable/Disable software endstops from the LCD
     // Be sure to set FILAMENT_RUNOUT_DISTANCE_MM large enough to avoid false positives.
     // Start at the value of the sensor for one revolution and if you experience false positives,
     // increment the value by the same amount.
-    // ie., 7mm is set, and you get false positives, set it to 14 and try it again.
+    // e.g., If set to 7mm and you get false positives, set it to 14 and try again.
     //#define FILAMENT_MOTION_SENSOR
   #endif
 #endif
@@ -1409,7 +1440,8 @@ With this feature, a mechanical or opto endstop switch is used to check for the 
 RAMPS-based boards use `SERVO3_PIN`. For other boards you may need to define `FIL_RUNOUT_PIN`. Enable the [`M43`](/docs/gcode/M43.html) feature in your firmware (`PINS_DEBUGGING`) and load it to your printer. Assuming you already have a runout sensor (switch based) there, you can watch the pin states while toggling the runout sensor on an off to see which pin is changing.
 
 ## Bed Leveling
-![Bed Level](/assets/images/config/bedlevel.png){: .floater}
+
+{% include media_floater.html float="right" framed="framed" alt="Bed Level" src="/assets/images/config/bedlevel.png" %}
 
 Bed Leveling is a standard feature on many 3D printers. It takes the guess-work out of getting a good first layer and good bed adhesion.
 
@@ -1592,7 +1624,7 @@ Enable this option if the bed center is at X0 Y0. This setting affects the way a
 ```cpp
 //#define MANUAL_X_HOME_POS 0
 //#define MANUAL_Y_HOME_POS 0
-//#define MANUAL_Z_HOME_POS 0 // Distance from nozzle to printbed after homing
+//#define MANUAL_Z_HOME_POS 0 // Distance from nozzle to print bed after homing
 //#define MANUAL_I_HOME_POS 0
 //#define MANUAL_J_HOME_POS 0
 //#define MANUAL_K_HOME_POS 0
@@ -1827,7 +1859,8 @@ zh_TW|Traditional Chinese||||
 See `language.h` for the latest list of supported languages and their international language codes.
 
 ### HD44780 Character Set
-![LCD Charset](/assets/images/config/lcd-charset.png){: .floater.framed}
+
+{% include media_floater.html float="right" framed="framed" alt="LCD Character Set" src="/assets/images/config/lcd-charset.png" %}
 
 ```cpp
 #define DISPLAY_CHARSET_HD44780 JAPANESE
@@ -1846,8 +1879,6 @@ To determine the language extension installed on your controller:
 
 See [LCD Language System](/docs/development/lcd_language.html) for in-depth info on how the Marlin display system currently works.
 
-![SD Card](/assets/images/config/sdcard.jpg){: .floater}
-
 ### LCD_INFO_SCREEN_STYLE
 ```cpp
 #define LCD_INFO_SCREEN_STYLE 0
@@ -1855,6 +1886,9 @@ See [LCD Language System](/docs/development/lcd_language.html) for in-depth info
 0 for classic; 1 for Průša info screen style.
 
 ## SD Card
+
+{% include media_floater.html float="right" framed="framed" alt="SD Card" src="/assets/images/config/sdcard.jpg" %}
+
 ```cpp
 //#define SDSUPPORT
 ```
@@ -1888,8 +1922,11 @@ Use CRC checks and retries on the SD communication.
 Disable all menus and only display the Status Screen with `NO_LCD_MENUS`, or just remove some extraneous menu items to recover space with `SLIM_LCD_MENUS`.
 
 ## Encoder
-![Encoder Knob](/assets/images/config/encoder.jpg){: .floater}
+
 ### Encoder Resolution
+
+{% include media_floater.html float="right" framed="framed" alt="Encoder Knob" src="/assets/images/config/encoder.jpg" %}
+
 ```cpp
 //#define ENCODER_PULSES_PER_STEP 1
 ```
@@ -1927,10 +1964,10 @@ This option reverses the encoder direction for Select Screen If CLOCKWISE normal
 ```
 Add individual axis homing items (Home X, Home Y, and Home Z) to the LCD menu.
 
-
-![Piezo](/assets/images/config/piezo.png){: .floater}
-
 ## Speaker
+
+{% include media_floater.html float="right" framed="framed" alt="Piezo" src="/assets/images/config/piezo.png" %}
+
 ```cpp
 //#define SPEAKER
 ```
@@ -1943,7 +1980,8 @@ By default Marlin assumes you have a buzzer with a fixed frequency. If you have 
 The duration and frequency for the UI feedback sound. Set these to 0 to disable audio feedback in the LCD menus. Test audio output with the G-code `M300 S<frequency Hz> P<duration ms>`
 
 ## LCD Controller
-![LCD Controllers](/assets/images/config/controllers.png){: .floater}
+
+{% include media_floater.html float="right" framed="framed" alt="LCD Controllers" src="/assets/images/config/controllers.png" %}
 
 Marlin includes support for several controllers. The two most popular controllers supported by Marlin are:
 
@@ -2080,10 +2118,10 @@ Correct the wrong arc g-codes sent by SkeinForge when using Arc Point as fillet 
 ```
 Marlin includes support for the [Baricuda Extruder for 3D Printing Sugar and Chocolate](//www.thingiverse.com/thing:26343) also [hosted on GitHub](//www.github.com/jmil/BariCUDA). The feature adds the codes [`M126`](/docs/gcode/M126.html), [`M127`](/docs/gcode/M127.html), [`M128`](/docs/gcode/M128.html), and [`M129`](/docs/gcode/M129.html) for controlling the pump and valve of the Baricuda.
 
-
-[![LED Lights](/assets/images/config/led-lights.jpg){: .floater.framed}](//www.instructables.com/id/3D-Printer-RGB-LED-Feedback/){:target="_blank"}
-
 ### RGB Color LEDs
+
+{% include media_floater.html float="right" framed="framed" alt="LED Lights" src="/assets/images/config/led-lights.jpg" link="//www.instructables.com/id/3D-Printer-RGB-LED-Feedback/" %}
+
 Marlin currently supplies two options for RGB-addressable color indicators. In both cases the color is set using [`M150`](/docs/gcode/M150.html) `Rr Ug Bb` to specify RGB components from 0 to 255.
 
 ```cpp
@@ -2106,7 +2144,8 @@ The [Philips PCA9632](//www.digchip.com/datasheets/3286493-pca9632.html) is a co
 ```cpp
 //#define RGB_LED
 //#define RGBW_LED
-#if EITHER(RGB_LED, RGBW_LED)
+
+#if ANY(RGB_LED, RGBW_LED)
   //#define RGB_LED_R_PIN 34
   //#define RGB_LED_G_PIN 43
   //#define RGB_LED_B_PIN 35
@@ -2153,9 +2192,11 @@ This option causes the printer to give status feedback on the installed color LE
 - Turn off after the print has finished and the user has pushed a button.
 
 ### Servos
-![Servo](/assets/images/config/servo.png){: .floater}
 
 #### Number of Servos
+
+{% include media_floater.html float="right" framed="framed" alt="Servo" src="/assets/images/config/servo.png" %}
+
 ```cpp
 //#define NUM_SERVOS 3 // Servo index starts with 0 for M280 command
 ```
@@ -2174,16 +2215,17 @@ With this option servos are powered only during movement, then turned off to pre
 
 # `Configuration_adv.h`
 ## Configuration Export
+```cpp
+//#define CONFIG_EXPORT 105 // :[1:'JSON', 2:'config.ini', 3:'schema.json', 4:'schema.yml', 5:'Config.h']
+```
 With this option the configuration will be exported to the build folder as part of the build process.
 - 1 = `marlin_config.json` - Dictionary containing the configuration. (Also generated for `CONFIGURATION_EMBEDDING`).
 - 2 = `config.ini` - File format for PlatformIO preprocessing.
 - 3 = `schema.json` - The entire configuration schema. (13 = pattern groups)
 - 4 = `schema.yml` - The entire configuration schema.
 - 5 = `Config.h` - Minimal configuration.
+
 Add 100 for some variant of the exported configuration, e.g., organized by section.
-```cpp
-//#define CONFIG_EXPORT 105 // :[1:'JSON', 2:'config.ini', 3:'schema.json', 4:'schema.yml', 5:'Config.h']
-```
 
 ## Temperature Options
 ### Custom Thermistor 1000 Parameters
@@ -2239,6 +2281,7 @@ Add 100 for some variant of the exported configuration, e.g., organized by secti
 
 Marlin 2.0 allows for custom temperature sensors.
 
+### Heated Bed Kit
 ```cpp
 //
 // Hephestos 2 24V heated bed upgrade kit.
@@ -2327,16 +2370,18 @@ If you get too many "Heating failed" errors, increase `WATCH_BED_TEMP_PERIOD` an
 
 Similar to the description for the Bed Thermal Protection above. Use [`M141`](/docs/gcode/M141.html)](/docs/gcode/M141.html) to set target chamber temperature and [`M191`](/docs/gcode/M191.html) to set and wait target chamber temperature.
 
-### PID Extrusion Scaling
-{% alert warning %}
-Experimental feature
-{% endalert %}
+### PID Extrusion Scaling <em class="fa fa-flask"></em>
 ```cpp
-#if ENABLED(PIDTEMP)
-  //#define PID_EXTRUSION_SCALING
-  #if ENABLED(PID_EXTRUSION_SCALING)
-    #define DEFAULT_Kc (100) //heating power=Kc*(e_speed)
-    #define LPQ_MAX_LEN 50
+// Add an additional term to the heater power, proportional to the extrusion speed.
+// A well-chosen Kc value should add just enough power to melt the increased material volume.
+//#define PID_EXTRUSION_SCALING
+#if ENABLED(PID_EXTRUSION_SCALING)
+  #define LPQ_MAX_LEN 50
+  #define DEFAULT_KC 100  // heating power = Kc * e_speed
+  #if ENABLED(PID_PARAMS_PER_HOTEND)
+    // Specify up to one value per hotend here, according to your setup.
+    // If there are fewer values, the last one applies to the remaining hotends.
+    #define DEFAULT_KC_LIST { DEFAULT_KC, DEFAULT_KC }  // heating power = Kc * e_speed
   #endif
 #endif
 ```
@@ -2345,30 +2390,26 @@ This option further improves hotend temperature control by accounting for the ex
 Extrusion scaling keeps a circular buffer of forward E movements done at each temperature measurement which acts to delay the applied factor and allow for heat dissipation. The size of this queue during printing is set by `M301 L`, limited by `LPQ_MAX_LEN`.
 
 {% alert info %}
-Your [`M301`](/docs/gcode/M301.html) `C` and [`M301`](/docs/gcode/M301.html) `L` values are saved to EEPROM when `EEPROM_SETTINGS` is enabled.
+Your [`M301`](/docs/gcode/M301.html) `C` and [`M301`](/docs/gcode/M301.html) `L` values can be saved to EEPROM when `EEPROM_SETTINGS` is enabled.
 {% endalert %}
 
-### PID Fan Scaling
-{% alert warning %}
-Experimental feature
-{% endalert %}
+### PID Fan Scaling <em class="fa fa-flask"></em>
 ```cpp
 //#define PID_FAN_SCALING
-  #if ENABLED(PID_FAN_SCALING)
-    //#define PID_FAN_SCALING_ALTERNATIVE_DEFINITION
-    #if ENABLED(PID_FAN_SCALING_ALTERNATIVE_DEFINITION)
-      #define PID_FAN_SCALING_AT_FULL_SPEED 13.0        //=PID_FAN_SCALING_LIN_FACTOR*255+DEFAULT_Kf
-      #define PID_FAN_SCALING_AT_MIN_SPEED 6.0          //=PID_FAN_SCALING_LIN_FACTOR*PID_FAN_SCALING_MIN_SPEED+DEFAULT_Kf
-      #define PID_FAN_SCALING_MIN_SPEED 10.0            // Minimum fan speed at which to enable PID_FAN_SCALING
+#if ENABLED(PID_FAN_SCALING)
+  //#define PID_FAN_SCALING_ALTERNATIVE_DEFINITION
+  #if ENABLED(PID_FAN_SCALING_ALTERNATIVE_DEFINITION)
+    #define PID_FAN_SCALING_AT_FULL_SPEED 13.0        //=PID_FAN_SCALING_LIN_FACTOR*255+DEFAULT_Kf
+    #define PID_FAN_SCALING_AT_MIN_SPEED 6.0          //=PID_FAN_SCALING_LIN_FACTOR*PID_FAN_SCALING_MIN_SPEED+DEFAULT_Kf
+    #define PID_FAN_SCALING_MIN_SPEED 10.0            // Minimum fan speed at which to enable PID_FAN_SCALING
 
-      #define DEFAULT_Kf (255.0*PID_FAN_SCALING_AT_MIN_SPEED-PID_FAN_SCALING_AT_FULL_SPEED*PID_FAN_SCALING_MIN_SPEED)/(255.0-PID_FAN_SCALING_MIN_SPEED)
-      #define PID_FAN_SCALING_LIN_FACTOR (PID_FAN_SCALING_AT_FULL_SPEED-DEFAULT_Kf)/255.0
+    #define DEFAULT_Kf (255.0*PID_FAN_SCALING_AT_MIN_SPEED-PID_FAN_SCALING_AT_FULL_SPEED*PID_FAN_SCALING_MIN_SPEED)/(255.0-PID_FAN_SCALING_MIN_SPEED)
+    #define PID_FAN_SCALING_LIN_FACTOR (PID_FAN_SCALING_AT_FULL_SPEED-DEFAULT_Kf)/255.0
 
-    #else
-      #define PID_FAN_SCALING_LIN_FACTOR (0)             // Power loss due to cooling = Kf * (fan_speed)
-      #define DEFAULT_Kf 10                              // A constant value added to the PID-tuner
-      #define PID_FAN_SCALING_MIN_SPEED 10               // Minimum fan speed at which to enable PID_FAN_SCALING
-    #endif
+  #else
+    #define PID_FAN_SCALING_LIN_FACTOR (0)             // Power loss due to cooling = Kf * (fan_speed)
+    #define DEFAULT_Kf 10                              // A constant value added to the PID-tuner
+    #define PID_FAN_SCALING_MIN_SPEED 10               // Minimum fan speed at which to enable PID_FAN_SCALING
   #endif
 #endif
 ```
@@ -2507,7 +2548,7 @@ This feature allows you to digitally multiplex the fan output. The multiplexer i
   #define INVERT_CASE_LIGHT false             // Set true if Case Light is ON when pin is LOW
   #define CASE_LIGHT_DEFAULT_ON true          // Set default power-up state on
   #define CASE_LIGHT_DEFAULT_BRIGHTNESS 105   // Set default power-up brightness (0-255, requires PWM pin)
-  //#define CASE_LIGHT_MAX_PWM 128            // Limit pwm
+  //#define CASE_LIGHT_MAX_PWM 128            // Limit PWM
   //#define CASE_LIGHT_MENU                   // Add Case Light options to the LCD menu
   //#define CASE_LIGHT_NO_BRIGHTNESS          // Disable brightness control. Enable for non-PWM lighting.
   //#define CASE_LIGHT_USE_NEOPIXEL           // Use NeoPixel LED as case light, requires NEOPIXEL_LED.
@@ -2549,7 +2590,7 @@ Benefits
   #define INVERT_X2_VS_X_DIR true   // Set 'true' if X motors should rotate in opposite directions
   //#define X_DUAL_ENDSTOPS
   #if ENABLED(X_DUAL_ENDSTOPS)
-    #define X2_USE_ENDSTOP _XMAX_
+    #define X2_STOP_PIN -1
     #define X_DUAL_ENDSTOPS_ADJUSTMENT  0
   #endif
 #endif
@@ -2559,7 +2600,7 @@ Benefits
   #define INVERT_Y2_VS_Y_DIR true   // Set 'true' if Y motors should rotate in opposite directions
   //#define Y_DUAL_ENDSTOPS
   #if ENABLED(Y_DUAL_ENDSTOPS)
-    #define Y2_USE_ENDSTOP _YMAX_
+    #define Y2_STOP_PIN -1
     #define Y_DUAL_ENDSTOPS_ADJUSTMENT  0
   #endif
 #endif
@@ -2569,14 +2610,14 @@ Benefits
 #if NUM_Z_STEPPER_DRIVERS > 1
   //#define Z_MULTI_ENDSTOPS
   #if ENABLED(Z_MULTI_ENDSTOPS)
-    #define Z2_USE_ENDSTOP          _XMAX_
+    #define Z2_STOP_PIN -1
     #define Z2_ENDSTOP_ADJUSTMENT   0
     #if NUM_Z_STEPPER_DRIVERS >= 3
-      #define Z3_USE_ENDSTOP        _YMAX_
+      #define Z3_STOP_PIN -1
       #define Z3_ENDSTOP_ADJUSTMENT 0
     #endif
     #if NUM_Z_STEPPER_DRIVERS >= 4
-      #define Z4_USE_ENDSTOP        _ZMAX_
+      #define Z4_STOP_PIN -1
       #define Z4_ENDSTOP_ADJUSTMENT 0
     #endif
   #endif
@@ -2584,7 +2625,7 @@ Benefits
 ```
 These options allow you to use extra E drivers to drive a second motor for X, Y, and/or Z axes.
 
-Set `X_DUAL_STEPPER_DRIVERS` to use a second X motor. If the X motors need to spin in opposite directions set `INVERT_X2_VS_X_DIR` to `true`. If the second motor has its own endstop set `X_DUAL_ENDSTOPS`. (This can adjust for "racking.") Use `X2_USE_ENDSTOP` to set the endstop plug that should be used for the second endstop. Extra endstops will appear in the output of ['M119'](/docs/gcode/M119.html).
+Set `X_DUAL_STEPPER_DRIVERS` to use a second X motor. If the X motors need to spin in opposite directions set `INVERT_X2_VS_X_DIR` to `true`. If the second motor has its own endstop set `X_DUAL_ENDSTOPS`. (This can adjust for "racking.") Define a custom `X2_STOP_PIN` to set the pin for the second endstop. Extra endstops appear in the output of ['M119'](/docs/gcode/M119.html).
 
 If the two X axes aren't perfectly aligned, use `X_DUAL_ENDSTOP_ADJUSTMENT` to adjust for the difference. This offset is applied to the X2 motor after homing with [`G28`](/docs/gcode/G028.html). The dual endstop offsets can be set at runtime with `M666 X[offset] Y[offset] Z[offset]`.
 
@@ -2955,19 +2996,19 @@ Set to true for active low signal.
 
 ### Default Stepper Deactive Time
 ```cpp
-#define DEFAULT_STEPPER_DEACTIVE_TIME 120
-#define DISABLE_INACTIVE_X true
-#define DISABLE_INACTIVE_Y true
-#define DISABLE_INACTIVE_Z true
-#define DISABLE_INACTIVE_I true
-#define DISABLE_INACTIVE_J true
-#define DISABLE_INACTIVE_K true
-#define DISABLE_INACTIVE_U true
-#define DISABLE_INACTIVE_V true
-#define DISABLE_INACTIVE_W true
-#define DISABLE_INACTIVE_E true
+#define DEFAULT_STEPPER_TIMEOUT_SEC 120
+#define DISABLE_IDLE_X true
+#define DISABLE_IDLE_Y true
+#define DISABLE_IDLE_Z true
+#define DISABLE_IDLE_I true
+#define DISABLE_IDLE_J true
+#define DISABLE_IDLE_K true
+#define DISABLE_IDLE_U true
+#define DISABLE_IDLE_V true
+#define DISABLE_IDLE_W true
+#define DISABLE_IDLE_E true
 ```
-Disable stepper motors after set time. Set to 0 to deactive feature. Time can be set by [`M18 & M84`](/docs/gcode/M018.html).
+Disable stepper motors after the set time. Set to 0 to deactivate the feature. Time can be set by [`M18 & M84`](/docs/gcode/M018.html).
 
 ### Default Minimum Feedrates
 ```cpp
@@ -2975,7 +3016,7 @@ Disable stepper motors after set time. Set to 0 to deactive feature. Time can be
 #define DEFAULT_MINTRAVELFEEDRATE     0.0
 ```
 
-### Rehome After Steppers Deactive
+### Re-home After Steppers Deactivate
 ```cpp
 //#define HOME_AFTER_DEACTIVATE
 ```
@@ -3063,7 +3104,7 @@ See `Configuration_adv.h` for further information.
   //#define CALIBRATION_MEASURE_WMAX
 
   // Probing at the exact top center only works if the center is flat. If
-  // probing on a screwhead or hollow washer, probe near the edges.
+  // probing on a screw head or hollow washer, probe near the edges.
   //#define CALIBRATION_MEASURE_AT_TOP_EDGES
 
   #ifndef CALIBRATION_PIN
@@ -3082,7 +3123,7 @@ Adds [`G425`](/docs/gcode/G425.html) to run automatic calibration using an elect
 ```
 Adaptive Step Smoothing increases the resolution of multi-axis moves, particularly at step frequencies below 1kHz (for AVR) or 10kHz (for ARM), where aliasing between axes in multi-axis moves causes audible vibration and surface artifacts. The algorithm adapts to provide the best possible step smoothing at the lowest stepping frequencies.
 
-### Custom Microstepping
+### Custom Micro-stepping
 If you have a board with pins named `X_MS1`, `X_MS2`, etc., then you can change the micro-stepping using G-code or the LCD menu.
 ```cpp
 //#define MICROSTEP1 LOW,LOW,LOW
@@ -3508,7 +3549,6 @@ If you have a watchdog reboot in an ATmega2560 the device can hang forever, as a
 ```cpp
 //#define BABYSTEPPING
 #if ENABLED(BABYSTEPPING)
-  //#define INTEGRATED_BABYSTEPPING         // EXPERIMENTAL integration of babystepping into the Stepper ISR
   //#define BABYSTEP_WITHOUT_HOMING
   //#define BABYSTEP_XY                     // Also enable X/Y Babystepping. Not supported on DELTA!
   #define BABYSTEP_INVERT_Z false           // Change if Z babysteps should go the other way
@@ -3635,7 +3675,7 @@ Enables [`G60`](/docs/gcode/G060.html) & [`G61`](/docs/gcode/G061.html) and spec
 #define ARC_SUPPORT               // Disable this feature to save ~3226 bytes
 #if ENABLED(ARC_SUPPORT)
   #define MM_PER_ARC_SEGMENT  1   // Length of each arc segment
-  #define N_ARC_CORRECTION   25   // Number of intertpolated segments between corrections
+  #define N_ARC_CORRECTION   25   // Number of interpolated segments between corrections
   //#define ARC_P_CIRCLES         // Enable the 'P' parameter to specify complete circles
   //#define CNC_WORKSPACE_PLANES  // Allow G2/G3 to operate in XY, ZX, or YZ planes
 #endif
@@ -4135,8 +4175,8 @@ Add the [`M240`](/docs/gcode/M240.html) to take a photo. The photo can be trigge
      * Any move in dynamic mode will use the current feed rate to calculate the laser power.
      * Feed rates are set by the F parameter of a move command e.g., G1 X0 Y10 F6000
      * Laser power would be calculated by bit shifting off 8 LSB's. In binary this is div 256.
-     * The calculation gives us ocr values from 0 to 255, values over F65535 will be set as 255 .
-     * More refined power control such as compesation for accell/decell will be addressed in future releases.
+     * The calculation gives us OCR values from 0 to 255, values over F65535 will be set as 255 .
+     * More refined power control such as compensation for accel/decel will be addressed in future releases.
      *
      * M5 I clears inline mode and set power to 0, M5 sets the power output to 0 but leaves inline mode on.
      */
@@ -4145,8 +4185,8 @@ Add the [`M240`](/docs/gcode/M240.html) to take a photo. The photo can be trigge
     /**
      * Enable M3 commands for laser mode inline power planner syncing.
      * This feature enables any M3 S-value to be injected into the block buffers while in
-     * CUTTER_MODE_CONTINUOUS. The option allows M3 laser power to be commited without waiting
-     * for a planner syncronization
+     * CUTTER_MODE_CONTINUOUS. The option allows M3 laser power to be committed without waiting
+     * for a planner synchronization
      */
     //#define LASER_POWER_SYNC
 
@@ -4158,8 +4198,6 @@ Add the [`M240`](/docs/gcode/M240.html) to take a photo. The photo can be trigge
      * - Due to the limited power resolution this is only approximate.
      */
     //#define LASER_POWER_TRAP
-
-
 
     //
     // Laser I2C Ammeter (High precision INA226 low/high side module)
@@ -4210,7 +4248,8 @@ You'll need to select a pin for the ON/OFF function and optionally choose a 0-5V
 See [Laser and Spindle (1.1.x)](/docs/configuration/1.1/laser_spindle.html) or [Laser and Spindle (2.0.9.x)](/docs/configuration/2.0.9/laser_spindle.html) and `Configuration_adv.h` for more details.
 
 ## Filament Width Sensor
-<iframe style="float:right;margin:0 0 1em 1em;" title="Filament sensor video" width="240" height="195" src="//youtube.com/embed/W93dFxF425s?autoplay=0" frameborder="0" allowfullscreen></iframe>
+
+{% include media_floater.html type="youtube" float="right" alt="Filament sensor video" videoid="W93dFxF425s" %}
 
 ```cpp
 //#define FILAMENT_WIDTH_SENSOR

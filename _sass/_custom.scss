@@ -73,7 +73,7 @@
   --color-hr: #333;
   --color-highlighter-rouge: #C99;
   --color-highlighter-rouge-bg: #300;
-  --color-iframe-border: #444;
+  --color-frame-border: #444;
   --color-iframe-search: #002;
   --color-iframe-search-a: #000;
   --color-iframe-search-bg: #FFF;
@@ -324,8 +324,8 @@
   --color-highlight-bg: #111;
   --color-highlighter-rouge: #C99;
   --color-highlighter-rouge-bg: #222;
-  --color-primary: #333;
-  --color-primary-bg: #CCC;
+  --color-primary: #FFF;
+  --color-primary-bg: #FFE4;
   --color-primary-border: #EEE;
   --color-info: #ADD029;
   --color-info-bg: #022535;
@@ -341,7 +341,7 @@
   --color-danger-code: #F00;
   --color-danger-code-bg: #C228;
   --color-required: #FF0;
-  --color-iframe-border: #444;
+  --color-frame-border: #888;
   --color-iframe-search: #FFF;
   --color-iframe-search-bg: #111;
   --color-iframe-search-a: #C80;
@@ -658,7 +658,7 @@ div.container.detail, div.container.config {
   a { color: var(--color-iframe-search-a); }
   input[type="search"] { border-color: var(--color-iframe-search-border); background: var(--color-iframe-search-bg); color: var(--color-iframe-search); }
   input[type="submit"] { background: var(--color-iframe-search-submit-bg); border-color: var(--color-iframe-search-submit-border); }
-  .overlay { background: var(--color-iframe-overlay-bg); border-bottom: 1px solid var(--color-iframe-border); }
+  .overlay { background: var(--color-iframe-overlay-bg); border-bottom: 1px solid var(--color-frame-border); }
   [data-search-results]>.item:hover a { color: var(--color-iframe-overlay-a); }
 }
 
@@ -940,11 +940,20 @@ pre {
   code { white-space: pre; }
 }
 
-img.floater {
-  float: right;
-  margin: 0 0 1em 1em;
+//
+// Floating Image
+//
+
+.floater {
+  float: left;
+  margin: 0 1em 1em 0;
+  &.right {
+    float: right;
+    margin: 0 0 1em 1em;
+  }
+  &.framed { border: 4px solid var(--color-frame-border); }
 }
-img.floater.framed { border: 4px solid #000; }
+
 div.custom-article, div.col-md-12>.row.long, div.col-md-12>.row.notes {
   padding-top: 0;
   margin-top: 0;
@@ -990,7 +999,7 @@ div.custom-article, div.col-md-12>.row.long, div.col-md-12>.row.notes {
 div.custom-article {
   p { margin-left: 0.5em; }
   p, ul>li {
-    font-size: 110%; clear: both;
+    font-size: 110%;
     ul>li p { font-size: 100%; }
     img {
       display: block;
@@ -1221,7 +1230,7 @@ li#searchbox {
 .search-section li#searchbox form { display: none; }
 
 iframe.youtube {
-  border-color: var(--color-iframe-border);
+  border-color: var(--color-frame-border);
   border: 2px solid;
   margin: 0.5em auto;
   &.rj { margin: 0; float: right; }

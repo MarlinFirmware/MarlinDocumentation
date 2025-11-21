@@ -140,7 +140,7 @@ $(function() {
    * If the location has a hash, scroll up to reveal it.
    */
   if (window.location.hash)
-    setTimeout(() => { window.scrollBy(0, -top_clearance); }, 100);
+    setTimeout(() => { window.scrollBy(0, -top_clearance); }, 500);
 
   /**
    * All external links open in a new tab
