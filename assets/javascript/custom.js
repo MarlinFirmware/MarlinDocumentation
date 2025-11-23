@@ -79,9 +79,9 @@ function userToggleDarkMode() {
 // Set dark / light theme as soon as possible
 var nightMode = getCookie('nightMode');        // A cookie?
 if (nightMode === '') {
-  const hasMatchMedia = () => window && window.matchMedia,
-        prefersDarkColorScheme = () => hasMatchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches,
-        prefersLightColorScheme = () => hasMatchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+  const hasMatchMedia = window && window.matchMedia,
+        prefersDarkColorScheme = hasMatchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches,
+        prefersLightColorScheme = hasMatchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
   var d = new Date(), h = d.getHours();
   nightMode = prefersDarkColorScheme || (!prefersLightColorScheme && (h >= 19 || h < 6));
 }
