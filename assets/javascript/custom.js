@@ -265,8 +265,8 @@ $(function() {
   // Scroll to the active nav item in a long nav sidebar, such as docs/gcode/*.html
   const $here_ul = $('.container.detail ul.nav.nav-list');
   if ($here_ul.length) {
-    const $here_link = $here_ul.children('li.tocify-item.active');
-    if ($here_link.length) {
+    const $here_li = $here_ul.children('li.tocify-item.active');
+    if ($here_li.length) {
       $.fn.visibleHeight = function() {
         const scrollTop = $(window).scrollTop(),
               scrollBot = scrollTop + $(window).height(),
@@ -276,7 +276,7 @@ $(function() {
               visibleBot = elBottom > scrollBot ? scrollBot : elBottom;
         return visibleBot - visibleTop;
       };
-      $here_ul.prop({ scrollTop: $here_link.offset().top - $here_ul.visibleHeight() / 2 });
+      $here_ul.prop({ scrollTop: $here_li.offset().top - $here_ul.visibleHeight() / 2 });
     }
   }
 

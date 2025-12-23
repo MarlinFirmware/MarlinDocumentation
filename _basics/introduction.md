@@ -3,11 +3,9 @@ title:        What is Marlin?
 description:  A brief introduction to Marlin
 
 author: jbrazio
-contrib: shitcreek
+contrib: shitcreek, thinkyhead
 category: [ articles, getting-started ]
 ---
-
-<!-- ## What is Marlin -->
 
 ![What is Marlin?](/assets/images/basics/what_is_marlin.png)
 
@@ -19,47 +17,90 @@ One key to Marlin's usefulness is that it's built around the lightweight Arduino
 
 Marlin aims to support all possible boards and machine configurations. We want it to be configurable, customizable, extensible, and economical for hobbyists and vendors alike. A minimal Marlin build can be very small (under 64KB), for use on a headless printer with only modest hardware. Features are enabled as-needed to support added components.
 
-## Main features
-
- - Smart motion system with lookahead, interrupt-based movement, linear acceleration
- - Extendable support for Cartesian, Delta, SCARA, Core/H-Bot, and Hangprinter kinematics
- - Full-featured [G-code](/meta/gcode/) vocabulary with over 150 commands
- - Complete move command suite, including lines, arcs, Bézier curves, and fast travel moves
- - Optional [S-Curve Acceleration](/docs/configuration/configuration.html#s-curve-acceleration) for smoother acceleration
- - Closed-loop PID heater control with auto-tuning, thermal protection, safety cutoff
- - Support for up to 10 independent coordinated linear/rotary axes for custom applications
- - Support for up to 8 extruder heaters plus a heated bed
- - LCD Controller UI with [more than 30 language translations](/docs/development/lcd_language.html)
- - Host-based and SD Card printing with autostart
- - Bed Leveling Compensation — with or without a bed probe
- - [Linear Advance](/docs/features/lin_advance.html) for pressure-based extrusion
- - [Input Shaping](/docs/features/input_shaping.html) for faster motion with almost no vibration
- - Support for Volumetric extrusion
- - Support for mixing and multi-extruders (Cyclops, Chimera, Diamond)
- - Support for Filament Runout/Width Sensors
- - Print Job Timer and Print Counter
-
 ## How Marlin Works
 
-Marlin Firmware runs as a single large self-contained application on the 3D printer's mainboard. It manages all the real-time activities of the machine. It coordinates the heaters, steppers, sensors, lights, LCD display, buttons, and everything else involved in the 3D printing process.
+Marlin Firmware runs as a single large self-contained application on the 3D printer's mainboard. It manages all the real-time activities of the machine. It coordinates the heaters, steppers, sensors, lights, LCD display, buttons, and everything else involved in the 3D printing process. While you *can* connect a host like OctoPrint for remote monitoring, the distinct advantage of Marlin is that it can run completely standalone.
 
-Marlin implements an additive manufacturing process called [Fused Deposition Modeling (FDM)](//en.wikipedia.org/wiki/Fused_deposition_modeling) — aka [Fused Filament Fabrication (FFF)](//en.wikipedia.org/wiki/Fused_filament_fabrication). In this process a motor pushes plastic filament through a hot nozzle that melts and extrudes the material while the nozzle is moved under computer control. After several minutes (or many hours) of laying down thin layers of plastic, the result is a physical object.
+Marlin implements an additive manufacturing process called [Fused Deposition Modeling (FDM)](//en.wikipedia.org/wiki/Fused_deposition_modeling) — aka [Fused Filament Fabrication (FFF)](//en.wikipedia.org/wiki/Fused_filament_fabrication). In this process a motor pushes plastic filament through a hot nozzle that melts and extrudes the material while the nozzle is moved under computer control. After several minutes (or a couple of days) of laying down thin layers of plastic, the result is a useful physical object.
 
-The control-language for Marlin is a derivative of [G-code](//en.wikipedia.org/wiki/G-code). G-code commands tell a machine to do simple things like "set heater 1 to 180°," or "move to XY at speed F." Before you can print a 3D model you need to prepare it for printing. See below for more details.
+Marlin's main loop handles command processing, updating the display, reading controller events, and running periodic tasks like monitoring endstops and filament sensors. While the command processor can be blocked by any command, other important tasks are maintained cooperatively by frequently calling the main `idle()` routine during long commands.
 
-Marlin's main loop handles command processing, updating the display, reading controller events, and running periodic tasks like monitoring endstops and filament sensors. While the command processor can be blocked by a lengthy command, other important tasks are maintained cooperatively by frequently calling the main `idle()` routine during long commands.
+A print job is described using a simplified derivative of [G-code](//en.wikipedia.org/wiki/G-code). This simple language tells robots to do things like "set heater 1 to 180°" (`M109 T1 S180`), or "move to XY at speed F" (`G0 X100 Y100 F3000`). A 3D model must be prepared for 3D printing with a slicer application that takes parameters such as print temperature, layer height, infill density, etc., and generates a G-code file for printing. See below for details.
 
-Marlin uses a shallow queue for G-code commands sent by the host or read from SD/FD during a print job. Most commands are executed right away, but movement commands are just queued up to be processed later.
+Marlin runs G-code commands sent from a host over USB serial, from a serial controller, or directly from a file. Most G-code commands execute right away, while movement commands are queued up and calculated by the Planner.
 
-Marlin handles a move command by adding one or more linear segments to the *Planner Queue*. Behind the scenes, linear moves are the only kind of moves Marlin actually does, so smooth `G2`/`G3`/`G5` curves are converted into several small straight line segments before being added to the Planner Queue for processing.
+The Planner converts movement commands into one or more linear segments. Since the Planner only does straight linear moves, commands like `G2`, `G3`, and `G5` that do curves end up generating many small segments. The Planner examines segments for changes in speed, acceleration, and angular momentum and makes adjustments to ensure that movement is smooth and continuous and within physical limits.
 
-A high priority *Stepper Interrupt* runs through the Planner Queue and generates precisely-timed electronic pulses to the stepper drivers. Even at modest movement speeds Marlin needs to generate thousands of stepper pulses every second. A typical consumer 3D printer will need to generate 80 steps-per-mm at 50mm/s for a total of 4000 steps-per-second, and that's just for a single axis!
+The high priority *Stepper Interrupt* reads blocks from the Planner Queue and generates precisely-timed electronic pulses to the stepper drivers. Even at modest movement speeds Marlin needs to generate thousands of stepper pulses every second. A typical consumer 3D printer will need to generate 80 steps-per-mm at 50mm/s for a total of 4000 steps-per-second, and that's just for a single axis! And in modern times it's not uncommon to go 5 to 10 times faster!
 
-Since CPU speed imposes a limit on how fast the machine can move, we're always looking for new ways to optimize our motion code for MCUs with fewer resources like the AVR.
+Since CPU speed places a limit on machine speed we're always looking for innovative ways to optimize our motion code for 16MHz AVR, and this ends up benefitting ARM as well.
 
+## Highlighted Features
+
+ - Support for a wide range of MCUs from 16MHz AVR to the fastest ARM processors
+ - Intelligent interrupt-based motion system
+   - Lookahead planner, linear acceleration, Input Shaping, Linear / Pressure Advance
+   - [S-Curve Acceleration](/docs/configuration/configuration.html#s-curve-acceleration) for smoother acceleration
+   - [ZV Input Shaping](/docs/features/input_shaping.html) for faster motion with almost no vibration
+   - Up to 10 linear and/or rotary axes for custom applications
+ - Fixed-Time Motion system — ***New!***
+   - Optimized motion timing using the full power of ARM
+   - Faster, smoother, and quieter stepping
+   - Advanced Input Shapers: ZV, ZVD, ZVDD, ZVDDD, EI, 2HEI, 3HEI, MZV
+   - 5th- and 6th-order Polynomial Trajectory Curves
+ - Full-featured [G-code](/meta/gcode/) vocabulary with over 150 commands
+   - Motion commands for lines, arcs, Bézier curves, and fast travel
+   - Control commands to set temperature targets, fan speeds, etc.
+   - Parameter commands to change machine behaviors
+   - EEPROM storage for settings and calibration results
+ - Versatile Machine Types
+   - Primarily focused on 3D Printers (i.e., Replicating Rapid Prototypers)
+   - Kinematics for Cartesian, CoreXY, Delta, SCARA, Hangprinter, etc.
+   - Laser and Cutter control for CNC
+   - Foam Cutter, Polar Plotter, Pick-and-place
+ - Temperature Control
+   - Closed-loop PID heating
+   - Model Predictive Control for more stable hotend temperature
+   - Automated PID and MPC tuning
+   - Thermal protection, safety cutoff
+   - Heated bed, heated chamber, laser cooler
+   - Fan control for hotend, print cooling, and electronics
+ - Automated Calibration and Compensation
+   - Assisted Tramming
+   - Support for many probe types
+   - Manual and Automatic Bed Probing
+   - Bed Leveling Compensation
+   - Obstacle Avoidance
+   - Mesh Validation, Probe Offset Wizard, Probe Repeatability test
+   - Backlash Compensation, Skew Correction
+ - Fused Filament Fabrication
+   - Up to 8 physical extruders
+     - Standard extruders (single E stepper per nozzle)
+     - Singlenozzle (multiple E steppers per nozzle)
+     - Switching Extruder (servo, magnetic, etc.)
+     - Mixing Extruder (Geeetech A20M)
+     - Multi-extruder (Cyclops, Chimera, Diamond)
+     - Mult-material (Prusa MMU, Chameleon 3D)
+   - Firmware-based extrusion and retraction control
+     - [Linear Advance](/docs/features/lin_advance.html) for pressure-based extrusion
+     - Non-linear extrusion, slippage compensation
+     - Volumetric extrusion, Filament Width Sensor
+ - Print Job Control
+   - Host-based and SD Card printing with autostart
+   - Print Job Timer with Remaining Time estimation
+   - Filament Runout Detection, Filament Change Procedure
+   - Object Cancel
+   - Print Counter and Service Reminders
+   - Print Pause with Nozzle Park
+ - LCD Menu interface
+   - HD44780 / GLCD support for [30+ languages](/docs/development/lcd_language.html)
+   - Portable APIs for various LCD and OLED controllers
+   - Creality DWIN display with Pro UI, Jyers UI, and Marlin UI variants
+   - Configurable Quick Preheat
+ 
 ## Printing Things
 
-### Modeling
+## Modeling
 
 While Marlin only prints G-code, most slicers only slice [STL](//en.wikipedia.org/wiki/STL_(file_format)) files.
 
@@ -69,7 +110,7 @@ Before Marlin can dream of printing, first you'll need a [3D model](//www.thingi
 
 A high degree of knowledge is needed to model complex objects like a [T-Rex Skull](//www.thingiverse.com/thing:308335), but other objects can be quite [simple to model](//www.thingiverse.com/thing:172175). To get ideas and test things out, explore sites like [Thingiverse](//www.thingiverse.com/explore/popular), [YouMagine](//www.youmagine.com/) and [Printables](//www.printables.com/) and print things for fun.
 
-### Slicing
+## Slicing
 
 Slicers prepare a solid 3D model by dividing it up into thin slices (layers). In the process it generates the [G-code](//en.wikipedia.org/wiki/G-code) that tells the printer in minute detail how to reproduce the model. There are many slicers to choose from, including:
 
@@ -81,15 +122,15 @@ Slicers prepare a solid 3D model by dividing it up into thin slices (layers). In
 - [Simplify3D](//www.simplify3d.com/) is a solid commercial offering with a simplified interface.
 - [Kiri:Moto](//grid.space/kiri/) is a free web-based slicer that is fine for simpler print jobs.
 
-### SD Printing
+## SD Printing
 
 Marlin can print a file from an SD Card with no connection to a host device. On a headless printer with an SD card, a standalone SD print can be initiated from the host and then the host can still monitor the print.
 
 USB Flash drives (and USB-C dongles as on the AnkerMake M5) are also supported, and Marlin 2.x can switch between two media drives. In a future update we'll be adding support for several arbitrary media types.
 
-It's a hassle to carry Micro-SD cards around, so some printer boards have a "target mode" (look for "SDIO") allowing you to tell the printer to temporarily release the onboard media. Then the SD/FD can be mounted as a USB drive on your PC for quick file transfers and firmware updates.
+It's a hassle to carry Micro-SD cards around, so some printer boards have a "target mode" (look for "SDIO" "CDC" "MSC") allowing you to tell the printer to temporarily release the onboard media. Then the SD/FD can be mounted as a USB drive on your PC for quick file transfers and firmware updates.
 
-### Host Printing
+## Host Printing
 
 Host software is available for several platforms, including desktop systems, Raspberry Pi, and Android tablets. Any device with a USB port and serial terminal can technically act as a host, but you'll have a better printing experience using host software specifically designed for 3D printers. Current selections include:
 

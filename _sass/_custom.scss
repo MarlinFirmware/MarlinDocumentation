@@ -999,8 +999,6 @@ div.custom-article, div.col-md-12>.row.long, div.col-md-12>.row.notes {
 div.custom-article {
   p { margin-left: 0.5em; }
   p, ul>li {
-    font-size: 110%;
-    ul>li p { font-size: 100%; }
     img {
       display: block;
       &.inline { display: inline; }
@@ -1416,6 +1414,13 @@ div.options table {
   th, td { padding: 0 0.5em; }
   th { font-family: monospace; }
   td { font-size: 90% }
+}
+
+.setting-section div.long table {
+  margin: 1em 0 1em 1em;
+  th, td { padding: 0 0.5em 0.5em 0.5em; }
+  th { font-weight: bold; }
+  td { font-size: 80% }
 }
 
 .detail-header {
