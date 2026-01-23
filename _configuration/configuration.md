@@ -19,6 +19,10 @@ Marlin also provides minimal and intelligent configuration methods that may be m
 - `Config.h` (2.1.3 and up) should contain just your pertinent settings. This replaces `Configuration.h` and `Configuration_adv.h`, which will be ignored.
 - `config.ini` (2.1.0 and up) modifies the configuration files at the start of a PlatformIO build and has some other useful powers. See the [Configuration with INI](config-ini.html) page to see if it's right for you.
 
+- `_Bootscreen.h` is included when `SHOW_CUSTOM_BOOTSCREEN` is defined. See the [Boot screens](boot_status_screen.html#_bootscreen.h) page for more information.
+- `_Statusscreen` is included when `CUSTOM_STATUS_SCREEN_IMAGE` is defined.
+See the [Status screens](boot_status_screen.html#_statusscreen.h) page for more information.
+
 ## Compiler Directives
 Marlin is configured using C `#define` statements so the firmware can be as small, fast, and efficient as possible, but if you want all the bells and whistles and your board has the power, you can go for it.
 
