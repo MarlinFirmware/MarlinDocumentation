@@ -1109,15 +1109,39 @@ A retractable Z-probe for deltas that uses an Allen key as the probe. See "[Koss
 
 More information will be included in an upcoming Delta configuration page.
 
-### Probe Offsets <em class="fa fa-sticky-note" aria-hidden="true"></em> <em class="fa fa-desktop" aria-hidden="true"></em>
-These offsets specify the distance from the tip of the nozzle to the probe — or more precisely, to the point at which the probe triggers. The X and Y offsets are specified as integers. The Z offset should be specified as exactly as possible using a decimal value. The Z offset can be overridden with `M851 Z` or the LCD controller. The [`M851`](/docs/gcode/M851.html) offset is saved to EEPROM with [`M500`](/docs/gcode/M500.html).
+### Nozzle-to-Probe offsets <em class="fa fa-sticky-note" aria-hidden="true"></em> <em class="fa fa-desktop" aria-hidden="true"></em>
+These offsets specify the distance from the tip of the nozzle of tool T0 to the probe — or more precisely, to the point at which the probe triggers. The X and Y offsets are specified as integers. The Z offset should be specified as exactly as possible using a decimal value. The Z offset can be overridden with `M851 Z`, baby stepping, or the LCD controller. The [`M851`](/docs/gcode/M851.html) offset is saved to EEPROM with [`M500`](/docs/gcode/M500.html).
+
+Assuming the typical work area orientation:
+
+- Probe to RIGHT of the Nozzle has a Positive X offset
+- Probe to LEFT  of the Nozzle has a Negative X offset
+- Probe in BACK  of the Nozzle has a Positive Y offset
+- Probe in FRONT of the Nozzle has a Negative Y offset
+
+Some examples:
+```cpp
+#define NOZZLE_TO_PROBE_OFFSET { 10, 10, -1 }   // Example "1"
+#define NOZZLE_TO_PROBE_OFFSET {-10,  5, -1 }   // Example "2"
+#define NOZZLE_TO_PROBE_OFFSET {  5, -5, -1 }   // Example "3"
+#define NOZZLE_TO_PROBE_OFFSET {-15,-10, -1 }   // Example "4"
+
+     +-- BACK ---+
+     |    [+]    |
+   L |        1  | R <-- Example "1" (right+,  back+)
+   E |  2        | I <-- Example "2" ( left-,  back+)
+   F |[-]  N  [+]| G <-- Nozzle
+   T |       3   | H <-- Example "3" (right+, front-)
+     | 4         | T <-- Example "4" ( left-, front-)
+     |    [-]    |
+     O-- FRONT --+
+
+#define NOZZLE_TO_PROBE_OFFSET { 10, 10, 0 } // (mm) X, Y, Z distance from Nozzle tip to Probe trigger-point
+```
 
 ### Distance from edge
-```cpp
-#define X_PROBE_OFFSET_FROM_EXTRUDER 10  // X offset: -left  +right  [of the nozzle]
-#define Y_PROBE_OFFSET_FROM_EXTRUDER 10  // Y offset: -front +behind [the nozzle]
-#define Z_PROBE_OFFSET_FROM_EXTRUDER 0   // Z offset: -below +above  [the nozzle]
 
+```cpp
 #define PROBING_MARGIN 10
 ```
 Certain types of probe need to stay away from the edge
@@ -1187,7 +1211,7 @@ Probing multiple times yields better results. Set to 2 for a fast/slow probe - t
 ```
 Z probes require clearance when deploying, stowing, and moving between probe points to avoid hitting the bed and other hardware. Servo-mounted probes require extra space for the arm to rotate. Inductive probes need space to keep from triggering early.
 
-Use these settings to specify the distance (mm) to raise the probe (or lower the bed). The values set here apply over and above any (negative) probe Z Offset set with `Z_PROBE_OFFSET_FROM_EXTRUDER`, [`M851`](/docs/gcode/M204.html), or the LCD. Only integer values >= 1 are valid for these settings.
+Use these settings to specify the distance (mm) to raise the probe (or lower the bed). The values set here apply over and above any (negative) probe Z Offset set with `NOZZLE_TO_PROBE_OFFSET`, [`M851`](/docs/gcode/M851.html), or the LCD. Only integer values >= 1 are valid for these settings.
 
 - *Example*: `M851 Z-5` with a CLEARANCE of 4  =>  9 mm from bed to nozzle.
 - *But*: `M851 Z+1` with a CLEARANCE of 2  =>  2 mm from bed to nozzle.

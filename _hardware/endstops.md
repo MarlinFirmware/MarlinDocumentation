@@ -81,7 +81,7 @@ Here we mechanically adjust the bed and possibly additionally the microswitch tr
 
 ## Probe used for homing and bed-leveling.
 
-The probe should be mounted so that its trigger point lies below the extruder nozzle. `Z_PROBE_OFFSET_FROM_EXTRUDER` (negative!) is this vertical offset. This offset is applied by the firmware when homing in order to properly reference the coordinate system to the nozzle position. To measure this see [here](#measure_offsets).  For a mechanical probe like a BL-Touch, this offset is geometrically fixed.  For a remote sensing probe (e. g. inductive or capacitive), the offset might vary with bed material. You can tweak it using [M851](/docs/gcode/M851.html).
+The probe should be mounted so that its trigger point lies below the extruder nozzle. The third value of `NOZZLE_TO_PROBE_OFFSET` (negative!) is this vertical offset. This offset is applied by the firmware when homing in order to properly reference the coordinate system to the nozzle position. To measure this see [here](#measure_offsets).  For a mechanical probe like a BL-Touch, this offset is geometrically fixed.  For a remote sensing probe (e. g. inductive or capacitive), the offset might vary with bed material. You can tweak it using [M851](/docs/gcode/M851.html).
 
 ![Fig. 1](/assets/images/docs/hardware/endstops/bltouchwithbltouch.png)
 {: style="text-align: center;"}
@@ -92,7 +92,7 @@ The process of bed-leveling generates an array of z-values of the bed heights at
 
 ## Microswitch used for homing, probe for bed leveling.
 
-When homing, the printer is not protected against hardware endstop failure.  This configuration uses a perhaps more reliable microswitch for homing, reserving the probe for bed leveling, where `Z_PROBE_LOW_POINT` provides failure protection.  The configuration is illustrated in Fig. 2, requiring the use of both `MANUAL_Z_HOME_POS` and `Z_PROBE_OFFSET_FROM_EXTRUDER` Ideally, with an uneven bed, `MANUAL_Z_HOME_POS` should be adjusted so that z=0 lies halfway between the highest and lowest parts of the bed.  This makes  the maximum bed correction as small as possible.
+When homing, the printer is not protected against hardware endstop failure.  This configuration uses a perhaps more reliable microswitch for homing, reserving the probe for bed leveling, where `Z_PROBE_LOW_POINT` provides failure protection.  The configuration is illustrated in Fig. 2, requiring the use of both `MANUAL_Z_HOME_POS` and `NOZZLE_TO_PROBE_OFFSET`. Ideally, with an uneven bed, `MANUAL_Z_HOME_POS` should be adjusted so that z=0 lies halfway between the highest and lowest parts of the bed.  This makes  the maximum bed correction as small as possible. If moving the nozzle into the dips of the bed surface can trigger the Z min limit switch, the hardware endstops must be temporarily disabled with M121. 
 
 ![Fig. 2](/assets/images/docs/hardware/endstops/bltouchwithmicroswitch.png)
 {: style="text-align: center;"}
@@ -102,7 +102,7 @@ Figure 2: Example configuration using a microswitch for homing, BL-Touch for bed
 <A name = "measure_offsets"></A>
 
 ## Measuring offsets.
-To measure an offset between a trigger point and the bed,  lower the nozzle to the trigger point (by homing, if it's the homing device), and note the z-value. Now turn off the software endstop temporarily (with M211 S0) to enable lowering the nozzle further down to the bed. Note the z again. The difference is the height of the respective trigger point above the bed.
+To measure an offset between a trigger point and the bed,  lower the nozzle to the trigger point (by homing, if it's the homing device), and note the z-value. If you do not use the probe for homing, temporarily disable the hardware endstops (with M121). Now turn off the software endstop temporarily (with M211 S0) to enable lowering the nozzle further down to the bed. Note the z again. The difference is the height of the respective trigger point above the bed.
 
 # Endstops and Electromagnetic Interference (EMI)
 
