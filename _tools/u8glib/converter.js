@@ -535,41 +535,40 @@ var bitmap_converter = () => {
         function bitwise_rle_decode(rlebytes, isext) {
           if (!rlebytes.length) return [];
 
-          const nyb = [];
+          const expanded = [];
           rlebytes.forEach(v => {
-            nyb.push((v >> 4) & 0x0F, v & 0x0F);
+            expanded.push((v >> 4) & 0x0F, v & 0x0F);
           });
 
-          let ni = 0;
-          let bitstate = nyb[ni++];
-          if (bitstate > 1) return [];
-
           const bits = [];
-          while (ni < nyb.length) {
-            let run = 0;
-            const n = nyb[ni++];
-            if (n < 15) {
-              run = n + 1;
+          let bitstate = 0;
+          let i = 0;
+
+          while (i < expanded.length) {
+            let c = expanded[i++];
+
+            // First nybble is the starting bit state.
+            if (i === 1) {
+              bitstate = c;
+              continue;
             }
-            else {
-              if (ni >= nyb.length) return [];
-              const a = nyb[ni++];
-              if (a < 15) {
-                if (ni >= nyb.length) return [];
-                const b = nyb[ni++];
-                run = ((a + 1) << 4) + b;
+
+            // Match the reference decoder's nybble stream rules.
+            if (c === 15) {
+              if (i + 1 >= expanded.length) return [];
+              const d = expanded[i], e = expanded[i + 1];
+              if (isext && d === 15) {
+                if (i + 2 >= expanded.length) return [];
+                c = 256 + 16 * e + expanded[i + 2] - 1;
+                i += 1;
               }
               else {
-                // Encoder always emits [15, 15, hi, lo] for long runs.
-                // Consume two nibbles here to keep the stream aligned.
-                if (ni + 1 >= nyb.length) return [];
-                const c = nyb[ni++], d = nyb[ni++];
-                run = 256 + (c << 4) + d;
+                c = 16 * d + e + 15;
               }
+              i += 2;
             }
 
-            if (run <= 0) return [];
-            for (let i = 0; i < run; i++) bits.push(bitstate);
+            for (let n = c; n >= 0; n--) bits.push(bitstate);
             bitstate ^= 1;
           }
 
