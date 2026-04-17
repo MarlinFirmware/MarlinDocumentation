@@ -102,7 +102,7 @@ Figure 2: Example configuration using a microswitch for homing, BL-Touch for bed
 <A name = "measure_offsets"></A>
 
 ## Measuring offsets.
-To measure an offset between a trigger point and the bed,  lower the nozzle to the trigger point (by homing, if it's the homing device), and note the z-value. If you do not use the probe for homing, temporarily disable the hardware endstops (with M121). Now turn off the software endstop temporarily (with M211 S0) to enable lowering the nozzle further down to the bed. Note the z again. The difference is the height of the respective trigger point above the bed.
+To measure an offset between a trigger point and the bed, lower the nozzle to the trigger point (by homing, if it's the homing device), and note the z-value. If you do not use the probe for homing, temporarily disable the hardware endstops (with M121). Now turn off the software endstop temporarily (with M211 S0) to enable lowering the nozzle further down to the bed. Note the z again. The difference is the height of the respective trigger point above the bed.
 
 # Endstops and Electromagnetic Interference (EMI)
 
