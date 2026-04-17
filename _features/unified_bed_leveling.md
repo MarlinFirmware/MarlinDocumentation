@@ -18,13 +18,23 @@ The main improvements over the previous systems are:
 
 ## Synopsis
 
-Currently an LCD display with a rotary encoder is recommended. Note that the MKS TFT 2.8 and 3.2 *do not* actually fulfill the LCD requirements. The main documentation below assumes that a conforming LCD and a Z-probe are present. See [the no-lcd addendum](#ubl-without-an-lcd) for information on using UBL without a display, and [the no-Z-probe addendum](#ubl-without-a-z-probe) to get UBL working without a Z-probe installed. Note that operation without an LCD is still work-in-progress, and subject to change.
+The Unified Bed Leveling (UBL) system provides advanced mesh-based bed compensation with extensive user control. Before proceeding, ensure your setup meets the following requirements.
 
-UBL is a superset of previous automatic leveling systems, but it does not necessarily supersede them in all cases. Its goal is to allow the best features of the previous leveling schemes to be used together and combined, as well as providing a richer set of commands and feedback for the user. However, this functionality comes at a cost of program space. Compared to bilinear leveling, for example, the difference might be 50 kB for UBL vs. 5 kB for bilinear -- and for an equally precise mesh the printed results could be quite similar. With that said, the cost in program space is likely only a concern for more resource constrained parts like the 128k ATMegas.
+### Requirements for LCD Display and Z-Probe
 
-The printer must be already fully functional and tested, with a well-constrained movement system. The more physically level and straight the bed is, the better your results will be. See `Configuration.h` and `Configuration_adv.h` for all of UBL's settings.
+Currently, an LCD display with a rotary encoder is recommended. Note that the MKS TFT 2.8 and 3.2 *do not* fulfill the LCD requirements. The main documentation below assumes that both a conforming LCD and a Z-probe are present. See [the no-lcd addendum](#ubl-without-an-lcd) for information on using UBL without a display, and [the no-Z-probe addendum](#ubl-without-a-z-probe) to get UBL working without a Z-probe installed. Note that operation without an LCD is still work-in-progress and subject to change.
 
-You should be able to successfully print a small object at the center of the bed with bed leveling turned off. It's very important to verify that your `Configuration.h` settings make this possible before trying to bring up UBL. Most problems bringing up the UBL Bed Leveling system occur when this step has been ignored. Please pay particular attention to your `Z_PROBE_OFFSET_FROM_EXTRUDER` value. Usually it's best to home the Z-Axis in the center of the bed. But wherever you decide to home, the Z value reported on the LCD (or with [`M114`](/docs/gcode/M114.html)) should be _very_ close to 0.0 mm when the nozzle is just touching the bed. Failure to calibrate `Z_PROBE_OFFSET_FROM_EXTRUDER` properly will result in dimensional errors in your printed parts.
+### Program Space Considerations
+
+UBL is a superset of previous automatic leveling systems, but it does not necessarily supersede them in all cases. Its goal is to combine the best features of previous leveling schemes while providing a richer set of commands and user feedback. However, this functionality comes at a cost: compared to bilinear leveling, for example, UBL may require approximately 50 kB versus 5 kB for bilinear leveling. While an equally precise mesh could yield similar printed results, the program space cost is likely only a concern on more resource-constrained microcontrollers like the 128k ATMegas.
+
+### Printer Condition
+
+The printer must be fully functional and tested, with a well-constrained movement system. The more physically level and straight the bed is, the better your results will be. Refer to `Configuration.h` and `Configuration_adv.h` for all of UBL's settings.
+
+### Baseline Calibration
+
+You should be able to successfully print a small object at the center of the bed with bed leveling turned off before attempting to configure UBL. It is critical to verify that your `Configuration.h` settings make this possible, as most problems when bringing up the UBL system occur when this step has been ignored. Pay particular attention to your `NOZZLE_TO_PROBE_OFFSET` value. Usually it's best to home the Z-Axis in the center of the bed, though wherever you decide to home, the Z value reported on the LCD (or with [`M114`](/docs/gcode/M114.html)) should be _very_ close to 0.0 mm when the nozzle is just touching the bed. Failure to calibrate `NOZZLE_TO_PROBE_OFFSET` properly will result in dimensional errors in your printed parts.
 
 The following command sequences can then be used as a quick-start guide to home, level, and fine-tune the results. These commands are for a 'normal' setup; see the relevant [addenda](#addenda) for concerns and G-code sequences related to setups without an LCD or Z-probe.
 
