@@ -9,7 +9,9 @@ category: [ configuration ]
 
 # `_Bootscreen.h`
 The bootscreen is displayed before the Marlin splash screen. This is available on 128x64 mono lcd displays and character lcd displays.
-Requires: CUSTOM_STATUS_SCREEN_IMAGE
+
+Requires: `CUSTOM_STATUS_SCREEN_IMAGE`
+
 Use [Marlin converter tool](https://marlinfw.org/tools/u8glib/converter.html) to generate custom bootscreens.
 
 ## Animation Options
@@ -18,8 +20,8 @@ Use [Marlin converter tool](https://marlinfw.org/tools/u8glib/converter.html) to
 #define CUSTOM_BOOTSCREEN_ANIMATED_FRAME_TIME // Each frame also has a duration
 #define CUSTOM_BOOTSCREEN_FRAME_TIME 500      // (ms) Same time for all frames
 ```
-`CUSTOM_BOOTSCREEN_ANIMATED_FRAME_TIME` [See example for details](https://github.com/MarlinFirmware/Configurations/blob/import-2.1.x/config/examples/AnimationExample/_Bootscreen.h)<br>
-`CUSTOM_BOOTSCREEN_FRAME_TIME` Value specifies constant time between frames in ms.
+- `CUSTOM_BOOTSCREEN_ANIMATED_FRAME_TIME` - [See example for details](https://github.com/MarlinFirmware/Configurations/blob/import-2.1.x/config/examples/AnimationExample/_Bootscreen.h)
+- `CUSTOM_BOOTSCREEN_FRAME_TIME` - Value specifies constant time between frames in ms.
 
 ## Bootscreen Options
 ```cpp
@@ -27,9 +29,8 @@ Use [Marlin converter tool](https://marlinfw.org/tools/u8glib/converter.html) to
 #define CUSTOM_BOOTSCREEN_X 5
 #define CUSTOM_BOOTSCREEN_Y 5
 ```
-
-`CUSTOM_BOOTSCREEN_TIMEOUT` Value specifies the time the boot screen is displayed in ms. Default is 2500 if not specified.
-`CUSTOM_BOOTSCREEN_[X|Y]` Absolute pixel or character offet. If omitted is set to centre the image.
+- `CUSTOM_BOOTSCREEN_TIMEOUT` - Value specifies the time the boot screen is displayed in ms. Default is 2500 if not specified.
+- `CUSTOM_BOOTSCREEN_[X|Y]` - Absolute pixel or character offet. If omitted is set to centre the image.
 
 ## Bitmap Options
 ```cpp
@@ -40,12 +41,11 @@ Use [Marlin converter tool](https://marlinfw.org/tools/u8glib/converter.html) to
 #define COMPACT_CUSTOM_BOOTSCREEN
 #define COMPACT_CUSTOM_BOOTSCREEN_EXT
 ```
-
-`CUSTOM_BOOTSCREEN_BMPWIDTH` Image width in pixels.<br>
-`CUSTOM_BOOTSCREEN_BMPHEIGHT` Image height in pixels. If omitted is calculated from image data.<br>
-`CUSTOM_BOOTSCREEN_INVERTED` Inverts the image. On and off pixels are swapped.<br>
-`COMPACT_CUSTOM_BOOTSCREEN` Use compressed image data to save some flash space<sup>*</sup>.<br>
-`COMPACT_CUSTOM_BOOTSCREEN_EXT` Use extended compressed image data to save some flash space<sup>*</sup>.
+- `CUSTOM_BOOTSCREEN_BMPWIDTH` - Image width in pixels.
+- `CUSTOM_BOOTSCREEN_BMPHEIGHT` - Image height in pixels. If omitted is calculated from image data.
+- `CUSTOM_BOOTSCREEN_INVERTED` - Inverts the image. On and off pixels are swapped.
+- `COMPACT_CUSTOM_BOOTSCREEN` - Use compressed image data to save some flash space<sup>*</sup>.
+- `COMPACT_CUSTOM_BOOTSCREEN_EXT` - Use extended compressed image data to save some flash space<sup>*</sup>.
 
 <sup>*</sup>Use the [Marlin converter tool](https://marlinfw.org/tools/u8glib/converter.html) To generate compressed data, it will automatically choose the best compression option for your image data.
 
@@ -160,9 +160,10 @@ const static PROGMEM byte customBootChars[][8] = {
 };
 ```
 # `_Statusscreen.h`
-The logo is displayed in the top left of the main Marlin status screen.
-This is available on 128x64 mono lcd displays.
-Requires: CUSTOM_STATUS_SCREEN_IMAGE
+The logo is displayed in the top left of the main Marlin status screen. Available on 128x64 mono lcd displays.
+
+Requires: `CUSTOM_STATUS_SCREEN_IMAGE`
+
 Use [Marlin converter tool](https://marlinfw.org/tools/u8glib/converter.html) to generate custom status logos.
 
 ## Status logo options
@@ -175,7 +176,7 @@ Use [Marlin converter tool](https://marlinfw.org/tools/u8glib/converter.html) to
 #define STATUS_LOGO_X            0
 #define STATUS_LOGO_Y            0
 ```
-`STATUS_BED_X` Postion of heated bed icon<br>
-`STATUS_HEATERS_X` Position of first hotend icon<br>
-`STATUS_LOGO_WIDTH`Width of status logo in bits<br>
-`STATUS_LOGO_[X|Y]` Start X|Y postion of status logo<br>
+- `STATUS_BED_X` - Position of heated bed icon
+- `STATUS_HEATERS_X` - Position of first hotend icon
+- `STATUS_LOGO_WIDTH` - Width of status logo in bits
+- `STATUS_LOGO_[X|Y]` - Start X|Y position of status logo
