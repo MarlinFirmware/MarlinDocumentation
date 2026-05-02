@@ -14,7 +14,7 @@ layout: default
         {%- if list.size > 0 -%}
           <div class="tocify bigtoc">
             <ul class="tocify-header nav nav-list">
-              {%- assign list = list | sort: 'tag' %}<!-- use a sorting tag -->
+              {%- assign list = list | sort: 'label' %}<!-- use a sorting tag -->
               {%- for conf in list %}
                 {% assign active = false %}
                 {% if page.codes[0] == conf.codes[0] and page.title == conf.title %}{% assign active = true %}{% endif %}

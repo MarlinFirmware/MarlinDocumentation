@@ -17,7 +17,7 @@ layout: default
         {%- if list.size > 0 -%}
           <div class="tocify bigtoc">
             <ul class="tocify-header nav nav-list">
-              {%- assign list = list | sort: 'tag' %}
+              {%- assign list = list | sort: 'label' %}
               {%- for conf in list %}
                 <li class="tocify-item"><a href="{{ conf.url | prepend: site.baseurl }}">{% if conf.label %}{{ conf.label }}{% else %}<strong>{{ conf.name }}</strong>{% endif %}</a></li>
               {% endfor -%}

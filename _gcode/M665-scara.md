@@ -5,7 +5,7 @@ brief: Set SCARA geometry values
 author: ManuelMcLure
 
 requires: MORGAN_SCARA|MAKERARM_SCARA
-group: none
+eeprom: true
 
 codes: [ M665 ]
 

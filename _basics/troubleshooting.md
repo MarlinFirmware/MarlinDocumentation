@@ -74,7 +74,7 @@ An under-powered PSU combined with heaters and high speed moves can lead to a fr
 
 ### EEPROM Errors
 
-After flashing a new version of Marlin, the existing EEPROM contents may no longer conform to the updated EEPROM layout. As a result, you may see an error like one of these:
+After flashing a new version of Marlin, the existing [EEPROM](/docs/features/eeprom.html) contents may no longer conform to the updated EEPROM layout. As a result, you may see an error like one of these:
 
 ```
 Error:EEPROM datasize error.
@@ -103,6 +103,10 @@ Marlin's `SanityCheck.h` files exist to check the validity of settings and make 
 ### Build Too Large
 
 A Marlin build can range in size from under 60K to over 200K with a generous complement of features enabled. All features try to use as little SRAM as possible, but some have a higher SRAM cost. As a guide and starting-point, be sure to use the example configuration included with Marlin that best matches your specific machine model.
+
+### Assembler messages
+
+Occasionally a build may fail with "Assembler messages: can't create file" or something similar. This is a spurious error caused by a weird interaction between the build system and the file system, where it looks for a file that was supposed to be created before the creation of the file has actually completed. Just keep restarting the build and all the code will eventually be compiled.
 
 ### Delta Height, Z Probe Offset, and G33
 

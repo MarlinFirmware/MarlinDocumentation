@@ -231,6 +231,7 @@ Macro|Description
 
 Since Marlin 2.0 all macros listed here (unless marked "**Precompiler only**") can be used anywhere in code where a value would be used. This is a really handy capability and allows the code to be a lot more concise. The `ENABLED` and related macros simply emit an integer 0 or 1. A more interesting macro is `TERN` and its relatives `TERN0`, `TERN1`, `TERN_`, `IF_ENABLED`, and `IF_DISABLED`.
 
+{:.pretty-list.headless}
 Macro|Description
 ----|-----------
 `TERN(OPTION, T, F)`| If `OPTION` is enabled emit T otherwise emit F.
@@ -240,7 +241,6 @@ Macro|Description
 `IF_ENABLED(OPTION, T)`| Alias for `TERN_`.
 `IF_DISABLED(OPTION, F)`| If `OPTION` is disabled emit F otherwise emit nothing.
 `SUM_TERN(OPTION, F)`| If `OPTION` is disabled emit F otherwise emit nothing.
-
 `PLUS_TERN0(O,A)`| Emit +(A) for enabled option O, otherwise nothing.
 `MINUS_TERN0(O,A)`| Emit -(A) for enabled option O, otherwise nothing.
 `SUM_TERN(O,B,A)`| Emit (B)+(A) for enabled option, otherwise just (B).
@@ -258,9 +258,9 @@ TERN_(EEPROM_SETTINGS, settings.read()); // Read settings (or not)
 {:.pretty-list.headless}
 Macro|Description
 ----|-----------
-`PIN_EXISTS(NAME)`| True if the pin is defined. **Precompiler only.** (Takes a pin name minus `_PIN`.)
-`PINS_EXIST(...)`| True if all the listed pins are defined. **Precompiler only.** (Takes pin names minus `_PIN`.)
-`ANY_PIN(...)`| True if any of the listed pins is defined. **Precompiler only.** (Takes pin names minus `_PIN`.)
+`PIN_EXISTS(NAME)`| True if the pin is defined. ***Precompiler only.*** (Takes a pin name minus `_PIN`.)
+`PINS_EXIST(...)`| True if all the listed pins are defined. ***Precompiler only.*** (Takes pin names minus `_PIN`.)
+`ANY_PIN(...)`| True if any of the listed pins is defined. ***Precompiler only.*** (Takes pin names minus `_PIN`.)
 
 ### FastIO
 
@@ -273,11 +273,14 @@ Macro|Description
 `SET_INPUT_PULLUP(PIN)`| Set a digital pin to `INPUT_PULLUP` mode.
 `SET_INPUT_PULLDOWN(PIN)`| Set a digital pin to `INPUT_PULLDOWN` mode (if supported, else `INPUT`).
 `SET_OUTPUT(PIN)`| Set a digital pin to `OUTPUT` mode.
+`SET_OUTPUT_OD(PIN)`| Set a digital pin to `OUTPUT` mode with open-drain (if supported, else `OUTPUT`).
 `SET_PWM(PIN)`| Set a digital pin to `PWM` mode (if supported, else `OUTPUT`).
 `SET_PWM_OD(PIN)`| Set a digital pin to `PWM` open-drain mode (if supported, else `PWM` or `OUTPUT`).
 `READ(PIN)`| Read the state of a digital pin. Returns either `HIGH` or `LOW`.
 `WRITE(PIN, STATE)`| Set a digital pin's state to either `HIGH` or `LOW`.
-`OUT_WRITE(PIN, STATE)`| Set a digital pin's state to either `HIGH` or `LOW`.
+`TOGGLE(PIN)`| Toggle the pin state between `HIGH` and `LOW`.
+`OUT_WRITE(PIN, STATE)`| Set a digital pin to `OUTPUT` mode and state to `HIGH` or `LOW`.
+`OUT_WRITE_OD(PIN, STATE)`| Set a digital pin to `OUTPUT` open-drain mode, state `HIGH` or `LOW`.
 
 ### Loops Shorthand
 

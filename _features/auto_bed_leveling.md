@@ -37,7 +37,7 @@ Unless you know you have a very flat bed, you should always use `AUTO_BED_LEVELI
 
 3. For testing, enable `DEBUG_LEVELING_FEATURE`. With this option enabled, use `M111 S32` to turn on detailed logging of homing and bed leveling. This will cause [`G28`](/docs/gcode/G028.html) and [`G29`](/docs/gcode/G029.html) to report everything they do, step-by-step, and can be indispensible for troubleshooting when things go wrong.
 
-4. Upload Marlin to the board and get ready for that first test. As always, do [`M502`](/docs/gcode/M502.html) followed by [`M500`](/docs/gcode/M500.html) to ensure that the configured "default" settings are stored in the EEPROM. Otherwise, older saved settings might be loaded and used.
+4. Upload Marlin to the board and get ready for that first test. As always, do [`M502`](/docs/gcode/M502.html) followed by [`M500`](/docs/gcode/M500.html) to ensure that the configured "default" settings are stored in the [EEPROM](/docs/features/eeprom.html). Otherwise, older saved settings might be loaded and used.
 
 # First-Time Bed Leveling
 

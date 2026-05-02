@@ -2,6 +2,21 @@
 // Marlin custom Javascript
 //
 
+// Set classes based on user agent
+// Source: www.printables.com
+/*
+if (/(Mac|iPhone|iPod|iPad)/i.test(navigator?.userAgentData?.platform || navigator?.platform || '')) {
+  document.body.classList.add('osx');
+}
+
+window.isMobile = typeof window !== 'undefined' && 'matchMedia' in window && window.matchMedia('(pointer: coarse)').matches;
+if (window.isMobile) {
+  document.body.classList.add('mobile');
+  document.documentElement.style.setProperty('--mobile100vh', `${window.innerHeight}px`);
+  document.body.classList.add('zoom-' + Math.round((window.outerWidth / window.innerWidth) * 100));
+}
+*/
+
 // Cookie Helpers
 
 function setCookie(cname, cvalue, exdays) {
@@ -43,6 +58,9 @@ function setDarkMode(dark) {
     .css('visibility', 'visible');
   $('#discord-frame').attr('src', `${discord_widget_url}&theme=` + (dark ? 'dark' : 'light'));
   $('#starchart img').attr('src', 'https://api.star-history.com/svg?repos=MarlinFirmware/Marlin&type=Date' + (dark ? '&theme=dark' : ''));
+
+  const color = getComputedStyle(document.documentElement).getPropertyValue('--color-browser-bg').trim();
+  $('#theme-color, #tile-color').attr('content', color);
 }
 
 function toggleDarkMode() {
@@ -61,9 +79,9 @@ function userToggleDarkMode() {
 // Set dark / light theme as soon as possible
 var nightMode = getCookie('nightMode');        // A cookie?
 if (nightMode === '') {
-  const hasMatchMedia = () => window && window.matchMedia,
-        prefersDarkColorScheme = () => hasMatchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches,
-        prefersLightColorScheme = () => hasMatchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+  const hasMatchMedia = window && window.matchMedia,
+        prefersDarkColorScheme = hasMatchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches,
+        prefersLightColorScheme = hasMatchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
   var d = new Date(), h = d.getHours();
   nightMode = prefersDarkColorScheme || (!prefersLightColorScheme && (h >= 19 || h < 6));
 }
@@ -81,14 +99,13 @@ $(function() {
   //
 
   var $window = $(window);
-  var $animation_elements = $('.animation-element');
 
   function start_exposed_anims() {
     var win_height = $window.height();
     var win_top = $window.scrollTop();
     var win_bottom = (win_top + win_height);
 
-    $.each($animation_elements, function() {
+    $.each($('.animation-element'), function() {
       var $e = $(this);
       var height = $e.outerHeight();
       var top = ($e.offset().top);
@@ -108,14 +125,22 @@ $(function() {
   /**
    * Dynamically build the table of contents
    */
-  $toc = $("#toc");
-  if ($toc !== undefined) $toc.tocify({
-    selectors: (typeof toc_selectors != 'undefined') ? toc_selectors : 'h1,h2,h3,h4',
-    scrollTo: 60,
+  const top_clearance = $("nav.navbar-fixed-top").height() + 10;
+
+  const $toc = $("#toc");
+  if ($toc.length) $toc.tocify({
+    selectors: (typeof toc_selectors !== 'undefined') ? toc_selectors : 'h1,h2,h3,h4',
+    scrollTo: top_clearance,
     smoothScroll: false,
     extendPage: false,
     hashGenerator: 'pretty'
   });
+
+  /**
+   * If the location has a hash, scroll up to reveal it.
+   */
+  if (window.location.hash)
+    setTimeout(() => { window.scrollBy(0, -top_clearance); }, 500);
 
   /**
    * All external links open in a new tab
@@ -170,7 +195,7 @@ $(function() {
 
   function shiftSubMenu() {
     var w = $(window).width();
-    if (w >= minWindowWidth && w <= maxWindowWidth ) {
+    if (w >= minWindowWidth && w <= maxWindowWidth) {
       $('.dropdown-menu').addClass('pull-right');
       $('.dropdown-submenu .dropdown-menu').addClass('flip-left');
     }
@@ -240,8 +265,8 @@ $(function() {
   // Scroll to the active nav item in a long nav sidebar, such as docs/gcode/*.html
   const $here_ul = $('.container.detail ul.nav.nav-list');
   if ($here_ul.length) {
-    const $here_link = $here_ul.children('li.tocify-item.active');
-    if ($here_link.length) {
+    const $here_li = $here_ul.children('li.tocify-item.active');
+    if ($here_li.length) {
       $.fn.visibleHeight = function() {
         const scrollTop = $(window).scrollTop(),
               scrollBot = scrollTop + $(window).height(),
@@ -251,7 +276,7 @@ $(function() {
               visibleBot = elBottom > scrollBot ? scrollBot : elBottom;
         return visibleBot - visibleTop;
       };
-      $here_ul.prop({ scrollTop: $here_link.offset().top - $here_ul.visibleHeight() / 2 });
+      $here_ul.prop({ scrollTop: $here_li.offset().top - $here_ul.visibleHeight() / 2 });
     }
   }
 

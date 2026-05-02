@@ -15,15 +15,15 @@ The core Marlin team consists of a few maintainers who review contributions, dis
 ## Ways to contribute
 
 ### Donate
-The current maintainer of Marlin is [Scott Lahteine](//www.thinkyhead.com/donate-to-marlin) aka [@thinkyhead](https://github.com/thinkyhead/). Scott has been writing software since 1977 mostly focusing on shareware and open source. He reviews every contribution before it goes into Marlin, maintains documentation, hosts the [Facebook](https://www.facebook.com/groups/marlinfirmware) and [Marlin Discord](https://discord.com/servers/marlin-firmware-461605380783472640), and maintains a test lab in Austin, TX.
+The current maintainer of Marlin is [Scott Lahteine](//www.thinkyhead.com/donate-to-marlin) aka [@thinkyhead](//github.com/thinkyhead/). Scott has been writing software since 1977 mostly focusing on shareware and open source. He reviews every contribution before it goes into Marlin, maintains documentation, hosts the [Facebook](//www.facebook.com/groups/marlinfirmware) and [Marlin Discord](//discord.com/servers/marlin-firmware-461605380783472640), and maintains a test lab in Austin, TX.
 
 Your sponsorship accelerates development, testing, and advancement of the most ambitious open source multi-platform 3D printing firmware in the world. Several support options are available:
 
-- <span class="fa-brands fa-github"></span> [Github Sponsors](https://github.com/sponsors/thinkyhead)
-- <span class="fa-brands fa-patreon"></span> [Patreon](https://www.patreon.com/thinkyhead)
-- <span class="fa-brands fa-paypal"></span> [PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=KMTV4WEYBEMWU&source=url)
-- ☕️ [Buy Me a Coffee!](https://buymeacoff.ee/thinkyhead)
-- $$ [GoFundMe](https://www.gofundme.com/marlin-firmware)
+- <span class="fa-brands fa-github"></span> [Github Sponsors](//github.com/sponsors/thinkyhead)
+- <span class="fa-brands fa-patreon"></span> [Patreon](//www.patreon.com/thinkyhead)
+- <span class="fa-brands fa-paypal"></span> [PayPal](//www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=KMTV4WEYBEMWU&source=url)
+- ☕️ [Buy Me a Coffee!](//buymeacoff.ee/thinkyhead)
+- $$ [GoFundMe](//www.gofundme.com/marlin-firmware)
 
 ### Report bugs
 - Use the community links below for help with configuration and troubleshooting.

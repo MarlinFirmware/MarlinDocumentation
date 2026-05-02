@@ -338,10 +338,6 @@ settings:
     type: int
     default: 0
 
-
-- name: BED_ANNEALING_GCODE
-  since: 2.1.3
-  brief: Enable gradual bed cooling via [`M190 R<temp> T<seconds>`](/docs/gcode/M190.html).
-
 ---
+
 Marlin monitors and controls the temperature of various components using a combination of PWM current, PID stabilization, and temperature sensors.

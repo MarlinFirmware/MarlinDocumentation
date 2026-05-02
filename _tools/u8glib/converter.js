@@ -131,7 +131,7 @@ var bitmap_converter = () => {
         reader.readAsDataURL(fileref);
       },
 
-    /**
+     /**
       * Bitwise RLE (run length) encoding
       * Convert data from raw mono bitmap to a bitwise run-length-encoded format.
       * - The first nybble is the starting bit state. Changing this nybble inverts the bitmap.
@@ -520,62 +520,201 @@ var bitmap_converter = () => {
         prepare_for_new_image();
         restore_pasted_cpp_field();
 
-        // Get the split up bytes on all lines
+        function parse_byte_token(s) {
+          if (/^0x[0-9a-f]+$/i.test(s))           // Hex
+            return parseInt(s.substring(2), 16) & 0xFF;
+          if (/^0b[01]+$/.test(s))                // Binary
+            return parseInt(s.substring(2), 2) & 0xFF;
+          if (/^B[01]+$/.test(s))                 // Binary (Arduino style)
+            return parseInt(s.substring(1), 2) & 0xFF;
+          if (/^[0-9]+$/.test(s))                 // Decimal
+            return (s * 1) & 0xFF;
+          return null;
+        }
+
+        function bitwise_rle_decode(rlebytes, isext) {
+          if (!rlebytes.length) return [];
+
+          const expanded = [];
+          rlebytes.forEach(v => {
+            expanded.push((v >> 4) & 0x0F, v & 0x0F);
+          });
+
+          const bits = [];
+          let bitstate = 0;
+          let i = 0;
+
+          while (i < expanded.length) {
+            let c = expanded[i++];
+
+            // First nybble is the starting bit state.
+            if (i === 1) {
+              bitstate = c;
+              continue;
+            }
+
+            // Match the reference decoder's nybble stream rules.
+            if (c === 15) {
+              if (i + 1 >= expanded.length) return [];
+              const d = expanded[i], e = expanded[i + 1];
+              if (isext && d === 15) {
+                if (i + 2 >= expanded.length) return [];
+                c = 256 + 16 * e + expanded[i + 2] - 1;
+                i += 1;
+              }
+              else {
+                c = 16 * d + e + 15;
+              }
+              i += 2;
+            }
+
+            for (let n = c; n >= 0; n--) bits.push(bitstate);
+            bitstate ^= 1;
+          }
+
+          const decoded = [];
+          for (let i = 0; i < bits.length; i += 8) {
+            let v = 0;
+            for (let b = 0; b < 8; b++)
+              v = (v << 1) | (i + b < bits.length && bits[i + b] ? 1 : 0);
+            decoded.push(v);
+          }
+
+          return decoded;
+        }
+
+        // Parse declared dimensions first so they can be used for RLE handling.
+        const width_match = cpp.match(/^\s*#define\s+[A-Z0-9_]*(?:BMPWIDTH|SCREENWIDTH|LOGO_WIDTH)\s+(\d+)\b/im);
+        const declared_width = width_match ? parseInt(width_match[1], 10) : 0;
+        const declared_bytewidth = declared_width ? tobytes(declared_width) : 0;
+
+        const height_match = cpp.match(/^\s*#define\s+[A-Z0-9_]*(?:BMPHEIGHT|SCREENHEIGHT|LOGO_HEIGHT)\s+(\d+)\b/im);
+        const declared_height = height_match ? parseInt(height_match[1], 10) : 0;
+
+        // Prefer raw bitmap arrays ([] with no explicit size) over fixed-size arrays,
+        // which are typically RLE or other encoded data.
+        const raw_arr_match = cpp.match(/const\s+unsigned\s+char\s+\w+\s*\[\s*\]\s*PROGMEM\s*=\s*\{([\s\S]*?)\};/im);
+
+        // Detect RLE-only paste (COMPACT_CUSTOM_BOOTSCREEN define or _rle[N] array)
+        // and decode it if width info is available.
+        const rle_arr_match = cpp.match(/const\s+unsigned\s+char\s+\w*_rle\s*\[[^\]]*\]\s*PROGMEM\s*=\s*\{([\s\S]*?)\};/im);
+        const is_rle_only = !raw_arr_match && !!rle_arr_match;
+        const is_rle_ext = /\bCOMPACT_CUSTOM_BOOTSCREEN_EXT\b/.test(cpp);
+
+        let rle_decoded = [];
+        if (is_rle_only) {
+          if (!declared_width)
+            return error_message("RLE data requires CUSTOM_BOOTSCREEN_BMPWIDTH (or equivalent *_BMPWIDTH) to decode.");
+
+          const rlebytes = [];
+          rle_arr_match[1].split(',').forEach(s => {
+            const b = parse_byte_token(s.trim());
+            if (b !== null) rlebytes.push(b);
+          });
+
+          rle_decoded = bitwise_rle_decode(rlebytes, is_rle_ext);
+          if (!rle_decoded.length)
+            return error_message("Unable to decode RLE bitmap data.");
+        }
+
+        // Fall back to the first { } block in the pasted text if no PROGMEM array was found.
+        const body_match = raw_arr_match || (is_rle_only ? null : cpp.match(/\{([\s\S]*?)\};?/m));
+        const cpp_data = is_rle_only
+          ? rle_decoded.map(v => tohex(v)).join(',')
+          : (body_match ? body_match[1] : cpp);
+
+        // Flatten all bytes from the body regardless of line layout.
+        const flat_bytes = [];
+        cpp_data.split(',').forEach(s => {
+          const b = parse_byte_token(s.trim());
+          if (b !== null) flat_bytes.push(b);
+        });
+        const total_bytes = flat_bytes.length;
+
+        // Get bytes-per-line counts for frequency analysis.
         var lens = [], mostlens = [];
-        $.each(cpp.split('\n'), (i,s) => {
+        $.each(cpp_data.split('\n'), (i,s) => {
           var pw = 0;
           $.each(s.replace(/[ \t]/g,'').split(','), (i,s) => {
-            if (s.match(/0x[0-9a-f]+/i) || s.match(/0b[01]+/) || s.match(/B[01]+/) || s.match(/[0-9]+/))
-              ++pw;
+            if (parse_byte_token(s) !== null) ++pw;
           });
           lens.push(pw);
           mostlens[pw] = 0;
         });
 
-        var wide = 0, high = 0;
+        var bytewidth = 0, wide = 0, high = 0;
+        var use_flat = false;   // when true, reconstruct rows from flat_bytes instead of line-by-line
 
-        // Find the length with the most instances
-        var most_so_far = 0;
-        mostlens.fill(0);
-        $.each(lens, (i,v) => {
-          if (++mostlens[v] > most_so_far) {
-            most_so_far = mostlens[v];
-            wide = v * 8;
+        // RLE-only paste has no meaningful line layout after decode, so reconstruct from flat bytes.
+        if (is_rle_only && declared_bytewidth) {
+          bytewidth = declared_bytewidth;
+          wide = declared_width;
+          use_flat = true;
+        }
+        // Priority 1: Declared width - trust it if a matching line length exists.
+        else if (declared_bytewidth && lens.includes(declared_bytewidth)) {
+          bytewidth = declared_bytewidth;
+          wide = declared_width;
+        }
+        else {
+          // Priority 2: No declared width - detect from line frequency.
+          var most_so_far = 0;
+          mostlens.fill(0);
+          $.each(lens, (i,v) => {
+            if (++mostlens[v] > most_so_far) {
+              most_so_far = mostlens[v];
+              bytewidth = v;
+              wide = v * 8;
+            }
+          });
+
+          if (bytewidth > 0 && declared_height > 0 && total_bytes >= declared_height) {
+            // BMPHEIGHT fallback: derive bytewidth from the flat byte stream.
+            // Any remainder bytes beyond bytewidth * declared_height are ignored.
+            bytewidth = Math.floor(total_bytes / declared_height);
+            wide = bytewidth * 8;
+            use_flat = true;
           }
-        });
+        }
 
-        if (!wide) return error_message("No bitmap found in pasted text.");
+        if (!wide || !bytewidth) return error_message("No bitmap found in pasted text.");
 
-        // Split up lines and iterate
-        var bitmap = [], bitstr = '';
-        $.each(cpp.split('\n'), (i,s) => {
-          s = s.replace(/[ \t]/g,'');
-          // Split up bytes and iterate
-          var byteline = [], len = 0;
-          $.each(s.split(','), (i,s) => {
-            var b;
-            if (s.match(/0x[0-9a-f]+/i))          // Hex
-              b = parseInt(s.substring(2), 16);
-            else if (s.match(/0b[01]+/))          // Binary
-              b = parseInt(s.substring(2), 2);
-            else if (s.match(/B[01]+/))           // Binary
-              b = parseInt(s.substring(1), 2);
-            else if (s.match(/[0-9]+/))           // Decimal
-              b = s * 1;
-            else
-              return true;                        // Skip this item
+        // Build the bitmap row by row.
+        var bitmap = [];
 
+        const emit_row_bytes = (row_bytes) => {
+          var byteline = [];
+          row_bytes.forEach(b => {
             for (var i = 0; i < 8; i++) {
               Array.prototype.push.apply(byteline, b & 0x80 ? pix_on : pix_off);
               b <<= 1;
             }
-            len += 8;
           });
-          if (len == wide) {
-            Array.prototype.push.apply(bitmap, byteline);
-            high++;
-          }
-        });
+          if (wide < bytewidth * 8) byteline = byteline.slice(0, wide * 4);
+          Array.prototype.push.apply(bitmap, byteline);
+          high++;
+        };
+
+        if (use_flat) {
+          // Flat byte stream: slice directly into rows ignoring line breaks.
+          const row_count = Math.floor(total_bytes / bytewidth);
+          for (var r = 0; r < row_count; r++)
+            emit_row_bytes(flat_bytes.slice(r * bytewidth, (r + 1) * bytewidth));
+        }
+        else {
+          // Line-based: each line that has exactly bytewidth bytes is one row.
+          $.each(cpp_data.split('\n'), (i,s) => {
+            s = s.replace(/[ \t]/g,'');
+            var row_bytes = [], linebytes = 0;
+            $.each(s.split(','), (i,s) => {
+              const b = parse_byte_token(s);
+              if (b === null) return true;
+              row_bytes.push(b);
+              linebytes += 1;
+            });
+            if (linebytes == bytewidth) emit_row_bytes(row_bytes);
+          });
+        }
 
         if (high < 4) return true;
 

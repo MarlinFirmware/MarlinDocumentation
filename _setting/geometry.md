@@ -11,14 +11,14 @@ settings:
   type: int
   since: 2.0.0
   brief: X size of the bed.
-  long: The X size of the bed. This is used to calculate the number of steps needed to move the X axis.
+  long: The X size of the bed. This is used to determine the usable print area, probing area, etc.
   example:
   - value: 250
 - name: Y_BED_SIZE
   type: int
   since: 2.0.0
   brief: Y size of the bed.
-  long: The Y size of the bed. This is used to calculate the number of steps needed to move the Y axis.
+  long: The Y size of the bed. This is used to determine the usable print area, probing area, etc.
   example:
   - value: 240
 
@@ -26,7 +26,7 @@ settings:
   type: int
   since: 1.0.0
   brief: Minimum X position.
-  long: The minimum X position (hard limit) of the machine.
+  long: The minimum X position (hard limit) of the machine. This is often a negative value.
   example:
   - value: -4
 - name: X_MAX_POS
@@ -71,14 +71,14 @@ settings:
   type: int
   since: 2.0.0
   brief: Minimum I position.
-  long: The minimum I position (hard limit) of the machine.
+  long: The minimum position (hard limit) of the I axis.
   example:
   - value: 0
 - name: I_MAX_POS
   type: int
   since: 2.0.0
   brief: Maximum I position.
-  long: The maximum I position (hard limit) of the machine.
+  long: The maximum position (hard limit) of the I axis.
   example:
   - value: 45
 
@@ -86,14 +86,14 @@ settings:
   type: int
   since: 2.0.0
   brief: Minimum J position.
-  long: The minimum J position (hard limit) of the machine.
+  long: The minimum position (hard limit) of the J axis.
   example:
   - value: 0
 - name: J_MAX_POS
   type: int
   since: 2.0.0
   brief: Maximum J position.
-  long: The maximum J position (hard limit) of the machine.
+  long: The maximum position (hard limit) of the J axis.
   example:
   - value: 180
 
@@ -101,14 +101,14 @@ settings:
   type: int
   since: 2.0.0
   brief: Minimum K position.
-  long: The minimum K position (hard limit) of the machine.
+  long: The minimum position (hard limit) of the K axis.
   example:
   - value: 0
 - name: K_MAX_POS
   type: int
   since: 2.0.0
   brief: Maximum K position.
-  long: The maximum K position (hard limit) of the machine.
+  long: The maximum position (hard limit) of the K axis.
   example:
   - value: 0
 
@@ -116,14 +116,14 @@ settings:
   type: int
   since: 2.0.0
   brief: Minimum U position.
-  long: The minimum U position (hard limit) of the machine.
+  long: The minimum position (hard limit) of the U axis.
   example:
   - value: 0
 - name: U_MAX_POS
   type: int
   since: 2.0.0
   brief: Maximum U position.
-  long: The maximum U position (hard limit) of the machine.
+  long: The maximum position (hard limit) of the U axis.
   example:
   - value: 0
 
@@ -131,14 +131,14 @@ settings:
   type: int
   since: 2.0.0
   brief: Minimum V position.
-  long: The minimum V position (hard limit) of the machine.
+  long: The minimum position (hard limit) of the V axis.
   example:
   - value: 0
 - name: V_MAX_POS
   type: int
   since: 2.0.0
   brief: Maximum V position.
-  long: The maximum V position (hard limit) of the machine.
+  long: The maximum position (hard limit) of the V axis.
   example:
   - value: 0
 
@@ -146,7 +146,7 @@ settings:
   type: int
   since: 2.0.0
   brief: Minimum W position.
-  long: The minimum W position (hard limit) of the machine.
+  long: The minimum position (hard limit) of the W axis.
   example:
   - value: 0
 - name: W_MAX_POS

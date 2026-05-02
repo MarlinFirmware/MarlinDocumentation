@@ -3,9 +3,9 @@ tag: t0001
 title: MMU2 Special Commands
 brief: MMU2 special filament loading commands
 author: thinkyhead
-since: 2.0.0
 
 group: control
+since: 2.0.0
 
 codes: [ 'T?', Tc, Tx ]
 

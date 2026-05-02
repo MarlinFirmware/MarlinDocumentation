@@ -80,13 +80,6 @@ Only run these commands from within your Marlin working copy. That is, you first
 WARNING: While short, these scripts can be dangerous and don't always fail cleanly. Read them to understand how they work and use them with utmost caution. Remember, you can use `git reflog` to recover from almost any disaster, so have fun.
 
 ---
-## `ghtp`
-
-**Usage:** `ghtp -[s|h] [remote-list]`
-
-Use this script to set the "GitHub Transport Protocol" for your remotes to either SSH or HTTP. This determines how Git (and Github Desktop) will connect to Github. You can set all remotes or specify just those you want to change. You should always use SSH with a public-key, unless behind a firewall.
-
----
 ## `mfinit`
 
 **_Run this script before any others_** to prepare your working copy of Marlin to use these helper scripts. All `mfinit` does is create a remote named `upstream` as an alias to `MarlinFirmware`. This is a common and convenient shorthand, and is used within the other scripts.
@@ -177,19 +170,39 @@ NOTE: `mfup` may stop for conflict resolution. If this occurs, don't panic. Care
 
 # Utility Scripts
 
+These scripts provide shorthand for some of the more common git operations we need to do.
+
+---
+## `ghtp`
+
+**Usage:** `ghtp -[s|h] [remote-list]`
+
+Use this script to set the "GitHub Transport Protocol" for your remotes to either SSH or HTTP. This determines how Git (and Github Desktop) will connect to Github. You can set all remotes or specify just those you want to change. You should always use SSH with a public-key, unless behind a firewall.
+
 ---
 ## `mfadd`
 
-Add and fetch a remote.
+Add and fetch a remote and optionally check out a branch.
 
-**Usage:** `mfadd MagoKimbra`
+**Usage:**
 
-Use this command to get a branch from another Github user to work on. After making changes and committing them to a copy of another user's branch, you can submit a PR to the original branch on their fork. If their branch has an open PR, then your PR's changes become included in their PR when merged.
+- `mfadd thefork`
+- `mfadd thefork:patch-1`
+- `mfadd thefork:patch-1 the_patch_12345`
+
+Use this command to check out a branch from another Github user. (Github provides a "copy" button at the top of each PR so you can type out `mfadd` -space- then paste the copied reference.)
+
+After making changes and committing them to a copy of another user's branch, you can submit a PR to the original branch on their fork for them to merge. If their branch has an open PR, then your changes will become part of that PR.
 
 ---
 ## `mfclean`
 
 Check to see if branches can be deleted. Remove merged branches and any branches that have been deleted from your fork. Use with care. May not be suitable for all working styles.
+
+---
+## `mfhelp`
+
+Give basic usage output about the scripts listed on this page.
 
 # Documentation Scripts
 
@@ -198,7 +211,7 @@ Documentation can be worked on with PRs, but these scripts assume a more direct 
 ---
 ## `mfdoc`
 
-Use Jekyll to compile the Marlin documentation website and display the local copy in the browser using the small integrated webserver. This command only runs in the `MarlinDocumentation` repository with the `master` branch checked out.
+Use Jekyll to compile the Marlin documentation website and display the local copy in the browser using the small integrated webserver. This command must be run from the root of a `MarlinDocumentation` repository.
 
 ---
 ## `mfpub`

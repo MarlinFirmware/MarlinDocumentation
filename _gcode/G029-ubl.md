@@ -5,11 +5,12 @@ author: Thinkyhead
 contrib: Vertabreak, shitcreek
 brief: Probe the bed and enable leveling compensation.
 
-requires: AUTO_BED_LEVELING_UBL
 group: calibration
+requires: AUTO_BED_LEVELING_UBL
+eeprom: true
 
-related: [ M420, M421 ]
 codes: [ G29 ]
+related: [ M420, M421 ]
 
 notes: |
   - Requires `AUTO_BED_LEVELING_UBL`.
@@ -21,7 +22,7 @@ notes: |
 
   - UBL does not replace 3-Point or Planar leveling. These use a 3D matrix to tilt the whole model. UBL's 3-point and Planar operations only apply to the mesh, not to the whole model.
 
-  - It is highly recommended to enable EEPROM. Without EEPROM storage enabled, UBL is limited to 3-Point or Grid Leveling (`G29 P0 T` or `G29 P0 G`) and can't save meshes for later use.
+  - It is highly recommended to enable [EEPROM](/docs/features/eeprom.html). Without EEPROM storage enabled, UBL is limited to 3-Point or Grid Leveling (`G29 P0 T` or `G29 P0 G`) and can't save meshes for later use.
 
   - For the initial [`G28`](/docs/gcode/G028.html) and `G29 P1` that automatically populates the mesh, UBL probes the mesh points in a growing spiral starting from the center of the bed. This pattern is better for Deltabots, allowing the center of the Mesh to be populated (and edited) more quickly so you can do test printing early in the process.
 
@@ -126,7 +127,7 @@ parameters:
 - tag: K
   optional: true
   requires: UBL_DEVEL_DEBUGGING
-  description: '**Kompare**: Subtract (diff) the stored mesh with this index from the current mesh. This destructively operates on the active mesh, and the result should not be used for printing. (Requires `UBL_DEVEL_DEBUGGING`)'
+  description: '**Kompare**: Subtract (diff) the stored mesh with this index from the current mesh. This destructively operates on the active mesh, and the result should not be used for printing.'
   values:
   - unit: index
     type: int
@@ -219,15 +220,14 @@ parameters:
 - tag: T
   optional: true
   description: |
-    **Topology**: Include a Topology Map in the output.
+    **Topology**: Include a Topology Map in the output in one of two styles.
     - This parameter can be used alone (`G29 T`) or in combination with most of the other commands.
     - This option works with all Phase commands (_e.g.,_ `G29 P4 R 5 T X 50 Y100 C-0.1 O`)
-    - A map type can also be specified:
-      - `T0`: Human-readable (the default)
-      - `T1`: Delimited. Suitable to paste into a spreadsheet to obtain a 3D graph of the mesh.
   values:
   - tag: 0
+    description: Human-readable (the default)
   - tag: 1
+    description: Delimited. Suitable to paste into a spreadsheet to obtain a 3D graph of the mesh.
 
 - tag: U
   optional: true
@@ -250,7 +250,7 @@ parameters:
 - tag: W
   optional: true
   requires: UBL_DEVEL_DEBUGGING
-  description: '**_What?_**: Display valuable UBL data. (Requires `UBL_DEVEL_DEBUGGING`)'
+  description: '**_What?_**: Display valuable UBL data.'
   values:
   - type: flag
 
@@ -303,13 +303,13 @@ examples:
 - pre: Use [`G26`](/docs/gcode/G026.html) and `G29` commands to fine-tune a measured mesh
   code: |
     G26 C P T3.0  ; Produce mesh validation pattern with primed nozzle. G26 is optional; any bed leveling stl would also work.
-        ; NOTE - PLA temperatures are assumed unless you specify - e.g. - B 105 H 225 for ABS Plastic
+                  ; NOTE - PLA temperatures are assumed unless you specify, e.g., "B 105 H 225" for ABS Plastic
     G29 P4 T      ; Move nozzle to 'bad' areas and fine tune the values if needed.
-        ; Repeat G26 and G29 P4 T  commands as needed.
+                  ; Repeat G26 and G29 P4 T  commands as needed.
     G29 S0        ; Save UBL mesh values to EEPROM.
     M500          ; Resave UBL's state information.
 
-- pre:  Tilt a stored mesh; e.g. in your startup script
+- pre: Tilt a stored mesh; e.g., in your startup script
   code: |
     G29 L0        ; Load the mesh stored in slot 0 (from G29 S0)
     G29 J         ; Probe 3 points and tilt the mesh according to what it finds, optionally G29 J2 would do 4 points.

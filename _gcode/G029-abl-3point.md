@@ -4,8 +4,9 @@ title: Bed Leveling (3-Point)
 brief: Probe the bed and enable leveling compensation.
 author: thinkyhead
 
-requires: AUTO_BED_LEVELING_3POINT
 group: calibration
+requires: AUTO_BED_LEVELING_3POINT
+eeprom: true
 
 codes: [ G29 ]
 related: [ M420 ]
@@ -15,7 +16,7 @@ notes: |
   - By default `G28` disables bed leveling. Follow `G28` with `M420 S` to turn leveling on.
       - With `ENABLE_LEVELING_AFTER_G28` leveling will always be enabled after `G28`.
       - With `RESTORE_LEVELING_AFTER_G28` leveling is restored to whatever state it was in before `G28`.
-  - To save time and machine wear, save your matrix to EEPROM with [`M500`](/docs/gcode/M500.html) and in your slicer's "Starting G-code" replace `G29` with `M420 S1` to enable your last-saved matrix.
+  - To save time and machine wear, save your matrix to [EEPROM](/docs/features/eeprom.html) with [`M500`](/docs/gcode/M500.html) and in your slicer's "Starting G-code" replace `G29` with `M420 S1` to enable your last-saved matrix.
   - For multi-axis machines (`I_DRIVER_TYPE` defined) without implementation of inverse kinematics, bed leveling produces wrong results while the toolhead is not oriented vertical and perpendicular to the bed and must be turned off with `M420 S0`
 
 parameters:
@@ -111,12 +112,12 @@ The first `G29` accepts the same parameters , shown in the [Usage](#usage-g029g1
 
   **To probe the bed using your LCD controller:** (Requires `LCD_BED_LEVELING`)
 
-  1. Select the `Level Bed` sub-menu, then choose `Level Bed` (not `Cancel`).
+  1. Find and select the `Level Bed` menu item and verify your choice. (The location of this menu item differs depending on your controller and Marlin version.)
   2. Wait for `Homing XYZ` to complete.
   3. When `Click to Begin` appears, press the controller button to move to the first point.
-  4. Use the controller wheel to adjust Z so that a piece of paper can just pass under the nozzle.
-  5. Press the controller button to save the Z value and move to the next point.
-  6. Repeat steps 4-5 until completed.
-  7. Use `Control` > `Store memory` to save the mesh to EEPROM, if desired.
+  4. Repeat the following steps until the entire mesh is completed:
+    - Use the controller wheel to adjust Z so that a piece of paper can just pass under the nozzle.
+    - Press the controller button to save the Z value and move to the next point.
+  5. Use `Control` > `Save to EEPROM` to save the mesh to EEPROM.
 
 {% enddetails %}
