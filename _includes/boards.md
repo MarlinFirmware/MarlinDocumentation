@@ -1,5 +1,6 @@
 <!--
 	Display the boards from _data/boards.yml
+	Used for both docs/development/boards.html and docs/hardware/boards.html
 -->
 ### General information
 
@@ -59,9 +60,9 @@ If you're developing a custom board, try to use common pinouts as much as possib
 <h4>{{ item.group }}</h4>
 {% if item.long %}<p>{{ item.long | markdownify }}</p>{% endif %}
 <table class="table table-condensed table-striped">
-<tr><th>Name</th><th>Description</th><th>Version</th></tr>
+<tr><th>Name</th><th>Description</th><th>Since</th></tr>
 {% for board in item.boards %}
-<tr{% if board.class %} class="{{ board.class }}"{% endif %}><td>BOARD_{{ board.name }}{% if board.old[0].name %}<br/><em>(BOARD_{{ board.old[0].name }})</em>{% endif %}</td><td>{{ board.brief }}</td><td>{% if board.since %}{{ board.since }}{% endif %}{% if board.old[0].since %}<br/><em>({{ board.old[0].since }})</em>{% endif %}</td></tr>
+<tr{% if board.class %} class="{{ board.class }}"{% endif %}><td><code>BOARD_{{ board.name }}{% if board.old[0].name %}</code><br><em>(<code>BOARD_{{ board.old[0].name }}</code>)</em>{% endif %}</td><td>{{ board.brief }}</td><td>{% if board.since %}{{ board.since }}{% endif %}{% if board.old[0].since %}<br><em>({{ board.old[0].since }})</em>{% endif %}</td></tr>
 {% endfor %}
 </table>
 {% endfor %}

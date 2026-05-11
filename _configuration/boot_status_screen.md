@@ -63,7 +63,7 @@ Use [Marlin converter tool](https://marlinfw.org/tools/u8glib/converter.html) to
 Define these characters so they can easily be used in custom boot screen strings.The display can have up to 8 custom characters.
 
 ## Character bootscreen example
-![Image](/assets/images/bootscreen/character%20bootscreen%20eg.png){: .floater.framed}
+![Image](/assets/images/bootscreen/glcd_bootscreen.png){: .floater.framed}
 
 ```cpp
 #define CHR0 "\x8" // Note: cannot be 0, 0 conflicts with string terminator character.
