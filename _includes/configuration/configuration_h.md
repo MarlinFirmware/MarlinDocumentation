@@ -1470,14 +1470,15 @@ Example: To have leveling fade out over the first 10mm of layer printing use `M4
 /**
  * Enable the G26 Mesh Validation Pattern tool.
  */
-#define G26_MESH_VALIDATION   // Enable G26 mesh validation
+//#define G26_MESH_VALIDATION
 #if ENABLED(G26_MESH_VALIDATION)
-  #define MESH_TEST_NOZZLE_SIZE     0.4   // (mm) Diameter of primary nozzle.
-  #define MESH_TEST_LAYER_HEIGHT    0.2   // (mm) Default layer height for the G26 Mesh Validation Tool.
-  #define MESH_TEST_HOTEND_TEMP   205   // (°C) Default nozzle temperature for the G26 Mesh Validation Tool.
-  #define MESH_TEST_BED_TEMP       60   // (°C) Default bed temperature for the G26 Mesh Validation Tool.
-  #define G26_XY_FEEDRATE         20    // (mm/s) Feedrate for XY Moves for the G26 Mesh Validation Tool.
-
+  #define MESH_TEST_NOZZLE_SIZE    0.4  // (mm) Diameter of primary nozzle.
+  #define MESH_TEST_LAYER_HEIGHT   0.2  // (mm) Default layer height for G26.
+  #define MESH_TEST_HOTEND_TEMP  205    // (°C) Default nozzle temperature for G26.
+  #define MESH_TEST_BED_TEMP      60    // (°C) Default bed temperature for G26.
+  #define G26_XY_FEEDRATE         20    // (mm/s) Feedrate for G26 XY moves.
+  #define G26_XY_FEEDRATE_TRAVEL 100    // (mm/s) Feedrate for G26 XY travel moves.
+  #define G26_RETRACT_MULTIPLIER   1.0  // G26 Q (retraction) used by default between mesh test elements.
 #endif
 ```
 When using any of the mesh-based leveling systems (1.1.7) you can activate `G26_MESH_VALIDATION` to print test patterns and fine-tune the mesh. See [`G26` Mesh Validation](/docs/gcode/G026.html) for full details. The [`G26`](/docs/gcode/G026.html) command accepts parameters for nozzle size, layer height, etc. The sub-options above specify the default values that will be applied for omitted parameters.
