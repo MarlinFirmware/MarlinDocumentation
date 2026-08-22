@@ -215,6 +215,7 @@ $(function() {
 
   // Watch for a certain keypress to toggle dark mode
   $(document).keypress(function(e) {
+    if ($(e.target).is('input, textarea, [contenteditable="true"]')) return;
     const c = String.fromCharCode(e.which).toLowerCase();
     if (c == 'd' || c == 'n') // 'd' or 'n' key
       userToggleDarkMode();
