@@ -22,7 +22,7 @@ notes: |
 
   - UBL does not replace 3-Point or Planar leveling. These use a 3D matrix to tilt the whole model. UBL's 3-point and Planar operations only apply to the mesh, not to the whole model.
 
-  - It is highly recommended to enable EEPROM. Without EEPROM storage enabled, UBL is limited to 3-Point or Grid Leveling (`G29 P0 T` or `G29 P0 G`) and can't save meshes for later use.
+  - It is highly recommended to enable [EEPROM](/docs/features/eeprom.html). Without EEPROM storage enabled, UBL is limited to 3-Point or Grid Leveling (`G29 P0 T` or `G29 P0 G`) and can't save meshes for later use.
 
   - For the initial [`G28`](/docs/gcode/G028.html) and `G29 P1` that automatically populates the mesh, UBL probes the mesh points in a growing spiral starting from the center of the bed. This pattern is better for Deltabots, allowing the center of the Mesh to be populated (and edited) more quickly so you can do test printing early in the process.
 
@@ -164,7 +164,7 @@ parameters:
       - The `H` value can be negative if the mesh dips in a large area. Press and hold the controller button to terminate the current Phase 2 command. You can then re-issue `G29 P 2` with an `H` parameter more suitable for the area you're manually probing. Note that the command tries to start in a corner of the bed where movement will be predictable. Override the distance calculation location with the `X` and `Y` parameters. You can print a mesh Map (`G29 T`) to see where the mesh is invalidated and where the nozzle needs to move to complete the command. Use `C` to indicate that the search should be based on the current position.
       - The `B` parameter for this command is described above. It places the manual probe subsystem into Business Card mode where the thickness of a business card is measured and then used to accurately set the nozzle height in all manual probing for the duration of the command. A Business card can be used, but you'll get better results with a flexible Shim that doesn't compress. This makes it easier to produce similar amounts of force and get more accurate measurements. Google if you're not sure how to use a shim.
       - The `T` (Map) parameter helps track mesh building progress.
-      - NOTE: `P2` requires an LCD controller
+      - NOTE: `P2` requires an LCD controller!
   - tag: 3
     description: |
       **Fill Unpopulated** regions of the mesh with a fixed value (`C`) or use 'smart fill' to extrapolate from already probed points (`no argument`).

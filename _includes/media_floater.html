@@ -1,0 +1,12 @@
+{%- if include.type == "youtube" -%}
+  <iframe class="floater {{ include.float | default: 'left' }}" title="Filament sensor video" width="240" height="195" src="//youtube.com/embed/{{ include.videoid }}?autoplay=0" frameborder="0" allowfullscreen></iframe>
+{%- elsif include.type == "video" -%}
+  <video controls style="width:{{ include.width | default: 'auto' }};">
+    <source src="{{ include.src | relative_url }}" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+{%- else -%}
+  {%- if include.link -%}<a href="{{ include.link | relative_url }}" target="_blank">{%- endif -%}
+  <img class="floater {{ include.float | default: 'left' }} {{ include.framed | default: '' }}" src="{{ include.src | relative_url }}" alt="{{ include.alt | default: '' }}" style="width:{{ include.width | default: 'auto' }};">
+  {%- if include.link -%}</a>{%- endif -%}
+{%- endif -%}

@@ -38,6 +38,8 @@ shared:
     brief: Trinamic TMC2209 (UART)
   - value: TMC2209_STANDALONE
     brief: Trinamic TMC2209 (standalone)
+  - value: TMC2240
+    brief: Trinamic TMC2240 (SPI)
   - value: TMC26X
     brief: Trinamic TMC26X (SPI)
   - value: TMC26X_STANDALONE
@@ -54,10 +56,6 @@ shared:
     brief: Trinamic TMC5160 (SPI)
   - value: TMC5160_STANDALONE
     brief: Trinamic TMC5160 (standalone)
-  - value: TMC2209
-    brief: Trinamic TMC2209
-  - value: TMC2240
-    brief: Trinamic TMC2240 (SPI)
 
 settings:
 - name: X_DRIVER_TYPE

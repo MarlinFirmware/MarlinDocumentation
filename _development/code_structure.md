@@ -225,7 +225,7 @@ See [the Input Shaping page](/docs/features/input_shaping.html) for details on t
 ### Fixed-Time Motion
 Marlin 2.1.3 introduces Fixed-Time Motion as an alternative method to get more precise step and direction timing along with its own Linear Advance and Input Shaping handlers. Fixed-Time Motion also uses the Stepper ISR to do regular stepping, but it also has a periodic `idle` task to handle state changes.
 
-Since Fixed-Time motion requires significantly more resources than the standard motion system to pre-calculate its precise pulse timings, it requires a faster processor and more RAM.
+Since Fixed-Time Motion requires significantly more resources than the standard motion system to pre-calculate its precise pulse timings, it requires a faster processor and more RAM. However, FTM is also very optimized, so it requires fewer resources than you might expect, and should run well on leaner ARM boards.
 
 As this system matures it will likely become default for fast 32-bit boards, but the original motion system will be preserved for slower processors and for simpler motion systems that don't need the most precise timing.
 

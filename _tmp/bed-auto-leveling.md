@@ -59,9 +59,7 @@ Next you need to define the Z endstop (probe) offset from hot-end. My preferred 
 
 ```
 // X and Y-Offset must be Integers!
-#define X_PROBE_OFFSET_FROM_EXTRUDER -24
-#define Y_PROBE_OFFSET_FROM_EXTRUDER 31
-#define Z_PROBE_OFFSET_FROM_EXTRUDER -5.1
+#define NOZZLE_TO_PROBE_OFFSET { -24, 31, -5.1 }
 ```
 
 ## Sled options
@@ -103,7 +101,7 @@ For example, suppose you measured the endstop position and it was 20mm to the ri
 ```
 #define X_PROBE_OFFSET_FROM_EXTRUDER 20
 #define Y_PROBE_OFFSET_FROM_EXTRUDER 10
-#define Z_PROBE_OFFSET_FROM_EXTRUDER 2.75
+#define NOZZLE_TO_PROBE_OFFSET 2.75
 ```
 
 Test the auto bed leveling sequence after set up via:

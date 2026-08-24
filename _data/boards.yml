@@ -1259,9 +1259,15 @@
   - name: CREALITY_CR4NTXXC10
     brief: Creality E3 Free-runs Silent Motherboard (STM32F401RET6)
     since: 2.1.3
-  - name: FYSETC_SPIDER_KING407
-    brief: FYSETC Spider King407 (STM32F407ZG)
-    since: 2.1.2
+  - name: FYSETC_SPIDER_KING_V1_F407
+    brief: FYSETC Spider King v1 (STM32F407ZG)
+    since: 2.1.3
+    old:
+    - name: FYSETC_SPIDER_KING407
+      since: 2.1.2
+  - name: FYSETC_SPIDER_KING_V1_1_F407
+    brief: FYSETC Spider King v1.1 (STM32F407ZG)
+    since: 2.1.3
   - name: MKS_SKIPR_V1
     brief: MKS SKIPR v1.0 all-in-one board (STM32F407VE)
     since: 2.1.2
@@ -1382,6 +1388,12 @@
     since: 2.1.3
   - name: FLY_SUPER8_PRO
     brief: FLY SUPER8 PRO (STM32H723ZG)
+    since: 2.1.3
+  - name: BOARD_FYSETC_SPIDER_KING_V1_H723
+    brief: FYSETC Spider King v1 (STM32H723ZG)
+    since: 2.1.3
+  - name: BOARD_FYSETC_SPIDER_KING_V1_1_H723
+    brief: FYSETC Spider King v1.1 (STM32H723ZG)
     since: 2.1.3
 
 #

@@ -79,9 +79,9 @@ function userToggleDarkMode() {
 // Set dark / light theme as soon as possible
 var nightMode = getCookie('nightMode');        // A cookie?
 if (nightMode === '') {
-  const hasMatchMedia = () => window && window.matchMedia,
-        prefersDarkColorScheme = () => hasMatchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches,
-        prefersLightColorScheme = () => hasMatchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+  const hasMatchMedia = window && window.matchMedia,
+        prefersDarkColorScheme = hasMatchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches,
+        prefersLightColorScheme = hasMatchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
   var d = new Date(), h = d.getHours();
   nightMode = prefersDarkColorScheme || (!prefersLightColorScheme && (h >= 19 || h < 6));
 }
@@ -140,7 +140,7 @@ $(function() {
    * If the location has a hash, scroll up to reveal it.
    */
   if (window.location.hash)
-    setTimeout(() => { window.scrollBy(0, -top_clearance); }, 100);
+    setTimeout(() => { window.scrollBy(0, -top_clearance); }, 500);
 
   /**
    * All external links open in a new tab
@@ -215,6 +215,7 @@ $(function() {
 
   // Watch for a certain keypress to toggle dark mode
   $(document).keypress(function(e) {
+    if ($(e.target).is('input, textarea, [contenteditable="true"]')) return;
     const c = String.fromCharCode(e.which).toLowerCase();
     if (c == 'd' || c == 'n') // 'd' or 'n' key
       userToggleDarkMode();
@@ -265,8 +266,8 @@ $(function() {
   // Scroll to the active nav item in a long nav sidebar, such as docs/gcode/*.html
   const $here_ul = $('.container.detail ul.nav.nav-list');
   if ($here_ul.length) {
-    const $here_link = $here_ul.children('li.tocify-item.active');
-    if ($here_link.length) {
+    const $here_li = $here_ul.children('li.tocify-item.active');
+    if ($here_li.length) {
       $.fn.visibleHeight = function() {
         const scrollTop = $(window).scrollTop(),
               scrollBot = scrollTop + $(window).height(),
@@ -276,7 +277,7 @@ $(function() {
               visibleBot = elBottom > scrollBot ? scrollBot : elBottom;
         return visibleBot - visibleTop;
       };
-      $here_ul.prop({ scrollTop: $here_link.offset().top - $here_ul.visibleHeight() / 2 });
+      $here_ul.prop({ scrollTop: $here_li.offset().top - $here_ul.visibleHeight() / 2 });
     }
   }
 

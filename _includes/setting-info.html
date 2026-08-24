@@ -51,10 +51,6 @@
   </div>
 {% endif %}
 
-{% if ispage %}
-  {% if page.content %}<{{ h3 }}>Description</{{ h3 }}>{% endif %}
-{% endif %}
-
 {% if conf.brief %}
   <div class="brief">{{conf.brief | markdownify }}</div>
 {% endif %}
@@ -67,10 +63,11 @@
   <div class="requires"><strong>⚠️ Requires: {{ conf.requires | join: ", " }}</strong></div>
 {% endif %}
 
+{% if tags %}
+  <div class="tags"><span class="label label-default"><i class="fa fa-tags" aria-hidden="true"></i> {{ tags }}</span></div>
+{% endif %}
+
 <div class="long">
-  {% if tags %}
-    <div class="tags"><span class="label label-default"><i class="fa fa-tags" aria-hidden="true"></i> {{ tags }}</span></div>
-  {% endif %}
   {% if ispage %}
     {% if page.content %}{{ page.content | markdownify }}{% endif %}
   {% else %}

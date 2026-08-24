@@ -15,14 +15,14 @@ parameters:
 
 - tag: S
   optional: true
-  description: "Current value to use for the raise move. (Default: `GANTRY_CALIBRATION_CURRENT`)"
+  description: "Current value to use for the raise move.<br/>(Default: `GANTRY_CALIBRATION_CURRENT`)"
   values:
   - unit: mA
     type: int
 
 - tag: Z
   optional: true
-  description: "Extra distance past `Z_MAX_POS` to move the Z axis. (Default: `GANTRY_CALIBRATION_EXTRA_HEIGHT`)"
+  description: "Extra distance past `Z_MAX_POS` to move the Z axis.<br/>(Default: `GANTRY_CALIBRATION_EXTRA_HEIGHT`)"
   values:
   - unit: linear
     type: float
