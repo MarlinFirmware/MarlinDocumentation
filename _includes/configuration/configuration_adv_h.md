@@ -1816,6 +1816,190 @@ To use TMC2130 stepper drivers in SPI mode connect your SPI2130 pins to the hard
 ```
 You'll need to import the [L6470 library](//github.com/ameyer/Arduino-L6470) into the Arduino IDE for this. See `Configuration_adv.h` for the full set of sub-options. NOTE: Support for L6470 was removed from Marlin in version 2.1, but may be restored in a future version if there is some demand.
 
+### Sensorless Homing
+```cpp
+//#define SENSORLESS_HOMING
+#if ANY(SENSORLESS_HOMING, SENSORLESS_PROBING)
+  #define X_STALL_SENSITIVITY  8
+  #define X2_STALL_SENSITIVITY X_STALL_SENSITIVITY
+  #define Y_STALL_SENSITIVITY  8
+  #define Y2_STALL_SENSITIVITY Y_STALL_SENSITIVITY
+  //#define Z_STALL_SENSITIVITY  8
+  //#define Z2_STALL_SENSITIVITY Z_STALL_SENSITIVITY
+  //#define Z3_STALL_SENSITIVITY Z_STALL_SENSITIVITY
+  //#define Z4_STALL_SENSITIVITY Z_STALL_SENSITIVITY
+  //#define I_STALL_SENSITIVITY  8
+  //#define J_STALL_SENSITIVITY  8
+  //#define K_STALL_SENSITIVITY  8
+  //#define U_STALL_SENSITIVITY  8
+  //#define V_STALL_SENSITIVITY  8
+  //#define W_STALL_SENSITIVITY  8
+  //#define SPI_ENDSTOPS              // TMC2130, TMC2240, and TMC5160 only
+  //#define IMPROVE_HOMING_RELIABILITY
+  //#define SENSORLESS_STALLGUARD_DELAY   0  // (ms) Delay to allow drivers to settle
+
+  #if HAS_MARLINUI_MENU
+    //#define SENSORLESS_HOMING_TEST_MENU_ITEMS
+  #endif
+#endif
+```
+
+Use StallGuard to home X, Y, and/or Z axes without physical endstop switches. This advanced feature uses the TMC stepper driver's ability to detect when the motor stalls against an obstacle.
+
+**Compatible Drivers:** TMC2130, TMC2160, TMC2209, TMC2240, TMC2660, TMC5130, and TMC5160 only.
+
+**Setup Requirements:**
+- Connect the stepper driver's DIAG1 pin to the corresponding endstop pin
+- X, Y, and Z homing will always be done in spreadCycle mode (not stealthChop)
+- It is recommended to set `HOMING_BUMP_MM` to `{ 0, 0, 0 }` for best results
+
+**Stall Sensitivity Values:**
+Use [`M914`](/docs/gcode/M914.html) to set the stall threshold at runtime.
+
+| Sensitivity | TMC2209 | Other TMC |
+|-------------|---------|-----------|
+| HIGHEST (too sensitive) | 255 | -64 |
+| LOWEST (too insensitive) | 0 | 63 |
+
+Higher sensitivity values make the driver more likely to detect a stall (may cause false positives). Lower values make it less sensitive (may fail to trigger). Tune these values for your specific machine.
+
+**SPI_ENDSTOPS** - TMC2130, TMC2240, and TMC5160 only. Poll the driver through SPI to determine load when homing. This removes the need for a physical wire from DIAG1 to an endstop pin.
+
+**IMPROVE_HOMING_RELIABILITY** - Tunes acceleration and jerk settings during homing and adds a guard period for endstop triggering to improve reliability.
+
+**SENSORLESS_STALLGUARD_DELAY** - Time in milliseconds to wait after energizing motors before attempting sensorless homing, allowing drivers to settle.
+
+**SENSORLESS_HOMING_TEST_MENU_ITEMS** - Adds convenient menu items for testing sensorless homing directly from the LCD.
+
+Comment out any axis's `*_STALL_SENSITIVITY` to disable sensorless homing for that axis.
+
+### TMC Homing Phase
+```cpp
+//#define TMC_HOME_PHASE { 896, 896, 896 }
+```
+
+Improve homing repeatability by homing to the stepper coil's nearest absolute phase position. Trinamic drivers maintain a stepper phase table with 1024 values spanning 4 full steps with 256 positions each (1024 total positions).
+
+**Full step positions** (128, 384, 640, 896) have the highest holding torque and are recommended values.
+
+Values range from 0 to 1023, or use -1 to disable homing phase for that axis. This feature ensures the stepper ends at the same electrical position every time, improving mechanical repeatability between homing cycles.
+
+### Edge Stepping
+```cpp
+#define EDGE_STEPPING
+```
+
+**Enable stepping on both rising and falling edge signals**, effectively creating a square wave step pattern. This is **strongly recommended for all Trinamic stepper drivers** and is enabled by default in modern Marlin configurations.
+
+**Visual Comparison:**
+
+```
+Normal Stepping (single edge):
+  STEP Pin    __    __    __    __
+Signal:    ___||____||____||____||____
+
+Steps:        1     2     3     4
+              ↑     ↑     ↑     ↑
+           (only rising edges = 4 steps)
+           (short pulse, uneven timing)
+
+
+EDGE_STEPPING (double edge):
+  STEP Pin     ___     ___     ___     ___
+Signal:    ___|   |___|   |___|   |___|   |___
+
+Steps:        1   2   3   4   5   6   7   8
+              ↑   ↓   ↑   ↓   ↑   ↓   ↑   ↓
+           (both edges = 8 steps, 2x rate!)
+           (square wave, even timing)
+```
+
+**Why Enable EDGE_STEPPING:**
+
+1. **Doubles Maximum Step Rate** - By stepping on both edges (rising and falling) of the pulse signal, the achievable step rate is doubled without increasing the pulse frequency. This allows higher speeds and accelerations.
+
+2. **Reduces CPU Usage** - Conversely, for the same step rate, stepping on both edges allows the pulse frequency to be halved, reducing the number of timer interrupts and CPU processing required.
+
+3. **Better Performance with TMC Drivers** - Trinamic drivers are specifically designed to work optimally with double-edge stepping. The TMC driver's `dedge` (double edge) register is automatically configured when this option is enabled.
+
+4. **Smoother Motion** - Square wave stepping provides more consistent timing and smoother motion, especially at higher speeds.
+
+**Technical Details:**
+- Sets the `chopconf.dedge` flag to `true` in TMC driver configuration
+- Requires `STEP_STATE_*` to be `HIGH` for proper logic operation
+- Previously named `SQUARE_WAVE_STEPPING` (deprecated in favor of `EDGE_STEPPING`)
+- Compatible with all Trinamic TMC drivers (TMC2130, TMC2208, TMC2209, TMC2660, TMC5160, TMC5161, etc.)
+
+**When NOT to use:** There is normally no reason to disable this option when using supported Trinamic drivers. For other stepper drivers, EDGE_STEPPING is simply ignored and has no effect.
+
+⚠️ **Warning:** If `EDGE_STEPPING` is disabled with Trinamic drivers, you'll see a compilation warning recommending you enable it. You can suppress this warning by defining `NO_EDGE_STEPPING_WARNING`.
+
+### TMC Debug
+```cpp
+//#define TMC_DEBUG
+```
+
+Enable the [`M122`](/docs/gcode/M122.html) debugging command for TMC stepper drivers. This provides detailed diagnostic information about driver status, configuration, and any error conditions.
+
+With `M122` enabled:
+- `M122` - Display TMC driver status for all axes
+- `M122 X` - Display status for X axis only (works for all axes)
+- `M122 S1` - Enable continuous automatic reporting
+- `M122 S0` - Disable continuous reporting
+
+**Information Provided:**
+- Driver registers and configuration
+- Current settings and actual current consumption
+- StallGuard threshold and result
+- Temperature warnings
+- Driver errors (short to ground, short to supply, open load)
+- Standstill status
+- UART communication errors (for TMC2208/TMC2209)
+
+This is extremely useful for troubleshooting driver issues, tuning current settings, and verifying proper driver communication.
+
+### TMC Advanced Configuration
+```cpp
+#define TMC_ADV() {  }
+```
+
+You can set your own advanced TMC driver settings by filling in this predefined function. This allows direct access to the TMC driver objects for configuration options not exposed through Marlin's standard configuration system.
+
+The code in `TMC_ADV()` is executed during driver initialization and can call any method available in the TMCStepper library.
+
+**Examples:**
+
+```cpp
+// Example 1: Configure DIAG0 for overtemperature warning on X
+#define TMC_ADV() { \
+  stepperX.diag0_otpw(1); \
+}
+
+// Example 2: Disable interpolation for Y axis, set custom TOFF
+#define TMC_ADV() { \
+  stepperX.diag0_otpw(1); \
+  stepperY.intpol(0); \
+  stepperY.toff(3); \
+}
+
+// Example 3: Fine-tune TMC2130 PWM settings
+#define TMC_ADV() { \
+  stepperX.pwm_freq(1);    // 1: ~35kHz, 2: ~20kHz, 3: ~15kHz \
+  stepperX.pwm_autoscale(true); \
+}
+```
+
+**Available Functions:**
+A complete list of available functions can be found in the [TMCStepper library documentation](https://github.com/teemuatlut/TMCStepper). Common uses include:
+- Fine-tuning chopper timing (`toff`, `hstrt`, `hend`)
+- Configuring diagnostic outputs (`diag0_*`, `diag1_*`)
+- Adjusting PWM settings for stealthChop
+- Setting advanced current control parameters
+- Configuring stallGuard thresholds
+- Customizing driver response characteristics
+
+⚠️ **Use with caution:** Incorrect settings can cause poor motor performance, overheating, or even damage to drivers or motors. Only modify these settings if you understand the TMC driver datasheets.
+
 ## Experimental i2c Bus
 ```cpp
 //#define EXPERIMENTAL_I2CBUS
