@@ -209,7 +209,7 @@ Scales heater power proportional to the part/layer fan speed which in turn reduc
 ```
 With Automatic Temperature the hotend target temperature is calculated by all the buffered lines of G-code. The maximum buffered steps/sec of the extruder motor is called "`se`".
 Start autotemp mode with `M109 F<factor> S<mintemp> B<maxtemp>`, giving a range of temperatures. The target temperature is set to `mintemp + factor * se[steps/sec]` and is limited by
-`mintemp` and `maxtemp`. Turn this off by executing [`M109`](/docs/gcode/M109.html) without `F`. If the temperature is set to a value below `mintemp` (_e.g.,_ by [`M104`](/docs/gcode/M104.html)) autotemp will not be applied.
+`mintemp` and `maxtemp`. Turn this off by executing [`M109`](/docs/gcode/M109.html) without `F`. If the temperature is set to a value below `mintemp` (e.g., by [`M104`](/docs/gcode/M104.html)) autotemp will not be applied.
 
 Example: Try [`M109`](/docs/gcode/M109.html) `S215 B260 F1` in your `start.gcode` to set a minimum temperature of 215 when idle, which will boost up to 260 as extrusion increases in speed.
 
@@ -415,7 +415,7 @@ Set `X_DUAL_STEPPER_DRIVERS` to use a second X motor. If the X motors need to sp
 If the two X axes aren't perfectly aligned, use `X_DUAL_ENDSTOP_ADJUSTMENT` to adjust for the difference. This offset is applied to the X2 motor after homing with [`G28`](/docs/gcode/G028.html). The dual endstop offsets can be set at runtime with `M666 X[offset] Y[offset] Z[offset]`.
 
 {% alert info %}
-Requires enabling the corresponding stepper driver (_e.g.,_ `X2_DRIVER_TYPE` in `Configuration.h`). ***DO NOT** enable `E2_DRIVER_TYPE` - this may produce undesirable results that can harm your machine.*
+Requires enabling the corresponding stepper driver (e.g., `X2_DRIVER_TYPE` in `Configuration.h`). ***DO NOT** enable `E2_DRIVER_TYPE` - this may produce undesirable results that can harm your machine.*
 {% endalert %}
 
 ## Dual X Carriage
@@ -1792,7 +1792,7 @@ You'll need to import the [TMC26XStepper](//github.com/trinamic/TMC26XStepper.gi
 ```
 You'll need the [TMC2130Stepper](//github.com/teemuatlut/TMC2130Stepper) Arduino library. See `Configuration_adv.h` for the full set of sub-options.
 
-To use TMC2130 stepper drivers in SPI mode connect your SPI2130 pins to the hardware SPI interface on your board and define the required CS pins in your `pins_MYBOARD.h` file. (_e.g.,_ RAMPS 1.4 uses AUX3 pins `X_CS_PIN 53`, `Y_CS_PIN 49`, etc.).
+To use TMC2130 stepper drivers in SPI mode connect your SPI2130 pins to the hardware SPI interface on your board and define the required CS pins in your `pins_MYBOARD.h` file. (e.g., RAMPS 1.4 uses AUX3 pins `X_CS_PIN 53`, `Y_CS_PIN 49`, etc.).
 
 ### L6470 Drivers
 (Removed in Marlin 2.1.2)

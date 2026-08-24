@@ -11,7 +11,7 @@ Please follow the formatting guidelines and coding standards below when contribu
 
 # Coding Style
 ## Indentation
-Indentation is important for readability and maintainability of code, and provides guidance for naïve code editors (_e.g.,_ TextMate, Sublime, et. al.) to properly fold code blocks by level.
+Indentation is important for readability and maintainability of code, and provides guidance for naïve code editors (e.g., TextMate, Sublime, et. al.) to properly fold code blocks by level.
 
  - Entab lines with 2 spaces and don't use tabs. _Set your editor to use 2 Spaces! Tabs will bite you in the end._
  - All block elements should increase the indentation level, including `#if` blocks and other non-brace compiler blocks:
@@ -153,7 +153,7 @@ Going forward, Marlin does not need to be backward-compatible with older (pre-20
 
  - Dynamic allocation (`malloc()`, `free()`, `new`, `delete`) is ***verboten***!
    There may be some flexibility for certain 32-bit features.
- - Avoid unconstrained recursion (_e.g.,_ calling `idle()` from `idle()`) so the stack won't explode.
+ - Avoid unconstrained recursion (e.g., calling `idle()` from `idle()`) so the stack won't explode.
  - Avoid using globals and `static` locals because SRAM is a precious resource on many boards.
  - Use `PSTR` and `PROGMEM` macros to keep strings in Program Memory.
 

@@ -17,16 +17,16 @@ Temperature can significantly affect bed probing and as a consequence first laye
 
 Since the probe temperature is not the only factor affecting first layer quality, the current implementation can compensate for the bed, probe, and extruder, but only the first two can be calibrated automatically. The measured values are used during [`G29`](/docs/gcode/G029.html) mesh bed leveling to adjust the probe measurements at different temperature readings.
 
-During the calibration process it's important to keep other parts at a constant temperature to prevent them from affecting measurement. For the bed this is fairly easy since Marlin controls its temperature. And for the probe, Marlin can control its proximity to the bed. On some printers (_e.g.,_ Průša MK3) it may be necessary to shield the probe from active fans or it won't heat up enough. Setting the extruder to something like 140°C can also help.
+During the calibration process it's important to keep other parts at a constant temperature to prevent them from affecting measurement. For the bed this is fairly easy since Marlin controls its temperature. And for the probe, Marlin can control its proximity to the bed. On some printers (e.g., Průša MK3) it may be necessary to shield the probe from active fans or it won't heat up enough. Setting the extruder to something like 140°C can also help.
 
 The probe calibration table starts at 30°C, the bed at 60°C, and the extruder at 180°C. In reality we might not reach maximum temperatures while calibrating, so linear regression and extrapolation are used to fill in the gaps. While this is hardly exact, it's still better than applying the last value for higher temperatures. The more measurements taken, the better the extrapolated values will be.
 
-The calibration process simply does some probing at a lower temperature (_e.g.,_ probe at 30°C with bed constant) and uses that measurement as the base value. After heating up the probe or bed by an incremental value (+5°C) another probe reading is taken and the measured offset is stored in the appropriate table. This process is repeated multiple times.
+The calibration process simply does some probing at a lower temperature (e.g., probe at 30°C with bed constant) and uses that measurement as the base value. After heating up the probe or bed by an incremental value (+5°C) another probe reading is taken and the measured offset is stored in the appropriate table. This process is repeated multiple times.
 
 After calibration print, verify sanity, and eventually modify single values (outliers) with the [`M871`](/docs/gcode/M871.html) command.
 
 ## [`G76`](/docs/gcode/G076.html) bed calibration process
-During bed calibration the probe temperature is held constant (_e.g.,_ 30°C).
+During bed calibration the probe temperature is held constant (e.g., 30°C).
  - Move the probe to the cooldown point.
  - Heat up the bed to 60°C.
  - Move the probe to the probing point (0.5mm above heatbed).
@@ -36,20 +36,20 @@ During bed calibration the probe temperature is held constant (_e.g.,_ 30°C).
    - Increase the bed temperature by 5°C.
    - Move the probe to the cooldown point.
    - Wait until the probe temperature is below 30°C and the bed has reached the new target temperature.
-   - Move the probe to the probing point and wait until the probe reaches the target temperature (_e.g.,_ 30°C).
+   - Move the probe to the probing point and wait until the probe reaches the target temperature (e.g., 30°C).
    - Probe the bed to get a delta value.
 - In the case of a timeout, compensation values for higher temperatures will be extrapolated from the existing values.
 
 Note that some beds distort when heated and this will invalidate results. If your bed distorts you may need manual calibration for the bed.
 
 ## [`G76`](/docs/gcode/G076.html) probe calibration process
-While probe calibration is active bed temperature is held constant (_e.g.,_ 110°C).
+While probe calibration is active bed temperature is held constant (e.g., 110°C).
  - Move the probe to the cooldown point.
- - Heat up the bed to maximum temperature (_e.g.,_ 110°C).
+ - Heat up the bed to maximum temperature (e.g., 110°C).
  - Move the probe to the probing point and lower to just 0.5mm above the bed.
  - Wait until the probe heats up to the target (30°C).
  - Probe the bed to get a base value.
- - To get the rest of the calibration values the following steps are repeated until the maximum probe temperature is reached or a timeout occurs (_i.e.,_ the probe doesn't get any hotter):
+ - To get the rest of the calibration values the following steps are repeated until the maximum probe temperature is reached or a timeout occurs (i.e., the probe doesn't get any hotter):
    - Increase the target temperature for the probe by 5°C.
    - Wait until the probe reaches the new target temperature.
    - Probe the bed to get a delta value.

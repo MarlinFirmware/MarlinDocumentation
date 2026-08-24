@@ -192,7 +192,7 @@ Immediate commands issued during a long-running command will be delayed until th
 Once `queue.advance()` has chosen the next command, it calls the parser to pre-process the G-code line. The pre-processor validates the line number and checksum and if all is well it does a quick pre-scan of the parameters before calling the specific G-code handler.
 
 #### 4. Handle the G-code
-All G-code handlers are encapsulated in the `GcodeSuite` class (_e.g.,_ `GcodeSuite::G28()`) although a few are implemented elsewhere. A G-code handler is a simple void method with no return value. Instead of getting parameters from the function call, it queries the `GCodeParser` class to check for parameters and read their values.
+All G-code handlers are encapsulated in the `GcodeSuite` class (e.g., `GcodeSuite::G28()`) although a few are implemented elsewhere. A G-code handler is a simple void method with no return value. Instead of getting parameters from the function call, it queries the `GCodeParser` class to check for parameters and read their values.
 
 For example, a handler might use `parser.seenval('X')` to check if the `'X'` parameter exists and has a value, then call `parser.value_float()` to get the value as a float. See `gcode/parser.h` for all the available methods.
 

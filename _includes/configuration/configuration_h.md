@@ -64,7 +64,7 @@ Enable this if your board has a secondary serial port.
 ```cpp
 #define BAUDRATE 115200
 ```
-The serial communication speed of the printer should be as fast as it can manage without generating errors. In most cases 115200 gives a good balance between speed and stability. Start with 250000 and only go lower if "line number" and "checksum" errors start to appear. Note that some boards (_e.g.,_ a temperamental Sanguinololu clone based on the ATMEGA1284P) may not be able to handle a baud rate over 57600. Allowed values: 2400, 9600, 19200, 38400, 57600, 115200, 250000.
+The serial communication speed of the printer should be as fast as it can manage without generating errors. In most cases 115200 gives a good balance between speed and stability. Start with 250000 and only go lower if "line number" and "checksum" errors start to appear. Note that some boards (e.g., a temperamental Sanguinololu clone based on the ATMEGA1284P) may not be able to handle a baud rate over 57600. Allowed values: 2400, 9600, 19200, 38400, 57600, 115200, 250000.
 
 ### Bluetooth
 ```cpp
@@ -986,7 +986,7 @@ This option is for any probe that's fixed in place, with no need to be deployed 
 //#define Z_PROBE_SERVO_NR 0       // Defaults to SERVO 0 connector.
 //#define Z_SERVO_ANGLES { 70, 0 } // Z Servo Deploy and Stow angles
 ```
-To indicate a Servo Z Probe (_e.g.,_ an endstop switch mounted on a rotating arm) just specify the servo index. Use the [`M280`](/docs/gcode/M280.html) command to find the best `Z_SERVO_ANGLES` values.
+To indicate a Servo Z Probe (e.g., an endstop switch mounted on a rotating arm) just specify the servo index. Use the [`M280`](/docs/gcode/M280.html) command to find the best `Z_SERVO_ANGLES` values.
 
 #### BLTouch
 
@@ -1035,7 +1035,7 @@ This type of probe is mounted on a detachable "sled" that sits at the far end of
   #define Z_PROBE_RETRACT_X X_MAX_POS
 #endif
 ```
-A probe deployed by moving the X-axis (_e.g.,_ Wilson II's rack-and-pinion probe designed by Marty Rice.)
+A probe deployed by moving the X-axis (e.g., Wilson II's rack-and-pinion probe designed by Marty Rice.)
 
 #### Allen Key
 ```cpp
@@ -1541,7 +1541,7 @@ These options specify the inset, grid, and 3-point triangle to use for UBL. Note
 
 //#define MESH_G28_REST_ORIGIN // After homing all axes ('G28' or 'G28 XYZ') rest Z at Z_MIN_POS
 ```
-These options specify the number of points that will always be probed in each dimension during [`G29`](/docs/gcode/G029.html). The mesh inset is used to automatically calculate the probe boundaries. These can be set explicitly in `Configuration_adv.h`. `MESH_G28_REST_ORIGIN` moves the nozzle to rest at `Z_MIN_POS` when mesh probing is done. If Z is offset (_e.g.,_ due to `home_offset` or some other cause) this is intended to move Z to a good starting point, usually Z=0.
+These options specify the number of points that will always be probed in each dimension during [`G29`](/docs/gcode/G029.html). The mesh inset is used to automatically calculate the probe boundaries. These can be set explicitly in `Configuration_adv.h`. `MESH_G28_REST_ORIGIN` moves the nozzle to rest at `Z_MIN_POS` when mesh probing is done. If Z is offset (e.g., due to `home_offset` or some other cause) this is intended to move Z to a good starting point, usually Z=0.
 
 ### LCD Bed Leveling
 ```cpp
@@ -1982,7 +1982,7 @@ Option|Description
 
 Option|Description
 ------|-----------
-`REPRAPWORLD_KEYPAD`|[RepRapWorld Keypad v1.1](//reprapworld.com/?products_details&products_id=202&cPath=1591_1626) Use `REPRAPWORLD_KEYPAD_MOVE_STEP` to set how much the robot should move on each keypress (_e.g.,_ 10mm per click).
+`REPRAPWORLD_KEYPAD`|[RepRapWorld Keypad v1.1](//reprapworld.com/?products_details&products_id=202&cPath=1591_1626) Use `REPRAPWORLD_KEYPAD_MOVE_STEP` to set how much the robot should move on each keypress (e.g., 10mm per click).
 
 ### I2C Character LCDs
 These controllers all require the [LiquidCrystal_I2C library](//github.com/kiyoshigawa/LiquidCrystal_I2C).
@@ -2115,7 +2115,7 @@ The [Philips PCA9632](//www.digchip.com/datasheets/3286493-pca9632.html) is a co
 ```
 Enable support for an RGB(W) LED connected to 5 V digital pins, or an RGB(W) Strip connected to MOSFETs controlled by digital pins. An inexpensive RGB LED can be used simply by assigning digital pins for each component. If the pins are able to do hardware PWM then a wide range of colors will be available. With simple digital pins only 7 colors are possible.
 
-Adds the [`M150`](/docs/gcode/M150.html) command to set the LED (or LED strip) color. If pins are PWM capable (_e.g.,_ 4, 5, 6, 11) then a range of luminance values can be set from 0 to 255.
+Adds the [`M150`](/docs/gcode/M150.html) command to set the LED (or LED strip) color. If pins are PWM capable (e.g., 4, 5, 6, 11) then a range of luminance values can be set from 0 to 255.
 
 {% alert warning %}
 LED Strips require a MOFSET Chip between PWM lines and LEDs, as the Arduino cannot handle the current the LEDs will require. Failure to follow this precaution can destroy your Arduino!
