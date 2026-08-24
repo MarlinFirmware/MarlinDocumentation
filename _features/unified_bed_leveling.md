@@ -34,9 +34,11 @@ The printer must be fully functional and tested, with a well-constrained movemen
 
 ### Baseline Calibration
 
-You should be able to successfully print a small object at the center of the bed with bed leveling turned off before attempting to configure UBL. It is critical to verify that your `Configuration.h` settings make this possible, as most problems when bringing up the UBL system occur when this step has been ignored. Pay particular attention to your `NOZZLE_TO_PROBE_OFFSET` value. Usually it's best to home the Z-Axis in the center of the bed, though wherever you decide to home, the Z value reported on the LCD (or with [`M114`](/docs/gcode/M114.html)) should be _very_ close to 0.0 mm when the nozzle is just touching the bed. Failure to calibrate `NOZZLE_TO_PROBE_OFFSET` properly will result in dimensional errors in your printed parts.
+ Calibrated probe offsets are crucial to get strong bed adhesion and a perfect first layer. But even without leveling your printer should be tuned well enough to successfully print a small object at the center of the bed. It's important at the start to verify your `Configuration.h` settings before trying diving into UBL. Poor initial calibration is where many problems with UBL actuall occur. With this in mind, pay particular attention to your `NOZZLE_TO_PROBE_OFFSET` (`M851 Z`) value.
 
-The following command sequences can then be used as a quick-start guide to home, level, and fine-tune the results. These commands are for a 'normal' setup; see the relevant [addenda](#addenda) for concerns and G-code sequences related to setups without an LCD or Z-probe.
+Usually it's best to home the Z-Axis with the probe aligned over the center of the bed. But however and wherever you decide to home, the Z value reported on the LCD (or with [`M114`](/docs/gcode/M114.html)) should be _very_ close to 0.0 when the nozzle is just touching the center of the bed.
+
+Use the following command sequences as a quick-start guide for homing, leveling, and fine-tuning. These commands are designed for a "normal" setup; see the relevant [addenda](#addenda) for concerns and G-code sequences meant for setups that lack an LCD or a Z-probe.
 
 ### Setup and Initial Probing
 ```gcode
@@ -44,21 +46,42 @@ M190 S65        ; Set bed temp to 65C (S65) recommended for accuracy when using 
 M104 S210       ; Set nozzle temp to 210C (S210) recommended for accuracy when using nozzle to probe
 
 G28             ; Home XYZ.
+                ; Before testing G29 set GRID_MAX_POINTS to 3, else each testrun will take forever.
+                ; you can increase it later when you are fine with the boundaries.
 G29 P1          ; Do automated probing of the bed.
 G29 P2 B T      ; Manual probing of locations. (USUALLY NOT NEEDED!)
 G29 P3 T        ; Repeat until all mesh points are filled in.
 
 G29 T           ; View the Z compensation values.
+                ; if some of the grid points are still ".", it cannot reach these points with current settings.
+                ; check PROBING_MARGIN and MESH_MIN
 G29 S0          ; Save UBL mesh points to slot 0.
 G29 F 10.0      ; Set Fade Height for correction at 10.0 mm.
 G29 A           ; Activate the UBL System.
 M500            ; Save settings to EEPROM.
                 ; WARNING: Causes UBL to be active at power-up, before any G28.
+                ; probably activate 3-Point Probing after home, see below
+```
+
+### Find Z Probe Offset
+Enable `PROBE_OFFSET_WIZARD` for a quick automated way to establish your Z Probe Offset. The following manual
+method may be used if your board lacks space or if your LCD controller cannot support this feature.
+```gcode
+                ; BABYSTEP_ZPROBE_OFFSET and BABYSTEPPING must be activated before you can use M290
+M851            ; to show current Z offset
+G28 XYZ         ; home if not done recently.
+G1 Xxx Yxx      ; move hotend to the center of the bed or where you can reach it best.
+G1 Z0           ; move Z to zero, then insert a paper under the hotend.
+M290 Z-0.1      ; incrementally move the hotend down until you just feel the paper meet some resistance.
+                ; this command is relative. you can monitor the absolute value using M851
+                ; do not use M851 for setting the offset, it sets a new value but nothing changes. why?
+M500            ; Save new M851 to EEPROM.
 ```
 
 ### Mesh Fine-Tuning
 ```gcode
-G26 C P5.0 F3.0 ; Produce mesh validation pattern (G26), continue with closest point (C), prime nozzle by extruding 5mm (P5.0), and set filament diameter 3mm (F3.0)
+G26 C P5.0 F3.0 ; Produce mesh validation pattern (G26), continue with (C)losest point,
+                ; using P5.0 (mm) Prime Length and F3.0 (mm) Filament diameter.
                 ; PLA temperatures are assumed unless you specify, e.g., B105 H225 for ABS Plastic
 G29 P4 T        ; Move nozzle to 'bad' areas and fine tune the values if needed
                 ; Repeat G26 and 'G29 P4 T' commands as needed.
@@ -76,9 +99,9 @@ G29 J           ; Probe 3 points and tilt the mesh to the plane.
 
 ## Scope
 
-The UBL system contains a suite of tools with multiple options intended to cover almost any situation. This document is aimed at getting a new user acquainted with the most used tools and options needed to produce a high quality print.
+The UBL system comprises a suite of tools with multiple options intended to cover almost any situation. This document is aimed at getting a new user acquainted with the most used tools and options needed to produce a high quality print.
 
-The intent is to provide a new user with enough knowledge of the UBL system that they can go to the detailed documentation and start working with the other tools and options as needed.
+This overview is meant to provide you a good enough understanding of UBL that you can use it for most common situations, and then you can dig into the details and start working with the other tools and options as needed.
 
 The 3-point leveling option is only covered to the extent of using it to transform an already-measured mesh.
 
@@ -167,7 +190,7 @@ The automated mesh boundary settings assume that the printable area is centered 
 
 For delta printers the situation is similar. It is necessary to have grid points defined that can be filled covering the entirety of `DELTA_PRINTABLE_RADIUS`, but there should also be a 'border' of valid mesh points that lie just outside the printable radius. This ensures that every grid cell within the printable radius will have all four of its corners defined.
 
-So however bed size and printable radius are defined, make sure that your mesh grid is defined so that a full circle of 'extra' mesh points lie outside of the printable radius.
+Regardless of the manner in which bed size and printable radius are defined, make sure your mesh grid is defined so that a full circle of 'extra' mesh points lie outside of the printable radius.
 
 **3-point probe positions** - If you plan to use 3-point probing to 'touch up' the orientation of a saved mesh then you will also need to make sure that the 3-point leveling probe points are all accessible by your probe.
 

@@ -1,10 +1,10 @@
 downloads:
   -
-    version: 2.1.2.7
+    version: 2.1.2.8
     description: Current Marlin Release
     tools: Supports AVR and ARM<br/>Arduino and PlatformIO
-    file: 2.1.2.7.zip
-    config: release-2.1.2.7
+    file: 2.1.2.8.zip
+    config: release-2.1.2.8
   -
     version: 2.0.9.10
     description: Marlin 2.0 LTS
