@@ -34,9 +34,11 @@ The printer must be fully functional and tested, with a well-constrained movemen
 
 ### Baseline Calibration
 
-You should be able to successfully print a small object at the center of the bed with bed leveling turned off. It's very important to verify that your `Configuration.h` settings make this possible before trying to bring up UBL. Most problems bringing up the UBL Bed Leveling system occur when this step has been ignored. Please pay particular attention to your `Z_PROBE_OFFSET_FROM_EXTRUDER` value (`NOZZLE_TO_PROBE_OFFSET` in Marlin 2.1). Usually it's best to home the Z-Axis in the center of the bed. But wherever you decide to home, the Z value reported on the LCD (or with [`M114`](/docs/gcode/M114.html)) should be _very_ close to 0.0 mm when the nozzle is just touching the bed. Failure to calibrate `Z_PROBE_OFFSET_FROM_EXTRUDER` properly will result in dimensional errors in your printed parts.
+ Calibrated probe offsets are crucial to get strong bed adhesion and a perfect first layer. But even without leveling your printer should be tuned well enough to successfully print a small object at the center of the bed. It's important at the start to verify your `Configuration.h` settings before trying diving into UBL. Poor initial calibration is where many problems with UBL actuall occur. With this in mind, pay particular attention to your `NOZZLE_TO_PROBE_OFFSET` (`M851 Z`) value.
 
-The following command sequences can then be used as a quick-start guide to home, level, and fine-tune the results. These commands are for a 'normal' setup; see the relevant [addenda](#addenda) for concerns and G-code sequences related to setups without an LCD or Z-probe.
+Usually it's best to home the Z-Axis with the probe aligned over the center of the bed. But however and wherever you decide to home, the Z value reported on the LCD (or with [`M114`](/docs/gcode/M114.html)) should be _very_ close to 0.0 when the nozzle is just touching the center of the bed.
+
+Use the following command sequences as a quick-start guide for homing, leveling, and fine-tuning. These commands are designed for a "normal" setup; see the relevant [addenda](#addenda) for concerns and G-code sequences meant for setups that lack an LCD or a Z-probe.
 
 ### Setup and Initial Probing
 ```gcode
@@ -188,7 +190,7 @@ The automated mesh boundary settings assume that the printable area is centered 
 
 For delta printers the situation is similar. It is necessary to have grid points defined that can be filled covering the entirety of `DELTA_PRINTABLE_RADIUS`, but there should also be a 'border' of valid mesh points that lie just outside the printable radius. This ensures that every grid cell within the printable radius will have all four of its corners defined.
 
-So however bed size and printable radius are defined, make sure that your mesh grid is defined so that a full circle of 'extra' mesh points lie outside of the printable radius.
+Regardless of the manner in which bed size and printable radius are defined, make sure your mesh grid is defined so that a full circle of 'extra' mesh points lie outside of the printable radius.
 
 **3-point probe positions** - If you plan to use 3-point probing to 'touch up' the orientation of a saved mesh then you will also need to make sure that the 3-point leveling probe points are all accessible by your probe.
 
