@@ -418,7 +418,7 @@ var bitmap_converter = () => {
         $ascii.change((e) => { $skinny.prop('disabled', !$(e.target).is(':checked')); return false; });
 
         // Restore cosmetic 'Status' behavior
-        $type.change((e) {
+        $type.change((e) => {
           let v = $(e.target).val();
           if (v == 'stat1' || v == 'stat2') $opt2.show(); else $opt2.hide();
           if (v == 'stat2') $opt3.show(); else $opt3.hide();
