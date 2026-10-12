@@ -85,6 +85,8 @@ code: |
       #if ENABLED(FILAMENT_MOTION_SENSOR)
         //#define FILAMENT_SWITCH_AND_MOTION
         #if ENABLED(FILAMENT_SWITCH_AND_MOTION)
+          #define FILAMENT_MOTION_DISTANCE_MM 3.0 // (mm) Missing distance required to trigger runout (0 = no jam detection)
+
           #define NUM_MOTION_SENSORS   1          // Number of sensors, up to one per extruder. Define a FIL_MOTION#_PIN for each.
           //#define FIL_MOTION1_PIN    -1
 
