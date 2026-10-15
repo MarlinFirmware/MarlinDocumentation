@@ -931,7 +931,7 @@ Junction Deviation determines the cornering speed. The smaller the value the slo
 
 ![Junction Deviation formula](//latex.codecogs.com/gif.latex?d=0.4\frac{Jerk^{2}}{Accel_{printing}})
 
-Use the above formula to calculate the Junction Deviation amount.
+Use the above formula to convert existing jerk and print acceleration values to a Junction Deviation amount. For a full explanation and a step-by-step tuning procedure, see the [Junction Deviation](/docs/features/junction_deviation.html) page.
 
 See the following sources for detailed explanations of Junction Deviation:
 - [JD Explained and Visualized, by Paul Wanamaker](//reprap.org/forum/read.php?1,739819)
