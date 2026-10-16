@@ -848,6 +848,8 @@ The [Průša Calculator](//prusaprinters.org/calculator/) is a great tool to hel
 ```
 In any move, the velocities (in mm/sec for linear axes, °/sec for rotational axes) in the X, Y, Z, ..., and E directions will be limited to the corresponding `DEFAULT_MAX_FEEDRATE`.
 
+On Core, Delta, SCARA, and Polar machines these limits apply to each *motor* (belt, tower carriage, or joint), not to the nozzle. See [Motion Limits on Non-Cartesian Machines](#motion-limits-on-non-cartesian-machines).
+
 Override with [`M203`](/docs/gcode/M203.html).
 
 {% alert danger %}
@@ -862,6 +864,8 @@ Setting these too high will cause the corresponding stepper motor to lose steps,
 When the velocity of any axis changes, its acceleration (or deceleration) in mm/s/s (or °/s/s for rotational axes) is limited by the current max acceleration setting. Also see the *jerk* settings below, which specify the largest instant speed change that can occur between segments.
 
 A value of 3000 means that an axis may accelerate by 100mm/s within 1/30th of a second, or up to 3000mm/s (180000mm/m) in a full second.
+
+On Core, Delta, SCARA, and Polar machines these limits apply to each *motor* (belt, tower carriage, or joint), not to the nozzle. See [Motion Limits on Non-Cartesian Machines](#motion-limits-on-non-cartesian-machines).
 
 Jerk sets the floor for accelerated moves. If the change in top speed for a given axis between segments is less than the jerk value for the axis, an instantaneous change in speed may be allowed. Limits placed on other axes also apply. Basically, lower jerk values result in more accelerated moves, which may be near-instantaneous in some cases, depending on the final acceleration determined by the planner.
 
@@ -878,6 +882,8 @@ The planner uses the default accelerations set here (or by [`M204`](/docs/gcode/
 - Printing moves include E plus at least one of the XYZ axes.
 - Retraction moves include only the E axis.
 - Travel moves include only the XYZ axes.
+
+These accelerations always apply to the nozzle (tool) path, in mm/s/s, on every kind of machine.
 
 In print/travel moves, `DEFAULT_ACCELERATION` and `DEFAULT_TRAVEL_ACCELERATION` apply to the XYZ axes. In retraction moves, `DEFAULT_RETRACT_ACCELERATION` applies only to the *E*-axis. During movement planning, Marlin constrains the default accelerations to the maximum acceleration of all axes involved in the move.
 
@@ -919,6 +925,8 @@ Jerk works in conjunction with acceleration (see above). Jerk is the maximum cha
 
 Both acceleration and jerk affect your print quality. If jerk is too low, the extruder will linger too long on small segments and corners, possibly leaving blobs. If the jerk is set too high, direction changes will apply too much torque and you may see "ringing" artifacts or dropped steps.
 
+Like max feedrate and max acceleration, jerk applies to each motor on Core, Delta, SCARA, and Polar machines. See [Motion Limits on Non-Cartesian Machines](#motion-limits-on-non-cartesian-machines).
+
 Override with [`M205`](/docs/gcode/M205.html).
 
 #### Junction Deviation <em class="fa fa-sticky-note" aria-hidden="true"></em> <em class="fa fa-desktop" aria-hidden="true"></em>
@@ -943,6 +951,47 @@ See the following sources for detailed explanations of Junction Deviation:
 //#define S_CURVE_ACCELERATION
 ```
 This option eliminates vibration during printing by fitting a Bézier curve to move acceleration, producing much smoother direction changes.
+
+### Motion Limits on Non-Cartesian Machines
+
+On a Cartesian printer each motor drives one axis, so "X max feedrate" and "X motor max feedrate" are the same thing. On other machines they are not. Marlin applies the per-axis limits to the **motors** (belts, tower carriages, or joints), while the requested feedrate and the starting acceleration apply to the **nozzle** path.
+
+| Setting | Applies to | Units |
+|---------|-----------|-------|
+| Move feedrate (`G0`/`G1 F`) | Nozzle | mm/min |
+| [`M204`](/docs/gcode/M204.html) `P` `T` `R` (`DEFAULT_ACCELERATION`, etc.) | Nozzle | mm/s/s |
+| [`M203`](/docs/gcode/M203.html) max feedrate (`DEFAULT_MAX_FEEDRATE`) | Each motor | Motor units/s |
+| [`M201`](/docs/gcode/M201.html) max acceleration (`DEFAULT_MAX_ACCELERATION`) | Each motor | Motor units/s/s |
+| [`M205`](/docs/gcode/M205.html) `X` `Y` `Z` jerk (`DEFAULT_XJERK`, etc.) | Each motor | Motor units/s |
+
+The planner starts with the nozzle feedrate and `M204` acceleration, then slows the move down if any motor would go past its `M203` or `M201` limit. So the nozzle can end up slower than requested, and the effective acceleration can change with the direction of the move or (on Delta, SCARA, and Polar) with the position of the nozzle.
+
+The X, Y, and Z parameters of `M201`, `M203`, and `M205` map to the motors as follows:
+
+| Machine | X | Y | Z | Motor units |
+|---------|---|---|---|-------------|
+| Cartesian | X axis | Y axis | Z axis | mm |
+| CoreXY / Markforged | Motor A | Motor B | Z axis | mm of belt |
+| Delta | Tower A carriage | Tower B carriage | Tower C carriage | mm of carriage travel |
+| SCARA / TPARA | Shoulder joint | Elbow joint | Z axis | degrees (Z in mm) |
+| Polar | Radius | Rotation | Z axis | mm / degrees |
+| Polargraph | Left belt | Right belt | Z (pen) | mm of belt |
+
+#### CoreXY and Markforged
+
+On CoreXY a pure X or pure Y move turns both motors at the same speed as the nozzle, but a 45° diagonal move turns one motor at about 1.41× the nozzle speed while the other stays still. With `M203 X300 Y300`, diagonal moves are limited to about 212mm/s. The same applies to `M201` and jerk. Set the motor limits with this in mind.
+
+#### Delta
+
+- Set the X, Y, and Z values of `M203`, `M201`, and `M205` the **same** for all three towers. In particular `DEFAULT_ZJERK` must equal `DEFAULT_XJERK`. The usual Cartesian Z values (like a Z jerk of 0.3 or a Z acceleration of 100) will make a delta crawl.
+- A carriage can move much faster than the nozzle. When the nozzle moves horizontally toward or away from a tower, that carriage moves at about `tan(θ)` times the nozzle speed, where θ is the rod angle from vertical. Near the edge of the bed, where the rods are flatter, this can be 1.5–2× the nozzle speed, and carriage accelerations can be higher still. Leave enough headroom in `M203` and `M201`, or moves near the edge will be slowed down.
+- Set `M204` (nozzle acceleration) to the value you actually want to print with, and set `M201` (carriage acceleration) high enough that it rarely limits normal moves. If `M201` is close to `M204`, the effective acceleration will change across the bed.
+
+#### Jerk on Delta, SCARA, and Polar
+
+Junction Deviation is not supported on these machines, so `CLASSIC_JERK` must be enabled. Jerk on these machines is the largest instant change in **motor** speed allowed between two segments.
+
+Marlin splits every straight line into short segments (`DEFAULT_SEGMENTS_PER_SECOND`, or [`M665 S`](/docs/gcode/M665.html) on Delta) and converts each one to motor moves. Even when the nozzle moves in a straight line at constant speed, the motor speeds change a little from one segment to the next. If jerk is too low, the planner slows down at every segment boundary and motion becomes jerky or "stop-and-go." Most example delta configurations use 5–10mm/s for all three towers. If motion is choppy, raise jerk before you change the segment rate.
 
 ## Z Probe Options
 ### Probe Pins

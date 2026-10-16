@@ -8,6 +8,8 @@ category: [ features, developer ]
 
 Junction Deviation (JD) decides how fast the nozzle may pass through a corner where one move ends and the next begins. It has been Marlin's default cornering method since 2.0, replacing the per-axis "Classic Jerk" model, and it is active whenever `CLASSIC_JERK` is disabled.
 
+Junction Deviation is available on Cartesian and Core (CoreXY, Markforged, etc.) machines. Delta, SCARA, TPARA, Polar, and Polargraph machines must use `CLASSIC_JERK` instead. See [Motion Limits on Non-Cartesian Machines](/docs/configuration/configuration.html#motion-limits-on-non-cartesian-machines).
+
 This page explains what the value means, which acceleration setting it works with, how to pick a starting value, and how to fine-tune it with test prints.
 
 ## How it works
