@@ -63,6 +63,8 @@ Marlin now includes a `PROBE_MANUALLY` option as a kind of faux probe. With this
 
 The `LCD_BED_LEVELING` option makes manual leveling a lot faster and easier by providing a guided procedure and direct Z adjustment.
 
+If the first layer is wrong by the same amount everywhere, the problem is the probe Z offset rather than the mesh; see [Z Offset and Babystepping](/docs/features/z_offset_babystepping.html). On a machine with two or more Z motors, run `G34` ([Z Stepper Alignment](/docs/features/z_stepper_alignment.html)) before `G29` so leveling does not have to compensate for a tilted gantry.
+
 # G29 Command Options
 
 For even more exciting details about ABL, see:

@@ -46,7 +46,7 @@ these are the settings to check first, roughly in order:
    depends on your belts, pulleys, lead screws, and microstepping. Adjust later with [`M92`](/docs/gcode/M092.html).
 4. **Bed size and travel limits.** [`X_BED_SIZE`](/docs/settings/geometry.html#N_BED_SIZE),
    `Y_BED_SIZE`, and the min/max positions tell Marlin where the nozzle can safely go.
-5. **Homing.** Set which end of each axis has the endstop with
+5. **Homing.** See [Homing](/docs/features/homing.html) for what `G28` does and how to verify the endstops before the first home. Set which end of each axis has the endstop with
    [`X_HOME_DIR`](/docs/settings/homing.html#N_HOME_DIR) and the others.
 6. **Speed and acceleration.** [`DEFAULT_MAX_FEEDRATE`](/docs/settings/motion.html#DEFAULT_MAX_FEEDRATE) and
    [`DEFAULT_MAX_ACCELERATION`](/docs/settings/motion.html#DEFAULT_MAX_ACCELERATION). Keep Y more conservative on a bed-slinger.
@@ -65,7 +65,7 @@ For bed leveling, [bilinear](/docs/gcode/G029-abl-bilinear.html) is a good defau
 [`G29`](/docs/gcode/G029.html) to measure the bed, then save the mesh.
 
 If the gantry is lifted by two Z motors, it can end up tilted. With a probe, [`G34`](/docs/gcode/G034-zsaa.html)
-([`Z_STEPPER_AUTO_ALIGN`](/docs/settings/calibrate.html#Z_STEPPER_AUTO_ALIGN)) levels the gantry by driving
+([`Z_STEPPER_AUTO_ALIGN`](/docs/settings/calibrate.html#Z_STEPPER_AUTO_ALIGN)) levels the gantry (see [Z Stepper Alignment](/docs/features/z_stepper_alignment.html)) by driving
 each Z motor separately.
 
 {: .more }

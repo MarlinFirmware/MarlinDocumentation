@@ -766,6 +766,8 @@ groups:
 ---
 
 ### General information
+
+For help choosing between these families and fixing a blank or garbled screen, see [Displays and Controllers](/docs/features/displays.html).
 Marlin supports a wide variety of display controllers, from simple character-based displays and monochrome graphics displays to high resolution color displays that can even display G-code previews.
 
 {:.pretty-list.headless}

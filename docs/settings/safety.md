@@ -97,4 +97,4 @@ settings:
     If the SAFE_POWER_PIN is defined for your board, Marlin will check that stepper drivers are properly plugged in before applying power. Disable protection if your stepper drivers don't support the feature.
 ---
 
-Options in the `safety` section of the Marlin configuration files.
+Options that keep the printer from damaging itself or starting a fire. For how the thermal checks behave, what each error means, and how to tune them without disabling them, see [Thermal Protection](/docs/features/thermal_protection.html).

@@ -3007,4 +3007,4 @@ lists:
   - value: USB_FLASH_DRIVE
 ---
 
-Options in the `lcd` section of the Marlin configuration files.
+Options for displays, controllers and their menus. For an overview of the display families and which option to pick, see [Displays and Controllers](/docs/features/displays.html); for `POWER_LOSS_RECOVERY` see [Power-Loss Recovery](/docs/features/power_loss_recovery.html); for `BABYSTEPPING` and `PROBE_OFFSET_WIZARD` see [Z Offset and Babystepping](/docs/features/z_offset_babystepping.html).

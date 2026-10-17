@@ -71,6 +71,8 @@ M290 Z-0.1      ; incrementally move the hotend down until you just feel the pap
 M500            ; Save new M851 to EEPROM.
 ```
 
+How babysteps are folded into the probe Z offset, and how to save the result, is explained on [Z Offset and Babystepping](/docs/features/z_offset_babystepping.html).
+
 ### Mesh Fine-Tuning
 ```gcode
 G26 C P5.0 F3.0 ; Produce mesh validation pattern (G26), continue with (C)losest point,

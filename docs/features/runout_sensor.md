@@ -40,7 +40,7 @@ RAMPS-based boards use `SERVO3_PIN` for the first runout sensor. For other board
 
 ## What happens on runout
 
-When a sensor triggers, Marlin runs `FILAMENT_RUNOUT_SCRIPT`, which is `M600` (Filament Change) by default.
+When a sensor triggers, Marlin runs `FILAMENT_RUNOUT_SCRIPT`, which is `M600` (Filament Change) by default. See [Filament Change and Pause](/docs/features/filament_change.html) for what `M600` does step by step and how to set the unload and load lengths.
 
 - With multiple sensors, use `%c` in the script for the current tool, e.g. `"M600 T%c"`.
 - By default only the sensor of the active extruder is watched. Enable `WATCH_ALL_RUNOUT_SENSORS` to run the
@@ -68,7 +68,7 @@ it at runtime, and `M412 L0` to turn off jam detection and keep only the runout 
 ## Related G-codes
 
 - `M412`: Filament Runout
-- `M600`: Filament Change (the default runout script)
+- `M600`: [Filament Change](/docs/features/filament_change.html) (the default runout script)
 - `M75`, `M77`: start/stop the Print Job Timer
 
 

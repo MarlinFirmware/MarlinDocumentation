@@ -115,4 +115,4 @@ settings:
   comment: Add 'M190 R T' for more gradual M190 R bed cooling.
 ---
 
-Options in the `bed temp` section of the Marlin configuration files.
+Heated bed control. PID versus bang-bang versus `BED_LIMIT_SWITCHING` is compared on the [PID Temperature Control](/docs/features/pid_tuning.html) page.

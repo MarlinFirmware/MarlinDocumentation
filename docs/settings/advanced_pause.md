@@ -213,4 +213,4 @@ settings:
   comment: Add M603 G-code and menu items. Requires ~1.3K bytes of flash.
 ---
 
-Options in the `advanced pause` section of the Marlin configuration files.
+Options for `M600` filament change and `M125` pause-and-park. The sequence and how to set the lengths are explained in [Filament Change and Pause](/docs/features/filament_change.html).

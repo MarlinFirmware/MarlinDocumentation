@@ -47,7 +47,7 @@ Because both motors take part in every X and Y move, X and Y normally use the sa
 
 **Z** often uses two to four motors, one at each corner of the bed. Set the number of Z motors, then use
 [`G34`](/docs/gcode/G034-zsaa.html) with [`Z_STEPPER_AUTO_ALIGN`](/docs/settings/calibrate.html#Z_STEPPER_AUTO_ALIGN)
-to level the bed against the gantry using the probe.
+to level the bed against the gantry using the probe; the [Z Stepper Alignment](/docs/features/z_stepper_alignment.html) page covers point placement for three and four motors.
 
 ## Homing and Probing
 
@@ -55,7 +55,7 @@ Many CoreXY printers home X and Y without switches, using [sensorless homing](/d
 on TMC drivers. Since both motors move for either axis, sensorless homing needs sensible stall sensitivity on
 both. If homing stops early or crashes into the frame, tune the sensitivity before anything else.
 
-Z homes with the probe at the center of the bed ([`Z_SAFE_HOMING`](/docs/settings/homing.html#Z_SAFE_HOMING)).
+Z homes with the probe at the center of the bed ([`Z_SAFE_HOMING`](/docs/settings/homing.html#Z_SAFE_HOMING)). The general homing sequence and its troubleshooting table are on the [Homing](/docs/features/homing.html) page.
 After that, bed leveling works exactly as it does on a [Cartesian printer](cartesian.html#probing-and-leveling).
 
 {: .more }

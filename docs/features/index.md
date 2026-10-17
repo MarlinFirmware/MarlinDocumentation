@@ -20,9 +20,13 @@ repeated here.
 - [Automatic Bed Leveling](/docs/features/auto_bed_leveling.html): probe the bed and compensate for tilt and unevenness.
 - [Unified Bed Leveling](/docs/features/unified_bed_leveling.html): a mesh you can inspect, edit and fill in by hand, for large or difficult beds.
 - [Probe Temperature Compensation](/docs/features/probe_temp_compensation.html): correct probe readings that drift with temperature.
+- [Z Offset and Babystepping](/docs/features/z_offset_babystepping.html): set the probe Z offset and tune the first layer live.
+- [Z Stepper Alignment](/docs/features/z_stepper_alignment.html): keep a two-, three- or four-motor Z axis level with G34.
 - See also [Probe Configuration](/docs/configuration/probes.html) for probe types, offsets and the probing area.
 
-## Motion and print quality
+## Motion and homing
+
+- [Homing](/docs/features/homing.html): what G28 does step by step, Z-safe homing, sensorless homing, and what to do when it fails.
 
 - [Linear Advance](/docs/features/lin_advance.html): control pressure in the nozzle for sharp corners and even lines.
 - [Input Shaping](/docs/features/input_shaping.html): cancel frame vibration to print faster with less ringing.
@@ -30,15 +34,23 @@ repeated here.
 - [Junction Deviation](/docs/features/junction_deviation.html): how cornering speed is decided, and how to tune it.
 - [Firmware Retract](/docs/features/fwretract.html): retraction handled by the firmware so it can be tuned without reslicing.
 
-## Temperature
+## Temperature and safety
 
+- [Thermal Protection](/docs/features/thermal_protection.html): the heater safety checks, MINTEMP/MAXTEMP, the watchdog, and what each error means.
+- [PID Temperature Control](/docs/features/pid_tuning.html): tune the hotend, bed and chamber with M303, or choose bang-bang.
 - [Model Predictive Temperature Control](/docs/features/model_predictive_control.html): a physics-based alternative to PID for steadier hotend temperatures.
 
-## Convenience and safety
+## Printing and recovery
 
+- [Filament Change and Pause](/docs/features/filament_change.html): M600 filament change, M125 pause-and-park, and the load/unload lengths.
 - [Filament Runout Sensor](/docs/features/runout_sensor.html): detect the end of the spool and pause for a filament change.
+- [Power-Loss Recovery](/docs/features/power_loss_recovery.html): resume an SD print after a power failure.
 - [EEPROM](/docs/features/eeprom.html): how settings are saved, loaded and reset.
 - [Autostart](/docs/features/autostart.html): run a G-code file from the media at power-up.
+
+## Displays
+
+- [Displays and Controllers](/docs/features/displays.html): identify your screen, pick the right option, wire EXP1/EXP2, and fix first-boot problems.
 
 Looking for something not listed here? The [Marlin Features](/docs/basics/features.html) overview and the
 [Settings](/docs/settings/index.html) reference cover every option, and new feature articles are welcome; see

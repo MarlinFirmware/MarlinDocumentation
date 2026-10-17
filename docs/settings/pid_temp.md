@@ -37,4 +37,4 @@ settings:
   comment: Add PID auto-tuning to the "Advanced Settings" menu. (~250 bytes of flash)
 ---
 
-Options in the `pid temp` section of the Marlin configuration files.
+PID gains for the hotends. For a walkthrough of autotune (`M303`) and the functional range, see [PID Temperature Control](/docs/features/pid_tuning.html).

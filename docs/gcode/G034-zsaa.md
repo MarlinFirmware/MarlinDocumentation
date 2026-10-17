@@ -41,10 +41,10 @@ parameters:
 
 - tag: T
   optional: true
-  description: Target accuracy - must be between 0.01 - 1.0
+  description: Target accuracy - must be between 0.001 - 1.0
   values:
   - type: float
-    tag: 0.01-1.0
+    tag: 0.001-1.0
 
 - tag: A
   optional: true
@@ -78,4 +78,4 @@ examples:
 
 ---
 
-Align multiple Z stepper motors using a bed probe by probing one position per stepper. See [`M422`](/docs/gcode/M422.html) for Z-Stepper automatic alignment parameter selection. Also see `HOME_AFTER_G34` in `Configuration_adv.h`
+Align multiple Z stepper motors using a bed probe by probing one position per stepper. See [`M422`](/docs/gcode/M422.html) for Z-Stepper automatic alignment parameter selection. Setup, point placement and the probe-free alternatives are on the [Z Stepper Alignment](/docs/features/z_stepper_alignment.html) page.
