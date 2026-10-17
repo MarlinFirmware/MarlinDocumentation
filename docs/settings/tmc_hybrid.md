@@ -146,3 +146,5 @@ settings:
 ---
 
 Options in the `tmc/hybrid` section of the Marlin configuration files.
+
+See [Trinamic Drivers](/docs/features/trinamic_drivers.html#hybrid-threshold) for how these options work together.

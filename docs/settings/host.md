@@ -95,3 +95,5 @@ settings:
 ---
 
 Options in the `host` section of the Marlin configuration files.
+
+See [Host Interface](/docs/features/host_interface.html) for how these options work together.

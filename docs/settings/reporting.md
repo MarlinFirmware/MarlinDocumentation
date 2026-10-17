@@ -74,3 +74,5 @@ settings:
 ---
 
 Options in the `reporting` section of the Marlin configuration files.
+
+See [Host Interface](/docs/features/host_interface.html) for how these options work together.

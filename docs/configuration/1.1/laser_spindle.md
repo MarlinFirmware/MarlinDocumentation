@@ -8,6 +8,9 @@ toc: true
 ---
 
 # Laser and Spindle Configuration (Marlin 1.1)
+
+{: .important }
+> This guide describes Marlin 1.1. For Marlin 2.1.x see [Laser and Spindle Control](/docs/features/laser_spindle.html).
 {: .note }
 > This document is based on Marlin 1.1.9
 

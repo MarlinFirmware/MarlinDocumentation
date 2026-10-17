@@ -259,3 +259,5 @@ settings:
 ---
 
 Options in the `tool change` section of the Marlin configuration files.
+
+See [Multiple Extruders and Tool Changing](/docs/features/multi_extruder.html#how-a-tool-change-works) for how these options work together.

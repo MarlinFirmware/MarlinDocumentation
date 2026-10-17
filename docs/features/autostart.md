@@ -12,7 +12,7 @@ contrib: AnHardt, thinkyhead
 
 # Autostart
 
-If the printer has an SD card inserted at startup or reset, Marlin will look for the file `auto0.g` and execute it, followed in sequence by any other files with the same pattern (`auto1.g`, `auto2.g`, etc.) all the way up to `auto9.g`.
+If the printer has an SD card inserted at startup or reset, Marlin will look for the file `auto0.g` and execute it (see [Media Printing](/docs/features/media_printing.html) for how the card is mounted and how Autostart interacts with Power-Loss Recovery and One-Click Print), followed in sequence by any other files with the same pattern (`auto1.g`, `auto2.g`, etc.) all the way up to `auto9.g`.
 
 By default, Autostart is included in the firmware whenever SD card support is enabled. It can be disabled to save a little flash and SRAM if the feature is not needed.
 

@@ -34,3 +34,5 @@ settings:
 ---
 
 Options in the `tmc/status` section of the Marlin configuration files.
+
+See [Trinamic Drivers](/docs/features/trinamic_drivers.html#driver-monitoring-and-warnings) for how these options work together.

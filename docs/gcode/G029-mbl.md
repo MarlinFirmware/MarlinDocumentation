@@ -140,3 +140,5 @@ Mesh Bed Leveling (MBL) allows interactively measuring a Z height mesh without a
   - Use the controller wheel to adjust Z so that a piece of paper can just pass under the nozzle.
   - Press the controller button to save the Z value and move to the next point.
 5. Use `Control` > `Save to EEPROM` to save the mesh to EEPROM.
+
+Step-by-step guide: [Mesh Bed Leveling and Manual Probing](/docs/features/mesh_bed_leveling.html).

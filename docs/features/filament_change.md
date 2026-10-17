@@ -265,8 +265,9 @@ The G-code itself works the same from OctoPrint or any serial host, but the "con
 Marlin. Marlin waits in a loop that only a display click or `M108` can end, and during that wait the normal command
 queue does not advance. That is why
 [`EMERGENCY_PARSER`](/docs/settings/serial.html#EMERGENCY_PARSER) matters: it watches the incoming serial bytes
-and acts on `M108` (and `M876`) before they enter the queue. Without it, an `M108` sent by the host sits behind the
-paused `M600` and never runs, and a printer with no display has no way to continue at all.
+and acts on `M108` (and `M876`) before they enter the queue. Without it, Marlin only notices an `M108` when it reads the line into the queue; once the queue's few slots
+fill up behind the paused `M600`, nothing more is read and a printer with no display has no way to continue at all.
+See [Host Interface](/docs/features/host_interface.html#emergency-parser) for the platforms that support it.
 
 With [`HOST_ACTION_COMMANDS`](/docs/settings/host.html#HOST_ACTION_COMMANDS) and
 [`HOST_PROMPT_SUPPORT`](/docs/settings/host.html#HOST_PROMPT_SUPPORT) enabled, Marlin sends

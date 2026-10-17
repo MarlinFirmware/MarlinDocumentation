@@ -49,7 +49,7 @@ As seen in this [Chris's Basement video](https://youtu.be/H-c8UTg-EMU), the RRD 
 
 ### One Side High, One Side Low
 - **Problem**: Bed probe done, leveling compensation enabled, and the first layer comes out out too squished on the right side, or too high on the left side, or *vice-versa*.
-- **Solution**: Make sure the probe is always perpendicular to the bed as the carriage moves. If the wires or Bowden tube are pulling on the carriage, or if the X gantry is even slightly twisted, the probe will not remain perpendicular and its readings will be garbaggio. There is a feature called `MECHANICAL_GANTRY_CALIBRATION` that can be used to compensate, but it is always best to tackle any mechanical issues first.
+- **Solution**: Make sure the probe is always perpendicular to the bed as the carriage moves. If the wires or Bowden tube are pulling on the carriage, or if the X gantry is even slightly twisted, the probe will not remain perpendicular and its readings will be garbaggio. See [X-axis twist compensation](/docs/features/mechanical_compensation.html#x-axis-twist-compensation) to measure and correct a twist. There is a feature called `MECHANICAL_GANTRY_CALIBRATION` that can be used to compensate, but it is always best to tackle any mechanical issues first.
 
 ### Heating Failed!
 Thermal Runaway is a constant concern with heaters, so Marlin watches heaters for some common runaway conditions:

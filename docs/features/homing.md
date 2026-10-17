@@ -201,7 +201,7 @@ Sensorless homing changes the sequence in a few ways:
 - A probe always wins for Z: when Z is homed with a probe, sensorless Z homing is turned off automatically.
 - CoreXY and similar kinematics enable StallGuard on both motors for each XY homing move, since both drive each axis.
 
-Wiring, driver setup and the `M122` diagnostics are on the [TMC drivers](/docs/appendix/tmc_drivers.html) page.
+Driver setup, the sensitivity scales and the `M122` diagnostics are on the [Trinamic Drivers](/docs/features/trinamic_drivers.html#stallguard-and-sensorless-homing) page; wiring is on the [TMC drivers](/docs/appendix/tmc_drivers.html) appendix page.
 
 ## Verifying the endstops before you home
 

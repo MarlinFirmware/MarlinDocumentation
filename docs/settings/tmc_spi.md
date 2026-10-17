@@ -128,3 +128,5 @@ settings:
 ---
 
 Options in the `tmc/spi` section of the Marlin configuration files.
+
+See [Trinamic Drivers](/docs/features/trinamic_drivers.html#requirements) for how these options work together.

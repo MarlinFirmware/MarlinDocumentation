@@ -15,7 +15,7 @@ settings:
 
     ![Extruders](/assets/images/config/extruders.png){: .float-right .framed }
 
-    This value, from 0 to 6, defines how many extruders (or E steppers) the printer has. By default Marlin will assume separate nozzles all moving together on a single carriage. If you have a single nozzle, a switching extruder, a mixing extruder, or dual X carriages, specify that below.
+    This value, from 1 to 8 (up to 15 with an extendable MMU), defines how many extruders (or E steppers) the printer has. By default Marlin will assume separate nozzles all moving together on a single carriage. If you have a single nozzle, a switching extruder, a mixing extruder, or dual X carriages, specify that below.
 
     This value should be set to the total number of E stepper motors on the machine, even if there's only a single nozzle.
   comment: This defines the number of extruders
@@ -671,3 +671,5 @@ settings:
 ---
 
 Options in the `extruder` section of the Marlin configuration files.
+
+See [Multiple Extruders and Tool Changing](/docs/features/multi_extruder.html) for how these options work together.

@@ -60,3 +60,5 @@ settings:
 ---
 
 Options in the `nozzle park` section of the Marlin configuration files.
+
+See [Media Printing](/docs/features/media_printing.html#nozzle-park-g27) for how these options work together.

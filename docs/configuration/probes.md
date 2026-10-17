@@ -35,7 +35,7 @@ Marlin includes various methods of probing and leveling:
 - **3-Point** probes a triangle to determine the height and tilt of the bed plane. During printing the nozzle is adjusted in X, Y, and Z, so you can even print on a badly-tilted bed. However, this method requires a very flat and even surface.
 - **Linear Grid** probes a square grid (as much as possible on `DELTA`) to determine the height and tilt of the bed. After that it works just the same way as 3-point leveling.
 - **Bilinear Grid** probes a grid in the same manner as Linear Grid, but during printing the Z axis is adjusted according to bilinear interpolation between the measured points. This allows the printer to compensate for an uneven surface,
-- **Mesh Bed Leveling** works in the same manner as **Bilinear Grid** but takes different [`G29`](/docs/gcode/G029.html) parameters. (This feature is superseded by combining the manual probe option with bilinear leveling,  and will not be included in future versions of Marlin.)
+- **Mesh Bed Leveling** works in the same manner as **Bilinear Grid** but takes different [`G29`](/docs/gcode/G029.html) parameters. See [Mesh Bed Leveling and Manual Probing](/docs/features/mesh_bed_leveling.html).
 - **Unified Bed Leveling** combines elements of bilinear and planar leveling and includes extra utilities to help improve measurement accuracy, especially for deltas. See [this page](/docs/features/unified_bed_leveling.html) for an article specifically about this feature.
 
 ## Configuration
@@ -81,7 +81,7 @@ This is a switch mounted on a "sled" that can be docked to the end of the X axis
 This is a popular solution on deltas. A spare Allen key is used with an endstop switch to make a probe that's deployed and stowed by turning the key 90 degrees. You can either deploy and stow the key manually or configure movements that bump the key against some fixed point. Options for this type of probe are included in the delta example configurations that come with Marlin.
 
 #### PROBE_MANUALLY
-The bed-nozzle distance can be measured without a probe by following a [`manual procedure`](/docs/gcode/G029-mbl.html). The nozzle moves to each point and pauses. You adjust the Z height so that the nozzle is touching the bed. Once the Z height is adjusted, you tell the machine to go to the next point. Continue until all points are probed. This option can be used with all Auto Bed Leveling options except UBL, which is freestanding.
+The bed-nozzle distance can be measured without a probe by following a [manual procedure](/docs/features/mesh_bed_leveling.html). The nozzle moves to each point and pauses. You adjust the Z height so that the nozzle is touching the bed. Once the Z height is adjusted, you tell the machine to go to the next point. Continue until all points are probed. This option can be used with all Auto Bed Leveling options except UBL, which is freestanding.
 
 ### 3. Other Probe Options
 

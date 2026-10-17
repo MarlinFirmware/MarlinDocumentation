@@ -87,3 +87,5 @@ settings:
 ---
 
 Options in the `idex` section of the Marlin configuration files.
+
+See [Multiple Extruders and Tool Changing](/docs/features/multi_extruder.html#independent-dual-x-carriages-idex) for how these options work together.

@@ -879,3 +879,5 @@ settings:
 ---
 
 Options in the `tmc/config` section of the Marlin configuration files.
+
+See [Trinamic Drivers](/docs/features/trinamic_drivers.html#motor-current) for how these options work together.

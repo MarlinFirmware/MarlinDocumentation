@@ -15,7 +15,7 @@ settings:
 
     You'll need to select a pin for the ON/OFF function and optionally choose a 0-5V hardware PWM pin for the speed control and a pin for the rotation direction.
 
-    See [Laser and Spindle (1.1.x)](/docs/configuration/1.1/laser_spindle.html) or [Laser and Spindle (2.0.9.x)](/docs/configuration/2.0.9/laser_spindle.html) and `Configuration_adv.h` for more details.
+    See [Laser and Spindle Control](/docs/features/laser_spindle.html) for how to set up and use a laser or spindle.
   comment: |-
     Spindle & Laser control
 
@@ -378,3 +378,5 @@ settings:
 ---
 
 Options in the `cnc` section of the Marlin configuration files.
+
+See [Laser and Spindle Control](/docs/features/laser_spindle.html) for how these options work together.

@@ -21,7 +21,7 @@ settings:
 
     **Setup Requirements:**
     - Connect the stepper driver's DIAG1 pin to the corresponding endstop pin
-    - X, Y, and Z homing will always be done in spreadCycle mode (not stealthChop)
+    - TMC2209 and TMC2240 home in stealthChop (StallGuard4); other drivers home in spreadCycle (StallGuard2). See [Trinamic Drivers](/docs/features/trinamic_drivers.html#what-changes-while-an-axis-homes).
     - It is recommended to set `HOMING_BUMP_MM` to `{ 0, 0, 0 }` for best results
 
     **Stall Sensitivity Values:**

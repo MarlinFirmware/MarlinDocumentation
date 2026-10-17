@@ -32,3 +32,5 @@ settings:
 ---
 
 Options in the `media` section of the Marlin configuration files.
+
+See [Media Printing](/docs/features/media_printing.html) for how these options work together.

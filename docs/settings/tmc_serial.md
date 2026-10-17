@@ -104,3 +104,5 @@ settings:
 ---
 
 Options in the `tmc/serial` section of the Marlin configuration files.
+
+See [Trinamic Drivers](/docs/features/trinamic_drivers.html#choosing-the-driver-type) for how these options work together.

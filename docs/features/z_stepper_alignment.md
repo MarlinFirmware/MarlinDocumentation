@@ -16,7 +16,7 @@ and one side ends up higher than the other.
 
 The symptoms are familiar: the first layer is good on one side of the bed and too high or too low on the other,
 the bed probe reports a tilted plane that bed leveling has to fight, or the gantry is visibly out of square with
-the frame. Bed leveling can compensate for a small tilt, but it is better to remove it at the source.
+the frame. Bed leveling can compensate for a small tilt, but it is better to remove it at the source. To square the bed itself with its screws, see [Bed Tramming](/docs/features/bed_tramming.html).
 
 Marlin offers three ways to bring the Z motors back into agreement:
 

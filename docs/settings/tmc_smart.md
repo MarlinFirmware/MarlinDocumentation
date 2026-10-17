@@ -16,3 +16,5 @@ settings:
 ---
 
 Options in the `tmc/smart` section of the Marlin configuration files.
+
+See [Trinamic Drivers](/docs/features/trinamic_drivers.html#how-marlin-sets-up-the-drivers) for how these options work together.

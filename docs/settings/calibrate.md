@@ -909,3 +909,5 @@ settings:
 ---
 
 Options in the `calibrate` section of the Marlin configuration files.
+
+See [Skew, Backlash and X-Twist Compensation](/docs/features/mechanical_compensation.html) for how these options work together.

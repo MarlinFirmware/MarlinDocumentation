@@ -139,3 +139,5 @@ settings:
 ---
 
 Options in the `tmc/stealthchop` section of the Marlin configuration files.
+
+See [Trinamic Drivers](/docs/features/trinamic_drivers.html#stealthchop-and-spreadcycle) for how these options work together.

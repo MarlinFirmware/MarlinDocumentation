@@ -15,7 +15,8 @@ parameters:
 
 - tag: F
   optional: true
-  description: Movement feedrate for the tool-change.
+  until: 2.0.0
+  description: Movement feedrate for the tool-change. (Ignored in 2.x; the tool change moves at `XY_PROBE_FEEDRATE`.)
   values:
   - tag: feedrate
     type: float
