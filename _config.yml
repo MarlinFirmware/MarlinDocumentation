@@ -1,19 +1,59 @@
 name: 'Marlin Firmware'
-logo: '/assets/images/logo/marlin/small.png'
+title: 'Marlin Firmware'
+logo: '/assets/images/logo/marlin/text-night.png'
 description: 'Printing the planet, one layer at a time.'
 
 baseurl: ''
 url: 'https://marlinfw.org'
 js: '/assets/javascript/'
 pull_img: '/assets/images/docs/development/pull_images/'
-
-# Not used anymore
-enforce_ssl: marlinfw.org
-
-version: '1.0.0'
-environment: development
-
 destination: ./_site
+
+exclude:
+  - _config.yml
+  - Gemfile
+  - LICENSE
+  - public
+  - script
+  - vendor
+  - dev-notes.md
+  - AGENTS.md
+  - docs/gcode/AGENTS.md
+  - assets/images/CREDITS.md
+  - notes
+  - .hermes-tmp.*
+
+#theme: jekyll-theme-documentation
+#theme: jekyll-theme-minimal
+theme: just-the-docs
+#nav_enabled: true
+#heading_anchors: false
+
+color_scheme: marlin
+back_to_top: true
+
+# Callouts: {: .note } / {: .warning } / {: .important } / {: .highlight } before a blockquote
+callouts:
+  highlight:
+    color: yellow
+  important:
+    title: Important
+    color: red
+  note:
+    title: Note
+    color: blue
+  warning:
+    title: Warning
+    color: yellow
+  more:
+    title: Want to Know More?
+    color: blue
+
+search_enabled: true
+search.button: true
+search.previews: 3
+search.preview_words_before: 5
+search.preview_words_after: 5
 
 twitter:
   username: MarlinFirmware
@@ -28,10 +68,20 @@ social:
     - http://forums.reprap.org/list.php?415
     - https://discord.com/servers/marlin-firmware-461605380783472640
 
+github:
+  repository_name: 'MarlinFirmware/MarlinDocumentation'
+#  repository_url:
+
 repository:
   main: 'https://github.com/MarlinFirmware/Marlin'
   doc: 'https://github.com/MarlinFirmware/MarlinDocumentation'
   config: 'https://github.com/MarlinFirmware/Configurations'
+  builds: 'https://github.com/MarlinFirmware/MarlinBuilds'
+  autobuild: 'https://github.com/MarlinFirmware/AutoBuildMarlin'
+
+# Google Analytics Tracking (optional)
+ga_tracking: UA-76230130-10
+ga_tracking_anonymize_ip: true # Use GDPR compliant Google Analytics settings (true/nil by default)
 
 analytics:
   id: 'UA-76230130-1'
@@ -45,37 +95,31 @@ kramdown:
   input: GFM
   syntax_highlighter: rouge
 
-jekyll_tidy:
-  compress_html: true
-  # exclude: ["index.html"]
-  # ignore_env: development
+plugins:
+  - jekyll-redirect-from
+  - jekyll-bootstrap-sass
+  - jekyll-tidy
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-toc
+  - jekyll-seo-tag
 
 sass:
     style: compressed
+
+jekyll_tidy:
+  compress_html: true
+  exclude: ["*.js"]
+  # ignore_env: development
 
 collections:
   basics:
     output: true
     permalink: /docs/:collection/:path:output_ext
 
-  configuration:
-    output: true
-    title: Configuration
-    permalink: /docs/:collection/:path:output_ext
-
-  setting:
-    output: true
-    title: Settings
-    permalink: /docs/:collection/:path:output_ext
-
   development:
     output: true
-    title: Developer Guide
-    permalink: /docs/:collection/:path:output_ext
-
-  features:
-    output: true
-    title: Features
+    title: Development
     permalink: /docs/:collection/:path:output_ext
 
   gcode:
@@ -83,36 +127,9 @@ collections:
     title: G-code
     permalink: /docs/:collection/:path:output_ext
 
-  hardware:
-    output: true
-    title: Hardware
-    permalink: /docs/:collection/:path:output_ext
-
-  meta:
-    output: true
-    permalink: /:collection/:path/
-
-  tools:
-    output: true
-    permalink: /:collection/:path:output_ext
-
-include: [ ".well-known" ]
-
-exclude:
-  - _config.yml
-  - Gemfile
-  - LICENSE
-  - public
-  - script
-  - vendor
-
-plugins:
-  - jekyll-mentions
-  - jekyll-seo-tag
-  - jekyll-avatar
-  - jekyll-bootstrap-sass
-  - jekyll-tidy
-  - jekyll-redirect-from
+#toc:
+#  min_level: 2 # default: 1
+#  max_level: 5 # default: 6
 
 defaults:
   - # All types
@@ -130,54 +147,68 @@ defaults:
   - # Basics collection
     scope:
       type: basics
+      path: 'docs/basics'
     values:
-      layout: docs
-      category: [ Basics ]
+      layout: page
 
-  - # Configuration collection
+  - # Development pages
     scope:
-      type: configuration
+      path: 'docs/development'
     values:
-      layout: docs
-      category: [ configuration ]
+      layout: page
 
-  - # Settings collection
+  - # Feature overview pages
     scope:
-      type: setting
+      path: 'docs/features'
     values:
-      layout: setting
-      category: [ setting ]
+      layout: article
 
-  - # Development collection
+  - # Printer type pages
     scope:
-      type: development
+      path: 'docs/printers'
     values:
-      layout: docs
-      category: [ development ]
+      layout: article
 
-  - # Features collection
+  - # G-code pages
     scope:
-      type: features
-    values:
-      layout: docs
-      category: [ features ]
-
-  - # G-code collection
-    scope:
-      type: gcode
+      path: 'docs/gcode'
     values:
       layout: gcode
       category: [ gcode ]
 
-  - # Hardware collection
+  - # Settings pages (generated by _tools/gen_settings.py)
     scope:
-      type: hardware
+      path: 'docs/settings'
     values:
-      layout: docs
-      category: [ hardware ]
+      layout: setting
 
-  - # Meta collection
+  - # Appendix pages
     scope:
-      type: meta
+      path: 'docs/appendix'
     values:
-      category: [ meta ]
+      layout: page
+
+# SEO Stuff
+author: Marlin Firmware
+summary: Documentation for the Marlin Firmware project.
+lang: en
+locale: en_US
+
+# RSS feeds
+feed:
+  posts_limit: 20
+
+# Obtrusive links not properly styled
+#aux_links:
+#  Just the Docs on GitHub:
+#    - https://github.com/just-the-docs/just-the-docs
+
+# Just the Docs theme configuration
+just_the_docs:
+  # Sections are driven by page `parent:` + `nav_order` frontmatter,
+  # so named collections are intentionally omitted to avoid empty
+  # `nav-category` dividers at the bottom of the sidebar.
+
+aux_links:
+  🤓 GitHub: https://github.com/MarlinFirmware/Marlin
+  ❤️ Donate: /docs/contribute.html

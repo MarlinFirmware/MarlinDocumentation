@@ -1,149 +1,83 @@
 ---
+# Search index for the Auto Build Marlin (ABM) VS Code extension, which downloads
+# https://marlinfw.org/feeds/feed.json and searches it in its Docs panel.
+# This is a compatibility contract: see _tools/check_feed.py before changing it.
+#
+# One JSON array. Entries of the same "class" must be contiguous (ABM prints a heading when the class
+# changes). Each entry has: title, content, excerpt, link (root-relative: ABM prefixes https://marlinfw.org),
+# class, and optionally group, since, requires (comma separated), exp, tags.
+# "content" is the indexify-reduced search text. It must not contain backticks, "$" or "{" (ABM injects the
+# feed into a JavaScript template literal).
 layout: null
+permalink: /feeds/feed.json
+sitemap: false
+search_exclude: true
 ---
 {%- assign first = true -%}
+{%- assign all_pages = site.pages | sort: 'url' -%}
 [
-{%- for gcode in site.gcode %}
-  {%- if gcode.codes[0] %}
-  {%- unless first %},{% endunless %}{
-    "title":{{ gcode.codes | join: ", " | append: " : " | append: gcode.title | jsonify }},
-    "content":{{ gcode.content | indexify | jsonify }},
-    "excerpt":"{{ gcode.brief }}",
-    "link":"{{ site.baseurl }}{{ gcode.url }}",
-    {%- if gcode.experimental -%}
-      "exp":true,
-    {%- endif %}
-    {%- if gcode.since -%}
-      "since":{{ gcode.since | jsonify }},
-    {%- endif %}
-    {%- if gcode.group -%}
-      "group":{{ gcode.group | jsonify }},
-    {%- endif %}
-    {%- if gcode.requires -%}
-      "requires":{{ gcode.requires | jsonify }},
-    {%- endif -%}
-    "class":"gcode"
-  }
-  {%- assign first = false %}
-  {%- endif %}
-{%- endfor %}
-
-{%- for conf in site.setting -%}
-  {%- if conf.label %}{% assign title = conf.label %}{% else %}{% assign title = conf.name %}{% endif %}
-  {%- capture subtext -%}
-    {% if conf.settings %}{% assign subs = conf.settings %}{% elsif conf.subopts %}{% assign subs = conf.subopts %}{% endif %}
-    {{ conf.name }} {{ conf.content }}
-    {% for sub1 in subs %}
-      {{ sub1.name }} {{ sub1.brief }} {{ sub1.long }}
-      {% for sub2 in sub1.subopts %}
-        {{ sub2.name }} {{ sub2.brief }} {{ sub2.long }}
-        {% for sub3 in sub2.subopts %}
-          {{ sub3.name }} {{ sub3.brief }} {{ sub3.long }}
-          {% for sub4 in sub3.subopts %}
-            {{ sub4.name }} {{ sub4.brief }} {{ sub4.long }}
-          {% endfor %}
-        {% endfor %}
-      {% endfor %}
-    {% endfor %}
+{%- comment -%} G-code: "G0, G1 : Linear Move" {%- endcomment -%}
+{%- for p in all_pages -%}
+  {%- if p.codes[0] and p.path contains 'docs/gcode/' -%}
+  {%- capture text -%}
+    {{ p.codes | join: ' ' }} {{ p.short_title }} {{ p.brief }} {{ p.content }}
+    {% for prm in p.parameters %}{{ prm.tag }} {{ prm.description }} {% for v in prm.values %}{{ v.tag }} {% endfor %}{% endfor %}
+    {% for n in p.notes %}{{ n }} {% endfor %}
   {%- endcapture -%}
-  {%- if conf.settings %}{% assign subs = conf.settings %}{% elsif conf.subopts %}{% assign subs = conf.subopts %}{% endif -%}
-  {%- unless first %},{% endunless %}{
-    "title":{{ title | jsonify }},
-    "content":{{ subtext | indexify | jsonify }},
-    "excerpt":"{{ conf.brief }}",
-    "link":"{{ site.baseurl }}{{ conf.url }}",
-    {%- if conf.experimental -%}
-      "exp":true,
-    {%- endif %}
-    {%- if conf.since -%}
-      "since":{{ gcode.since | jsonify }},
-    {%- endif %}
-    {%- if conf.until -%}
-      "until":{{ gcode.until | jsonify }},
-    {%- endif %}
-    {%- if conf.tags -%}
-      "tags": [ {{ conf.tags | join: ", " | jsonify }} ],
-    {%- endif -%}
-    "class":"setting"
+  {%- unless first %},{% endunless %}
+  {
+    "title": {{ p.codes | join: ", " | append: " : " | append: p.short_title | jsonify }},
+    "content": {{ text | indexify | jsonify }},
+    "excerpt": {{ p.brief | plain_excerpt | jsonify }},
+    "link": {{ p.url | jsonify }},
+    {%- if p.experimental %}"exp": true,{% endif %}
+    {%- if p.since %}"since": {{ p.since | jsonify }},{% endif %}
+    {%- if p.group %}"group": {{ p.group | join: ", " | jsonify }},{% endif %}
+    {%- if p.requires %}"requires": {{ p.requires | join: ", " | remove: "`" | jsonify }},{% endif %}
+    "class": "gcode"
   }
-  {%- assign first = false %}
-{%- endfor %}
-
-{%- for feature in site.features %}
-  {%- if feature.title != null and feature.title != empty and item.search_omit != empty %}
-  {%- unless first %},{% endunless %}{
-    "title":{{ feature.title | jsonify }},
-    "content":{{ feature.content | indexify | jsonify }},
-    "link":"{{ site.baseurl }}{{ feature.url | replace: 'index.html','' }}",
-    "excerpt":{{ feature.description | jsonify }},
-    "class":"feat"
-  }
-  {% assign first = false %}
-  {% endif %}
-{% endfor %}
-
-{%- for hw in site.hardware %}
-  {%- if hw.title != null and hw.title != empty and item.search_omit != empty %}
-  {%- unless first %},{% endunless %}{
-    "title":{{ hw.title | jsonify }},
-    "content":{{ hw.content | indexify | jsonify }},
-    "link":"{{ site.baseurl }}{{ hw.url | replace: 'index.html','' }}",
-    "excerpt":{{ hw.description | jsonify }},
-    "class":"hardware"
-  }
-  {%- assign first = false %}
-  {%- endif %}
-{%- endfor %}
-
-{%- for inst in site.basics %}
-  {%- if inst.title != null and inst.title != empty and item.search_omit != empty %}
-  {%- unless first %},{% endunless %}{
-    "title":{{ inst.title | jsonify }},
-    "content":{{ inst.content | indexify | jsonify }},
-    "link":"{{ site.baseurl }}{{ inst.url | replace: 'index.html','' }}",
-    "excerpt":{{ inst.description | jsonify }},
-    "class":"basics"
-  }
-  {%- assign first = false %}
-  {%- endif %}
-{%- endfor %}
-
-{%- for dev in site.development %}
-  {%- if dev.title != null and dev.title != empty and item.search_omit != empty %}
-  {%- unless first %},{% endunless %}{
-    "title":{{ dev.title | jsonify }},
-    "content":{{ dev.content | markdownify | indexify | jsonify }},
-    "link":"{{ site.baseurl }}{{ dev.url | replace: 'index.html','' }}",
-    "excerpt":{{ dev.description | jsonify }},
-    "class":"devel"
-  }
-  {%- assign first = false %}
-  {%- endif %}
-{%- endfor %}
-
-{%- for cnf in site.configuration %}
-  {%- if cnf.title != null and cnf.title != empty and item.search_omit != empty %}
-  {%- unless first %},{% endunless %}{
-    "title":{{ cnf.title | jsonify }},
-    "content":{{ cnf.content | indexify | jsonify }},
-    "link":"{{ site.baseurl }}{{ cnf.url | replace: 'index.html','' }}",
-    "excerpt":{{ cnf.description | jsonify }},
-    "class":"config"
-  }
-  {%- assign first = false %}
-  {%- endif %}
-{%- endfor %}
-
-{%- for page in site.pages %}
-  {%- if page.title != null and page.title != empty and item.search_omit != empty %}
-  {%- unless first %},{% endunless %}{
-    "title":{{ page.title | jsonify }},
-    "content":{{ page.content | indexify | jsonify }},
-    "link":"{{ site.baseurl }}{{ page.url | replace: 'index.html','' }}",
-    "excerpt":{{ page.description | jsonify }},
-    "class":"page"
-  }
-  {%- assign first = false %}
-  {%- endif %}
+  {%- assign first = false -%}
+  {%- endif -%}
 {%- endfor -%}
+
+{%- comment -%} Settings: one entry per option, linking to its anchor on the settings page {%- endcomment -%}
+{%- for p in all_pages -%}
+  {%- if p.settings and p.path contains 'docs/settings/' -%}
+  {%- for s in p.settings -%}
+    {%- assign blurb = s.brief | default: s.comment | default: s.shared_comment -%}
+    {%- capture text -%}{{ s.name }} {{ blurb }} {{ s.long }} {% for m in s.members %}{{ m.name }} {% endfor %}{%- endcapture -%}
+    {%- unless first %},{% endunless %}
+  {
+    "title": {{ s.name | jsonify }},
+    "content": {{ text | indexify | jsonify }},
+    "excerpt": {{ blurb | plain_excerpt | jsonify }},
+    "link": {{ p.url | append: '#' | append: s.name | replace: '*', 'N' | jsonify }},
+    {%- if s.since %}"since": {{ s.since | jsonify }},{% endif %}
+    "group": {{ p.title | jsonify }},
+    "class": "setting"
+  }
+    {%- assign first = false -%}
+  {%- endfor -%}
+  {%- endif -%}
+{%- endfor -%}
+
+{%- comment -%} Prose sections, in the order ABM shows them {%- endcomment -%}
+{%- assign sections = "docs/features/|feat,docs/printers/|printers,docs/basics/|basics,docs/development/|devel,docs/configuration/|config,docs/appendix/|appendix" | split: ',' -%}
+{%- for sec in sections -%}
+  {%- assign parts = sec | split: '|' -%}
+  {%- for p in all_pages -%}
+    {%- if p.path contains parts[0] and p.title and p.redirect_to == nil and p.search_exclude != true and p.nav_exclude != true -%}
+    {%- capture text -%}{{ p.title }} {{ p.description }} {{ p.content }}{%- endcapture -%}
+    {%- unless first %},{% endunless %}
+  {
+    "title": {{ p.title | jsonify }},
+    "content": {{ text | indexify | jsonify }},
+    "excerpt": {{ p.description | plain_excerpt | jsonify }},
+    "link": {{ p.url | replace: 'index.html', '' | jsonify }},
+    "class": {{ parts[1] | jsonify }}
+  }
+    {%- assign first = false -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endfor %}
 ]

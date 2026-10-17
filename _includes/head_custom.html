@@ -1,0 +1,73 @@
+{%- comment -%}
+  head_custom.html — Color scheme toggle support
+  Sets `data-color-scheme` on body via inline JS to avoid FOUC.
+  CSS overrides in custom.scss use this attribute for light theme.
+{%- endcomment -%}
+
+<script>
+(function(){
+  var key = 'marlin-color-scheme', scheme;
+  try { scheme = localStorage.getItem(key); } catch(e) {}
+  if (!scheme)
+    scheme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+  document.documentElement.setAttribute('data-color-scheme', scheme);
+})();
+</script>
+
+{%- comment -%}
+  Theme toggle button rendered by _includes/header_custom.html.
+  Toggle icon/label updated dynamically by JS below.
+  Press 'd' or 'n' to toggle any time.
+{%- endcomment -%}
+
+<script>
+(function(){
+  'use strict';
+  var KEY = 'marlin-color-scheme';
+
+  function setScheme(s) {
+    document.documentElement.setAttribute('data-color-scheme', s);
+    try { localStorage.setItem(KEY, s); } catch(e) {}
+    var btn = document.getElementById('theme-toggle');
+    if (btn) {
+      var icon = btn.querySelector('.theme-toggle-icon');
+      var label = btn.querySelector('.theme-toggle-label');
+      if (icon) icon.textContent = s === 'dark' ? '☀️' : '🌙';
+      if (label) label.textContent = s === 'dark' ? 'Light' : 'Dark';
+    }
+  }
+
+  function toggleScheme() {
+    var cur = document.documentElement.getAttribute('data-color-scheme') || 'dark';
+    setScheme(cur === 'dark' ? 'light' : 'dark');
+  }
+
+  // Keyboard shortcut: d or n toggles
+  document.addEventListener('keydown', function(e) {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    var c = e.key.toLowerCase();
+    if (c === 'd' || c === 'n') { toggleScheme(); }
+  });
+
+  // Listen for OS-level changes when user has no saved preference
+  if (window.matchMedia) {
+    var mq = window.matchMedia('(prefers-color-scheme: dark)');
+    mq.addEventListener('change', function(e) {
+      try { if (localStorage.getItem(KEY) === null) setScheme(e.matches ? 'dark' : 'light'); }
+      catch(ex) {}
+    });
+  }
+
+  // Wire up toggle button once DOM is ready
+  function onReady() {
+    var btn = document.getElementById('theme-toggle');
+    if (btn) btn.addEventListener('click', toggleScheme);
+    // Sync button state to current scheme
+    setScheme(document.documentElement.getAttribute('data-color-scheme') || 'dark');
+  }
+  if (document.readyState === 'loading')
+    document.addEventListener('DOMContentLoaded', onReady);
+  else
+    onReady();
+})();
+</script>

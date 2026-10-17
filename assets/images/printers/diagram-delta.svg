@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 320" width="560" height="320" role="img" aria-label="Delta motion: three vertical towers whose carriages position the effector through fixed-length arms"><title>Delta motion: three vertical towers whose carriages position the effector through fixed-length arms</title><style>
+text{font:14px -apple-system,Helvetica,Arial,sans-serif;fill:#445}
+.t{font-weight:600;fill:#223}
+.f{fill:none;stroke:#667;stroke-width:3}
+.b{fill:#e6e9ef;stroke:#99a;stroke-width:1.5}
+.m{fill:#4a7bd0}.mb{fill:#d0704a}
+.belt{fill:none;stroke:#4a7bd0;stroke-width:2.5}
+.belt2{fill:none;stroke:#d0704a;stroke-width:2.5}
+.a{stroke:#223;stroke-width:2;fill:none;marker-end:url(#ar)}
+.arm{stroke:#556;stroke-width:4;stroke-linecap:round}
+</style><defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="#223"/></marker></defs><rect width="560" height="320" fill="#fff"/>
+<text x="20" y="28" class="t">Delta: three towers move the head together</text>
+<g transform="translate(150,175)">
+<circle r="110" class="b"/><text x="-18" y="5">bed</text>
+<circle cx="0" cy="-130" r="10" class="m"/><text x="14" y="-128" font-size="12">A (X tower)</text>
+<circle cx="-113" cy="65" r="10" class="m"/><text x="-138" y="95" font-size="12">B (Y tower)</text>
+<circle cx="113" cy="65" r="10" class="m"/><text x="80" y="95" font-size="12">C (Z tower)</text>
+<line x1="0" y1="-120" x2="12" y2="-25" class="arm"/><line x1="-104" y1="60" x2="-14" y2="14" class="arm"/><line x1="104" y1="60" x2="14" y2="14" class="arm"/>
+<circle cx="4" cy="0" r="16" fill="#556"/>
+</g>
+<g transform="translate(340,60)">
+<text x="0" y="0" class="t">Side view</text>
+<line x1="20" y1="20" x2="20" y2="220" class="f"/><line x1="180" y1="20" x2="180" y2="220" class="f"/>
+<rect x="12" y="70" width="16" height="22" class="m"/><rect x="172" y="110" width="16" height="22" class="m"/>
+<line x1="28" y1="84" x2="96" y2="170" class="arm"/><line x1="172" y1="124" x2="104" y2="170" class="arm"/>
+<rect x="88" y="166" width="24" height="12" fill="#556"/>
+<rect x="0" y="220" width="200" height="8" class="b"/>
+<text x="0" y="252" font-size="12">Carriages slide up and down;</text><text x="0" y="268" font-size="12">fixed-length arms place the head.</text>
+</g></svg>

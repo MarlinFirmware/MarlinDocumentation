@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 320" width="560" height="320" role="img" aria-label="Polar printer seen from above: a round bed rotates while the nozzle moves along a radius"><title>Polar printer seen from above: a round bed rotates while the nozzle moves along a radius</title><style>
+text{font:14px -apple-system,Helvetica,Arial,sans-serif;fill:#445}
+.t{font-weight:600;fill:#223}
+.bed{fill:#e6e9ef;stroke:#99a;stroke-width:1.5}
+.rail{stroke:#556;stroke-width:6;stroke-linecap:round}
+.a{stroke:#d0704a;stroke-width:2.5;fill:none;marker-end:url(#ar)}
+.b{stroke:#4a7bd0;stroke-width:2.5;fill:none;marker-end:url(#ab)}
+.sp{stroke:#c3c7d2;stroke-width:1}
+</style><defs>
+<marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="#d0704a"/></marker>
+<marker id="ab" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="#4a7bd0"/></marker></defs>
+<rect width="560" height="320" fill="#fff"/>
+<text x="20" y="28" class="t">Polar: the bed turns, the nozzle moves along a radius</text>
+<circle cx="190" cy="175" r="110" class="bed"/>
+<line x1="190" y1="65" x2="190" y2="285" class="sp"/><line x1="80" y1="175" x2="300" y2="175" class="sp"/>
+<line x1="112" y1="97" x2="268" y2="253" class="sp"/><line x1="112" y1="253" x2="268" y2="97" class="sp"/>
+<line x1="190" y1="175" x2="320" y2="175" class="rail"/>
+<circle cx="190" cy="175" r="6" fill="#223"/>
+<circle cx="262" cy="175" r="7" fill="#d0704a"/>
+<path d="M200,148 A112,112 0 0 0 150,76" class="b" transform="translate(0,0)"/>
+<line x1="196" y1="196" x2="256" y2="196" class="a"/>
+<text x="206" y="216" fill="#d0704a" font-weight="600">radius (X)</text>
+<text x="96" y="54" fill="#4a7bd0" font-weight="600">rotation (Y or B)</text>
+<text x="170" y="165" font-size="12" text-anchor="end">center</text>
+<text x="330" y="150" font-size="12">nozzle rail</text>
+<text x="360" y="215" font-size="13">X moves the nozzle toward</text><text x="360" y="232" font-size="13">or away from the center.</text>
+<text x="360" y="256" font-size="13">The rotation axis turns the</text><text x="360" y="273" font-size="13">bed, measured in degrees.</text>
+</svg>

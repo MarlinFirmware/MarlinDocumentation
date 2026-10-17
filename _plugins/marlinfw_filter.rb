@@ -21,6 +21,14 @@ module Jekyll
       some
     end
 
+    # Plain one-line text from Markdown/HTML, for the search feed's "excerpt" (no backticks, links or markup).
+    def plain_excerpt(input, length = 200)
+      t = input.to_s.gsub(/<[^>]*>/, ' ')
+      t = t.gsub(/!\[[^\]]*\]\([^\)]*\)/, ' ').gsub(/\[([^\]]+)\]\([^\)]*\)/, '\\1')
+      t = t.gsub(/[`*]|\{:[^}]*\}|\$\{/, '').gsub(/(^|\s)_+|_+(\s|$)/, '\\1 ').gsub(/\s+/, ' ').strip
+      t.length > length ? t[0, length - 1].sub(/\s+\S*$/, '') + '…' : t
+    end
+
     def linkify(input)
       re1 = /([GM])(\d)\b/
       re2 = /([GM])(\d\d)\b/
@@ -40,7 +48,6 @@ module Jekyll
         out
       end
     end
-
   end
 end
 

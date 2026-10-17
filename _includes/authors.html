@@ -1,8 +1,0 @@
-<div id="authors">
-  {% assign authors = matter.author | append: ',' | append: matter.contrib | replace: " ","" | split: ',' %}
-  {% if authors %}
-    {% for author in authors %}
-      <a href="//github.com/{{ author }}" data-toggle="tooltip" data-placement="bottom" title="Visit {{ author }}'s profile on Github">{% avatar user=author size=30 %}</a>
-    {% endfor %}
-  {% endif %}
-</div>

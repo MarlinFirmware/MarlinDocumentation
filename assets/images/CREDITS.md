@@ -1,0 +1,13 @@
+# Image credits
+
+Third-party images used on the site. Every image that is not original Marlin artwork gets a line here:
+file, source, author, license. Pages that show the image also carry a short credit line.
+
+| File | Source | Author | License |
+|---|---|---|---|
+| printers/cartesian-prusa-i3.jpg | https://commons.wikimedia.org/wiki/File:Prusa_i3_3D_Printer_-_Reprap_-_Completed.jpg | John Abella | CC BY 2.0 |
+| printers/delta-kossel.jpg | https://commons.wikimedia.org/wiki/File:Finished_kossel.jpg | John Rood | CC BY 2.0 |
+| printers/delta-large.jpg | https://commons.wikimedia.org/wiki/File:Large_delta-style_3D_printer.jpg | Z22 | CC BY-SA 4.0 (not yet used) |
+| printers/corexy-voron.jpg | https://commons.wikimedia.org/wiki/File:Voron_3D_printer.jpg | disinterpreter | CC BY-SA 2.0 |
+
+Original diagrams (`printers/diagram-*.svg`, including SCARA and Polar) are Marlin project artwork, GPL-3.0 like the site.

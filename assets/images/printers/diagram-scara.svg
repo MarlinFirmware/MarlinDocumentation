@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 320" width="560" height="320" role="img" aria-label="SCARA arm seen from above: shoulder angle theta measured from the X axis, elbow angle psi measured from the upper arm"><title>SCARA arm seen from above: shoulder angle theta measured from the X axis, elbow angle psi measured from the upper arm</title><style>
+text{font:14px -apple-system,Helvetica,Arial,sans-serif;fill:#445}
+.t{font-weight:600;fill:#223}
+.bed{fill:#e6e9ef;stroke:#99a;stroke-width:1.5}
+.ax{stroke:#99a;stroke-width:1.5;stroke-dasharray:5 4;fill:none}
+.arm{stroke:#556;stroke-width:8;stroke-linecap:round;fill:none}
+.arm2{stroke:#4a7bd0;stroke-width:8;stroke-linecap:round;fill:none}
+.ang{fill:none;stroke:#d0704a;stroke-width:2.5}
+</style><rect width="560" height="320" fill="#fff"/>
+<text x="20" y="28" class="t">SCARA: two joints, two angles</text>
+<rect x="190" y="60" width="190" height="140" class="bed"/>
+<text x="290" y="84" font-size="12" text-anchor="middle">bed</text>
+<line x1="130" y1="290" x2="290" y2="290" class="ax"/>
+<text x="294" y="295" font-size="12">+X</text>
+<line x1="221.9" y1="212.9" x2="260.2" y2="180.8" class="ax"/>
+<line x1="130" y1="290" x2="221.9" y2="212.9" class="arm"/>
+<line x1="221.9" y1="212.9" x2="201.1" y2="94.7" class="arm2"/>
+<circle cx="130" cy="290" r="9" fill="#223"/><circle cx="221.9" cy="212.9" r="7" fill="#223"/><circle cx="201.1" cy="94.7" r="5" fill="#d0704a"/>
+<path d="M170,290 A40,40 0 0 0 160.6,264.3" class="ang"/>
+<path d="M248.7,190.4 A35,35 0 0 0 215.8,178.5" class="ang"/>
+<text x="176" y="278" fill="#d0704a" font-weight="600">θ</text>
+<text x="244" y="170" fill="#d0704a" font-weight="600">ψ</text>
+<text x="40" y="300" font-size="12">shoulder</text>
+<text x="232" y="228" font-size="12">elbow</text>
+<text x="212" y="112" font-size="12">nozzle</text>
+<text x="80" y="236" font-size="12">upper arm</text>
+<text x="252" y="136" font-size="12" text-anchor="start" fill="#4a7bd0">forearm</text>
+<text x="330" y="236" font-size="13">θ (theta): shoulder angle,</text><text x="330" y="253" font-size="13">from the +X axis</text>
+<text x="330" y="277" font-size="13">ψ (psi): elbow angle, from</text><text x="330" y="294" font-size="13">the upper arm (0° = straight)</text>
+</svg>

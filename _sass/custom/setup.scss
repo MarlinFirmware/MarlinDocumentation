@@ -1,0 +1,11 @@
+//
+// _sass/custom/setup.scss
+//
+// Imported by Just the Docs before its own variables (which are all !default),
+// so theme Sass variables can be overridden here.
+//
+
+// Keep the md sidebar the same width as lg. The theme default is 15.5rem, and
+// .side-bar + .main { margin-left } is derived from this value, so the width
+// must be changed here rather than with a min-width override on .side-bar.
+$nav-width-md: 16.5rem;

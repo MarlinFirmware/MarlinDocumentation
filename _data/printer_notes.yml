@@ -1,0 +1,10 @@
+# Human-written notes and photos for the Appendix printer directory.
+# Keyed by config path under Configurations/config/examples (same as `path:` in _data/printers.yml).
+# _tools/gen_printers.py never writes this file; it warns about keys that no longer match a config.
+#
+# "Creality/Ender-3/CrealityV422":
+#   summary: One or two plain sentences about the machine.
+#   photo: /assets/images/printers/creality-ender-3.jpg
+#   alt: Creality Ender-3 with a glass bed
+#   photo_credit: "Photo: <author>, <license>"   # also record in assets/images/CREDITS.md
+{}

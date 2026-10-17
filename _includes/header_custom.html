@@ -1,0 +1,12 @@
+{%- comment -%}
+  header_custom.html — Color scheme toggle button
+
+  Renders a theme toggle button between the search bar and aux nav.
+  The button text/icon is updated dynamically by JS in head_custom.html.
+
+  Uses CSS class .theme-toggle defined in _sass/custom/custom.scss.
+{%- endcomment -%}
+<button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle color scheme" title="Toggle dark/light mode">
+  <span class="theme-toggle-icon">🌙</span>
+  <span class="theme-toggle-label">Light</span>
+</button>

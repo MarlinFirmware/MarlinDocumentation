@@ -1,0 +1,20 @@
+{%- comment -%}
+  settings_toc.html — "On this page" list for a settings page, built from frontmatter
+  `settings:` / `lists:` (the anchors rendered by _layouts/setting.html), grouped by
+  config file. Same markup as jekyll-toc so the #toc styles apply.
+{%- endcomment -%}
+<ul id="toc" class="section-nav">
+{%- assign files = page.settings | map: 'file' | uniq -%}
+{%- for f in files %}
+  <li class="toc-entry toc-h2"><a href="#{{ page.settings | where: 'file', f | map: 'name' | first | replace: '*', 'N' }}">{{ f }}</a>
+    <ul>
+    {%- for s in page.settings %}{% if s.file == f %}
+      <li class="toc-entry toc-h3"><a href="#{{ s.name | replace: '*', 'N' }}">{{ s.name | replace: '_', '_<wbr>' }}</a></li>
+    {%- endif %}{% endfor %}
+    </ul>
+  </li>
+{%- endfor %}
+{%- for l in page.lists %}
+  <li class="toc-entry toc-h2"><a href="#values-{{ l[0] }}">Values: {{ l[0] }}</a></li>
+{%- endfor %}
+</ul>

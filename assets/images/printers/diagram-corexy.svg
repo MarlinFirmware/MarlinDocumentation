@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 320" width="560" height="320" role="img" aria-label="CoreXY motion: two stationary motors whose combined belt movement produces X and Y"><title>CoreXY motion: two stationary motors whose combined belt movement produces X and Y</title><style>
+text{font:14px -apple-system,Helvetica,Arial,sans-serif;fill:#445}
+.t{font-weight:600;fill:#223}
+.f{fill:none;stroke:#667;stroke-width:3}
+.b{fill:#e6e9ef;stroke:#99a;stroke-width:1.5}
+.m{fill:#4a7bd0}.mb{fill:#d0704a}
+.belt{fill:none;stroke:#4a7bd0;stroke-width:2.5}
+.belt2{fill:none;stroke:#d0704a;stroke-width:2.5}
+.a{stroke:#223;stroke-width:2;fill:none;marker-end:url(#ar)}
+.arm{stroke:#556;stroke-width:4;stroke-linecap:round}
+</style><defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="#223"/></marker></defs><rect width="560" height="320" fill="#fff"/>
+<text x="20" y="28" class="t">CoreXY: two fixed motors share both axes</text>
+<rect x="60" y="50" width="300" height="240" fill="none" stroke="#99a" stroke-width="1.5"/>
+<rect x="44" y="266" width="28" height="28" class="m"/><text x="20" y="310" font-size="12">Motor A</text>
+<rect x="348" y="266" width="28" height="28" class="mb"/><text x="340" y="310" font-size="12">Motor B</text>
+<line x1="60" y1="150" x2="360" y2="150" class="f"/>
+<rect x="190" y="136" width="40" height="28" rx="4" fill="#556"/>
+<polyline points="58,280 58,58 70,150 190,146" class="belt"/>
+<polyline points="362,280 362,58 350,150 230,146" class="belt2"/>
+<polyline points="58,280 350,160 230,158" class="belt" stroke-dasharray="5 4"/>
+<polyline points="362,280 70,160 190,158" class="belt2" stroke-dasharray="5 4"/>
+<g transform="translate(390,80)">
+<text x="0" y="0" class="t">Both motors…</text>
+<text x="0" y="28">same direction → X</text><line x1="0" y1="40" x2="70" y2="40" class="a"/>
+<text x="0" y="82">opposite directions → Y</text><line x1="30" y1="140" x2="30" y2="95" class="a"/>
+<text x="0" y="175" font-size="12">Z moves the bed</text><text x="0" y="192" font-size="12">(often 2–4 motors)</text>
+</g></svg>

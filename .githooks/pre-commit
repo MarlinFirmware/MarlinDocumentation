@@ -1,0 +1,15 @@
+#!/bin/sh
+# Gate every commit on the static site checks (about 2 seconds, no build needed).
+# Enable once per clone with:  _tools/install_hooks.sh
+# Skip in an emergency with:   git commit --no-verify
+root=$(git rev-parse --show-toplevel) || exit 1
+cd "$root" || exit 1
+if ! python3 -c "import yaml" 2>/dev/null; then
+  echo "pre-commit: PyYAML is required (pip install pyyaml)" >&2
+  exit 1
+fi
+python3 _tools/check_site.py || {
+  echo >&2
+  echo "pre-commit: site checks failed. Fix the problems above (bad YAML drops a page's whole frontmatter)." >&2
+  exit 1
+}

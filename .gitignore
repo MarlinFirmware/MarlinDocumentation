@@ -11,3 +11,4 @@ applet/
 Thumbs.db
 .aider*
 .env
+__pycache__/

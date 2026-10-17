@@ -8,6 +8,9 @@ on:
   pull_request:
     branches:
     - master
+  push:
+    branches:
+    - wip-new-theme
 
 jobs:
   build:
@@ -21,5 +24,14 @@ jobs:
       with:
         ruby-version: 3.3.4
         bundler-cache: true
+    - name: Site Checks (YAML, navigation)
+      run: |
+        pip install pyyaml
+        python3 _tools/check_site.py
     - name: Test Build
       run: bundle exec jekyll build
+    - name: Built Site Checks (sidebar, links)
+      run: |
+        python3 _tools/check_site.py --built
+        python3 _tools/check_links.py
+        python3 _tools/check_feed.py

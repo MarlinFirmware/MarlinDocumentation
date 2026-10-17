@@ -1,0 +1,168 @@
+//
+// _sass/custom/tools.scss
+//
+// Interactive tools (/tools/*, layout: tool). Ported from the old site's _tool.scss and the
+// #bitmap-converter rules, using the theme's colors so they follow the light/dark scheme.
+//
+
+// Wide screens: let tool pages use the extra width (the default content column is 50rem)
+@media (min-width: 1400px) {
+  #main-header { width: 100%; }
+  .main:has(.tool-layout) {
+    max-width: calc(100vw - #{$nav-width-md} - 4rem);
+  }
+}
+
+:root {
+  --tool-label: #6cb6ff;
+  --tool-section-bg: #ffffff0d;
+  --tool-head-bg: #ffffff1a;
+  --tool-output-bg: #11131a;
+  --tool-invalid: #ffd800;
+  --tool-button-bg: #2e7d32;
+  --tool-button-color: #fff;
+  --tool-warning-color: #ff0;
+  --tool-warning-bg: #330;
+}
+[data-color-scheme="light"] {
+  --tool-label: #0366a8;
+  --tool-section-bg: #0000000a;
+  --tool-head-bg: #00000014;
+  --tool-output-bg: #ffc;
+  --tool-button-bg: #bfa;
+  --tool-button-color: #000;
+  --tool-warning-color: #440;
+  --tool-warning-bg: #ff0;
+}
+
+.tool-page {
+  img { max-width: 100%; }
+  textarea, input#pasted { font-family: $mono-font-family; }
+}
+
+// Two-column example/theory blocks (formerly Bootstrap .row > .col-sm-6)
+.tool-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(22rem, 1fr));
+  gap: 1.5rem;
+  margin: 1.5rem 0;
+  h3 { margin-top: 0; }
+}
+
+// Calibration pattern form: settings on the left, G-code output on the right
+table#tool {
+  display: table;           // JTD makes tables block + scroll; the form needs real table layout
+  width: 100%;
+  min-width: 0;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid $border-color;
+
+  tr { border: 0; }
+  th, td {
+    padding: 0.4rem 0.6rem;
+    vertical-align: middle;
+    border: 0;
+    background: none;
+  }
+  th { width: 20%; text-align: right; }
+  td:nth-child(2) { width: 7%; }
+  td:nth-child(3) { width: 39%; font-size: 85%; }
+  td.options { text-align: center; }
+  td.td-hidden { display: none; }
+
+  tr.head td { background-color: var(--tool-head-bg); }
+  td.section { background-color: var(--tool-section-bg); h4 { margin: 0.25rem 0; } }
+
+  td.td-output { width: 34%; padding: 0; vertical-align: top; }
+  textarea {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 50rem;
+    height: 100%;
+    border: none;
+    resize: none;
+    font-size: 85%;
+    color: inherit;
+    background: var(--tool-output-bg);
+  }
+
+  input, select { font-size: 100%; }
+  input[type="number"] { width: 7.5rem; }
+  select { width: 9rem; }
+
+  label {
+    color: var(--tool-label);
+    font-weight: bold;
+    text-transform: capitalize;
+    // &::after { content: ":"; }
+  }
+
+  .calibpat2 td, .calibpat2 th {
+    padding-top: 1.5em;
+    padding-bottom: 1.5em;
+    background-color: var(--tool-head-bg);
+  }
+  .calibpat2 td:nth-child(3) { font-size: inherit; }
+
+  .disabled { color: #f33; font-weight: bold; display: block; width: 150px; float: left; opacity: 0.5; }
+  .invalidDiv, .invalidSize, .invalidNumber { background-color: var(--tool-invalid); color: #000; }
+  :invalid { box-shadow: 0 0 3px var(--tool-invalid); outline: 1px solid var(--tool-invalid); }
+}
+
+td.options input[type="button"].tool {
+  margin-top: 1em;
+}
+
+input[type="button"].tool {
+  margin: 0 0 0 0.5em;
+  padding: 0.3em 1em;
+  border: 0;
+  border-radius: 4px;
+  cursor: pointer;
+  color: var(--tool-button-color);
+  background: var(--tool-button-bg);
+}
+
+#warnbox { display: none; }
+p#warning1, p#warning2, p#warning3 {
+  display: none;
+  padding: 0.25em 0;
+  text-align: center;
+  color: var(--tool-warning-color);
+  background: var(--tool-warning-bg);
+}
+
+// Bitmap / RGB565 converters
+#bitmap-converter {
+  canvas { display: block; padding: 2px; margin-top: 5px; }
+  #preview-lg { border: 1px solid $border-color; margin: 5px; background: #000; }
+  #preview-sm { border: 2px solid $border-color; float: right; background: #000; }
+  input#pasted { margin: 0.5em 0.5em 0.5em 0; }
+  textarea#output {
+    width: 100%;
+    border: 2px solid $border-color;
+    border-radius: 8px;
+    font-size: 90%;
+    line-height: 1.1;
+    resize: none;
+    cursor: default;
+    color: inherit;
+    background: var(--tool-output-bg);
+  }
+  div.file-selector {
+    clear: both;
+    padding: 1em;
+    margin: 1em 0;
+    border-radius: 1em;
+    user-select: none;
+    background: var(--tool-section-bg);
+    .options { clear: both; border-radius: 1em; padding: 4px 0.5em 0; background: var(--tool-head-bg); }
+    label:hover { color: var(--tool-label); }
+    label.tbd, label.tbd:hover { color: #888 !important; }
+  }
+  #file-input { display: inline-block; }
+  div#err-box { display: none; padding: 1em; font-size: 150%; font-weight: bold; color: #f55; }
+  div#cpp-container, #boot-sub, #stat-sub { display: none; }
+}
