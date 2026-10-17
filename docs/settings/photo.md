@@ -95,3 +95,5 @@ settings:
 ---
 
 Options in the `photo` section of the Marlin configuration files.
+
+See [Sensors and Accessories](/docs/features/accessories.html#camera-trigger) for how these options work together.

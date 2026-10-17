@@ -48,3 +48,5 @@ settings:
 ---
 
 Options in the `freeze` section of the Marlin configuration files.
+
+See [Print Progress and Statistics](/docs/features/print_progress_stats.html#freeze-hold-motion-with-a-switch) for how these options work together.

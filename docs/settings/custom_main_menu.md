@@ -127,3 +127,5 @@ settings:
 ---
 
 Options in the `custom main menu` section of the Marlin configuration files.
+
+See [Custom Commands](/docs/features/custom_commands.html#custom-menu-items) for how these options work together.

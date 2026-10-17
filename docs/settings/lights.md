@@ -237,3 +237,5 @@ settings:
 ---
 
 Options in the `lights` section of the Marlin configuration files.
+
+See [Lights and LEDs](/docs/features/lights.html) for how these options work together.

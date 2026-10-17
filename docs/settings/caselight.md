@@ -75,3 +75,5 @@ settings:
 ---
 
 Options in the `caselight` section of the Marlin configuration files.
+
+See [Lights and LEDs](/docs/features/lights.html#case-light) for how these options work together.

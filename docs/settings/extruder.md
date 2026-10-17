@@ -169,8 +169,8 @@ settings:
   type: switch
   disabled: true
   brief: Parking Extruder
-  long: Two separate X-carriages with extruders that connect to a moving part via a solenoid docking mechanism. Requires `SOL1_PIN` and `SOL2_PIN`.
-  comment: Two separate X-carriages with extruders that connect to a moving part via a solenoid docking mechanism. Requires SOL1_PIN and SOL2_PIN.
+  long: Two separate X-carriages with extruders that connect to a moving part via a solenoid docking mechanism. Requires `SOL0_PIN` and `SOL1_PIN`.
+  comment: Two separate X-carriages with extruders that connect to a moving part via a solenoid docking mechanism. Requires `SOL0_PIN` and `SOL1_PIN`.
 - name: MAGNETIC_PARKING_EXTRUDER
   file: Configuration.h
   type: switch

@@ -193,7 +193,7 @@ menu slow to open. The fix is either fewer files per folder or more RAM for sort
 - [`MENU_ADDAUTOSTART`](/docs/settings/lcd.html#MENU_ADDAUTOSTART): add "Run Autofiles" to run the `auto#.g` files
   on demand.
 - [`PASSWORD_ON_SD_PRINT_MENU`](/docs/settings/security.html#PASSWORD_ON_SD_PRINT_MENU): ask for the
-  [password](/docs/settings/security.html) before opening the file list.
+  [password](/docs/features/password.html) before opening the file list.
 
 ### End and abort scripts
 

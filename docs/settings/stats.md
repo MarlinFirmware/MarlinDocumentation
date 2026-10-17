@@ -79,3 +79,5 @@ settings:
 ---
 
 Options in the `stats` section of the Marlin configuration files.
+
+See [Print Progress and Statistics](/docs/features/print_progress_stats.html#print-statistics) for how these options work together.

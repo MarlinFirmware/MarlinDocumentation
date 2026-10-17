@@ -215,3 +215,5 @@ settings:
 ---
 
 Options in the `psu control` section of the Marlin configuration files.
+
+See [Power Supply Control](/docs/features/psu_control.html) for how these options work together.

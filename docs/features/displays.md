@@ -188,7 +188,7 @@ The `SHOW_BOOTSCREEN` logo, `LCD_TIMEOUT_TO_STATUS`, `STATUS_MESSAGE_SCROLLING`,
    prints the character set so you can identify an HD44780 ROM.
 5. Add the behavior you want: `BABYSTEPPING` (with `DOUBLECLICK_FOR_Z_BABYSTEPPING` and
    `BABYSTEP_ZPROBE_OFFSET`), `PROBE_OFFSET_WIZARD`, `LCD_BED_LEVELING`, `LCD_BED_TRAMMING`,
-   `INDIVIDUAL_AXIS_HOMING_MENU`, `LCD_INFO_MENU`, `SPEAKER` for a real speaker instead of a fixed-tone buzzer, and
+   `INDIVIDUAL_AXIS_HOMING_MENU`, `LCD_INFO_MENU`, [`SPEAKER`](/docs/features/accessories.html#buzzer-and-speaker) for a real speaker instead of a fixed-tone buzzer, and
    `LCD_FEEDBACK_FREQUENCY_HZ` / `LCD_FEEDBACK_FREQUENCY_DURATION_MS` for the click sound.
 6. For a serial display (DWIN or ExtUI), Marlin picks `LCD_SERIAL_PORT` for known boards; otherwise define it in
    `Configuration.h`. It cannot be the same port as `SERIAL_PORT`.

@@ -74,3 +74,5 @@ settings:
 ---
 
 Options in the `security` section of the Marlin configuration files.
+
+See [Password](/docs/features/password.html) for how these options work together.

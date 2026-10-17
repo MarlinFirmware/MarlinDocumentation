@@ -29,7 +29,7 @@ tell whether they are good.
 Run autotune after anything that changes how fast the heater block gains or loses heat:
 
 - A new hotend, heater cartridge, thermistor or heater block.
-- A new part-cooling fan or fan duct, which blows more (or less) air at the block.
+- A new [part-cooling fan](/docs/features/fans.html) or fan duct, which blows more (or less) air at the block.
 - A silicone sock, or removing one.
 - Moving the printer into an enclosure, or out of one.
 - A new bed heater, bed plate or bed insulation, if you use bed PID.

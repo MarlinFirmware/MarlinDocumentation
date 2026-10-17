@@ -42,6 +42,8 @@ repeated here.
 - [Thermal Protection](/docs/features/thermal_protection.html): the heater safety checks, MINTEMP/MAXTEMP, the watchdog, and what each error means.
 - [PID Temperature Control](/docs/features/pid_tuning.html): tune the hotend, bed and chamber with M303, or choose bang-bang.
 - [Model Predictive Temperature Control](/docs/features/model_predictive_control.html): a physics-based alternative to PID for steadier hotend temperatures.
+- [Fans](/docs/features/fans.html): part-cooling fans and their PWM options, hotend auto fans, the controller fan, chamber and cooler fans.
+- [Power Supply Control](/docs/features/psu_control.html): switch the supply with M80/M81, automatic power on and off, idle shutdown.
 
 ## Printing and recovery
 
@@ -52,11 +54,16 @@ repeated here.
 - [Autostart](/docs/features/autostart.html): run a G-code file from the media at power-up.
 - [Media Printing](/docs/features/media_printing.html): print from an SD card or USB drive, with end/abort scripts, nozzle park and nozzle clean.
 - [Multiple Extruders and Tool Changing](/docs/features/multi_extruder.html): multi-hotend, single-nozzle, switching and parking toolheads, IDEX and mixing, with hotend offsets and filament swap.
+- [Print Progress and Statistics](/docs/features/print_progress_stats.html): progress and remaining time on the screen, print statistics, service reminders, and Freeze.
 - [Host Interface](/docs/features/host_interface.html): serial ports and baud, the ok/resend protocol, M115 capabilities, auto-reports, host actions and prompts.
 
-## Displays
+## Displays and customization
 
 - [Displays and Controllers](/docs/features/displays.html): identify your screen, pick the right option, wire EXP1/EXP2, and fix first-boot problems.
+- [Lights and LEDs](/docs/features/lights.html): case light, RGB and NeoPixel strips, M150/M355, printer event LEDs and the Lights menu.
+- [Custom Commands](/docs/features/custom_commands.html): your own menu items, user buttons, G-code macros, and the event G-code hooks.
+- [Password](/docs/features/password.html): lock the printer with a PIN, and what to do if you forget it.
+- [Sensors and Accessories](/docs/features/accessories.html): filament width sensor, I2C position encoders, camera trigger, solenoids, joystick, and the buzzer.
 
 ## Lasers and CNC
 

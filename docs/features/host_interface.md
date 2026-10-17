@@ -208,7 +208,7 @@ as not present, so turning this report off makes a host assume the least. The on
 | `Cap:EEPROM` | `EEPROM_SETTINGS` |
 | `Cap:AUTOLEVEL`, `Cap:Z_PROBE`, `Cap:LEVELING_DATA` | A leveling system and a bed probe |
 | `Cap:RUNOUT` | A filament runout sensor |
-| `Cap:SOFTWARE_POWER` | `PSU_CONTROL` |
+| `Cap:SOFTWARE_POWER` | [`PSU_CONTROL`](/docs/features/psu_control.html) |
 | `Cap:TOGGLE_LIGHTS` | `CASE_LIGHT_ENABLE` |
 | `Cap:ARCS` | `ARC_SUPPORT` |
 | `Cap:THERMAL_PROTECTION` | All hotend, bed and chamber thermal protection options enabled |

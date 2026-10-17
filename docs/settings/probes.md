@@ -194,7 +194,7 @@ settings:
   long: |-
     ![Solenoid Probe](/assets/images/config/solenoid.png){: .float-right .framed }
 
-    A probe that is deployed and stowed with a solenoid pin (Defined as `SOL1_PIN`.)
+    A probe that is deployed and stowed with a solenoid pin, `SOL1_PIN`. `SOL0_PIN` is reserved for the first (or only) tool solenoid, so a probe always uses `SOL1_PIN`. Most boards don't predefine it; if your board doesn't (the Teensy 3.5/3.6 pins now assign only `SOL0_PIN`), define `SOL1_PIN` yourself in the configuration.
   comment: A probe that is deployed and stowed with a solenoid pin (SOL1_PIN)
 - name: Z_PROBE_SLED
   file: Configuration.h
@@ -203,7 +203,7 @@ settings:
   long: |-
     ![Z-Probe Sled](/assets/images/config/zprobe_sled.png){: .float-right .framed }
 
-    This type of probe is mounted on a detachable "sled" that sits at the far end of the X axis. Before probing, the X carriage moves to the far end and picks up the sled. When probing is completed, it drops the sled off. The `SLED_DOCKING_OFFSET` specifies the extra distance the X axis must travel to pickup the sled. 0 should be fine but it may be pushed further if needed.
+    This type of probe is mounted on a detachable "sled" that sits at the far end of the X axis. Before probing, the X carriage moves to the far end and picks up the sled. When probing is completed, it drops the sled off. The `SLED_DOCKING_OFFSET` specifies the extra distance the X axis must travel to pickup the sled. 0 should be fine but it may be pushed further if needed. If the sled is latched by a solenoid, it uses `SOL1_PIN`, which you must define yourself on boards that don't predefine it (such as the Teensy 3.5/3.6).
   comment: A sled-mounted probe like those designed by Charles Bell.
 - name: SLED_DOCKING_OFFSET
   file: Configuration.h

@@ -20,7 +20,7 @@ options live on the [LCD / Controller](/docs/settings/lcd.html#POWER_LOSS_RECOVE
 
 ## What it can and cannot recover
 
-Power-Loss Recovery only applies to [prints that Marlin reads from media](/docs/features/media_printing.html) itself. It works by remembering a byte
+Power-Loss Recovery only applies to [prints that Marlin reads from media](/docs/features/media_printing.html) itself. For M81 and the other ways the supply can be switched off, see [Power Supply Control](/docs/features/psu_control.html). It works by remembering a byte
 offset in the file on the card, so there is nothing to remember when a host (OctoPrint, a slicer over USB, and
 so on) is streaming the commands: the host holds the file and the printer never knows where it is in the job.
 If you print over USB, look for a resume feature in your host software instead.

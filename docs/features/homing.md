@@ -76,7 +76,7 @@ order, a full `G28` on a Cartesian or CoreXY printer does this:
    defined or back to `Z_CLEARANCE_FOR_HOMING` if not. So after `G28` the nozzle normally rests about 5 mm above the
    bed with the display showing `Z 5.00`, not `Z 0.00`. [`XY_AFTER_HOMING`](/docs/settings/homing.html#XY_AFTER_HOMING)
    then moves to an XY parking spot, and [`EVENT_GCODE_AFTER_HOMING`](/docs/settings/homing.html#EVENT_GCODE_AFTER_HOMING)
-   runs any commands you want after every `G28`.
+   runs any commands you want after every `G28` (see [Custom Commands](/docs/features/custom_commands.html) for how event scripts run). It does not run when `G28 O` finds nothing to home.
 7. **Restores bed leveling** only if you ask for it ([see below](#bed-leveling-after-g28)).
 
 ### Homing one axis

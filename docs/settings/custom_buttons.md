@@ -112,3 +112,5 @@ settings:
 ---
 
 Options in the `custom buttons` section of the Marlin configuration files.
+
+See [Custom Commands](/docs/features/custom_commands.html) for how these options work together.

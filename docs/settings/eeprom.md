@@ -61,3 +61,5 @@ settings:
 ---
 
 Options in the `eeprom` section of the Marlin configuration files.
+
+See [EEPROM](/docs/features/eeprom.html) for how these options work together.

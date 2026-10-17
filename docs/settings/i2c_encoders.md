@@ -196,3 +196,5 @@ settings:
 ---
 
 Options in the `i2c encoders` section of the Marlin configuration files.
+
+See [Sensors and Accessories](/docs/features/accessories.html#i2c-position-encoders) for how these options work together.

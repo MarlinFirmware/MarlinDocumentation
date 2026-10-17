@@ -75,3 +75,5 @@ settings:
 ---
 
 Options in the `filament width` section of the Marlin configuration files.
+
+See [Sensors and Accessories](/docs/features/accessories.html#filament-width-sensor) for how these options work together.

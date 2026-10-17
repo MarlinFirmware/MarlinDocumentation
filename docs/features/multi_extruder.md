@@ -59,7 +59,7 @@ You can enable only one of `SINGLENOZZLE`, `DUAL_X_CARRIAGE`, `PARKING_EXTRUDER`
 - The first value of each `HOTEND_OFFSET_*` list must be 0, or the build fails with "Offsets for the first hotend
   must be 0.0."
 - Servo-driven mechanisms need [`NUM_SERVOS`](/docs/settings/servos.html#NUM_SERVOS) and the servo pins; solenoid
-  mechanisms need `SOL0_PIN` (and `SOL1_PIN` for a parking extruder).
+  mechanisms need `SOL0_PIN` (and `SOL1_PIN` for a parking extruder); see [Solenoids](/docs/features/accessories.html#solenoids) for the pin numbering and M380/M381.
 
 ## How a tool change works
 

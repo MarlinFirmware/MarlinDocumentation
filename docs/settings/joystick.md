@@ -69,3 +69,5 @@ settings:
 ---
 
 Options in the `joystick` section of the Marlin configuration files.
+
+See [Sensors and Accessories](/docs/features/accessories.html#joystick) for how these options work together.

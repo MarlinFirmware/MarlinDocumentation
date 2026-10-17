@@ -79,10 +79,10 @@ An under-powered PSU combined with heaters and high speed moves can lead to a fr
 After flashing a new version of Marlin, the existing [EEPROM](/docs/features/eeprom.html) contents may no longer conform to the updated EEPROM layout. As a result, you may see an error like one of these:
 
 ```
-Error:EEPROM datasize error.
+Warning:EEPROM datasize error.
 ```
 ```
-EEPROM CRC mismatch - (stored) 4235 != 6244 (calculated)!
+Warning:EEPROM CRC mismatch - (stored) 4235 != 6244 (calculated)!
 ```
 
 **Troubleshooting Procedure**

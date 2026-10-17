@@ -210,7 +210,7 @@ settings:
 - name: FAN_OFF_PWM
   file: Configuration_adv.h
   type: int
-  default: 1
+  default: 0
   disabled: true
   long: Some coolers may require a non-zero "off" state.
   comment: Some coolers may require a non-zero "off" state.
@@ -506,3 +506,5 @@ settings:
 ---
 
 Options in the `fans` section of the Marlin configuration files.
+
+See [Fans](/docs/features/fans.html) for how these options work together.
