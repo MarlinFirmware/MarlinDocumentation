@@ -304,3 +304,5 @@ settings:
 ---
 
 Options in the `filament runout sensors` section of the Marlin configuration files.
+
+See [Filament Runout Sensor](/docs/features/runout_sensor.html) for how these options work together.

@@ -190,7 +190,7 @@ menu slow to open. The fix is either fewer files per folder or more RAM for sort
   Touch displays without an encoder get this automatically.
 - [`BROWSE_MEDIA_ON_INSERT`](/docs/settings/lcd.html#BROWSE_MEDIA_ON_INSERT): open the file list when a card is
   inserted.
-- [`MENU_ADDAUTOSTART`](/docs/settings/lcd.html#MENU_ADDAUTOSTART): add "Run Autofiles" to run the `auto#.g` files
+- [`MENU_ADDAUTOSTART`](/docs/settings/lcd.html#MENU_ADDAUTOSTART): add "Run SD Autofiles" (or "Run USB Autofiles") to run the [`auto#.g` files](/docs/features/autostart.html)
   on demand.
 - [`PASSWORD_ON_SD_PRINT_MENU`](/docs/settings/security.html#PASSWORD_ON_SD_PRINT_MENU): ask for the
   [password](/docs/features/password.html) before opening the file list.

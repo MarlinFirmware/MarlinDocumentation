@@ -20,7 +20,7 @@ settings:
   long: |-
     ![LED Lights](/assets/images/config/led-lights.jpg){: .float-right .framed }
 
-    Marlin currently supplies two options for RGB-addressable color indicators. In both cases the color is set using [`M150`](/docs/gcode/M150.html) `Rr Ug Bb` to specify RGB components from 0 to 255.
+    Marlin drives six kinds of colour indicator (`BLINKM`, `PCA9632`, `PCA9533`, `RGB_LED`, `RGBW_LED`, `NEOPIXEL_LED`); see [Lights and LEDs](/docs/features/lights.html). In every case the color is set using [`M150`](/docs/gcode/M150.html) `Rr Ug Bb` to specify RGB components from 0 to 255.
 
     The [BLINKM board](//thingm.com/products/blinkm/) supplies the backlighting for some LCD controllers. Its color is set using I2C messages.
   comment: Support for BlinkM/CyzRgb
@@ -218,12 +218,14 @@ settings:
   type: switch
   requires: ANY(BLINKM, RGB_LED, RGBW_LED, PCA9632, PCA9533, NEOPIXEL_LED)
   long: |-
-    This option causes the printer to give status feedback on the installed color LED, BLINKM, or PCA9632:
+    This option causes the printer to give status feedback on the installed color LED (any of the LED types above):
     - Gradually change from blue to violet as the heated bed gets to target temp.
     - Gradually change from violet to red as the hotend gets to temperature.
-    - Change to white to illuminate work surface.
-    - Change to green once print has finished.
-    - Turn off after the print has finished and the user has pushed a button.
+    - Change to white when the `M109` hotend wait ends, to illuminate the work surface.
+    - Change to green once a media print longer than 60 s has finished.
+    - After a button press (or `PE_LEDS_COMPLETED_TIME`), return to the user preset with `LED_COLOR_PRESETS`, otherwise turn off.
+
+    See [Printer event LEDs](/docs/features/lights.html#printer-event-leds).
   comment: |-
     Printer Event LEDs
 

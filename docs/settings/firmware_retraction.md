@@ -105,3 +105,5 @@ settings:
 ---
 
 Options in the `firmware retraction` section of the Marlin configuration files.
+
+See [Firmware Retract](/docs/features/fwretract.html) for how these options work together.
