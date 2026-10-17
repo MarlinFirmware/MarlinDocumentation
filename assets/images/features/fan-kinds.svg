@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 395" width="560" height="395" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12">
+  <title>The fans Marlin controls and what drives each one</title>
+  <desc>A printer in an enclosure, not to scale. 1: the part-cooling fan beside the nozzle, set on command by M106 and M107. 2: the hotend heat-sink fan, switched automatically by hotend temperature through E0_AUTO_FAN_PIN. 3: the controller fan on the mainboard, switched automatically while motors are enabled or the bed heats (USE_CONTROLLER_FAN, adjustable with M710). 4: the chamber fan on the enclosure wall, driven by chamber temperature (CHAMBER_FAN or CHAMBER_AUTO_FAN_PIN). 5: the laser cooler fan, driven by cooler temperature (COOLER_FAN or COOLER_AUTO_FAN_PIN).</desc>
+  <defs>
+    <marker id="ao" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0L10 5 0 10z" fill="#e0813f"/>
+    </marker>
+    <style>
+      .t     { fill: #8a8f98; }
+      .h     { fill: #8a8f98; font-size: 13px; font-weight: 600; }
+      .mono  { fill: #8a8f98; font-family: SFMono-Regular, Menlo, Consolas, monospace; font-size: 11px; }
+      .line  { fill: none; stroke: #8a8f98; stroke-width: 1.2; }
+      .encl  { fill: none; stroke: #8a8f98; stroke-width: 1.2; stroke-dasharray: 6 4; }
+      .rail  { stroke: #8a8f98; stroke-width: 3; }
+      .part  { fill: rgba(136, 136, 136, 0.22); stroke: #8a8f98; stroke-width: 1; }
+      .heat  { fill: rgba(251, 113, 133, 0.35); stroke: #fb7185; stroke-width: 1.2; }
+      .hline { stroke: #fb7185; stroke-width: 2; stroke-dasharray: 4 3; }
+      .board { fill: rgba(44, 132, 250, 0.22); stroke: #5a8fd6; stroke-width: 1.2; }
+      .cool  { fill: rgba(45, 212, 191, 0.12); stroke: #2dd4bf; stroke-width: 1.2; stroke-dasharray: 4 3; }
+      .fo    { fill: rgba(224, 129, 63, 0.22); stroke: #e0813f; stroke-width: 2; }
+      .ft    { fill: rgba(45, 212, 191, 0.22); stroke: #2dd4bf; stroke-width: 2; }
+      .fb    { fill: rgba(44, 132, 250, 0.22); stroke: #5a8fd6; stroke-width: 2; }
+      .bo    { stroke: #e0813f; stroke-width: 1.5; }
+      .bt    { stroke: #2dd4bf; stroke-width: 1.5; }
+      .bb    { stroke: #5a8fd6; stroke-width: 1.5; }
+      .air   { fill: none; stroke: #e0813f; stroke-width: 1.5; stroke-dasharray: 4 3; marker-end: url(#ao); }
+      .ko    { fill: #e0813f; }
+      .kt    { fill: #2dd4bf; }
+      .kb    { fill: #2b5f9e; }
+      .nw    { fill: #ffffff; font-size: 11px; font-weight: 700; text-anchor: middle; }
+      .nd    { fill: #0f4f47; font-size: 11px; font-weight: 700; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <!-- legend -->
+  <circle class="ko" cx="26" cy="18" r="6"/>
+  <text class="t" x="38" y="22">On command (G-code)</text>
+  <circle class="kt" cx="190" cy="18" r="6"/>
+  <text class="t" x="202" y="22">Automatic: temperature</text>
+  <circle fill="#5a8fd6" cx="370" cy="18" r="6"/>
+  <text class="t" x="382" y="22">Automatic: activity</text>
+
+  <!-- enclosure (chamber) -->
+  <rect class="encl" x="20" y="42" width="300" height="330" rx="4"/>
+  <text class="t" x="30" y="60">Enclosure (heated chamber)</text>
+
+  <!-- gantry, carriage, hotend -->
+  <line class="rail" x1="34" y1="96" x2="306" y2="96"/>
+  <rect class="part" x="140" y="86" width="64" height="22" rx="2"/>
+  <rect class="part" x="160" y="108" width="24" height="32"/>
+  <line class="line" x1="160" y1="115" x2="184" y2="115"/>
+  <line class="line" x1="160" y1="122" x2="184" y2="122"/>
+  <line class="line" x1="160" y1="129" x2="184" y2="129"/>
+  <line class="line" x1="160" y1="136" x2="184" y2="136"/>
+  <rect class="heat" x="152" y="140" width="40" height="15" rx="1"/>
+  <polygon class="part" points="165,155 179,155 172,166"/>
+
+  <!-- 1: part-cooling fan with duct airflow to the nozzle tip -->
+  <circle class="fo" cx="116" cy="126" r="13"/>
+  <line class="bo" x1="107" y1="117" x2="125" y2="135"/>
+  <line class="bo" x1="125" y1="117" x2="107" y2="135"/>
+  <path class="air" d="M124 139 Q136 164 160 170"/>
+  <circle class="ko" cx="94" cy="108" r="8"/>
+  <text class="nw" x="94" y="112">1</text>
+
+  <!-- 2: hotend heat-sink fan -->
+  <circle class="ft" cx="198" cy="124" r="11"/>
+  <line class="bt" x1="190" y1="116" x2="206" y2="132"/>
+  <line class="bt" x1="206" y1="116" x2="190" y2="132"/>
+  <circle class="kt" cx="222" cy="112" r="8"/>
+  <text class="nd" x="222" y="116">2</text>
+
+  <!-- bed and printed part -->
+  <rect class="part" x="150" y="172" width="44" height="28"/>
+  <rect class="part" x="50" y="200" width="240" height="9"/>
+  <line class="hline" x1="54" y1="213" x2="286" y2="213"/>
+
+  <!-- 3: mainboard with controller fan -->
+  <rect class="board" x="40" y="262" width="160" height="78" rx="3"/>
+  <text class="t" x="50" y="288">Mainboard and</text>
+  <text class="t" x="50" y="304">stepper drivers</text>
+  <circle class="fb" cx="172" cy="294" r="13"/>
+  <line class="bb" x1="163" y1="285" x2="181" y2="303"/>
+  <line class="bb" x1="181" y1="285" x2="163" y2="303"/>
+  <circle class="kb" cx="172" cy="324" r="8"/>
+  <text class="nw" x="172" y="328">3</text>
+
+  <!-- 4: chamber fan on the enclosure wall -->
+  <circle class="ft" cx="320" cy="150" r="13"/>
+  <line class="bt" x1="311" y1="141" x2="329" y2="159"/>
+  <line class="bt" x1="329" y1="141" x2="311" y2="159"/>
+  <circle class="kt" cx="298" cy="128" r="8"/>
+  <text class="nd" x="298" y="132">4</text>
+
+  <!-- 5: laser cooler with its fan -->
+  <rect class="cool" x="222" y="262" width="84" height="78" rx="3"/>
+  <text class="t" x="232" y="288">Laser</text>
+  <text class="t" x="232" y="304">cooler</text>
+  <circle class="ft" cx="287" cy="294" r="11"/>
+  <line class="bt" x1="279" y1="286" x2="295" y2="302"/>
+  <line class="bt" x1="295" y1="286" x2="279" y2="302"/>
+  <circle class="kt" cx="287" cy="324" r="8"/>
+  <text class="nd" x="287" y="328">5</text>
+
+  <!-- key -->
+  <circle class="ko" cx="352" cy="66" r="8"/>
+  <text class="nw" x="352" y="70">1</text>
+  <text class="h" x="368" y="70">Part-cooling fan</text>
+  <text class="t" x="368" y="86">On command from the slicer</text>
+  <text class="mono" x="368" y="101">M106 S0-255, M107</text>
+
+  <circle class="kt" cx="352" cy="126" r="8"/>
+  <text class="nd" x="352" y="130">2</text>
+  <text class="h" x="368" y="130">Hotend fan (heat sink)</text>
+  <text class="t" x="368" y="146">Auto: hotend temperature</text>
+  <text class="mono" x="368" y="161">E0_AUTO_FAN_PIN</text>
+
+  <circle class="kb" cx="352" cy="186" r="8"/>
+  <text class="nw" x="352" y="190">3</text>
+  <text class="h" x="368" y="190">Controller fan</text>
+  <text class="t" x="368" y="206">Auto: motors on, bed heats</text>
+  <text class="mono" x="368" y="221">USE_CONTROLLER_FAN, M710</text>
+
+  <circle class="kt" cx="352" cy="246" r="8"/>
+  <text class="nd" x="352" y="250">4</text>
+  <text class="h" x="368" y="250">Chamber fan</text>
+  <text class="t" x="368" y="266">Auto: chamber temperature</text>
+  <text class="mono" x="368" y="281">CHAMBER_FAN</text>
+  <text class="mono" x="368" y="295">CHAMBER_AUTO_FAN_PIN</text>
+
+  <circle class="kt" cx="352" cy="318" r="8"/>
+  <text class="nd" x="352" y="322">5</text>
+  <text class="h" x="368" y="322">Cooler fan (laser)</text>
+  <text class="t" x="368" y="338">Auto: cooler temperature</text>
+  <text class="mono" x="368" y="353">COOLER_FAN</text>
+  <text class="mono" x="368" y="367">COOLER_AUTO_FAN_PIN</text>
+
+  <text class="t" x="20" y="390" font-size="11">Not to scale.</text>
+</svg>

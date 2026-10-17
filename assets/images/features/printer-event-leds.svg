@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 214" width="560" height="214" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12">
+  <title>Printer event LED colors through a print</title>
+  <desc>Five colored bars in time order. While M190 waits for the bed, the LEDs ramp from blue to violet: red rises from 0 to 255 with heating progress p, blue stays at 255. While M109 waits for the hotend, they ramp from violet to red: red stays at 255 and blue falls from 255 to 0. When M109 finishes the LEDs turn white for printing. When a media print longer than 60 seconds ends they turn green and Marlin waits for a click, up to PE_LEDS_COMPLETED_TIME. Then they change to the user preset color, or off. Green is 0 throughout both ramps. p is the heating progress, from the start temperature to the target, clamped from 0 to 1.</desc>
+  <defs>
+    <linearGradient id="bed" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#0000ff"/>
+      <stop offset="1" stop-color="#ff00ff"/>
+    </linearGradient>
+    <linearGradient id="hotend" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#ff00ff"/>
+      <stop offset="1" stop-color="#ff0000"/>
+    </linearGradient>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0L10 5 0 10z" fill="#8a8f98"/>
+    </marker>
+    <style>
+      .bar    { stroke: #8a8f98; stroke-width: 1; }
+      .rest   { fill: rgba(136,136,136,0.22); stroke: #8a8f98; stroke-width: 1; stroke-dasharray: 6 4; }
+      .time   { fill: none; stroke: #8a8f98; stroke-width: 1.2; marker-end: url(#ah); }
+      .h      { fill: #8a8f98; font-size: 13px; font-weight: 600; text-anchor: middle; }
+      .tm     { fill: #8a8f98; text-anchor: middle; }
+      .t      { fill: #8a8f98; }
+      .mono   { font-family: SFMono-Regular, Menlo, Consolas, monospace; font-size: 11px; }
+      .orange { fill: #e0813f; }
+    </style>
+  </defs>
+
+  <!-- Stage headings -->
+  <text class="h" x="80"  y="22">M190: bed heats</text>
+  <text class="h" x="206" y="22">M109: hotend</text>
+  <text class="h" x="306" y="22">Printing</text>
+  <text class="h" x="411" y="22">Print done</text>
+  <text class="h" x="511" y="22">Click</text>
+
+  <!-- Color bars -->
+  <rect class="bar" x="20"  y="32" width="120" height="36" rx="3" fill="url(#bed)"/>
+  <rect class="bar" x="146" y="32" width="120" height="36" rx="3" fill="url(#hotend)"/>
+  <rect class="bar" x="272" y="32" width="68"  height="36" rx="3" fill="#ffffff"/>
+  <rect class="bar" x="346" y="32" width="130" height="36" rx="3" fill="#00d000"/>
+  <rect class="rest" x="482" y="32" width="58" height="36" rx="3"/>
+
+  <!-- Time axis -->
+  <line class="time" x1="20" y1="78" x2="540" y2="78"/>
+
+  <!-- Color names -->
+  <text class="tm" x="80"  y="98">blue → violet</text>
+  <text class="tm" x="206" y="98">violet → red</text>
+  <text class="tm" x="306" y="98">white</text>
+  <text class="tm" x="411" y="98">green</text>
+  <text class="tm" x="511" y="98">preset</text>
+  <text class="tm" x="511" y="113">or off</text>
+
+  <!-- Channel formulas -->
+  <text class="tm mono orange" x="80"  y="120">R = 255·p</text>
+  <text class="tm mono" x="80"  y="136">B = 255</text>
+  <text class="tm mono" x="206" y="120">R = 255</text>
+  <text class="tm mono orange" x="206" y="136">B = 255·(1−p)</text>
+  <text class="tm" x="306" y="120">after M109</text>
+  <text class="tm" x="411" y="120">waits for a click,</text>
+  <text class="tm mono" x="411" y="136">PE_LEDS_COMPLETED_TIME</text>
+
+  <!-- Caption -->
+  <text class="t" x="20" y="174">p = (T − T<tspan font-size="9" dy="3">start</tspan><tspan dy="-3">) / (T</tspan><tspan font-size="9" dy="3">target</tspan><tspan dy="-3"> − T</tspan><tspan font-size="9" dy="3">start</tspan><tspan dy="-3">), clamped to 0…1.  G = 0 in both ramps.</tspan></text>
+  <text class="t" x="20" y="196">Green only after an SD/USB print that ran longer than 60 s. Bars not to scale.</text>
+</svg>

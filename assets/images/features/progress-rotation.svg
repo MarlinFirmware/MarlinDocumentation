@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 275" width="560" height="275" font-family="Helvetica, Arial, sans-serif">
+  <title>Status screen progress field rotation</title>
+  <desc>On a MarlinUI status screen the progress bar always shows percent done, while one text field next to it cycles through the enabled items (percent, elapsed, remaining and interaction time), showing each for about one second.</desc>
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#8a8f98"/>
+    </marker>
+    <style>
+      .lbl { fill: #8a8f98; font-size: 12px; }
+      .opt { fill: #8a8f98; font-size: 10px; font-family: Menlo, Consolas, monospace; }
+      .val { fill: #8a8f98; font-size: 13px; font-family: Menlo, Consolas, monospace; }
+      .valo { fill: #e0813f; font-size: 13px; font-family: Menlo, Consolas, monospace; font-weight: bold; }
+    </style>
+  </defs>
+
+  <text x="280" y="20" text-anchor="middle" class="lbl">Status screen, print in progress (not to scale)</text>
+
+  <!-- screen -->
+  <rect x="40" y="32" width="480" height="78" rx="6" fill="rgba(136,136,136,0.22)" stroke="#8a8f98" stroke-width="1.5"/>
+  <text x="60" y="60" class="lbl">progress bar: percent done</text>
+  <rect x="60" y="70" width="280" height="14" fill="none" stroke="#8a8f98" stroke-width="1.5"/>
+  <rect x="62" y="72" width="124" height="10" fill="#5a8fd6"/>
+  <text x="380" y="60" class="lbl">rotating field</text>
+  <rect x="370" y="66" width="130" height="24" rx="3" fill="none" stroke="#e0813f" stroke-width="2"/>
+  <text x="435" y="83" text-anchor="middle" class="valo">R: 02:10</text>
+
+  <!-- rotation sequence -->
+  <rect x="30" y="140" width="110" height="30" rx="4" fill="rgba(44,132,250,0.22)" stroke="#5a8fd6" stroke-width="1.5"/>
+  <text x="85" y="160" text-anchor="middle" class="val">45%</text>
+  <text x="85" y="186" text-anchor="middle" class="opt">SHOW_PROGRESS_PERCENT</text>
+
+  <rect x="155" y="140" width="110" height="30" rx="4" fill="rgba(44,132,250,0.22)" stroke="#5a8fd6" stroke-width="1.5"/>
+  <text x="210" y="160" text-anchor="middle" class="val">E: 01:23</text>
+  <text x="210" y="200" text-anchor="middle" class="opt">SHOW_ELAPSED_TIME</text>
+
+  <rect x="280" y="140" width="110" height="30" rx="4" fill="rgba(224,129,63,0.18)" stroke="#e0813f" stroke-width="2"/>
+  <text x="335" y="160" text-anchor="middle" class="valo">R: 02:10</text>
+  <text x="335" y="186" text-anchor="middle" class="opt">SHOW_REMAINING_TIME</text>
+
+  <rect x="405" y="140" width="110" height="30" rx="4" fill="rgba(44,132,250,0.22)" stroke="#5a8fd6" stroke-width="1.5" stroke-dasharray="5 3"/>
+  <text x="460" y="160" text-anchor="middle" class="val">C: 00:35</text>
+  <text x="460" y="200" text-anchor="middle" class="opt">SHOW_INTERACTION_TIME</text>
+
+  <line x1="141" y1="155" x2="152" y2="155" stroke="#8a8f98" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="266" y1="155" x2="277" y2="155" stroke="#8a8f98" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="391" y1="155" x2="402" y2="155" stroke="#8a8f98" stroke-width="1.5" marker-end="url(#arr)"/>
+  <path d="M516,155 L546,155 L546,214 L14,214 L14,155 L27,155" fill="none" stroke="#8a8f98" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <line x1="435" y1="91" x2="345" y2="137" stroke="#e0813f" stroke-width="1.2" stroke-dasharray="3 3"/>
+
+  <text x="280" y="240" text-anchor="middle" class="lbl">Each enabled item shows for about 1 s, then the next. Disabled items are left out.</text>
+  <text x="280" y="260" text-anchor="middle" class="lbl">Dashed: needs SET_INTERACTION_TIME and M73 C from the slicer.</text>
+</svg>
