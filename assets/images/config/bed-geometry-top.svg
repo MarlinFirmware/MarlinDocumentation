@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400" width="560" height="400" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12">
+  <title>Bed geometry, travel limits and probe offset, seen from above</title>
+  <desc>A printer bed seen from above. The bed is X_BED_SIZE by Y_BED_SIZE with the origin at the front-left corner. Dashed lines mark the nozzle travel limits X_MIN_POS, X_MAX_POS, Y_MIN_POS and Y_MAX_POS. A probe sits to the right of and in front of the nozzle by NOZZLE_TO_PROBE_OFFSET. The shaded area is where the probe can reach while the nozzle stays within its limits, and the dotted rectangle inset by PROBING_MARGIN holds the leveling grid points.</desc>
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 0L10 5 0 10z" fill="#8a8f98"/>
+    </marker>
+    <marker id="ahb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 0L10 5 0 10z" fill="#e0813f"/>
+    </marker>
+    <style>
+      .bed    { fill: rgba(136, 136, 136, 0.22); stroke: #8a8f98; stroke-width: 1.5; }
+      .reach  { fill: rgba(44, 132, 250, 0.22); stroke: none; }
+      .limit  { fill: none; stroke: #8a8f98; stroke-width: 1.2; stroke-dasharray: 6 4; }
+      .margin { fill: none; stroke: #2dd4bf; stroke-width: 1.2; stroke-dasharray: 2 3; }
+      .dim    { fill: none; stroke: #8a8f98; stroke-width: 1; marker-start: url(#ah); marker-end: url(#ah); }
+      .tick   { stroke: #8a8f98; stroke-width: 1; }
+      .off    { fill: none; stroke: #e0813f; stroke-width: 1.6; marker-end: url(#ahb); }
+      .axis   { fill: none; stroke: #8a8f98; stroke-width: 1.4; marker-end: url(#ah); }
+      .t      { fill: #8a8f98; }
+      .tm     { fill: #8a8f98; text-anchor: middle; }
+      .te     { fill: #8a8f98; text-anchor: end; }
+      .mono   { font-family: SFMono-Regular, Menlo, Consolas, monospace; font-size: 11px; }
+      .nozzle { fill: #c9a227; stroke: #6b5a1a; stroke-width: 1.2; }
+      .probe  { fill: #e0813f; stroke: #7a3b2e; stroke-width: 1.2; }
+      .pt     { fill: #2dd4bf; }
+      .orange { fill: #e0813f; }
+      .teal   { fill: #2dd4bf; }
+      .blue   { fill: #5a8fd6; }
+    </style>
+  </defs>
+
+  <!-- Scale: 0.9 px per mm. Bed origin (0,0) at px (150,330). Bed 300 x 250 mm. -->
+
+  <!-- Bed -->
+  <rect class="bed" x="150" y="105" width="270" height="225"/>
+
+  <!-- Probe-reachable area: X 20..300, Y 0..230 -->
+  <rect class="reach" x="168" y="123" width="252" height="207"/>
+
+  <!-- PROBING_MARGIN inset: X 30..290, Y 10..220 -->
+  <rect class="margin" x="177" y="132" width="234" height="189"/>
+  <g class="pt">
+    <circle cx="177" cy="132" r="3"/><circle cx="294" cy="132" r="3"/><circle cx="411" cy="132" r="3"/>
+    <circle cx="177" cy="226.5" r="3"/><circle cx="294" cy="226.5" r="3"/><circle cx="411" cy="226.5" r="3"/>
+    <circle cx="177" cy="321" r="3"/><circle cx="294" cy="321" r="3"/><circle cx="411" cy="321" r="3"/>
+  </g>
+  <text class="t teal mono" x="184" y="316">PROBING_MARGIN</text>
+
+  <!-- Travel limits -->
+  <line class="limit" x1="141" y1="92" x2="141" y2="348"/>
+  <line class="limit" x1="420" y1="92" x2="420" y2="348"/>
+  <line class="limit" x1="128" y1="105" x2="432" y2="105"/>
+  <line class="limit" x1="128" y1="339" x2="432" y2="339"/>
+  <text class="tm mono" x="141" y="86">X_MIN_POS</text>
+  <text class="tm mono" x="420" y="86">X_MAX_POS</text>
+  <text class="te mono" x="124" y="109">Y_MAX_POS</text>
+  <text class="te mono" x="124" y="343">Y_MIN_POS</text>
+
+  <!-- Origin -->
+  <circle cx="150" cy="330" r="3" fill="#8a8f98"/>
+  <text class="te" x="140" y="362" font-size="11">(0, 0)</text>
+  <line class="tick" x1="143" y1="357" x2="149" y2="333"/>
+
+  <!-- Bed size dimensions -->
+  <line class="dim" x1="150" y1="372" x2="420" y2="372"/>
+  <text class="tm mono" x="285" y="386">X_BED_SIZE</text>
+  <line class="dim" x1="445" y1="105" x2="445" y2="330"/>
+  <text class="t mono" x="452" y="221">Y_BED_SIZE</text>
+
+  <!-- Axes glyph -->
+  <path class="axis" d="M45 250 H90"/>
+  <path class="axis" d="M45 250 V205"/>
+  <text class="t" x="93" y="254" font-size="11">+X</text>
+  <text class="tm" x="45" y="199" font-size="11">+Y (back)</text>
+  <text class="tm" x="285" y="353" font-size="10.5">FRONT</text>
+
+  <!-- Nozzle at (100,150) -> (240,195); probe at (130,130) -> (267,213) -->
+  <path class="off" d="M225 195 H247"/>
+  <path class="off" d="M252 195 V208"/>
+  <circle class="nozzle" cx="225" cy="195" r="6"/>
+  <circle class="probe" cx="252" cy="213" r="5"/>
+  <text class="te" x="216" y="199" font-size="11">Nozzle</text>
+  <text class="t orange mono" x="262" y="203">NOZZLE_TO_PROBE_OFFSET</text>
+  <text class="t orange" x="262" y="217" font-size="11">X +30 (right), Y −20 (front)</text>
+
+  <!-- Legend -->
+  <g font-size="10.5">
+    <rect x="20" y="24" width="14" height="10" class="bed"/>
+    <text class="t" x="39" y="33">Bed</text>
+    <line x1="70" y1="29" x2="90" y2="29" class="limit"/>
+    <text class="t" x="95" y="33">Nozzle travel limits</text>
+    <rect x="20" y="42" width="14" height="10" class="reach"/>
+    <text class="t" x="39" y="51">Where the probe can reach while the nozzle stays within its limits</text>
+    <circle cx="400" cy="47" r="3" class="pt"/>
+    <text class="t" x="408" y="51">Leveling probe points</text>
+  </g>
+</svg>

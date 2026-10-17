@@ -89,3 +89,33 @@ The bed-nozzle distance can be measured without a probe by following a [`manual 
 - `Z_MIN_PROBE_ENDSTOP_INVERTING` should be set to `true` if your probe uses normally-open (NO) switches. Normally-closed switches are recommended because they have the appropriate failsafe state and are less prone to false positives.
 - `ENDSTOPPULLUP_ZMIN_PROBE` may be used if you need to _disable_ the endstop pullup for some reason, such as having an external pull-down resistor on a normally-open switch.
 - `USE_ZMAX_PLUG` must be enabled if the probe is connected to the Z-Max endstop pin. `USE_ZMIN_PLUG` must be enabled if the probe is connected to the Z-Min endstop pin. _Et cetera_, _et cetera_.
+
+### 4. Probe Offsets and the Probing Area
+
+![Bed seen from above, showing the bed size, the nozzle travel limits, the probe offset from the nozzle, the area the probe can reach and the probing margin](/assets/images/config/bed-geometry-top.svg){: .framed }
+
+The probe is not at the nozzle, so Marlin needs to know where it is. [`NOZZLE_TO_PROBE_OFFSET`](/docs/settings/probes.html#NOZZLE_TO_PROBE_OFFSET) is the distance from the nozzle tip to the center of the probe, in millimeters, as `{ X, Y, Z }`:
+
+- **X**: positive when the probe is to the right of the nozzle, negative to the left.
+- **Y**: positive when the probe is behind the nozzle (toward the back), negative in front.
+- **Z**: the height of the trigger point relative to the nozzle tip. Most probes trigger below the nozzle, so Z is negative.
+
+Measure X and Y with a ruler or calipers; they rarely need to be exact to better than a millimeter. The Z value is critical for the first layer, so start with your best guess, then tune it at runtime with [`M851`](/docs/gcode/M851.html), the Probe Offset Wizard ([`PROBE_OFFSET_WIZARD`](/docs/settings/lcd.html#PROBE_OFFSET_WIZARD)) or babystepping, and save it with [`M500`](/docs/gcode/M500.html).
+
+The offset also limits where the probe can go. The nozzle must stay within its travel limits ([`X_MIN_POS`](/docs/settings/geometry.html#X_MIN_POS), [`X_MAX_POS`](/docs/settings/geometry.html#X_MAX_POS), and the same for Y), so a probe mounted 30 mm to the right of the nozzle cannot reach the leftmost 30 mm of the bed. Marlin works this out from the offset and the limits, then insets the result by [`PROBING_MARGIN`](/docs/settings/probes.html#PROBING_MARGIN) to keep the probe away from clips and bed edges. The leveling grid is fitted inside what remains. If the grid seems to miss part of the bed, that is why: a negative `X_MIN_POS` or `Y_MIN_POS` (so the nozzle can travel past the bed edge) often recovers the missing strip.
+
+![Side view of the nozzle and probe on one carriage, showing the Z offset, the clearance heights and the probe low point](/assets/images/config/probe-z-offset-side.svg){: .framed }
+
+Several heights control how the probe moves between points:
+
+- [`Z_CLEARANCE_DEPLOY_PROBE`](/docs/settings/probes.html#Z_CLEARANCE_DEPLOY_PROBE): the Z height to raise to before deploying or stowing the probe.
+- [`Z_CLEARANCE_BETWEEN_PROBES`](/docs/settings/probes.html#Z_CLEARANCE_BETWEEN_PROBES): the height to raise to while traveling from one probe point to the next.
+- [`Z_CLEARANCE_MULTI_PROBE`](/docs/settings/probes.html#Z_CLEARANCE_MULTI_PROBE): the height to raise to between repeat probes of the same point when [`MULTIPLE_PROBING`](/docs/settings/probes.html#MULTIPLE_PROBING) is enabled.
+- [`Z_AFTER_PROBING`](/docs/settings/probes.html#Z_AFTER_PROBING): where to leave Z when probing is finished.
+- [`Z_PROBE_LOW_POINT`](/docs/settings/probes.html#Z_PROBE_LOW_POINT): how far below the expected trigger point the probe may travel before Marlin stops with a probing error. Keep it small so a probe that fails to trigger cannot drive the nozzle into the bed.
+
+{: .warning }
+> A probe that triggers *above* the nozzle (positive Z offset) is unusual. If you have one, set the clearance heights with care so the nozzle cannot touch the bed while the probe is still looking for it.
+
+{: .more }
+> **Why the probe tip is lower than the nozzle.** Probing stops when the probe triggers, and at that moment Marlin records the nozzle's Z position as the bed height. With a Z offset of −1.5, the trigger happens while the nozzle is still 1.5 mm above the bed, so Marlin subtracts the offset to find where the bed really is. That is also why a wrong Z offset shifts your whole first layer up or down by the same amount.

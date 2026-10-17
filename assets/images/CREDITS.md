@@ -11,3 +11,5 @@ file, source, author, license. Pages that show the image also carry a short cred
 | printers/corexy-voron.jpg | https://commons.wikimedia.org/wiki/File:Voron_3D_printer.jpg | disinterpreter | CC BY-SA 2.0 |
 
 Original diagrams (`printers/diagram-*.svg`, including SCARA and Polar) are Marlin project artwork, GPL-3.0 like the site.
+
+Original diagrams added for the launch (`basics/marlin-pipeline.svg`, `config/bed-geometry-top.svg`, `config/probe-z-offset-side.svg`) are Marlin project artwork, GPL-3.0 like the site. The `logo/marlin-outrun.svg` logo is Marlin project artwork.

@@ -1,0 +1,91 @@
+{%- comment -%}
+  home/icons.html — Inline SVG symbol sprite for the landing page.
+  24x24 monoline icons, stroke = currentColor so they follow the theme.
+  Reference with: <svg class="home-icon"><use xlink:href="#home-icon-NAME"></use></svg>
+{%- endcomment -%}
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+  <defs>
+    <!-- motion: three axes with an arrowed path -->
+    <symbol id="home-icon-motion" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 20V5M4 20h15"/><path d="M4 5l-2 2.5M4 5l2 2.5M19 20l-2.5-2M19 20l-2.5 2"/>
+      <path d="M6 17c3-7 6-9 12-10"/><path d="M15.5 6.2L18 7l-.8 2.5"/>
+    </symbol>
+    <!-- heat: thermometer -->
+    <symbol id="home-icon-heat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M10 14.5V5a2 2 0 014 0v9.5a3.5 3.5 0 11-4 0z"/><path d="M12 10v6.5"/><circle cx="12" cy="17.5" r="1.4" fill="currentColor" stroke="none"/><path d="M17 6h3M17 9h2M17 12h3"/>
+    </symbol>
+    <!-- shield: safety -->
+    <symbol id="home-icon-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 3l7 3v5c0 4.5-3 8.2-7 10-4-1.8-7-5.5-7-10V6l7-3z"/><path d="M9 12l2 2 4-4.5"/>
+    </symbol>
+    <!-- display: screen with knob -->
+    <symbol id="home-icon-display" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="2.5" y="5" width="15" height="11" rx="1.5"/><path d="M5.5 8.5h9M5.5 11h6M5.5 13.5h7"/><circle cx="20.5" cy="10.5" r="1.8"/><path d="M20.5 8.7V7.5"/>
+    </symbol>
+    <!-- chip: controller board -->
+    <symbol id="home-icon-chip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="6" y="6" width="12" height="12" rx="1.5"/><rect x="9.5" y="9.5" width="5" height="5"/>
+      <path d="M9 6V3M12 6V3M15 6V3M9 21v-3M12 21v-3M15 21v-3M6 9H3M6 12H3M6 15H3M21 9h-3M21 12h-3M21 15h-3"/>
+    </symbol>
+    <!-- printer: 3D printer frame -->
+    <symbol id="home-icon-printer" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 3h16M4 3v18M20 3v18M4 21h16"/><path d="M4 9h16"/><path d="M11 9v2.5h2V9"/><path d="M12 11.5l-1 2h2z" fill="currentColor"/><path d="M7 17h10"/>
+    </symbol>
+    <!-- book: introduction/basics -->
+    <symbol id="home-icon-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 5.5A2.5 2.5 0 016.5 3H20v15H6.5A2.5 2.5 0 004 20.5z"/><path d="M4 18V5.5M6.5 18H20M9 7h7M9 10h5"/>
+    </symbol>
+    <!-- download: tray with arrow -->
+    <symbol id="home-icon-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 3v11M8 10l4 4 4-4"/><path d="M4 15v3.5A1.5 1.5 0 005.5 20h13a1.5 1.5 0 001.5-1.5V15"/>
+    </symbol>
+    <!-- sliders: configuration -->
+    <symbol id="home-icon-sliders" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 7h16M4 12h16M4 17h16"/><circle cx="9" cy="7" r="2" fill="var(--body-background-color, #000)"/><circle cx="15" cy="12" r="2" fill="var(--body-background-color, #000)"/><circle cx="7" cy="17" r="2" fill="var(--body-background-color, #000)"/>
+    </symbol>
+    <!-- list: settings reference -->
+    <symbol id="home-icon-list" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M8 6h12M8 12h12M8 18h12"/><path d="M3.5 6h.01M3.5 12h.01M3.5 18h.01" stroke-width="2.4"/>
+    </symbol>
+    <!-- code: G-code -->
+    <symbol id="home-icon-code" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"/>
+    </symbol>
+    <!-- wrench: tools -->
+    <symbol id="home-icon-wrench" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M14.5 4.5a4.5 4.5 0 00-4.6 6.3L3.5 17.2a1.8 1.8 0 002.5 2.5l6.4-6.4a4.5 4.5 0 006.3-4.6l-2.8 2.8-2.9-.6-.6-2.9z"/>
+    </symbol>
+    <!-- star: features -->
+    <symbol id="home-icon-star" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1.1 5.9L12 16.9l-5.3 2.8 1.1-5.9-4.3-4.1 5.9-.8z"/>
+    </symbol>
+    <!-- bookmark: appendix -->
+    <symbol id="home-icon-appendix" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M6 3h12v18l-6-4-6 4z"/><path d="M9 8h6M9 11.5h4"/>
+    </symbol>
+    <!-- github: octocat-ish mark (simple) -->
+    <symbol id="home-icon-github" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+      <path d="M12 2a10 10 0 00-3.2 19.5c.5.1.7-.2.7-.5v-1.8c-2.8.6-3.4-1.2-3.4-1.2-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.6 2.4 1.1 3 .9.1-.7.4-1.1.6-1.4-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.8 1a9.5 9.5 0 015 0c1.9-1.3 2.8-1 2.8-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.4 4.7-4.6 5 .4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5A10 10 0 0012 2z"/>
+    </symbol>
+    <!-- discord: speech bubble with controller feel -->
+    <symbol id="home-icon-discord" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M8.5 5.5A14 14 0 0112 5a14 14 0 013.5.5l.7 1.3A10 10 0 0120 13.5v3l-3.5 1.5-1-2a10 10 0 01-7 0l-1 2L4 16.5v-3a10 10 0 013.8-6.7z"/><circle cx="9.5" cy="12.5" r="1.1" fill="currentColor" stroke="none"/><circle cx="14.5" cy="12.5" r="1.1" fill="currentColor" stroke="none"/>
+    </symbol>
+    <!-- chat: discussions / forums -->
+    <symbol id="home-icon-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 5.5A1.5 1.5 0 015.5 4h13A1.5 1.5 0 0120 5.5v9a1.5 1.5 0 01-1.5 1.5H10l-4.5 3.5V16H5.5A1.5 1.5 0 014 14.5z"/><path d="M8 8.5h8M8 11.5h5"/>
+    </symbol>
+    <!-- bug: issue tracker -->
+    <symbol id="home-icon-bug" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M9 8a3 3 0 016 0v1H9z"/><rect x="7" y="9" width="10" height="10" rx="5"/><path d="M12 9v10M3.5 12H7M17 12h3.5M4.5 18.5l3-2M19.5 18.5l-3-2M4.5 6.5l3 2M19.5 6.5l-3 2"/>
+    </symbol>
+    <!-- heart: donate -->
+    <symbol id="home-icon-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 20s-7-4.4-7-10a4 4 0 017-2.6A4 4 0 0119 10c0 5.6-7 10-7 10z"/>
+    </symbol>
+    <!-- share: social links -->
+    <symbol id="home-icon-share" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="18" cy="5.5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="18.5" r="2.5"/><path d="M8.2 10.9l7.6-4.1M8.2 13.1l7.6 4.1"/>
+    </symbol>
+  </defs>
+</svg>

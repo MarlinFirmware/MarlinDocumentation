@@ -34,6 +34,8 @@ A print job is described using a simplified derivative of [G-code](https://en.wi
 
 Marlin runs G-code commands sent from a host over USB serial, from a serial controller, or directly from an SD card or USB drive. Most commands execute right away, while movement commands are queued and processed by the Planner.
 
+![How Marlin processes a print: G-code from a host or SD card enters the command queue, is parsed, planned into motion blocks and turned into step pulses; temperature commands drive the heaters and fans](/assets/images/basics/marlin-pipeline.svg){: .framed }
+
 ### The Motion Pipeline
 
 The Planner converts movement commands into linear segments. Even arcs and curves are broken into many small straight lines. The Planner examines each segment for changes in speed and acceleration, making adjustments to ensure movement is smooth and within physical limits.

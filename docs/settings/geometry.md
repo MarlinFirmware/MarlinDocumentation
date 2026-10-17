@@ -166,4 +166,7 @@ settings:
   comment: Enable/Disable software endstops from the LCD
 ---
 
-Options in the `geometry` section of the Marlin configuration files.
+These options describe the printable bed and how far the nozzle may travel. The bed is [`X_BED_SIZE`](#X_BED_SIZE) by [`Y_BED_SIZE`](#Y_BED_SIZE) with its origin (0, 0) at the front-left corner. The nozzle can travel between [`X_MIN_POS`](#X_MIN_POS) and [`X_MAX_POS`](#X_MAX_POS) (and the same for Y and Z); when the carriage can move past the bed edge, set a negative minimum so the whole bed stays reachable, which matters most when a [bed probe](/docs/configuration/probes.html#4-probe-offsets-and-the-probing-area) is mounted off to one side of the nozzle.
+
+![Bed seen from above: bed size, travel limits, the probe offset from the nozzle, the area the probe can reach and the probing margin](/assets/images/config/bed-geometry-top.svg){: .framed }
+

@@ -8,6 +8,10 @@
 // Marlin dark-theme defaults (compiled into CSS)
 // Light-theme overrides are in the [data-color-scheme="light"] block at bottom
 :root {
+  // JTD theme values for the dark scheme, exposed as variables so site styles can follow the toggle
+  --link-color: #{$link-color};
+  --border-color: #{$border-color};
+  --body-text-color: #{$body-text-color};
   --marlin-top-bg-1: #222;
   --marlin-top-bg-2: #222;
   --marlin-top-bg-3: #242424;
@@ -326,7 +330,7 @@ body.has-toc #table-of-contents.page .toc-h3 a {
 }
 
 .nav-list .nav-list-item > .nav-list .nav-list-item .nav-list-link {
-    color: #f00;
+    color: var(--nav-child-link-color, #{$nav-child-link-color});
     font-size: small;
     line-height: 1.25;
 }
@@ -580,11 +584,25 @@ img.printer-photo { max-width: 40%; }
     .site-nav a { color: #58595b; }
     .aux-nav a { color: #1565c0; }
 
+    // Buttons: the dark scheme bakes in dark backgrounds, and `.main-content a` recolors their text
+    .main-content .btn, .btn {
+        background-color: #e8e8ec;
+        color: #27262b;
+        box-shadow: 0 1px 0 rgba(0, 0, 0, 0.08);
+        &:hover { background-color: #dcdce2; }
+    }
+    .main-content .btn-primary, .btn-primary {
+        background-color: #1565c0;
+        color: #fff;
+        &:hover { background-color: #0f56a8; color: #fff; }
+    }
+
     // Logo — switch to day variant
     .site-logo { background-image: url("/assets/images/logo/marlin/text-day.png"); }
 }
 
 @import "./custom/tools";
+@import "./custom/home";
 
 // Printer directory: config tables fold under their board/variant name on longer vendor pages
 details.printer-config {

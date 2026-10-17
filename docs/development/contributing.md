@@ -45,7 +45,7 @@ If you know C or C++ and can help to patch bugs, fix typos, or just add helpful 
 Marlin posts "nightly" builds that contain the most up-to-date code. While they include patches to the most recent release (yay, fewer bugs!) they can also contain untested code, so your feedback is essential.
 
 ### Contribute Documentation
-Are you skilled in information design? This website is far from complete, and it's a bit text-heavy. We need more photos, diagrams, and YouTube videos to embed on these pages. A well-chosen image or well-produced video can have more impact than many pages of written documentation. Visit the [MarlinDocumentation Project](https://github.com/MarlinFirmware/MarlinDocumentation) for more information.
+Are you skilled in information design? This website is far from complete, and it's a bit text-heavy. We need more photos, diagrams, and YouTube videos to embed on these pages. A well-chosen image or well-produced video can have more impact than many pages of written documentation. Visit the [MarlinDocumentation Project](https://github.com/MarlinFirmware/MarlinDocumentation) for more information, and read the [Documentation Style Guide](/docs/development/style_guide.html) before you start.
 
 ### Join the Community
 

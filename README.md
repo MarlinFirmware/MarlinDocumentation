@@ -22,9 +22,6 @@ This repository contains the raw documentation for [Marlin 3D printer firmware](
 
 - [Technical details](#technical-details)
 - [How to contribute](#how-to-contribute)
-  - [Coding style](#coding-style)
-  - [Editorial style](#editorial-style)
-  - [Work in progress](#work-in-progress)
 - [Local Jekyll preview](#local-jekyll-preview)
   - [Installing Ruby on Windows](#installing-ruby-on-windows)
   - [Installing Ruby on macOS](#installing-ruby-on-macos)
@@ -45,54 +42,18 @@ The Marlin Documentation Project is built using the following technologies:
 
 ## How to contribute
 
-To work with the documentation, first [fork](//docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo) this repository to your GitHub account, then clone **your MarlinDocumentation fork** locally. You should do all work within your own fork before submitting it as a [Pull Request](//docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request) to the `master` branch. You can download the [GitHub Desktop app](//github.com/apps/desktop) and use GitHub's "Open in Desktop" option, or from your own desktop, open a terminal/cmd window and do:
+Fork this repository, create a branch, edit or add pages, run the checks, and open a Pull Request against
+`master`. Before you start, read:
 
-For example, change into the root of C:\\:
+- [`AGENTS.md`](AGENTS.md): the repo map, how the site is organized, and the checks every change must pass.
+- [Documentation Style Guide](docs/development/style_guide.md): voice, page structure, images, callouts, links.
+- [`_tools/README.md`](_tools/README.md): the generators (Settings, G-code index, printer directory) and checks.
+- [`skills/`](skills/README.md): step-by-step procedures for common tasks (new page, diagram, G-code page,
+  settings regeneration), usable by people and by coding agents.
 
-```bash
-cd C:\
-```
-
-Clone Marlin Documentation repository:
-
-```bash
-git clone https://github.com/MarlinFirmware/MarlinDocumentation.git
-```
-
-This will create a local `C:\MarlinDocumentation` folder linked to your fork.
-
-To add new documentation or edit existing documentation, start by [creating a new branch](//docs.github.com/en/issues/tracking-your-work-with-issues/creating-a-branch-for-an-issue) as a copy of the `master` branch. You can do this using the GitHub web interface, from within GitHub Desktop, or from the command line.
-
-If your new document is about "mashed potatoes" then name the new branch accordingly:
-
-```
-git checkout master -b doc-mashed_potatoes
-```
-
-Inside the `_docs` folder, add the new file `mashed-potatoes.md` and let flow all your creativity into it. When you feel your masterpiece is ready to be shared with the world, commit the changes and push them up to **your Marlin Documentation fork**. This is done most easily from within the GitHub Desktop app, but here are the command line commands for reference:
-
-```sh
-git add mashed-potatoes.md
-git commit -m "Added a new document about potatoes"
-git push
-```
-
-Next, start a new Pull Request to the upstream repository ([MarlinFirmware/MarlinDocumentation](//github.com/MarlinFirmware/MarlinDocumentation)).
-
-> [!TIP]
-> Check out GitHub's documentation on [creating a new branch](//docs.github.com/en/issues/tracking-your-work-with-issues/creating-a-branch-for-an-issue), [managing branches](//docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-branches-in-your-repository), and creating [Pull Requests](//docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request) if you're new to contributing with git.
-
-### Coding style
-
-This Jekyll-based site is based on the [Markdown](//www.markdownguide.org/) language in delicious [YAML](//yaml.org/) wrapper. Be careful with this format because even small typos can cause Jekyll to reject the page. If you've installed Jekyll as described below, you can use it to build and preview the documentation and this will tell you where your errors are.
-
-### Editorial style
-
-Try to be neutral, concise, and straightforward. Avoid use of personal pronouns, unless avoiding them proves awkward. Provide images and give examples where needed. Check your spelling, grammar, and punctuation.
-
-### Work in progress
-
-You can use the `_tmp` folder for work-in-progress, and they will not be included in the site deployment.
+Reference sections (`docs/settings/`, the G-code index, the printer directory) are generated; edit the
+human-owned fields or the page body, not the generated entries. Run `_tools/install_hooks.sh` once per clone so
+the site checks run before every commit.
 
 ## Local Jekyll preview
 
@@ -263,10 +224,10 @@ bundle install
 
 Jekyll uses a combination of YAML, Markdown, Liquid, and HTML to define the site content and layout. A `_config.yml` file defines a site structure with "collections" corresponding to sub-folders. The website is "compiled" to produce static HTML and Javascript. The most important folders in the site are:
 
-- `_layouts` contains the general layouts (aka page templates).
-- `_includes` has partial layouts included by others.
-- `_meta` is where we keep top-level page descriptions.
-- Sections: `_basics`, `_configuration`, `_development`, `_features`, `_gcode`, `_hardware`….
+- `_layouts` contains the page templates (home, article, setting, gcode, tool).
+- `_includes` has partials included by the layouts.
+- `docs/<section>/` holds the pages; each section has an `index.md` and child pages linked by `parent:`.
+- `_tools/` holds the generators and the checks. See `AGENTS.md` for the full map.
 
 ### Previewing content
 

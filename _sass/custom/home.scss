@@ -1,0 +1,200 @@
+//
+// _sass/custom/home.scss — Landing page (layout: home, index.md)
+//
+// Everything here is scoped to body.home. Colors come from the theme's CSS custom
+// properties so the page follows the dark/light toggle.
+//
+
+body.home {
+  .main-content { max-width: 60rem; }
+
+  // ---- Hero -------------------------------------------------------------
+  .home-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 18rem;
+    gap: 1rem 2.5rem;
+    align-items: center;
+    margin-top: 1rem;
+
+    h1 {
+      margin: 0 0 0.25rem;
+      font-size: 2.6rem;
+      line-height: 1.1;
+    }
+    .home-tagline {
+      margin: 0 0 1rem;
+      font-size: 1.25rem;
+      font-weight: 500;
+      color: var(--link-color);
+    }
+    p { font-size: 1.02rem; }
+  }
+  .home-hero-logo {
+    text-align: center;
+    img { width: 100%; max-width: 18rem; height: auto; filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.35)); }
+  }
+  .home-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin: 1.25rem 0 0.75rem;
+    .btn { margin: 0; }
+  }
+  .home-release-line {
+    font-size: 0.85rem;
+    opacity: 0.8;
+    margin: 0;
+  }
+
+  // ---- Stats strip --------------------------------------------------------
+  .home-stats {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0.5rem;
+    padding: 1rem 0.5rem;
+    margin: 2rem 0 0;
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+    text-align: center;
+    li { margin: 0; padding: 0; line-height: 1.2; &::before { content: none; } }
+    strong {
+      display: block;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--link-color);
+    }
+    span { font-size: 0.78rem; opacity: 0.8; }
+  }
+
+  // ---- Sections -----------------------------------------------------------
+  .home-section {
+    margin-top: 2.5rem;
+    > h2 { margin-top: 0; }
+  }
+  h2 { font-size: 1.5rem; }
+
+  // ---- Cards --------------------------------------------------------------
+  .home-cards {
+    display: grid;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  .home-pillars { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .home-tiles   { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+  .home-card {
+    display: block;
+    padding: 1rem 1.1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background: var(--marlin-toc-bg);
+    color: var(--body-text-color);
+    text-decoration: none;
+    transition: border-color 0.15s ease, transform 0.15s ease, background 0.15s ease;
+
+    h3 {
+      margin: 0.25rem 0 0.35rem;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--link-color);
+    }
+    p {
+      margin: 0;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    &:hover, &:focus-visible {
+      border-color: var(--link-color);
+      background: rgba(44, 132, 250, 0.08);
+      transform: translateY(-2px);
+      background-image: none;
+      h3 { text-decoration: underline; }
+    }
+  }
+  .home-tile {
+    display: grid;
+    grid-template-columns: 1.6rem 1fr;
+    gap: 0.75rem;
+    align-items: start;
+    .home-icon { margin-top: 0.15rem; }
+    h3 { margin-top: 0; }
+  }
+
+  .home-icon {
+    width: 1.6rem;
+    height: 1.6rem;
+    color: var(--link-color);
+    flex: none;
+  }
+  .home-pillars .home-icon { width: 2rem; height: 2rem; }
+
+  // ---- Release + Community -----------------------------------------------
+  .home-two-col {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 2.5rem;
+    h2 { margin-top: 0; }
+  }
+  .home-release-table {
+    th { text-align: left; white-space: nowrap; }
+    td, th { padding: 0.35rem 0.75rem; font-size: 0.9rem; }
+    min-width: 0;
+  }
+  .home-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    li { margin: 0; padding: 0; &::before { content: none; } }
+    a {
+      display: grid;
+      grid-template-columns: 1.4rem 1fr;
+      gap: 0.6rem;
+      align-items: start;
+      padding: 0.45rem 0.4rem;
+      border-radius: 4px;
+      color: var(--body-text-color);
+      text-decoration: none;
+      line-height: 1.4;
+      .home-icon { width: 1.4rem; height: 1.4rem; margin-top: 0.1rem; }
+      strong { color: var(--link-color); }
+      &:hover { background: var(--marlin-toc-bg); background-image: none; strong { text-decoration: underline; } }
+    }
+    .home-link-text { font-size: 0.9rem; opacity: 0.85; }
+  }
+
+  // ---- Prose body -----------------------------------------------------------
+  .home-figure {
+    display: block;
+    max-width: 100%;
+    margin: 1.5rem auto 0;
+  }
+  .home-license {
+    margin-top: 2.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+    font-size: 0.85rem;
+    opacity: 0.85;
+  }
+
+  // ---- Responsive -----------------------------------------------------------
+  @media (max-width: 70rem) {
+    .home-stats { grid-template-columns: repeat(3, 1fr); row-gap: 1rem; }
+    .home-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 46.25rem) {
+    .home-hero {
+      grid-template-columns: 1fr;
+      .home-hero-logo { order: -1; img { max-width: 12rem; } }
+      h1 { font-size: 2.1rem; }
+    }
+    .home-pillars, .home-tiles, .home-two-col { grid-template-columns: 1fr; }
+    .home-two-col { gap: 1.5rem; }
+    .home-stats { grid-template-columns: repeat(2, 1fr); }
+  }
+}
+
+[data-color-scheme="light"] body.home {
+  .home-hero-logo img { filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.18)); }
+  .home-card:hover, .home-card:focus-visible { background: rgba(44, 132, 250, 0.06); }
+}

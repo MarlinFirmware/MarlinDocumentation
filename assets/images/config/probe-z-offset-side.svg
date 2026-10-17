@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 310" width="560" height="310" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12">
+  <title>Probe Z offset and probing clearances, seen from the side</title>
+  <desc>A side view of the nozzle and a probe mounted beside it on the same carriage. The bed surface is Z zero. The probe tip sits lower than the nozzle tip, so it triggers while the nozzle is still above the bed; that distance is the negative Z value in NOZZLE_TO_PROBE_OFFSET. Dashed lines show Z_MAX_POS, Z_CLEARANCE_DEPLOY_PROBE, Z_CLEARANCE_BETWEEN_PROBES and Z_PROBE_LOW_POINT.</desc>
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 0L10 5 0 10z" fill="#8a8f98"/>
+    </marker>
+    <marker id="ahb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 0L10 5 0 10z" fill="#e0813f"/>
+    </marker>
+    <style>
+      .bed    { fill: rgba(136, 136, 136, 0.35); stroke: #8a8f98; stroke-width: 1.5; }
+      .zline  { fill: none; stroke: #8a8f98; stroke-width: 1.2; stroke-dasharray: 6 4; }
+      .zero   { fill: none; stroke: #8a8f98; stroke-width: 1.8; }
+      .dim    { fill: none; stroke: #8a8f98; stroke-width: 1; marker-start: url(#ah); marker-end: url(#ah); }
+      .off    { fill: none; stroke: #e0813f; stroke-width: 1.6; marker-start: url(#ahb); marker-end: url(#ahb); }
+      .t      { fill: #8a8f98; }
+      .tm     { fill: #8a8f98; text-anchor: middle; }
+      .mono   { font-family: SFMono-Regular, Menlo, Consolas, monospace; font-size: 11px; }
+      .small  { font-size: 10.5px; }
+      .carriage { fill: #3a4a63; stroke: #7d8aa3; stroke-width: 1.2; }
+      .nozzle { fill: #c9a227; stroke: #6b5a1a; stroke-width: 1.2; }
+      .probe  { fill: #e0813f; stroke: #7a3b2e; stroke-width: 1.2; }
+      .orange { fill: #e0813f; }
+      .low    { stroke: #fb7185; }
+      .lowt   { fill: #fb7185; }
+      .onnoz  { fill: #3b3209; text-anchor: middle; }
+      .onprb  { fill: #fff; text-anchor: middle; }
+      .oncar  { fill: #dbe7fa; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <!-- Not to scale: Z distances are exaggerated so the labels fit. -->
+
+  <!-- Z reference lines (labels sit above each line, at the left) -->
+  <line class="zline" x1="60" y1="22" x2="490" y2="22"/>
+  <text class="t mono" x="64" y="17">Z_MAX_POS</text>
+  <text class="t small" x="135" y="17">top of travel, the build height</text>
+
+  <line class="zline" x1="60" y1="95" x2="490" y2="95"/>
+  <text class="t mono" x="64" y="90">Z_CLEARANCE_DEPLOY_PROBE</text>
+  <text class="t small" x="64" y="108">height to deploy and stow the probe</text>
+
+  <line class="zline" x1="60" y1="145" x2="490" y2="145"/>
+  <text class="t mono" x="64" y="140">Z_CLEARANCE_BETWEEN_PROBES</text>
+  <text class="t small" x="64" y="158">raise this high between probe points</text>
+
+  <!-- Bed -->
+  <rect class="bed" x="175" y="215" width="300" height="20"/>
+  <line class="zero" x1="60" y1="215" x2="490" y2="215"/>
+  <text class="t mono" x="64" y="210">Z = 0</text>
+  <text class="t small" x="100" y="210">bed surface (Z_MIN_POS)</text>
+
+  <line class="zline low" x1="60" y1="229" x2="490" y2="229"/>
+  <text class="lowt mono" x="64" y="244">Z_PROBE_LOW_POINT</text>
+  <text class="lowt small" x="200" y="244">stop with an error if the probe has not triggered by here</text>
+
+  <!-- Carriage -->
+  <rect class="carriage" x="320" y="48" width="150" height="16" rx="3"/>
+  <text class="oncar small" x="395" y="60">carriage</text>
+
+  <!-- Nozzle (tip 1.5 mm above the bed when the probe triggers) -->
+  <rect class="nozzle" x="338" y="64" width="24" height="96"/>
+  <path class="nozzle" d="M338 160 H362 L353 185 H347 Z"/>
+  <text class="onnoz small" x="350" y="120">nozzle</text>
+
+  <!-- Probe (tip touching the bed = trigger) -->
+  <rect class="probe" x="420" y="64" width="20" height="128"/>
+  <rect class="probe" x="427" y="192" width="6" height="23"/>
+  <text class="onprb small" x="430" y="120">probe</text>
+
+  <!-- X offset -->
+  <line class="dim" x1="350" y1="42" x2="430" y2="42"/>
+  <text class="tm small" x="390" y="38">X offset</text>
+
+  <!-- Z offset -->
+  <line class="off" x1="390" y1="185" x2="390" y2="215"/>
+  <text class="t orange mono" x="448" y="180">Z offset</text>
+  <text class="t orange small" x="448" y="194">−1.5 here</text>
+
+  <!-- Caption -->
+  <text class="t small" x="64" y="268">The probe triggers while the nozzle is still above the bed. That distance, as a negative</text>
+  <text class="t small" x="64" y="282">number, is the Z value of NOZZLE_TO_PROBE_OFFSET. Tune it with M851 or the Probe Offset</text>
+  <text class="t small" x="64" y="296">Wizard. Drawing not to scale.</text>
+</svg>

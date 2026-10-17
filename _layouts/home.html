@@ -1,0 +1,151 @@
+---
+layout: table_wrappers
+---
+{%- comment -%}
+  home.html — Landing page layout.
+
+  Renders the hero, pillar cards, section tiles, release box and community links
+  from the page's frontmatter (see index.md), with the page body (narrative prose)
+  between the pillars and the section tiles. Styles: _sass/custom/home.scss.
+{%- endcomment -%}
+<!DOCTYPE html>
+
+<html lang="{{ site.lang | default: 'en-US' }}">
+{% include head.html %}
+<body class="home">
+  <a class="skip-to-main" href="#main-content">Skip to main content</a>
+  {% include icons/icons.html %}
+  {% include home/icons.html %}
+  {% if page.nav_enabled == true %}
+    {% include components/sidebar.html %}
+  {% elsif layout.nav_enabled == true and page.nav_enabled == nil %}
+    {% include components/sidebar.html %}
+  {% elsif site.nav_enabled != false and layout.nav_enabled == nil and page.nav_enabled == nil %}
+    {% include components/sidebar.html %}
+  {% endif %}
+  <div class="main" id="top">
+    {% include components/header.html %}
+    <div class="main-content-wrap">
+      <div id="main-content" class="main-content">
+        <main>
+
+          {%- assign release = site.data.marlin.downloads[0] -%}
+          {%- assign beta = site.data.marlin.betas[0] -%}
+
+          {%- comment -%} Counts shown in the hero. All derived at build time from site data. {%- endcomment -%}
+          {%- assign board_count = 0 -%}
+          {%- for group in site.data.boards -%}
+            {%- assign n = group.boards | size -%}
+            {%- assign board_count = board_count | plus: n -%}
+          {%- endfor -%}
+          {%- assign gcode_pages = site.pages | where_exp: "p", "p.codes" | where_exp: "p", "p.pagetype != 'toc'" -%}
+          {%- assign gcode_count = 0 -%}
+          {%- for p in gcode_pages -%}
+            {%- assign n = p.codes | size -%}
+            {%- assign gcode_count = gcode_count | plus: n -%}
+          {%- endfor -%}
+          {%- assign setting_count = site.data.setting_pages | size -%}
+          {%- assign printer_count = 0 -%}
+          {%- for vendor in site.data.printers -%}
+            {%- assign n = vendor.models | size -%}
+            {%- assign printer_count = printer_count | plus: n -%}
+          {%- endfor -%}
+
+          <section class="home-hero">
+            <div class="home-hero-text">
+              <h1>{{ page.hero.title | default: site.title }}</h1>
+              <p class="home-tagline">{{ page.hero.tagline }}</p>
+              {{ page.hero.lead | markdownify }}
+              <p class="home-actions">
+                <a class="btn btn-primary btn-lg" href="/meta/download.html">Download Marlin {{ release.version }}</a>
+                {% for a in page.hero.actions %}<a class="btn btn-lg" href="{{ a.url }}">{{ a.label }}</a>{% endfor %}
+              </p>
+              <p class="home-release-line">
+                Latest release <a href="//github.com/MarlinFirmware/Marlin/releases/tag/{{ release.version }}">{{ release.version }}</a>{% if beta %} &middot; Beta <a href="//github.com/MarlinFirmware/Marlin/releases/tag/{{ beta.version }}">{{ beta.version }}</a>{% endif %} &middot; <a href="/meta/releases.html">About releases</a>
+              </p>
+            </div>
+            <div class="home-hero-logo">
+              <img src="/assets/images/logo/marlin-outrun.svg" alt="Marlin Firmware logo" width="320" height="286" loading="eager" />
+            </div>
+          </section>
+
+          <ul class="home-stats" aria-label="Project at a glance">
+            <li><strong>{{ board_count }}</strong> <span>controller boards</span></li>
+            <li><strong>{{ page.stats.platforms }}</strong> <span>MCU platforms</span></li>
+            <li><strong>{{ gcode_count }}</strong> <span>G-code commands</span></li>
+            <li><strong>{{ setting_count }}</strong> <span>configuration options</span></li>
+            <li><strong>{{ printer_count }}</strong> <span>example printer configs</span></li>
+            <li><strong>{{ page.stats.since }}</strong> <span>project started</span></li>
+          </ul>
+
+          {% if page.pillars %}
+          <section class="home-section">
+            <h2 id="what-marlin-does">{{ page.pillars_title | default: "What Marlin does" }}</h2>
+            <div class="home-cards home-pillars">
+              {% for card in page.pillars %}
+              <a class="home-card" href="{{ card.url }}">
+                <svg class="home-icon" aria-hidden="true"><use xlink:href="#home-icon-{{ card.icon }}"></use></svg>
+                <h3>{{ card.title }}</h3>
+                <p>{{ card.text }}</p>
+              </a>
+              {% endfor %}
+            </div>
+          </section>
+          {% endif %}
+
+          {%- assign pcontent = content | inject_anchors -%}
+          {% if site.heading_anchors != false %}
+            {% include vendor/anchor_headings.html html=pcontent beforeHeading="true" anchorBody="<svg viewBox=\"0 0 16 16\" aria-hidden=\"true\"><use xlink:href=\"#svg-link\"></use></svg>" anchorClass="anchor-heading" anchorAttrs="aria-labelledby=\"%html_id%\"" %}
+          {% else %}
+            {{ pcontent }}
+          {% endif %}
+
+          {% if page.sections %}
+          <section class="home-section">
+            <h2 id="documentation">{{ page.sections_title | default: "Documentation" }}</h2>
+            <div class="home-cards home-tiles">
+              {% for tile in page.sections %}
+              <a class="home-card home-tile" href="{{ tile.url }}">
+                <svg class="home-icon" aria-hidden="true"><use xlink:href="#home-icon-{{ tile.icon }}"></use></svg>
+                <div>
+                  <h3>{{ tile.title }}</h3>
+                  <p>{{ tile.text }}</p>
+                </div>
+              </a>
+              {% endfor %}
+            </div>
+          </section>
+          {% endif %}
+
+          <section class="home-section home-two-col">
+            <div class="home-release">
+              <h2 id="get-marlin">Get Marlin</h2>
+              <table class="home-release-table">
+                <tr><th>Release</th><td><a href="//github.com/MarlinFirmware/Marlin/releases/tag/{{ release.version }}">{{ release.version }}</a></td><td>{{ release.description }}</td></tr>
+                {% if beta %}<tr><th>Beta</th><td><a href="//github.com/MarlinFirmware/Marlin/releases/tag/{{ beta.version }}">{{ beta.version }}</a></td><td>{{ beta.description }}</td></tr>{% endif %}
+                <tr><th>Nightly</th><td><a href="//github.com/MarlinFirmware/Marlin/tree/bugfix-2.1.x">bugfix-2.1.x</a></td><td>Latest fixes, lightly tested</td></tr>
+              </table>
+              <p>Source code is on <a href="/meta/download.html">the Download page</a>; ready-made configurations for hundreds of printers are in the <a href="{{ site.repository.config }}">Configurations</a> repository, and pre-built binaries for popular machines in <a href="{{ site.repository.builds }}">MarlinBuilds</a>. New to Marlin? Start with <a href="/docs/basics/install.html">Build &amp; Install</a>.</p>
+            </div>
+            <div class="home-community">
+              <h2 id="community">Community</h2>
+              <ul class="home-links">
+                {% for link in page.community %}
+                <li><a href="{{ link.url }}"><svg class="home-icon" aria-hidden="true"><use xlink:href="#home-icon-{{ link.icon }}"></use></svg><span><strong>{{ link.title }}</strong> <span class="home-link-text">{{ link.text }}</span></span></a></li>
+                {% endfor %}
+              </ul>
+            </div>
+          </section>
+
+          <p class="home-license">Marlin is free software released under the <a href="//github.com/MarlinFirmware/Marlin/blob/bugfix-2.1.x/LICENSE">GNU General Public License v3</a>. This documentation is maintained by the community in the <a href="{{ site.repository.doc }}">MarlinDocumentation</a> repository. <a href="/docs/development/contributing.html">Learn how to contribute.</a></p>
+
+        </main>
+        {% include components/footer.html %}
+      </div>
+    </div>
+    {% if site.search_enabled != false %}
+      {% include components/search_footer.html %}
+    {% endif %}
+  </div>
+</body>
+</html>

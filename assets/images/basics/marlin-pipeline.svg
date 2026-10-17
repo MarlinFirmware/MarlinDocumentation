@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 250" width="760" height="250" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13">
+  <title>How Marlin processes a print</title>
+  <desc>G-code from a host or SD card enters the command queue, is parsed, planned into motion blocks and turned into step pulses; temperature commands drive the heaters and fans; the display and controls talk to the queue.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0L10 5 0 10z" fill="#5a8fd6"/>
+    </marker>
+    <style>
+      .box { fill: #2b5f9e; stroke: #5a8fd6; stroke-width: 1.5; rx: 6; }
+      .in  { fill: #3a4a63; stroke: #7d8aa3; }
+      .out { fill: #7a3b2e; stroke: #d08a7a; }
+      .ui  { fill: #4a3a73; stroke: #9a86d6; }
+      .lbl { fill: #fff; font-weight: 600; text-anchor: middle; }
+      .sub { fill: #dbe7fa; font-size: 10.5px; text-anchor: middle; }
+      .cap { fill: #8a8f98; font-size: 10.5px; text-anchor: middle; }
+      .ln  { fill: none; stroke: #5a8fd6; stroke-width: 1.8; marker-end: url(#arrow); }
+      .ln2 { fill: none; stroke: #5a8fd6; stroke-width: 1.8; marker-end: url(#arrow); marker-start: url(#arrow); }
+      .hdr { fill: #5a8fd6; font-size: 11.5px; font-weight: 600; }
+      .grp { fill: none; stroke: #5a8fd6; stroke-width: 1; stroke-dasharray: 5 4; opacity: 0.6; rx: 10; }
+    </style>
+  </defs>
+
+  <!-- Marlin boundary -->
+  <rect class="grp" x="165" y="18" width="455" height="218"/>
+  <text class="cap hdr" x="392" y="33">Marlin, on the controller board</text>
+
+  <!-- Inputs -->
+  <rect class="box in" x="20" y="48" width="120" height="50"/>
+  <text class="lbl" x="80" y="69">Slicer / Host</text>
+  <text class="sub" x="80" y="86">USB serial, network</text>
+
+  <rect class="box in" x="20" y="138" width="120" height="50"/>
+  <text class="lbl" x="80" y="159">SD card</text>
+  <text class="sub" x="80" y="176">print files</text>
+
+  <!-- Queue -->
+  <rect class="box" x="185" y="93" width="110" height="50"/>
+  <text class="lbl" x="240" y="114">Command queue</text>
+  <text class="sub" x="240" y="131">buffered lines</text>
+
+  <path class="ln" d="M140 73 C160 73 165 118 185 118"/>
+  <path class="ln" d="M140 163 C160 163 165 118 185 118"/>
+
+  <!-- Parser -->
+  <rect class="box" x="325" y="93" width="110" height="50"/>
+  <text class="lbl" x="380" y="114">Parser</text>
+  <text class="sub" x="380" y="131">G1 X10 F1500 …</text>
+  <path class="ln" d="M295 118 H325"/>
+
+  <!-- Planner -->
+  <rect class="box" x="465" y="93" width="135" height="50"/>
+  <text class="lbl" x="532" y="114">Motion planner</text>
+  <text class="sub" x="532" y="131">look-ahead, acceleration</text>
+  <path class="ln" d="M435 118 H465"/>
+
+  <!-- Steppers -->
+  <rect class="box out" x="640" y="93" width="100" height="50"/>
+  <text class="lbl" x="690" y="114">Steppers</text>
+  <text class="sub" x="690" y="131">step / dir pulses</text>
+  <path class="ln" d="M600 118 H640"/>
+
+  <!-- Temperature -->
+  <rect class="box" x="465" y="178" width="135" height="50"/>
+  <text class="lbl" x="532" y="199">Temperature</text>
+  <text class="sub" x="532" y="216">PID / MPC, protection</text>
+  <path class="ln" d="M380 143 V203 H465"/>
+
+  <rect class="box out" x="640" y="178" width="100" height="50"/>
+  <text class="lbl" x="690" y="199">Heaters, fans</text>
+  <text class="sub" x="690" y="216">PWM power</text>
+  <path class="ln" d="M600 203 H640"/>
+
+  <!-- UI -->
+  <rect class="box ui" x="185" y="178" width="110" height="50"/>
+  <text class="lbl" x="240" y="199">Display &amp; UI</text>
+  <text class="sub" x="240" y="216">menus, status, host</text>
+  <path class="ln2" d="M240 178 V143"/>
+
+  <!-- Feedback caption -->
+  <text class="cap" x="392" y="247">Endstops, probes and thermistors feed back into motion and temperature control.</text>
+</svg>

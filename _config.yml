@@ -16,11 +16,10 @@ exclude:
   - public
   - script
   - vendor
-  - dev-notes.md
+  - README.md
   - AGENTS.md
-  - docs/gcode/AGENTS.md
+  - skills
   - assets/images/CREDITS.md
-  - notes
   - .hermes-tmp.*
 
 #theme: jekyll-theme-documentation

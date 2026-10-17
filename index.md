@@ -1,182 +1,133 @@
 ---
 title:       'Home'
-description: 'Marlin Firmware - A Really Good 3D Printer Driver.'
-category:    [ default ]
+description: 'Marlin Firmware — open source motion control and user interface for RepRap 3D printers.'
 layout:      home
-regenerate:  true
-# Theme Options
-nav_enabled: true
 nav_exclude: true
-gh_edit_link: true # show or hide edit this page link
-back_to_top: true
-back_to_top_text: "Back to top"
+gh_edit_link: true
+
+# Everything below is rendered by _layouts/home.html. Keep the prose in the body short:
+# the landing page points into the docs, it doesn't repeat them.
+
+hero:
+  title: Marlin Firmware
+  tagline: Open source motion control and UI for RepRap 3D printers
+  lead: |
+    Marlin is the firmware inside the printer. It reads G-code from a host or an SD card and turns it into
+    smooth, precise motion, reliable temperature control and a responsive user interface, all on a single
+    microcontroller. It has driven RepRap-style machines since 2011 and today runs on everything from classic
+    8-bit boards to modern 32-bit ARM, ESP32 and RP2040 controllers.
+  actions:
+    - label: Get started
+      url: /docs/basics/install.html
+    - label: G-code reference
+      url: /docs/gcode/index.html
+
+stats:
+  platforms: 15+     # HAL families in Marlin/src/HAL (STM32, AVR, ESP32, SAMD, RP2040, LPC, GD32, HC32, AT32, Teensy, ...)
+  since: 2011
+
+pillars_title: A complete firmware for the whole machine
+pillars:
+  - icon: motion
+    title: Motion
+    url: /docs/printers/index.html
+    text: >
+      A look-ahead planner with acceleration and junction control, Linear Advance, Input Shaping and Fixed-Time
+      Motion for cleaner prints at higher speeds. Cartesian, CoreXY, Delta, SCARA, Polar, IDEX and belt kinematics.
+  - icon: heat
+    title: Heating and safety
+    url: /docs/settings/temperature.html
+    text: >
+      PID and Model Predictive temperature control for hotends, beds and chambers. Thermal runaway protection,
+      power-loss recovery and filament runout detection are built in and on by default where it matters.
+  - icon: display
+    title: User interface
+    url: /docs/settings/lcd.html
+    text: >
+      Character and graphical LCDs, color TFT touch screens and DWIN displays, plus host interfaces and SD card
+      printing. Menus, status screens and messages in dozens of languages.
+  - icon: chip
+    title: Hardware
+    url: /docs/appendix/boards.html
+    text: >
+      Hundreds of controller boards across more than a dozen MCU families, Trinamic stepper drivers, every common
+      bed probe, multiple extruders and tool changers, and lasers and spindles for CNC work.
+
+sections_title: Find your way around
+sections:
+  - icon: book
+    title: Introduction
+    url: /docs/basics/index.html
+    text: What Marlin is, how it processes G-code, and how a print job flows from slicer to steppers.
+  - icon: download
+    title: Build & Install
+    url: /docs/basics/install.html
+    text: Get Marlin onto your board, from pre-built binaries to Auto Build Marlin and PlatformIO.
+  - icon: sliders
+    title: Configuration
+    url: /docs/configuration.html
+    text: How Configuration.h and Configuration_adv.h work, with guides for probes, displays and more.
+  - icon: printer
+    title: Printer Types
+    url: /docs/printers/index.html
+    text: How each kind of machine moves, and what that means for homing, leveling and limits.
+  - icon: star
+    title: Features
+    url: /docs/features/index.html
+    text: Bed leveling, Linear Advance, Input Shaping, firmware retraction and other major features explained.
+  - icon: list
+    title: Settings
+    url: /docs/settings/index.html
+    text: Every configuration option, grouped by section, with defaults, requirements and notes.
+  - icon: code
+    title: G-code
+    url: /docs/gcode/index.html
+    text: Every command Marlin understands, with parameters, examples and the version it arrived in.
+  - icon: wrench
+    title: Tools
+    url: /tools/index.html
+    text: Calibration pattern generators for Linear Advance and Input Shaping, bitmap and color converters.
+  - icon: appendix
+    title: Appendix
+    url: /docs/appendix/index.html
+    text: Boards, controllers, thermistors, endstops, the printer directory and troubleshooting.
+
+community:
+  - icon: github
+    title: GitHub
+    url: //github.com/MarlinFirmware/Marlin
+    text: Source code, releases and pull requests.
+  - icon: bug
+    title: Issues
+    url: //github.com/MarlinFirmware/Marlin/issues
+    text: Bug reports and feature requests.
+  - icon: chat
+    title: Discussions
+    url: //github.com/MarlinFirmware/Marlin/discussions
+    text: Questions, ideas and show-and-tell.
+  - icon: discord
+    title: Discord
+    url: //discord.com/servers/marlin-firmware-461605380783472640
+    text: Live chat with users and developers.
+  - icon: share
+    title: Social
+    url: //fosstodon.org/@marlinfirmware
+    text: Mastodon, Bluesky, X and the RepRap forums.
+  - icon: heart
+    title: Donate
+    url: /donate.html
+    text: Help fund development and hardware for testing.
 ---
 
-<!-- This how TOC is emitted with just-the-docs out of the box. But we'll emit nav in layouts instead. See _layouts/article.html  -->
-<!-- details open markdown="block">
-  <summary>Page Index</summary>{: .text-delta }
-  - TOC
-  {:toc}
-</details -->
+## Built for RepRap, ready for what comes next
 
-<script>
-const toggleDarkMode = document.querySelector('.js-toggle-dark-mode');
-jtd.addEvent(toggleDarkMode, 'click', function() {
-    if (jtd.getTheme() === 'dark') {
-        jtd.setTheme('light');
-        toggleDarkMode.textContent = 'Preview dark color scheme';
-    } else {
-        jtd.setTheme('dark');
-        toggleDarkMode.textContent = 'Return to the light side';
-    }
-});
-</script>
+Marlin began in 2011 when [Erik van der Zalm](//github.com/ErikZalm) combined Sprinter and Grbl into one firmware for
+RepRap and Ultimaker machines. It has been owned and maintained by the maker community ever since, and it now ships
+in many of the world's desktop 3D printers.
 
-# {{site.name}}
+The project's direction is simple: provide every firmware function a complete motion system and user interface needs,
+with RepRap-style 3D printers as the first priority, on a modern foundation. That means 32-bit boards and current
+toolchains as the main target, continued care for the 8-bit boards still in wide use, and a single code base that
+you can configure for your own machine rather than a vendor's.
 
-## Welcome
-
-Marlin is a highly optimized monolithic firmware designed to execute motion smoothly and reliably while maintaining a responsive user interface on a single MCU. If you need a motion system for your project consider choosing Marlin!
-
-The sidebar has one other feature — this one from Bootstrap. If the user’s viewport is tall enough, the sidebar remains fixed on the page. This allows the user to scroll down the page and still keep the sidebar in view.
-
-In the customsscripts.js file in the js folder, there’s a function that adds an affix class if the height of the browser window is greater than 800 pixels. If the browser’s height is less than 800 pixels, the nav affix class does not get inserted. As a result, the sidebar can slide up and down as the user scrolls up and down the page.
-
-Depending on your content, you may need to adjust 800 pixel number. If your sidebar is so long that having it in a fixed position makes it so the bottom of the sidebar gets cut off, increase the 800 pixel number here to a higher number.
-
-Text can be **bold**, _italic_, or ~~strikethrough~~.
-
-[Link to another page](../another-page).
-
-There should be whitespace between paragraphs.
-
-There should be whitespace between paragraphs. We recommend including a README, or a file with information about your project.
-
-# [](#header-1)Header 1
-
-This is a normal paragraph following a header. GitHub is a code hosting platform for version control and collaboration. It lets you and others work together on projects from anywhere.
-
-## [](#header-2)Header 2
-
-> This is a blockquote following a header.
->
-> When something is important enough, you do it even if the odds are not in your favor.
-
-### [](#header-3)Header 3
-
-```py
-# Python code with syntax highlighting
-import module
-
-def function(x):
-    return x + 1
-
-class ClassName(object):
-    """docstring for ClassName"""
-    def __init__(self, arg):
-        super(ClassName, self).__init__()
-        self.arg = arg
-
-    @property
-    def foo(self):
-        return self._foo
-```
-
-```js
-// Javascript code with syntax highlighting.
-var fun = function lang(l) {
-  dateformat.i18n = require('./lang/' + l)
-  return true;
-}
-```
-
-```ruby
-# Ruby code with syntax highlighting
-GitHubPages::Dependencies.gems.each do |gem, version|
-  s.add_dependency(gem, "= #{version}")
-end
-```
-
-#### [](#header-4)Header 4
-
-*   This is an unordered list following a header.
-*   This is an unordered list following a header.
-*   This is an unordered list following a header.
-
-##### [](#header-5)Header 5
-
-1.  This is an ordered list following a header.
-2.  This is an ordered list following a header.
-3.  This is an ordered list following a header.
-
-###### [](#header-6)Header 6
-
-| head1        | head two          | three |
-|:-------------|:------------------|:------|
-| ok           | good swedish fish | nice  |
-| out of stock | good and plenty   | nice  |
-| ok           | good `oreos`      | hmm   |
-| ok           | good `zoute` drop | yumm  |
-
-### There's a horizontal rule below this.
-
-* * *
-
-### Here is an unordered list:
-
-*   Item foo
-*   Item bar
-*   Item baz
-*   Item zip
-
-### And an ordered list:
-
-1.  Item one
-1.  Item two
-1.  Item three
-1.  Item four
-
-### And a nested list:
-
-- level 1 item
-  - level 2 item
-  - level 2 item
-    - level 3 item
-    - level 3 item
-- level 1 item
-  - level 2 item
-  - level 2 item
-  - level 2 item
-- level 1 item
-  - level 2 item
-  - level 2 item
-- level 1 item
-
-### Small image
-
-![](https://assets-cdn.github.com/images/icons/emoji/octocat.png)
-
-### Large image
-
-![](https://guides.github.com/activities/hello-world/branching.png)
-
-### Definition lists can be used with HTML syntax.
-
-<dl>
-<dt>Name</dt>
-<dd>Godzilla</dd>
-<dt>Born</dt>
-<dd>1952</dd>
-<dt>Birthplace</dt>
-<dd>Japan</dd>
-<dt>Color</dt>
-<dd>Green</dd>
-</dl>
-
-```
-Long, single-line code blocks should not wrap. They should horizontally scroll if they are too long. This line should be long enough to demonstrate this.
-```
-
-```
-The final element.
-```
+![How Marlin fits between the slicer and the printer: G-code arrives from a host or SD card, is queued and parsed, planned into motion blocks and finally turned into step pulses and heater power.](/assets/images/basics/marlin-pipeline.svg){: .home-figure }
