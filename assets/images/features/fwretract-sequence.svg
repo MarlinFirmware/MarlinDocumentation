@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 372" width="760" height="372" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13">
+  <title>The G10 / G11 firmware retraction sequence</title>
+  <desc>Five steps left to right: G10 retracts the filament, then raises the nozzle (Z hop); the travel move runs with both still applied; G11 lowers the nozzle, then pushes the filament forward by the retract length plus the extra length. Two traces show nozzle height and filament position over the sequence. Under each step is the option and G-code that sets it. A note at the bottom gives the swap-retraction equivalents.</desc>
+  <defs>
+    <marker id="arr-g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 0L10 5 0 10z" fill="#8a8f98"/>
+    </marker>
+    <style>
+      .box  { fill: #2b5f9e; stroke: #5a8fd6; stroke-width: 1.5; }
+      .boxt { fill: rgba(44,132,250,0.22); stroke: #5a8fd6; stroke-width: 1.2; stroke-dasharray: 6 4; }
+      .lbl  { fill: #fff; font-weight: 600; text-anchor: middle; }
+      .sub  { fill: #dbe7fa; font-size: 10.5px; text-anchor: middle; }
+      .lblt { fill: #5a8fd6; font-weight: 600; text-anchor: middle; }
+      .subt { fill: #8a8f98; font-size: 10.5px; text-anchor: middle; }
+      .grp  { fill: #e0813f; font-weight: 600; font-size: 12px; text-anchor: middle; }
+      .brk  { fill: none; stroke: #e0813f; stroke-width: 1.4; }
+      .opt  { fill: #8a8f98; font-family: Menlo, Consolas, 'Courier New', monospace; font-size: 10px; text-anchor: middle; }
+      .cap  { fill: #8a8f98; font-size: 10.5px; text-anchor: middle; }
+      .leg  { fill: #8a8f98; font-size: 11.5px; }
+      .zl   { fill: none; stroke: #2dd4bf; stroke-width: 2.4; stroke-linejoin: round; }
+      .el   { fill: none; stroke: #e0813f; stroke-width: 2.4; stroke-linejoin: round; }
+      .ref  { fill: none; stroke: #8a8f98; stroke-width: 1; stroke-dasharray: 6 4; }
+      .dim  { fill: none; stroke: #8a8f98; stroke-width: 1.1; marker-start: url(#arr-g); marker-end: url(#arr-g); }
+      .dimt { fill: #8a8f98; font-size: 10.5px; }
+      .sep  { fill: none; stroke: #8a8f98; stroke-width: 0.8; opacity: 0.5; }
+      .swap { fill: #8a8f98; font-size: 11px; }
+      .swapm { fill: #2dd4bf; font-family: Menlo, Consolas, 'Courier New', monospace; font-size: 10px; }
+    </style>
+  </defs>
+
+  <!-- Legend -->
+  <line class="zl" x1="30" y1="18" x2="58" y2="18"/>
+  <text class="leg" x="64" y="22">Nozzle height (Z)</text>
+  <line class="el" x1="200" y1="18" x2="228" y2="18"/>
+  <text class="leg" x="234" y="22">Filament position at the extruder (E)</text>
+  <text class="leg" x="738" y="22" text-anchor="end">not to scale</text>
+
+  <!-- Command brackets -->
+  <path class="brk" d="M30 52 V44 H306 V52"/>
+  <text class="grp" x="168" y="39">G10</text>
+  <path class="brk" d="M462 52 V44 H738 V52"/>
+  <text class="grp" x="600" y="39">G11</text>
+
+  <!-- Step boxes -->
+  <rect class="box" x="30" y="58" width="132" height="50" rx="6"/>
+  <text class="lbl" x="96" y="79">1. Retract</text>
+  <text class="sub" x="96" y="96">pull filament back</text>
+
+  <rect class="box" x="174" y="58" width="132" height="50" rx="6"/>
+  <text class="lbl" x="240" y="79">2. Z hop</text>
+  <text class="sub" x="240" y="96">raise the nozzle</text>
+
+  <rect class="boxt" x="318" y="58" width="132" height="50" rx="6"/>
+  <text class="lblt" x="384" y="79">3. Travel</text>
+  <text class="subt" x="384" y="96">G0/G1 moves</text>
+
+  <rect class="box" x="462" y="58" width="132" height="50" rx="6"/>
+  <text class="lbl" x="528" y="79">4. Unhop</text>
+  <text class="sub" x="528" y="96">lower the nozzle</text>
+
+  <rect class="box" x="606" y="58" width="132" height="50" rx="6"/>
+  <text class="lbl" x="672" y="79">5. Recover</text>
+  <text class="sub" x="672" y="96">length + extra</text>
+
+  <!-- Column separators for the trace area -->
+  <line class="sep" x1="168" y1="120" x2="168" y2="246"/>
+  <line class="sep" x1="312" y1="120" x2="312" y2="246"/>
+  <line class="sep" x1="456" y1="120" x2="456" y2="246"/>
+  <line class="sep" x1="600" y1="120" x2="600" y2="246"/>
+
+  <!-- Z trace: low, rises in step 2, high through travel, drops in step 4 -->
+  <path class="zl" d="M30 160 H200 L280 132 H488 L568 160 H738"/>
+  <line class="dim" x1="292" y1="134" x2="292" y2="158"/>
+  <text class="dimt" x="300" y="150">hop</text>
+
+  <!-- E trace: start level, retract in step 1, flat, recover past start in step 5 -->
+  <line class="ref" x1="30" y1="190" x2="738" y2="190"/>
+  <path class="el" d="M30 190 H56 L136 228 H632 L712 174 H738"/>
+  <line class="dim" x1="146" y1="192" x2="146" y2="226"/>
+  <text class="dimt" x="140" y="244" text-anchor="end">length</text>
+  <line class="dim" x1="726" y1="176" x2="726" y2="188"/>
+  <text class="dimt" x="720" y="170" text-anchor="end">extra</text>
+  <text class="cap" x="384" y="212">offsets stay applied</text>
+
+  <!-- Governing options under each step -->
+  <text class="opt" x="96" y="268">RETRACT_LENGTH</text>
+  <text class="cap" x="96" y="281">M207 S</text>
+  <text class="opt" x="96" y="298">RETRACT_FEEDRATE</text>
+  <text class="cap" x="96" y="311">M207 F</text>
+
+  <text class="opt" x="240" y="268">RETRACT_ZRAISE</text>
+  <text class="cap" x="240" y="281">M207 Z</text>
+  <text class="cap" x="240" y="298">max Z feedrate</text>
+  <text class="cap" x="240" y="311">M203 Z</text>
+
+  <text class="cap" x="384" y="268">Z and E positions in</text>
+  <text class="cap" x="384" y="281">the G-code unchanged</text>
+
+  <text class="cap" x="528" y="268">only if a hop was done</text>
+  <text class="cap" x="528" y="298">max Z feedrate</text>
+  <text class="cap" x="528" y="311">M203 Z</text>
+
+  <text class="opt" x="672" y="268">RETRACT_RECOVER_LENGTH</text>
+  <text class="cap" x="672" y="281">M208 S (extra)</text>
+  <text class="opt" x="672" y="298">RETRACT_RECOVER_FEEDRATE</text>
+  <text class="cap" x="672" y="311">M208 F</text>
+
+  <!-- Swap variant -->
+  <line class="sep" x1="30" y1="326" x2="738" y2="326"/>
+  <text class="swap" x="30" y="344">Swap, G10 S1 (2+ extruders): length <tspan class="swapm">RETRACT_LENGTH_SWAP</tspan> (M207 W), same retract feedrate</text>
+  <text class="swap" x="30" y="362">Next G11 on that extruder: + <tspan class="swapm">RETRACT_RECOVER_LENGTH_SWAP</tspan> (M208 W) at <tspan class="swapm">RETRACT_RECOVER_FEEDRATE_SWAP</tspan> (M208 R)</text>
+</svg>
