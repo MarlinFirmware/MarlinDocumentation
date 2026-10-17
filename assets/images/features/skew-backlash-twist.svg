@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 262" width="560" height="262" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12">
+  <title>Skew, backlash and X-axis twist</title>
+  <desc>Three panels. Skew: a printed square that came out as a parallelogram, with the ideal square dashed behind it, corners A B C D, the two diagonals AC and BD and the side AD, which are the measurements XY_DIAG_AC, XY_DIAG_BD and XY_SIDE_AD. Backlash: a graph of position over time where the commanded position reverses direction but the actual position stays still for a moment, so it lags behind by BACKLASH_DISTANCE_MM after every reversal. X-axis twist: three side views of the X carriage at the left, middle and right of the gantry; the carriage tilts by a different amount at each position, so the probe tip sits at a different height relative to the nozzle tip at each X. These differences are the XATC_Z_OFFSETS. Not to scale.</desc>
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 0L10 5 0 10z" fill="#8a8f98"/>
+    </marker>
+    <marker id="aht" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M0 0L10 5 0 10z" fill="#2dd4bf"/>
+    </marker>
+    <style>
+      .t      { fill: #8a8f98; }
+      .tm     { fill: #8a8f98; text-anchor: middle; }
+      .th     { fill: #8a8f98; text-anchor: middle; font-weight: 600; font-size: 13px; }
+      .small  { font-size: 10.5px; }
+      .mono   { font-family: SFMono-Regular, Menlo, Consolas, monospace; font-size: 11px; }
+      .tteal  { fill: #2dd4bf; }
+      .div    { stroke: #8a8f98; stroke-width: 1; stroke-dasharray: 2 4; opacity: 0.6; }
+      .ideal  { fill: none; stroke: #8a8f98; stroke-width: 1.2; stroke-dasharray: 6 4; }
+      .print  { fill: rgba(44, 132, 250, 0.22); stroke: #8a8f98; stroke-width: 1.5; }
+      .ac     { stroke: #e0813f; stroke-width: 2.2; fill: none; }
+      .bd     { stroke: #5a8fd6; stroke-width: 2.2; fill: none; }
+      .ad     { stroke: #2dd4bf; stroke-width: 3.5; fill: none; }
+      .axis   { stroke: #8a8f98; stroke-width: 1.2; fill: none; marker-end: url(#ah); }
+      .cmd    { stroke: #8a8f98; stroke-width: 1.5; stroke-dasharray: 6 4; fill: none; }
+      .act    { stroke: #e0813f; stroke-width: 2.2; fill: none; }
+      .gap    { stroke: #2dd4bf; stroke-width: 1.5; fill: none; marker-start: url(#aht); marker-end: url(#aht); }
+      .band   { fill: rgba(45, 212, 191, 0.25); }
+      .bed    { fill: rgba(136, 136, 136, 0.22); stroke: #8a8f98; stroke-width: 1.2; }
+      .rail   { fill: rgba(136, 136, 136, 0.35); stroke: #8a8f98; stroke-width: 1.2; }
+      .car    { fill: rgba(136, 136, 136, 0.22); stroke: #8a8f98; stroke-width: 1.2; }
+      .noz    { fill: #e0813f; }
+      .prb    { fill: #2dd4bf; }
+    </style>
+  </defs>
+
+  <line class="div" x1="185" y1="8" x2="185" y2="254"/>
+  <line class="div" x1="375" y1="8" x2="375" y2="254"/>
+
+  <!-- Panel 1: skew -->
+  <text class="th" x="92" y="22">Skew</text>
+  <text class="tm small" x="92" y="38">printed square, top view</text>
+  <path class="ideal" d="M25 185 V72 H140 V185 Z"/>
+  <path class="print" d="M25 185 L48 72 H163 L140 185 Z"/>
+  <line class="ac" x1="25" y1="185" x2="163" y2="72"/>
+  <line class="bd" x1="48" y1="72" x2="140" y2="185"/>
+  <line class="ad" x1="25" y1="185" x2="140" y2="185"/>
+  <text class="t" x="12" y="198">A</text>
+  <text class="t" x="38" y="64">B</text>
+  <text class="t" x="166" y="64">C</text>
+  <text class="t" x="145" y="199">D</text>
+  <line class="ac" x1="12" y1="212" x2="34" y2="212"/>
+  <text class="t mono" x="40" y="216">XY_DIAG_AC</text>
+  <line class="bd" x1="12" y1="229" x2="34" y2="229"/>
+  <text class="t mono" x="40" y="233">XY_DIAG_BD</text>
+  <line class="ad" x1="12" y1="246" x2="34" y2="246"/>
+  <text class="t mono" x="40" y="250">XY_SIDE_AD</text>
+
+  <!-- Panel 2: backlash -->
+  <text class="th" x="280" y="22">Backlash</text>
+  <text class="tm small" x="280" y="38">one axis, position over time</text>
+  <line class="axis" x1="205" y1="185" x2="205" y2="52"/>
+  <line class="axis" x1="205" y1="185" x2="364" y2="185"/>
+  <text class="t small" x="211" y="58">position</text>
+  <text class="t small" x="364" y="199" text-anchor="end">time</text>
+  <rect class="band" x="275" y="74" width="22" height="12"/>
+  <text class="tm small" x="286" y="68">dead band</text>
+  <polyline class="cmd" points="210,170 275,80 355,170"/>
+  <polyline class="act" points="210,170 275,80 297,80 355,145"/>
+  <line class="gap" x1="333" y1="121" x2="333" y2="144"/>
+  <line class="cmd" x1="200" y1="212" x2="222" y2="212"/>
+  <text class="t" x="228" y="216">commanded</text>
+  <line class="act" x1="200" y1="229" x2="222" y2="229"/>
+  <text class="t" x="228" y="233">actual</text>
+  <line class="gap" x1="211" y1="239" x2="211" y2="253"/>
+  <text class="t mono" x="228" y="250">BACKLASH_DISTANCE_MM</text>
+
+  <!-- Panel 3: X-axis twist -->
+  <text class="th" x="468" y="22">X-axis twist</text>
+  <text class="tm small" x="468" y="38">seen along X, not to scale</text>
+  <text class="tm small" x="415" y="80">X min</text>
+  <text class="tm small" x="470" y="80">X mid</text>
+  <text class="tm small" x="525" y="80">X max</text>
+  <rect class="bed" x="388" y="170" width="164" height="9"/>
+
+  <g transform="rotate(-12 415 95)">
+    <rect class="car" x="399" y="100" width="36" height="28"/>
+    <path class="noz" d="M404 128 H414 L409 142 Z"/>
+    <rect class="prb" x="427" y="128" width="6" height="10"/>
+  </g>
+  <circle class="rail" cx="415" cy="95" r="5"/>
+
+  <g>
+    <rect class="car" x="454" y="100" width="36" height="28"/>
+    <path class="noz" d="M459 128 H469 L464 142 Z"/>
+    <rect class="prb" x="482" y="128" width="6" height="10"/>
+  </g>
+  <circle class="rail" cx="470" cy="95" r="5"/>
+
+  <g transform="rotate(12 525 95)">
+    <rect class="car" x="509" y="100" width="36" height="28"/>
+    <path class="noz" d="M514 128 H524 L519 142 Z"/>
+    <rect class="prb" x="537" y="128" width="6" height="10"/>
+  </g>
+  <circle class="rail" cx="525" cy="95" r="5"/>
+
+  <line class="cmd" x1="413" y1="142.2" x2="445" y2="142.2" style="stroke-dasharray: 2 2; stroke-width: 1"/>
+  <line class="cmd" x1="460" y1="142" x2="492" y2="142" style="stroke-dasharray: 2 2; stroke-width: 1"/>
+  <line class="cmd" x1="505" y1="139.7" x2="538" y2="139.7" style="stroke-dasharray: 2 2; stroke-width: 1"/>
+  <text class="tteal mono" x="415" y="195" text-anchor="middle">z0</text>
+  <text class="tteal mono" x="470" y="195" text-anchor="middle">z1</text>
+  <text class="tteal mono" x="525" y="195" text-anchor="middle">z2</text>
+
+  <path class="noz" d="M390 207 H400 L395 218 Z"/>
+  <text class="t" x="406" y="216">nozzle</text>
+  <rect class="prb" x="392" y="224" width="6" height="10"/>
+  <text class="t" x="406" y="233">probe</text>
+  <text class="tteal mono" x="390" y="250">z0–z2</text>
+  <text class="t mono" x="432" y="250">XATC_Z_OFFSETS</text>
+</svg>

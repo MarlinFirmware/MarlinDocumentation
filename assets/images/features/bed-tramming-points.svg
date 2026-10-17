@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 410" width="560" height="410" role="img" aria-labelledby="t d">
+  <title id="t">Bed tramming points and screw-turn convention</title>
+  <desc id="d">Top view of a bed with a leveling screw near each corner. G35 probes points 1 to 4 over the screws, with point 1 as the reference. The LCD Bed Tramming points sit inside the bed edges by the four BED_TRAMMING_INSET_LFRB distances and are visited in the order LF, RF, RB, LB, with an optional center point. On the right, TRAMMING_SCREW_THREAD values ending in _CW mean a clockwise turn raises a corner, values ending in _CCW mean a counter-clockwise turn raises it, and G35 uses a pitch of 0.5, 0.7 or 0.8 mm per turn for M3, M4 and M5.</desc>
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 12px; fill: #8a8f98; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 11px; }
+    .small { font-size: 11px; }
+    .teal { fill: #2dd4bf; }
+    .orange { fill: #e0813f; }
+    .bed { fill: rgba(136,136,136,0.22); stroke: #8a8f98; stroke-width: 1.5; }
+    .screw { fill: none; stroke: #8a8f98; stroke-width: 1.5; }
+    .slot { stroke: #8a8f98; stroke-width: 1.5; }
+    .g35 { fill: none; stroke: #e0813f; stroke-width: 2; }
+    .lcdpt { fill: #2dd4bf; }
+    .lcdbox { fill: none; stroke: #2dd4bf; stroke-width: 1; stroke-dasharray: 6 4; }
+    .dim { stroke: #2dd4bf; stroke-width: 1; fill: none; }
+    .arc { fill: none; stroke: #e0813f; stroke-width: 2; }
+    .head { fill: #e0813f; }
+    .divider { stroke: #8a8f98; stroke-width: 1; stroke-dasharray: 6 4; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L8,4 L0,8 z" fill="#2dd4bf"/>
+    </marker>
+  </defs>
+
+  <!-- Legend -->
+  <circle cx="36" cy="20" r="5" class="lcdpt"/>
+  <text x="46" y="24">LCD Bed Tramming point</text>
+  <circle cx="206" cy="20" r="7" class="g35"/>
+  <text x="219" y="24">G35 probe point</text>
+  <circle cx="330" cy="20" r="6" class="screw"/>
+  <line x1="326" y1="20" x2="334" y2="20" class="slot"/>
+  <text x="342" y="24">Bed screw</text>
+
+  <!-- Bed -->
+  <rect x="30" y="56" width="320" height="264" rx="4" class="bed"/>
+  <text x="190" y="337" text-anchor="middle">FRONT</text>
+
+  <!-- LCD tramming rectangle and points -->
+  <rect x="76" y="102" width="228" height="172" class="lcdbox"/>
+  <circle cx="76" cy="274" r="5" class="lcdpt"/>
+  <circle cx="304" cy="274" r="5" class="lcdpt"/>
+  <circle cx="304" cy="102" r="5" class="lcdpt"/>
+  <circle cx="76" cy="102" r="5" class="lcdpt"/>
+  <text x="86" y="268" class="teal">1 LF</text>
+  <text x="294" y="268" class="teal" text-anchor="end">2 RF</text>
+  <text x="294" y="120" class="teal" text-anchor="end">3 RB</text>
+  <text x="86" y="120" class="teal">4 LB</text>
+  <circle cx="190" cy="188" r="5" fill="none" stroke="#2dd4bf" stroke-width="1.5" stroke-dasharray="3 2"/>
+  <text x="190" y="208" text-anchor="middle" class="small">center (optional)</text>
+
+  <!-- Inset dimensions -->
+  <line x1="31" y1="160" x2="75" y2="160" class="dim" marker-start="url(#a)" marker-end="url(#a)"/>
+  <text x="53" y="154" text-anchor="middle" class="teal">L</text>
+  <line x1="305" y1="160" x2="349" y2="160" class="dim" marker-start="url(#a)" marker-end="url(#a)"/>
+  <text x="327" y="154" text-anchor="middle" class="teal">R</text>
+  <line x1="150" y1="57" x2="150" y2="101" class="dim" marker-start="url(#a)" marker-end="url(#a)"/>
+  <text x="158" y="84" class="teal">B</text>
+  <line x1="150" y1="275" x2="150" y2="319" class="dim" marker-start="url(#a)" marker-end="url(#a)"/>
+  <text x="158" y="302" class="teal">F</text>
+
+  <!-- Screws with G35 points -->
+  <g>
+    <circle cx="52" cy="298" r="6" class="screw"/><line x1="48" y1="298" x2="56" y2="298" class="slot"/>
+    <circle cx="52" cy="298" r="11" class="g35"/>
+    <circle cx="328" cy="298" r="6" class="screw"/><line x1="324" y1="298" x2="332" y2="298" class="slot"/>
+    <circle cx="328" cy="298" r="11" class="g35"/>
+    <circle cx="328" cy="78" r="6" class="screw"/><line x1="324" y1="78" x2="332" y2="78" class="slot"/>
+    <circle cx="328" cy="78" r="11" class="g35"/>
+    <circle cx="52" cy="78" r="6" class="screw"/><line x1="48" y1="78" x2="56" y2="78" class="slot"/>
+    <circle cx="52" cy="78" r="11" class="g35"/>
+  </g>
+  <text x="68" y="310" class="orange">1 (reference)</text>
+  <text x="312" y="310" class="orange" text-anchor="end">2</text>
+  <text x="312" y="74" class="orange" text-anchor="end">3</text>
+  <text x="68" y="74" class="orange">4</text>
+
+  <!-- Captions under the bed -->
+  <text x="30" y="360" class="mono teal">BED_TRAMMING_INSET_LFRB { L, F, R, B }</text>
+  <text x="30" y="378"><tspan class="mono orange">TRAMMING_POINT_XY</tspan> probe points, placed over the screws</text>
+  <text x="30" y="400" class="small">Top view, front at the bottom. Default order shown. Not to scale.</text>
+
+  <!-- Divider -->
+  <line x1="370" y1="48" x2="370" y2="340" class="divider"/>
+
+  <!-- Screw thread panel -->
+  <text x="385" y="66" class="mono">TRAMMING_SCREW_THREAD</text>
+
+  <circle cx="405" cy="112" r="7" class="screw"/>
+  <line x1="400" y1="112" x2="410" y2="112" class="slot"/>
+  <path d="M 385 112 A 20 20 0 1 1 405 132" class="arc"/>
+  <polygon points="397,132 406,127 406,137" class="head"/>
+  <text x="436" y="108">Clockwise turn</text>
+  <text x="436" y="124">raises the corner</text>
+  <text x="385" y="152" class="mono">M3_CW  M4_CW  M5_CW</text>
+
+  <circle cx="405" cy="196" r="7" class="screw"/>
+  <line x1="400" y1="196" x2="410" y2="196" class="slot"/>
+  <path d="M 425 196 A 20 20 0 1 0 405 216" class="arc"/>
+  <polygon points="413,216 404,211 404,221" class="head"/>
+  <text x="436" y="192">Counter-clockwise</text>
+  <text x="436" y="208">raises the corner</text>
+  <text x="385" y="236" class="mono">M3_CCW M4_CCW M5_CCW</text>
+
+  <text x="385" y="268">Pitch used by G35</text>
+  <text x="385" y="286"><tspan class="mono">M3</tspan>  0.5 mm per turn</text>
+  <text x="385" y="302"><tspan class="mono">M4</tspan>  0.7 mm per turn</text>
+  <text x="385" y="318"><tspan class="mono">M5</tspan>  0.8 mm per turn</text>
+  <text x="385" y="336" class="small">1 turn = 60 minutes</text>
+</svg>

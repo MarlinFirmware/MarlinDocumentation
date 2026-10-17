@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 320" width="560" height="320" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12">
+  <title>The three G12 nozzle cleaning patterns</title>
+  <desc>Top view of three cleaning areas. Left: G12 P0, the stroke pattern, moves the nozzle back and forth in a straight line between NOZZLE_CLEAN_START_POINT and NOZZLE_CLEAN_END_POINT, S times. Middle: G12 P1, the zigzag pattern, draws T triangles inside the rectangle spanned by the start and end points, advancing along the longer side, and repeats S times. Right: G12 P2, the circle pattern, moves to the start point, then traces a circle of radius R around NOZZLE_CLEAN_CIRCLE_MIDDLE in NOZZLE_CLEAN_CIRCLE_FN straight segments, S times, and returns to the start point. Not to scale.</desc>
+  <defs>
+    <marker id="ab" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 0L10 5 0 10z" fill="#5a8fd6"/>
+    </marker>
+    <marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 0L10 5 0 10z" fill="#8a8f98"/>
+    </marker>
+    <style>
+      .t     { fill: #8a8f98; }
+      .tm    { fill: #8a8f98; text-anchor: middle; }
+      .hd    { fill: #e0813f; text-anchor: middle; font-weight: 600; font-size: 13px; }
+      .mono  { font-family: SFMono-Regular, Menlo, Consolas, monospace; font-size: 11px; }
+      .area  { fill: rgba(136, 136, 136, 0.22); stroke: #8a8f98; stroke-width: 1.2; }
+      .box   { fill: rgba(44, 132, 250, 0.12); stroke: #8a8f98; stroke-width: 1; stroke-dasharray: 4 3; }
+      .path  { fill: none; stroke: #5a8fd6; stroke-width: 2; stroke-linejoin: round; }
+      .both  { fill: none; stroke: #5a8fd6; stroke-width: 2.2; marker-start: url(#ab); marker-end: url(#ab); }
+      .go    { fill: none; stroke: #8a8f98; stroke-width: 1.4; stroke-dasharray: 4 3; marker-end: url(#ag); }
+      .rad   { stroke: #e0813f; stroke-width: 1.4; }
+      .start { fill: #2dd4bf; }
+      .end   { fill: #fb7185; }
+      .mid   { fill: none; stroke: #2dd4bf; stroke-width: 2; }
+    </style>
+  </defs>
+
+  <!-- Panel titles -->
+  <text class="hd" x="97" y="24">G12 P0 · stroke</text>
+  <text class="hd" x="280" y="24">G12 P1 · zigzag</text>
+  <text class="hd" x="463" y="24">G12 P2 · circle</text>
+
+  <!-- Panel areas -->
+  <rect class="area" x="12" y="40" width="170" height="176" rx="6"/>
+  <rect class="area" x="195" y="40" width="170" height="176" rx="6"/>
+  <rect class="area" x="378" y="40" width="170" height="176" rx="6"/>
+
+  <!-- P0: stroke -->
+  <line class="both" x1="44" y1="186" x2="150" y2="84"/>
+  <circle class="start" cx="40" cy="190" r="5"/>
+  <circle class="end" cx="155" cy="80" r="5"/>
+  <text class="t" x="50" y="204">start</text>
+  <text class="t" x="128" y="66">end</text>
+  <text class="t mono" x="106" y="166">S strokes</text>
+
+  <!-- P1: zigzag -->
+  <rect class="box" x="227" y="80" width="118" height="110"/>
+  <polyline class="path" points="227.0,190 246.7,80 266.3,190 286.0,80 305.7,190 325.3,80 345.0,190"/>
+  <circle class="start" cx="227" cy="190" r="5"/>
+  <circle class="end" cx="345" cy="80" r="5"/>
+  <text class="t" x="206" y="208">start</text>
+  <text class="t" x="322" y="66">end</text>
+  <text class="tm mono" x="303" y="208">T = 3 triangles</text>
+
+  <!-- P2: circle -->
+  <polyline class="path" points="463.0,89.0 490.0,97.8 506.7,120.8 506.7,149.2 490.0,172.2 463.0,181.0 436.0,172.2 419.3,149.2 419.3,120.8 436.0,97.8 463.0,89.0"/>
+  <line class="rad" x1="463" y1="135" x2="506.7" y2="149.2"/>
+  <text class="t mono" x="473" y="169">R</text>
+  <line class="go" x1="463" y1="129" x2="463" y2="96"/>
+  <circle class="mid" cx="463" cy="135" r="7"/>
+  <circle class="start" cx="463" cy="135" r="4"/>
+  <text class="tm" x="463" y="208">start = middle (default)</text>
+  <text class="t mono" x="388" y="58">FN segments</text>
+
+  <!-- Legend -->
+  <circle class="start" cx="20" cy="242" r="5"/>
+  <text class="t mono" x="32" y="246">NOZZLE_CLEAN_START_POINT</text>
+  <circle class="end" cx="300" cy="242" r="5"/>
+  <text class="t mono" x="312" y="246">NOZZLE_CLEAN_END_POINT</text>
+  <circle class="mid" cx="20" cy="264" r="6"/>
+  <text class="t mono" x="32" y="268">NOZZLE_CLEAN_CIRCLE_MIDDLE</text>
+  <line class="rad" x1="294" y1="264" x2="306" y2="264"/>
+  <text class="t mono" x="312" y="268">R: NOZZLE_CLEAN_CIRCLE_RADIUS</text>
+  <text class="t mono" x="20" y="290">S: NOZZLE_CLEAN_STROKES</text>
+  <text class="t mono" x="300" y="290">T: NOZZLE_CLEAN_TRIANGLES</text>
+  <text class="t" x="20" y="310">Top view, not to scale. FN is NOZZLE_CLEAN_CIRCLE_FN.</text>
+</svg>

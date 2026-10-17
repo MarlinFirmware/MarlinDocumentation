@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 330" width="560" height="330" role="img" aria-labelledby="t d">
+  <title id="t">TMC stepping mode by speed</title>
+  <desc id="d">Five horizontal bars over a speed axis. With STEALTHCHOP_XY enabled and no hybrid threshold the driver uses stealthChop at every speed. With STEALTHCHOP_XY disabled it uses spreadCycle at every speed. With HYBRID_THRESHOLD it uses stealthChop below X_HYBRID_THRESHOLD and spreadCycle above it. During sensorless homing TMC2130, 2160, 5130 and 5160 drivers use spreadCycle with StallGuard2, while TMC2209 and TMC2240 drivers use stealthChop with StallGuard4.</desc>
+  <style>
+    .lbl  { font: 12px -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; fill: #8a8f98; }
+    .sub  { font: 11px -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; fill: #8a8f98; }
+    .mono { font: 11px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fill: #8a8f98; }
+    .in   { font: 600 12px -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; fill: #ffffff; }
+    .stealth { fill: #5a8fd6; }
+    .spread  { fill: #e0813f; }
+    .axis { stroke: #8a8f98; stroke-width: 1.5; fill: none; }
+    .thr  { stroke: #fb7185; stroke-width: 1.5; stroke-dasharray: 6 4; fill: none; }
+  </style>
+
+  <!-- Legend -->
+  <rect x="200" y="14" width="14" height="14" rx="2" class="stealth"/>
+  <text x="220" y="25" class="lbl">stealthChop (quiet)</text>
+  <rect x="360" y="14" width="14" height="14" rx="2" class="spread"/>
+  <text x="380" y="25" class="lbl">spreadCycle (torque)</text>
+
+  <!-- Row 1: STEALTHCHOP on, no hybrid -->
+  <text x="16" y="60" class="mono">STEALTHCHOP_XY</text>
+  <text x="16" y="75" class="sub">enabled (default)</text>
+  <rect x="200" y="52" width="340" height="24" rx="3" class="stealth"/>
+  <text x="370" y="69" text-anchor="middle" class="in">stealthChop at every speed</text>
+
+  <!-- Row 2: STEALTHCHOP off -->
+  <text x="16" y="108" class="mono">STEALTHCHOP_XY</text>
+  <text x="16" y="123" class="sub">disabled</text>
+  <rect x="200" y="100" width="340" height="24" rx="3" class="spread"/>
+  <text x="370" y="117" text-anchor="middle" class="in">spreadCycle at every speed</text>
+
+  <!-- Row 3: Hybrid threshold -->
+  <text x="16" y="156" class="mono">HYBRID_THRESHOLD</text>
+  <text x="16" y="171" class="sub">enabled</text>
+  <rect x="200" y="148" width="136" height="24" rx="3" class="stealth"/>
+  <rect x="336" y="148" width="204" height="24" rx="3" class="spread"/>
+  <text x="268" y="165" text-anchor="middle" class="in">stealthChop</text>
+  <text x="438" y="165" text-anchor="middle" class="in">spreadCycle</text>
+
+  <!-- Row 4: sensorless homing, StallGuard2 drivers -->
+  <text x="16" y="204" class="lbl">Sensorless homing</text>
+  <text x="16" y="219" class="sub">TMC2130, 2160, 5130, 5160</text>
+  <rect x="200" y="196" width="340" height="24" rx="3" class="spread"/>
+  <text x="370" y="213" text-anchor="middle" class="in">spreadCycle + StallGuard2</text>
+
+  <!-- Row 5: sensorless homing, StallGuard4 drivers -->
+  <text x="16" y="252" class="lbl">Sensorless homing</text>
+  <text x="16" y="267" class="sub">TMC2209, TMC2240</text>
+  <rect x="200" y="244" width="340" height="24" rx="3" class="stealth"/>
+  <text x="370" y="261" text-anchor="middle" class="in">stealthChop + StallGuard4</text>
+
+  <!-- Threshold line -->
+  <line x1="336" y1="140" x2="336" y2="180" class="thr"/>
+  <line x1="336" y1="279" x2="336" y2="293" class="thr"/>
+
+  <!-- Speed axis -->
+  <line x1="200" y1="286" x2="540" y2="286" class="axis"/>
+  <path d="M532 281 L541 286 L532 291" class="axis"/>
+  <line x1="200" y1="281" x2="200" y2="291" class="axis"/>
+  <text x="200" y="304" text-anchor="middle" class="sub">0</text>
+  <text x="336" y="304" text-anchor="middle" class="mono">X_HYBRID_THRESHOLD</text>
+  <text x="336" y="319" text-anchor="middle" class="sub">(100 mm/s default)</text>
+  <text x="540" y="304" text-anchor="end" class="sub">speed</text>
+  <text x="16" y="319" class="sub">Not to scale.</text>
+</svg>

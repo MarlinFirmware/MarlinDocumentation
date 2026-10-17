@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 330" width="560" height="330" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12">
+  <title>Manual mesh probing: point order on a 3 by 3 mesh, and the paper test at each point</title>
+  <desc>Left: a printer bed seen from above with the front at the bottom. A dashed rectangle inset from the bed edges by MESH_INSET holds nine mesh points in three columns (I 0 to 2, left to right) and three rows (J 0 to 2, front to back). Orange arrows show the order Marlin visits them: the front row left to right (1, 2, 3), the middle row right to left (4, 5, 6), and the back row left to right (7, 8, 9). Right: a side view of the nozzle over the bed with a sheet of paper between them. You move Z with G1 Z or the LCD knob in MESH_EDIT_Z_STEP increments until the paper drags lightly, then G29 S2 or a click saves that Z height and moves to the next point. Not to scale.</desc>
+  <defs>
+    <marker id="aho" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 0L10 5 0 10z" fill="#e0813f"/>
+    </marker>
+    <marker id="ahg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 0L10 5 0 10z" fill="#8a8f98"/>
+    </marker>
+    <style>
+      .bed    { fill: rgba(136, 136, 136, 0.22); stroke: #8a8f98; stroke-width: 1.5; }
+      .mesh   { fill: rgba(44, 132, 250, 0.22); stroke: #5a8fd6; stroke-width: 1.2; stroke-dasharray: 6 4; }
+      .path   { fill: none; stroke: #e0813f; stroke-width: 2; marker-end: url(#aho); }
+      .dim    { fill: none; stroke: #8a8f98; stroke-width: 1; marker-start: url(#ahg); marker-end: url(#ahg); }
+      .updown { fill: none; stroke: #e0813f; stroke-width: 1.6; marker-start: url(#aho); marker-end: url(#aho); }
+      .pt     { fill: #2dd4bf; stroke: #0f766e; stroke-width: 1; }
+      .ptnum  { fill: #0b3b36; font-size: 11px; font-weight: 700; text-anchor: middle; }
+      .t      { fill: #8a8f98; }
+      .tm     { fill: #8a8f98; text-anchor: middle; }
+      .te     { fill: #8a8f98; text-anchor: end; }
+      .head   { fill: #8a8f98; font-weight: 600; }
+      .mono   { font-family: SFMono-Regular, Menlo, Consolas, monospace; font-size: 11px; }
+      .orange { fill: #e0813f; }
+      .blue   { fill: #5a8fd6; }
+      .hotend { fill: rgba(136, 136, 136, 0.35); stroke: #8a8f98; stroke-width: 1.2; }
+      .nozzle { fill: #c9a227; stroke: #6b5a1a; stroke-width: 1.2; }
+      .paper  { fill: #f4f1e8; stroke: #e0813f; stroke-width: 1.2; }
+      .sep    { stroke: #8a8f98; stroke-width: 1; stroke-dasharray: 2 4; }
+    </style>
+  </defs>
+
+  <!-- ===== Left panel: top view ===== -->
+  <text class="head" x="20" y="24">Top view, 3 × 3 mesh</text>
+
+  <!-- Bed: x 60..300, y 46..246 (front at bottom) -->
+  <rect class="bed" x="60" y="46" width="240" height="200"/>
+  <!-- Mesh area inset by MESH_INSET (exaggerated): x 88..272, y 74..218 -->
+  <rect class="mesh" x="88" y="74" width="184" height="144"/>
+
+  <!-- MESH_INSET dimensions -->
+  <line class="dim" x1="61" y1="110" x2="87" y2="110"/>
+  <text class="t mono" x="94" y="114">MESH_INSET</text>
+  <line class="dim" x1="232" y1="219" x2="232" y2="245"/>
+
+  <!-- Probe order (serpentine) -->
+  <path class="path" d="M100 218 H166"/>
+  <path class="path" d="M194 218 H258"/>
+  <path class="path" d="M272 204 V160"/>
+  <path class="path" d="M258 146 H194"/>
+  <path class="path" d="M166 146 H102"/>
+  <path class="path" d="M88 132 V88"/>
+  <path class="path" d="M100 74 H166"/>
+  <path class="path" d="M194 74 H258"/>
+
+  <!-- Points: columns x 88/180/272, rows y 218 (J0) / 146 (J1) / 74 (J2) -->
+  <g>
+    <circle class="pt" cx="88"  cy="218" r="10"/><text class="ptnum" x="88"  y="222">1</text>
+    <circle class="pt" cx="180" cy="218" r="10"/><text class="ptnum" x="180" y="222">2</text>
+    <circle class="pt" cx="272" cy="218" r="10"/><text class="ptnum" x="272" y="222">3</text>
+    <circle class="pt" cx="272" cy="146" r="10"/><text class="ptnum" x="272" y="150">4</text>
+    <circle class="pt" cx="180" cy="146" r="10"/><text class="ptnum" x="180" y="150">5</text>
+    <circle class="pt" cx="88"  cy="146" r="10"/><text class="ptnum" x="88"  y="150">6</text>
+    <circle class="pt" cx="88"  cy="74"  r="10"/><text class="ptnum" x="88"  y="78">7</text>
+    <circle class="pt" cx="180" cy="74"  r="10"/><text class="ptnum" x="180" y="78">8</text>
+    <circle class="pt" cx="272" cy="74"  r="10"/><text class="ptnum" x="272" y="78">9</text>
+  </g>
+
+  <!-- Index labels -->
+  <text class="tm mono" x="88"  y="264">I0</text>
+  <text class="tm mono" x="180" y="264">I1</text>
+  <text class="tm mono" x="272" y="264">I2</text>
+  <text class="te mono" x="54" y="222">J0</text>
+  <text class="te mono" x="54" y="150">J1</text>
+  <text class="te mono" x="54" y="78">J2</text>
+  <text class="tm" x="180" y="282" font-size="11">FRONT</text>
+
+  <!-- Separator -->
+  <line class="sep" x1="330" y1="20" x2="330" y2="300"/>
+
+  <!-- ===== Right panel: side view at one point ===== -->
+  <text class="head" x="348" y="24">Side view, at each point</text>
+
+  <!-- Hotend and nozzle; tip at y 186 -->
+  <rect class="hotend" x="420" y="92" width="56" height="44" rx="3"/>
+  <polygon class="nozzle" points="432,136 464,136 452,184 444,184"/>
+  <!-- Paper between nozzle and bed -->
+  <rect class="paper" x="372" y="185" width="150" height="5"/>
+  <!-- Bed -->
+  <rect class="bed" x="352" y="190" width="190" height="14"/>
+
+  <!-- Z adjustment arrow -->
+  <line class="updown" x1="500" y1="104" x2="500" y2="170"/>
+  <text class="t orange" x="508" y="141">Z</text>
+
+  <text class="t orange" x="372" y="176">paper</text>
+
+  <text class="t" x="352" y="228">Adjust Z with <tspan class="mono">G1 Z</tspan> or the knob</text>
+  <text class="t mono" x="352" y="246">MESH_EDIT_Z_STEP</text>
+  <text class="t" x="466" y="246">per detent</text>
+  <text class="t" x="352" y="268">Stop at a light drag, then</text>
+  <text class="t" x="352" y="286"><tspan class="mono">G29 S2</tspan> or click: save, next</text>
+
+  <text class="t" x="20" y="316" font-size="11">Numbers: the order G29 S2 or Next Point visits the points. Not to scale.</text>
+</svg>

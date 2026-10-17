@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 470" width="560" height="470" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13">
+  <title>Host and Marlin exchanging lines over serial</title>
+  <desc>A message sequence between a host on the left and Marlin on the right, time running downward. The host sends numbered, checksummed lines; Marlin answers each with ok, sends busy keepalive messages during a long command, reports a checksum error with a Resend request when a line arrives damaged, and sends a host action prompt that the host answers with M876.</desc>
+  <defs>
+    <marker id="ab" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5 0 10z" fill="#5a8fd6"/></marker>
+    <marker id="at" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5 0 10z" fill="#2dd4bf"/></marker>
+    <marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5 0 10z" fill="#8a8f98"/></marker>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5 0 10z" fill="#fb7185"/></marker>
+    <marker id="ao" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5 0 10z" fill="#e0813f"/></marker>
+    <style>
+      .lane  { fill: #2b5f9e; stroke: #5a8fd6; stroke-width: 1.5; }
+      .lanet { fill: #fff; font-weight: 600; text-anchor: middle; }
+      .life  { stroke: #8a8f98; stroke-width: 1.2; stroke-dasharray: 6 4; }
+      .msg   { font-family: Menlo, Consolas, 'Courier New', monospace; font-size: 11px; text-anchor: middle; }
+      .mb    { fill: #5a8fd6; }
+      .mt    { fill: #2dd4bf; }
+      .mg    { fill: #8a8f98; }
+      .mr    { fill: #fb7185; }
+      .mo    { fill: #e0813f; }
+      .lb    { stroke: #5a8fd6; stroke-width: 1.8; marker-end: url(#ab); }
+      .lt    { stroke: #2dd4bf; stroke-width: 1.8; marker-end: url(#at); }
+      .lg    { stroke: #8a8f98; stroke-width: 1.5; marker-end: url(#ag); }
+      .lr    { stroke: #fb7185; stroke-width: 1.8; marker-end: url(#ar); }
+      .lrd   { stroke: #fb7185; stroke-width: 1.8; stroke-dasharray: 5 4; }
+      .lo    { stroke: #e0813f; stroke-width: 1.8; marker-end: url(#ao); }
+      .note  { fill: #8a8f98; font-size: 11px; }
+      .leg   { fill: #8a8f98; font-size: 11.5px; }
+    </style>
+  </defs>
+
+  <!-- Legend -->
+  <line class="lb" x1="12" y1="16" x2="34" y2="16"/><text class="leg" x="40" y="20">command</text>
+  <line class="lt" x1="102" y1="16" x2="124" y2="16"/><text class="leg" x="130" y="20">ok</text>
+  <line class="lg" x1="160" y1="16" x2="182" y2="16"/><text class="leg" x="188" y="20">echo: / busy</text>
+  <line class="lr" x1="272" y1="16" x2="294" y2="16"/><text class="leg" x="300" y="20">Error: / Resend</text>
+  <line class="lo" x1="402" y1="16" x2="424" y2="16"/><text class="leg" x="430" y="20">host action</text>
+
+  <!-- Lanes -->
+  <rect class="lane" x="100" y="38" width="100" height="28" rx="6"/>
+  <text class="lanet" x="150" y="57">Host</text>
+  <rect class="lane" x="430" y="38" width="100" height="28" rx="6"/>
+  <text class="lanet" x="480" y="57">Marlin</text>
+  <line class="life" x1="150" y1="66" x2="150" y2="428"/>
+  <line class="life" x1="480" y1="66" x2="480" y2="428"/>
+
+  <!-- 1. command -->
+  <text class="msg mb" x="315" y="90">N41 G28*38</text>
+  <line class="lb" x1="152" y1="96" x2="477" y2="96"/>
+  <!-- 2. busy -->
+  <text class="msg mg" x="315" y="122">echo:busy: processing</text>
+  <line class="lg" x1="478" y1="128" x2="153" y2="128"/>
+  <text class="note" x="12" y="132">every 2 s while busy</text>
+  <!-- 3. ok -->
+  <text class="msg mt" x="315" y="154">ok</text>
+  <line class="lt" x1="478" y1="160" x2="153" y2="160"/>
+  <text class="note" x="12" y="164">G28 finished</text>
+  <!-- 4. damaged line -->
+  <text class="msg mb" x="315" y="186">N42 G1 X10 Y20*28</text>
+  <line class="lrd" x1="152" y1="192" x2="466" y2="192"/>
+  <text class="mr" x="469" y="198" font-size="16" font-weight="700">✕</text>
+  <text class="note" x="12" y="196">damaged in transit</text>
+  <!-- 5. error -->
+  <text class="msg mr" x="315" y="218">Error:checksum mismatch, Last Line: 41</text>
+  <line class="lr" x1="478" y1="224" x2="153" y2="224"/>
+  <!-- 6. resend -->
+  <text class="msg mr" x="315" y="250">Resend: 42</text>
+  <line class="lr" x1="478" y1="256" x2="153" y2="256"/>
+  <!-- 7. ok -->
+  <text class="msg mt" x="315" y="282">ok</text>
+  <line class="lt" x1="478" y1="288" x2="153" y2="288"/>
+  <!-- 8. resent line -->
+  <text class="msg mb" x="315" y="314">N42 G1 X10 Y20*28</text>
+  <line class="lb" x1="152" y1="320" x2="477" y2="320"/>
+  <text class="note" x="12" y="324">same line again</text>
+  <!-- 9. ok -->
+  <text class="msg mt" x="315" y="346">ok</text>
+  <line class="lt" x1="478" y1="352" x2="153" y2="352"/>
+  <!-- 10. prompt -->
+  <text class="msg mo" x="315" y="378">//action:prompt_begin Nozzle Parked</text>
+  <line class="lo" x1="478" y1="384" x2="153" y2="384"/>
+  <text class="note" x="12" y="388">M600 is waiting</text>
+  <!-- 11. answer -->
+  <text class="msg mb" x="315" y="410">M876 S0</text>
+  <line class="lb" x1="152" y1="416" x2="477" y2="416"/>
+  <text class="note" x="12" y="420">user clicks Continue</text>
+
+  <text class="note" x="315" y="452" text-anchor="middle">Time runs downward. Prompt button and show lines omitted.</text>
+</svg>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 336" width="760" height="336" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13">
+  <title>The tool change sequence</title>
+  <desc>Eight steps of a T command, left to right in two rows: check the tool number and homing, retract the old filament, raise Z, park, switch the tool with the machine's own mechanism, apply the hotend offsets, heat and prime the new tool, and return to the print. Under each step is the option that controls it. The retract and prime steps only happen with TOOLCHANGE_FILAMENT_SWAP; the switch step depends on the mechanism.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0L10 5 0 10z" fill="#5a8fd6"/>
+    </marker>
+    <style>
+      .box  { fill: #2b5f9e; stroke: #5a8fd6; stroke-width: 1.5; }
+      .swap { fill: #2b5f9e; stroke: #2dd4bf; stroke-width: 2.5; stroke-dasharray: 6 4; }
+      .mech { fill: #e0813f; stroke: #e0813f; stroke-width: 1.5; }
+      .lbl  { fill: #fff; font-weight: 600; text-anchor: middle; }
+      .sub  { fill: #dbe7fa; font-size: 10.5px; text-anchor: middle; }
+      .subm { fill: #fff3e8; font-size: 10.5px; text-anchor: middle; }
+      .opt  { fill: #8a8f98; font-family: Menlo, Consolas, 'Courier New', monospace; font-size: 10px; text-anchor: middle; }
+      .cap  { fill: #8a8f98; font-size: 11px; text-anchor: middle; }
+      .leg  { fill: #8a8f98; font-size: 11.5px; }
+      .ln   { fill: none; stroke: #5a8fd6; stroke-width: 1.8; marker-end: url(#arrow); }
+    </style>
+  </defs>
+
+  <!-- Legend -->
+  <rect class="box" x="30" y="12" width="18" height="12" rx="3"/>
+  <text class="leg" x="54" y="22">Every tool change</text>
+  <rect class="swap" x="180" y="12" width="18" height="12" rx="3"/>
+  <text class="leg" x="204" y="22">Only with TOOLCHANGE_FILAMENT_SWAP</text>
+  <rect class="mech" x="476" y="12" width="18" height="12" rx="3"/>
+  <text class="leg" x="500" y="22">Depends on the mechanism</text>
+
+  <!-- Row 1 -->
+  <rect class="box" x="30" y="50" width="160" height="56" rx="6"/>
+  <text class="lbl" x="110" y="73">1. Check</text>
+  <text class="sub" x="110" y="91">valid tool? homed?</text>
+  <text class="opt" x="110" y="124">EXTRUDERS</text>
+
+  <rect class="swap" x="210" y="50" width="160" height="56" rx="6"/>
+  <text class="lbl" x="290" y="73">2. Retract old</text>
+  <text class="sub" x="290" y="91">pull back the swap length</text>
+  <text class="opt" x="290" y="124">TOOLCHANGE_FS_LENGTH</text>
+  <text class="opt" x="290" y="138">M217 S</text>
+
+  <rect class="box" x="390" y="50" width="160" height="56" rx="6"/>
+  <text class="lbl" x="470" y="73">3. Raise Z</text>
+  <text class="sub" x="470" y="91">lift off the print</text>
+  <text class="opt" x="470" y="124">TOOLCHANGE_ZRAISE</text>
+  <text class="opt" x="470" y="138">M217 Z</text>
+
+  <rect class="box" x="570" y="50" width="160" height="56" rx="6"/>
+  <text class="lbl" x="650" y="73">4. Park</text>
+  <text class="sub" x="650" y="91">optional change point</text>
+  <text class="opt" x="650" y="124">TOOLCHANGE_PARK_XY</text>
+  <text class="opt" x="650" y="138">M217 X Y W</text>
+
+  <line class="ln" x1="190" y1="78" x2="208" y2="78"/>
+  <line class="ln" x1="370" y1="78" x2="388" y2="78"/>
+  <line class="ln" x1="550" y1="78" x2="568" y2="78"/>
+
+  <!-- Connector from row 1 to row 2 -->
+  <path class="ln" d="M730 78 L746 78 L746 160 L110 160 L110 186"/>
+
+  <!-- Row 2 -->
+  <rect class="mech" x="30" y="188" width="160" height="56" rx="6"/>
+  <text class="lbl" x="110" y="211">5. Switch tool</text>
+  <text class="subm" x="110" y="229">servo, dock or carriage</text>
+  <text class="opt" x="110" y="262">SWITCHING_*, PARKING_*</text>
+  <text class="opt" x="110" y="276">DUAL_X_CARRIAGE</text>
+
+  <rect class="box" x="210" y="188" width="160" height="56" rx="6"/>
+  <text class="lbl" x="290" y="211">6. Apply offsets</text>
+  <text class="sub" x="290" y="229">new tool's XYZ position</text>
+  <text class="opt" x="290" y="262">HOTEND_OFFSET_X/Y/Z</text>
+  <text class="opt" x="290" y="276">M218</text>
+
+  <rect class="swap" x="390" y="188" width="160" height="56" rx="6"/>
+  <text class="lbl" x="470" y="211">7. Prime new</text>
+  <text class="sub" x="470" y="229">push back, prime, wipe, fan</text>
+  <text class="opt" x="470" y="262">TOOLCHANGE_FS_EXTRA_PRIME</text>
+  <text class="opt" x="470" y="276">M217 E P U G F D</text>
+
+  <rect class="box" x="570" y="188" width="160" height="56" rx="6"/>
+  <text class="lbl" x="650" y="211">8. Return</text>
+  <text class="sub" x="650" y="229">XY back, then Z down</text>
+  <text class="opt" x="650" y="262">TOOLCHANGE_NO_RETURN</text>
+  <text class="opt" x="650" y="276">EVENT_GCODE_TOOLCHANGE_T*</text>
+
+  <line class="ln" x1="190" y1="216" x2="208" y2="216"/>
+  <line class="ln" x1="370" y1="216" x2="388" y2="216"/>
+  <line class="ln" x1="550" y1="216" x2="568" y2="216"/>
+
+  <text class="cap" x="380" y="306">Single-nozzle standby temperature and fan are swapped at the start of step 7, with or without the filament swap.</text>
+  <text class="cap" x="380" y="324">If the axes are not homed, Marlin skips the moves (steps 2–4, 7 and 8) and only switches and applies the offsets.</text>
+</svg>
