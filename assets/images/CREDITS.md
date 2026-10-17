@@ -13,3 +13,5 @@ file, source, author, license. Pages that show the image also carry a short cred
 Original diagrams (`printers/diagram-*.svg`, including SCARA and Polar) are Marlin project artwork, GPL-3.0 like the site.
 
 Original diagrams added for the launch (`basics/marlin-pipeline.svg`, `config/bed-geometry-top.svg`, `config/probe-z-offset-side.svg`) are Marlin project artwork, GPL-3.0 like the site. The `logo/marlin-outrun.svg` logo is Marlin project artwork.
+
+Feature-page diagrams added with the Tier 1 manual pages (`features/thermal-protection-window.svg`, `features/pid-tuned-vs-untuned.svg`, `features/filament-change-sequence.svg`, `features/power-loss-resume-sequence.svg`, `features/homing-sequence.svg`, `features/first-layer-squish.svg`, `features/z-align-points.svg`) are original Marlin project artwork, GPL-3.0 like the site.

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 270" width="560" height="270" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12">
+  <title>What Marlin does when you choose Resume after a power loss</title>
+  <desc>Seven steps in order: heat the bed, heat the hotend to at least 180 degrees, raise Z and home X and Y without homing Z, restore the saved temperatures, tool and fan speeds, un-retract and purge, move to the saved X Y and lower to the saved Z, then reopen the file and continue from the saved byte offset.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0L10 5 0 10z" fill="#5a8fd6"/>
+    </marker>
+    <style>
+      .box  { fill: rgba(44,132,250,0.22); stroke: #5a8fd6; stroke-width: 1.5; rx: 6; }
+      .hot  { fill: rgba(224,129,63,0.22); stroke: #e0813f; }
+      .num  { fill: #5a8fd6; font-weight: 700; font-size: 11px; }
+      .numh { fill: #e0813f; }
+      .lbl  { fill: #8a8f98; font-weight: 600; text-anchor: middle; }
+      .sub  { fill: #8a8f98; font-size: 10.5px; text-anchor: middle; font-family: Menlo, Consolas, monospace; }
+      .cap  { fill: #8a8f98; font-size: 10.5px; }
+      .ln   { fill: none; stroke: #5a8fd6; stroke-width: 1.8; marker-end: url(#arrow); }
+      .hdr  { fill: #8a8f98; font-size: 12px; font-weight: 600; }
+    </style>
+  </defs>
+
+  <text class="hdr" x="16" y="20">Resume sequence (from the saved /PLR file)</text>
+
+  <!-- Row 1 -->
+  <rect class="box hot" x="16" y="38" width="118" height="62"/>
+  <text class="num numh" x="22" y="51">1</text>
+  <text class="lbl" x="75" y="62">Heat bed</text>
+  <text class="lbl" x="75" y="77">to saved target</text>
+  <text class="sub" x="75" y="93">M190</text>
+
+  <rect class="box hot" x="152" y="38" width="118" height="62"/>
+  <text class="num numh" x="158" y="51">2</text>
+  <text class="lbl" x="211" y="62">Heat hotend</text>
+  <text class="lbl" x="211" y="77">to ≥ 180 °C</text>
+  <text class="sub" x="211" y="93">M109</text>
+
+  <rect class="box" x="288" y="38" width="118" height="62"/>
+  <text class="num" x="294" y="51">3</text>
+  <text class="lbl" x="347" y="62">Raise Z, then</text>
+  <text class="lbl" x="347" y="77">home X and Y</text>
+  <text class="sub" x="347" y="93">G28 R0 XY</text>
+
+  <rect class="box" x="424" y="38" width="120" height="62"/>
+  <text class="num" x="430" y="51">4</text>
+  <text class="lbl" x="484" y="62">Restore temps,</text>
+  <text class="lbl" x="484" y="77">tool and fans</text>
+  <text class="sub" x="484" y="93">M109, T, M106</text>
+
+  <path class="ln" d="M134 69 L152 69"/>
+  <path class="ln" d="M270 69 L288 69"/>
+  <path class="ln" d="M406 69 L424 69"/>
+
+  <!-- Wrap to row 2 -->
+  <path class="ln" d="M484 100 L484 118 L97 118 L97 136"/>
+
+  <!-- Row 2 -->
+  <rect class="box" x="16" y="136" width="162" height="62"/>
+  <text class="num" x="22" y="149">5</text>
+  <text class="lbl" x="97" y="160">Un-retract and purge</text>
+  <text class="lbl" x="97" y="175">(if configured)</text>
+  <text class="sub" x="97" y="191">G1 E… F3000</text>
+
+  <rect class="box" x="199" y="136" width="162" height="62"/>
+  <text class="num" x="205" y="149">6</text>
+  <text class="lbl" x="280" y="160">Move to saved X Y,</text>
+  <text class="lbl" x="280" y="175">lower to saved Z</text>
+  <text class="sub" x="280" y="191">G1 X Y, G1 Z</text>
+
+  <rect class="box" x="382" y="136" width="162" height="62"/>
+  <text class="num" x="388" y="149">7</text>
+  <text class="lbl" x="463" y="160">Reopen file, continue</text>
+  <text class="lbl" x="463" y="175">at saved byte offset</text>
+  <text class="sub" x="463" y="191">M23, M24 S T</text>
+
+  <path class="ln" d="M178 167 L199 167"/>
+  <path class="ln" d="M361 167 L382 167"/>
+
+  <!-- Caption -->
+  <text class="cap" x="16" y="226">Z is not homed by default: the saved Z height is trusted, and only X and Y are homed.</text>
+  <text class="cap" x="16" y="243">Orange steps wait for temperature. Leveling is turned off for the homing step and restored after it.</text>
+  <text class="cap" x="16" y="260">Steps 5 and 6 only run after the hotend has reached its saved temperature.</text>
+</svg>

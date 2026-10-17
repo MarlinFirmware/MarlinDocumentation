@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 352" width="760" height="352" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13">
+  <title>The M600 filament change sequence</title>
+  <desc>Eight steps left to right in two rows: retract, park, unload, wait for filament (a prompt), then load, purge, the Purge more or Continue prompt, and the return to the print. Under each step is the option that controls it. The waiting step is marked where the hotend heater can time out.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0L10 5 0 10z" fill="#5a8fd6"/>
+    </marker>
+    <marker id="arrow-o" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0L10 5 0 10z" fill="#e0813f"/>
+    </marker>
+    <style>
+      .box  { fill: #2b5f9e; stroke: #5a8fd6; stroke-width: 1.5; rx: 6; }
+      .wait { fill: #e0813f; stroke: #e0813f; }
+      .lbl  { fill: #fff; font-weight: 600; text-anchor: middle; }
+      .sub  { fill: #dbe7fa; font-size: 10.5px; text-anchor: middle; }
+      .subw { fill: #fff3e8; font-size: 10.5px; text-anchor: middle; }
+      .opt  { fill: #8a8f98; font-family: Menlo, Consolas, 'Courier New', monospace; font-size: 10px; text-anchor: middle; }
+      .cap  { fill: #8a8f98; font-size: 11px; text-anchor: middle; }
+      .leg  { fill: #8a8f98; font-size: 11.5px; }
+      .ln   { fill: none; stroke: #5a8fd6; stroke-width: 1.8; marker-end: url(#arrow); }
+      .lno  { fill: none; stroke: #e0813f; stroke-width: 1.8; marker-end: url(#arrow-o); }
+      .tmo  { fill: none; stroke: #fb7185; stroke-width: 1.4; stroke-dasharray: 5 4; }
+      .tmot { fill: #fb7185; font-size: 11px; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <!-- Legend -->
+  <rect class="box" x="30" y="12" width="18" height="12"/>
+  <text class="leg" x="54" y="22">Marlin moves on its own</text>
+  <rect class="box wait" x="215" y="12" width="18" height="12"/>
+  <text class="leg" x="239" y="22">Waits for you: click, host button or M108</text>
+  <line class="tmo" x1="500" y1="18" x2="530" y2="18"/>
+  <text class="leg" x="536" y="22">Hotend heater may time out</text>
+
+  <!-- Row 1 -->
+  <rect class="box" x="30" y="50" width="160" height="56"/>
+  <text class="lbl" x="110" y="73">1. Retract</text>
+  <text class="sub" x="110" y="91">only if the nozzle is hot</text>
+  <text class="opt" x="110" y="124">PAUSE_PARK_RETRACT_*</text>
+
+  <rect class="box" x="210" y="50" width="160" height="56"/>
+  <text class="lbl" x="290" y="73">2. Park</text>
+  <text class="sub" x="290" y="91">raise Z, then move XY</text>
+  <text class="opt" x="290" y="124">NOZZLE_PARK_POINT</text>
+
+  <rect class="box" x="390" y="50" width="160" height="56"/>
+  <text class="lbl" x="470" y="73">3. Unload</text>
+  <text class="sub" x="470" y="91">retract, purge, pull back</text>
+  <text class="opt" x="470" y="124">FILAMENT_CHANGE_UNLOAD_*</text>
+
+  <rect class="box wait" x="570" y="50" width="160" height="56"/>
+  <text class="lbl" x="650" y="73">4. Insert filament</text>
+  <text class="subw" x="650" y="91">beeps, then waits</text>
+  <text class="opt" x="650" y="124">FILAMENT_CHANGE_ALERT_BEEPS</text>
+
+  <line class="ln" x1="190" y1="78" x2="208" y2="78"/>
+  <line class="ln" x1="370" y1="78" x2="388" y2="78"/>
+  <line class="ln" x1="550" y1="78" x2="568" y2="78"/>
+
+  <!-- Heater timeout note under step 4 -->
+  <rect class="tmo" x="562" y="136" width="176" height="40" rx="6"/>
+  <text class="tmot" x="650" y="152">heater off after</text>
+  <text class="opt tmot" x="650" y="168">PAUSE_PARK_NOZZLE_TIMEOUT</text>
+
+  <!-- Connector from row 1 to row 2 -->
+  <path class="ln" d="M560 78 L560 192 L110 192 L110 213"/>
+  <text class="cap" x="335" y="187">you click (or send M108); if the heater timed out, "Click to heat" comes first</text>
+
+  <!-- Row 2 -->
+  <rect class="box" x="30" y="215" width="160" height="56"/>
+  <text class="lbl" x="110" y="238">5. Load</text>
+  <text class="sub" x="110" y="256">slow length, then fast</text>
+  <text class="opt" x="110" y="289">FILAMENT_CHANGE_FAST_LOAD_*</text>
+
+  <rect class="box" x="210" y="215" width="160" height="56"/>
+  <text class="lbl" x="290" y="238">6. Purge</text>
+  <text class="sub" x="290" y="256">extrude to clear old color</text>
+  <text class="opt" x="290" y="289">ADVANCED_PAUSE_PURGE_*</text>
+
+  <rect class="box wait" x="390" y="215" width="160" height="56"/>
+  <text class="lbl" x="470" y="238">7. Purge more?</text>
+  <text class="subw" x="470" y="256">or Continue</text>
+  <text class="cap" x="478" y="289">needs a menu or host prompt</text>
+
+  <rect class="box" x="570" y="215" width="160" height="56"/>
+  <text class="lbl" x="650" y="238">8. Return to print</text>
+  <text class="sub" x="650" y="256">retract, move back, unretract</text>
+  <text class="opt" x="650" y="289">ADVANCED_PAUSE_RESUME_PRIME</text>
+
+  <line class="ln" x1="190" y1="243" x2="208" y2="243"/>
+  <line class="ln" x1="370" y1="243" x2="388" y2="243"/>
+  <line class="ln" x1="550" y1="243" x2="568" y2="243"/>
+
+  <!-- Purge more loop -->
+  <path class="lno" d="M392 271 L392 310 L214 310 L214 273"/>
+  <text class="cap" x="303" y="324">Purge more</text>
+
+  <text class="cap" x="380" y="344">Not to scale. Steps 1–3 also apply to M125 (pause and park) without the unload.</text>
+</svg>

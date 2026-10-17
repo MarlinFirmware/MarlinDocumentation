@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 436" width="560" height="436" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12">
+  <title>Thermal protection window: runaway check and heat-up watch</title>
+  <desc>Two temperature-versus-time plots. The upper plot shows the runaway check: once the heater first reaches its target, the temperature must stay above target minus THERMAL_PROTECTION_HYSTERESIS. A healthy trace stays in the band, with a short dip that resets the timer. A runaway trace falls below the limit and stays there longer than THERMAL_PROTECTION_PERIOD, so the firmware halts with THERMAL RUNAWAY. The lower plot shows the heat-up watch: after a target is set the temperature must rise by at least WATCH_TEMP_INCREASE in every WATCH_TEMP_PERIOD; a trace that stops rising fails the next check and the firmware halts with Heating failed. Not to scale.</desc>
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 0L10 5 0 10z" fill="#8a8f98"/>
+    </marker>
+    <style>
+      .axis   { fill: none; stroke: #8a8f98; stroke-width: 1.2; }
+      .target { fill: none; stroke: #8a8f98; stroke-width: 1.6; }
+      .limit  { fill: none; stroke: #fb7185; stroke-width: 1.4; stroke-dasharray: 6 4; }
+      .guide  { fill: none; stroke: #8a8f98; stroke-width: 0.9; stroke-dasharray: 3 3; }
+      .band   { fill: rgba(44, 132, 250, 0.22); }
+      .dim    { fill: none; stroke: #8a8f98; stroke-width: 1; marker-start: url(#ah); marker-end: url(#ah); }
+      .ok     { fill: none; stroke: #2dd4bf; stroke-width: 2.2; stroke-linecap: round; }
+      .bad    { fill: none; stroke: #e0813f; stroke-width: 2.2; stroke-linecap: round; }
+      .trip   { fill: #fb7185; stroke: none; }
+      .t      { fill: #8a8f98; }
+      .tm     { fill: #8a8f98; text-anchor: middle; }
+      .te     { fill: #8a8f98; text-anchor: end; }
+      .teal   { fill: #2dd4bf; }
+      .red    { fill: #fb7185; }
+      .orange { fill: #e0813f; }
+      .mono   { font-family: SFMono-Regular, Menlo, Consolas, monospace; font-size: 11px; }
+      .small  { font-size: 10.5px; }
+      .h      { font-size: 13px; font-weight: 600; }
+    </style>
+  </defs>
+
+  <!-- Legend -->
+  <line class="ok" x1="48" y1="20" x2="70" y2="20"/>
+  <text class="t" x="76" y="24">healthy</text>
+  <line class="bad" x1="140" y1="20" x2="162" y2="20"/>
+  <text class="t" x="168" y="24">runaway</text>
+  <rect class="band" x="235" y="13" width="22" height="14"/>
+  <text class="t" x="263" y="24">allowed band</text>
+  <line class="limit" x1="360" y1="20" x2="382" y2="20"/>
+  <text class="t" x="388" y="24">lower limit</text>
+
+  <!-- ===== Upper plot: runaway check ===== -->
+  <line class="axis" x1="48" y1="40" x2="48" y2="205"/>
+  <line class="axis" x1="48" y1="205" x2="536" y2="205"/>
+  <text class="tm small" transform="translate(16 122) rotate(-90)">temperature</text>
+  <text class="te small" x="536" y="218">time</text>
+
+  <!-- allowed band: target down to target - hysteresis -->
+  <rect class="band" x="48" y="90" width="488" height="40"/>
+  <line class="target" x1="48" y1="90" x2="536" y2="90"/>
+  <text class="t small" x="52" y="86">target</text>
+  <line class="limit" x1="48" y1="130" x2="536" y2="130"/>
+  <text class="red mono" x="124" y="151">target -</text>
+  <text class="red mono" x="124" y="164">THERMAL_PROTECTION_HYSTERESIS</text>
+
+  <!-- phases -->
+  <line class="guide" x1="150" y1="56" x2="150" y2="205"/>
+  <text class="t small" x="52" y="66">not yet watched</text>
+  <text class="t small" x="156" y="66">at target: watched</text>
+
+  <!-- period window and trip -->
+  <line class="guide" x1="316" y1="40" x2="316" y2="205"/>
+  <line class="guide" x1="446" y1="40" x2="446" y2="205"/>
+  <line class="dim" x1="316" y1="50" x2="446" y2="50"/>
+  <text class="tm mono" x="381" y="46">THERMAL_PROTECTION_PERIOD</text>
+
+  <!-- healthy trace (teal) with a short dip that resets the timer -->
+  <path class="ok" d="M48 196 C 90 192, 120 120, 150 94 S 180 112, 196 104 C 206 128, 214 142, 222 140 C 232 136, 240 112, 252 104 S 290 116, 320 102 S 360 114, 400 100 S 440 114, 480 100 S 520 112, 536 104"/>
+  <text class="teal small" x="176" y="180">short dip: timer resets</text>
+
+  <!-- runaway trace (orange): leaves the band and stays out -->
+  <path class="bad" d="M252 104 C 270 112, 290 118, 316 130 C 350 146, 400 164, 446 172"/>
+  <circle class="trip" cx="446" cy="172" r="5"/>
+  <text class="red small" x="454" y="168">halt:</text>
+  <text class="red mono" x="454" y="182">THERMAL RUNAWAY</text>
+
+  <!-- ===== Lower plot: heat-up watch ===== -->
+  <text class="t h" x="48" y="250">Heat-up watch, while the heater is still below target</text>
+  <line class="axis" x1="48" y1="262" x2="48" y2="385"/>
+  <line class="axis" x1="48" y1="385" x2="536" y2="385"/>
+  <text class="tm small" transform="translate(16 324) rotate(-90)">temperature</text>
+  <text class="te small" x="536" y="398">time</text>
+
+  <!-- check guides -->
+  <line class="guide" x1="158" y1="270" x2="158" y2="385"/>
+  <line class="guide" x1="268" y1="270" x2="268" y2="385"/>
+  <line class="guide" x1="378" y1="270" x2="378" y2="385"/>
+  <line class="dim" x1="268" y1="278" x2="378" y2="278"/>
+  <text class="tm mono" x="323" y="274">WATCH_TEMP_PERIOD</text>
+
+  <!-- required rise over one period -->
+  <line class="guide" x1="48" y1="375" x2="152" y2="375"/>
+  <line class="dim" x1="152" y1="375" x2="152" y2="345"/>
+  <text class="t mono" x="163" y="366">WATCH_TEMP_INCREASE</text>
+
+  <!-- trace: rising (passes two checks), then flat (fails the third) -->
+  <path class="ok" d="M48 375 C 90 372, 130 356, 158 345 C 200 332, 240 322, 268 318"/>
+  <path class="bad" d="M268 318 C 300 317, 340 318, 378 318"/>
+  <circle class="trip" cx="378" cy="318" r="5"/>
+  <text class="red small" x="386" y="314">halt:</text>
+  <text class="red mono" x="386" y="328">Heating failed</text>
+
+  <!-- check labels under the axis -->
+  <text class="t small" x="48" y="398">target set</text>
+  <text class="tm teal small" x="158" y="398">check: rose</text>
+  <text class="tm teal small" x="268" y="398">check: rose</text>
+  <text class="tm red small" x="378" y="398">check: no rise</text>
+
+  <text class="tm small" x="292" y="426">Not to scale. Temperatures and times are exaggerated so the labels fit.</text>
+</svg>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 340" width="560" height="340" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12">
+  <title>G34 probe points and Z stepper positions, seen from above</title>
+  <desc>Two printer beds seen from above. Left: a bed with two Z lead screws, one at each side, and one probe point near each screw (Z_STEPPER_ALIGN_XY, set with M422 S). Right: a bed with three Z lead screws, two at the front corners and one at the back center. Orange hexagons mark the screw positions (Z_STEPPER_ALIGN_STEPPER_XY, set with M422 W) and teal dots mark the probe points (Z_STEPPER_ALIGN_XY, set with M422 S). Each probe point sits inside the probe's reach, as close to its screw as possible. Not to scale.</desc>
+  <defs>
+    <style>
+      .bed    { fill: rgba(136, 136, 136, 0.22); stroke: #8a8f98; stroke-width: 1.5; }
+      .reach  { fill: rgba(44, 132, 250, 0.18); stroke: #5a8fd6; stroke-width: 1; stroke-dasharray: 5 4; }
+      .link   { fill: none; stroke: #8a8f98; stroke-width: 1; stroke-dasharray: 2 3; }
+      .screw  { fill: rgba(224, 129, 63, 0.35); stroke: #e0813f; stroke-width: 1.6; }
+      .pt     { fill: #2dd4bf; stroke: none; }
+      .t      { fill: #8a8f98; }
+      .tm     { fill: #8a8f98; text-anchor: middle; }
+      .mono   { font-family: SFMono-Regular, Menlo, Consolas, monospace; font-size: 11px; }
+      .orange { fill: #e0813f; }
+      .teal   { fill: #2dd4bf; }
+      .blue   { fill: #5a8fd6; }
+      .head   { fill: #8a8f98; font-weight: 600; }
+    </style>
+  </defs>
+
+  <!-- ===== Left panel: two Z steppers ===== -->
+  <text class="head" x="30" y="22">Two Z steppers (bed-slinger)</text>
+
+  <!-- Bed and probe reach -->
+  <rect class="bed" x="50" y="50" width="180" height="150"/>
+  <rect class="reach" x="68" y="66" width="144" height="118"/>
+
+  <!-- Lead screws beside the bed -->
+  <polygon class="screw" points="36,118 43,122 43,130 36,134 29,130 29,122"/>
+  <polygon class="screw" points="244,118 251,122 251,130 244,134 237,130 237,122"/>
+  <text class="tm orange mono" x="36" y="150">Z1</text>
+  <text class="tm orange mono" x="244" y="150">Z2</text>
+
+  <!-- Probe points and links to their screws -->
+  <line class="link" x1="43" y1="126" x2="68" y2="126"/>
+  <line class="link" x1="237" y1="126" x2="212" y2="126"/>
+  <circle class="pt" cx="68" cy="126" r="4.5"/>
+  <circle class="pt" cx="212" cy="126" r="4.5"/>
+  <text class="t teal mono" x="76" y="114">S1</text>
+  <text class="t teal mono" x="192" y="114">S2</text>
+
+  <text class="tm t" x="140" y="240">Z1 lifts the left side, Z2 the right</text>
+
+  <!-- ===== Right panel: three Z steppers ===== -->
+  <text class="head" x="312" y="22">Three Z steppers</text>
+
+  <rect class="bed" x="330" y="50" width="180" height="150"/>
+  <rect class="reach" x="348" y="66" width="144" height="118"/>
+
+  <!-- Screws: front-left, front-right, back-center (just outside the bed) -->
+  <polygon class="screw" points="336,206 343,210 343,218 336,222 329,218 329,210"/>
+  <polygon class="screw" points="504,206 511,210 511,218 504,222 497,218 497,210"/>
+  <polygon class="screw" points="420,32 427,36 427,44 420,48 413,44 413,36"/>
+  <text class="t orange mono" x="348" y="220">W1</text>
+  <text class="t orange mono" x="474" y="220">W2</text>
+  <text class="t orange mono" x="432" y="44">W3</text>
+
+  <!-- Probe points -->
+  <line class="link" x1="340" y1="208" x2="352" y2="180"/>
+  <line class="link" x1="500" y1="208" x2="488" y2="180"/>
+  <line class="link" x1="420" y1="48" x2="420" y2="70"/>
+  <circle class="pt" cx="352" cy="180" r="4.5"/>
+  <circle class="pt" cx="488" cy="180" r="4.5"/>
+  <circle class="pt" cx="420" cy="70" r="4.5"/>
+  <text class="t teal mono" x="360" y="172">S1</text>
+  <text class="t teal mono" x="468" y="172">S2</text>
+  <text class="t teal mono" x="428" y="76">S3</text>
+
+  <text class="tm t" x="420" y="240">Front of the bed is at the bottom</text>
+
+  <!-- ===== Legend ===== -->
+  <circle class="pt" cx="36" cy="266" r="4.5"/>
+  <text class="t" x="48" y="270">Probe point for stepper n, one per stepper: <tspan class="teal mono">Z_STEPPER_ALIGN_XY</tspan> / <tspan class="teal mono">M422 S</tspan><tspan class="mono">n X Y</tspan></text>
+
+  <polygon class="screw" points="36,284 43,288 43,296 36,300 29,296 29,288"/>
+  <text class="t" x="48" y="296">Lead screw (3 or 4 steppers only): <tspan class="orange mono">Z_STEPPER_ALIGN_STEPPER_XY</tspan> / <tspan class="orange mono">M422 W</tspan><tspan class="mono">n X Y</tspan></text>
+
+  <rect class="reach" x="31" y="312" width="12" height="10"/>
+  <text class="t" x="48" y="321">Area the probe can reach. Points must stay inside it. Not to scale.</text>
+</svg>

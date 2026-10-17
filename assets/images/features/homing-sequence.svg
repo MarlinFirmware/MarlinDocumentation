@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 450" width="560" height="450" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12">
+  <title>The homing sequence for one axis, and the Z safe homing move</title>
+  <desc>Top: a timeline of the moves G28 makes to home one axis toward its MIN endstop. Z is raised first, then the axis moves fast toward the endstop until it triggers, backs off by HOMING_BUMP_MM, approaches again slowly at the homing feedrate divided by HOMING_BUMP_DIVISOR, triggers again, and the position is set to the home position. An optional final back-off of HOMING_BACKOFF_POST_MM follows. Bottom: a top view of the bed showing Z_SAFE_HOMING moving the probe from the XY home corner to the safe point at the bed center before Z is homed.</desc>
+  <defs>
+    <marker id="ab" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 0L10 5 0 10z" fill="#5a8fd6"/>
+    </marker>
+    <marker id="ao" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 0L10 5 0 10z" fill="#e0813f"/>
+    </marker>
+    <marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 0L10 5 0 10z" fill="#8a8f98"/>
+    </marker>
+    <marker id="at" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 0L10 5 0 10z" fill="#2dd4bf"/>
+    </marker>
+    <style>
+      .t      { fill: #8a8f98; }
+      .tm     { fill: #8a8f98; text-anchor: middle; }
+      .te     { fill: #8a8f98; text-anchor: end; }
+      .mono   { font-family: SFMono-Regular, Menlo, Consolas, monospace; font-size: 11px; }
+      .step   { fill: #e0813f; font-weight: 600; }
+      .fast   { fill: none; stroke: #5a8fd6; stroke-width: 2.2; marker-end: url(#ab); }
+      .slow   { fill: none; stroke: #5a8fd6; stroke-width: 1.4; stroke-dasharray: 3 3; marker-end: url(#ab); }
+      .back   { fill: none; stroke: #e0813f; stroke-width: 1.8; marker-end: url(#ao); }
+      .post   { fill: none; stroke: #8a8f98; stroke-width: 1.4; stroke-dasharray: 6 4; marker-end: url(#ag); }
+      .zup    { fill: none; stroke: #5a8fd6; stroke-width: 1.8; marker-end: url(#ab); }
+      .safe   { fill: none; stroke: #2dd4bf; stroke-width: 1.8; marker-end: url(#at); }
+      .stop   { stroke: #fb7185; stroke-width: 3; }
+      .hit    { fill: #fb7185; }
+      .car    { fill: rgba(224, 129, 63, 0.35); stroke: #e0813f; stroke-width: 1.2; }
+      .rail   { stroke: #8a8f98; stroke-width: 1; }
+      .sep    { stroke: #8a8f98; stroke-width: 0.8; stroke-dasharray: 2 4; }
+      .bed    { fill: rgba(136, 136, 136, 0.22); stroke: #8a8f98; stroke-width: 1.5; }
+      .nozzle { fill: #c9a227; stroke: #6b5a1a; stroke-width: 1.2; }
+      .probe  { fill: #e0813f; stroke: #7a3b2e; stroke-width: 1.2; }
+      .pt     { fill: #2dd4bf; }
+      .red    { fill: #fb7185; }
+    </style>
+  </defs>
+
+  <!-- Heading -->
+  <text class="t" x="14" y="20" font-size="13" font-weight="600">Homing one axis toward its MIN endstop</text>
+  <text class="te" x="546" y="20">not to scale</text>
+
+  <!-- Endstop -->
+  <line class="stop" x1="80" y1="52" x2="80" y2="296"/>
+  <text class="tm mono" x="80" y="44">X_MIN endstop</text>
+  <!-- travel direction -->
+  <line class="rail" x1="86" y1="296" x2="520" y2="296"/>
+  <text class="te" x="546" y="300">+X</text>
+  <text class="t" x="86" y="310">home position (X_MIN_POS, usually 0)</text>
+
+  <!-- Step 0: raise Z -->
+  <text class="step" x="100" y="66">0</text>
+  <text class="t" x="114" y="66">Raise Z to <tspan class="mono">Z_CLEARANCE_FOR_HOMING</tspan> so the nozzle clears the bed</text>
+  <line class="zup" x1="408" y1="88" x2="408" y2="72"/>
+  <rect class="car" x="400" y="88" width="16" height="12"/>
+
+  <!-- Step 1: fast approach -->
+  <text class="step" x="100" y="118">1</text>
+  <text class="t" x="114" y="118">Fast move toward the endstop at <tspan class="mono">HOMING_FEEDRATE_MM_M</tspan></text>
+  <line class="fast" x1="398" y1="130" x2="92" y2="130"/>
+  <rect class="car" x="400" y="124" width="16" height="12"/>
+
+  <!-- Step 2: trigger -->
+  <text class="step" x="100" y="160">2</text>
+  <text class="t" x="114" y="160">Endstop triggers; the move stops at once</text>
+  <circle class="hit" cx="80" cy="172" r="4"/>
+  <rect class="car" x="84" y="166" width="16" height="12"/>
+
+  <!-- Step 3: back off -->
+  <text class="step" x="100" y="202">3</text>
+  <text class="t" x="114" y="202">Back off by <tspan class="mono">HOMING_BUMP_MM</tspan></text>
+  <line class="back" x1="100" y1="214" x2="150" y2="214"/>
+  <rect class="car" x="152" y="208" width="16" height="12"/>
+
+  <!-- Step 4: slow approach -->
+  <text class="step" x="100" y="244">4</text>
+  <text class="t" x="114" y="244">Slow move at <tspan class="mono">HOMING_FEEDRATE_MM_M ÷ HOMING_BUMP_DIVISOR</tspan></text>
+  <line class="slow" x1="150" y1="256" x2="92" y2="256"/>
+  <rect class="car" x="152" y="250" width="16" height="12"/>
+
+  <!-- Step 5: trigger + set position -->
+  <text class="step" x="100" y="284">5</text>
+  <text class="t" x="114" y="284">Triggers again: position = home position (+ <tspan class="mono">M206</tspan> offset)</text>
+  <circle class="hit" cx="80" cy="290" r="4"/>
+  <rect class="car" x="84" y="284" width="16" height="12"/>
+
+  <!-- Step 6: post back-off -->
+  <line class="post" x1="100" y1="330" x2="150" y2="330"/>
+  <text class="step" x="160" y="334">6</text>
+  <text class="t" x="174" y="334">Optional back-off by <tspan class="mono">HOMING_BACKOFF_POST_MM</tspan></text>
+
+  <!-- Separator -->
+  <line class="sep" x1="14" y1="348" x2="546" y2="348"/>
+
+  <!-- Inset: Z safe homing, top view -->
+  <text class="t" x="14" y="366" font-size="13" font-weight="600">Z_SAFE_HOMING</text>
+  <rect class="bed" x="14" y="374" width="120" height="68"/>
+  <!-- nozzle + probe at the XY home corner (front-left) -->
+  <circle class="nozzle" cx="22" cy="434" r="3.5"/>
+  <circle class="probe" cx="30" cy="430" r="2.5"/>
+  <!-- move to the safe point -->
+  <line class="safe" x1="34" y1="428" x2="70" y2="410"/>
+  <!-- safe point: probe over bed center -->
+  <circle class="pt" cx="74" cy="408" r="3.5"/>
+  <text class="tm" x="74" y="394" font-size="10">probe here</text>
+
+  <text class="t" x="150" y="384">After X and Y are homed, G28 moves the probe to</text>
+  <text class="t mono" x="150" y="402">Z_SAFE_HOMING_X_POINT, Z_SAFE_HOMING_Y_POINT</text>
+  <text class="t" x="150" y="420">(the bed center by default) and only then homes Z,</text>
+  <text class="t" x="150" y="438">so the probe triggers on the bed, not past its edge.</text>
+</svg>

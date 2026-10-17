@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 250" width="560" height="250" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12">
+  <title>First layer cross-sections: nozzle too high, correct height, nozzle too low</title>
+  <desc>Three cross-sections of extruded first-layer lines on a bed. Too high: round lines with gaps between them that barely touch the bed. Correct: lines pressed into flat ovals that touch each other with no gap. Too low: lines squashed thin and wide, ridges forced up between them. Arrows show which way to move the Z offset in each case: more negative when too high, more positive when too low.</desc>
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 0L10 5 0 10z" fill="#8a8f98"/>
+    </marker>
+    <style>
+      .bed    { fill: rgba(136, 136, 136, 0.35); stroke: #8a8f98; stroke-width: 1.5; }
+      .noz    { fill: rgba(136, 136, 136, 0.22); stroke: #8a8f98; stroke-width: 1.2; }
+      .hi     { fill: rgba(251, 113, 133, 0.35); stroke: #fb7185; stroke-width: 1.5; }
+      .ok     { fill: rgba(45, 212, 191, 0.35); stroke: #2dd4bf; stroke-width: 1.5; }
+      .lo     { fill: rgba(224, 129, 63, 0.35); stroke: #e0813f; stroke-width: 1.5; }
+      .t      { fill: #8a8f98; }
+      .tm     { fill: #8a8f98; text-anchor: middle; }
+      .mono   { font-family: SFMono-Regular, Menlo, Consolas, monospace; font-size: 11px; }
+      .small  { font-size: 10.5px; }
+      .thi    { fill: #fb7185; text-anchor: middle; font-weight: 600; }
+      .tok    { fill: #2dd4bf; text-anchor: middle; font-weight: 600; }
+      .tlo    { fill: #e0813f; text-anchor: middle; font-weight: 600; }
+      .dim    { fill: none; stroke: #8a8f98; stroke-width: 1; marker-end: url(#ah); }
+    </style>
+  </defs>
+
+  <!-- Not to scale. Each panel: a nozzle above, extruded lines, bed below. -->
+
+  <!-- Panel 1: too high -->
+  <text class="thi" x="100" y="20">Too high</text>
+  <text class="tm small" x="100" y="36">gaps, lines barely stick</text>
+  <path class="noz" d="M85 46 H115 L108 72 H92 Z"/>
+  <ellipse class="hi" cx="58" cy="118" rx="13" ry="12"/>
+  <ellipse class="hi" cx="100" cy="118" rx="13" ry="12"/>
+  <ellipse class="hi" cx="142" cy="118" rx="13" ry="12"/>
+  <rect class="bed" x="20" y="130" width="160" height="14"/>
+
+  <!-- Panel 2: correct -->
+  <text class="tok" x="280" y="20">Right</text>
+  <text class="tm small" x="280" y="36">flat tops, no gaps, no ridges</text>
+  <path class="noz" d="M265 46 H295 L288 72 H272 Z"/>
+  <path class="ok" d="M220 130 Q220 113 232 113 L248 113 Q260 113 260 130 Z"/>
+  <path class="ok" d="M260 130 Q260 113 272 113 L288 113 Q300 113 300 130 Z"/>
+  <path class="ok" d="M300 130 Q300 113 312 113 L328 113 Q340 113 340 130 Z"/>
+  <rect class="bed" x="200" y="130" width="160" height="14"/>
+
+  <!-- Panel 3: too low -->
+  <text class="tlo" x="460" y="20">Too low</text>
+  <text class="tm small" x="460" y="36">thin, wide, ridges between lines</text>
+  <path class="noz" d="M445 46 H475 L468 72 H452 Z"/>
+  <path class="lo" d="M398 130 Q398 123 406 123 L514 123 Q522 123 522 130 Z"/>
+  <path class="lo" d="M436 123 Q440 108 444 123 Z"/>
+  <path class="lo" d="M476 123 Q480 108 484 123 Z"/>
+  <rect class="bed" x="380" y="130" width="160" height="14"/>
+
+  <!-- Fix arrows -->
+  <line class="dim" x1="100" y1="170" x2="100" y2="192"/>
+  <text class="tm small" x="100" y="208">lower the nozzle:</text>
+  <text class="tm mono" x="100" y="222">M851 Z more negative</text>
+
+  <text class="tm small" x="280" y="208">keep it:</text>
+  <text class="tm mono" x="280" y="222">M500 to save</text>
+
+  <line class="dim" x1="460" y1="192" x2="460" y2="170"/>
+  <text class="tm small" x="460" y="208">raise the nozzle:</text>
+  <text class="tm mono" x="460" y="222">M851 Z more positive</text>
+
+  <text class="tm small" x="280" y="242">Cross-section of first-layer lines on the bed. Drawing not to scale.</text>
+</svg>
