@@ -71,6 +71,20 @@ permalink: /assets/js/search-data.json
   }
         {%- assign i = i | plus: 1 -%}
       {%- endunless -%}
+      {%- comment -%} Marlin: one search entry per obsolete option (appendix list) {%- endcomment -%}
+      {%- if page.url == '/docs/appendix/obsolete_options.html' -%}
+        {%- for o in site.data.obsolete -%}
+  ,"{{ i }}": {
+    "doc": {{ page.title | jsonify }},
+    "title": {{ o.name | jsonify }},
+    "content": {{ o.note | append: ' Obsolete option, last in ' | append: o.until | default: 'Before 1.1.0' | append: ' ' | jsonify }},
+    "url": "{{ page.url | append: '#' | append: o.name | relative_url }}",
+    {% include lunr/custom-data.json page=page %}
+    "relUrl": "{{ page.url | append: '#' | append: o.name }}"
+  }
+          {%- assign i = i | plus: 1 -%}
+        {%- endfor -%}
+      {%- endif -%}
       {%- comment -%} Marlin: one search entry per configuration option / option group {%- endcomment -%}
       {%- for s in page.settings -%}
         {%- assign sid = s.name | replace: '*', 'N' -%}

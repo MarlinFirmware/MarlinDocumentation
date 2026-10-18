@@ -5,6 +5,7 @@ Run everything from the site root. Rebuild with `bundle exec jekyll build`, then
 | Script | Inputs | Writes | Hand-edit the output? |
 |---|---|---|---|
 | gen_settings.py | MarlinFirmware schema (schema.py) | docs/settings/*.md | No. Put prose in the `long:` fields that mine_config_guide.py preserves |
+| gen_obsolete.py | Marlin/src/inc/Changes.h + release tags | _data/obsolete.yml, _data/obsolete_by_new.yml | No. Rendered by docs/appendix/obsolete_options.md and the settings layout |
 | mine_config_guide.py | old Configuration guide | settings `long:` text | n/a |
 | gen_gcode_index.py | docs/gcode/*.md | G-code index | No |
 | gen_printers.py | Configurations/config/examples | _data/printers.yml, docs/appendix/printers/<vendor>.md (only when missing) | printers.yml: no. Vendor pages: yes |

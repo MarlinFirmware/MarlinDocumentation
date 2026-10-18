@@ -42,7 +42,12 @@ module Jekyll
         page = gcode_pages(site)[name] or return nil
         return "<a href=\"#{base}#{page}\"><code>#{name}</code></a>"
       end
-      slug = (site.data['setting_pages'] || {})[name] or return nil
+      slug = (site.data['setting_pages'] || {})[name]
+      if slug.nil?
+        # Retired names (_data/obsolete.yml, from Changes.h) resolve to the appendix list
+        return nil unless obsolete_names(site).include?(name)
+        return "<a href=\"#{base}/docs/appendix/obsolete_options.html##{name}\" class=\"obsolete\"><code>#{name}</code></a>"
+      end
       url = "/docs/settings/#{slug}.html"
       return nil unless settings_urls(site).include?(url)
       "<a href=\"#{base}#{url}##{name}\"><code>#{name}</code></a>"
@@ -51,8 +56,13 @@ module Jekyll
     # Per-build caches
     def self.fresh(site)
       if @site_id != site.object_id || @build != site.time
-        @site_id, @build, @urls, @gcodes = site.object_id, site.time, nil, nil
+        @site_id, @build, @urls, @gcodes, @obsolete = site.object_id, site.time, nil, nil, nil
       end
+    end
+
+    def self.obsolete_names(site)
+      fresh(site)
+      @obsolete ||= (site.data['obsolete'] || []).map { |o| o['name'] }.to_set
     end
 
     def self.settings_urls(site)

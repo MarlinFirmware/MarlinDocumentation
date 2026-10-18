@@ -41,6 +41,14 @@ To use configurations from an earlier version of Marlin, first try dropping them
 
 To migrate your settings to a new Configuration you can use tools like Notepad++ or [Winmerge](//winmerge.org/) to compare old configurations with the newer (default) configurations and copy settings over on a change-by-change basis. Most settings will come over without changes, then you can review any tricky changes that remain.
 
+The firmware also ships `buildroot/share/scripts/config-migrate.py`, which does this for you from a full clone of Marlin: it finds the stock version your files started from, extracts your changes, and replays them onto the stock files of the target version, following option renames. Options the target no longer has are moved, commented out, to a block at the end of the file, and a report lists anything that needs your attention:
+
+```
+python3 buildroot/share/scripts/config-migrate.py MyConfig --to 2.1.2.9 -o MyConfig/migrated
+```
+
+If a build stops on an option name it no longer knows, the [Obsolete Options](/docs/appendix/obsolete_options.html) list gives the last version that had it and what to use instead.
+
 With recent versions of Marlin you also have the option of exporting your configuration using an older version of Marlin and then importing the `config.ini` into a newer version of Marlin with fresh configs. See the [Configuration with INI](/docs/configuration/config-ini.html) page for details.
 
 ## Sources of Documentation

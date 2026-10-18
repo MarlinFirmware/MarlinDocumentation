@@ -31,6 +31,10 @@ layout: article
   {%- if s.block_clause %}
   <p class="setting-block">Block clause <span class="setting-expr">{{ s.block_clause | setting_links }}</span></p>
   {%- endif %}
+  {%- assign formerly = site.data.obsolete_by_new[s.name] %}
+  {%- if formerly %}
+  <p class="setting-formerly">Formerly {% for f in formerly %}<a href="{{ '/docs/appendix/obsolete_options.html' | relative_url }}#{{ f.name }}"><code>{{ f.name }}</code></a>{% if f.until %} (until {{ f.until }}){% else %} (before 1.1.0){% endif %}{% unless forloop.last %}, {% endunless %}{% endfor %}</p>
+  {%- endif %}
 
   <div class="setting-desc">
   {%- if s.brief %}{{ s.brief | markdownify }}

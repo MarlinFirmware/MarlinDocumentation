@@ -69,6 +69,7 @@ with no build error. `check_site.py` catches it; `grep error` on the build outpu
 | New Marlin release | `_data/marlin.yml` | Update `downloads[0]`, `patched`, `betas`; confirm the `Configurations` release branch exists. The landing page and Download page read this file. |
 | Firmware options changed | `docs/settings/` | `skills/regenerate-settings/SKILL.md` |
 | New or changed G-code | `docs/gcode/` | `skills/gcode-page/SKILL.md`, then `python3 _tools/gen_gcode_index.py` |
+| Option renamed or retired in `Changes.h` | `_data/obsolete.yml` | `python3 _tools/gen_obsolete.py --marlin <firmware>` (see `skills/regenerate-settings/`) |
 | Example configs changed | `docs/appendix/printers/` | `python3 _tools/gen_printers.py --configs ../Configurations` |
 | New narrative page or diagram | `docs/features/`, `docs/printers/`, `docs/configuration/` | `skills/write-page/SKILL.md`, `skills/diagram/SKILL.md` |
 | Landing page content | `index.md` frontmatter | Cards and links are data; the body is two short paragraphs and one figure |

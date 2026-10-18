@@ -427,6 +427,12 @@ footer p em {
     margin: 0.25rem 0;
 }
 .setting-block { opacity: 0.75; }
+.setting-formerly { font-size: 0.85em; margin: 0.25rem 0; opacity: 0.8; }
+a.obsolete code { text-decoration: line-through; text-decoration-color: var(--link-color); }
+.obsolete-options td:nth-child(2) { white-space: nowrap; }
+.obsolete-options .muted { opacity: 0.6; }
+.obsolete-options .obsolete-note { font-size: 0.9em; opacity: 0.85; }
+.obsolete-options tr:target { background: rgba(44,132,250,0.15); }
 .setting-expr a code { text-decoration: underline dotted; }
 .setting-shared { opacity: 0.85; font-style: italic; }
 .setting-default { font-size: 0.9em; }
