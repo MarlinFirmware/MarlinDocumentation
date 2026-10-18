@@ -63,8 +63,12 @@ If you're developing a custom board, try to use common pinouts as much as possib
 ## Boards List
 
 <div id="board-list">
+{% assign group_ids = "" | split: "" %}
 {% for item in site.data.boards %}
-<h3>{{ item.group }}</h3>
+{% assign group_id = item.group | slugify %}
+{% if group_ids contains group_id %}{% assign group_id = group_id | append: "-" | append: forloop.index %}{% endif %}
+{% assign group_ids = group_ids | push: group_id %}
+<h3 id="{{ group_id }}">{{ item.group }}</h3>
 {% if item.long %}<p>{{ item.long | markdownify }}</p>{% endif %}
 <table class="table table-condensed table-striped">
 <tr><th>Name</th><th>Description</th><th>Since</th></tr>
