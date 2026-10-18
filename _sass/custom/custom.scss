@@ -90,18 +90,14 @@
 #top {
     background-color: var(--marlin-top-bg-1);
 }
-#main-header {
-    display: block;
-    position: fixed;
-    z-index: 1000;
-    width: $content-width;
-    height: $header-height;
-}
-.main-content-wrap {
-    padding-top: 3rem;
-}
-#main-content {
-    margin-top: 0.5rem;
+// Keep the header bar (search, theme toggle, aux links) in view while scrolling.
+// Sticky, not fixed, so it stays in the flow and follows the width of .main.
+@media (min-width: 50rem) {
+    #main-header {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    }
 }
 
 :target {
@@ -118,25 +114,41 @@
     background: var(--marlin-table-header-bg);
 }
 
-// Move below the "fixed" #main-header
-.breadcrumb-nav {
-    margin-top: 2.5rem;
-    margin-bottom: -2.5rem;
-}
-
-// Move down if breadcrumbs are present
-.breadcrumb-nav + #main-content {
-    padding-top: 1rem;
-}
-
 /**
  * Just the Docs theme Screen Width modifiers:
  *  xs  320px (20rem) and up
  *  sm  500px (31.25rem) and up
- *  md  740px (46.25rem) and up
- *  lg  1120px (70rem) and up
+ *  md  800px (50rem) and up (= $content-width; the sidebar appears)
+ *  lg  1064px (66.5rem) and up (= $content-width + $nav-width)
  *  xl  1400px (87.5rem) and up
+ *
+ * Site styles below also switch at 1120px (70rem). Ranges below a breakpoint end at
+ * 49.99rem / 69.99rem so they never overlap the min-width side at the exact width.
  */
+
+// Wide screens: the theme caps the content column at $content-width (50rem) and centers it,
+// leaving most of a large monitor empty. From 70rem up, let the column grow to $wide-content-width
+// (the sidebar keeps its width and the pair stays centered), and cap running text at
+// $prose-max-width so lines stay readable while tables, code and tools use the extra room.
+$wide-content-width: 80rem;
+$prose-max-width: 56rem;
+
+@media (min-width: 70rem) {
+    .side-bar {
+        width: calc((100% - #{$nav-width + $wide-content-width}) / 2 + #{$nav-width});
+    }
+    .side-bar + .main {
+        // Capital M: keep Sass from evaluating CSS max() (as the theme does)
+        margin-left: Max(#{$nav-width}, calc((100% - #{$nav-width + $wide-content-width}) / 2 + #{$nav-width}));
+    }
+    .main { max-width: $wide-content-width; }
+    .main-content {
+        p, li, dd, blockquote { max-width: $prose-max-width; }
+    }
+}
+
+// Header bar: the theme lays out search, theme toggle and aux nav as a flex row (md and up).
+// Size the items; don't position them. Phones wrap them under the search box (below).
 
 // Search Input in the header top-center
 .search-input-wrap { max-width: 30rem; } /* Reduce from 33.5rem */
@@ -144,37 +156,21 @@
 // Top-right aux nav with one or more links
 // Defined by aux_links in _config.yml
 .aux-nav {
-    float: left;
-    position: relative;
+    flex: none;
     a {
         color: var(--marlin-aux-nav-color);
     }
 }
-@media (max-width: 70rem) {
-    .aux-nav {
-        float: none;
-        left: calc(-19rem + 1em);
-        top: 0;
-    }
-}
-@media (min-width: 70rem) {
-    .aux-nav {
-        left: 34rem;
-        top: -3.5rem;
-        z-index: 2000;
-    }
-}
-
-.aux-nav .site-button { height: 90%; }
 
 .theme-toggle {
-    display: inline;
-    float: left;
-    position: relative;
-    a { color: var(--marlin-aux-nav-color); }
-    left: 33rem;
-    top: -2.5rem;
-    z-index: 2000;
+    display: flex;
+    flex: none;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0 0.75rem;
+    cursor: pointer;
+    white-space: nowrap;
+    color: inherit;
     border: none;
     background: transparent;
     font-size: 0.75rem;
@@ -183,6 +179,18 @@
         font-size: 1rem;
         line-height: 1;
     }
+}
+@media (max-width: 49.99rem) {
+    // Phones: the theme hides the header until the menu is opened. Keep search in view, with
+    // the theme toggle and aux links on one row below it.
+    .side-bar + .main #main-header {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        .search { flex: 1 0 100%; }
+        .aux-nav { height: 2.5rem; margin-left: auto; }
+    }
+    .theme-toggle { height: 2.5rem; padding: 0 1rem; }
 }
 
 // ============================================================
@@ -250,9 +258,6 @@ body.has-toc #table-of-contents.page .toc-h3 a {
 
 @media (min-width: 70rem) {
     body.has-toc {
-        .main { max-width: 64rem; }
-        #main-header { width: 64rem; }
-
         #top {
             background: linear-gradient(
                 to right,
@@ -274,8 +279,6 @@ body.has-toc #table-of-contents.page .toc-h3 a {
 
         // Breadcrumbs span the top row, above both the content and the TOC column.
         // (Without an area they were auto-placed into a row below the content.)
-        // The usual negative bottom margin only suits the single-column flow: here it would
-        // pull the content row up underneath the breadcrumbs.
         .breadcrumb-nav {
             grid-area: crumbs;
             margin-bottom: 0.5rem;
@@ -303,17 +306,7 @@ body.has-toc #table-of-contents.page .toc-h3 a {
     }
 }
 
-@media (max-width: 70rem) {
-    .site-button {
-        display: inline;
-        position: relative;
-        top: 1em;
-        margin: 1.5em 0 0.5em 0.5em;
-        padding: 0.5rem 1rem 0.5rem 1rem;
-    }
-    nav#site-nav {
-        padding-top: 2.5rem;
-    }
+@media (max-width: 69.99rem) {
     body.has-toc {
         .main-content-wrap {
             display: flex;

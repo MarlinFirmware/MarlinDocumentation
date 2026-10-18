@@ -6,8 +6,6 @@
 //
 
 body.home {
-  .main-content { max-width: 60rem; }
-
   // ---- Hero -------------------------------------------------------------
   .home-hero {
     display: grid;
@@ -178,18 +176,19 @@ body.home {
   }
 
   // ---- Responsive -----------------------------------------------------------
-  @media (max-width: 70rem) {
+  // Below 70rem the sidebar leaves the content column too narrow for side-by-side hero and columns
+  @media (max-width: 69.99rem) {
+    .home-hero {
+      grid-template-columns: 1fr;
+      .home-hero-logo { order: -1; img { max-width: 12rem; } }
+    }
+    .home-two-col { grid-template-columns: 1fr; gap: 1.5rem; }
     .home-stats { grid-template-columns: repeat(3, 1fr); row-gap: 1rem; }
     .home-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
   @media (max-width: 46.25rem) {
-    .home-hero {
-      grid-template-columns: 1fr;
-      .home-hero-logo { order: -1; img { max-width: 12rem; } }
-      h1 { font-size: 2.1rem; }
-    }
-    .home-pillars, .home-tiles, .home-two-col { grid-template-columns: 1fr; }
-    .home-two-col { gap: 1.5rem; }
+    .home-hero h1 { font-size: 2.1rem; }
+    .home-pillars, .home-tiles { grid-template-columns: 1fr; }
     .home-stats { grid-template-columns: repeat(2, 1fr); }
   }
 }
