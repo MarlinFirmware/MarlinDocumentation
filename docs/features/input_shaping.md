@@ -58,9 +58,20 @@ Low-frequency vibrations are easy to pick up with an accelerometer, and measurin
 
 1. Flash the supplied firmware onto an RP2040 "USB accelerometer" board with an ADXL345 (for example the Mellow Fly ADXL345 USB-C), and mount the board on the toolhead (for X) or the bed (for Y).
 2. Connect it to your computer over USB and open the web app in a browser with Web Serial support (Chrome, Edge or Opera). Nothing is uploaded; the samples stream straight into the page.
-3. Shake each axis, with a fast back-and-forth move or a test print, and watch the live spectrogram settle on the peak frequency.
+3. Shake one axis at a time. The best way is Marlin's own sweep, [`M495`](/docs/gcode/M495-M496.html) (enable [`RESONANCE_TEST`](/docs/settings/motion_control.html#RESONANCE_TEST)), which runs the axis through 5 to 100 Hz in about three minutes. Without it, a fast back-and-forth move or a test print also works. Watch the live spectrogram settle on the peak frequency.
 4. On the **Optimize shaper** screen, run **Auto optimise**. It evaluates Marlin's own shapers (ZV, ZVD, ZVDD, ZVDDD, EI, 2- and 3-hump EI, MZV) against the measured spectrum and returns the shaper, its frequency, damping and vibration tolerance.
 5. Enter the result on the printer with [`M493`](/docs/gcode/M493.html) (`C` shaper type, `A` frequency, `I` damping, `Q` vibration tolerance, with `X`/`Y` to set one axis) for Fixed-Time Motion, or the frequency alone with [`M593`](/docs/gcode/M593.html) for the ZV shaper. Save with [`M500`](/docs/gcode/M500.html).
+
+A worked example for the X axis, with the board on the toolhead:
+
+```
+M495 X S        ; Home, move to the center, sweep X from 5 to 100 Hz
+                ; (the tool records the sweep; Auto optimise suggests e.g. ZVD at 48.5 Hz, ζ 0.10)
+M493 X C2 A48.5 I0.10   ; Apply it to X only (C2 = ZVD)
+M500            ; Save
+```
+
+Then move the board to the bed and repeat with `M495 Y S` and `M493 Y …`. An `M493` line without `X` or `Y` sets both axes at once. Print a test part to confirm, and stop a running sweep at any time with `M496`.
 
 The tool's **Simulate** mode lets you explore the shaper trade-offs without any hardware. If you have no accelerometer, the two print-based methods below find the frequency instead:
 

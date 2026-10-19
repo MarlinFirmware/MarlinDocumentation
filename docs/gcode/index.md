@@ -54,7 +54,7 @@ G1 Z0.2 F60 ; Move Z down 0.2mm at 60 mm/min
 
 ## Command Categories
 
-Every G-code page, organized by category (252 pages).
+Every G-code page, organized by category (253 pages).
 
 ### Motion
 
@@ -71,7 +71,7 @@ Commands that control movement of the printer axes.
 | [G11](/docs/gcode/G011.html) | Recover | 1.0.0-beta |
 | [G60](/docs/gcode/G060.html) | Stored Positions | - |
 | [G61](/docs/gcode/G061.html) | Return to Saved Position | - |
-| [G80](/docs/gcode/G080.html) | Cancel Current Motion Mode | - |
+| [G80](/docs/gcode/G080.html) | Cancel Current Motion Mode | 2.0.0 |
 | [G92](/docs/gcode/G092.html) | Set Position | 1.0.0-beta |
 | [M0, M1](/docs/gcode/M000-M001.html) | Unconditional stop | 1.0.0-beta |
 | [M92](/docs/gcode/M092.html) | Set Axis Steps-per-unit | - |
@@ -94,6 +94,7 @@ Commands that control movement of the printer axes.
 | [M428](/docs/gcode/M428.html) | Home Offsets Here | - |
 | [M493](/docs/gcode/M493.html) | Fixed-Time Motion | 2.1.3 |
 | [M494](/docs/gcode/M494.html) | FT Motion Trajectory Smoothing | 2.1.3 |
+| [M495, M496](/docs/gcode/M495-M496.html) | Resonance Test | 2.1.3 |
 | [M592](/docs/gcode/M592.html) | Nonlinear Extrusion Control | 2.1.3 |
 | [M593](/docs/gcode/M593.html) | ZV Input Shaping | 2.1.2 |
 
@@ -165,7 +166,7 @@ Probing, bed leveling, and machine calibration.
 | [M851](/docs/gcode/M851.html) | XYZ Probe Offset | - |
 | [M852](/docs/gcode/M852.html) | Bed Skew Compensation | - |
 | [M871](/docs/gcode/M871.html) | Probe temperature config | - |
-| [M951](/docs/gcode/M951.html) | Magnetic Parking Extruder | - |
+| [M951](/docs/gcode/M951.html) | Magnetic Parking Extruder | 2.0.0 |
 | [M995](/docs/gcode/M995.html) | Touch Screen Calibration | - |
 
 ### Temperature
@@ -191,7 +192,7 @@ Heaters, fans, and temperature control.
 | [M304](/docs/gcode/M304.html) | Set Bed PID | - |
 | [M305](/docs/gcode/M305.html) | User Thermistor Parameters | - |
 | [M306](/docs/gcode/M306.html) | Model Predictive Temp. Control | 2.0.9.4 |
-| [M309](/docs/gcode/M309.html) | Set Chamber PID | - |
+| [M309](/docs/gcode/M309.html) | Set Chamber PID | 2.0.8 |
 | [M430](/docs/gcode/M430.html) | Power Monitor | - |
 | [M710](/docs/gcode/M710.html) | Controller Fan settings | 2.0.5.2 |
 
@@ -351,7 +352,7 @@ Power, steppers, tools, macros, and other machine control.
 | [M907](/docs/gcode/M907.html) | Trimpot Stepper Motor Current | - |
 | [M908](/docs/gcode/M908.html) | Set Trimpot Pins | - |
 | [M909](/docs/gcode/M909.html) | Report DAC Stepper Current | - |
-| [M910](/docs/gcode/M910.html) | Commit DAC to EEPROM | - |
+| [M910](/docs/gcode/M910.html) | Commit DAC to EEPROM | 1.1.0 |
 | [M912](/docs/gcode/M912.html) | Clear TMC OT Pre-Warn | - |
 | [M913](/docs/gcode/M913.html) | Set Hybrid Threshold Speed | - |
 | [M915](/docs/gcode/M915.html) | TMC Z axis calibration | - |
@@ -451,7 +452,7 @@ Closed-loop position encoders.
 
 | Command | Description | Since |
 |---------|-------------|-------|
-| [M860-M869](/docs/gcode/M860-M869.html) | I2C Position Encoders | 1.0.0-beta |
+| [M860-M869](/docs/gcode/M860-M869.html) | I2C Position Encoders | 1.1.4 |
 
 ### Mixing Extruder
 
