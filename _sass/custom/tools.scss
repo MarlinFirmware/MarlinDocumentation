@@ -5,14 +5,6 @@
 // #bitmap-converter rules, using the theme's colors so they follow the light/dark scheme.
 //
 
-// Wide screens: let tool pages use the extra width (the default content column is 50rem)
-@media (min-width: 1400px) {
-  #main-header { width: 100%; }
-  .main:has(.tool-layout) {
-    max-width: calc(100vw - #{$nav-width-md} - 4rem);
-  }
-}
-
 :root {
   --tool-label: #6cb6ff;
   --tool-section-bg: #ffffff0d;
@@ -109,6 +101,41 @@ table#tool {
   .disabled { color: #f33; font-weight: bold; display: block; width: 150px; float: left; opacity: 0.5; }
   .invalidDiv, .invalidSize, .invalidNumber { background-color: var(--tool-invalid); color: #000; }
   :invalid { box-shadow: 0 0 3px var(--tool-invalid); outline: 1px solid var(--tool-invalid); }
+}
+
+// Below 70rem the four-column form doesn't fit beside the sidebar (or on a phone). Lay out each
+// setting as label, field and description, and move the G-code output (the rowspan cell) after
+// the settings. On phones the description goes below the label and field.
+@media (max-width: 69.99rem) {
+  table#tool {
+    display: block;
+    tbody { display: flex; flex-direction: column; }
+
+    tr {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.5fr);
+      align-items: center;
+    }
+    tr#warnbox { display: none; }
+    // Rows holding the output cell and the "G-code" heading: let their cells flow on their own
+    tr.head, tr:has(> td[rowspan]) { display: contents; }
+    tr.head > td:last-child, td[rowspan] { order: 1; }
+
+    th, td, td:nth-child(2), td:nth-child(3), td.td-output { width: auto; }
+    th { text-align: left; }
+    td[colspan], td.options { grid-column: 1 / -1; }
+    td:nth-child(3) { opacity: 0.85; }
+
+    @media (max-width: 31.24rem) {
+      tr { grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); }
+      td:nth-child(3) { grid-column: 1 / -1; padding-top: 0; }
+    }
+
+    td[rowspan] { padding: 0; }
+    textarea { min-height: 25rem; height: auto; }
+
+    input:not([type="checkbox"]):not([type="button"]), select { width: 100%; box-sizing: border-box; }
+  }
 }
 
 td.options input[type="button"].tool {
