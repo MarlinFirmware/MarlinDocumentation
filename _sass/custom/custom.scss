@@ -612,12 +612,24 @@ details.printer-config {
   .table-wrapper, > table { margin-top: 0; }
 }
 
-// Inline images (ported from the old site's .floater/.framed). Markup: {: .float-right .framed } or {: .floater.framed }
-.floater { float: left; margin: 0 1em 1em 0; &.right { float: right; margin: 0 0 1em 1em; } }
-img.float-right { margin: 0 0 1em 1em; }
-img.floater, img.float-right { max-width: 45%; height: auto; }
+// Inline images (ported from the old site's .floater/.framed).
+//  - Photos float beside their text:  {: .float-right .framed } or {: .floater.framed } (left)
+//  - Diagrams and wide images get their own line, text after:  {: .framed } or no class
+.floater { float: left; margin: .25em 1.5em 1em 0; &.right { float: right; margin: .25em 0 1em 1.5em; } }
+img.float-right { float: right; margin: .25em 0 1em 1.5em; }
+img.floater, img.float-right { max-width: min(40%, 18rem); height: auto; }
 img.framed { border: 4px solid #3a3a44; border-radius: 2px; }
 [data-color-scheme="light"] img.framed { border-color: #d8d8de; }
+
+.main-content {
+  // A framed image that doesn't float is a block on its own line, below any float above it
+  img.framed:not(.floater):not(.float-right) { display: block; clear: both; max-width: 100%; height: auto; margin: 1.5em auto; }
+  // Each section starts below the previous section's photo, so floats never stack
+  h1, h2, h3, h4, h5, h6, hr, .table-wrapper, table, pre, div.highlighter-rouge, figure, details { clear: both; }
+  // Lists and callouts beside a photo wrap next to it instead of running under it
+  ul, ol, dl, blockquote, p.note, p.warning, p.important, p.more { display: flow-root; }
+}
+
 @media (max-width: 40rem) {
-  img.floater, img.float-right { float: none !important; display: block; max-width: 100%; margin: 0 auto 1em; }
+  img.floater, img.float-right, .floater { float: none !important; display: block; max-width: min(100%, 20rem); margin: 0 auto 1em; }
 }
