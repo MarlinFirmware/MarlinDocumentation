@@ -42,9 +42,12 @@ fields (`brief`, `long`, `since`, `example`, `see`) and the markdown body of eac
 8. **Regenerate the obsolete-options list** in the same pass, so renamed options get their "Formerly" line and
    retired names keep resolving:
    ```sh
-   python3 _tools/gen_obsolete.py --marlin <firmware checkout>
+   python3 _tools/gen_obsolete.py --marlin <firmware checkout> [--abm <AutoBuildMarlin checkout>]
    ```
-   It parses `Marlin/src/inc/Changes.h` into `_data/obsolete.yml` (+ `obsolete_by_new.yml`). The "until" version of
+   It parses `Marlin/src/inc/Changes.h` into `_data/obsolete.yml` (+ `obsolete_by_new.yml`), merging the rename
+   tables of Auto Build Marlin's `abm/migration-rules.js` (`--abm`, default `$MARLIN_ABM`) for names `Changes.h`
+   never checked (board renames, removals) and replacements its messages do not name. The two sources agree on
+   versions; `until` always comes from the tag scan. The "until" version of
    each name is the last upstream release tag whose config files still had it (tags are read from the `upstream`
    remote, so a stale local tag cannot leak in). Known versions are cached; only new names scan the tags.
    Rendered by `docs/appendix/obsolete_options.md`, the "Formerly" line in `_layouts/setting.html`, the

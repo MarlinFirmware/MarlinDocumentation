@@ -62,7 +62,7 @@ sections:
   - icon: download
     title: Build & Install
     url: /docs/basics/install.html
-    text: Get Marlin onto your board, from pre-built binaries to Auto Build Marlin and PlatformIO.
+    text: Get Marlin onto your board, from pre-built binaries and online builds to Auto Build Marlin and PlatformIO.
   - icon: sliders
     title: Configuration
     url: /docs/configuration.html

@@ -28,6 +28,8 @@ footer: |
 <div class="jumbotron custom-no-margin"><div class="container">
   <h1>💾 Download <em>Marlin Firmware</em></h1>
   {{ page.header | markdownify }}
+  {% capture nobuild %}No build tools? [Pre-built firmware](//github.com/MarlinFirmware/MarlinBuilds) covers many popular printers, and [**Marlin Web Build**]({{ site.data.marlin.tools.webbuild }}) builds `bugfix-2.1.x` online for any example configuration. See [Build & Install](/docs/basics/install.html).{% endcapture %}
+  {{ nobuild | markdownify }}
 
   {% assign head_text='Beta Release!' %}
   {% assign download_items=site.data.marlin.betas %}
