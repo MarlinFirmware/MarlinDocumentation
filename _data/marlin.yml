@@ -77,3 +77,10 @@ patched:
     tools: Supports Arduino 1.6.8 and up
     file: 1.1.x.zip
     config: release-1.1.9
+
+# External tools (update here when a tool moves)
+tools:
+  webbuild: https://marlinfirmware.github.io/MarlinWebBuild/
+  webbuild_repo: https://github.com/MarlinFirmware/MarlinWebBuild
+  resonance_tester: https://dbuezas.github.io/usb-Input-shaper-calibrator/
+  resonance_tester_repo: https://github.com/dbuezas/usb-Input-shaper-calibrator

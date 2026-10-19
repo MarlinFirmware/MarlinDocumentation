@@ -54,9 +54,15 @@ This motion system is controlled with G-code [`M493`](/docs/gcode/M493.html).
 
 ### With an Accelerometer
 
-Low-frequency vibrations are very easy to pick up with an accelerometer, so these inexpensive components are becoming more common in consumer 3D printers. With the accelerometer attached the printer runs a move series to introduce and measure vibrations, then it tests various shapers at different frequencies to find the best solution.
+Low-frequency vibrations are easy to pick up with an accelerometer, and measuring them directly finds the resonance frequency in minutes rather than by reading test prints. Marlin has no accelerometer input of its own, but the [**Marlin USB Resonance Tester**]({{ site.data.marlin.tools.resonance_tester }}) (by David Buezas) does the measurement from your browser:
 
-It's a hassle to attach and configure an accelerometer on most printers that run Marlin, so for now we recommend using one or both of the methods described for [`M593`](/docs/gcode/M593.html) or [`M493`](/docs/gcode/M493.html) and briefly described below:
+1. Flash the supplied firmware onto an RP2040 "USB accelerometer" board with an ADXL345 (for example the Mellow Fly ADXL345 USB-C), and mount the board on the toolhead (for X) or the bed (for Y).
+2. Connect it to your computer over USB and open the web app in a browser with Web Serial support (Chrome, Edge or Opera). Nothing is uploaded; the samples stream straight into the page.
+3. Shake each axis, with a fast back-and-forth move or a test print, and watch the live spectrogram settle on the peak frequency.
+4. On the **Optimize shaper** screen, run **Auto optimise**. It evaluates Marlin's own shapers (ZV, ZVD, ZVDD, ZVDDD, EI, 2- and 3-hump EI, MZV) against the measured spectrum and returns the shaper, its frequency, damping and vibration tolerance.
+5. Enter the result on the printer with [`M493`](/docs/gcode/M493.html) (`C` shaper type, `A` frequency, `I` damping, `Q` vibration tolerance, with `X`/`Y` to set one axis) for Fixed-Time Motion, or the frequency alone with [`M593`](/docs/gcode/M593.html) for the ZV shaper. Save with [`M500`](/docs/gcode/M500.html).
+
+The tool's **Simulate** mode lets you explore the shaper trade-offs without any hardware. If you have no accelerometer, the two print-based methods below find the frequency instead:
 
 ### Single-Layer Calibration
 

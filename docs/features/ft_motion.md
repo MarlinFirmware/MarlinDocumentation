@@ -61,4 +61,4 @@ Give it a try! It has been tested and found to work for many setups. If you run 
 
 ## See Also
 - [`M493` Fixed Time Motion](/docs/gcode/M493.html) G-code for configuration and control.
-- [Marlin Input Shaping](/docs/features/input_shaping.html)
+- [Marlin Input Shaping](/docs/features/input_shaping.html), including measuring resonance with the [USB Resonance Tester](/docs/features/input_shaping.html#with-an-accelerometer) and entering its result with `M493`.
