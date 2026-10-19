@@ -454,7 +454,7 @@ Since Marlin needs to runs on the most modest hardware, much care has been taken
 #define MYFEATURE
 #if ENABLED(MYFEATURE)
   #define MYFEATURE_SETTING 12.5
-  #undef OVERRIDDEN_FEATURE // This won't be needed with MYFEATURE
+  //#define MYFEATURE_SUBOPTION
 #endif
 ```
 **In SanityCheck.h:**
