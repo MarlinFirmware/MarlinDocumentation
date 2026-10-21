@@ -71,4 +71,4 @@ repeated here.
 
 Looking for something not listed here? The [Marlin Features](/docs/basics/features.html) overview and the
 [Settings](/docs/settings/index.html) reference cover every option, and new feature articles are welcome; see
-[Contributing to the documentation](/docs/development/contributing.html).
+[Contributing to the documentation](/docs/basics/contributing.html).

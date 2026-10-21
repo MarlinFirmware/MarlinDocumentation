@@ -504,4 +504,4 @@ If you find errors or want to improve the documentation, please:
 2. Edit the G-code page in the `docs/gcode/` directory
 3. Submit a pull request
 
-See the [Contributing Guide](/docs/development/contributing.html) for more information.
+See the [Contributing Guide](/docs/basics/contributing.html) for more information.

@@ -2,7 +2,7 @@
 title:       Marlin Features
 parent:      Introduction
 description: 'An overview of what every Marlin build includes and the optional features that make a printer safer, better calibrated and easier to live with.'
-nav_order:   3
+nav_order:   1
 layout:      article
 nav_enabled: true
 gh_edit_link: true

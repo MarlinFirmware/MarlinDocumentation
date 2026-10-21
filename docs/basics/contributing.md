@@ -1,26 +1,27 @@
 ---
 title: Contributing to Marlin
-description: How to help improve Marlin
-parent: Development
+description: Ways you can help keep Marlin alive and thriving
+parent: Introduction
 layout: article
-nav_order: 5
+nav_order: 10
 nav_enabled: true
 toc: true
 has_toc: true
 back_to_top: true
 ---
 
-<!-- ## The Layers of Marlin -->
-As a community-supported open source project, Marlin relies on the time and talent of many volunteers. All the great stuff you see in Marlin today comes from a [bright and engaged group](//github.com/MarlinFirmware/Marlin/graphs/contributors) of debaters, experimenters, and makers who screw up their sleep schedules, grind their steppers, and twerk their axes so the rest of us don't have to.
+# Contributing to Marlin
+
+As a community-supported open source project, Marlin relies on the time and talent of many volunteers. All the great stuff you see in Marlin today comes from a [bright and engaged group](//github.com/MarlinFirmware/Marlin/graphs/contributors) of users, experimenters, and weekend coders who screw up their sleep schedules, grind their steppers, and twerk their axes so the rest of us don't have to.
 
 The core Marlin team consists of a few maintainers who review contributions, discuss ideas, track bugs, apply [Coding Standards](coding_standards.html), publish releases, and update this website. See the [project page](//github.com/MarlinFirmware/Marlin) for current team contacts.
 
 ## Ways to contribute
 
 ### Donate
-The current maintainer of Marlin is [Scott Lahteine](//www.thinkyhead.com/donate-to-marlin) aka [@thinkyhead](//github.com/thinkyhead/). Scott has been writing software since 1977 mostly focusing on shareware and open source. He reviews every contribution before it goes into Marlin, maintains documentation, hosts the [Facebook](//www.facebook.com/groups/marlinfirmware) and [Marlin Discord](//discord.com/servers/marlin-firmware-461605380783472640), and maintains a test lab in Austin, TX.
+Marlin is currently maintained by [Scott Lahteine](//www.thinkyhead.com/donate-to-marlin) aka [@thinkyhead](//github.com/thinkyhead/) who maintains the *Marlin Test Lab* in Austin, TX and is responsible for reviewing and passing all Marlin contributions, maintaining documentation, and hosting the [Marlin Facebook Group](//www.facebook.com/groups/marlinfirmware) and [Marlin Discord](//discord.com/servers/marlin-firmware-461605380783472640).
 
-Your sponsorship accelerates development, testing, and advancement of the most ambitious open source multi-platform 3D printing firmware in the world. Several support options are available:
+Your sponsorship keeps the project alive and helps to support the development, testing, and evolution of this ambitious open source multi-platform 3D printing firmware. Several options are available:
 
 - <span class="fa-brands fa-github"></span> [Github Sponsors](//github.com/sponsors/thinkyhead)
 - <span class="fa-brands fa-patreon"></span> [Patreon](//www.patreon.com/thinkyhead)
@@ -31,10 +32,11 @@ Your sponsorship accelerates development, testing, and advancement of the most a
 ### Report bugs
 - Read [Reporting Bugs](/docs/development/reporting_bugs.html) first. It shows how to write a report that can be fixed.
 - Use the community links below for help with configuration and troubleshooting.
-- Submit your **Confirmed Bugs** to the [Issue Queue](//github.com/MarlinFirmware/Marlin/issues/new?labels=Bug%3A+Potential+%3F&template=bug_report.yml&title=%5BBUG%5D+%28bug+summary%29). Search the Issue Queue first!
+- Submit your **[Confirmed Bugs](/docs/development/reporting_bugs.html)** to the [Issue Queue](//github.com/MarlinFirmware/Marlin/issues/new?labels=Bug%3A+Potential+%3F&template=bug_report.yml&title=%5BBUG%5D+%28bug+summary%29). Search the Issue Queue first!
 
 ### Request features
-- Submit your **Feature Requests** to the [Issue Queue](//github.com/MarlinFirmware/Marlin/issues/new?labels=T%3A+Feature+Request&template=feature_request.yml&title=%5BFR%5D+%28feature+summary%29). Search the Issue Queue first!
+- Read **[Requesting Features](/docs/development/feature_request.html)** first for the full details.
+- Submit your **[Feature Requests](/docs/development/feature_request.html)** to the [Issue Queue](//github.com/MarlinFirmware/Marlin/issues/new?labels=T%3A+Feature+Request&template=feature_request.yml&title=%5BFR%5D+%28feature+summary%29). Search the Issue Queue first!
 
 ### Submit code
 If you know C or C++ and can help to patch bugs, fix typos, or just add helpful comments, we welcome your expertise. See "[Contributing Code](/docs/development/getting_started_pull_requests.html)" to find out how to submit code.

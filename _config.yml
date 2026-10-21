@@ -6,7 +6,6 @@ description: 'Printing the planet, one layer at a time.'
 baseurl: ''
 url: 'https://marlinfw.org'
 js: '/assets/javascript/'
-pull_img: '/assets/images/docs/development/pull_images/'
 destination: ./_site
 
 exclude:
@@ -209,5 +208,5 @@ just_the_docs:
   # `nav-category` dividers at the bottom of the sidebar.
 
 aux_links:
-  🤓 GitHub: https://github.com/MarlinFirmware/Marlin
-  ❤️ Donate: /docs/contribute.html
+  GitHub: https://github.com/MarlinFirmware/Marlin
+  ❤️ Donate: /docs/basics/contributing.html#donate

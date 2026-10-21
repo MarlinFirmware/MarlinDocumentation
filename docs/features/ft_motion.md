@@ -53,11 +53,11 @@ As with standard motion, the smoothest lines results from dividing up time into 
 
 ### Disadvantages
 - Fixed Time Motion requires a 32-bit board with enough RAM to store events for a short slice of time. Although each "event" comprises only two bits per axis, they add up when running many thousands of events per second.
-- Tuning advanced Input Shapers is not an easy automated process. But Ulendo is working on something that should help.
-- Not all Marlin features are supported (yet). For example, Mixing Extruder has not yet been implemented as FT Motion events. Please contribute your efforts to help make this feature more capable!
+- Tuning advanced Input Shapers is not yet fully automated, but we provide tools to measure resonances and calculate the required values. And Ulendo offers a tuner SaaS integrated with OctoPrint that provides extra measurements for their proprietary Filtered-ß-Spline compensation. (Contact Ulendo for more information.)
+- Not all Marlin features are supported (yet). For example, Mixing Extruder has not yet been implemented with FT Motion.
 
 ### Should You Use FT Motion?
-Give it a try! It has been tested and found to work for many setups. If you run into trouble let us know! This is an important new feature for the future of hobbyist motion systems!
+Give it a try! It has been tested and found to work for many setups. If you run into trouble let us know! This is an important new feature for the future of hobbyist motion systems, and once more complete it will become the *default* motion system.
 
 ## See Also
 - [`M493` Fixed Time Motion](/docs/gcode/M493.html) G-code for configuration and control.
