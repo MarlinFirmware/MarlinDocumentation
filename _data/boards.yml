@@ -1538,7 +1538,7 @@
 
 - group: Marlin Simulator
   long: |
-    Marlin includes a built-in Simulator HAL (`NATIVE_SIM`) that runs on Windows, macOS, or Linux for debugging and experimentation.
+    Marlin includes a built-in Simulator HAL (`NATIVE_SIM`) that runs on Windows, macOS, or Linux for debugging and experimentation. See the [Marlin Simulator](/docs/printers/simulator.html) page.
     It can simulate a Character-based LCD, standard Graphical LCD, or a TFT Color display.
   boards:
   - name: SIMULATED

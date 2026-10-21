@@ -3,7 +3,7 @@ title: Contributing to Marlin
 description: How to help improve Marlin
 parent: Development
 layout: article
-nav_order: 3
+nav_order: 5
 nav_enabled: true
 toc: true
 has_toc: true
@@ -29,6 +29,7 @@ Your sponsorship accelerates development, testing, and advancement of the most a
 - $$ [GoFundMe](https://www.gofundme.com/marlin-firmware)
 
 ### Report bugs
+- Read [Reporting Bugs](/docs/development/reporting_bugs.html) first. It shows how to write a report that can be fixed.
 - Use the community links below for help with configuration and troubleshooting.
 - Submit your **Confirmed Bugs** to the [Issue Queue](https://github.com/MarlinFirmware/Marlin/issues/new?labels=Bug%3A+Potential+%3F&template=bug_report.yml&title=%5BBUG%5D+%28bug+summary%29). Search the Issue Queue first!
 
@@ -36,13 +37,13 @@ Your sponsorship accelerates development, testing, and advancement of the most a
 - Submit your **Feature Requests** to the [Issue Queue](https://github.com/MarlinFirmware/Marlin/issues/new?labels=T%3A+Feature+Request&template=feature_request.yml&title=%5BFR%5D+%28feature+summary%29). Search the Issue Queue first!
 
 ### Submit code
-If you know C or C++ and can help to patch bugs, fix typos, or just add helpful comments, we welcome your expertise. See "[Contributing Code with Pull Requests](/docs/development/getting_started_pull_requests.html)" to find out how to submit code.
+If you know C or C++ and can help to patch bugs, fix typos, or just add helpful comments, we welcome your expertise. See "[Contributing Code](/docs/development/getting_started_pull_requests.html)" to find out how to submit code.
 
 - Submit **Bug Fixes** and **New Features** as Pull Requests to the ([bugfix-2.1.x](https://github.com/MarlinFirmware/Marlin/tree/bugfix-2.1.x)) branch.
 - Follow the [Coding Standards](/docs/development/coding_standards.html) to gain points with the maintainers.
 
 ### Do Some Testing
-Marlin posts "nightly" builds that contain the most up-to-date code. While they include patches to the most recent release (yay, fewer bugs!) they can also contain untested code, so your feedback is essential.
+Marlin posts "nightly" builds that contain the most up-to-date code. While they include patches to the most recent release (yay, fewer bugs!) they can also contain untested code, so your feedback is essential. If you write code, see [Marlin Testing](/docs/development/testing.html) for how Marlin is tested and how to test your own changes.
 
 ### Contribute Documentation
 Are you skilled in information design? This website is far from complete, and it's a bit text-heavy. We need more photos, diagrams, and YouTube videos to embed on these pages. A well-chosen image or well-produced video can have more impact than many pages of written documentation. Visit the [MarlinDocumentation Project](https://github.com/MarlinFirmware/MarlinDocumentation) for more information, and read the [Documentation Style Guide](/docs/development/style_guide.html) before you start.

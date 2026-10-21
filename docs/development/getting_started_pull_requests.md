@@ -1,372 +1,252 @@
 ---
-title: Contributing Code with Pull Requests
-description: How to submit changes to Marlin through Github
+title: Contributing Code
+description: Submitting changes to Marlin on Github
 parent: Development
 layout: article
-nav_order: 5
+nav_order: 8
 nav_enabled: true
 toc: true
 has_toc: true
 back_to_top: true
 ---
 
-### Introduction
+# Contributing Code
+
+Marlin welcomes fixes and new features from anyone. Every change arrives as a **Pull Request** (PR) on GitHub: you
+copy the project to your own account, make the change on a branch there, and ask the maintainers to pull it into the
+main project. This page walks through that process from start to finish. It assumes you can edit C++ and
+build Marlin. If you can't build it yet, start with [Build & Install](/docs/basics/install.html).
+
+Before you write anything, read [Contributing to Marlin](contributing.html) and the
+[Coding Standards](coding_standards.html). Changes that follow them are accepted sooner.
+
+## The short version
+
+1. Fork `MarlinFirmware/Marlin` and clone your fork.
+2. Make a branch from the latest `bugfix-2.1.x`.
+3. Make one small, focused change, and [test it](testing.html).
+4. Commit with a clear message.
+5. Push the branch to your fork and open a Pull Request that targets `bugfix-2.1.x`.
+6. Fix whatever CI and the reviewers find, then **rebase** (don't merge) to keep the branch current.
 
-GitHub is a great tool for collaboration, but it has a bit of a learning curve. The power of GitHub comes from the [Git version control system](https://en.wikipedia.org/wiki/Git). Git will be familiar if you've used other version control systems like [CVS](https://en.wikipedia.org/wiki/Concurrent_Versions_System), [Apache Subversion](https://en.wikipedia.org/wiki/Apache_Subversion), or [Mercurial](https://en.wikipedia.org/wiki/Mercurial). GitHub adds helpful collaboration features that make it an ideal platform for maintaining the Marlin project.
+## Before you start
 
-Before submitting code and other content, please review [Contributing to Marlin](contributing.html) and [Marlin Coding Standards](coding_standards.html). Following our guidelines ensures that your changes will be accepted more quickly.
+- **Look for existing work.** Search open issues and Pull Requests for the same fix or feature. Two people building the same
+  thing is a waste.
+- **Discuss a large change first.** For anything big or controversial, open a
+  [feature request](feature_request.html) or ask in the Discord before you spend weeks on it. A maintainer can tell you whether
+  it fits, and how.
+- **A good first change** is easy to find in the issues labeled
+  [good first issue](https://github.com/MarlinFirmware/Marlin/labels/good%20first%20issue) and
+  [help wanted](https://github.com/MarlinFirmware/Marlin/labels/help%20wanted).
+- **Keep it small.** A Pull Request should do one thing and build and pass CI on its own. If your work has several
+  parts, split it into several PRs. The usual splits are refactor then feature, core logic then LCD support, and one board
+  family or HAL per PR. If one PR depends on another, say so in its description.
+- **AI tools are welcome**, but you are the author, you answer for every line, and you must have read and tested it. The
+  rules are in the AI-Assisted Contributions section of Marlin's
+  [`contributing.md`](https://github.com/MarlinFirmware/Marlin/blob/bugfix-2.1.x/.github/contributing.md).
 
-### Set up GitHub, Fork, and Clone
+## Which branch?
 
-Before you can contribute to Marlin, you need to get a [free GitHub.com account](https://github.com/join). This is a pretty quick process. Please upload a unique icon or image so it will be easier to identify you on the project pages! You'll also need to download and install the [GitHub Desktop](https://desktop.github.com) application.
+Pull Requests go to **`bugfix-2.1.x`**, the working branch. It receives both bug fixes and new features, and releases are cut
+from it later. *Never* target a release branch such as `2.0.x`. PRs aimed at one are closed automatically, with a
+reminder to resubmit.
 
-After signing in to your GitHub account, go to the main Marlin repository at: [https://github.com/MarlinFirmware/Marlin](https://github.com/MarlinFirmware/Marlin) and create a fork of Marlin by clicking the `fork` icon in the top right of the page.
+A fix that must also reach an older release can be backported by the maintainers. Very small patches are most
+likely to be taken. Say in your description if you think yours should be.
 
-![image1](/assets/images/docs/development/pull_images/pull_1.jpg)
+## Set up
 
-When GitHub is done copying files, a page will appear displaying your shiny new fork of Marlin. This takes about 10-20 seconds, so be patient. You may need to wait for the `Fetching Latest Commit` message to go away also. If it still hasn't finished after few minutes then GitHub might be hung up (not unusual).
+You need a free [GitHub account](https://github.com/join) and [Git](https://git-scm.com/). If you prefer a graphical
+tool, [GitHub Desktop](https://desktop.github.com) handles cloning, committing and pushing. It can't do rebases,
+so you will still use the command line for those.
 
-----
+1. **Fork.** On the [Marlin repository](https://github.com/MarlinFirmware/Marlin) click **Fork**. This copies the
+   project to your account. Keep the repository name `Marlin`.
+2. **Clone your fork** and add the main project as a second remote called `upstream`:
 
-### Rename your Fork (not recommended)
+   ```sh
+   git clone https://github.com/YOUR-NAME/Marlin.git
+   cd Marlin
+   git remote add upstream https://github.com/MarlinFirmware/Marlin.git
+   git fetch upstream
+   ```
 
-It's always best to leave the repository name as "Marlin" unless you plan to make your own custom version of Marlin for publication. Here are the instructions if you want to rename it.
+   Now `origin` is your fork, where you push, and `upstream` is the main project, where you read the newest code.
+   `git remote -v` shows both.
 
-Click on the `Settings` icon.
+## Make a branch
 
-![image2](/assets/images/docs/development/pull_images/pull_2.jpg)
+Never work on `bugfix-2.1.x` itself. Make a branch with a short, descriptive name, starting from the latest
+upstream code:
 
-Click in the `Repository name` box, type the new name, and click `Rename`.
+```sh
+git fetch upstream
+git switch -c fix_probe_offset --no-track upstream/bugfix-2.1.x
+```
 
-![image3](/assets/images/docs/development/pull_images/pull_3.jpg)
+If you use GitHub Desktop, fetch, then choose **Branch &rarr; New Branch** and base it on `upstream/bugfix-2.1.x`.
 
-![image4](/assets/images/docs/development/pull_images/pull_4.jpg)
+## Make the change
 
-This takes you back to your fork's main page, where the new name is displayed.
+- Follow the [Coding Standards](coding_standards.html): two-space indents, no tabs, and the style of the code around
+  your change. Don't reformat or rename code you aren't changing, because that hides your real change in the diff.
+- **Don't change defaults** in `Configuration.h` or `Configuration_adv.h` unless that is the point of the PR. A new
+  feature is disabled by default. When you add or change an option, update its comment there, and add checks to
+  `Marlin/src/inc/SanityCheck.h` for the combinations that can't work.
+- Gate optional code with `ENABLED()`, `DISABLED()` and the related macros, so it costs nothing when it is off. The code must
+  build for both 8-bit AVR boards and 32-bit boards.
+- Never commit the changes you make to configuration files to suit your own printer. Keep them out of your commits.
+- Include a picture, a diagram or a video link in the PR description if they help to show what the change does.
 
-Edit the title by clicking `Edit`.
+## Test it
 
-![image5](/assets/images/docs/development/pull_images/pull_5.jpg)
+Testing is part of the change. At a minimum, build the environments your change affects and try it, in the
+[Simulator](/docs/printers/simulator.html) or on a printer. A new feature or option should also come with a build test, and
+with a unit test when its logic can run without hardware. [Marlin Testing](testing.html) explains each of these and how to run
+them, and has a checklist to use before you submit.
 
-Type in the new title and click `Save`.
+## Commit
 
-![image6](/assets/images/docs/development/pull_images/pull_6.jpg)
+Commit your work in logical steps, with one purpose per commit:
 
-----
+```sh
+git add -p                      # choose exactly the changes to include
+git commit
+```
 
-### Change the Default Branch
+A commit message:
 
-At this time we're using the `bugfix-2.1.x` branch to patch bugs for the next minor release, and we'll create a new branch for the next major release as we develop a plan. We recommend you change the "Default Branch" in your fork to `bugfix-2.1.x` to make it easier to do Pull Requests later.
+- starts with a short summary of 72 characters or fewer, in the imperative mood ("Fix probe offset on Delta", not "Fixed" or "Fixes");
+- starts with an emoji that tells the kind of change, as in the project's `git log` (🐛 fix, ✨ feature, ⚡️ performance, 🔧 configuration,
+  🩹 minor fix, 🧑‍💻 developer tooling, 🚸 UX);
+- explains the reason for the change after a blank line, when it isn't obvious.
 
-Click on the **branches** tab to view all branches in your fork.
+Look at recent commits with `git log --oneline upstream/bugfix-2.1.x` to see the style. Leave issue numbers out of the
+first line. They go in the PR description.
 
-![image8](/assets/images/docs/development/pull_images/pull_8.jpg)
+## Open the Pull Request
 
-Click on the **Change default branch** button.
+Push the branch to your fork:
 
-![image9](/assets/images/docs/development/pull_images/pull_9.jpg)
+```sh
+git push -u origin fix_probe_offset
+```
 
-Click on the branch dropdown button. Select `bugfix-2.1.x` and click **Update**.
+Then open the PR in either of these ways:
 
-![image10](/assets/images/docs/development/pull_images/pull_10.jpg)
+- On GitHub, open your fork. A banner offers **Compare &amp; pull request** for the branch you just pushed. Click it.
+- Or from the command line with the [GitHub CLI](https://cli.github.com/): `gh pr create --base bugfix-2.1.x`.
 
-A warning pops up. Just click the button.
+**Check that the base repository is `MarlinFirmware/Marlin` and the base branch is `bugfix-2.1.x`.** GitHub Desktop
+and some browser paths choose another target, and a PR aimed at the wrong branch must be redone.
 
-![image11](/assets/images/docs/development/pull_images/pull_11.jpg)
+Fill in every section of the PR form:
 
-----
+| Section | What to write |
+|---------|---------------|
+| **Description** | What the change does and why, in detail. The first reviewer may not know the area, so don't be brief. Add images where they help. |
+| **Requirements** | A specific board, display or other hardware that the change needs, if any. |
+| **Benefits** | What the change fixes or improves. |
+| **Configurations** | A ZIP of the configuration files a reviewer needs in order to build and try the change. |
+| **Related Issues** | Issues that it fixes or answers. Write the number as `#1536` and GitHub links it both ways. |
 
-### Clone Marlin to GitHub Desktop
+Keep issue numbers out of the PR *title*. Say in the description what you built and tested, on which hardware if any, and
+what you didn't test. Reviewers can then spend their time where it counts.
 
-Click the "**<> Code**" tab
+## After you submit
 
-![image12](/assets/images/docs/development/pull_images/pull_12.jpg)
+### Checks
 
-Click the **Clone or download** button
+A few seconds after you open the PR, GitHub starts the automatic checks (CI). They build many boards and
+configurations, run the unit tests and check the formatting, and they take a while. A red mark by a check means it
+failed, and the **Details** link shows the log. The first error is usually the real one.
+[Marlin Testing](testing.html#what-ci-checks) explains each check and how to reproduce it on your computer. A PR
+with failing checks can't be merged, but you don't have to fix it right away.
 
-![image13](/assets/images/docs/development/pull_images/pull_13.jpg)
+### Review
 
-Select **Open in Desktop**
+Maintainers and other contributors comment on the PR. Expect questions and requests for changes. This is normal
+and not an insult. Answer every comment, and say when you have changed something. Reviews can take a while, because
+the reviewers are volunteers with a lot of PRs to read, so be patient.
 
-![image14](/assets/images/docs/development/pull_images/pull_14.jpg)
+To change the PR, commit to the same branch and push. The PR updates by itself:
 
-A security popup may appear. Just click the **Allow** button
+```sh
+git add -p
+git commit
+git push
+```
 
-![image15](/assets/images/docs/development/pull_images/pull_15.jpg)
+## Keep it current
 
-Click **OK** to save it in the default location.
+The main code moves while your PR waits. Bring your branch up to date by **rebasing** onto the latest upstream, never
+with a merge. A merge adds an extra commit that mixes the old and new code, and the project doesn't want it.
 
-![image16](/assets/images/docs/development/pull_images/pull_16.jpg)
+```sh
+git fetch upstream
+git rebase upstream/bugfix-2.1.x
+git push --force-with-lease
+```
 
-A progress bar appears.
+The push has to be forced because a rebase rewrites the history of your branch. `--force-with-lease` refuses to
+overwrite anything on your fork that you haven't seen.
 
-![image17](/assets/images/docs/development/pull_images/pull_17.jpg)
+### Resolve conflicts
 
-### Using GitHub Desktop...
+If the rebase stops with a conflict, Git marks the files it couldn't combine. Open each one and look for blocks like this:
 
-You now have a "working copy" of Marlin. Note that only the branch you selected on your GitHub page may have been downloaded. Check that the desired branch was downloaded by clicking on **Changes**.
+```
+<<<<<<< HEAD
+(the newest upstream code)
+=======
+(your change)
+>>>>>>> your commit message
+```
 
-![image18](/assets/images/docs/development/pull_images/pull_18.jpg)
+Edit the block into the code you want, with no markers left, then:
 
-Click **Open this repository**.
+```sh
+git add path/to/file
+git rebase --continue
+```
 
-![image19](/assets/images/docs/development/pull_images/pull_19.jpg)
+If it goes wrong, `git rebase --abort` puts everything back as it was. Conflict resolution takes some practice. Look at
+what changed upstream, using the history of the file on GitHub, to decide what to keep.
 
-A Windows Explorer window appears. Open the `Marlin` directory and then open the `Version.h` file.
+### Tidy the commits
 
-![image20](/assets/images/docs/development/pull_images/pull_20.jpg)
+If your PR has many small fix-up commits, combine them before it is merged, so that it has one commit per logical
+change. Use an interactive rebase:
 
-Scroll down until the `#define SHORT_BUILD_VERSION` is visible. The text should be "`bugfix-2.1.x`."
+```sh
+git rebase -i upstream/bugfix-2.1.x
+```
 
-![image21](/assets/images/docs/development/pull_images/pull_21.jpg)
+Your editor opens with a list of your commits. Leave the first as `pick`, and change `pick` to `fixup` (or `f`)
+on any commit that belongs with the one above it. Use `reword` to change a message, and `drop` to remove a commit.
+Save and close, then `git push --force-with-lease`.
 
-If you downloaded the wrong branch, go back to the GitHub website, select the correct branch, and choose "**Open in Desktop**" again.
+The [Marlin GitHub scripts](git_scripts.html) automate these steps, and many others, for those who use them often.
 
-----
+## If you submitted the wrong thing
 
-### Make a feature branch
+- **Wrong target branch.** On the PR, use **Edit** next to the title and change the base branch to `bugfix-2.1.x`. If
+  the PR then shows unrelated commits, rebase your branch onto `upstream/bugfix-2.1.x` and push again.
+- **Config changes in your commits.** Remove them in a new commit (`git restore --source=upstream/bugfix-2.1.x -- Marlin/Configuration.h Marlin/Configuration_adv.h`),
+  then tidy the commits so that the change disappears from the history.
+- **Too big.** Split it. Create a new branch from `upstream/bugfix-2.1.x` for each part, bring over only the files
+  for that part, and open a separate PR for each one.
 
-It's a good idea to keep an unaltered copy of the `bugfix-2.1.x` branch that you keep in sync with the main repository. Before editing any code you should make a copy of `bugfix-2.1.x` and give the new branch a descriptive name.
+## After it is merged
 
-![image22](/assets/images/docs/development/pull_images/pull_22.jpg)
+Clean up the branch, locally and on your fork:
 
-Make a new branch via Desktop by clicking this icon:
+```sh
+git fetch upstream
+git switch --detach upstream/bugfix-2.1.x
+git branch -D fix_probe_offset
+git push origin --delete fix_probe_offset
+```
 
-![image23](/assets/images/docs/development/pull_images/pull_23.jpg)
-
-Type in the branch name and click **Create new branch**.
-
-![image24](/assets/images/docs/development/pull_images/pull_24.jpg)
-
-The new branch is automatically selected. Click the **Publish** button to upload the branch to your fork on GitHub. (The button changes to **Sync** once the branch has been published.)
-
-![image25](/assets/images/docs/development/pull_images/pull_25.jpg)
-
-----
-
-### Make Changes and Test
-
-You can freely edit code files, configurations, etc., in your working copy. You can make new branches in your working copy to experiment, then throw them away. Nothing counts until you publish and sync your changes. And thanks to the magic of `git` you can always go back to earlier points in time.
-
-In the main view, GitHub Desktop shows all your uncommitted changes in a list. You can click on each item to see the specific changes in the right pane. Previous commits are shown under the "History" tab.
-
-### Commit to your Working Copy
-
-Use GitHub Desktop to "commit" the changes you want to keep (to your working copy). A commit stores your changes and provides a "bookmark" (Commit ID) for the point in time when the changes were committed. The "commit message" summarizes why the changes were made.
-
-Tick the checkboxes on all the files that you want to commit. (Note that you can also "cherry-pick" selected changes by clicking in the margin of the second pane.)
-
-![image26](/assets/images/docs/development/pull_images/pull_26.jpg)
-
-Fill in the **Summary** and **Description**, then click **Commit**. Voila! The selected changes are packaged and ready for submission.
-
-![image27](/assets/images/docs/development/pull_images/pull_27.jpg)
-
-Once everything is committed, publish to your GitHub account by clicking the `Sync` button:
-
-![image28](/assets/images/docs/development/pull_images/pull_28.jpg)
-
-----
-
-### Submit code with a Pull Request
-
-Before submitting the Pull Request:
-
-- Please review the [Marlin project guidelines](https://github.com/MarlinFirmware/Marlin/wiki/DNE-Contributing).
-- Make sure you've compiled and done some sanity tests on the code.
-
-#### Submit from GitHub Desktop
-
-You can use GitHub Desktop to submit a Pull Request by using the **Pull Request** button, but you must be careful to _**specifically target the `MarlinFirmware/bugfix-2.1.x` branch!**_
-
-#### Submit from the GitHub website
-
-Return to your fork's page on GitHub, select your updated branch, and click the **New Pull Request** button.
-
-![image29](/assets/images/docs/development/pull_images/pull_29.jpg)
-
-GitHub should automatically detect the target for the Pull Request as `bugfix-2.1.x` in the main `MarlinFirmware` project. However, you may instead see a page like the one below. In that case, click the **Compare across forks** button:
-
-![image30](/assets/images/docs/development/pull_images/pull_30.jpg)
-
-To target the `bugfix-2.1.x` branch in the main Marlin repository, click the **base** button and select `bugfix-2.1.x`. (For new features you should instead use `dev-2.1.x`.)
-
-![image31](/assets/images/docs/development/pull_images/pull_31.jpg)
-
-Click **compare across forks** (again).
-
-![image32](/assets/images/docs/development/pull_images/pull_32.jpg)
-
-Click on the **head fork:** button and then click on **your repository**.
-
-![image33](/assets/images/docs/development/pull_images/pull_33.jpg)
-
-Click on the **compare** button and then click the **name of the branch** you created with Desktop.
-
-![image34](/assets/images/docs/development/pull_images/pull_34.jpg)
-
-If you have only a single commit, its text will be copied into the Pull Request. Edit as needed to provide all the relevant details. When your description is complete click the **Create Pull Request** button.
-
-![image35](/assets/images/docs/development/pull_images/pull_35.jpg)
-
-Here's the Pull Request that was just created.
-
-![image36](/assets/images/docs/development/pull_images/pull_36.jpg)
-
-If you have an open issue associated with your Pull Request, include that issue's number in your Pull Request description (e.g., "`#1536`"), and a link to the Pull Request will automatically appear on the issue's page. The same goes for individual commit descriptions.
-
-### Updating the PR
-
-Typically you'll get requests to correct, improve and add features to your code.
-The top level steps of doing this are:
-1. Open your branch in Windows Explorer
-2. Edit & test your code
-3. Apply the code to the PR (commit & sync)
-4. Repeat 1-3 as necessary
-5. Resolve "All checks have failed" issues
-6. Make the PR pretty & sync to main repository ( may need to be done multiple times)
-
-#### Open your branch in Windows Explorer
-
-You've done most of this before when you created your branch.
-
-Open Desktop, select your repository (on the left side), select your branch (top left), click on **Changes** (top middle) and then click on **open this repository** (right middle)
-
-![image37](/assets/images/docs/development/pull_images/pull_37.jpg)
-A Windows Explorer window will popup. Copy the `Marlin` directory to your work area. Close the Windows Explorer window and close Desktop.
-
-![image38](/assets/images/docs/development/pull_images/pull_38.jpg)
-
-#### Edit and Test
-
-As before, do all your work & testing in your local copy.
-
-#### Move the code to the PR (commit & sync your code)
-
-Open Desktop and the Windows Explorer window as before
-
-Copy the changed files into the new Windows Explorer window. Alternatively you can just copy your entire directory over. GitHub will check the newly copied files against the old and only list the ones that have changed.
-
-Finish the commit and Sync as you did previously in **Commit changes to your working copy**.
-
-_**When a branch is associated with a PR, the PR is updated on every Sync.**_
-
-Most of the time you've made changes to the Configuration.h and Configuration_adv.h files that are specific to your printer. Do NOT upload those to the PR. This can be done multiple ways:
-* Don't copy them into the GitHub directory
-* Don't include them in the commit
-
-#### Repeat the above as necessary
-
-#### Resolve "All checks have failed" issues
-
-When you create a PR (and every time you commit new code) GitHub uses the "Travis CI" service to run several tests on the code by enabling various combinations of options and compiling for various target platforms. Any failed tests need to be resolved before the PR can be merged into the main Marlin repository.
-
-Within 30-90 seconds of doing the sync the PR will have a section that looks like this:
-
-![image39](/assets/images/docs/development/pull_images/pull_39.jpg)
-
-Several minutes later the PR will show this status if there are no problems:
-
-![image40](/assets/images/docs/development/pull_images/pull_40.jpg)
-
-If you see a "failed" status instead then something needs to be fixed. You don't have to fix the PR immediately but it must be fixed before it can be merged into the main Marlin repository.
-
-To see the errors click on **Details**
-
-![image41](/assets/images/docs/development/pull_images/pull_41.jpg)
-
-This will bring up the **Travis** log. Green means that the test has passed. Red means there's a problem.
-
-![image42](/assets/images/docs/development/pull_images/pull_42.jpg)
-
-It's recommended that you include the fixes in the next code you commit.
-
-The errors you're looking at come from the compiler. Resolve just like you do when compiling on your local machine.
-
-Unfortunately the Travis log does not include the options that were enabled when the errors were found. That makes it harder to reproduce the problem locally.
-
-#### Organize and Sync the PR
-
-If you've made a lot of small fix-up commits it can be hard to see the combined result. So before a PR is merged it's helpful to reduce your commits down to a manageable number and get them organized. They can even be combined into a single commit.
-
-This process also incorporates any code changes in the main Marlin code that have been done since the PR was created or the last time the process was run.
-
-This process uses a command window (shell) to issue GIT commands.
-
-Open **Desktop** and open the **Windows Explorer** window. Make a copy of the directory. You may need it later.
-
-Next, right-click on the repository to open the popup menu. Select **Open in Git Shell**.
-
-![image43](/assets/images/docs/development/pull_images/pull_43.jpg)
-
-The Git Shell will open.
-
-![image44](/assets/images/docs/development/pull_images/pull_44.jpg)
-
-Type `git remote –v` into the Git Shell and press return to execute the command.
-
-![image45](/assets/images/docs/development/pull_images/pull_45.jpg)
-
-If the `upstream` remote is missing then type `git remote add upstream https://github.com/MarlinFirmware/Marlin.git` followed by return.
-
-Next type `git fetch upstream` followed by `git rebase upstream/bugfix-2.1.x`. If the rebase succeeds the output will look like this:
-
-![image46](/assets/images/docs/development/pull_images/pull_46.jpg)
-
-If Git can't automatically merge the code then it'll look like this.
-
-![image47](/assets/images/docs/development/pull_images/pull_47.jpg)
-
-This tells you the number of files that need to be examined and the names of the files. In this example there's only one file needing attention.
-
-Git marks conflicts within the file and then writes the modified file to the directory you opened with Desktop.
-
-Open the modified file (the file name didn't change but the timestamp did) and search for `<<<<<<< HEAD`. This marks the beginning of the code that could be newer than what you started with. The `=======` marks the boundary between the newer code and the original code in your file. The `>>>>>>>` line marks the end of the conflicting code. In this example, "`#endif in wrong place`" is the title of the commit that GIT couldn't automatically handle.
-
-Resolving conflicts is a bit of an art, and it may take some practice to start getting a feel for what's going on. Often it may be helpful to consult the copy you made just before opening the Git Shell. It may help to keep the latest `bugfix-2.1.x` on GitHub open in the browser as a reference on what to keep and what to change.
-
-![image48](/assets/images/docs/development/pull_images/pull_48.jpg)
-
-Save the file.
-
-Go to Git Shell and enter the command `git rebase --continue`. This will tell `git` to keep your changes and continue with the rebase.
-
-![image49](/assets/images/docs/development/pull_images/pull_49.jpg)
-
-Repeat the **edit-save-add-commit** cycle until all the files have been committed.
-
-If you couldn't address all the files then you can abort the process with: `git rebase –abort`
-
-If all the files have been addressed then enter this into the Git Shell: `git rebase –continue`
-
-The next step is to "squash" the commits using an interactive rebase. This allows you to easily combine commits together. To start the process enter the command: `git rebase -i upstream/bugfix-2.1.x`.
-
-Assuming there are no conflicts, an editor window should open with a list of your commits. Each line begins with the action you want performed, which is `pick` by default. You may see extra commits if the main code base has been updated, so make sure the commits are all yours. Change the action to `drop` for any commits you don't want to keep. Your first commit should be left as `pick` (or `reword` if you want to change the commit message). Set the action to `fixup` (or just `f`) for any commits you want to combine with the `pick` commit that precedes it.
-
-![image50](/assets/images/docs/development/pull_images/pull_50.jpg)
-
-After making all necessary changes, save the file.
-
-![image51](/assets/images/docs/development/pull_images/pull_51.jpg)
-
-In a few seconds a second editor window will pop up. Here you can provide a description for the squashed commit.
-
-All lines _without_ a leading `#` will be included the description. Edit the description to itemize the combined changes, then save and close the file.
-
-![image52](/assets/images/docs/development/pull_images/pull_52.jpg)
-
-After saving and closing the editor, the Git Shell will show this:
-
-![image53](/assets/images/docs/development/pull_images/pull_53.jpg)
-
-In Git Shell type `git push –f` to push the changes to your fork on Github. Check the output to make sure it succeeds.
-
-![image54](/assets/images/docs/development/pull_images/pull_54.jpg)
-
-You can now close Git Shell.
-
-In **Github Desktop** you should see that only the commits you `pick`ed are left, and all your `fixup`s are now part of those commits.
-
-You won't need to click `Sync` in Desktop at this point because you already used `push -f`.
-
-You can now close Desktop and the Windows Explorer window you opened from Desktop.
+Thank you for making Marlin better. See [Contributing to Marlin](contributing.html) for other ways to help.

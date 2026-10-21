@@ -3,7 +3,7 @@ title: Coding Standards
 description: Guidelines for Marlin code formatting, methodologies, and standards.
 parent: Development
 layout: article
-nav_order: 2
+nav_order: 4
 nav_enabled: true
 toc: true
 has_toc: true

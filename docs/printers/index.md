@@ -21,3 +21,5 @@ machine with a Marlin example configuration and its type.
 | [Delta](delta.html) | Three vertical towers, with thin arms hanging down to the nozzle. The bed is round and doesn't move. |
 | [SCARA](scara.html) | Two arms joined end to end swing the nozzle across a fixed bed, like a robot arm lying flat. |
 | [Polar](polar.html) | A round bed turns while the nozzle moves in and out along its radius. Also covers Polargraph, where a pen hangs from two belts. |
+
+Want to try a configuration without a machine? The [Marlin Simulator](simulator.html) runs Marlin on your computer with a 3D model of a bedslinger, cube, delta or SCARA printer.

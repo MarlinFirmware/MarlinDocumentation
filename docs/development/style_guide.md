@@ -2,7 +2,7 @@
 title: Documentation Style Guide
 description: 'How to write and format pages for marlinfw.org: voice, structure, images, callouts, links and the checks every change must pass.'
 parent: Development
-nav_order: 7
+nav_order: 10
 layout: article
 toc: true
 ---

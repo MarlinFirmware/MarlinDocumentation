@@ -3,7 +3,7 @@ title: Marlin Github Scripts
 description: Helper scripts to ease and speed Marlin development.
 parent: Development
 layout: article
-nav_order: 6
+nav_order: 9
 nav_enabled: true
 toc: true
 has_toc: true

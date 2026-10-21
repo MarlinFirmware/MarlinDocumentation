@@ -1,14 +1,16 @@
 ---
 title: How Marlin Works
 description: A concise look at the Marlin main loop, the idle task, and G-code processing
-parent: Appendix
+parent: Development
 layout: article
-nav_order: 2
+nav_order: 1
 nav_enabled: true
 toc: true
 has_toc: true
 back_to_top: true
 ---
+
+# How Marlin Works
 
 Marlin is a single, self-contained application that runs on the printer's mainboard.
 It owns all the real-time activity of the machine — heaters, steppers, sensors, the
