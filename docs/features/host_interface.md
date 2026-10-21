@@ -369,7 +369,7 @@ protocol for uploading files to the SD card, started with `M28 B1` (Marlin repli
 
 **MeatPack.** [`MEATPACK_ON_SERIAL_PORT_1`](/docs/settings/gcode.html#MEATPACK_ON_SERIAL_PORT_1) and
 [`MEATPACK_ON_SERIAL_PORT_2`](/docs/settings/gcode.html#MEATPACK_ON_SERIAL_PORT_2) let a host with the
-[OctoPrint-MeatPack](https://github.com/scottmudge/OctoPrint-MeatPack) plugin compress G-code on the fly, packing
+[OctoPrint-MeatPack](//github.com/scottmudge/OctoPrint-MeatPack) plugin compress G-code on the fly, packing
 the most common characters two to a byte and dropping comments. Streamed G-code ends up roughly half the size, which
 helps on boards stuck at a low baud rate where detailed curves stutter. The host turns packing on and off with
 control bytes, so ordinary lines still work.

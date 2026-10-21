@@ -46,10 +46,10 @@ PlatformIO will automatically download all libraries it requires, so skip direct
 
 ### Installing from a zip file
 - Marlin 1.1.9 and up:
-  - Go to [TMC library homepage](https://github.com/teemuatlut/TMCStepper)
+  - Go to [TMC library homepage](//github.com/teemuatlut/TMCStepper)
 - Older versions of Marlin
-  - Go to the [TMC2130 library page](https://github.com/teemuatlut/TMC2130Stepper)
-  - Go to the [TMC2208 library page](https://github.com/teemuatlut/TMC2208Stepper)
+  - Go to the [TMC2130 library page](//github.com/teemuatlut/TMC2130Stepper)
+  - Go to the [TMC2208 library page](//github.com/teemuatlut/TMC2208Stepper)
 - Click **Clone or download** -> **Download ZIP**
 - In Arduino IDE and go to **Sketch** -> **Include Library** -> **Add .ZIP Library**…
 - Navigate to the downloaded file and click the **Open** button.
@@ -102,9 +102,9 @@ The two smaller bridges need to be configured as shown.
 
 ## Features and configuration options
 Several Trinamic-specific technologies are supported by Marlin.
-- [stealthChop](https://www.trinamic.com/technology/adv-technologies/stealthchop/) is a technology that drives the motors using PWM voltage instead of current. The result is nearly inaudible stepping at low velocities. StealthChop has a lower stepping speed limit and if you need to move faster, for example travel moves, you may want to use spreadCycle or configure Hybrid Mode.
-- [spreadCycle](https://www.trinamic.com/technology/adv-technologies/spreadcycle/) is an alternative stepping mode. The driver will use four stages to drive the desired current into the stepper motor. SpreadCycle provides greater torque which might be useful if you're experiencing skipped steps. The downside is slightly higher noise levels.
-- [stallGuard](https://www.trinamic.com/technology/adv-technologies/stallguard/) measures the load that is applied to the motor. If the load is sufficiently high, Marlin can react to the event. Such an event can be when we drive an axis to its physical limit and the signal provided by the driver can be detected just like an endstop. That way you can use the driver itself as an axis sensor negating the need to an additional endstop and the wiring needed. StallGuard is only active when the driver is in spreadCycle mode.
+- [stealthChop](//www.trinamic.com/technology/adv-technologies/stealthchop/) is a technology that drives the motors using PWM voltage instead of current. The result is nearly inaudible stepping at low velocities. StealthChop has a lower stepping speed limit and if you need to move faster, for example travel moves, you may want to use spreadCycle or configure Hybrid Mode.
+- [spreadCycle](//www.trinamic.com/technology/adv-technologies/spreadcycle/) is an alternative stepping mode. The driver will use four stages to drive the desired current into the stepper motor. SpreadCycle provides greater torque which might be useful if you're experiencing skipped steps. The downside is slightly higher noise levels.
+- [stallGuard](//www.trinamic.com/technology/adv-technologies/stallguard/) measures the load that is applied to the motor. If the load is sufficiently high, Marlin can react to the event. Such an event can be when we drive an axis to its physical limit and the signal provided by the driver can be detected just like an endstop. That way you can use the driver itself as an axis sensor negating the need to an additional endstop and the wiring needed. StallGuard is only active when the driver is in spreadCycle mode.
 * Hybrid Mode: Marlin can configure the driver to automatically change between stepping modes using a user configured switching velocity. If the velocity is lower than the threshold the stepper is in quiet stealthChop mode. When the axis velocity increases the driver will automatically switch to spreadCycle.
 
 Option | Description
@@ -144,7 +144,7 @@ Command | Configuration<br>required | Description
 
 ## Troubleshooting
 
-- Some SilentStepSticks with variable 3-5V logic voltage (VIO) [might get damaged](https://github.com/MarlinFirmware/Marlin/issues/10162#issuecomment-397844847) if only powered over USB.
+- Some SilentStepSticks with variable 3-5V logic voltage (VIO) [might get damaged](//github.com/MarlinFirmware/Marlin/issues/10162#issuecomment-397844847) if only powered over USB.
 - Test driver communication status with [`M122`](/docs/gcode/M122.html).
 - Test Marlin's **bugfix** branch (on GitHub) to see if your issue is fixed.
 - Test the latest TMCStepper library to see if your issue is fixed.
@@ -170,21 +170,21 @@ Command | Configuration<br>required | Description
 
 ## External resources
 
-- [Arduino library for TMC drivers](https://github.com/teemuatlut/TMCStepper) (Replaces the following two)
-- For older Marlin you may need [TMC2130 Arduino library](https://github.com/teemuatlut/TMC2130Stepper) or [TMC2208 Arduino library](https://github.com/teemuatlut/TMC2208Stepper)
+- [Arduino library for TMC drivers](//github.com/teemuatlut/TMCStepper) (Replaces the following two)
+- For older Marlin you may need [TMC2130 Arduino library](//github.com/teemuatlut/TMC2130Stepper) or [TMC2208 Arduino library](//github.com/teemuatlut/TMC2208Stepper)
 
-- [SilentStepStick TMC2130 schematic and pinout](https://github.com/watterott/SilentStepStick/blob/master/hardware/
+- [SilentStepStick TMC2130 schematic and pinout](//github.com/watterott/SilentStepStick/blob/master/hardware/
 SlentStepStick-TMC2130_v11.pdf)
-- [SilentStepStick TMC2208 schematic and pinout](https://github.com/watterott/SilentStepStick/blob/master/hardware/SlentStepStick-TMC2208_v12.pdf)
+- [SilentStepStick TMC2208 schematic and pinout](//github.com/watterott/SilentStepStick/blob/master/hardware/SlentStepStick-TMC2208_v12.pdf)
 
-- [Trinamic](https://www.trinamic.com)
-- [Watterott documentation](https://learn.watterott.com/silentstepstick/)
-- [stallGuard](https://www.trinamic.com/technology/adv-technologies/stallguard/)
-- [stealthChop](https://www.trinamic.com/technology/adv-technologies/stealthchop/)
-- [spreadCycle](https://www.trinamic.com/technology/adv-technologies/spreadcycle/)
-- Datasheets for [TMC2130](https://www.trinamic.com/fileadmin/assets/Products/ICs_Documents/TMC2130_datasheet.pdf) and [TMC2208](https://www.trinamic.com/fileadmin/assets/Products/ICs_Documents/TC220x_TMC2224_Datasheet_Rev1.10.pdf)
+- [Trinamic](//www.trinamic.com)
+- [Watterott documentation](//learn.watterott.com/silentstepstick/)
+- [stallGuard](//www.trinamic.com/technology/adv-technologies/stallguard/)
+- [stealthChop](//www.trinamic.com/technology/adv-technologies/stealthchop/)
+- [spreadCycle](//www.trinamic.com/technology/adv-technologies/spreadcycle/)
+- Datasheets for [TMC2130](//www.trinamic.com/fileadmin/assets/Products/ICs_Documents/TMC2130_datasheet.pdf) and [TMC2208](//www.trinamic.com/fileadmin/assets/Products/ICs_Documents/TC220x_TMC2224_Datasheet_Rev1.10.pdf)
 
-- [TMC2130 Hackaday article by Moritz Walter](https://hackaday.com/2016/09/30/3-printering-trinamic-tmc2130-stepper-motor-drivers-shifting-the-gears/)
+- [TMC2130 Hackaday article by Moritz Walter](//hackaday.com/2016/09/30/3-printering-trinamic-tmc2130-stepper-motor-drivers-shifting-the-gears/)
 
-- [Video guide by Thomas Sanladerer](https://youtu.be/sPvTB3irCxQ)
-- [TMC2208 Torque testing by Alex Kenis](https://youtu.be/GVs2d-TOims)
+- [Video guide by Thomas Sanladerer](//youtu.be/sPvTB3irCxQ)
+- [TMC2208 Torque testing by Alex Kenis](//youtu.be/GVs2d-TOims)

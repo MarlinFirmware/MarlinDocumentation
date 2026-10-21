@@ -16,17 +16,17 @@ Marlin has _a lot_ of features, and there are several more in development, but w
 
 ### &nbsp;&nbsp;&nbsp;&nbsp; [Open Marlin Feature Requests](//github.com/MarlinFirmware/Marlin/labels/T%3A%20Feature%20Request)
 
-# Before Submitting
+## Before Submitting
 
-**Scan the [Feature Requests](https://github.com/MarlinFirmware/Marlin/labels/T%3A%20Feature%20Request) list** to see if a similar request is already in the queue. If there is, you can add comments to the existing request.
+**Scan the [Feature Requests](//github.com/MarlinFirmware/Marlin/labels/T%3A%20Feature%20Request) list** to see if a similar request is already in the queue. If there is, you can add comments to the existing request.
 
 **Read the [Coding Standards](coding_standards.html)** (especially "[Adding a New Feature](coding_standards.html#adding-a-new-feature)") and review them when preparing your code for submission.
 
-**[Sign up for a free Github account](https://github.com/join)**. A Github account is required to submit a Feature Request. The process only takes a few minutes, and then you will be notified on Github as your feature progresses and be able to contribute to the feature.
+**[Sign up for a free Github account](//github.com/join)**. A Github account is required to submit a Feature Request. The process only takes a few minutes, and then you will be notified on Github as your feature progresses and be able to contribute to the feature.
 
-# Submitting a Feature Request
+## Submitting a Feature Request
 
-Go to the Marlin project page to [Open a Feature Request](https://github.com/MarlinFirmware/Marlin/issues/new?labels=T%3A+Feature+Request&template=feature_request.yml&title=%5BFR%5D+%28feature+summary%29) and follow these guidelines:
+Go to the Marlin project page to [Open a Feature Request](//github.com/MarlinFirmware/Marlin/issues/new?labels=T%3A+Feature+Request&template=feature_request.yml&title=%5BFR%5D+%28feature+summary%29) and follow these guidelines:
 
 - Prefix the title with **'[Feature Request]'** or its short form, **'[FR]'**.
 - Keep the title short and to the point. A good example would be:

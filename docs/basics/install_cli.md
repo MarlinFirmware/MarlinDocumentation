@@ -14,7 +14,7 @@ For advanced users, automation, or server-based builds, you can build Marlin dir
 
 ## Install PlatformIO Core
 
-Follow the [PlatformIO Core installation guide](https://docs.platformio.org/en/latest/core/installation.html) to install the `pio` command-line tool and its dependencies. If you already have the PlatformIO VSCode extension installed, PlatformIO Core is already on your system — you may just need to install the [shell commands](https://docs.platformio.org/en/latest/core/installation/shell-commands.html).
+Follow the [PlatformIO Core installation guide](//docs.platformio.org/en/latest/core/installation.html) to install the `pio` command-line tool and its dependencies. If you already have the PlatformIO VSCode extension installed, PlatformIO Core is already on your system — you may just need to install the [shell commands](//docs.platformio.org/en/latest/core/installation/shell-commands.html).
 
 ## Find Your Build Environment
 

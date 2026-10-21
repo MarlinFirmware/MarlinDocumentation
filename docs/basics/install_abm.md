@@ -16,11 +16,11 @@ Before you start, get Marlin and a matching set of example configurations, as de
 
 ## 1. Install Visual Studio Code
 
-If you don't have it already, download and install [Visual Studio Code](https://code.visualstudio.com/) for your platform. VSCode provides the foundation for the tools you'll use to configure and build Marlin.
+If you don't have it already, download and install [Visual Studio Code](//code.visualstudio.com/) for your platform. VSCode provides the foundation for the tools you'll use to configure and build Marlin.
 
 ## 2. Install Auto Build Marlin
 
-Open VSCode and click the **Extensions** button on the left sidebar. Search for "Marlin" and locate **Auto Build Marlin** in the results. Click **Install**. The [PlatformIO](https://platformio.org/) extension will be installed automatically as a dependency.
+Open VSCode and click the **Extensions** button on the left sidebar. Search for "Marlin" and locate **Auto Build Marlin** in the results. Click **Install**. The [PlatformIO](//platformio.org/) extension will be installed automatically as a dependency.
 
 ![Auto Build Marlin extension](/assets/images/basics/abm/install.png)
 
@@ -32,7 +32,7 @@ Unzip the downloaded Marlin source (or clone the repo). Open VSCode and use **Fi
 
 ## 4. Add Example Configurations
 
-Visit the [Configurations repository](https://github.com/MarlinFirmware/Configurations/) and select the branch that matches your Marlin version. Download the archive, unzip it, find your printer (or the closest match), and copy the `Configuration.h`, `Configuration_adv.h`, `_Bootscreen.h`, and `_Statusscreen.h` files into the `Marlin/` folder. If a `README` is included, review it for any machine-specific notes.
+Visit the [Configurations repository](//github.com/MarlinFirmware/Configurations/) and select the branch that matches your Marlin version. Download the archive, unzip it, find your printer (or the closest match), and copy the `Configuration.h`, `Configuration_adv.h`, `_Bootscreen.h`, and `_Statusscreen.h` files into the `Marlin/` folder. If a `README` is included, review it for any machine-specific notes.
 
 If no matching config exists, edit `Marlin/Configuration.h` and set your board with `#define MOTHERBOARD BOARD_YOURBOARD`. All valid board names are listed in `Marlin/src/core/boards.h`.
 

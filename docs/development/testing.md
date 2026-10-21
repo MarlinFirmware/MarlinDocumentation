@@ -36,7 +36,7 @@ Request says which of these you used.
 Most of the tools below are scripts in the Marlin source tree, so run them from the top folder of your checkout (the one that has
 `platformio.ini`). You will need:
 
-- [PlatformIO](https://platformio.org/) with `pio` in your `PATH`. Installing [Auto Build Marlin](/docs/basics/install_abm.html) in
+- [PlatformIO](//platformio.org/) with `pio` in your `PATH`. Installing [Auto Build Marlin](/docs/basics/install_abm.html) in
   Visual Studio Code also installs it.
 - Python 3 and `make`. Some `make` tasks also need Node.js (`npx`) or Docker.
 - A real GCC if you work on macOS, because the system `gcc` is Clang. See the note in

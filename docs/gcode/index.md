@@ -500,7 +500,7 @@ Click on any command in the table above to view its detailed documentation.
 
 If you find errors or want to improve the documentation, please:
 
-1. Fork the [MarlinDocumentation](https://github.com/MarlinFirmware/MarlinDocumentation) repository
+1. Fork the [MarlinDocumentation](//github.com/MarlinFirmware/MarlinDocumentation) repository
 2. Edit the G-code page in the `docs/gcode/` directory
 3. Submit a pull request
 

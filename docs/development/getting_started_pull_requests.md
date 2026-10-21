@@ -37,14 +37,14 @@ Before you write anything, read [Contributing to Marlin](contributing.html) and 
   [feature request](feature_request.html) or ask in the Discord before you spend weeks on it. A maintainer can tell you whether
   it fits, and how.
 - **A good first change** is easy to find in the issues labeled
-  [good first issue](https://github.com/MarlinFirmware/Marlin/labels/good%20first%20issue) and
-  [help wanted](https://github.com/MarlinFirmware/Marlin/labels/help%20wanted).
+  [good first issue](//github.com/MarlinFirmware/Marlin/labels/good%20first%20issue) and
+  [help wanted](//github.com/MarlinFirmware/Marlin/labels/help%20wanted).
 - **Keep it small.** A Pull Request should do one thing and build and pass CI on its own. If your work has several
   parts, split it into several PRs. The usual splits are refactor then feature, core logic then LCD support, and one board
   family or HAL per PR. If one PR depends on another, say so in its description.
 - **AI tools are welcome**, but you are the author, you answer for every line, and you must have read and tested it. The
   rules are in the AI-Assisted Contributions section of Marlin's
-  [`contributing.md`](https://github.com/MarlinFirmware/Marlin/blob/bugfix-2.1.x/.github/contributing.md).
+  [`contributing.md`](//github.com/MarlinFirmware/Marlin/blob/bugfix-2.1.x/.github/contributing.md).
 
 ## Which branch?
 
@@ -57,11 +57,11 @@ likely to be taken. Say in your description if you think yours should be.
 
 ## Set up
 
-You need a free [GitHub account](https://github.com/join) and [Git](https://git-scm.com/). If you prefer a graphical
-tool, [GitHub Desktop](https://desktop.github.com) handles cloning, committing and pushing. It can't do rebases,
+You need a free [GitHub account](//github.com/join) and [Git](//git-scm.com/). If you prefer a graphical
+tool, [GitHub Desktop](//desktop.github.com) handles cloning, committing and pushing. It can't do rebases,
 so you will still use the command line for those.
 
-1. **Fork.** On the [Marlin repository](https://github.com/MarlinFirmware/Marlin) click **Fork**. This copies the
+1. **Fork.** On the [Marlin repository](//github.com/MarlinFirmware/Marlin) click **Fork**. This copies the
    project to your account. Keep the repository name `Marlin`.
 2. **Clone your fork** and add the main project as a second remote called `upstream`:
 
@@ -136,7 +136,7 @@ git push -u origin fix_probe_offset
 Then open the PR in either of these ways:
 
 - On GitHub, open your fork. A banner offers **Compare &amp; pull request** for the branch you just pushed. Click it.
-- Or from the command line with the [GitHub CLI](https://cli.github.com/): `gh pr create --base bugfix-2.1.x`.
+- Or from the command line with the [GitHub CLI](//cli.github.com/): `gh pr create --base bugfix-2.1.x`.
 
 **Check that the base repository is `MarlinFirmware/Marlin` and the base branch is `bugfix-2.1.x`.** GitHub Desktop
 and some browser paths choose another target, and a PR aimed at the wrong branch must be redone.

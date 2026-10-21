@@ -9,7 +9,7 @@ settings:
   type: switch
   disabled: true
   long: |-
-    [Video](https://www.youtube.com/watch?v=W93dFxF425s)
+    [Video](//www.youtube.com/watch?v=W93dFxF425s)
 
     Enable to add support for a filament width sensor such as [Filament Width Sensor Prototype Version 3](//www.thingiverse.com/thing:454584). With a filament sensor installed, Marlin can adjust the flow rate according to the measured filament width. Adjust the sub-options below according to your setup.
 

@@ -11,8 +11,8 @@ toc: true
 
 This guide is for anyone adding or editing pages on marlinfw.org. It covers the voice we write in, how pages are
 structured, how to add images and diagrams, and the checks that run before a change is published. The site is built
-with Jekyll and the [Just the Docs](https://just-the-docs.com/) theme from the
-[MarlinDocumentation](https://github.com/MarlinFirmware/MarlinDocumentation) repository.
+with Jekyll and the [Just the Docs](//just-the-docs.com/) theme from the
+[MarlinDocumentation](//github.com/MarlinFirmware/MarlinDocumentation) repository.
 
 ## Who we write for
 

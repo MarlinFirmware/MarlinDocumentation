@@ -89,5 +89,5 @@ To check or fine-tune the values afterward, use [`M665`](/docs/gcode/M665.html) 
 - [Delta settings](/docs/settings/delta.html), [`G33`](/docs/gcode/G033.html), [`M665`](/docs/gcode/M665.html)
 - [Printer directory](/docs/appendix/printers/): look for "Delta" under Type
 
-<small>Photo: John Rood, [CC BY 2.0](https://creativecommons.org/licenses/by/2.0), via
-[Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Finished_kossel.jpg).</small>
+<small>Photo: John Rood, [CC BY 2.0](//creativecommons.org/licenses/by/2.0), via
+[Wikimedia Commons](//commons.wikimedia.org/wiki/File:Finished_kossel.jpg).</small>

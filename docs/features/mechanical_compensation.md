@@ -70,7 +70,7 @@ gantry or the Y rails, and print again. Use the software correction for what is 
 ### Print and measure the calibration square
 
 `Configuration.h` points to a calibration square on
-[Thingiverse (thing:2563185)](https://www.thingiverse.com/thing:2563185), "YACS". It has clipped corners so the
+[Thingiverse (thing:2563185)](//www.thingiverse.com/thing:2563185), "YACS". It has clipped corners so the
 caliper jaws sit on the same points every time. Any accurately modeled square works.
 
 1. Print the square flat on the bed, as large as you can measure with your calipers, at normal settings. Print it

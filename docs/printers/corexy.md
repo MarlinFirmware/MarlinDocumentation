@@ -77,5 +77,5 @@ After that, bed leveling works exactly as it does on a [Cartesian printer](carte
 - [Kinematics settings](/docs/settings/kinematics.html)
 - [Printer directory](/docs/appendix/printers/): look for "CoreXY" under Type
 
-<small>Photo: disinterpreter, [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0), via
-[Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Voron_3D_printer.jpg).</small>
+<small>Photo: disinterpreter, [CC BY-SA 2.0](//creativecommons.org/licenses/by-sa/2.0), via
+[Wikimedia Commons](//commons.wikimedia.org/wiki/File:Voron_3D_printer.jpg).</small>

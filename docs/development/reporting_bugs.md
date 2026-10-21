@@ -16,17 +16,17 @@ A good bug report is the fastest way to a fix. Marlin's developers are volunteer
 the report has to carry everything needed to *see the bug for themselves*. If they can't reproduce a bug, they
 usually can't fix it.
 
-Bug reports go to the [Marlin Issue Queue](https://github.com/MarlinFirmware/Marlin/issues) on GitHub. You need a free
-[GitHub account](https://github.com/join) and should watch your report afterward, because questions about it will
+Bug reports go to the [Marlin Issue Queue](//github.com/MarlinFirmware/Marlin/issues) on GitHub. You need a free
+[GitHub account](//github.com/join) and should watch your report afterward, because questions about it will
 come there.
 
 ## Is it a bug?
 
 The Issue Queue is for faults in the firmware. These belong elsewhere:
 
-- **Questions and help with setup.** Ask in the [Discord](https://discord.com/servers/marlin-firmware-461605380783472640), a
-  [Facebook group](https://www.facebook.com/groups/1049718498464482/) or the
-  [RepRap forum](https://forums.reprap.org/list.php?415). Start with [Troubleshooting](/docs/appendix/troubleshooting.html).
+- **Questions and help with setup.** Ask in the [Discord](//discord.com/servers/marlin-firmware-461605380783472640), a
+  [Facebook group](//www.facebook.com/groups/1049718498464482/) or the
+  [RepRap forum](//forums.reprap.org/list.php?415). Start with [Troubleshooting](/docs/appendix/troubleshooting.html).
 - **A feature Marlin doesn't have.** See [Requesting Features](feature_request.html).
 - **A configuration that won't build because of an `#error`.** The message usually says what to change. Read it
   first, and see the [obsolete options](/docs/appendix/obsolete_options.html) list if it names an old option.
@@ -35,7 +35,7 @@ If you aren't sure, ask first. A question that turns out to be a bug can be repo
 
 ## Before you report
 
-1. **Update.** Try the latest code on the [`bugfix-2.1.x` branch](https://github.com/MarlinFirmware/Marlin/archive/bugfix-2.1.x.zip). Your bug may
+1. **Update.** Try the latest code on the [`bugfix-2.1.x` branch](//github.com/MarlinFirmware/Marlin/archive/bugfix-2.1.x.zip). Your bug may
    be fixed already. The report form asks whether you have done this.
 2. **Search the Issue Queue**, including closed issues. If someone reported the same bug, add what you know to that
    issue. If a *closed* issue looks like your problem, open a new one and link to the old one by number (for example, `#8888`), because bugs
@@ -102,15 +102,15 @@ because it points to hardware or wiring.
   [Marlin Testing](testing.html).
 - Say when your problem is solved or turned out not to be a bug. That helps those who search later.
 - Remember that everyone, including you, follows the project's
-  [Code of Conduct](https://github.com/MarlinFirmware/Marlin/blob/bugfix-2.1.x/.github/code_of_conduct.md).
+  [Code of Conduct](//github.com/MarlinFirmware/Marlin/blob/bugfix-2.1.x/.github/code_of_conduct.md).
 
 If you know C++ and want to fix the bug yourself, see [Contributing Code](getting_started_pull_requests.html).
 
 ## Links
 
-- [Issue Queue](https://github.com/MarlinFirmware/Marlin/issues)
-- [Report a bug](https://github.com/MarlinFirmware/Marlin/issues/new?labels=Bug%3A+Potential+%3F&template=bug_report.yml&title=%5BBUG%5D+%28bug+summary%29)
-- [`bugfix-2.1.x` branch](https://github.com/MarlinFirmware/Marlin/tree/bugfix-2.1.x)
-- [MarlinFirmware on Discord](https://discord.com/servers/marlin-firmware-461605380783472640)
-- [Marlin Firmware](https://www.facebook.com/groups/1049718498464482/) and [Marlin Firmware for 3D Printers](https://www.facebook.com/groups/3Dtechtalk/) Facebook groups
-- [Marlin Forum](https://forums.reprap.org/list.php?415) at RepRap.org
+- [Issue Queue](//github.com/MarlinFirmware/Marlin/issues)
+- [Report a bug](//github.com/MarlinFirmware/Marlin/issues/new?labels=Bug%3A+Potential+%3F&template=bug_report.yml&title=%5BBUG%5D+%28bug+summary%29)
+- [`bugfix-2.1.x` branch](//github.com/MarlinFirmware/Marlin/tree/bugfix-2.1.x)
+- [MarlinFirmware on Discord](//discord.com/servers/marlin-firmware-461605380783472640)
+- [Marlin Firmware](//www.facebook.com/groups/1049718498464482/) and [Marlin Firmware for 3D Printers](//www.facebook.com/groups/3Dtechtalk/) Facebook groups
+- [Marlin Forum](//forums.reprap.org/list.php?415) at RepRap.org

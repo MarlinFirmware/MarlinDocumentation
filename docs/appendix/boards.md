@@ -24,7 +24,7 @@ Several files in the Marlin source code provide hardware support, but the files 
 | `pins.h` | Includes the appropriate `pins_BOARD.h` file for the specified `MOTHERBOARD`. |
 | `pins_BOARDNAME.h` | Each of these files assigns pins to Marlin functions. Some are shared by related boards. |
 | `pins_postprocess.h` | Auto-assign stepper and endstop pins for extra axes. |
-| `platformio.ini` | Some boards need a new [PlatformIO environment](https://docs.platformio.org/en/latest/projectconf/) with custom build settings. |
+| `platformio.ini` | Some boards need a new [PlatformIO environment](//docs.platformio.org/en/latest/projectconf/) with custom build settings. |
 
 To build Marlin for a specific board, set the `MOTHERBOARD` option in `Configuration.h`. This example selects a RAMPS 1.4 board with the 12V power MOSFET connectors arranged in Extruder, Fan, Bed (EFB) order:
 
@@ -36,7 +36,7 @@ See the [board list](#board-list) below for a complete list of boards supported 
 
 ## FastIO and Pin Mapping
 
-FastIO is a set of macros that allows Marlin to read and write pins quickly, using the same code on all processors. Marlin uses FastIO macros whenever possible because [direct port manipulation](https://www.arduino.cc/en/Reference/PortManipulation) is many times faster than the pin functions provided by `Arduino.h`.
+FastIO is a set of macros that allows Marlin to read and write pins quickly, using the same code on all processors. Marlin uses FastIO macros whenever possible because [direct port manipulation](//www.arduino.cc/en/Reference/PortManipulation) is many times faster than the pin functions provided by `Arduino.h`.
 
 Pin Mapping refers to the relationship between assigned "pin numbers" and the actual hardware ports on the CPU. For example, pins might be mapped starting with 0 to represent **Port A Pin 0**, then numbered sequentially up to **Port L Pin 15**.
 

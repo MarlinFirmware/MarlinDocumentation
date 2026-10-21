@@ -1,7 +1,7 @@
 # MarlinDocumentation — agent and contributor orientation
 
-This repository is the source of [marlinfw.org](https://marlinfw.org), the documentation site for
-[Marlin Firmware](https://github.com/MarlinFirmware/Marlin). It is a Jekyll site on the Just the Docs theme,
+This repository is the source of [marlinfw.org](//marlinfw.org), the documentation site for
+[Marlin Firmware](//github.com/MarlinFirmware/Marlin). It is a Jekyll site on the Just the Docs theme,
 with generated reference sections (Settings, G-code index, printer directory) and hand-written narrative sections.
 This file is the map. The rules for writing are in the
 [Documentation Style Guide](docs/development/style_guide.md); the generators and checks are described in

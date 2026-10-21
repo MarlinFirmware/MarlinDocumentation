@@ -33,7 +33,7 @@ For a Marlin firmware perfectly tailored to your machine, peripherals, and prefe
 
 ## Online Build Service
 
-[**Marlin Web Build**]({{ site.data.marlin.tools.webbuild }}) builds Marlin for any of the [example configurations](https://github.com/MarlinFirmware/Configurations/tree/bugfix-2.1.x/config/examples) without a build environment on your computer. It runs on GitHub Actions, so you need a free GitHub account: each request is a GitHub issue, and the download link arrives as a reply a few minutes later.
+[**Marlin Web Build**]({{ site.data.marlin.tools.webbuild }}) builds Marlin for any of the [example configurations](//github.com/MarlinFirmware/Configurations/tree/bugfix-2.1.x/config/examples) without a build environment on your computer. It runs on GitHub Actions, so you need a free GitHub account: each request is a GitHub issue, and the download link arrives as a reply a few minutes later.
 
 1. Open the [configuration picker]({{ site.data.marlin.tools.webbuild }}), find your printer and pick a build environment.
 2. Click **Request build on GitHub** and submit the pre-filled issue.
@@ -55,7 +55,7 @@ Before building, you'll need:
   ```bash
   git clone https://github.com/MarlinFirmware/Marlin.git
   ```
-- **Example Configurations**: Get the matching version from the [Configurations repository](https://github.com/MarlinFirmware/Configurations/). Make sure the version matches your Marlin version exactly (e.g., Marlin 2.1.3 → Configurations `release-2.1.3`).
+- **Example Configurations**: Get the matching version from the [Configurations repository](//github.com/MarlinFirmware/Configurations/). Make sure the version matches your Marlin version exactly (e.g., Marlin 2.1.3 → Configurations `release-2.1.3`).
 
 ## Build Tips
 
@@ -65,4 +65,4 @@ Before building, you'll need:
 - **Read the first error** in the build log. It's usually the main error. Subsequent errors are often cascading noise.
 - **Build warnings** about code style or unused variables can usually be ignored. Warnings from `Warnings.cpp` are informational.
 - **Not sure it worked?** After the build, look for the firmware file in the folder that Auto Build Marlin reveals.
-- **Need help?** Join the [Marlin Discord](https://discord.com/servers/marlin-firmware-461605380783472640) for community support.
+- **Need help?** Join the [Marlin Discord](//discord.com/servers/marlin-firmware-461605380783472640) for community support.

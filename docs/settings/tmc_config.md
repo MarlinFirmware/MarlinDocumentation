@@ -861,7 +861,7 @@ settings:
     **Examples:**
 
     **Available Functions:**
-    A complete list of available functions can be found in the [TMCStepper library documentation](https://github.com/teemuatlut/TMCStepper). Common uses include:
+    A complete list of available functions can be found in the [TMCStepper library documentation](//github.com/teemuatlut/TMCStepper). Common uses include:
     - Fine-tuning chopper timing (`toff`, `hstrt`, `hend`)
     - Configuring diagnostic outputs (`diag0_*`, `diag1_*`)
     - Adjusting PWM settings for stealthChop

@@ -9,7 +9,7 @@ toc: true
 has_toc: true
 back_to_top: true
 ---
-Marlin uses [direct port manipulation](https://www.arduino.cc/en/Reference/PortManipulation) macros to read and change pin states as quickly as possible, which is much faster than the `Arduino.h` functions. FastIO can only be used for constant pin numbers, known at compile-time, and thus Marlin (currently) uses hard-coded pin numbers and requires a re-compile whenever you want to change them.
+Marlin uses [direct port manipulation](//www.arduino.cc/en/Reference/PortManipulation) macros to read and change pin states as quickly as possible, which is much faster than the `Arduino.h` functions. FastIO can only be used for constant pin numbers, known at compile-time, and thus Marlin (currently) uses hard-coded pin numbers and requires a re-compile whenever you want to change them.
 
 ## FastIO Pin Mapping
 

@@ -21,7 +21,7 @@ Use [Marlin converter tool](/tools/u8glib/converter.html) to generate custom boo
 #define CUSTOM_BOOTSCREEN_ANIMATED_FRAME_TIME // Each frame also has a duration
 #define CUSTOM_BOOTSCREEN_FRAME_TIME 500      // (ms) Same time for all frames
 ```
-- `CUSTOM_BOOTSCREEN_ANIMATED_FRAME_TIME` - [See example for details](https://github.com/MarlinFirmware/Configurations/blob/import-2.1.x/config/examples/AnimationExample/_Bootscreen.h)
+- `CUSTOM_BOOTSCREEN_ANIMATED_FRAME_TIME` - [See example for details](//github.com/MarlinFirmware/Configurations/blob/import-2.1.x/config/examples/AnimationExample/_Bootscreen.h)
 - `CUSTOM_BOOTSCREEN_FRAME_TIME` - Value specifies constant time between frames in ms.
 
 ## Bootscreen Options

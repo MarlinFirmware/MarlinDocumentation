@@ -84,5 +84,5 @@ each Z motor separately.
 - [Printer directory](/docs/appendix/printers/): example configurations by manufacturer
 - [Motion settings](/docs/settings/motion.html) and [Geometry settings](/docs/settings/geometry.html)
 
-<small>Photo: John Abella, [CC BY 2.0](https://creativecommons.org/licenses/by/2.0), via
-[Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Prusa_i3_3D_Printer_-_Reprap_-_Completed.jpg).</small>
+<small>Photo: John Abella, [CC BY 2.0](//creativecommons.org/licenses/by/2.0), via
+[Wikimedia Commons](//commons.wikimedia.org/wiki/File:Prusa_i3_3D_Printer_-_Reprap_-_Completed.jpg).</small>

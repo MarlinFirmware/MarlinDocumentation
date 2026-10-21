@@ -14,7 +14,7 @@ back_to_top: true
 
 # Introduction to Marlin
 
-Marlin is an open source [firmware](https://en.wikipedia.org/wiki/Firmware) for the [RepRap](https://reprap.org/) family of replicating rapid prototypers — popularly known as "3D printers." Originally derived from [Sprinter](https://reprap.org/wiki/List_of_Firmware#Sprinter) and [grbl](https://reprap.org/wiki/Grbl), Marlin became a standalone project on August 12, 2011 with its [GitHub release](https://github.com/MarlinFirmware/Marlin/commit/f850af5c1ca343ed65b94c4b9da5dd1ab4c4a53c). Marlin is licensed under the GPLv3 and is free for all applications.
+Marlin is an open source [firmware](//en.wikipedia.org/wiki/Firmware) for the [RepRap](//reprap.org/) family of replicating rapid prototypers — popularly known as "3D printers." Originally derived from [Sprinter](//reprap.org/wiki/List_of_Firmware#Sprinter) and [grbl](//reprap.org/wiki/Grbl), Marlin became a standalone project on August 12, 2011 with its [GitHub release](//github.com/MarlinFirmware/Marlin/commit/f850af5c1ca343ed65b94c4b9da5dd1ab4c4a53c). Marlin is licensed under the GPLv3 and is free for all applications.
 
 From the start Marlin was built by and for RepRap enthusiasts to be a straightforward, reliable, and adaptable printer driver that "just works." As a testament to its quality, Marlin is used by several respected commercial 3D printers. LulzBot, Průša Research, Creality3D, BIQU, Geeetech, and Ultimaker are just a few of the vendors who ship a variant of Marlin. Marlin is also capable of driving CNC machines and laser engravers.
 
@@ -26,11 +26,11 @@ Marlin aims to support all possible boards and machine configurations. A minimal
 
 Marlin Firmware runs as a single self-contained application on the printer's mainboard. It manages all the real-time activities of the machine — heaters, steppers, sensors, lights, LCD display, buttons, and everything else involved in the 3D printing process. Marlin can run completely standalone or you can connect a host like OctoPrint for remote monitoring and extended control features.
 
-Marlin implements an additive manufacturing process called [Fused Deposition Modeling (FDM)](https://en.wikipedia.org/wiki/Fused_deposition_modeling) — also known as Fused Filament Fabrication (FFF). In this process a motor pushes plastic filament through a hot nozzle that melts and extrudes the material while the nozzle is moved under computer control. After several minutes (or a couple of days) of laying down thin layers of plastic, the result is a physical object.
+Marlin implements an additive manufacturing process called [Fused Deposition Modeling (FDM)](//en.wikipedia.org/wiki/Fused_deposition_modeling) — also known as Fused Filament Fabrication (FFF). In this process a motor pushes plastic filament through a hot nozzle that melts and extrudes the material while the nozzle is moved under computer control. After several minutes (or a couple of days) of laying down thin layers of plastic, the result is a physical object.
 
 ### G-code Command Processing
 
-A print job is described using a simplified derivative of [G-code](https://en.wikipedia.org/wiki/G-code). This language tells robots to do things like *"set heater 1 to 200°C"* (`M109 T1 S200`) or *"move to X100 Y100 at speed 3000mm/min"* (`G0 X100 Y100 F3000`). A 3D model must be prepared with a slicer application that converts it to G-code.
+A print job is described using a simplified derivative of [G-code](//en.wikipedia.org/wiki/G-code). This language tells robots to do things like *"set heater 1 to 200°C"* (`M109 T1 S200`) or *"move to X100 Y100 at speed 3000mm/min"* (`G0 X100 Y100 F3000`). A 3D model must be prepared with a slicer application that converts it to G-code.
 
 Marlin runs G-code commands sent from a host over USB serial, from a serial controller, or directly from an SD card or USB drive. Most commands execute right away, while movement commands are queued and processed by the Planner.
 
@@ -88,11 +88,11 @@ Marlin only prints G-code, so the workflow starts in your slicer:
 1. **Model** — Download a 3D model (STL format) or design one in CAD software such as FreeCAD, OpenSCAD, Fusion 360, or Tinkercad.
 
 2. **Slice** — Convert the model to G-code using a slicer. Common choices:
-   - [PrusaSlicer](https://www.prusa3d.com/prusaslicer/) — cutting-edge, open source, based on Slic3r
-   - [Bambu Studio](https://github.com/bambulab/BambuStudio) — popular fork with strong machine integration
-   - [Orca Slicer](https://github.com/SoftFever/OrcaSlicer) — refined fork of Bambu Studio
-   - [Cura](https://ultimaker.com/en/products/cura-software) — widely used, included with many printers
-   - [Simplify3D](https://www.simplify3d.com/) — commercial option with a streamlined interface
+   - [PrusaSlicer](//www.prusa3d.com/prusaslicer/) — cutting-edge, open source, based on Slic3r
+   - [Bambu Studio](//github.com/bambulab/BambuStudio) — popular fork with strong machine integration
+   - [Orca Slicer](//github.com/SoftFever/OrcaSlicer) — refined fork of Bambu Studio
+   - [Cura](//ultimaker.com/en/products/cura-software) — widely used, included with many printers
+   - [Simplify3D](//www.simplify3d.com/) — commercial option with a streamlined interface
 
 3. **Transfer** — Copy the G-code file to an SD card, USB drive, or send it directly over USB from the slicer or a host application.
 
@@ -102,10 +102,10 @@ Marlin only prints G-code, so the workflow starts in your slicer:
 
 Host software runs on your computer (or Raspberry Pi) and provides a user interface, remote monitoring, and file transfer (to set up the connection and the options hosts use, see [Host Interface](/docs/features/host_interface.html)):
 
-- [OctoPrint](https://octoprint.org/) — powerful open source host for Raspberry Pi, the most popular choice for hobbyists
-- [Pronterface](https://www.pronterface.com/) — open source desktop host by Kliment
-- [Repetier Host](https://www.repetier.com/) — full-featured host by Repetier Software
-- [Bambu Studio](https://github.com/bambulab/BambuStudio) — includes host functionality for Bambu printers
+- [OctoPrint](//octoprint.org/) — powerful open source host for Raspberry Pi, the most popular choice for hobbyists
+- [Pronterface](//www.pronterface.com/) — open source desktop host by Kliment
+- [Repetier Host](//www.repetier.com/) — full-featured host by Repetier Software
+- [Bambu Studio](//github.com/bambulab/BambuStudio) — includes host functionality for Bambu printers
 
 > **Tip:** Many printers ship with an outdated or rebranded version of Cura or Repetier. Downloading the latest generic version is almost always better — newer versions include the latest features and bug fixes.
 

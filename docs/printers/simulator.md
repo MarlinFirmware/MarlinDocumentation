@@ -72,7 +72,7 @@ brew install gcc@14 glm mesa sdl2 sdl2_net                                     #
 On Windows, use MSYS2 with the packages named in `ini/native.ini`.
 
 Copy the `Configuration.h` and `Configuration_adv.h` from the
-[Simulator example](https://github.com/MarlinFirmware/Configurations/tree/bugfix-2.1.x/config/examples/Simulator)
+[Simulator example](//github.com/MarlinFirmware/Configurations/tree/bugfix-2.1.x/config/examples/Simulator)
 into the `Marlin/` folder, then build the environment for your system and start the program:
 
 ```sh
@@ -212,7 +212,7 @@ curl -s -X POST http://127.0.0.1:8100/kernel/control -d '{"realtime_scale":10}' 
 accepted and then ignored.
 
 The complete list of requests is in the
-[agent interface reference](https://github.com/MarlinFirmware/MarlinSimUI/blob/cutting-edge/docs/agent-interface.md).
+[agent interface reference](//github.com/MarlinFirmware/MarlinSimUI/blob/cutting-edge/docs/agent-interface.md).
 
 ## Command-line options
 
@@ -236,7 +236,7 @@ The complete list of requests is in the
 
 ## Branches
 
-MarlinSimUI lives in the [MarlinSimUI repository](https://github.com/MarlinFirmware/MarlinSimUI). The `master`
+MarlinSimUI lives in the [MarlinSimUI repository](//github.com/MarlinFirmware/MarlinSimUI). The `master`
 branch is stable. The `cutting-edge` branch holds newer work (the printer models, camera, agent interface) and is what
 Marlin's `ini/native.ini` fetches. A third branch, `cutting-edge-more-printers`, adds a Prusa i3 demo model
 (`--machine i3`).
