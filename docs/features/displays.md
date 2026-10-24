@@ -122,7 +122,8 @@ enable exactly one:
 | `DWIN_CREALITY_LCD_JYERSUI` | Jyers UI by Jacob Myers, an alternative layout with its own leveling and tuning screens. |
 | `DWIN_MARLINUI_PORTRAIT` / `DWIN_MARLINUI_LANDSCAPE` | Standard MarlinUI menus, drawn on the DWIN panel. Behaves like a graphical LCD, including games and `LCD_LANGUAGE_2`. |
 
-All of them need the matching `DWIN_SET` installed on the screen itself; see the first-boot table below.
+All five use the same unified `DWIN_SET`; see [Ender-3 V2 DWIN Display](/docs/features/dwin_display.html) for
+where to get it and how to flash it.
 
 ### Serial "smart" displays (ExtUI)
 
@@ -278,7 +279,8 @@ the display family.
 | Touch lands beside the button you pressed | Uncalibrated or wrongly oriented resistive touch | Run [`M995`](/docs/gcode/M995.html) (needs `TOUCH_SCREEN_CALIBRATION`), check `TOUCH_ORIENTATION`, then save with [`M500`](/docs/gcode/M500.html) or enable `TOUCH_CALIBRATION_AUTO_SAVE` |
 | TFT image upside down, sideways or mirrored | Panel mounted differently from the preset's default | Set `TFT_ROTATION` to one of `TFT_ROTATE_90/180/270`, their `_MIRROR_X`/`_MIRROR_Y` variants, or `TFT_MIRROR_X`/`TFT_MIRROR_Y`; on the DGUS IA_CREALITY UI use `LCD_SCREEN_ROTATE` (0, 90, 180 or 270) |
 | TFT shows nothing or only noise | No UI selected, wrong interface, or wrong driver | Enable one of `TFT_COLOR_UI` / `TFT_CLASSIC_UI` / `TFT_LVGL_UI` (the build stops otherwise); with `TFT_GENERIC` set exactly one of `TFT_INTERFACE_FSMC` / `TFT_INTERFACE_SPI` and the right `TFT_RES_*`; try `TFT_DRIVER AUTO` |
-| DWIN screen stays blue, or shows Creality's boot image and nothing else | The screen firmware does not match the UI, or the serial link is wrong | Copy the `DWIN_SET` folder for your UI onto a microSD card, insert it into the slot on the back of the screen, power up and wait for the screen to turn from blue to orange, then power off and remove the card. Check `LCD_SERIAL_PORT` for your board and that `LCD_BAUDRATE` is 115200 |
+| DWIN screen stays blue, or shows Creality's boot image and nothing else | The screen firmware does not match the UI, or the serial link is wrong | Copy the unified `DWIN_SET` folder onto a microSD card, insert it into the slot on the back of the screen, power up and wait for the screen to turn from blue to orange, then power off and remove the card. See [Ender-3 V2 DWIN Display](/docs/features/dwin_display.html) for the full flashing guide. Check `LCD_SERIAL_PORT` for your board and that `LCD_BAUDRATE` is 115200 |
+| ProUI shows the Creality boot image with status, temperatures and XYZ drawn over it, no menu tiles, "SD Card Init Fail", and the knob does not respond | A firmware bug, not the DWIN_SET; reflashing the screen does not help | Update to firmware that includes Marlin #28669 (issue #27141). This happened with the 2.1.x builds that had ProUI under ExtUI before #28669 |
 | Serial smart display (DGUS, Anycubic, Sovol) ignores Marlin | Screen firmware mismatch or wrong serial port | Load the screen firmware named in the `Configuration.h` comment for your `DGUS_LCD_UI` variant; verify `LCD_SERIAL_PORT` is not the same as `SERIAL_PORT` and that the TX/RX lines are crossed correctly |
 | Menu items you expect are missing | `SLIM_LCD_MENUS`, `NO_LCD_MENUS`, or a feature that only MarlinUI panels support | Check those two options; on DWIN Creality UI and ExtUI screens, items such as PID tuning, the info menu and the probe offset wizard are not available |
 | Screen goes dark during long prints | A sleep or backlight timeout is set | `DISPLAY_SLEEP_MINUTES` or `LCD_BACKLIGHT_TIMEOUT_MINS`, adjustable at runtime with [`M255`](/docs/gcode/M255.html) when `EDITABLE_DISPLAY_TIMEOUT` is on; DWIN panels also take [`M256`](/docs/gcode/M256.html) for brightness |
@@ -301,6 +303,7 @@ the display family.
   [color graphical displays](/docs/appendix/controllers.html#color-graphical-displays),
   [smart displays](/docs/appendix/controllers.html#smart-displays) and
   [G-code hosts](/docs/appendix/controllers.html#g-code-hosts).
+- [Ender-3 V2 DWIN Display](/docs/features/dwin_display.html): the DWIN-family screen on the Ender-3 V2 — get the DWIN_SET, flash it, and fix blank or wrong-icon screens.
 - [LCD settings](/docs/settings/lcd.html) and [Interface settings](/docs/settings/interface.html): every option.
 - [Boot and Status Screens](/docs/configuration/boot_status_screen.html): custom boot and status images.
 - [`M117`](/docs/gcode/M117.html), [`M300`](/docs/gcode/M300.html), [`M73`](/docs/gcode/M073.html),

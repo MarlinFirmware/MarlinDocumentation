@@ -60,6 +60,7 @@ repeated here.
 ## Displays and customization
 
 - [Displays and Controllers](/docs/features/displays.html): identify your screen, pick the right option, wire EXP1/EXP2, and fix first-boot problems.
+- [Ender-3 V2 DWIN Display](/docs/features/dwin_display.html): the DWIN-family screen on the Ender-3 V2 — get the DWIN_SET, flash it, and fix blank or wrong-icon screens.
 - [Lights and LEDs](/docs/features/lights.html): case light, RGB and NeoPixel strips, M150/M355, printer event LEDs and the Lights menu.
 - [Custom Commands](/docs/features/custom_commands.html): your own menu items, user buttons, G-code macros, and the event G-code hooks.
 - [Password](/docs/features/password.html): lock the printer with a PIN, and what to do if you forget it.
