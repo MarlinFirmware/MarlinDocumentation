@@ -18,7 +18,7 @@ jobs:
     if: github.repository == 'MarlinFirmware/MarlinDocumentation'
     steps:
     - name: PR Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v7
     - name: Ruby Setup
       uses: ruby/setup-ruby@v1
       with:
