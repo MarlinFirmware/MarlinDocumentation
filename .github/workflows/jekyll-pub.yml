@@ -48,6 +48,10 @@ jobs:
       - name: Upload artifact
         # Automatically uploads an artifact from the './_site' directory by default
         uses: actions/upload-pages-artifact@v5
+        with:
+          # Publish dot-directories such as .well-known (Bluesky domain validation).
+          # Since v4 this action skips them by default; .git and .github stay excluded.
+          include-hidden-files: true
 
   # Deployment job
   deploy:
