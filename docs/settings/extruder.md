@@ -170,7 +170,7 @@ settings:
   disabled: true
   brief: Parking Extruder
   long: Two separate X-carriages with extruders that connect to a moving part via a solenoid docking mechanism. Requires `SOL0_PIN` and `SOL1_PIN`.
-  comment: Two separate X-carriages with extruders that connect to a moving part via a solenoid docking mechanism. Requires `SOL0_PIN` and `SOL1_PIN`.
+  comment: Two separate X-carriages with extruders that connect to a moving part via a solenoid docking mechanism. Requires SOL0_PIN and SOL1_PIN.
 - name: MAGNETIC_PARKING_EXTRUDER
   file: Configuration.h
   type: switch
@@ -668,6 +668,13 @@ settings:
   disabled: true
   requires: NONLINEAR_EXTRUSION
   comment: Enable if NLE should be ON by default
+- name: NONLINEAR_FACTORS
+  file: Configuration_adv.h
+  type: float[]
+  default: '{ 0.0f, 0.0f, 1.0f }'
+  disabled: true
+  requires: NONLINEAR_EXTRUSION
+  comment: Quadratic, Linear, Constant coefficients
 ---
 
 Options in the `extruder` section of the Marlin configuration files.
