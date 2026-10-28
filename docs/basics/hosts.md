@@ -136,21 +136,40 @@ Do **not** enable [`AUTO_REPORT_FANS`](/docs/settings/reporting.html#AUTO_REPORT
 ## Running a host in Docker
 
 For people who prefer containers, the Marlin repository ships Compose files for both hosts under
-`buildroot/share/hosts/`:
+`buildroot/share/hosts/` (currently in the open pull request
+[MarlinFirmware/Marlin#28759](https://github.com/MarlinFirmware/Marlin/pull/28759)):
 
-- `mainsail.yml` — Mainsail + Moonraker + serial2moon, web UI on port 8088.
-- `octoprint.yml` — OctoPrint, web UI on port 5050.
+- `mainsail.yml` — Mainsail + Moonraker + serial2moon, web UI at `http://localhost:8088`.
+- `octoprint.yml` — OctoPrint, web UI at `http://localhost:5050`.
 
-Both need Docker with Compose v2.24 or newer. Settings go in a `.env` file next to the Compose file; the
-comments at the top of each file list them. A USB printer can only be passed through to a container on a
-**Linux** host — Docker Desktop on macOS and Windows cannot pass USB through.
+Both need Docker with Compose v2.24 or newer. Start one with:
+
+```sh
+docker compose -f mainsail.yml up -d     # or octoprint.yml
+```
+
+Settings go in a `.env` file next to the Compose file (all optional); the comments at the top of each
+file list them. For Mainsail these include `S2M_SERIAL_PORT`, `S2M_BAUD`, `S2M_TRANSPORT` (set `tcp` to
+talk to a TCP socket, e.g. the simulator, instead of USB serial), `S2M_TCP_ADDR`, `MAINSAIL_PORT`,
+`MOONRAKER_PORT`, `PRINTER_NAME`, and `S2M_IMAGE`. For OctoPrint: `OCTOPRINT_PORT`, `OCTOPRINT_IMAGE`,
+`SERIAL_DEVICE`, and `SIM_ADDR`. Pull updated images with `docker compose -f <file> pull` and bring the
+stack back up (`docker compose -f <file> up -d`) — never while a print is running.
+
+On first start OctoPrint takes about 30 seconds to come up, then shows its setup wizard. Its data lives
+in an `octoprint` Docker volume; `docker compose -f octoprint.yml down -v` erases it.
+
+A USB printer can only be passed through to a container on a **Linux** host — Docker Desktop on macOS
+and Windows cannot pass USB through.
 
 ## Trying it without a printer
 
 You can run either host against the [Marlin Simulator](/docs/printers/simulator.html) instead of a real
 printer. The simulator exposes a raw G-code socket, and the Docker Compose files above are set up to talk
-to it. This is a developer-oriented workflow; the details are in the
-`marlin-hosts-in-docker` skill in the Marlin repository (`buildroot/skills/marlin-hosts-in-docker/SKILL.md`).
+to it. Build the simulator with `SERIAL_PORT_2` enabled, or the socket silently ignores G-code; and run
+one host per simulator, because its socket accepts a single client (the two Compose files default to
+different ports: 8099 for Mainsail, 8199 for OctoPrint). This is a developer-oriented workflow; the
+details are in the `marlin-hosts-in-docker` skill in the Marlin repository
+(`buildroot/skills/marlin-hosts-in-docker/SKILL.md`, also in MarlinFirmware/Marlin#28759).
 
 ## Which should I use?
 
