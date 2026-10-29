@@ -540,20 +540,21 @@ img.printer-photo { max-width: 40%; }
     .main-header { background-color: #e8e8ec; border-bottom-color: #ccc; }
     // Inline code — JTD dark scheme sets background: #0d1117, border: #44434d
     :not(pre, figure) > code {
-      background-color: #f0f0f3;
-      border-color: #ccc;
+        background-color: #f0f0f3;
+        border-color: #ccc;
     }
 
     // Bare pre blocks (non-highlighted) — inherit dark bg without this
     .main-content pre {
-      background-color: #004;
-      color: #27262b;
+        background-color: #004;
+        color: #27262b;
     }
 
     // Code blocks (syntax highlighted) — lighten for light mode
     .highlight, pre.highlight,
     div.highlighter-rouge, figure.highlight {
-      background-color: #226;
+        background-color: #226;
+        color: white;
     }
 
     // Table cells — JTD dark scheme gives dark backgrounds that persist
