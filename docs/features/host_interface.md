@@ -15,7 +15,9 @@ host software. The host streams G-code one line at a time, shows temperatures an
 pause, resume and cancel. This page explains how that conversation works, which options make it fast and reliable,
 which options let a host do more than stream lines, and how to fix the connection when it misbehaves.
 
-For a list of host programs, see [Host Software](/docs/basics/#host-software) in the Introduction.
+For a list of host programs, see [Host Software](/docs/basics/#host-software) in the Introduction. For an
+overview of the two most common hosts — OctoPrint and Mainsail — with setup instructions, see
+[Using a Host with Marlin](/docs/basics/hosts.html).
 
 ## What you need
 
