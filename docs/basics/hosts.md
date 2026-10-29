@@ -136,8 +136,7 @@ Do **not** enable [`AUTO_REPORT_FANS`](/docs/settings/reporting.html#AUTO_REPORT
 ## Running a host in Docker
 
 For people who prefer containers, the Marlin repository ships Compose files for both hosts under
-`buildroot/share/hosts/` (currently in the open pull request
-[MarlinFirmware/Marlin#28759](https://github.com/MarlinFirmware/Marlin/pull/28759)):
+[`buildroot/share/hosts/`](https://github.com/MarlinFirmware/Marlin/tree/bugfix-2.1.x/buildroot/share/hosts):
 
 - `mainsail.yml` — Mainsail + Moonraker + serial2moon, web UI at `http://localhost:8088`.
 - `octoprint.yml` — OctoPrint, web UI at `http://localhost:5050`.
@@ -169,7 +168,7 @@ to it. Build the simulator with `SERIAL_PORT_2` enabled, or the socket silently 
 one host per simulator, because its socket accepts a single client (the two Compose files default to
 different ports: 8099 for Mainsail, 8199 for OctoPrint). This is a developer-oriented workflow; the
 details are in the `marlin-hosts-in-docker` skill in the Marlin repository
-(`buildroot/skills/marlin-hosts-in-docker/SKILL.md`, also in MarlinFirmware/Marlin#28759).
+([`buildroot/skills/marlin-hosts-in-docker/SKILL.md`](https://github.com/MarlinFirmware/Marlin/blob/bugfix-2.1.x/buildroot/skills/marlin-hosts-in-docker/SKILL.md)).
 
 ## Which should I use?
 
