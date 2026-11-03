@@ -100,7 +100,7 @@ Marlin only prints G-code, so the workflow starts in your slicer:
 
 ## Host Software
 
-Host software runs on your computer (or Raspberry Pi) and provides a user interface, remote monitoring, and file transfer (to set up the connection and the options hosts use, see [Host Interface](/docs/features/host_interface.html)):
+Host software runs on your computer (or Raspberry Pi) and provides a user interface, remote monitoring, and file transfer (to set up the connection and the options hosts use, see [Host Interface](/docs/features/host_interface.html)). For an overview of the two most common hosts — OctoPrint and Mainsail — with setup instructions, see [Using a Host with Marlin](/docs/basics/hosts.html):
 
 - [OctoPrint](//octoprint.org/) — powerful open source host for Raspberry Pi, the most popular choice for hobbyists
 - [Pronterface](//www.pronterface.com/) — open source desktop host by Kliment
