@@ -193,3 +193,157 @@ p#warning1, p#warning2, p#warning3 {
   div#err-box { display: none; padding: 1em; font-size: 150%; font-weight: bold; color: #f55; }
   div#cpp-container, #boot-sub, #stat-sub { display: none; }
 }
+
+// Ringing Tower Generator (ringing-tower.html). The 3D preview stays at the top of the viewport while
+// the settings scroll underneath it. Class names are created by ringing-tower-page.js.
+#ringing-tower {
+  --rt-gap: 0.75rem;
+  min-width: 0;
+
+  // Stage: the preview and the buttons under it stay together at the top of the viewport while the settings
+  // scroll underneath. It sits below the sticky desktop header (3.75rem).
+  .rt-stage {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    margin: 1rem 0;
+    padding-bottom: 0.25rem;
+    // The settings must not show through behind the buttons. Dark is the default scheme, light sets the variable.
+    background: var(--body-background-color, #222);
+  }
+  @media (min-width: 50rem) {
+    .rt-stage { top: 4.5rem; }   // clears the sticky desktop header
+  }
+
+  // Preview. Height follows the window.
+  .rt-preview {
+    height: clamp(16rem, 50vh, 34rem);
+    overflow: hidden;
+    background: var(--tool-output-bg);
+    border: 1px solid $border-color;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    canvas { display: block; width: 100% !important; height: 100% !important; }
+    // WebGL-unavailable fallback text (set by the page script)
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    text-align: center;
+    color: var(--tool-label);
+  }
+
+  // Options that do not apply to the current choices are hidden by the page script
+  .rt-field[hidden], .rt-group[hidden] { display: none !important; }
+
+  // Form: a responsive grid of groups. Each setting is label | input | unit, with help text below.
+  .rt-form {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+    gap: var(--rt-gap);
+    margin: 1rem 0;
+  }
+  .rt-group {
+    min-width: 0;
+    margin: 0;
+    padding: 0.5rem 1rem 0.75rem;
+    background: var(--tool-section-bg);
+    border: 1px solid $border-color;
+    border-radius: 6px;
+    legend {
+      padding: 0 0.4rem;
+      font-weight: bold;
+      color: var(--tool-label);
+    }
+  }
+  .rt-field {
+    display: grid;
+    grid-template-columns: minmax(7rem, 1fr) auto auto;
+    align-items: center;
+    gap: 0.25rem 0.5rem;
+    padding: 0.3rem 0;
+    label { font-weight: 600; text-transform: none; color: inherit; }
+    input[type="number"], input[type="text"], select, textarea {
+      width: 7.5rem;
+      max-width: 100%;
+      box-sizing: border-box;
+      font-size: 100%;
+    }
+    input[type="checkbox"] { justify-self: start; }
+    textarea { grid-column: 2 / -1; width: 100%; font-family: $mono-font-family; font-size: 85%; }
+    select { width: 9.5rem; }
+    .rt-unit { font-size: 85%; opacity: 0.75; white-space: nowrap; }
+    // Help text sits under the field, spanning the row
+    .rt-help { grid-column: 1 / -1; font-size: 85%; opacity: 0.75; line-height: 1.35; }
+    &:has(textarea) { grid-template-columns: minmax(7rem, 1fr) minmax(0, 2fr); }
+  }
+
+  .rt-warnings {
+    margin: 1rem 0;
+    padding: 0.5rem 1rem 0.5rem 2rem;
+    color: var(--tool-warning-color);
+    background: var(--tool-warning-bg);
+    border-left: 4px solid var(--tool-warning-color);
+    border-radius: 4px;
+    li { margin: 0.25rem 0; }
+  }
+
+  .rt-table {
+    max-width: 100%;
+    overflow-x: auto;
+    padding: 0.75rem;
+    font-size: 85%;
+    background: var(--tool-output-bg);
+    border-radius: 4px;
+  }
+
+  .rt-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0.5rem 0 0;
+    button {
+      padding: 0.4rem 0.9rem;
+      border: 0;
+      border-radius: 4px;
+      cursor: pointer;
+      color: var(--tool-button-color);
+      background: var(--tool-button-bg);
+      &#rt-reset { color: inherit; background: var(--tool-head-bg); }
+    }
+    #rt-info { margin-left: auto; font-size: 90%; opacity: 0.8; }
+  }
+
+  .rt-gcode {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 20rem;
+    padding: 0.5rem;
+    font-family: $mono-font-family;
+    font-size: 85%;
+    color: inherit;
+    background: var(--tool-output-bg);
+    border: 1px solid $border-color;
+    border-radius: 4px;
+    resize: vertical;
+  }
+
+  .rt-notes li { margin: 0.4rem 0; }
+  .rt-seealso { font-size: 90%; opacity: 0.85; }
+
+  // Phones: the preview takes less height so the settings are still reachable
+  @media (max-width: 47.99rem) {
+    .rt-preview { height: 40vh; min-height: 14rem; }
+    .rt-form { grid-template-columns: minmax(0, 1fr); }
+    // Label on its own row, then field and unit side by side
+    .rt-field { grid-template-columns: auto auto 1fr; }
+    .rt-field > label { grid-column: 1 / -1; }
+    .rt-field > input, .rt-field > select { grid-column: 1; }
+    .rt-field > textarea { grid-column: 1 / -1; }
+    .rt-field .rt-unit { grid-column: 2; }
+    .rt-actions button { flex: 1 1 auto; }
+    .rt-actions #rt-info { margin-left: 0; flex-basis: 100%; }
+  }
+}

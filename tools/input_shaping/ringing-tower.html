@@ -1,0 +1,47 @@
+---
+title:        'Ringing Tower Generator'
+description:  'Generate a ringing tower as G-code, with Input Shaping frequency steps'
+parent: Tools
+nav_order: 3
+layout: tool
+---
+<script src="./ringing-tower.js"></script>
+<script type="module" src="./ringing-tower-page.js"></script>
+
+<div id="ringing-tower" class="tool-page">
+  <h1>Ringing Tower Generator</h1>
+  <p>Generate G-code for a ringing tower made for your printer. The frequency of the Input Shaper changes every few millimeters of height, so after printing you can look for the height where the ringing is smallest and read the best frequency from the table. No slicer or model file is needed.</p>
+
+  <div id="rt-stage" class="rt-stage">
+    <div id="rt-preview" class="rt-preview" aria-label="3D preview of the ringing tower on the print bed"></div>
+    <div class="rt-actions">
+      <button id="rt-download" type="button">Download G-code</button>
+      <button id="rt-zoom" type="button">Zoom to tower</button>
+      <button id="rt-reset" type="button">Reset to defaults</button>
+      <span id="rt-info"></span>
+    </div>
+  </div>
+
+  <form id="rt-form" class="rt-form" onsubmit="return false"></form>
+
+  <ul id="rt-warnings" class="rt-warnings" hidden></ul>
+
+  <h2 id="rt-table-heading">Frequency by height</h2>
+  <pre id="rt-table" class="rt-table">Generating…</pre>
+
+  <h2>G-code</h2>
+  <textarea id="rt-gcode" class="rt-gcode" rows="16" readonly></textarea>
+
+  <h2>Before you print</h2>
+  <ul class="rt-notes">
+    <li><strong>Not yet tested on a printer.</strong> This G-code has not been run on a real printer yet. Start with a short test tower and check the result before you print a full one.</li>
+    <li><strong>How to read the tower.</strong> On each tested wall the notch moves along the wall as the tower rises, following the pattern you chose. Ringing trails each sharp turn, so the echo should repeat the same pattern up the wall. The shaper frequency changes with height (see the table above), so look for the height where the echo is smallest.</li>
+    <li><strong>Axis letters ring too.</strong> The edges of the indented X and Y letters are small corners of their own. They help you tell the walls apart, but turn them off if you want the cleanest result.</li>
+    <li><strong>CoreXY.</strong> Set rotation to 45 to isolate the A and B motors. This has not been tested on CoreXY printers yet.</li>
+    <li><strong>Retraction and Z-hop are simple.</strong> Each layer is one path, and the tool retracts only on long travels.</li>
+  </ul>
+
+  <p class="rt-seealso">See also: the <a href="/tools/input_shaping/freq-calibr.html">Input Shaping Calibration Pattern</a>, which finds resonance frequencies with a different pattern. That tool is by KimmoHop, based on work by @tombrazier (GPLv3). The Ringing Tower Generator is a new implementation.</p>
+</div>
+
+
