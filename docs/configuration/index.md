@@ -18,7 +18,6 @@ Build-time configuration options describe aspects of the machine that will never
 
 Marlin also provides minimal and intelligent configuration methods that may be more suitable for your needs. Give these a try and let us know what you think!
 
-- `Config.h` (2.1.3 and up) should contain just your pertinent settings. This replaces `Configuration.h` and `Configuration_adv.h`, which will be ignored.
 - `config.ini` (2.1.0 and up) modifies the configuration files at the start of a PlatformIO build and has some other useful powers. See the [Configuration with INI](/docs/configuration/config-ini.html) page to see if it's right for you.
 
 - `_Bootscreen.h` is included when `SHOW_CUSTOM_BOOTSCREEN` is enabled. See the [Boot screens](/docs/configuration/boot_status_screen.html#_bootscreenh) page for more information.
@@ -44,7 +43,7 @@ To migrate your settings to a new Configuration you can use tools like Notepad++
 The firmware also ships `buildroot/share/scripts/config-migrate.py`, which does this for you from a full clone of Marlin: it finds the stock version your files started from, extracts your changes, and replays them onto the stock files of the target version, following option renames. Options the target no longer has are moved, commented out, to a block at the end of the file, and a report lists anything that needs your attention:
 
 ```
-python3 buildroot/share/scripts/config-migrate.py MyConfig --to 2.1.2.9 -o MyConfig/migrated
+python3 buildroot/share/scripts/config-migrate.py MyConfig --to 2.1.3 -o MyConfig/migrated
 ```
 
 Marlin Web Build can also run this migration online: upload a zip of your files, and it migrates them to the version you choose and builds the firmware. See [Online Build Service](/docs/basics/install.html#online-build-service).

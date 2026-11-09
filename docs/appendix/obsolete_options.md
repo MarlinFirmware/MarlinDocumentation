@@ -12,7 +12,7 @@ Marlin renames and retires configuration options as features grow. When you carr
 
 How to read the table:
 
-- **Last version** is the last release whose configuration files still contained the option. "Before 1.1.0" means it was gone before the first 1.1 release. "2.1.2.9" means the option was retired after the latest release, so it still works there and fails on `bugfix-2.1.x`.
+- **Last version** is the last release whose configuration files still contained the option. "Before 1.1.0" means it was gone before the first 1.1 release. "2.1.2.10" means the option was retired after 2.1.2.10, so it still works there and is gone from 2.1.3 and `bugfix-2.1.x`.
 - **Use instead** links to the current option. Where the firmware message says more than a plain rename (a value changed meaning, or the feature was folded into another), it is quoted.
 - Current options that were renamed carry a "Formerly" line on their [Settings](/docs/settings/index.html) page, pointing back here.
 
