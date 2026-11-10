@@ -49,18 +49,6 @@ Legacy 8-bit AVR MCUs built on the stock Arduino AVR core. The Teensy++ 2.0 uses
   [Arduino AVR](//www.arduino.cc/)|ATmega, ATTiny, etc.|16-20MHz|64-256k|2-16k|5V|no
   [Teensy++ 2.0](//www.pjrc.com/store/teensypp.html)|AT90USB1286 AVR|16MHz|128k|8k|5V|no
 
-#### AT32 (Cortex-M4F)
-
-Artery Technology's AT32 is its own Cortex-M4F MCU family with its own Arduino core. It is not register-compatible with STM32, so it has its own HAL. The framework is [MarlinFirmware/ArduinoCore-AT32F4](//github.com/MarlinFirmware/ArduinoCore-AT32F4) (a fork of rizacelik/ArduinoCore-AT32F4) and the PlatformIO platform is [MarlinFirmware/platform-at32](//github.com/MarlinFirmware/platform-at32). PlatformIO downloads both automatically.
-
-*Experimental.* The pin assignments for the Wanhao 0327001 and EasyThreed K7 ET4000+ are placeholders, not yet verified against the schematic, so these boards are not yet usable. The EasyThreed K7 Rev. B pins are derived from the MKS Robin Lite mapping and are not yet validated on AT32 hardware. No AT32 board has been reported tested on real hardware with this HAL, so testers are welcome. Graphical (U8glib) LCDs, including ST7920 and 12864, are not yet supported.
-
-  board|processor|speed|flash|sram|logic|fpu
-  ----|---------|-----|-----|----|-----|---
-  Wanhao 0327001 v2.0|[AT32F403ARGT7](//www.arterychip.com/en/product/AT32F403A.jsp) ARM Cortex-M4F|240MHz|1M|96-224k|3.3V|yes
-  EasyThreed K7 ET4000+|[AT32F403ARCT7](//www.arterychip.com/en/product/AT32F403A.jsp) ARM Cortex-M4F|240MHz|256k|96-224k|3.3V|yes
-  EasyThreed K7 Rev. B ET4000+|[AT32F407RCT7](//www.arterychip.com/en/product/AT32F407.jsp) ARM Cortex-M4F|240MHz|256k|96-224k|3.3V|yes
-
 #### DUE
 
 Arduino Due and compatibles built on the Atmel/Microchip SAM3X8E, using the upstream Arduino SAM core.
@@ -85,6 +73,7 @@ GigaDevice GD32F1/GD32F3 MCUs using the third-party MFL Arduino core ([bmourit/A
   ----|---------|-----|-----|----|-----|---
   Creality V4.2.x|[GD32F303RE](//www.gigadevice.com/) ARM Cortex-M4F|120MHz|512k|64k|3.3V|yes
   Voxelab Aquila V1.0.1|[GD32F103RC](//www.gigadevice.com/) ARM Cortex-M3|108MHz|256k|48k|3.3V|no
+  Anycubic Kobra 2 Neo (TriGorilla V4.0.1)|[GD32F303RG](//www.gigadevice.com/) ARM Cortex-M4F|120MHz|1M|96k|3.3V|yes
 
 #### HC32
 
@@ -93,11 +82,11 @@ XHSC HC32F460 Cortex-M4F family using the upstream `platform-hc32f46x` PlatformI
   board|processor|speed|flash|sram|logic|fpu
   ----|---------|-----|-----|----|-----|---
   Voxelab Aquila V1.0.x|[HC32F460C](//www.xhsc.com.cn/) ARM Cortex-M4F|200MHz|256k|192k|3.3V|yes
-  Creality Kobra Neo|[HC32F460E](//www.xhsc.com.cn/) ARM Cortex-M4F|200MHz|512k|192k|3.3V|yes
+  Anycubic Kobra Neo / Go (TriGorilla V3.0.6)|[HC32F460E](//www.xhsc.com.cn/) ARM Cortex-M4F|200MHz|512k|192k|3.3V|yes
 
 #### LINUX
 
-A host build for Linux. Marlin compiles as a console application on the host CPU, with no MCU and no Arduino framework. GPIO is a software array, so there are no physical pins.
+A host-only build for Linux. Marlin compiles as a console application on the host CPU, with no MCU and no Arduino framework. GPIO is simulated in software, so there are no physical pins. The build runs in Marlin's CI as `linux_native`.
 
   board|processor|speed|flash|sram|logic|fpu
   ----|---------|-----|-----|----|-----|---
@@ -153,7 +142,6 @@ The official STM32duino core (Arduino_Core_STM32) serves the STM32 F0, F1, F4, F
   ----|---------|-----|-----|----|-----|---
   Malyan M200 v2 / M300|[STM32F070CB/RB](//www.st.com/en/microcontrollers-microprocessors/stm32f070rb.html) ARM-Cortex M0|48MHz|128k|16k|3.3V|no
   BIGTREETECH SKR Mini E3, Creality V4.2.x (F1 envs)|[STM32F103RC/RE/VE](//www.st.com/en/microcontrollers-microprocessors/stm32f103.html) ARM-Cortex M3|72MHz|256-512k|48-64k|3.3V|no
-  [STEVAL-3DP001V1](//www.st.com/en/evaluation-tools/steval-3dp001v1.html)|[STM32F401VE Arm-Cortex M4](//www.st.com/en/microcontrollers/stm32f401ve.html)|84MHz|512k|64+32k|3.3-5V|yes
   BIGTREETECH SKR Pro (F407 envs)|STM32F407VG ARM-Cortex M4|168MHz|1M|192k|3.3V|yes
   FYSETC S6 / Spider (F446 envs)|STM32F446VE ARM-Cortex M4|180MHz|512k|128k|3.3V|yes
   [NUCLEO-F767ZI](//www.st.com/en/evaluation-tools/nucleo-f767zi.html), REMRAM V1|STM32F767 ARM-Cortex M7|216MHz|2M|512k|3.3V|yes
