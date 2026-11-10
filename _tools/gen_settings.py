@@ -115,6 +115,8 @@ def simplify(expr):
 # Schema extraction
 #
 
+BOARD_SENTINELS = {'BOARD_UNKNOWN', 'BOARD_ERROR'}
+
 def parse_options(s):
   """Parse schema option lists like "[ 1:'label', -2:'label' ]" or "['A','B']"."""
   if not s or not isinstance(s, str): return None
@@ -220,6 +222,8 @@ def scraped(opt, filekey):
   for k in ('comment', 'shared_comment'):
     if k in d: d[k] = comment_md(d[k])
   opts = parse_options(opt.get('options'))
+  # boards.h also defines BOARD_UNKNOWN (-1) and BOARD_ERROR (-2) as internal sentinels, not boards to pick.
+  if opts: opts = [o for o in opts if o['value'] not in BOARD_SENTINELS]
   if opts: d['options'] = opts
   return d
 

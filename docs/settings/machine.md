@@ -23,7 +23,6 @@ settings:
     Using `boards.h` as a reference, replace `BOARD_RAMPS_14_EFB` with your board's ID. The `boards.h` file has the most up-to-date listing of supported boards - check there first if you don't see yours listed [`here`](/docs/appendix/boards.html).
   comment: Choose the name from boards.h that matches your setup
   options:
-  - value: BOARD_ERROR
   - value: BOARD_RAMPS_OLD
   - value: BOARD_RAMPS_13_EFB
   - value: BOARD_RAMPS_13_EEB
@@ -402,6 +401,8 @@ settings:
   - value: BOARD_MKS_NEPTUNE_3
   - value: BOARD_MKS_E3D_V2
   - value: BOARD_PRUSA_BUDDY
+  - value: BOARD_LDO_LEVIATHAN_V1_2
+  - value: BOARD_CREALITY_V24S1_200
   - value: BOARD_CREALITY_CR4NS
   - value: BOARD_REMRAM_V1
   - value: BOARD_NUCLEO_F767ZI
@@ -423,6 +424,7 @@ settings:
   - value: BOARD_FYSETC_SPIDER_KING_V1_1_H723
   - value: BOARD_BTT_SCYLLA_V1_0
   - value: BOARD_FYSETC_SPIDER_V3_H723
+  - value: BOARD_LDO_LEVIATHAN_V1_3
   - value: BOARD_ESPRESSIF_ESP32
   - value: BOARD_MRR_ESPA
   - value: BOARD_MRR_ESPE
@@ -449,6 +451,7 @@ settings:
   - value: BOARD_AQUILA_V101_GD32_MFL
   - value: BOARD_CREALITY_V422_GD32_MFL
   - value: BOARD_CREALITY_V427_GD32_MFL
+  - value: BOARD_TRIGORILLA_V401_GD32_MFL
   - value: BOARD_WANHAO_0327001
   - value: BOARD_EASYTHREED_ET4000_PLUS
   - value: BOARD_EASYTHREED_K7_REVB_AT32F407
