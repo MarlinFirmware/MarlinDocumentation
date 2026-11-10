@@ -1497,7 +1497,7 @@
 # GD32 ARM Cortex-M4
 #
 
-- group: GD32 ARM Cortex-M3
+- group: GD32 ARM Cortex-M4
   long: Boards using the GD32 by GigaDevices
   boards:
   - name: CREALITY_V422_GD32_MFL
@@ -1505,6 +1505,23 @@
     since: 2.1.3
   - name: CREALITY_V427_GD32_MFL
     brief: Creality V4.2.7 MFL (GD32F303RE)<br>(STM32 Variant Above)
+    since: 2.1.3
+
+#
+# AT32 ARM Cortex-M4
+#
+
+- group: AT32 ARM Cortex-M4
+  long: Boards using the AT32 by Artery Technology. Experimental. Pin assignments for some boards are not yet verified against hardware.
+  boards:
+  - name: WANHAO_0327001
+    brief: Wanhao 0327001 v2.0 (AT32F403ARGT7)<br>(Experimental, pins not yet verified)
+    since: 2.1.3
+  - name: EASYTHREED_ET4000_PLUS
+    brief: EasyThreed K7 ET4000+ (AT32F403ARCT7)<br>(Experimental, pins not yet verified)
+    since: 2.1.3
+  - name: EASYTHREED_K7_REVB_AT32F407
+    brief: EasyThreed K7 Rev. B ET4000+ (AT32F407RCT7)<br>(Experimental, pins from MKS Robin Lite mapping)
     since: 2.1.3
 
 #

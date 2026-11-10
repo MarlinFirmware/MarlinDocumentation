@@ -28,6 +28,18 @@ We could have chosen to use an RTOS to build this abstraction, but there are jus
 
 ### Current Marlin HALs
 
+#### AT32 (Cortex-M4F)
+
+Artery Technology's AT32 is its own Cortex-M4F MCU family with its own Arduino core. It is not register-compatible with STM32, so it has its own HAL. The framework is [MarlinFirmware/ArduinoCore-AT32F4](//github.com/MarlinFirmware/ArduinoCore-AT32F4) (a fork of rizacelik/ArduinoCore-AT32F4) and the PlatformIO platform is [MarlinFirmware/platform-at32](//github.com/MarlinFirmware/platform-at32). PlatformIO downloads both automatically.
+
+*Experimental.* The pin assignments for the Wanhao 0327001 and EasyThreed K7 ET4000+ are placeholders, not yet verified against the schematic, so these boards are not yet usable. The EasyThreed K7 Rev. B pins are derived from the MKS Robin Lite mapping and are not yet validated on AT32 hardware. No AT32 board has been reported tested on real hardware with this HAL, so testers are welcome. Graphical (U8glib) LCDs, including ST7920 and 12864, are not yet supported.
+
+  board|processor|speed|flash|sram|logic|fpu
+  ----|---------|-----|-----|----|-----|---
+  Wanhao 0327001 v2.0|[AT32F403ARGT7](//www.arterychip.com/en/product/AT32F403A.jsp) ARM Cortex-M4F|240MHz|1M|96-224k|3.3V|yes
+  EasyThreed K7 ET4000+|[AT32F403ARCT7](//www.arterychip.com/en/product/AT32F403A.jsp) ARM Cortex-M4F|240MHz|256k|96-224k|3.3V|yes
+  EasyThreed K7 Rev. B ET4000+|[AT32F407RCT7](//www.arterychip.com/en/product/AT32F407.jsp) ARM Cortex-M4F|240MHz|256k|96-224k|3.3V|yes
+
 #### AVR (8-bit)
 
   board|processor|speed|flash|sram|logic|fpu
