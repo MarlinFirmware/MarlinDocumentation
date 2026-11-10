@@ -1497,7 +1497,7 @@
 # GD32 ARM Cortex-M4
 #
 
-- group: GD32 ARM Cortex-M3
+- group: GD32 ARM Cortex-M4
   long: Boards using the GD32 by GigaDevices
   boards:
   - name: CREALITY_V422_GD32_MFL
