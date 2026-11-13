@@ -121,12 +121,12 @@
   note: ADVANCED_PAUSE_EXTRUDE_LENGTH is now ADVANCED_PAUSE_PURGE_LENGTH.
   source: changes
 - name: ALLOW_LOW_EJERK
-  until: 2.1.2.9
+  until: 2.1.2.10
   replaced_by: []
   note: ALLOW_LOW_EJERK is deprecated and should be removed.
   source: changes
 - name: ANET_FULL_GRAPHICS_LCD_ALT_WIRING
-  until: 2.1.2.9
+  until: 2.1.2.10
   replaced_by:
   - CTC_A10S_A13
   note: ANET_FULL_GRAPHICS_LCD_ALT_WIRING is now CTC_A10S_A13.
@@ -181,7 +181,7 @@
   note: BABYSTEP_MULTIPLICATOR is now BABYSTEP_MULTIPLICATOR_[XY|Z].
   source: changes
 - name: BABYSTEP_ZPROBE_GFX_OVERLAY
-  until: 2.1.2.9
+  until: 2.1.2.10
   replaced_by:
   - BABYSTEP_GFX_OVERLAY
   note: BABYSTEP_ZPROBE_GFX_OVERLAY is now BABYSTEP_GFX_OVERLAY.
@@ -200,7 +200,7 @@
   note: BACK_PROBE_BED_POSITION is obsolete. Set a margin with PROBING_MARGIN or PROBING_MARGIN_BACK instead.
   source: changes
 - name: BED_HYSTERESIS
-  until: 2.1.2.9
+  until: 2.1.2.10
   replaced_by:
   - BED_LIMIT_HYSTERESIS
   note: BED_HYSTERESIS is now BED_LIMIT_HYSTERESIS.
@@ -283,7 +283,7 @@
   note: Renamed to BOARD_OPULO_LUMEN_REV4 in 2.0.9.6.
   source: abm
 - name: BOARD_MKS_MONSTER8
-  until: 2.1.0.5
+  until: 2.1.0.6
   replaced_by: []
   note: Renamed to BOARD_MKS_MONSTER8_V1 in 2.1.1.
   source: abm
@@ -344,7 +344,7 @@
   note: BTT_MINI_12864_V1 is now BTT_MINI_12864.
   source: changes
 - name: CALIBRATION_MEASUREMENT_RESOLUTION
-  until: 2.1.2.9
+  until: 2.1.2.10
   replaced_by: []
   note: CALIBRATION_MEASUREMENT_RESOLUTION is no longer needed and should be removed.
   source: changes
@@ -361,7 +361,7 @@
   note: CHAMBER_HEATER_PIN is now HEATER_CHAMBER_PIN.
   source: changes
 - name: CHAMBER_HYSTERESIS
-  until: 2.1.2.9
+  until: 2.1.2.10
   replaced_by:
   - CHAMBER_LIMIT_HYSTERESIS
   note: CHAMBER_HYSTERESIS is now CHAMBER_LIMIT_HYSTERESIS.
@@ -435,13 +435,13 @@
   note: CUTTER_POWER_DISPLAY is now CUTTER_POWER_UNIT.
   source: changes
 - name: DEBUG_ROBOT_KINEMATICS
-  until: 2.1.1.7
+  until: 2.1.1.8
   replaced_by:
   - DEBUG_TPARA_KINEMATICS
   note: DEBUG_ROBOT_KINEMATICS is now DEBUG_TPARA_KINEMATICS.
   source: changes
 - name: DEBUG_SCARA_KINEMATICS
-  until: 2.1.2.9
+  until: 2.1.2.10
   replaced_by: []
   note: DEBUG_SCARA_KINEMATICS is obsolete and should be removed.
   source: changes
@@ -588,12 +588,12 @@
   note: Removed in 1.1.9.1.
   source: abm
 - name: DELTA_MAX_RADIUS
-  until: 2.1.2.9
+  until: 2.1.2.10
   replaced_by: []
   note: DELTA_MAX_RADIUS is obsolete and should be removed.
   source: changes
 - name: DELTA_PRINTABLE_RADIUS
-  until: 2.1.2.9
+  until: 2.1.2.10
   replaced_by:
   - PRINTABLE_RADIUS
   note: DELTA_PRINTABLE_RADIUS is now PRINTABLE_RADIUS.
@@ -605,7 +605,7 @@
   note: Remove DELTA_PROBEABLE_RADIUS and use PROBING_MARGIN to inset the probe area instead.
   source: changes
 - name: DELTA_SEGMENTS_PER_SECOND
-  until: 2.1.1.7
+  until: 2.1.1.8
   replaced_by:
   - DEFAULT_SEGMENTS_PER_SECOND
   note: (POLAR|DELTA|SCARA|TPARA|ROBOT)_SEGMENTS_PER_SECOND is now DEFAULT_SEGMENTS_PER_SECOND.
@@ -623,31 +623,31 @@
   note: DGUS_LCD is now DGUS_LCD_UI ORIGIN|FYSETC|HIPRECY).
   source: changes
 - name: DGUS_LCD_UI_FYSETC
-  until: 2.1.2.9
+  until: 2.1.2.10
   replaced_by:
   - DGUS_LCD_UI
   note: DGUS_LCD_UI_[TYPE] is now set using DGUS_LCD_UI TYPE.
   source: changes
 - name: DGUS_LCD_UI_HIPRECY
-  until: 2.1.2.9
+  until: 2.1.2.10
   replaced_by:
   - DGUS_LCD_UI
   note: DGUS_LCD_UI_[TYPE] is now set using DGUS_LCD_UI TYPE.
   source: changes
 - name: DGUS_LCD_UI_MKS
-  until: 2.1.2.9
+  until: 2.1.2.10
   replaced_by:
   - DGUS_LCD_UI
   note: DGUS_LCD_UI_[TYPE] is now set using DGUS_LCD_UI TYPE.
   source: changes
 - name: DGUS_LCD_UI_ORIGIN
-  until: 2.1.2.9
+  until: 2.1.2.10
   replaced_by:
   - DGUS_LCD_UI
   note: DGUS_LCD_UI_[TYPE] is now set using DGUS_LCD_UI TYPE.
   source: changes
 - name: DGUS_LCD_UI_RELOADED
-  until: 2.1.2.9
+  until: 2.1.2.10
   replaced_by:
   - DGUS_LCD_UI
   note: DGUS_LCD_UI_[TYPE] is now set using DGUS_LCD_UI TYPE.
@@ -675,7 +675,7 @@
   note: DIGIPOT_I2C is now DIGIPOT_MCP4451 (or DIGIPOT_MCP4018).
   source: changes
 - name: DISABLE_ENCODER
-  until: 2.1.2.9
+  until: 2.1.2.10
   replaced_by:
   - NO_BACK_MENU_ITEM
   note: DISABLE_ENCODER is now NO_BACK_MENU_ITEM.
@@ -764,7 +764,7 @@
   note: EXPERIMENTAL_SCURVE is no longer needed and should be removed.
   source: changes
 - name: EXTRA_LIN_ADVANCE_K
-  until: 2.1.1.7
+  until: 2.1.1.8
   replaced_by:
   - ADVANCE_K_EXTRA
   note: EXTRA_LIN_ADVANCE_K is now ADVANCE_K_EXTRA.
@@ -947,59 +947,6 @@
   replaced_by: []
   note: FSMC_UPSCALE is now GRAPHICAL_TFT_UPSCALE.
   source: changes
-- name: FTM_CTS_COMPARE_VAL
-  until: 2.1.2.8
-  replaced_by: []
-  note: Removed in 2.1.2.9.
-  source: abm
-- name: FTM_LINEAR_ADV_DEFAULT_ENA
-  until: null
-  replaced_by: []
-  note: FTM_LINEAR_ADV_DEFAULT_ENA is obsolete and should be removed.
-  source: changes
-- name: FTM_LINEAR_ADV_DEFAULT_K
-  until: null
-  replaced_by:
-  - ADVANCE_K
-  note: FTM_LINEAR_ADV_DEFAULT_K is now set with ADVANCE_K and should be removed.
-  source: changes
-- name: FTM_MIN_TICKS
-  until: 2.1.2.8
-  replaced_by: []
-  note: Removed in 2.1.2.9.
-  source: abm
-- name: FTM_RATIO
-  until: 2.1.2.8
-  replaced_by: []
-  note: Removed in 2.1.2.9.
-  source: abm
-- name: FTM_SHAPING_DEFAULT_X_FREQ
-  until: null
-  replaced_by:
-  - FTM_SHAPING_DEFAULT_FREQ_X
-  note: FTM_SHAPING_DEFAULT_[XY]_FREQ is now FTM_SHAPING_DEFAULT_FREQ_[XY].
-  source: changes
-- name: FTM_SHAPING_DEFAULT_Y_FREQ
-  until: null
-  replaced_by:
-  - FTM_SHAPING_DEFAULT_FREQ_Y
-  note: FTM_SHAPING_DEFAULT_[XY]_FREQ is now FTM_SHAPING_DEFAULT_FREQ_[XY].
-  source: changes
-- name: FTM_STEPS_PER_UNIT_TIME
-  until: 2.1.2.8
-  replaced_by: []
-  note: Removed in 2.1.2.9.
-  source: abm
-- name: FTM_TS
-  until: 2.1.2.8
-  replaced_by: []
-  note: Removed in 2.1.2.9.
-  source: abm
-- name: FTM_ZMAX
-  until: 2.1.2.8
-  replaced_by: []
-  note: Removed in 2.1.2.9.
-  source: abm
 - name: GRAPHICAL_TFT_ROTATE_180
   until: 2.0.7.1
   replaced_by:
@@ -1061,7 +1008,7 @@
   note: HOMING_FEEDRATE_XY and HOMING_FEEDRATE_Z are now set using the HOMING_FEEDRATE_MM_M array instead.
   source: changes
 - name: INTEGRATED_BABYSTEPPING
-  until: 2.1.2.9
+  until: 2.1.2.10
   replaced_by: []
   note: INTEGRATED_BABYSTEPPING is no longer needed and should be removed.
   source: changes
@@ -1072,52 +1019,52 @@
   note: INTERNAL_SERIAL_PORT is now MMU_SERIAL_PORT.
   source: changes
 - name: INVERT_E_STEP_PIN
-  until: 2.1.2.9
+  until: 2.1.2.10
   replaced_by: []
   note: INVERT_*_STEP_PIN true is now STEP_STATE_* LOW, and INVERT_*_STEP_PIN false is now STEP_STATE_* HIGH.
   source: changes
 - name: INVERT_I_STEP_PIN
-  until: 2.1.2.9
+  until: 2.1.2.10
   replaced_by: []
   note: INVERT_*_STEP_PIN true is now STEP_STATE_* LOW, and INVERT_*_STEP_PIN false is now STEP_STATE_* HIGH.
   source: changes
 - name: INVERT_J_STEP_PIN
-  until: 2.1.2.9
+  until: 2.1.2.10
   replaced_by: []
   note: INVERT_*_STEP_PIN true is now STEP_STATE_* LOW, and INVERT_*_STEP_PIN false is now STEP_STATE_* HIGH.
   source: changes
 - name: INVERT_K_STEP_PIN
-  until: 2.1.2.9
+  until: 2.1.2.10
   replaced_by: []
   note: INVERT_*_STEP_PIN true is now STEP_STATE_* LOW, and INVERT_*_STEP_PIN false is now STEP_STATE_* HIGH.
   source: changes
 - name: INVERT_U_STEP_PIN
-  until: 2.1.2.9
+  until: 2.1.2.10
   replaced_by: []
   note: INVERT_*_STEP_PIN true is now STEP_STATE_* LOW, and INVERT_*_STEP_PIN false is now STEP_STATE_* HIGH.
   source: changes
 - name: INVERT_V_STEP_PIN
-  until: 2.1.2.9
+  until: 2.1.2.10
   replaced_by: []
   note: INVERT_*_STEP_PIN true is now STEP_STATE_* LOW, and INVERT_*_STEP_PIN false is now STEP_STATE_* HIGH.
   source: changes
 - name: INVERT_W_STEP_PIN
-  until: 2.1.2.9
+  until: 2.1.2.10
   replaced_by: []
   note: INVERT_*_STEP_PIN true is now STEP_STATE_* LOW, and INVERT_*_STEP_PIN false is now STEP_STATE_* HIGH.
   source: changes
 - name: INVERT_X_STEP_PIN
-  until: 2.1.2.9
+  until: 2.1.2.10
   replaced_by: []
   note: INVERT_*_STEP_PIN true is now STEP_STATE_* LOW, and INVERT_*_STEP_PIN false is now STEP_STATE_* HIGH.
   source: changes
 - name: INVERT_Y_STEP_PIN
-  until: 2.1.2.9
+  until: 2.1.2.10
   replaced_by: []
   note: INVERT_*_STEP_PIN true is now STEP_STATE_* LOW, and INVERT_*_STEP_PIN false is now STEP_STATE_* HIGH.
   source: changes
 - name: INVERT_Z_STEP_PIN
-  until: 2.1.2.9
+  until: 2.1.2.10
   replaced_by: []
   note: INVERT_*_STEP_PIN true is now STEP_STATE_* LOW, and INVERT_*_STEP_PIN false is now STEP_STATE_* HIGH.
   source: changes
@@ -1177,27 +1124,27 @@
   note: LARGE_MOVE_ITEMS is obsolete. Instead define MANUAL_MOVE_DISTANCE_MM and MANUAL_MOVE_DISTANCE_IN.
   source: changes
 - name: LASER_MOVE_G0_OFF
-  until: 2.1.0.5
+  until: 2.1.0.6
   replaced_by: []
   note: Removed in 2.1.1.
   source: abm
 - name: LASER_MOVE_G28_OFF
-  until: 2.1.0.5
+  until: 2.1.0.6
   replaced_by: []
   note: Removed in 2.1.1.
   source: abm
 - name: LASER_MOVE_POWER
-  until: 2.1.0.5
+  until: 2.1.0.6
   replaced_by: []
   note: Removed in 2.1.1.
   source: abm
 - name: LASER_POWER_INLINE
-  until: 2.1.0.5
+  until: 2.1.0.6
   replaced_by: []
   note: LASER_POWER_INLINE is not required, inline mode is enabled with 'M3 I' and disabled with 'M5 I'.
   source: changes
 - name: LASER_POWER_INLINE_CONTINUOUS
-  until: 2.1.0.5
+  until: 2.1.0.6
   replaced_by: []
   note: LASER_POWER_INLINE_CONTINUOUS is not required, inline mode is enabled with 'M3 I' and disabled with 'M5 I'.
   source: changes
@@ -1207,18 +1154,18 @@
   note: Removed in 2.0.9.5.
   source: abm
 - name: LASER_POWER_INLINE_INVERT
-  until: 2.1.0.5
+  until: 2.1.0.6
   replaced_by: []
   note: Removed in 2.1.1.
   source: abm
 - name: LASER_POWER_INLINE_TRAPEZOID
-  until: 2.1.0.5
+  until: 2.1.0.6
   replaced_by:
   - LASER_POWER_TRAP
   note: LASER_POWER_INLINE_TRAPEZOID is now LASER_POWER_TRAP.
   source: changes
 - name: LASER_POWER_INLINE_TRAPEZOID_CONT
-  until: 2.1.0.5
+  until: 2.1.0.6
   replaced_by:
   - LASER_POWER_TRAP
   note: LASER_POWER_INLINE_TRAPEZOID_CONT is replaced with LASER_POWER_TRAP.
@@ -1236,7 +1183,7 @@
   note: LCD_ALEPHOBJECTS_CLCD_UI is now LCD_LULZBOT_CLCD_UI.
   source: changes
 - name: LCD_BACKLIGHT_TIMEOUT
-  until: 2.1.1.7
+  until: 2.1.1.8
   replaced_by:
   - LCD_BACKLIGHT_TIMEOUT_MINS
   note: LCD_BACKLIGHT_TIMEOUT (seconds) is now LCD_BACKLIGHT_TIMEOUT_MINS (minutes).
@@ -1298,7 +1245,7 @@
   note: LCD_SCREEN_ROT_90 is now LCD_SCREEN_ROTATE with a value of 90.
   source: changes
 - name: LCD_SET_PROGRESS_MANUALLY
-  until: 2.1.1.7
+  until: 2.1.1.8
   replaced_by:
   - SET_PROGRESS_MANUALLY
   note: LCD_SET_PROGRESS_MANUALLY is now SET_PROGRESS_MANUALLY.
@@ -1375,7 +1322,7 @@
   note: LIN_ADVANCE (1.5) no longer uses LIN_ADVANCE_E_D_RATIO.
   source: changes
 - name: LIN_ADVANCE_K
-  until: 2.1.1.7
+  until: 2.1.1.8
   replaced_by:
   - ADVANCE_K
   note: LIN_ADVANCE_K is now ADVANCE_K.
@@ -1520,13 +1467,13 @@
   note: MESH_NUM_[XY]_POINTS is now GRID_MAX_POINTS_[XY].
   source: changes
 - name: MILLISECONDS_PREHEAT_TIME
-  until: 2.1.2.9
+  until: 2.1.2.10
   replaced_by:
   - PREHEAT_TIME_HOTEND_MS
   note: MILLISECONDS_PREHEAT_TIME is now PREHEAT_TIME_HOTEND_MS.
   source: changes
 - name: MINIMUM_PLANNER_SPEED
-  until: 2.1.2.9
+  until: 2.1.2.10
   replaced_by: []
   note: MINIMUM_PLANNER_SPEED is obsolete. The minimum planner junction speed is now automatic.
   source: changes
@@ -1538,7 +1485,7 @@
   note: MINIMUM_STEPPER_DIR_DELAY is now MINIMUM_STEPPER_POST_DIR_DELAY and MINIMUM_STEPPER_PRE_DIR_DELAY.
   source: changes
 - name: MINIMUM_STEPPER_PULSE
-  until: 2.1.2.9
+  until: 2.1.2.10
   replaced_by:
   - MINIMUM_STEPPER_PULSE_NS
   note: MINIMUM_STEPPER_PULSE (in µs) is now MINIMUM_STEPPER_PULSE_NS. Multiply old MINIMUM_STEPPER_PULSE x 1000!
@@ -1627,7 +1574,7 @@
   note: MMU2_CHECK_FILAMENT_PRESENCE_EXTRUSION_LENGTH is now MMU3_CHECK_FILAMENT_PRESENCE_EXTRUSION_LENGTH.
   source: changes
 - name: MMU2_DEBUG
-  until: 2.1.2.9
+  until: 2.1.2.10
   replaced_by:
   - MMU_DEBUG
   note: MMU2_DEBUG is now MMU_DEBUG.
@@ -1650,7 +1597,7 @@
   note: MMU2_MAX_RETRIES is now MMU3_MAX_RETRIES.
   source: changes
 - name: MMU2_MENUS
-  until: 2.1.2.9
+  until: 2.1.2.10
   replaced_by:
   - MMU_MENUS
   note: MMU2_MENUS is now MMU_MENUS.
@@ -1668,7 +1615,7 @@
   note: MMU2_RETRY_UNLOAD_TO_FINDA_LENGTH is now MMU3_RETRY_UNLOAD_TO_FINDA_LENGTH.
   source: changes
 - name: MMU2_RST_PIN
-  until: 2.1.2.9
+  until: 2.1.2.10
   replaced_by:
   - MMU_RST_PIN
   note: MMU2_RST_PIN is now MMU_RST_PIN.
@@ -1679,7 +1626,7 @@
   note: Removed in 2.0.8.
   source: abm
 - name: MMU2_SERIAL_PORT
-  until: 2.1.2.9
+  until: 2.1.2.10
   replaced_by:
   - MMU_SERIAL_PORT
   note: MMU2_SERIAL_PORT is now MMU_SERIAL_PORT.
@@ -1702,7 +1649,7 @@
   note: MMU2_VERIFY_LOAD_TO_NOZZLE_FEED_RATE is now MMU3_VERIFY_LOAD_TO_NOZZLE_FEED_RATE.
   source: changes
 - name: MMU_EXTRUDER_SENSOR
-  until: 2.1.2.9
+  until: 2.1.2.10
   replaced_by:
   - MMU2_EXTRUDER_SENSOR
   note: MMU_EXTRUDER_SENSOR is now MMU2_EXTRUDER_SENSOR.
@@ -1719,7 +1666,7 @@
   note: MMU_HAS_CUTTER is now MMU3_HAS_CUTTER.
   source: changes
 - name: MMU_LOADING_ATTEMPTS_NR
-  until: 2.1.2.9
+  until: 2.1.2.10
   replaced_by:
   - MMU2_LOADING_ATTEMPTS_NR
   note: MMU_LOADING_ATTEMPTS_NR is now MMU2_LOADING_ATTEMPTS_NR.
@@ -1737,13 +1684,13 @@
   note: MM_PER_ARC_SEGMENT is now MIN_ARC_SEGMENT_MM.
   source: changes
 - name: MORGAN_SCARA
-  until: 2.1.2.9
+  until: 2.1.2.10
   replaced_by:
   - SCARA
   note: MORGAN_SCARA is now just SCARA.
   source: changes
 - name: MP_SCARA
-  until: 2.1.2.9
+  until: 2.1.2.10
   replaced_by:
   - SCARA
   note: MP_SCARA is now just SCARA.
@@ -1773,7 +1720,7 @@
   note: NOZZLE_PARK_Y_ONLY is now NOZZLE_PARK_MOVE 2.
   source: changes
 - name: NO_FAN_SLOWING_IN_PID_TUNING
-  until: 2.1.2.9
+  until: 2.1.2.10
   replaced_by:
   - TEMP_TUNING_MAINTAIN_FAN
   note: NO_FAN_SLOWING_IN_PID_TUNING is now TEMP_TUNING_MAINTAIN_FAN.
@@ -1896,7 +1843,7 @@
   note: PLA_PREHEAT_HPB_TEMP is now PREHEAT_1_TEMP_BED.
   source: changes
 - name: POLAR_SEGMENTS_PER_SECOND
-  until: 2.1.1.7
+  until: 2.1.1.8
   replaced_by:
   - DEFAULT_SEGMENTS_PER_SECOND
   note: (POLAR|DELTA|SCARA|TPARA|ROBOT)_SEGMENTS_PER_SECOND is now DEFAULT_SEGMENTS_PER_SECOND.
@@ -1939,7 +1886,7 @@
   note: PROBE_OFFSET_START is now PROBE_OFFSET_WIZARD_START_Z.
   source: changes
 - name: PROBE_PT_1_X
-  until: 2.1.2.9
+  until: 2.1.2.10
   replaced_by:
   - PROBE_PT_1
   - PROBE_PT_2
@@ -1947,7 +1894,7 @@
   note: PROBE_PT_[123]_[XY] is now defined using PROBE_PT_[123] with an array { x, y }.
   source: changes
 - name: PROBE_PT_1_Y
-  until: 2.1.2.9
+  until: 2.1.2.10
   replaced_by:
   - PROBE_PT_1
   - PROBE_PT_2
@@ -1955,7 +1902,7 @@
   note: PROBE_PT_[123]_[XY] is now defined using PROBE_PT_[123] with an array { x, y }.
   source: changes
 - name: PROBE_PT_2_X
-  until: 2.1.2.9
+  until: 2.1.2.10
   replaced_by:
   - PROBE_PT_1
   - PROBE_PT_2
@@ -1963,7 +1910,7 @@
   note: PROBE_PT_[123]_[XY] is now defined using PROBE_PT_[123] with an array { x, y }.
   source: changes
 - name: PROBE_PT_2_Y
-  until: 2.1.2.9
+  until: 2.1.2.10
   replaced_by:
   - PROBE_PT_1
   - PROBE_PT_2
@@ -1971,7 +1918,7 @@
   note: PROBE_PT_[123]_[XY] is now defined using PROBE_PT_[123] with an array { x, y }.
   source: changes
 - name: PROBE_PT_3_X
-  until: 2.1.2.9
+  until: 2.1.2.10
   replaced_by:
   - PROBE_PT_1
   - PROBE_PT_2
@@ -1979,7 +1926,7 @@
   note: PROBE_PT_[123]_[XY] is now defined using PROBE_PT_[123] with an array { x, y }.
   source: changes
 - name: PROBE_PT_3_Y
-  until: 2.1.2.9
+  until: 2.1.2.10
   replaced_by:
   - PROBE_PT_1
   - PROBE_PT_2
@@ -2013,7 +1960,7 @@
   note: PRUSA_MMU2_S_MODE is obsolete. Define MMU_MODEL as PRUSA_MMU2S instead.
   source: changes
 - name: PSI_HOMING_OFFSET
-  until: 2.1.2.9
+  until: 2.1.2.10
   replaced_by:
   - SCARA_HOME_THETA
   - SCARA_HOME_PSI
@@ -2103,43 +2050,43 @@
   note: RIGHT_PROBE_BED_POSITION is obsolete. Set a margin with PROBING_MARGIN or PROBING_MARGIN_RIGHT instead.
   source: changes
 - name: ROBOT_LINKAGE_1
-  until: 2.1.1.7
+  until: 2.1.1.8
   replaced_by:
   - TPARA_LINKAGE_1
   note: ROBOT_LINKAGE_[12] is now TPARA_LINKAGE_[12].
   source: changes
 - name: ROBOT_LINKAGE_2
-  until: 2.1.1.7
+  until: 2.1.1.8
   replaced_by:
   - TPARA_LINKAGE_2
   note: ROBOT_LINKAGE_[12] is now TPARA_LINKAGE_[12].
   source: changes
 - name: ROBOT_OFFSET_X
-  until: 2.1.1.7
+  until: 2.1.1.8
   replaced_by:
   - TPARA_OFFSET_X
   note: ROBOT_OFFSET_[XYZ] is now TPARA_OFFSET_[XYZ].
   source: changes
 - name: ROBOT_OFFSET_Y
-  until: 2.1.1.7
+  until: 2.1.1.8
   replaced_by:
   - TPARA_OFFSET_Y
   note: ROBOT_OFFSET_[XYZ] is now TPARA_OFFSET_[XYZ].
   source: changes
 - name: ROBOT_OFFSET_Z
-  until: 2.1.1.7
+  until: 2.1.1.8
   replaced_by:
   - TPARA_OFFSET_Z
   note: ROBOT_OFFSET_[XYZ] is now TPARA_OFFSET_[XYZ].
   source: changes
 - name: ROBOT_SEGMENTS_PER_SECOND
-  until: 2.1.1.7
+  until: 2.1.1.8
   replaced_by:
   - DEFAULT_SEGMENTS_PER_SECOND
   note: (POLAR|DELTA|SCARA|TPARA|ROBOT)_SEGMENTS_PER_SECOND is now DEFAULT_SEGMENTS_PER_SECOND.
   source: changes
 - name: ROTATE_PROGRESS_DISPLAY
-  until: 2.1.1.7
+  until: 2.1.1.8
   replaced_by: []
   note: Removed in 2.1.2.
   source: abm
@@ -2149,20 +2096,20 @@
   note: R_SENSE is now set per axis with [AXIS]_RSENSE.
   source: changes
 - name: SCARA_FEEDRATE_SCALING
-  until: 2.1.2.9
+  until: 2.1.2.10
   replaced_by:
   - FEEDRATE_SCALING
   note: SCARA_FEEDRATE_SCALING is now FEEDRATE_SCALING.
   source: changes
 - name: SCARA_OFFSET_THETA1
-  until: 2.1.2.9
+  until: 2.1.2.10
   replaced_by:
   - SCARA_HOME_THETA
   - SCARA_HOME_PSI
   note: SCARA_OFFSET_THETA1/2 and THETA/PSI_HOMING_OFFSET are obsolete. Set SCARA_HOME_THETA and SCARA_HOME_PSI to the shoulder and elbow angles at the home position, or leave them undefined to home at the Cartesian position.
   source: changes
 - name: SCARA_OFFSET_THETA2
-  until: 2.1.2.9
+  until: 2.1.2.10
   replaced_by:
   - SCARA_HOME_THETA
   - SCARA_HOME_PSI
@@ -2175,7 +2122,7 @@
   note: SCARA_PRINTABLE_RADIUS is now PRINTABLE_RADIUS.
   source: changes
 - name: SCARA_SEGMENTS_PER_SECOND
-  until: 2.1.1.7
+  until: 2.1.1.8
   replaced_by:
   - DEFAULT_SEGMENTS_PER_SECOND
   note: (POLAR|DELTA|SCARA|TPARA|ROBOT)_SEGMENTS_PER_SECOND is now DEFAULT_SEGMENTS_PER_SECOND.
@@ -2237,7 +2184,7 @@
   note: SERVO_ENDSTOP_ANGLES is deprecated. Use Z_SERVO_ANGLES instead.
   source: changes
 - name: SF_ARC_FIX
-  until: 2.1.2.9
+  until: 2.1.2.10
   replaced_by: []
   note: SF_ARC_FIX is obsolete and should be removed.
   source: changes
@@ -2253,7 +2200,7 @@
   note: SHORT_MANUAL_Z_MOVE is now FINE_MANUAL_MOVE, applying to Z on most printers.
   source: changes
 - name: SHOW_SD_PERCENT
-  until: 2.1.1.7
+  until: 2.1.1.8
   replaced_by:
   - SHOW_PROGRESS_PERCENT
   note: SHOW_SD_PERCENT is now SHOW_PROGRESS_PERCENT.
@@ -2369,7 +2316,7 @@
   note: SPINDLE_STOP_ON_DIR_CHANGE is now SPINDLE_CHANGE_DIR_STOP.
   source: changes
 - name: SQUARE_WAVE_STEPPING
-  until: 2.1.2.9
+  until: 2.1.2.10
   replaced_by:
   - EDGE_STEPPING
   note: SQUARE_WAVE_STEPPING is now EDGE_STEPPING.
@@ -2456,7 +2403,7 @@
   note: THERMO_*_PIN is now TEMP_n_CS_PIN, TEMP_n_SCK_PIN, TEMP_n_MOSI_PIN, TEMP_n_MISO_PIN.
   source: changes
 - name: THETA_HOMING_OFFSET
-  until: 2.1.2.9
+  until: 2.1.2.10
   replaced_by:
   - SCARA_HOME_THETA
   - SCARA_HOME_PSI
@@ -2545,13 +2492,13 @@
   note: TOUCH_BUTTONS is now TOUCH_SCREEN.
   source: changes
 - name: TOUCH_IDLE_SLEEP
-  until: 2.1.1.7
+  until: 2.1.1.8
   replaced_by:
   - DISPLAY_SLEEP_MINUTES
   note: TOUCH_IDLE_SLEEP (seconds) is now DISPLAY_SLEEP_MINUTES (minutes).
   source: changes
 - name: TOUCH_IDLE_SLEEP_MINS
-  until: 2.1.2.9
+  until: 2.1.2.10
   replaced_by:
   - DISPLAY_SLEEP_MINUTES
   note: TOUCH_IDLE_SLEEP_MINS is now DISPLAY_SLEEP_MINUTES.
@@ -2702,7 +2649,7 @@
   note: USE_AUTOMATIC_VERSIONING is now CUSTOM_VERSION_FILE.
   source: changes
 - name: USE_M73_REMAINING_TIME
-  until: 2.1.1.7
+  until: 2.1.1.8
   replaced_by:
   - SET_REMAINING_TIME
   note: USE_M73_REMAINING_TIME is now SET_REMAINING_TIME.
@@ -2723,7 +2670,7 @@
   note: Removed in 2.1.2.2.
   source: abm
 - name: X2_USE_ENDSTOP
-  until: 2.1.2.9
+  until: 2.1.2.10
   replaced_by:
   - X2_STOP_PIN
   note: X2_USE_ENDSTOP is obsolete. Instead set X2_STOP_PIN directly. (e.g., 'X2_USE_ENDSTOP _XMAX_' becomes 'X2_STOP_PIN X_MAX_PIN')
@@ -2779,7 +2726,7 @@
   note: '[XYZ]_PROBE_OFFSET_FROM_EXTRUDER is now NOZZLE_TO_PROBE_OFFSET.'
   source: changes
 - name: Y2_USE_ENDSTOP
-  until: 2.1.2.9
+  until: 2.1.2.10
   replaced_by:
   - Y2_STOP_PIN
   note: Y2_USE_ENDSTOP is obsolete. Instead set Y2_STOP_PIN directly. (e.g., 'Y2_USE_ENDSTOP _YMAX_' becomes 'Y2_STOP_PIN Y_MAX_PIN')
@@ -2818,19 +2765,19 @@
   note: '[XYZ]_PROBE_OFFSET_FROM_EXTRUDER is now NOZZLE_TO_PROBE_OFFSET.'
   source: changes
 - name: Z2_USE_ENDSTOP
-  until: 2.1.2.9
+  until: 2.1.2.10
   replaced_by:
   - Z2_STOP_PIN
   note: Z2_USE_ENDSTOP is obsolete. Instead set Z2_STOP_PIN directly. (e.g., 'Z2_USE_ENDSTOP _ZMAX_' becomes 'Z2_STOP_PIN Z_MAX_PIN')
   source: changes
 - name: Z3_USE_ENDSTOP
-  until: 2.1.2.9
+  until: 2.1.2.10
   replaced_by:
   - Z3_STOP_PIN
   note: Z3_USE_ENDSTOP is obsolete. Instead set Z3_STOP_PIN directly. (e.g., 'Z3_USE_ENDSTOP _ZMAX_' becomes 'Z3_STOP_PIN Z_MAX_PIN')
   source: changes
 - name: Z4_USE_ENDSTOP
-  until: 2.1.2.9
+  until: 2.1.2.10
   replaced_by:
   - Z4_STOP_PIN
   note: Z4_USE_ENDSTOP is obsolete. Instead set Z4_STOP_PIN directly. (e.g., 'Z4_USE_ENDSTOP _ZMAX_' becomes 'Z4_STOP_PIN Z_MAX_PIN')
@@ -2871,7 +2818,7 @@
   note: '[XYZ]_HOME_BUMP_MM is now HOMING_BUMP_MM.'
   source: changes
 - name: Z_HOMING_HEIGHT
-  until: 2.1.2.9
+  until: 2.1.2.10
   replaced_by:
   - Z_CLEARANCE_FOR_HOMING
   note: Z_HOMING_HEIGHT is now Z_CLEARANCE_FOR_HOMING.
@@ -2904,7 +2851,7 @@
   note: Z_PROBE_DEPLOY_HEIGHT and Z_PROBE_TRAVEL_HEIGHT are now Z_CLEARANCE_DEPLOY_PROBE and Z_CLEARANCE_BETWEEN_PROBES.
   source: changes
 - name: Z_PROBE_END_SCRIPT
-  until: 2.1.2.9
+  until: 2.1.2.10
   replaced_by:
   - EVENT_GCODE_AFTER_G29
   note: Z_PROBE_END_SCRIPT is now EVENT_GCODE_AFTER_G29.
@@ -2916,13 +2863,13 @@
   note: '[XYZ]_PROBE_OFFSET_FROM_EXTRUDER is now NOZZLE_TO_PROBE_OFFSET.'
   source: changes
 - name: Z_PROBE_OFFSET_RANGE_MAX
-  until: 2.1.2.9
+  until: 2.1.2.10
   replaced_by:
   - PROBE_OFFSET_ZMAX
   note: Z_PROBE_OFFSET_RANGE_(MIN|MAX) is now PROBE_OFFSET_Z(MIN|MAX).
   source: changes
 - name: Z_PROBE_OFFSET_RANGE_MIN
-  until: 2.1.2.9
+  until: 2.1.2.10
   replaced_by:
   - PROBE_OFFSET_ZMIN
   note: Z_PROBE_OFFSET_RANGE_(MIN|MAX) is now PROBE_OFFSET_Z(MIN|MAX).

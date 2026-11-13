@@ -30,6 +30,7 @@ class PlainDumper(yaml.SafeDumper):
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / '_data'
 NAME = re.compile(r'\b[A-Z][A-Z0-9_]{3,}\b')
+WORD = re.compile(r'\b[A-Za-z_][A-Za-z0-9_]{3,}\b')  # option names, including legacy mixed-case ones such as DEFAULT_Kp
 SKIP = {'ENABLED', 'DISABLED', 'ANY', 'ALL', 'NONE', 'EITHER', 'BOTH', 'GITHUB_ACTION', 'HIGH', 'LOW', 'TRUE', 'FALSE',
         'MARLIN', 'PLEASE', 'NOTE', 'HINT', 'SEE', 'USE', 'AND', 'FOR', 'WITH', 'THE', 'XYZ', 'XYZE'}
 
@@ -49,6 +50,13 @@ def release_tags(fw):
     tags = set(re.findall(r'refs/tags/(\S+?)(?:\^\{\})?$', remote, re.M))
     tags = [t for t in tags if re.fullmatch(r'(1\.1\.\d+(\.\d+)?|2\.\d+\.\d+(\.\d+)*)', t)]
     return sorted(tags, key=vkey)
+
+
+def tag_defs(fw, tag):
+    """Names #define'd in the option headers at one firmware tag."""
+    text = ''.join(git(fw, 'show', f'{tag}:Marlin/{f}')
+                   for f in ('Configuration.h', 'Configuration_adv.h', 'boards.h', 'src/core/boards.h'))
+    return set(re.findall(r'^\s*(?://\s*)?#define\s+(\w+)', text, re.M))
 
 
 def expand(pattern):
@@ -141,6 +149,32 @@ def main():
             continue
         entries[old] = {'name': old, 'replaced_by': [new] if new and new in current else [], 'note': None,
                         'source': 'abm', 'abm_from': frm, 'abm_new': new}
+
+    # A name that only appears in 2.1.3 pre-release tags was a dev-cycle rename that never shipped, so no
+    # release's configuration could contain it and it is not an obsolete option. Drop it.
+    dev_tags = git(fw, 'tag', '--list', '2.1.3-b*').split()
+    if dev_tags:
+        # "Released" means the name is mentioned in a release's option headers (a #define, a comment or an
+        # #if), since some options only ever appear in comments or conditions.
+        released = set()
+        for t in release_tags(fw):
+            text = ''.join(git(fw, 'show', f'{t}:Marlin/{f}')
+                           for f in ('Configuration.h', 'Configuration_adv.h', 'boards.h', 'src/core/boards.h'))
+            released |= set(WORD.findall(text))
+        dev_only = set()
+        for t in dev_tags:
+            dev_only |= tag_defs(fw, t)
+        # Changes.h keeps a check for every option it has ever removed, and a pre-1.1 removal can look just like a
+        # dev-cycle one there, so Changes.h-only names are reported for review rather than dropped.
+        dev_changes = set(WORD.findall(''.join(git(fw, 'show', f'{t}:Marlin/src/inc/Changes.h') for t in dev_tags)))
+        release_changes = set()
+        for t in release_tags(fw):
+            release_changes |= set(WORD.findall(git(fw, 'show', f'{t}:Marlin/src/inc/Changes.h')))
+        review = sorted(n for n in entries if n not in released and n not in dev_only and n in dev_changes - release_changes)
+        if review:
+            print('review (dev-cycle candidates, kept): ' + ' '.join(review), file=sys.stderr)
+        for n in [n for n in entries if n not in released and (n in dev_only or (n.startswith(('FTM_', 'FT_')) and n not in release_changes))]:
+            del entries[n]
 
     out_path = DATA / 'obsolete.yml'
     cached = {}

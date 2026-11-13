@@ -15,13 +15,11 @@ ADVANCED_PAUSE_PURGE_LENGTH:
 - name: FILAMENT_CHANGE_EXTRUDE_LENGTH
   until: 1.1.1
 ADVANCE_K:
-- name: FTM_LINEAR_ADV_DEFAULT_K
-  until: null
 - name: LIN_ADVANCE_K
-  until: 2.1.1.7
+  until: 2.1.1.8
 ADVANCE_K_EXTRA:
 - name: EXTRA_LIN_ADVANCE_K
-  until: 2.1.1.7
+  until: 2.1.1.8
 ANYCUBIC_LCD_I3MEGA:
 - name: ANYCUBIC_TFT_MODEL
   until: 2.0.6
@@ -48,13 +46,13 @@ AUTO_BED_LEVELING_LINEAR:
   until: null
 BABYSTEP_GFX_OVERLAY:
 - name: BABYSTEP_ZPROBE_GFX_OVERLAY
-  until: 2.1.2.9
+  until: 2.1.2.10
 BABYSTEP_MULTIPLICATOR_Z:
 - name: BABYSTEP_MULTIPLICATOR
   until: 1.1.9.2
 BED_LIMIT_HYSTERESIS:
 - name: BED_HYSTERESIS
-  until: 2.1.2.9
+  until: 2.1.2.10
 BED_TRAMMING_INCLUDE_CENTER:
 - name: LEVEL_CENTER_TOO
   until: 2.0.9.3
@@ -81,7 +79,7 @@ CHAMBER_AUTO_FAN_PIN:
   until: null
 CHAMBER_LIMIT_HYSTERESIS:
 - name: CHAMBER_HYSTERESIS
-  until: 2.1.2.9
+  until: 2.1.2.10
 CHDK_PIN:
 - name: CHDK
   until: 1.1.9.2
@@ -99,7 +97,7 @@ CONTROLLER_FAN_USE_Z_ONLY:
   until: 2.0.5.1
 CTC_A10S_A13:
 - name: ANET_FULL_GRAPHICS_LCD_ALT_WIRING
-  until: 2.1.2.9
+  until: 2.1.2.10
 CUSTOM_MACHINE_NAME:
 - name: CUSTOM_MENDEL_NAME
   until: null
@@ -132,7 +130,7 @@ DEACTIVATE_SERVOS_AFTER_MOVE:
   until: null
 DEBUG_TPARA_KINEMATICS:
 - name: DEBUG_ROBOT_KINEMATICS
-  until: 2.1.1.7
+  until: 2.1.1.8
 DEFAULT_BED_KD:
 - name: DEFAULT_bedKd
   until: 2.1.2.5
@@ -225,13 +223,13 @@ DEFAULT_KP_LIST:
   until: 2.1.2.5
 DEFAULT_SEGMENTS_PER_SECOND:
 - name: DELTA_SEGMENTS_PER_SECOND
-  until: 2.1.1.7
+  until: 2.1.1.8
 - name: POLAR_SEGMENTS_PER_SECOND
-  until: 2.1.1.7
+  until: 2.1.1.8
 - name: ROBOT_SEGMENTS_PER_SECOND
-  until: 2.1.1.7
+  until: 2.1.1.8
 - name: SCARA_SEGMENTS_PER_SECOND
-  until: 2.1.1.7
+  until: 2.1.1.8
 - name: TPARA_SEGMENTS_PER_SECOND
   until: null
 DEFAULT_STEPPER_TIMEOUT_SEC:
@@ -247,15 +245,15 @@ DGUS_LCD_UI:
 - name: DGUS_LCD
   until: 2.0.1.2
 - name: DGUS_LCD_UI_FYSETC
-  until: 2.1.2.9
+  until: 2.1.2.10
 - name: DGUS_LCD_UI_HIPRECY
-  until: 2.1.2.9
+  until: 2.1.2.10
 - name: DGUS_LCD_UI_MKS
-  until: 2.1.2.9
+  until: 2.1.2.10
 - name: DGUS_LCD_UI_ORIGIN
-  until: 2.1.2.9
+  until: 2.1.2.10
 - name: DGUS_LCD_UI_RELOADED
-  until: 2.1.2.9
+  until: 2.1.2.10
 DGUS_UI_MOVE_DIS_OPTION:
 - name: DUGS_UI_MOVE_DIS_OPTION
   until: 2.0.4.6
@@ -267,9 +265,9 @@ DISABLE_OTHER_EXTRUDERS:
   until: 2.1.2.1
 DISPLAY_SLEEP_MINUTES:
 - name: TOUCH_IDLE_SLEEP
-  until: 2.1.1.7
+  until: 2.1.1.8
 - name: TOUCH_IDLE_SLEEP_MINS
-  until: 2.1.2.9
+  until: 2.1.2.10
 DWIN_LCD_PROUI:
 - name: DWIN_CREALITY_LCD_ENHANCED
   until: 2.0.9.3
@@ -287,7 +285,7 @@ E3_AUTO_FAN_PIN:
   until: null
 EDGE_STEPPING:
 - name: SQUARE_WAVE_STEPPING
-  until: 2.1.2.9
+  until: 2.1.2.10
 ENDSTOPS_ALWAYS_ON_DEFAULT:
 - name: ENDSTOPS_ONLY_FOR_HOMING
   until: null
@@ -296,13 +294,13 @@ ENDSTOP_NOISE_THRESHOLD:
   until: 1.1.9.2
 EVENT_GCODE_AFTER_G29:
 - name: Z_PROBE_END_SCRIPT
-  until: 2.1.2.9
+  until: 2.1.2.10
 EVENT_GCODE_SD_ABORT:
 - name: EVENT_GCODE_SD_STOP
   until: 2.0.6
 FEEDRATE_SCALING:
 - name: SCARA_FEEDRATE_SCALING
-  until: 2.1.2.9
+  until: 2.1.2.10
 FILAMENT_CHANGE_ALERT_BEEPS:
 - name: FILAMENT_CHANGE_NUMBER_OF_ALERT_BEEPS
   until: 1.1.8
@@ -332,12 +330,6 @@ FIL_RUNOUT_STATE:
 FINE_MANUAL_MOVE:
 - name: SHORT_MANUAL_Z_MOVE
   until: 2.0.7.5
-FTM_SHAPING_DEFAULT_FREQ_X:
-- name: FTM_SHAPING_DEFAULT_X_FREQ
-  until: null
-FTM_SHAPING_DEFAULT_FREQ_Y:
-- name: FTM_SHAPING_DEFAULT_Y_FREQ
-  until: null
 G26_MESH_VALIDATION:
 - name: UBL_G26_MESH_VALIDATION
   until: 1.1.6
@@ -408,14 +400,14 @@ LASER_FEATURE:
   until: 1.1.9.2
 LASER_POWER_TRAP:
 - name: LASER_POWER_INLINE_TRAPEZOID
-  until: 2.1.0.5
+  until: 2.1.0.6
 - name: LASER_POWER_INLINE_TRAPEZOID_CONT
-  until: 2.1.0.5
+  until: 2.1.0.6
 - name: LASER_POWER_INLINE_TRAPEZOID_PER
   until: null
 LCD_BACKLIGHT_TIMEOUT_MINS:
 - name: LCD_BACKLIGHT_TIMEOUT
-  until: 2.1.1.7
+  until: 2.1.1.8
 LCD_BAUDRATE:
 - name: DGUS_BAUDRATE
   until: 2.0.6.3
@@ -527,7 +519,7 @@ MINIMUM_STEPPER_PRE_DIR_DELAY:
   until: 1.1.9.2
 MINIMUM_STEPPER_PULSE_NS:
 - name: MINIMUM_STEPPER_PULSE
-  until: 2.1.2.9
+  until: 2.1.2.10
 MIN_ARC_SEGMENT_MM:
 - name: MM_PER_ARC_SEGMENT
   until: 2.0.9.1
@@ -545,10 +537,10 @@ MKS_LCD12864B:
   until: 2.0.8
 MMU2_EXTRUDER_SENSOR:
 - name: MMU_EXTRUDER_SENSOR
-  until: 2.1.2.9
+  until: 2.1.2.10
 MMU2_LOADING_ATTEMPTS_NR:
 - name: MMU_LOADING_ATTEMPTS_NR
-  until: 2.1.2.9
+  until: 2.1.2.10
 MMU3_CHECK_FILAMENT_PRESENCE_EXTRUSION_LENGTH:
 - name: MMU2_CHECK_FILAMENT_PRESENCE_EXTRUSION_LENGTH
   until: null
@@ -578,10 +570,10 @@ MMU3_VERIFY_LOAD_TO_NOZZLE_FEED_RATE:
   until: null
 MMU_DEBUG:
 - name: MMU2_DEBUG
-  until: 2.1.2.9
+  until: 2.1.2.10
 MMU_MENUS:
 - name: MMU2_MENUS
-  until: 2.1.2.9
+  until: 2.1.2.10
 MMU_MODEL:
 - name: MK2_MULTIPLEXER
   until: 2.0.7.5
@@ -597,12 +589,12 @@ MMU_MODEL:
   until: null
 MMU_RST_PIN:
 - name: MMU2_RST_PIN
-  until: 2.1.2.9
+  until: 2.1.2.10
 MMU_SERIAL_PORT:
 - name: INTERNAL_SERIAL_PORT
   until: 2.0.6.3
 - name: MMU2_SERIAL_PORT
-  until: 2.1.2.9
+  until: 2.1.2.10
 MONITOR_DRIVER_STATUS:
 - name: AUTOMATIC_CURRENT_CONTROL
   until: 1.1.6
@@ -655,7 +647,7 @@ NOZZLE_TO_PROBE_OFFSET:
   until: 1.1.9.2
 NO_BACK_MENU_ITEM:
 - name: DISABLE_ENCODER
-  until: 2.1.2.9
+  until: 2.1.2.10
 NO_SD_HOST_DRIVE:
 - name: USB_SD_DISABLED
   until: null
@@ -714,13 +706,13 @@ PREHEAT_2_TEMP_HOTEND:
   until: null
 PREHEAT_TIME_HOTEND_MS:
 - name: MILLISECONDS_PREHEAT_TIME
-  until: 2.1.2.9
+  until: 2.1.2.10
 PREVENT_COLD_EXTRUSION:
 - name: PREVENT_DANGEROUS_EXTRUDE
   until: null
 PRINTABLE_RADIUS:
 - name: DELTA_PRINTABLE_RADIUS
-  until: 2.1.2.9
+  until: 2.1.2.10
 - name: SCARA_PRINTABLE_RADIUS
   until: 1.1.8
 PROBE_OFFSET_WIZARD_START_Z:
@@ -728,49 +720,49 @@ PROBE_OFFSET_WIZARD_START_Z:
   until: 2.0.7.5
 PROBE_OFFSET_ZMAX:
 - name: Z_PROBE_OFFSET_RANGE_MAX
-  until: 2.1.2.9
+  until: 2.1.2.10
 PROBE_OFFSET_ZMIN:
 - name: Z_PROBE_OFFSET_RANGE_MIN
-  until: 2.1.2.9
+  until: 2.1.2.10
 PROBE_PT_1:
 - name: PROBE_PT_1_X
-  until: 2.1.2.9
+  until: 2.1.2.10
 - name: PROBE_PT_1_Y
-  until: 2.1.2.9
+  until: 2.1.2.10
 - name: PROBE_PT_2_X
-  until: 2.1.2.9
+  until: 2.1.2.10
 - name: PROBE_PT_2_Y
-  until: 2.1.2.9
+  until: 2.1.2.10
 - name: PROBE_PT_3_X
-  until: 2.1.2.9
+  until: 2.1.2.10
 - name: PROBE_PT_3_Y
-  until: 2.1.2.9
+  until: 2.1.2.10
 PROBE_PT_2:
 - name: PROBE_PT_1_X
-  until: 2.1.2.9
+  until: 2.1.2.10
 - name: PROBE_PT_1_Y
-  until: 2.1.2.9
+  until: 2.1.2.10
 - name: PROBE_PT_2_X
-  until: 2.1.2.9
+  until: 2.1.2.10
 - name: PROBE_PT_2_Y
-  until: 2.1.2.9
+  until: 2.1.2.10
 - name: PROBE_PT_3_X
-  until: 2.1.2.9
+  until: 2.1.2.10
 - name: PROBE_PT_3_Y
-  until: 2.1.2.9
+  until: 2.1.2.10
 PROBE_PT_3:
 - name: PROBE_PT_1_X
-  until: 2.1.2.9
+  until: 2.1.2.10
 - name: PROBE_PT_1_Y
-  until: 2.1.2.9
+  until: 2.1.2.10
 - name: PROBE_PT_2_X
-  until: 2.1.2.9
+  until: 2.1.2.10
 - name: PROBE_PT_2_Y
-  until: 2.1.2.9
+  until: 2.1.2.10
 - name: PROBE_PT_3_X
-  until: 2.1.2.9
+  until: 2.1.2.10
 - name: PROBE_PT_3_Y
-  until: 2.1.2.9
+  until: 2.1.2.10
 PROBING_HEATERS_OFF:
 - name: BLTOUCH_HEATERS_OFF
   until: 1.1.0
@@ -864,27 +856,27 @@ RETRACT_ZRAISE:
   until: 1.1.9.2
 SCARA:
 - name: MORGAN_SCARA
-  until: 2.1.2.9
+  until: 2.1.2.10
 - name: MP_SCARA
-  until: 2.1.2.9
+  until: 2.1.2.10
 SCARA_HOME_PSI:
 - name: PSI_HOMING_OFFSET
-  until: 2.1.2.9
+  until: 2.1.2.10
 - name: SCARA_OFFSET_THETA1
-  until: 2.1.2.9
+  until: 2.1.2.10
 - name: SCARA_OFFSET_THETA2
-  until: 2.1.2.9
+  until: 2.1.2.10
 - name: THETA_HOMING_OFFSET
-  until: 2.1.2.9
+  until: 2.1.2.10
 SCARA_HOME_THETA:
 - name: PSI_HOMING_OFFSET
-  until: 2.1.2.9
+  until: 2.1.2.10
 - name: SCARA_OFFSET_THETA1
-  until: 2.1.2.9
+  until: 2.1.2.10
 - name: SCARA_OFFSET_THETA2
-  until: 2.1.2.9
+  until: 2.1.2.10
 - name: THETA_HOMING_OFFSET
-  until: 2.1.2.9
+  until: 2.1.2.10
 SDCARD_CONNECTION:
 - name: LPC_SD_CUSTOM_CABLE
   until: null
@@ -919,15 +911,15 @@ SERVO_DELAY:
   until: null
 SET_PROGRESS_MANUALLY:
 - name: LCD_SET_PROGRESS_MANUALLY
-  until: 2.1.1.7
+  until: 2.1.1.8
 SET_REMAINING_TIME:
 - name: USE_M73_REMAINING_TIME
-  until: 2.1.1.7
+  until: 2.1.1.8
 SHOW_PROGRESS_PERCENT:
 - name: DOGM_SD_PERCENT
   until: 2.0.9.1
 - name: SHOW_SD_PERCENT
-  until: 2.1.1.7
+  until: 2.1.1.8
 SPINDLE_CHANGE_DIR:
 - name: SPINDLE_DIR_CHANGE
   until: 1.1.9.2
@@ -965,7 +957,7 @@ TEMP_SENSOR_REDUNDANT_MAX_DIFF:
   until: 2.0.8.7
 TEMP_TUNING_MAINTAIN_FAN:
 - name: NO_FAN_SLOWING_IN_PID_TUNING
-  until: 2.1.2.9
+  until: 2.1.2.10
 TFT_ROTATION:
 - name: GRAPHICAL_TFT_ROTATE_180
   until: 2.0.7.1
@@ -1024,19 +1016,19 @@ TOUCH_UI_FTDI_EVE:
   until: null
 TPARA_LINKAGE_1:
 - name: ROBOT_LINKAGE_1
-  until: 2.1.1.7
+  until: 2.1.1.8
 TPARA_LINKAGE_2:
 - name: ROBOT_LINKAGE_2
-  until: 2.1.1.7
+  until: 2.1.1.8
 TPARA_OFFSET_X:
 - name: ROBOT_OFFSET_X
-  until: 2.1.1.7
+  until: 2.1.1.8
 TPARA_OFFSET_Y:
 - name: ROBOT_OFFSET_Y
-  until: 2.1.1.7
+  until: 2.1.1.8
 TPARA_OFFSET_Z:
 - name: ROBOT_OFFSET_Z
-  until: 2.1.1.7
+  until: 2.1.1.8
 USE_CONTROLLER_FAN:
 - name: CONTROLLERFAN_PIN
   until: null
@@ -1045,7 +1037,7 @@ X2_ENDSTOP_ADJUSTMENT:
   until: 2.0.1.2
 X2_STOP_PIN:
 - name: X2_USE_ENDSTOP
-  until: 2.1.2.9
+  until: 2.1.2.10
 XY_PROBE_FEEDRATE:
 - name: XY_PROBE_SPEED
   until: 2.0.7.5
@@ -1056,7 +1048,7 @@ Y2_ENDSTOP_ADJUSTMENT:
   until: 2.0.1.2
 Y2_STOP_PIN:
 - name: Y2_USE_ENDSTOP
-  until: 2.1.2.9
+  until: 2.1.2.10
 Z2_ENDSTOP_ADJUSTMENT:
 - name: Z_DUAL_ENDSTOPS_ADJUSTMENT
   until: 2.0.1.2
@@ -1066,7 +1058,7 @@ Z2_ENDSTOP_ADJUSTMENT:
   until: 2.0.1.2
 Z2_STOP_PIN:
 - name: Z2_USE_ENDSTOP
-  until: 2.1.2.9
+  until: 2.1.2.10
 Z3_ENDSTOP_ADJUSTMENT:
 - name: Z_QUAD_ENDSTOPS_ADJUSTMENT3
   until: null
@@ -1074,13 +1066,13 @@ Z3_ENDSTOP_ADJUSTMENT:
   until: 2.0.1.2
 Z3_STOP_PIN:
 - name: Z3_USE_ENDSTOP
-  until: 2.1.2.9
+  until: 2.1.2.10
 Z4_ENDSTOP_ADJUSTMENT:
 - name: Z_QUAD_ENDSTOPS_ADJUSTMENT4
   until: null
 Z4_STOP_PIN:
 - name: Z4_USE_ENDSTOP
-  until: 2.1.2.9
+  until: 2.1.2.10
 ZONESTAR_LCD:
 - name: ANET_KEYPAD_LCD
   until: 1.1.6
@@ -1115,7 +1107,7 @@ Z_CLEARANCE_FOR_HOMING:
 - name: MIN_Z_HEIGHT_FOR_HOMING
   until: null
 - name: Z_HOMING_HEIGHT
-  until: 2.1.2.9
+  until: 2.1.2.10
 - name: Z_RAISE_BEFORE_HOMING
   until: null
 Z_IDLE_HEIGHT:

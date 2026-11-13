@@ -1,22 +1,22 @@
 downloads:
   -
-    version: 2.1.2.9
+    version: 2.1.2.10
     description: Current Marlin Release
     tools: Supports AVR and ARM<br/>Arduino and PlatformIO
-    file: 2.1.2.9.zip
-    config: release-2.1.2.9
+    file: 2.1.2.10.zip
+    config: latest-2.1.2.x
   -
-    version: 2.0.9.11
+    version: 2.0.9.12
     description: Marlin 2.0 LTS
     tools: Supports AVR and ARM<br/>Arduino and PlatformIO
-    file: 2.0.9.11.zip
-    config: release-2.0.9.11
+    file: 2.0.9.12.zip
+    config: latest-2.0.9
   -
     version: 1.1.9.1
     description: Marlin 1.1 LTS
     tools: Supports AVR<br/>Arduino and PlatformIO
     file: 1.1.9.1.zip
-    config: release-1.1.9
+    config: latest-1.1.x
   -
     version: 1.0.2-3
     description: Marlin 1.0 LTS
@@ -53,30 +53,30 @@ nightlies:
     extra: ⚠️ Work in progress - Updates for 1.1.x
     tools: Supports Arduino 1.6.8 and up
     file: bugfix-1.1.x.zip
-    config: release-1.1.9
+    config: latest-1.1.x
 
 patched:
   -
     version: 2.1.x
-    description: Marlin 2.1.2.9 with bug fixes
+    description: Marlin 2.1.2.x with bug fixes
     extra: Latest 2.1.x with Hotfixes
     tools: Supports AVR and ARM<br/>Arduino and PlatformIO
     file: 2.1.x.zip
-    config: release-2.1.2.9
+    config: latest-2.1.2.x
   -
     version: 2.0.x
     description: Marlin 2.0 with bug fixes
     extra: Latest 2.0.x with Hotfixes
     tools: Supports AVR and ARM<br/>Arduino and PlatformIO
     file: 2.0.x.zip
-    config: release-2.0.9.11
+    config: latest-2.0.9
   -
     version: 1.1.x
     description: Marlin 1.1 with bug fixes
     extra: Latest 1.1.x with Hotfixes
     tools: Supports Arduino 1.6.8 and up
     file: 1.1.x.zip
-    config: release-1.1.9
+    config: latest-1.1.x
 
 # External tools (update here when a tool moves)
 tools:
