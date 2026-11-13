@@ -547,7 +547,7 @@ img.printer-photo { max-width: 40%; }
     // Bare pre blocks (non-highlighted) — inherit dark bg without this
     .main-content pre {
         background-color: #004;
-        color: #27262b;
+        color: white;
     }
 
     // Code blocks (syntax highlighted) — lighten for light mode
