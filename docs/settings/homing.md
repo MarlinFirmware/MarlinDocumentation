@@ -217,11 +217,11 @@ settings:
   long: |-
     After Z homes, probe the bed again at the same XY position and correct Z by the measured error. The probing uses the same procedure as bed leveling, so `MULTIPLE_PROBING`, `EXTRA_PROBING`, and `PROBING_HEATERS_OFF` all apply. This helps with probes that are intermittently inaccurate and can't be improved with a slower re-bump (`HOMING_BUMP_DIVISOR`). Enable `Z_SAFE_HOMING` so the XY position is a known-good point, and consider setting the Z value of `HOMING_BUMP_MM` to 0.
 
-    Use [`G28 P`](/docs/gcode/G028.html) to do this for one homing, or `G28 P0` to skip it when this option is enabled.
+    This option enables the [`G28 P`](/docs/gcode/G028.html) parameter. Nothing changes unless `P` is included in the `G28` command.
   comment: |-
     Precise Z Homing
 
-    After Z homes, probe at the same XY with the bed probe and correct Z by the measured error. Uses the same settings as bed leveling, including `MULTIPLE_PROBING`, `EXTRA_PROBING`, and `PROBING_HEATERS_OFF`. Useful for probes that are intermittently inaccurate. Consider `Z_SAFE_HOMING`, and setting the Z value of `HOMING_BUMP_MM` to 0. Requires a bed probe. `G28 P` enables this for one homing; `G28 P0` disables it.
+    Enables the `G28 P` parameter. After Z homes, `G28 P` probes at the same XY with the bed probe and corrects Z by the measured error. Uses the same settings as bed leveling, including `MULTIPLE_PROBING`, `EXTRA_PROBING`, and `PROBING_HEATERS_OFF`. Useful for probes that are intermittently inaccurate. Consider `Z_SAFE_HOMING`, and setting the Z value of `HOMING_BUMP_MM` to 0. Requires a bed probe.
 - name: HOMING_FEEDRATE_MM_M
   file: Configuration.h
   type: array
