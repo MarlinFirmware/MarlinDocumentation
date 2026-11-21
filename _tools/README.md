@@ -8,6 +8,7 @@ Run everything from the site root. Rebuild with `bundle exec jekyll build`, then
 | gen_obsolete.py | Marlin/src/inc/Changes.h + release tags | _data/obsolete.yml, _data/obsolete_by_new.yml | No. Rendered by docs/appendix/obsolete_options.md and the settings layout |
 | mine_config_guide.py | old Configuration guide | settings `long:` text | n/a |
 | gen_gcode_index.py | docs/gcode/*.md | G-code index | No |
+| bump_releases.py | Marlin and Configurations tags (`git ls-remote`) | _data/marlin.yml `downloads:` versions | Descriptions yes; versions no. Run after each release, see below |
 | gen_printers.py | Configurations/config/examples | _data/printers.yml, docs/appendix/printers/<vendor>.md (only when missing) | printers.yml: no. Vendor pages: yes |
 | migrate_features.py | old site | docs/features | One-shot migration |
 | check_links.py | _site | report | n/a |
@@ -35,6 +36,15 @@ The Auto Build Marlin VS Code extension downloads `https://marlinfw.org/feeds/fe
 - `content` is the `indexify` word list. No backticks or `${` in any text, because ABM injects the feed into a JavaScript template literal. `plain_excerpt` (in `_plugins/marlinfw_filter.rb`) cleans excerpts.
 - `python3 _tools/check_feed.py` checks all of this after a build, including that every link and anchor exists. CI runs it.
 - Changing the shape needs a matching change in the extension. ABM headings for new classes live in `section_head` in `docsview.js`.
+
+## Download page after a release (bump_releases.py)
+
+    python3 _tools/bump_releases.py --check   # report only; exit 1 if anything is out of date
+    python3 _tools/bump_releases.py           # update _data/marlin.yml
+
+- Each `downloads:` entry with a release version (2.1.2.10, 2.0.9.12, 1.1.9.1) moves to the newest Marlin tag of the same series, with its `file:`. Betas, nightlies, patched branches and descriptions are not touched; add or remove whole entries by hand.
+- It also reports stale tags: a `config:` `latest-*` tag in Configurations that isn't at the new release, and any Marlin `latest-*` tag that isn't the newest tag of its series. Move those tags before publishing (see the LTS release notes in the Marlin repo maintainers' guide).
+- Commit as `🔖 Download: Marlin <versions>`. If the new versions changed Configuration files, also re-run `gen_obsolete.py --rescan`.
 
 ## Printer directory (gen_printers.py)
 
