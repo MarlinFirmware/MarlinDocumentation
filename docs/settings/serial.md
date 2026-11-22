@@ -14,7 +14,7 @@ settings:
     This setting allows you to choose which serial port on your board will be used for communication with the host computer.
     Serial port -1 is typically the USB emulated serial port, if available. Note that the first serial port (-1 or 0) will always be used by the Arduino bootloader.
   comment: |-
-    Select the serial port on the board to use for communication with the host. This allows the connection of wireless adapters (for instance) to non-default port pins. Serial port -1 is the USB emulated serial port, if available.
+    Select the serial port on the board to use for communication with the host. This allows the connection of wireless adapters (for instance) to non-default port pins. Serial port -1 is the USB emulated serial port, if available. Serial port -2 is the built-in Bluetooth (Classic SPP) on ESP32, not together with WiFi.
 
     Note: The first serial port (-1 or 0) will always be used by the Arduino bootloader.
 - name: BAUDRATE
@@ -54,7 +54,7 @@ settings:
 
     {: .note }
     > Serial port -1 is the USB emulated serial port, if available.
-  comment: Select a secondary serial port on the board to use for communication with the host. Currently Ethernet (-2) is only supported on Teensy 4.1 boards.
+  comment: Select a secondary serial port on the board to use for communication with the host. -2 is Ethernet on Teensy 4.1 boards, and the built-in Bluetooth (Classic SPP) on ESP32. `ESP3D_WIFISUPPORT` requires -1, which carries G-code from ESP3D to Marlin.
   members:
   - id: '2'
     name: SERIAL_PORT_2
@@ -111,6 +111,23 @@ settings:
   brief: Buffer size for RS485 bus.
   long: |
     The size of the CAN bus buffer. This should be set to the maximum number of messages that can be sent in a single CAN frame.
+- name: CAN_BUS
+  file: Configuration.h
+  type: switch
+  disabled: true
+  comment: |-
+    CAN bus
+
+    Use the board's CAN port (CAN_RX_PIN / CAN_TX_PIN) to talk to CAN devices, such as toolhead boards running Klipper. Classic CAN 2.0 frames only. Requires an STM32 with bxCAN (F1/F2/F4/F7) or FDCAN (G0/G4/H7), and a CAN transceiver.
+
+    - `M960` reports the bus state and lists Klipper / Katapult nodes found on the bus.
+- name: CAN_BITRATE
+  file: Configuration.h
+  type: int
+  default: 1000000
+  units: bits/s
+  requires: CAN_BUS
+  comment: (bits/s) All nodes must agree. Klipper's default is 1000000.
 - name: BLUETOOTH
   file: Configuration.h
   type: switch

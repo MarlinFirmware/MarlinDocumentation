@@ -113,6 +113,7 @@ settings:
   - value: BOARD_XTLW_MFF_V1
   - value: BOARD_XTLW_MFF_V2
   - value: BOARD_RUMBA_E3D
+  - value: BOARD_RAMPS_PANCAKEBOT
   - value: BOARD_RAMBO
   - value: BOARD_MINIRAMBO
   - value: BOARD_MINIRAMBO_10A

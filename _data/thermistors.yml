@@ -106,7 +106,7 @@
 - value: '-3'
   label: MAX31855 with Thermocouple, -200°C to +700°C (only for sensors 0-2 and bed)
 - value: '-2'
-  label: MAX6675 with Thermocouple, 0°C to +700°C (only for sensors 0-2 and bed)
+  label: MAX6675  with Thermocouple, 0°C to +700°C    (only for sensors 0-2 and bed)
 - value: '-18'
   label: ADS1118 with Thermocouple, e.g., Mightyboard rev G/H
 - value: '-4'

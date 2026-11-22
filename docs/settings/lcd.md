@@ -320,6 +320,11 @@ settings:
     MaKr3d Makr-Panel with graphic controller and SD support.
 
     - <https://reprap.org/wiki/MaKrPanel>
+- name: PANCAKEBOT_PANEL
+  file: Configuration.h
+  type: switch
+  disabled: true
+  comment: PancakeBot Panel with a 128x32 ST7565 graphic display and 4 push buttons. Up / Down / Select / Back. Use with the PancakeBot board and PANCAKEBOT.
 - name: ELB_FULL_GRAPHIC_CONTROLLER
   file: Configuration.h
   type: switch
@@ -654,6 +659,11 @@ settings:
     - Download https://www.crealitycloud.com/downloads/firmware/sermoon-series/sermoon-d1
     - Copy the DWIN_SET folder from the firmware package to the SD card.
 
+    SERMOON_V1 (T5L)
+
+    - Download https://www.crealitycloud.com/downloads/firmware/sermoon-series/sermoon-v1
+    - Copy the DWIN_SET folder from the firmware package to the SD card.
+
     Flash display with DGUS Displays for Marlin:
 
     - Format the SD card to FAT32 with an allocation size of 4kb.
@@ -735,6 +745,26 @@ settings:
   disabled: true
   brief: Sovol SV-06 Resistive Touch Screen.
   comment: Sovol SV-06 Resistive Touch Screen
+- name: CREALITY_RTS
+  file: Configuration.h
+  type: switch
+  disabled: true
+  comment: |-
+    Creality Resistive Touch Screen
+
+    As found in the Creality CR-6 S1
+- name: CREALITY_WIFI
+  file: Configuration.h
+  type: switch
+  disabled: true
+  requires: CREALITY_RTS
+  comment: Creality WiFi module
+- name: MENU_RESET_WIFI
+  file: Configuration.h
+  type: switch
+  disabled: true
+  requires: CREALITY_RTS
+  comment: The controller has a menu to reset WiFi with RESET_WIFI_PIN
 - name: NEXTION_TFT
   file: Configuration.h
   type: switch
@@ -749,6 +779,16 @@ settings:
     Elegoo Neptune 3 Pro / Plus / Max TJC Touch Screen
 
     Requires a 6x6 (Pro), 7x7 (Plus), or 7x9 (Max) bilinear leveling grid.
+- name: PANELDUE
+  file: Configuration.h
+  type: switch
+  disabled: true
+  comment: |-
+    PanelDue touch controller by Duet3D (PanelDueFirmware 3.2 or newer)
+
+    - <https://docs.duet3d.com/User_manual/Connecting_hardware/Display_PanelDue>
+
+    Connect the PanelDue to a free UART and define LCD_SERIAL_PORT with its index. The PanelDue baud rate must be set to 57600, or define `LCD_BAUDRATE` to match.
 - name: EXTENSIBLE_UI
   file: Configuration.h
   type: switch
@@ -1009,10 +1049,7 @@ settings:
     TFT Theme for Color UI. Choose one of the following or add a new one to 'Marlin/src/lcd/tft/themes' directory
 
     BLUE_MARLIN  - Default theme with 'midnight blue' background BLACK_MARLIN - Theme with 'black' background ANET_BLACK   - Theme used for Anet ET4/5
-  options:
-  - value: BLUE_MARLIN
-  - value: BLACK_MARLIN
-  - value: ANET_BLACK
+  options: tft_theme
 - name: TFT_SHARED_IO
   file: Configuration.h
   type: switch
@@ -1020,19 +1057,38 @@ settings:
   requires: TFT_COLOR_UI
   brief: I/O is shared between TFT display and other devices. Disable async data transfer.
   comment: I/O is shared between TFT display and other devices. Disable async data transfer.
+  options: tft_theme
 - name: COMPACT_MARLIN_BOOT_LOGO
   file: Configuration.h
   type: switch
   requires: TFT_COLOR_UI
   brief: Use compressed data to save Flash space.
   comment: Use compressed data to save Flash space
-- name: MKS_WIFI_MODULE
+  options: tft_theme
+- name: NOVIN3DP_GALAXY_UI
   file: Configuration.h
   type: switch
   disabled: true
-  requires: TFT_LVGL_UI
-  brief: Use the onboard MKS WiFi module.
-  comment: MKS WiFi module
+  requires: TFT_COLOR_UI
+  comment: 'Galaxy UI (by NOVIN3DP) for 480x320 touch screens (e.g., MKS TS35) Replaces the Color UI screens with a dark-blue touch UI: home tiles, print status with QOI G-code thumbnails, USB/SD storage selector and file grid, round XY jog pad, heater/fan sliders. Marlin list menus are drawn in the same style. Slicer: export G-code thumbnails as 48x48/QOI and 150x150/QOI.'
+- name: GALAXY_TOUCH_BEEP
+  file: Configuration.h
+  type: switch
+  disabled: true
+  requires: TFT_COLOR_UI && NOVIN3DP_GALAXY_UI
+  comment: Short beep on every touch
+- name: GALAXY_HOME_ICONS_FLAT
+  file: Configuration.h
+  type: switch
+  disabled: true
+  requires: TFT_COLOR_UI && NOVIN3DP_GALAXY_UI
+  comment: 'Home screen icons: flat instead of 3D'
+- name: GALAXY_FAST_SPI
+  file: Configuration.h
+  type: switch
+  disabled: true
+  requires: TFT_COLOR_UI && NOVIN3DP_GALAXY_UI
+  comment: 'Double the TFT SPI clock (STM32F4 on SPI1: 21 to 42MHz) to halve redraw time. Exceeds most panel specs. Disable if the screen shows noise or glitches.'
 - name: TFT_ROTATION
   file: Configuration.h
   type: enum
@@ -2950,6 +3006,27 @@ settings:
   disabled: true
   requires: TFT_SCALED_DOGLCD
   comment: 00010 100010 11111 Cyan
+- name: GCODE_PREVIEW_JPEG
+  file: Configuration_adv.h
+  type: switch
+  disabled: true
+  requires: ALL(TFT_COLOR_UI, HAS_MEDIA)
+  comment: |-
+    G-code Preview for TFT Color UI
+
+    Show the thumbnail your slicer embeds in the G-code before printing a file. Set your slicer to write JPG or QOI thumbnails, or MKS TFT preview images.
+- name: GCODE_PREVIEW_QOI
+  file: Configuration_adv.h
+  type: switch
+  disabled: true
+  requires: ALL(TFT_COLOR_UI, HAS_MEDIA)
+  comment: Enable QOI thumbnail decoding
+- name: GCODE_PREVIEW_MKS
+  file: Configuration_adv.h
+  type: switch
+  disabled: true
+  requires: ALL(TFT_COLOR_UI, HAS_MEDIA)
+  comment: Enable MKS TFT preview images (";simage:" / ";;gimage:")
 - name: DISPLAY_SLEEP_MINUTES
   file: Configuration_adv.h
   type: int
@@ -2998,10 +3075,15 @@ lists:
   - value: E3S1PRO
   - value: CR10SPROV2
   - value: SERMOON_D1
+  - value: SERMOON_V1
   tft_font:
   - value: NOTOSANS
   - value: UNIFONT
   - value: HELVETICA
+  tft_theme:
+  - value: BLUE_MARLIN
+  - value: BLACK_MARLIN
+  - value: ANET_BLACK
   default_volume:
   - value: SD_ONBOARD
   - value: USB_FLASH_DRIVE

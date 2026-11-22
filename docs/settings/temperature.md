@@ -738,7 +738,7 @@ settings:
 
     The issue: If a thermistor falls out, it will report the much lower temperature of the air in the room, and the firmware will keep the heater on.
 
-    The solution: Once the temperature reaches the target, start observing. If the temperature stays too far below the target (hysteresis) for too long (period), the firmware will halt the machine as a safety precaution.
+    The solution: Once the temperature is within the hysteresis of the target, start observing. If the temperature stays too far below the target (hysteresis) for too long (period), the firmware will halt the machine as a safety precaution.
 
     If you get false positives for "Thermal Runaway", increase
 
@@ -754,7 +754,7 @@ settings:
 
     The issue: If a thermistor falls out, it will report the much lower temperature of the air in the room, and the firmware will keep the heater on.
 
-    The solution: Once the temperature reaches the target, start observing. If the temperature stays too far below the target (hysteresis) for too long (period), the firmware will halt the machine as a safety precaution.
+    The solution: Once the temperature is within the hysteresis of the target, start observing. If the temperature stays too far below the target (hysteresis) for too long (period), the firmware will halt the machine as a safety precaution.
 
     If you get false positives for "Thermal Runaway", increase
 
@@ -784,7 +784,7 @@ settings:
   units: seconds
   requires: ALL(HAS_HOTEND, THERMAL_PROTECTION_HOTENDS)
   comment: |-
-    Whenever an M104, M109, or M303 increases the target temperature, the firmware will wait for the `WATCH_TEMP_PERIOD` to expire. If the temperature hasn't increased by `WATCH_TEMP_INCREASE` degrees, the machine is halted and requires a hard reset. This test restarts with any M104/M109/M303, but only if the current temperature is far enough below the target for a reliable test.
+    Whenever an M104, M109, or M303 increases the target temperature, the firmware will wait for the `WATCH_TEMP_PERIOD` to expire. If the temperature hasn't increased by `WATCH_TEMP_INCREASE` degrees, the machine is halted and requires a hard reset. This test restarts with any M104/M109/M303 and repeats until the temperature is within `THERMAL_PROTECTION_HYSTERESIS` of the target, where Thermal Runaway protection takes over.
 
     If you get false positives for "Heating failed", increase `WATCH_TEMP_PERIOD` and/or decrease `WATCH_TEMP_INCREASE`. `WATCH_TEMP_INCREASE` should not be set below 2.
 - name: WATCH_TEMP_INCREASE
@@ -794,7 +794,7 @@ settings:
   units: °C
   requires: ALL(HAS_HOTEND, THERMAL_PROTECTION_HOTENDS)
   shared_comment: |-
-    Whenever an M104, M109, or M303 increases the target temperature, the firmware will wait for the `WATCH_TEMP_PERIOD` to expire. If the temperature hasn't increased by `WATCH_TEMP_INCREASE` degrees, the machine is halted and requires a hard reset. This test restarts with any M104/M109/M303, but only if the current temperature is far enough below the target for a reliable test.
+    Whenever an M104, M109, or M303 increases the target temperature, the firmware will wait for the `WATCH_TEMP_PERIOD` to expire. If the temperature hasn't increased by `WATCH_TEMP_INCREASE` degrees, the machine is halted and requires a hard reset. This test restarts with any M104/M109/M303 and repeats until the temperature is within `THERMAL_PROTECTION_HYSTERESIS` of the target, where Thermal Runaway protection takes over.
 
     If you get false positives for "Heating failed", increase `WATCH_TEMP_PERIOD` and/or decrease `WATCH_TEMP_INCREASE`. `WATCH_TEMP_INCREASE` should not be set below 2.
 - name: THERMAL_PROTECTION_*_PERIOD
