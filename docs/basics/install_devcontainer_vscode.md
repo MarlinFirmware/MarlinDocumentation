@@ -44,3 +44,35 @@ container whenever you open the folder.
 Bind-mounting the local filesystem into a container is convenient, but has some performance overhead on Windows and
 macOS. There are [ways to improve disk performance](//code.visualstudio.com/remote/advancedcontainers/improve-performance),
 or you can open the repository in an isolated container volume instead.
+
+## When to use a dev container
+
+Choose the dev container if you want to build Marlin without installing a toolchain on your computer, or if you want
+every build to use the same environment. If you already have PlatformIO working in VSCode, the
+[PlatformIO VSCode guide](/docs/basics/install_platformio_vscode.html) does the same job without Docker.
+
+## What the container includes
+
+The container is defined by two files in Marlin's `.devcontainer/` folder: `devcontainer.json`, which lists the
+VSCode extensions, and a `Dockerfile` that builds the image. The extensions that `devcontainer.json` installs are:
+
+- **PlatformIO IDE** (`platformio.platformio-ide`), for building and uploading.
+- **Auto Build Marlin** (`marlinfirmware.auto-build`), for building with a configuration you choose.
+- **Python** and **Pylance** (`ms-python.python`, `ms-python.vscode-pylance`), for editing Python in the project.
+- **EditorConfig** (`editorconfig.editorconfig`), which applies the project's `.editorconfig` settings (trailing
+  whitespace removed, final newline inserted) to your edits.
+
+Because the extension list lives in the repository, every clone of Marlin gets the same set when it opens in a
+container.
+
+## Troubleshooting
+
+| Symptom | Likely cause | What to do |
+|---|---|---|
+| VSCode says it cannot find a container runtime | Docker is not running | Start Docker Desktop (or the Docker service on Linux), then run the command again. |
+| The first build takes a long time | The image is being built for the first time | Wait for the progress notification to finish. Later opens reuse the image. |
+| Builds are slow on Windows or macOS | Bind-mounted files | See the disk performance link above, or use an isolated container volume. |
+| The Ubuntu `snap` version of Docker does not work | Snap packages are not supported | Install Docker CE from Docker's own repository. |
+
+If the container will not start at all, use [Auto Build Marlin](/docs/basics/install_abm.html) or the
+[command-line install](/docs/basics/install_cli.html) instead, and keep the container for when the problem is fixed.
