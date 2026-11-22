@@ -315,7 +315,7 @@ settings:
   units: mm
   requires: ANY(SWITCHING_TOOLHEAD, MAGNETIC_SWITCHING_TOOLHEAD, ELECTROMAGNETIC_SWITCHING_TOOLHEAD)
   long: Adjust the relevant settings to your specifications for use with `SWITCHING_TOOLHEAD`, `PARKING_EXTRUDER` or `MAGNETIC_PARKING_EXTRUDER`.
-  comment: (mm) Y position of the toolhead dock
+  comment: (mm) Y position of the toolhead dock. The docks are at the low-Y end if this is in the lower half of the Y travel, else at the high-Y end.
   members:
   - id: Y
     name: SWITCHING_TOOLHEAD_Y_POS
@@ -328,6 +328,7 @@ settings:
   type: int
   units: mm
   requires: ANY(SWITCHING_TOOLHEAD, MAGNETIC_SWITCHING_TOOLHEAD, ELECTROMAGNETIC_SWITCHING_TOOLHEAD)
+  comment: (mm) Security distance Y axis, from the dock toward the work area
   members:
   - id: Y
     name: SWITCHING_TOOLHEAD_Y_SECURITY
@@ -343,7 +344,7 @@ settings:
   units: mm
   requires: ANY(SWITCHING_TOOLHEAD, MAGNETIC_SWITCHING_TOOLHEAD, ELECTROMAGNETIC_SWITCHING_TOOLHEAD)
   brief: Minimum distance from dock for unobstructed X axis.
-  comment: (mm) Minimum distance from dock for unobstructed X axis
+  comment: (mm) Minimum distance from dock (toward the work area) for unobstructed X axis
 - name: SWITCHING_TOOLHEAD_SERVO_NR
   file: Configuration.h
   type: int
@@ -367,7 +368,7 @@ settings:
   requires: ANY(SWITCHING_TOOLHEAD, MAGNETIC_SWITCHING_TOOLHEAD, ELECTROMAGNETIC_SWITCHING_TOOLHEAD) && MAGNETIC_SWITCHING_TOOLHEAD
   block_clause: '!SWITCHING_TOOLHEAD'
   brief: Security distance Y axis.
-  comment: (mm) Security distance Y axis
+  comment: (mm) Security distance Y axis, from the dock toward the work area
 - name: PRIME_BEFORE_REMOVE
   file: Configuration.h
   type: switch

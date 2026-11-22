@@ -44,6 +44,12 @@ settings:
   default: 4
   requires: DELTA && DELTA_AUTO_CALIBRATION
   comment: 'Default number of probe points : n*n (1 -&gt; 7)'
+- name: DELTA_CALIBRATION_LEAST_SQUARES
+  file: Configuration.h
+  type: switch
+  disabled: true
+  requires: DELTA && DELTA_AUTO_CALIBRATION
+  comment: 'Add G33 ''L'' to solve by least squares, as in RepRapFirmware, and optionally calibrate the diagonal rod. The factors to adjust are chosen by the ''L'' value: 3 (endstops), 4 (+ radius), 6 (+ tower angles), 7 (+ diagonal rod)'
 - name: PROBE_MANUALLY_STEP
   file: Configuration.h
   type: float

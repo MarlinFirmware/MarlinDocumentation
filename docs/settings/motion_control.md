@@ -252,6 +252,12 @@ settings:
   default: 1.875
   requires: FT_MOTION && FTM_POLYS
   comment: Max acceleration overshoot factor for POLY6 (1.25 to 1.875)
+- name: FTM_MINIMUM_CRUISE_RATIO
+  file: Configuration_adv.h
+  type: float
+  default: 0.5
+  requires: FT_MOTION
+  comment: Minimum fraction of distance to spend at cruising speed (0.0f disables) Reduces vibrations and extrusion artefacts in short blocks like small surface features and thin solid infills
 - name: FTM_CONSTANT_JOLT
   file: Configuration_adv.h
   type: switch

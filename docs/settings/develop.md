@@ -62,6 +62,14 @@ settings:
   type: switch
   disabled: true
   comment: '- `M265` I2C Scanner'
+- name: CREALITY_BOOTLOADER_INFO_DUMP
+  file: Configuration_adv.h
+  type: switch
+  disabled: true
+  comment: |-
+    - `M7422` Dump the Creality v4.2.x bootloader info region to serial.
+
+    The stock bootloader on some STM32F103-based Creality boards (v4.2.2 and similar) reserves the last 2K of flash for the last-flashed filename tagged with a 0xAA55 magic header.
 - name: MARLIN_TEST_BUILD
   file: Configuration_adv.h
   type: switch

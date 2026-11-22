@@ -210,7 +210,7 @@ settings:
 - name: FAN_OFF_PWM
   file: Configuration_adv.h
   type: int
-  default: 0
+  default: 1
   disabled: true
   long: Some coolers may require a non-zero "off" state.
   comment: Some coolers may require a non-zero "off" state.

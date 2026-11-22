@@ -173,6 +173,14 @@ settings:
   units: °C
   requires: HAS_E_TEMP_SENSOR
   comment: (°C) Temperature proximity considered "close enough" to the target
+- name: TEMP_SETTLE_BAND
+  file: Configuration.h
+  type: int
+  default: 3
+  units: °C
+  disabled: true
+  requires: HAS_E_TEMP_SENSOR
+  comment: '(°C) Time in range (`TEMP_RESIDENCY_TIME`, heat soak) counts from when the hotend gets this close to the target. (Default: `TEMP_HYSTERESIS`)'
 - name: TEMP_BED_RESIDENCY_TIME
   file: Configuration.h
   type: int
@@ -195,6 +203,14 @@ settings:
   units: °C
   requires: TEMP_SENSOR_BED
   comment: (°C) Temperature proximity considered "close enough" to the target
+- name: TEMP_BED_SETTLE_BAND
+  file: Configuration.h
+  type: int
+  default: 3
+  units: °C
+  disabled: true
+  requires: TEMP_SENSOR_BED
+  comment: '(°C) Time in range (`TEMP_BED_RESIDENCY_TIME`, heat soak) counts from when the bed gets this close to the target. (Default: `TEMP_BED_HYSTERESIS`)'
 - name: TEMP_CHAMBER_RESIDENCY_TIME
   file: Configuration.h
   type: int
