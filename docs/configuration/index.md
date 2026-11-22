@@ -47,6 +47,8 @@ The firmware also ships `buildroot/share/scripts/config-migrate.py`, which does 
 python3 buildroot/share/scripts/config-migrate.py MyConfig --to 2.1.2.9 -o MyConfig/migrated
 ```
 
+Marlin Web Build can also run this migration online: upload a zip of your files, and it migrates them to the version you choose and builds the firmware. See [Online Build Service](/docs/basics/install.html#online-build-service).
+
 If a build stops on an option name it no longer knows, the [Obsolete Options](/docs/appendix/obsolete_options.html) list gives the last version that had it and what to use instead.
 
 With recent versions of Marlin you also have the option of exporting your configuration using an older version of Marlin and then importing the `config.ini` into a newer version of Marlin with fresh configs. See the [Configuration with INI](/docs/configuration/config-ini.html) page for details.
