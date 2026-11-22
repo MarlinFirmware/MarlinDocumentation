@@ -15,7 +15,7 @@ Browser-based helpers for Marlin users. Nothing is uploaded; everything runs in 
 - [Input Shaping Calibration Pattern](/tools/input_shaping/freq-calibr.html) — generate G-code to find resonance frequencies for Input Shaping.
 - [Ringing Tower Generator](/tools/input_shaping/ringing-tower.html) — generate a ringing tower as G-code, sized and placed for your printer, with Input Shaping frequency steps. No slicer or model needed.
 - [Marlin USB Resonance Tester]({{ site.data.marlin.tools.resonance_tester }}) (external, by David Buezas) — measure resonance with a USB accelerometer and optimise Fixed-Time Motion shapers; see [Input Shaping](/docs/features/input_shaping.html#with-an-accelerometer).
-- [Marlin Web Build]({{ site.data.marlin.tools.webbuild }}) (external) — build `bugfix-2.1.x` for any example configuration without installing anything; see [Build & Install](/docs/basics/install.html#online-build-service).
+- [Marlin Web Build]({{ site.data.marlin.tools.webbuild }}) (external) — build `bugfix-2.1.x` or a recent patch release, for any example configuration or your own configuration, without installing anything; see [Build & Install](/docs/basics/install.html#online-build-service).
 - [Bitmap Converter 2.0](/tools/u8glib/converter2.html) — convert images to boot/status screen files for Marlin 2.x.
 - [Bitmap to C/C++ Converter](/tools/u8glib/converter.html) — the original monochrome bitmap converter.
 - [RGB565 to C/C++ Converter](/tools/rgb565/converter.html) — convert images to RGB565 arrays for color displays.

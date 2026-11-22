@@ -33,19 +33,32 @@ For a Marlin firmware perfectly tailored to your machine, peripherals, and prefe
 
 ## Online Build Service
 
-[**Marlin Web Build**]({{ site.data.marlin.tools.webbuild }}) builds Marlin for any of the [example configurations](//github.com/MarlinFirmware/Configurations/tree/bugfix-2.1.x/config/examples) without a build environment on your computer. It runs on GitHub Actions, so you need a free GitHub account: each request is a GitHub issue, and the download link arrives as a reply a few minutes later.
+[**Marlin Web Build**]({{ site.data.marlin.tools.webbuild }}) builds Marlin without a build environment on your computer. It runs on GitHub Actions, so you need a free GitHub account: each request is a GitHub issue, and the download link arrives as a reply a few minutes later.
 
-1. Open the [configuration picker]({{ site.data.marlin.tools.webbuild }}), find your printer and pick a build environment.
+Choose a version in the picker. You can build `bugfix-2.1.x`, always from its latest commit, or the latest patch release of each Marlin series from 2.0.7 on, such as 2.1.2.10. A release is built with the example configurations published for it. Older series and betas are not offered.
+
+**To build an example configuration:**
+
+1. Open the [configuration picker]({{ site.data.marlin.tools.webbuild }}), choose a version, find your printer and pick a build environment.
 2. Click **Request build on GitHub** and submit the pre-filled issue.
 3. Download the firmware from the reply and install it as for [pre-built firmware](#pre-built-firmware).
 
-Keep these limits in mind:
+**To build your own configuration:**
 
-- Only the `bugfix-2.1.x` branch is built, always from its latest commit. It has the newest fixes and is often more stable than the last release, but it changes daily.
-- Only stock example configurations can be built. For a configuration you have edited, use [Auto Build Marlin](install_abm.html).
-- Downloads are kept for about two weeks, and there is a daily request limit per user.
+1. Open the [configuration picker]({{ site.data.marlin.tools.webbuild }}) and check **Supply your own configs**.
+2. Zip your `Configuration.h` and `Configuration_adv.h`, plus `_Bootscreen.h` or `_Statusscreen.h` if you use them. Choose a version and drag the zip into the **Configuration files** box of the request form.
+3. Submit the request and download the firmware from the reply.
 
-The service is open source ([repository]({{ site.data.marlin.tools.webbuild_repo }})); a build for the same commit, configuration and environment is reused rather than rebuilt.
+Files from an older Marlin are migrated to the version you chose, using Marlin's `config-migrate.py`. Files that already match that version are used unchanged. Files from a newer Marlin than the one you chose are refused. The build environment is taken from the `MOTHERBOARD` in your `Configuration.h` unless you enter one.
+
+{: .warning }
+**Attached files and the firmware built from them are public.** Anyone can download them, so leave out anything private, such as Wi-Fi passwords.
+
+Uploaded files may use only `#define`-style preprocessor lines (`define`, `undef`, `if`/`ifdef`/`ifndef`/`elif`/`else`/`endif`, `error`, `warning`, plus `#pragma once` and `#include <avr/pgmspace.h>`). The `##`, `asm` and `_Pragma` operators are not allowed. Every stock example passes these checks. If your configuration includes extra files, copy their contents into it.
+
+The download is a zip with the firmware, a `config/` folder of the files that were built (migrated if needed; keep these for next time), `original/` with your files, `MIGRATION_REPORT.txt` listing every change, and `BUILD_INFO.txt`. If a build fails, the reply still links the migrated files and the report. Downloads are kept for about two weeks, and there is a daily request limit per user.
+
+For full control, or for building on your own computer, use [Auto Build Marlin](install_abm.html).
 
 ## Prerequisites
 
