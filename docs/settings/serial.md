@@ -14,7 +14,7 @@ settings:
     This setting allows you to choose which serial port on your board will be used for communication with the host computer.
     Serial port -1 is typically the USB emulated serial port, if available. Note that the first serial port (-1 or 0) will always be used by the Arduino bootloader.
   comment: |-
-    Select the serial port on the board to use for communication with the host. This allows the connection of wireless adapters (for instance) to non-default port pins. Serial port -1 is the USB emulated serial port, if available. Serial port -2 is the built-in Bluetooth (Classic SPP) on ESP32, not together with WiFi.
+    Select the serial port on the board to use for communication with the host. This allows the connection of wireless adapters (for instance) to non-default port pins. Serial port -1 is the USB emulated serial port, if available (ESP32-S2/S3: the native USB port). Serial port -2 is the built-in Bluetooth (Classic SPP) on ESP32, not together with WiFi. ESP32: Serial port -3 is the WiFi serial port (WIFISUPPORT or `ESP3D_WIFISUPPORT`).
 
     Note: The first serial port (-1 or 0) will always be used by the Arduino bootloader.
 - name: BAUDRATE
@@ -54,7 +54,7 @@ settings:
 
     {: .note }
     > Serial port -1 is the USB emulated serial port, if available.
-  comment: Select a secondary serial port on the board to use for communication with the host. -2 is Ethernet on Teensy 4.1 boards, and the built-in Bluetooth (Classic SPP) on ESP32. `ESP3D_WIFISUPPORT` requires -1, which carries G-code from ESP3D to Marlin.
+  comment: Select a secondary serial port on the board to use for communication with the host. -2 is Ethernet on Teensy 4.1 boards, and the built-in Bluetooth (Classic SPP) on ESP32. `ESP3D_WIFISUPPORT` requires a serial port set to -3, which carries G-code from ESP3D to Marlin.
   members:
   - id: '2'
     name: SERIAL_PORT_2

@@ -58,6 +58,14 @@ settings:
   disabled: true
   requires: EEPROM_SETTINGS
   comment: Init EEPROM on first boot after a new build.
+- name: EEPROM_AUTOSAVE_AFTER
+  file: Configuration.h
+  type: int
+  default: 5000
+  units: ms
+  disabled: true
+  requires: EEPROM_SETTINGS
+  comment: (ms) Save settings this long after they're edited on a supporting LCD, once not printing.
 ---
 
 Options in the `eeprom` section of the Marlin configuration files.
