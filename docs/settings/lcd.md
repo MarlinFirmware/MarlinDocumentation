@@ -664,6 +664,12 @@ settings:
     - Download https://www.crealitycloud.com/downloads/firmware/sermoon-series/sermoon-v1
     - Copy the DWIN_SET folder from the firmware package to the SD card.
 
+    CREALITY_TOUCH
+
+    - Creality CR-6 SE touch screen. Requires CR-6 Community touch screen firmware v61 or newer.
+    - Download https://github.com/CR6Community/CR-6-touchscreen/releases
+    - Copy the DWIN_SET folder from the release to the SD card.
+
     Flash display with DGUS Displays for Marlin:
 
     - Format the SD card to FAT32 with an allocation size of 4kb.
@@ -752,7 +758,7 @@ settings:
   comment: |-
     Creality Resistive Touch Screen
 
-    As found in the Creality CR-6 S1
+    As found in the Creality Ender-5 S1
 - name: CREALITY_WIFI
   file: Configuration.h
   type: switch
@@ -3076,6 +3082,7 @@ lists:
   - value: CR10SPROV2
   - value: SERMOON_D1
   - value: SERMOON_V1
+  - value: CREALITY_TOUCH
   tft_font:
   - value: NOTOSANS
   - value: UNIFONT
