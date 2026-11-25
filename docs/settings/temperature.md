@@ -633,10 +633,24 @@ settings:
   units: °C
   requires: TEMP_SENSOR_COOLER
   shared_comment: Laser Cooler options
-- name: TEMP_COOLER_HYSTERESIS
+- name: TEMP_COOLER_RESIDENCY_TIME
+  file: Configuration_adv.h
+  type: int
+  default: 0
+  units: seconds
+  requires: TEMP_SENSOR_COOLER
+  comment: (seconds) Time to wait for cooler to "settle" in M193
+- name: TEMP_COOLER_WINDOW
   file: Configuration_adv.h
   type: int
   default: 1
+  units: °C
+  requires: TEMP_SENSOR_COOLER
+  comment: (°C) Temperature proximity for the "temperature reached" timer
+- name: TEMP_COOLER_HYSTERESIS
+  file: Configuration_adv.h
+  type: int
+  default: 3
   units: °C
   requires: TEMP_SENSOR_COOLER
   comment: (°C) Temperature proximity considered "close enough" to the target

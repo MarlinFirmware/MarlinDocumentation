@@ -2196,6 +2196,8 @@ TEMP_CHAMBER_RESIDENCY_TIME: temperature_sensors
 TEMP_CHAMBER_WINDOW: temperature_sensors
 TEMP_COOLER_HYSTERESIS: temperature
 TEMP_COOLER_PIN: temperature
+TEMP_COOLER_RESIDENCY_TIME: temperature
+TEMP_COOLER_WINDOW: temperature
 TEMP_HYSTERESIS: temperature_sensors
 TEMP_RESIDENCY_TIME: temperature_sensors
 TEMP_SENSOR_0: temperature_sensors
