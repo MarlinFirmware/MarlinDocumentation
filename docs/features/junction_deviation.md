@@ -108,6 +108,7 @@ The symptoms in the [troubleshooting table](#troubleshooting) overlap (ringing, 
 - **`S_CURVE_ACCELERATION`** smooths acceleration *along* each move. It works together with JD and doesn't change the JD value you need.
 - **[Linear Advance](/docs/features/lin_advance.html)**: When Linear Advance is enabled with Junction Deviation, the extruder's jerk limit is calculated from the JD value and the E-axis max acceleration (`M201 E`), so changing JD also changes E jerk. Re-check your K factor after a big JD change.
 - **`CLASSIC_JERK`**: Enable this in `Configuration.h` to go back to per-axis jerk (`M205 X Y Z E`). Junction Deviation is then disabled.
+- **[Motion Limits](/docs/features/motion_limits.html)**: the acceleration, feedrate and minimum segment limits that apply alongside Junction Deviation, and where each one is set.
 
 ## Further reading
 

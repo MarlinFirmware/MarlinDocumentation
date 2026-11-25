@@ -35,6 +35,7 @@ repeated here.
 - [Input Shaping](/docs/features/input_shaping.html): cancel frame vibration to print faster with less ringing.
 - [Fixed Time Motion](/docs/features/ft_motion.html): an alternative stepping engine for smoother, quieter motion on 32-bit boards.
 - [Junction Deviation](/docs/features/junction_deviation.html): how cornering speed is decided, and how to tune it.
+- [Motion Limits](/docs/features/motion_limits.html): acceleration, jerk, feedrate limits and minimum segment time, and where M201 to M205 set them.
 - [Firmware Retract](/docs/features/fwretract.html): G10/G11 retraction with Z hop, swap retract for tool changes, and auto-retract, tunable without reslicing.
 
 ## Temperature and safety
