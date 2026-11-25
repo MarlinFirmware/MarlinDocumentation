@@ -54,7 +54,7 @@ G1 Z0.2 F60 ; Move Z down 0.2mm at 60 mm/min
 
 ## Command Categories
 
-Every G-code page, organized by category (253 pages).
+Every G-code page, organized by category (259 pages).
 
 ### Motion
 
@@ -346,6 +346,10 @@ Power, steppers, tools, macros, and other machine control.
 | [M672](/docs/gcode/M672.html) | Duet Smart Effector sensitivity | 2.0.2 |
 | [M701](/docs/gcode/M701.html) | Load filament | - |
 | [M702](/docs/gcode/M702.html) | Unload filament | - |
+| [M704](/docs/gcode/M704.html) | Preload to MMU | 2.1.3 |
+| [M705](/docs/gcode/M705.html) | Eject Filament | 2.1.3 |
+| [M706](/docs/gcode/M706.html) | Cut Filament | 2.1.3 |
+| [M709](/docs/gcode/M709.html) | MMU Power and Reset | 2.1.3 |
 | [M810-M819](/docs/gcode/M810-M819.html) | G-code macros | - |
 | [M820](/docs/gcode/M820.html) | Report G-code macros | 2.1.3 |
 | [M900](/docs/gcode/M900.html) | Linear Advance Factor | - |
@@ -424,6 +428,8 @@ Diagnostics and developer tools.
 | [M100](/docs/gcode/M100.html) | Free Memory | - |
 | [M119](/docs/gcode/M119.html) | Endstop States | - |
 | [M122](/docs/gcode/M122.html) | TMC Debugging | 1.1.7 |
+| [M707](/docs/gcode/M707.html) | Read MMU Register | 2.1.3 |
+| [M708](/docs/gcode/M708.html) | Write MMU Register | 2.1.3 |
 | [M7219](/docs/gcode/M7219.html) | MAX7219 Control | - |
 
 ### Network
