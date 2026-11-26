@@ -31,9 +31,11 @@ footer: |
   {% capture nobuild %}No build tools? [Pre-built firmware](//github.com/MarlinFirmware/MarlinBuilds) covers many popular printers, and [**Marlin Web Build**]({{ site.data.marlin.tools.webbuild }}) builds `bugfix-2.1.x` or the latest patch release of each Marlin version from 2.0.7 online, for any example configuration or your own configuration. See [Build & Install](/docs/basics/install.html).{% endcapture %}
   {{ nobuild | markdownify }}
 
+  {% if site.data.marlin.betas.size > 0 %}
   {% assign head_text='Beta Release!' %}
   {% assign download_items=site.data.marlin.betas %}
   {% include download_table.html %}
+  {% endif %}
 
   {% assign head_text='Latest Releases' %}
   {% assign download_items=site.data.marlin.downloads %}

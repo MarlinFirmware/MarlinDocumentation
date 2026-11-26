@@ -14,31 +14,12 @@ The Marlin community is continuously fixing and improving the codebase. Once Mar
 Marlin maintains a single continuous development branch named `bugfix-2.1.x` where we accept all contributions. Contributors are expected to keep this branch up to date in their own forks and avoid modifying it. Instead, contributors should copy `bugfix-2.1.x` to a new branch (with a good name) in their fork and make changes to that branch. Once the branch is submitted as a "Pull Request" it acts as the hub for further development until it gets merged into the codebase.
 
 ### Marlin Releases
-Marlin releases for the latest version are currently published in a branch called named `2.1.x`. The standard procedure to prepare a release:
-- Move changes from `bugfix-2.1.x` to `2.1.x` manually to get the code in sync.
-- Apply a version tag.
-- Collect and organize Release Notes.
-- Push the Marlin version changes and version tag to GitHub.
-- Publish a Release on GitHub.
-- Publish updated Configurations.
-- Publish updated Documentation.
-- Announce the release.
+Marlin releases are tagged from a release branch cut from `bugfix-2.1.x`. Marlin 2.1.3 was prepared that way: the `release-2.1.3` branch carries the version commit, and the matching example configurations are on the `release-2.1.3` branch of [Configurations](//github.com/MarlinFirmware/Configurations) (binaries are on the `release-2.1.3` branch of [MarlinBuilds](//github.com/MarlinFirmware/MarlinBuilds)). Each release has release notes on the [GitHub Releases](//github.com/MarlinFirmware/Marlin/releases) page, a `Full Changelog` comparison with the previous release, and a download on the [Download](/meta/download.html) page.
 
-**Note:** We sometimes push timely patches to `2.1.x` without tagging a new version right away, so downloading `2.1.x` directly is best when you want the latest release.
+**Note:** Between releases, `bugfix-2.1.x` is the place to get the newest fixes. The `2.1.x` download tracks the latest 2.1.x release with hotfixes.
 
 ### Marlin "LTS" Branches
 Sometimes external libraries or the tools used to build Marlin may change and break the build, which also breaks older versions. We need a way to apply patches across several old release versions and make tagged releases for them. It can also be useful to patch old bugs. Maintaining these "LTS" branches allows users and machine vendors tied to a specific Marlin version to update their codebase with patches to keep their firmware building without impacting their customizations.
-
-### Marlin Future Releases
-After the Marlin 2.1.3 release we'll continue to modernize the codebase. We'll also be making some small adjustments to the development and release process. Here are some of the process changes we're planning:
-- The `bugfix-2.1.x` branch will be renamed to simply `dev`.
-- The `2.1.x` branch will be copied to `lts-2.1.3` and branch `2.1.x` will go dormant.
-
-The release process will work like this:
-- Ahead of each release we'll make a snapshot of `dev` as a pre-release intended only for testers and announce it on [Discord](//discord.com/servers/marlin-firmware-461605380783472640).
-- During the testing period all development within `dev` will take the lead from the pre-release branch, so nothing will go into `dev` that isn't also going into the pending release. New features and other non-bug-fixing PRs will be held during this period.
-- Once the pre-release is certified by testers (or at least hasn't exploded dramatically) it will be tagged and released to the world.
-- Releases may be followed up with "fixup" patches within the first week after a release. Volunteer testers catch a lot of bugs, but they don't always catch 'em all!
 
 ### Further Resources
 - Detailed [release notes](//github.com/MarlinFirmware/Marlin/releases)
