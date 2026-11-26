@@ -53,6 +53,7 @@ repeated here.
 - [EEPROM](/docs/features/eeprom.html): how settings are saved, loaded and reset.
 - [Autostart](/docs/features/autostart.html): run a G-code file from the media at power-up.
 - [Media Printing](/docs/features/media_printing.html): print from an SD card or USB drive, with end/abort scripts, nozzle park and nozzle clean.
+- [Cancel Objects](/docs/features/cancel_objects.html): skip one object of a multi-object print with M486, from G-code or the LCD, while the rest keeps printing.
 - [Multiple Extruders and Tool Changing](/docs/features/multi_extruder.html): multi-hotend, single-nozzle, switching and parking toolheads, IDEX and mixing, with hotend offsets and filament swap.
 - [Print Progress and Statistics](/docs/features/print_progress_stats.html): progress and remaining time on the screen, print statistics, service reminders, and Freeze.
 - [Host Interface](/docs/features/host_interface.html): serial ports and baud, the ok/resend protocol, M115 capabilities, auto-reports, host actions and prompts.

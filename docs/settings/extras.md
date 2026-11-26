@@ -73,3 +73,5 @@ settings:
 ---
 
 Options in the `extras` section of the Marlin configuration files.
+
+For how Cancel Objects works in a print, see [Cancel Objects](/docs/features/cancel_objects.html).
