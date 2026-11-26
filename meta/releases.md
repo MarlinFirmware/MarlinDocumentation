@@ -21,10 +21,6 @@ Marlin releases are tagged from a release branch cut from `bugfix-2.1.x`. Marlin
 ### Marlin "LTS" Branches
 Sometimes external libraries or the tools used to build Marlin may change and break the build, which also breaks older versions. We need a way to apply patches across several old release versions and make tagged releases for them. It can also be useful to patch old bugs. Maintaining these "LTS" branches allows users and machine vendors tied to a specific Marlin version to update their codebase with patches to keep their firmware building without impacting their customizations.
 
-### Marlin Future Releases
-<!-- TODO(Scott): the process for the release after 2.1.3 is pending confirmation. Do not publish a plan here until confirmed. -->
-The release process is under review. This section will be updated when the plan is confirmed.
-
 ### Further Resources
 - Detailed [release notes](//github.com/MarlinFirmware/Marlin/releases)
 - Resources for [reporting issues](//github.com/MarlinFirmware/Marlin/issues)
