@@ -154,6 +154,7 @@ Probing, bed leveling, and machine calibration.
 | [M217](/docs/gcode/M217.html) | Filament swap parameters | 2.0.0 |
 | [M218](/docs/gcode/M218.html) | Set Hotend Offset | - |
 | [M290](/docs/gcode/M290.html) | Babystep | 1.1.7 |
+| [M293, M294](/docs/gcode/M293-M294.html) | Babystep Z Up and Down | 2.1.3 |
 | [M401](/docs/gcode/M401.html) | Deploy Probe | - |
 | [M402](/docs/gcode/M402.html) | Stow Probe | - |
 | [M422](/docs/gcode/M422.html) | Set Z Motor XY | 2.0.4 |
@@ -269,6 +270,7 @@ Host interaction, reporting, and serial communication.
 | [M118](/docs/gcode/M118.html) | Serial print | - |
 | [M154](/docs/gcode/M154.html) | Position Auto-Report | 2.0.8.1 |
 | [M155](/docs/gcode/M155.html) | Temperature Auto-Report | - |
+| [M485](/docs/gcode/M485.html) | Send RS485 Packet | 2.1.3 |
 | [M550](/docs/gcode/M550.html) | Machine Name | - |
 | [M575](/docs/gcode/M575.html) | Serial baud rate | 2.0.0 |
 | [M876](/docs/gcode/M876.html) | Handle Prompt Response | - |
@@ -312,6 +314,7 @@ Power, steppers, tools, macros, and other machine control.
 | [M5](/docs/gcode/M005.html) | Spindle / Laser Off | 1.1.2 |
 | [M7-M9](/docs/gcode/M007-M009.html) | Coolant Controls | - |
 | [M10, M11](/docs/gcode/M010-M011.html) | Vacuum / Blower Control | 2.0.8 |
+| [M12](/docs/gcode/M012.html) | Closed Loop Sync | 2.0.0 |
 | [M17](/docs/gcode/M017.html) | Enable Steppers | - |
 | [M18, M84](/docs/gcode/M018.html) | Disable steppers | - |
 | [M42](/docs/gcode/M042.html) | Set Pin State | - |
@@ -441,6 +444,7 @@ Ethernet and network settings.
 | [M552](/docs/gcode/M552.html) | Ethernet IP Address, Network IF | 2.0.8 |
 | [M553](/docs/gcode/M553.html) | Ethernet Subnet Mask | 2.0.8 |
 | [M554](/docs/gcode/M554.html) | Ethernet Gateway IP Address | 2.0.8 |
+| [M587](/docs/gcode/M587.html) | MKS WiFi Network | 2.1.3 |
 
 ### I2C and External Devices
 
