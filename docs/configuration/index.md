@@ -18,6 +18,7 @@ Build-time configuration options describe aspects of the machine that will never
 
 Marlin also provides minimal and intelligent configuration methods that may be more suitable for your needs. Give these a try and let us know what you think!
 
+- `Config.h` (2.1.3 and up) should contain just your pertinent settings. This replaces `Configuration.h` and `Configuration_adv.h`, which will be ignored.
 - `config.ini` (2.1.0 and up) modifies the configuration files at the start of a PlatformIO build and has some other useful powers. See the [Configuration with INI](/docs/configuration/config-ini.html) page to see if it's right for you.
 
 - `_Bootscreen.h` is included when `SHOW_CUSTOM_BOOTSCREEN` is enabled. See the [Boot screens](/docs/configuration/boot_status_screen.html#_bootscreenh) page for more information.
