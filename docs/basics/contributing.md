@@ -79,3 +79,5 @@ Marlin is hosted on GitHub, so you'll need a free GitHub user account to post is
 - We have Zero Tolerance for personal attacks. Use other channels to discuss those issues. _Contributors have been banned for violating this policy!_
 - Pay attention to your issues and follow up on them. Stale issues may be closed without notice.
 - If your issue is resolved, please post a message and close it.
+
+<script src="{{ '/assets/javascript/get-file.js' | relative_url }}"></script>
