@@ -71,7 +71,7 @@ Select this option for a switch mounted on a solenoid.
 
 #### BLTOUCH
 ![BLTouch](/assets/images/config/BLTouch.png){: .floater.framed}
-The BLTouch by ANTCLABS is a compact probe specifically designed for use on inexpensive 3D printers. It uses a Hall effect sensor to detect the movement of a metal pin that can be magnetically extended and retracted. The BLTouch connects to the servo pins which function to send commands to the probe.
+The BLTouch by ANTCLABS is a compact probe specifically designed for use on inexpensive 3D printers. It uses a Hall effect sensor to detect the movement of a metal pin that can be magnetically extended and retracted. The BLTouch connects to the servo pins which function to send commands to the probe. For the deploy and stow sequence, voltage modes and troubleshooting, see the [BLTouch Probe](/docs/features/bltouch.html) feature article.
 
 #### Z_PROBE_SLED
 ![Z-Probe Sled](/assets/images/config/zprobe_sled.png){: .floater.framed}

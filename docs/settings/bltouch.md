@@ -55,3 +55,5 @@ settings:
 ---
 
 Options in the `bltouch` section of the Marlin configuration files.
+
+For how Marlin deploys and stows the probe, the voltage and high-speed modes, and the STOP messages, see the [BLTouch Probe](/docs/features/bltouch.html) feature article.
