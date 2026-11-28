@@ -21,6 +21,7 @@ repeated here.
 - [Mesh Bed Leveling and Manual Probing](/docs/features/mesh_bed_leveling.html): level without a probe, from the LCD or a host, with a paper-measured mesh.
 - [Automatic Bed Leveling](/docs/features/auto_bed_leveling.html): probe the bed and compensate for tilt and unevenness.
 - [Unified Bed Leveling](/docs/features/unified_bed_leveling.html): a mesh you can inspect, edit and fill in by hand, for large or difficult beds.
+- [BLTouch Probe](/docs/features/bltouch.html): deploy and stow a BLTouch, choose its voltage and speed modes, and read its STOP messages.
 - [Probe Temperature Compensation](/docs/features/probe_temp_compensation.html): correct probe readings that drift with temperature.
 - [Z Offset and Babystepping](/docs/features/z_offset_babystepping.html): set the probe Z offset and tune the first layer live.
 - [Z Stepper Alignment](/docs/features/z_stepper_alignment.html): keep a two-, three- or four-motor Z axis level with G34.
