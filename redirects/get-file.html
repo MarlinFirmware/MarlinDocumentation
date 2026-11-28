@@ -1,0 +1,25 @@
+---
+# /get-file?url=<encoded file URL> opens the Donate section, which starts the download.
+# jekyll-redirect-from can't forward a query string, so this page does it with a script.
+# The URL is validated by assets/javascript/get-file.js.
+layout: null
+title: Get File
+permalink: /get-file.html
+nav_exclude: true
+search_exclude: true
+sitemap: false
+---
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<title>Get File</title>
+<script>
+location.replace("{{ '/docs/basics/contributing.html' | relative_url }}" + location.search + "#donate");
+</script>
+</head>
+<body>
+<noscript><p>JavaScript is needed to start the download. <a href="{{ '/meta/download.html' | relative_url }}">Go to the Download page</a>.</p></noscript>
+</body>
+</html>
